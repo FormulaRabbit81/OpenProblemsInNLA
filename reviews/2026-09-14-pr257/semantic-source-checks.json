@@ -1,0 +1,1328 @@
+{
+  "scope": "Static semantic/source inspection; not a Lean build, Comparator run, or NanoDa replay.",
+  "pr_head": "cc661b4170e590daeb2ca4232336ab8b6d2eeaaf",
+  "proof_head": "762bd5ec5050a96f5e6ba3926b6cda4816fcd4b0",
+  "published_base": "deb549fa9ddd6b119e6c59016f268237e645dfa2",
+  "canonical_statement_byte_identical": true,
+  "canonical_statement_sha256": "678c57f2122f25ae9682932adafa6f82621d72f9b65119078952ff06a0fa05cd",
+  "challenge_and_statement_definitions_token_identical": true,
+  "target_definitions": [
+    "moment",
+    "spectralNorm",
+    "varianceScale",
+    "deletedBilinear",
+    "weakMoment",
+    "deletionScale",
+    "RegularEntries",
+    "UpperBoundAt"
+  ],
+  "solution_local_import_closure_count": 113,
+  "solution_local_import_closure_lines": 17955,
+  "challenge_in_solution_import_closure": false,
+  "dangerous_tokens_in_comment_stripped_local_closure": [],
+  "external_imports": [
+    "Lean.Elab.Tactic.Omega",
+    "Mathlib.Algebra.BigOperators.Fin",
+    "Mathlib.Algebra.BigOperators.Group.Finset.Basic",
+    "Mathlib.Algebra.BigOperators.Group.Finset.Piecewise",
+    "Mathlib.Algebra.BigOperators.Group.Finset.Powerset",
+    "Mathlib.Algebra.BigOperators.Ring.Finset",
+    "Mathlib.Algebra.Order.BigOperators.Group.Finset",
+    "Mathlib.Algebra.Order.Floor.Semiring",
+    "Mathlib.Analysis.CStarAlgebra.Basic",
+    "Mathlib.Analysis.CStarAlgebra.Matrix",
+    "Mathlib.Analysis.Convex.Integral",
+    "Mathlib.Analysis.Convex.Jensen",
+    "Mathlib.Analysis.Convex.Mul",
+    "Mathlib.Analysis.Convex.SpecificFunctions.Basic",
+    "Mathlib.Analysis.InnerProductSpace.PiL2",
+    "Mathlib.Analysis.MeanInequalitiesPow",
+    "Mathlib.Analysis.Normed.Lp.MeasurableSpace",
+    "Mathlib.Analysis.Normed.Module.RCLike.Real",
+    "Mathlib.Analysis.Normed.Operator.Basic",
+    "Mathlib.Analysis.SpecialFunctions.Log.Basic",
+    "Mathlib.Analysis.SpecialFunctions.Pow.Real",
+    "Mathlib.Analysis.SpecialFunctions.Sqrt",
+    "Mathlib.Analysis.SpecificLimits.Basic",
+    "Mathlib.Combinatorics.SimpleGraph.Finite",
+    "Mathlib.Data.Finset.Card",
+    "Mathlib.Data.Finset.SymmDiff",
+    "Mathlib.Data.Fintype.BigOperators",
+    "Mathlib.Data.Fintype.Pi",
+    "Mathlib.Data.Matrix.Basic",
+    "Mathlib.Data.Matrix.Block",
+    "Mathlib.Data.Matrix.Mul",
+    "Mathlib.Data.Nat.Find",
+    "Mathlib.Data.Real.Basic",
+    "Mathlib.Data.Set.Finite.Basic",
+    "Mathlib.LinearAlgebra.Matrix.Hadamard",
+    "Mathlib.LinearAlgebra.Matrix.Trace",
+    "Mathlib.MeasureTheory.Constructions.BorelSpace.ContinuousLinearMap",
+    "Mathlib.MeasureTheory.Constructions.Pi",
+    "Mathlib.MeasureTheory.Covering.BesicovitchVectorSpace",
+    "Mathlib.MeasureTheory.Function.L1Space.Integrable",
+    "Mathlib.MeasureTheory.Function.L2Space",
+    "Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp",
+    "Mathlib.MeasureTheory.Function.LpSeminorm.LpNorm",
+    "Mathlib.MeasureTheory.Function.LpSeminorm.Prod",
+    "Mathlib.MeasureTheory.Integral.Bochner.Basic",
+    "Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap",
+    "Mathlib.MeasureTheory.Integral.Bochner.SumMeasure",
+    "Mathlib.MeasureTheory.Integral.MeanInequalities",
+    "Mathlib.MeasureTheory.Integral.Prod",
+    "Mathlib.MeasureTheory.SpecificCodomains.Pi",
+    "Mathlib.MeasureTheory.SpecificCodomains.WithLp",
+    "Mathlib.Order.ConditionallyCompleteLattice.Finset",
+    "Mathlib.Probability.Distributions.Bernoulli",
+    "Mathlib.Probability.IdentDistrib",
+    "Mathlib.Probability.IdentDistribIndep",
+    "Mathlib.Probability.Independence.Basic",
+    "Mathlib.Probability.Independence.InfinitePi",
+    "Mathlib.Probability.Independence.Integration",
+    "Mathlib.Probability.Moments.Variance",
+    "Mathlib.Tactic",
+    "Mathlib.Tactic.FunProp",
+    "Mathlib.Tactic.Linarith",
+    "Mathlib.Tactic.Ring",
+    "Mathlib.Tactic.SplitIfs"
+  ],
+  "local_modules": {
+    "GraphMatrices.Basic": {
+      "path": "vendor/graph-matrices/GraphMatrices/Basic.lean",
+      "sha256": "164de046b8f6c92c734da05afd3191df30c2ed673a2e607b9924e8260733cdc6",
+      "imports": [
+        "Mathlib.Data.Matrix.Basic",
+        "Mathlib.Data.Real.Basic"
+      ],
+      "lines": 13
+    },
+    "GraphMatrices.CrossedEdges": {
+      "path": "vendor/graph-matrices/GraphMatrices/CrossedEdges.lean",
+      "sha256": "b1186acc40deae996f1c34a5de2078d74ab68b6513c9d9d457846009eddf9fe7",
+      "imports": [
+        "Mathlib.Data.Matrix.Mul",
+        "Mathlib.Algebra.BigOperators.Fin",
+        "Mathlib.LinearAlgebra.Matrix.Hadamard",
+        "Mathlib.Data.Real.Basic",
+        "Mathlib.Tactic.Linarith",
+        "Mathlib.Tactic.Ring"
+      ],
+      "lines": 352
+    },
+    "GraphMatrices.FiniteL2": {
+      "path": "vendor/graph-matrices/GraphMatrices/FiniteL2.lean",
+      "sha256": "83072b149965312bcb3c8542256f9fa4a0bdce28346c8c4fb03b735bbc3bf2f6",
+      "imports": [
+        "Mathlib.Data.Matrix.Basic",
+        "Mathlib.LinearAlgebra.Matrix.Trace",
+        "Mathlib.Tactic"
+      ],
+      "lines": 224
+    },
+    "GraphMatrices.FiniteLocalMoments": {
+      "path": "vendor/graph-matrices/GraphMatrices/FiniteLocalMoments.lean",
+      "sha256": "7f2ee608c5545648526ac0860cad6ed94decc1da01259e7511de4204bd15daa2",
+      "imports": [
+        "GraphMatrices.FiniteProbability",
+        "Mathlib.Tactic"
+      ],
+      "lines": 226
+    },
+    "GraphMatrices.FinitePaleyZygmund": {
+      "path": "vendor/graph-matrices/GraphMatrices/FinitePaleyZygmund.lean",
+      "sha256": "b97f808e15e9ebd92c25ae43196a88ee8603a40e186fcfc92ed450d7e5580597",
+      "imports": [
+        "GraphMatrices.FiniteProbability",
+        "Mathlib.Analysis.SpecialFunctions.Pow.Real",
+        "Mathlib.Analysis.SpecialFunctions.Sqrt"
+      ],
+      "lines": 103
+    },
+    "GraphMatrices.FiniteProbability": {
+      "path": "vendor/graph-matrices/GraphMatrices/FiniteProbability.lean",
+      "sha256": "bceb39e64edeb1adce65fff13fa92e084ca25dc7cd0dc0997b078c387b948de7",
+      "imports": [
+        "Mathlib.Algebra.BigOperators.Ring.Finset",
+        "Mathlib.Data.Fintype.BigOperators",
+        "Mathlib.Data.Set.Finite.Basic",
+        "Mathlib.Tactic"
+      ],
+      "lines": 369
+    },
+    "GraphMatrices.GraphMatrix": {
+      "path": "vendor/graph-matrices/GraphMatrices/GraphMatrix.lean",
+      "sha256": "3f00400d36c5d08e4c6a802617726830f61d4a41222313d034cf56aca98f622c",
+      "imports": [
+        "Mathlib.Combinatorics.SimpleGraph.Finite",
+        "Mathlib.Data.Matrix.Basic",
+        "Mathlib.Data.Real.Basic",
+        "Mathlib.Algebra.BigOperators.Group.Finset.Basic"
+      ],
+      "lines": 112
+    },
+    "GraphMatrices.GraphMomentTransfer": {
+      "path": "vendor/graph-matrices/GraphMatrices/GraphMomentTransfer.lean",
+      "sha256": "9a1964a859909dab7371ed69df0c404412bb932f5e2642db4cec7ce34cedaa70",
+      "imports": [
+        "GraphMatrices.FiniteLocalMoments",
+        "Mathlib.LinearAlgebra.Matrix.Trace",
+        "Mathlib.Data.Matrix.Mul"
+      ],
+      "lines": 202
+    },
+    "GraphMatrices.MatrixAverageContraction": {
+      "path": "vendor/graph-matrices/GraphMatrices/MatrixAverageContraction.lean",
+      "sha256": "0fea3bb54a6563d9d36ae73cf2aafe892339bb745770964ded8c9729d68ec0c4",
+      "imports": [
+        "GraphMatrices.RoleColoring",
+        "GraphMatrices.OffDiagonalModel"
+      ],
+      "lines": 138
+    },
+    "GraphMatrices.OffDiagonalModel": {
+      "path": "vendor/graph-matrices/GraphMatrices/OffDiagonalModel.lean",
+      "sha256": "5f19f401b5c51a38ec340364d512ab0d11f5e4a6fb46b3080cca5f8d19b4e36f",
+      "imports": [
+        "GraphMatrices.SignGraphDegree"
+      ],
+      "lines": 279
+    },
+    "GraphMatrices.RoleColoring": {
+      "path": "vendor/graph-matrices/GraphMatrices/RoleColoring.lean",
+      "sha256": "e28f806a1f3d014ad54223aeae5af36d244d1b7149568af8ca97d8024f3fce64",
+      "imports": [
+        "GraphMatrices.GraphMatrix",
+        "GraphMatrices.FiniteProbability",
+        "GraphMatrices.SpectralNorm",
+        "Mathlib.Analysis.Convex.Jensen",
+        "Mathlib.Analysis.Convex.SpecificFunctions.Basic"
+      ],
+      "lines": 245
+    },
+    "GraphMatrices.SignGraphDegree": {
+      "path": "vendor/graph-matrices/GraphMatrices/SignGraphDegree.lean",
+      "sha256": "1dea2f53a01789557e03d3c356ffedbca869989d25bf54b9142f04267fbc9c28",
+      "imports": [
+        "GraphMatrices.GraphMatrix",
+        "GraphMatrices.Walsh",
+        "GraphMatrices.Basic",
+        "GraphMatrices.FiniteLocalMoments",
+        "GraphMatrices.GraphMomentTransfer"
+      ],
+      "lines": 128
+    },
+    "GraphMatrices.SpectralNorm": {
+      "path": "vendor/graph-matrices/GraphMatrices/SpectralNorm.lean",
+      "sha256": "d2b800ff6f8e209b09bc59d5f03419311358765db14b686721bea126967bd43d",
+      "imports": [
+        "Mathlib.Analysis.CStarAlgebra.Matrix",
+        "Mathlib.Tactic",
+        "GraphMatrices.Basic",
+        "GraphMatrices.CrossedEdges"
+      ],
+      "lines": 182
+    },
+    "GraphMatrices.Walsh": {
+      "path": "vendor/graph-matrices/GraphMatrices/Walsh.lean",
+      "sha256": "f25caa9fadfd119cc7347000a41e5301360bb4ff3541c241a429819cb025473d",
+      "imports": [
+        "Mathlib.Algebra.BigOperators.Ring.Finset",
+        "Mathlib.Data.Finset.SymmDiff",
+        "Mathlib.Data.Fintype.Pi",
+        "Mathlib.Data.Real.Basic",
+        "Mathlib.Tactic"
+      ],
+      "lines": 107
+    },
+    "GraphMatrices.WalshFiniteL2": {
+      "path": "vendor/graph-matrices/GraphMatrices/WalshFiniteL2.lean",
+      "sha256": "8a9c01fb0f1a94caabedd48d98c87b88f515cc0b3bc567d8ea8034b440d15664",
+      "imports": [
+        "GraphMatrices.FiniteL2",
+        "GraphMatrices.Walsh",
+        "GraphMatrices.SignGraphDegree"
+      ],
+      "lines": 96
+    },
+    "GraphMatrices.WalshFourthMoment": {
+      "path": "vendor/graph-matrices/GraphMatrices/WalshFourthMoment.lean",
+      "sha256": "09e7c3efa5af23723db43b38060d10914033b3f81154e8f34483cdb71469a851",
+      "imports": [
+        "GraphMatrices.WalshFiniteL2",
+        "GraphMatrices.MatrixAverageContraction",
+        "GraphMatrices.FinitePaleyZygmund",
+        "Mathlib.Algebra.BigOperators.Group.Finset.Powerset"
+      ],
+      "lines": 190
+    },
+    "MI32": {
+      "path": "MI32.lean",
+      "sha256": "1efd6739f8edc4a9d0628e806c046cc47d3a83f7a078b93101563351e492b31f",
+      "imports": [
+        "MI32.Statement",
+        "MI32.StatementChecks",
+        "MI32.MomentDoubling",
+        "MI32.PositivePolynomial",
+        "MI32.RegularPositivePolynomial",
+        "MI32.HilbertWalsh",
+        "MI32.ParityGeometry",
+        "MI32.PositiveCone",
+        "MI32.RegularPositiveCone",
+        "MI32.RawParity",
+        "MI32.RawPositiveCone",
+        "MI32.ConeInterpolation",
+        "MI32.SymmetricLaw",
+        "MI32.FiniteNet",
+        "MI32.ThinNetMoment",
+        "MI32.MatrixImages",
+        "MI32.SymmetricPositiveCone",
+        "MI32.PositiveLinearPowers",
+        "MI32.PositiveMomentComparison",
+        "MI32.SymmetricMomentComparison",
+        "MI32.CopySymmetrization",
+        "MI32.HilbertConditioning",
+        "MI32.IndependentColumns",
+        "MI32.DiagonalCopyComparison",
+        "MI32.MomentTools",
+        "MI32.SymmetricLinearRegularity",
+        "MI32.HilbertComparison",
+        "MI32.ThinMomentRoot",
+        "MI32.SymmetricConeInterpolation",
+        "MI32.ActiveCountSectors",
+        "MI32.AnnihilationSectorContraction",
+        "MI32.AxisRestriction",
+        "MI32.CreationSectorContraction",
+        "MI32.MaskedPolynomialAction",
+        "MI32.MultiplicationHolder",
+        "MI32.OutputPolynomialInteraction",
+        "MI32.ParityWalshCompression",
+        "MI32.PolynomialEnergyAssembly",
+        "MI32.PolynomialSectorEnergy",
+        "MI32.PolynomialSectorMasks",
+        "MI32.PositiveWordExtension",
+        "MI32.RawCountBlocks",
+        "MI32.RawDirectionalActions",
+        "MI32.RawSectorNorms",
+        "MI32.RestrictedThinMatrix",
+        "MI32.SupportedPolynomialInteraction",
+        "MI32.ThinMatrix",
+        "MI32.ThinPolynomialInteraction",
+        "MI32.ThinTranspose",
+        "MI32.BipartiteConeContraction",
+        "MI32.BipartiteNorm",
+        "MI32.BipartiteVacuumIteration",
+        "MI32.LocalSymmetricMoment",
+        "MI32.PositiveVacuumWords",
+        "MI32.RawAnnihilatorContraction",
+        "MI32.RawCreatorContraction",
+        "MI32.RawMultiplicationContraction",
+        "MI32.TransposedPolynomialContraction",
+        "MI32.VacuumNormBound",
+        "MI32.BipartiteWeakMoment",
+        "MI32.BlockDiagonalMoment",
+        "MI32.BlockDiagonalNorm",
+        "MI32.BlockMomentMaximum",
+        "MI32.CopyDeletionScale",
+        "MI32.DeletionMomentEndpoints",
+        "MI32.DeletionVarianceSelection",
+        "MI32.GeneralLawCopy",
+        "MI32.LocalLogMoment",
+        "MI32.MatrixCopySymmetrization",
+        "MI32.SymmetricLinearAllOrders",
+        "MI32.SymmetrizationReduction",
+        "MI32.VarianceScaleBasics",
+        "MI32.WeakMomentBasics",
+        "MI32.CenteredGramNorm",
+        "MI32.DeletionScheduleArithmetic",
+        "MI32.GradedVarianceEnergy",
+        "MI32.NestedShells",
+        "MI32.WeakDeletionMonotonicity",
+        "MI32.NestedDeletionSelection",
+        "MI32.BilinearHighOrder",
+        "MI32.BlockOrderArithmetic",
+        "MI32.FiberBlockNorm",
+        "MI32.FrobeniusMean",
+        "MI32.GramEntryMoments",
+        "MI32.MaskedEntryLaw",
+        "MI32.NestedDeletionFamily",
+        "MI32.RestrictedBlockFamily",
+        "MI32.BlockMaskMoment",
+        "MI32.FarRemainderMoment",
+        "MI32.NearBlockMoment",
+        "MI32.DeletionMasks",
+        "MI32.NearMaskMean",
+        "MI32.FarMaskMean",
+        "MI32.SymmetricDeletion",
+        "MI32.RegularWitness"
+      ],
+      "lines": 102
+    },
+    "MI32.ActiveCountSectors": {
+      "path": "MI32/ActiveCountSectors.lean",
+      "sha256": "8fc04c1f028b9e0704a408be2fc6c85437b235f561ff617340e6054868cd1aaa",
+      "imports": [
+        "MI32.ParityGeometry",
+        "MI32.PolynomialSectorMasks"
+      ],
+      "lines": 137
+    },
+    "MI32.AnnihilationSectorContraction": {
+      "path": "MI32/AnnihilationSectorContraction.lean",
+      "sha256": "27260b9dd4bf06b54c6c47b55f69dc33c8dbf8d700f6d388b8866cad50f92468",
+      "imports": [
+        "MI32.ActiveCountSectors",
+        "MI32.MaskedPolynomialAction",
+        "MI32.OutputPolynomialInteraction"
+      ],
+      "lines": 121
+    },
+    "MI32.AxisRestriction": {
+      "path": "MI32/AxisRestriction.lean",
+      "sha256": "43ae80e43efcdb83c7543c3e3682eedd3945ef1e1e608808f4356af446781a37",
+      "imports": [
+        "MI32.Statement",
+        "MI32.ThinMatrix",
+        "Mathlib.Algebra.BigOperators.Group.Finset.Piecewise"
+      ],
+      "lines": 262
+    },
+    "MI32.BilinearHighOrder": {
+      "path": "MI32/BilinearHighOrder.lean",
+      "sha256": "c998afc1312d2590e32fa0d8576bef52531c33337c79beafbda03e618f8846c9",
+      "imports": [
+        "MI32.LocalLogMoment"
+      ],
+      "lines": 107
+    },
+    "MI32.BipartiteConeContraction": {
+      "path": "MI32/BipartiteConeContraction.lean",
+      "sha256": "d24a7b998307a5b980f98e2429b596df75563fb8a73b109bb565af6c168a94d4",
+      "imports": [
+        "MI32.PositiveVacuumWords",
+        "MI32.ThinPolynomialInteraction",
+        "MI32.RawMultiplicationContraction",
+        "MI32.TransposedPolynomialContraction"
+      ],
+      "lines": 204
+    },
+    "MI32.BipartiteNorm": {
+      "path": "MI32/BipartiteNorm.lean",
+      "sha256": "5d978af0f47d25361a38ab47f5c987bc99d31efd18649faff99fdac79818d9c8",
+      "imports": [
+        "MI32.PositiveVacuumWords",
+        "MI32.ThinMatrix",
+        "Mathlib.Analysis.CStarAlgebra.Matrix"
+      ],
+      "lines": 128
+    },
+    "MI32.BipartiteVacuumIteration": {
+      "path": "MI32/BipartiteVacuumIteration.lean",
+      "sha256": "56cc8427719c4895d8eda1aca4e5075f20d25a98d3eba5919829c822b0646767",
+      "imports": [
+        "MI32.BipartiteConeContraction"
+      ],
+      "lines": 144
+    },
+    "MI32.BipartiteWeakMoment": {
+      "path": "MI32/BipartiteWeakMoment.lean",
+      "sha256": "a6efc4c8f44486d40fe55189e15f830b3a8a9bfe71b17d2845eeb9d292cf468b",
+      "imports": [
+        "MI32.BipartiteVacuumIteration",
+        "MI32.BipartiteNorm",
+        "Mathlib.Analysis.Normed.Module.RCLike.Real"
+      ],
+      "lines": 165
+    },
+    "MI32.BlockDiagonalMoment": {
+      "path": "MI32/BlockDiagonalMoment.lean",
+      "sha256": "c3b0ebae75a34dac249e384d0e3d4d43f3dc655bd788bf55abdf580d1a469bf7",
+      "imports": [
+        "MI32.BlockDiagonalNorm",
+        "MI32.BlockMomentMaximum",
+        "MI32.ThinMatrix"
+      ],
+      "lines": 68
+    },
+    "MI32.BlockDiagonalNorm": {
+      "path": "MI32/BlockDiagonalNorm.lean",
+      "sha256": "0b9407518c873ce1547f05f5ea350bedb8a366192287d5faf59f52795a95da32",
+      "imports": [
+        "Mathlib.Analysis.CStarAlgebra.Matrix",
+        "Mathlib.Data.Matrix.Block",
+        "Mathlib.Tactic"
+      ],
+      "lines": 86
+    },
+    "MI32.BlockMaskMoment": {
+      "path": "MI32/BlockMaskMoment.lean",
+      "sha256": "2793640a7f06d7c54af68571b5ad052c9e2861b00e590eb4b7fc1fe3632ae691",
+      "imports": [
+        "MI32.FiberBlockNorm",
+        "MI32.BlockMomentMaximum",
+        "MI32.ThinMatrix",
+        "MI32.MomentTools"
+      ],
+      "lines": 96
+    },
+    "MI32.BlockMomentMaximum": {
+      "path": "MI32/BlockMomentMaximum.lean",
+      "sha256": "d259c32bbb00cca6729c9071051d9b95924c648800751f73b6c32c8c132e5fbf",
+      "imports": [
+        "MI32.MomentTools",
+        "Mathlib.MeasureTheory.SpecificCodomains.Pi",
+        "Mathlib.Analysis.SpecificLimits.Basic"
+      ],
+      "lines": 111
+    },
+    "MI32.BlockOrderArithmetic": {
+      "path": "MI32/BlockOrderArithmetic.lean",
+      "sha256": "39e5b6cc5e1e919f8032a268fa37f5ddb2243a18ea33736fd6065bb95950be16",
+      "imports": [
+        "MI32.DeletionScheduleArithmetic",
+        "Mathlib.Tactic"
+      ],
+      "lines": 129
+    },
+    "MI32.CenteredGramNorm": {
+      "path": "MI32/CenteredGramNorm.lean",
+      "sha256": "9613612242228a582a3cc85f30c606ce299a4700554794d57ee210fac34e15ef",
+      "imports": [
+        "MI32.VacuumNormBound",
+        "MI32.LocalLogMoment",
+        "MI32.ThinMatrix"
+      ],
+      "lines": 142
+    },
+    "MI32.ConeInterpolation": {
+      "path": "MI32/ConeInterpolation.lean",
+      "sha256": "12a79ddc611f62322f24776973991b6f3ddf160b3a8f8e948176a5cd64872bdc",
+      "imports": [
+        "MI32.MomentDoubling",
+        "Mathlib.MeasureTheory.Integral.MeanInequalities",
+        "Mathlib.MeasureTheory.Function.L1Space.Integrable"
+      ],
+      "lines": 235
+    },
+    "MI32.CopyDeletionScale": {
+      "path": "MI32/CopyDeletionScale.lean",
+      "sha256": "ee93bdafbf3c60eb28e082f76b75beebb00d852dab30b79600de6493b4887fae",
+      "imports": [
+        "MI32.WeakMomentBasics",
+        "MI32.DeletionMomentEndpoints"
+      ],
+      "lines": 116
+    },
+    "MI32.CopySymmetrization": {
+      "path": "MI32/CopySymmetrization.lean",
+      "sha256": "b7157492c84ecfa289e8284670378f3bab72f4d89e850d302509bc9e1b137d57",
+      "imports": [
+        "Mathlib.Analysis.Convex.Integral",
+        "Mathlib.Analysis.Convex.Mul",
+        "Mathlib.MeasureTheory.Function.LpSeminorm.Prod",
+        "Mathlib.MeasureTheory.Integral.Prod",
+        "Mathlib.Tactic"
+      ],
+      "lines": 61
+    },
+    "MI32.CreationSectorContraction": {
+      "path": "MI32/CreationSectorContraction.lean",
+      "sha256": "ef2d72f007ef1c5be40bd2e90bc6b7240def33547ba2ecbe1f790bedd79d1e85",
+      "imports": [
+        "MI32.ActiveCountSectors",
+        "MI32.MaskedPolynomialAction",
+        "MI32.SupportedPolynomialInteraction",
+        "MI32.StatementChecks"
+      ],
+      "lines": 92
+    },
+    "MI32.DeletionMasks": {
+      "path": "MI32/DeletionMasks.lean",
+      "sha256": "431944293e883738318770ced399d06ce9d4cd1fafd987201ac52669609861ae",
+      "imports": [
+        "MI32.NestedDeletionFamily",
+        "MI32.NestedShells",
+        "MI32.FiberBlockNorm",
+        "MI32.MaskedEntryLaw"
+      ],
+      "lines": 267
+    },
+    "MI32.DeletionMomentEndpoints": {
+      "path": "MI32/DeletionMomentEndpoints.lean",
+      "sha256": "938b9d7c528b438f14eba68529c766949aaf17cf7767df20d2be71f0b5145ac8",
+      "imports": [
+        "MI32.MomentTools",
+        "MI32.CopySymmetrization",
+        "Mathlib.Analysis.MeanInequalitiesPow",
+        "Mathlib.Analysis.Convex.SpecificFunctions.Basic"
+      ],
+      "lines": 164
+    },
+    "MI32.DeletionScheduleArithmetic": {
+      "path": "MI32/DeletionScheduleArithmetic.lean",
+      "sha256": "84ed32039c096882876441f9d3806f4f7a4f754b878ef3662ae0d9e2cd0311e2",
+      "imports": [
+        "MI32.Statement",
+        "Mathlib.Analysis.SpecialFunctions.Log.Basic",
+        "Mathlib.Tactic"
+      ],
+      "lines": 110
+    },
+    "MI32.DeletionVarianceSelection": {
+      "path": "MI32/DeletionVarianceSelection.lean",
+      "sha256": "a139d5435684bc16abf7f1735a165195efd007aa760f382c45a845c92ee23ea8",
+      "imports": [
+        "MI32.Statement",
+        "Mathlib.Tactic"
+      ],
+      "lines": 152
+    },
+    "MI32.DiagonalCopyComparison": {
+      "path": "MI32/DiagonalCopyComparison.lean",
+      "sha256": "53397ba10c9333e6bd0496365ac6acce2c8bb4f93c3c48e24926d4f9f9dc9b89",
+      "imports": [
+        "MI32.MomentDoubling",
+        "Mathlib.Probability.IdentDistrib",
+        "Mathlib.Probability.Independence.Integration",
+        "Mathlib.MeasureTheory.Function.LpSeminorm.Prod",
+        "Mathlib.MeasureTheory.Integral.Prod"
+      ],
+      "lines": 259
+    },
+    "MI32.FarMaskMean": {
+      "path": "MI32/FarMaskMean.lean",
+      "sha256": "bc1e51302ba42974b29cceee2a0ae0b72ac72e377ff12f79544be78aabf59429",
+      "imports": [
+        "MI32.DeletionMasks",
+        "MI32.FarRemainderMoment",
+        "MI32.MaskedEntryLaw",
+        "MI32.NestedDeletionFamily",
+        "MI32.DeletionScheduleArithmetic",
+        "MI32.GradedVarianceEnergy",
+        "MI32.VarianceScaleBasics"
+      ],
+      "lines": 174
+    },
+    "MI32.FarRemainderMoment": {
+      "path": "MI32/FarRemainderMoment.lean",
+      "sha256": "2ca3b94ac1c784ddfe5c25a2160d8e5a0d2e144e7bf0bebdb393fe89b150d5a5",
+      "imports": [
+        "MI32.GramEntryMoments",
+        "MI32.GradedVarianceEnergy",
+        "MI32.CenteredGramNorm"
+      ],
+      "lines": 107
+    },
+    "MI32.FiberBlockNorm": {
+      "path": "MI32/FiberBlockNorm.lean",
+      "sha256": "59ea697a5e4a1a995c56656a01bdfca12b678b2dd9ffa29a07616ab1092a1f80",
+      "imports": [
+        "Mathlib.Analysis.CStarAlgebra.Matrix",
+        "Mathlib.Data.Matrix.Block",
+        "Mathlib.Tactic"
+      ],
+      "lines": 158
+    },
+    "MI32.FiniteNet": {
+      "path": "MI32/FiniteNet.lean",
+      "sha256": "8830c26d250e3aa397b4617bd6892d75bfb493119534f58a844410f4d6be3798",
+      "imports": [
+        "Mathlib.MeasureTheory.Covering.BesicovitchVectorSpace",
+        "Mathlib.Analysis.Normed.Operator.Basic",
+        "Mathlib.Data.Nat.Find",
+        "Mathlib.Tactic"
+      ],
+      "lines": 123
+    },
+    "MI32.FrobeniusMean": {
+      "path": "MI32/FrobeniusMean.lean",
+      "sha256": "2201c908418951b5137e28dd0f9f2e040a7ade26e6fb5125ad9142fb0ceb0fcf",
+      "imports": [
+        "MI32.CenteredGramNorm"
+      ],
+      "lines": 125
+    },
+    "MI32.GeneralLawCopy": {
+      "path": "MI32/GeneralLawCopy.lean",
+      "sha256": "717dedf79fc82aad7f3b6afee79adf238194d009b05d344fd0ce7ee95c7aec3a",
+      "imports": [
+        "MI32.DeletionMomentEndpoints",
+        "MI32.MatrixCopySymmetrization"
+      ],
+      "lines": 102
+    },
+    "MI32.GradedVarianceEnergy": {
+      "path": "MI32/GradedVarianceEnergy.lean",
+      "sha256": "a09e25316c9a9169dc6213bd1dad7dfb37563fa9b21f3e04c78eb93d8132e729",
+      "imports": [
+        "Mathlib.Analysis.SpecificLimits.Basic",
+        "Mathlib.Tactic"
+      ],
+      "lines": 166
+    },
+    "MI32.GramEntryMoments": {
+      "path": "MI32/GramEntryMoments.lean",
+      "sha256": "d2a17139183fe4b8fe08db9adb299c2b43e71fdd7ff7639ef2daeb922b1cc10a",
+      "imports": [
+        "MI32.CenteredGramNorm",
+        "MI32.MatrixImages",
+        "MI32.IndependentColumns",
+        "MI32.MomentTools"
+      ],
+      "lines": 365
+    },
+    "MI32.HilbertComparison": {
+      "path": "MI32/HilbertComparison.lean",
+      "sha256": "d6005893d39600244b54aeaca96fb025a7c4e303aaf2e2b706c942703476bb27",
+      "imports": [
+        "MI32.DiagonalCopyComparison",
+        "MI32.SymmetricMomentComparison",
+        "MI32.CopySymmetrization",
+        "MI32.HilbertConditioning",
+        "MI32.MomentTools",
+        "Mathlib.MeasureTheory.SpecificCodomains.WithLp"
+      ],
+      "lines": 153
+    },
+    "MI32.HilbertConditioning": {
+      "path": "MI32/HilbertConditioning.lean",
+      "sha256": "34863bb77d5c1e12b0b48a3b74e22f82d38e7086dec73baf38700686943e4060",
+      "imports": [
+        "Mathlib.Analysis.InnerProductSpace.PiL2",
+        "Mathlib.Analysis.Normed.Lp.MeasurableSpace",
+        "Mathlib.MeasureTheory.Integral.Prod",
+        "Mathlib.Tactic"
+      ],
+      "lines": 79
+    },
+    "MI32.HilbertWalsh": {
+      "path": "MI32/HilbertWalsh.lean",
+      "sha256": "7e460182ee0147a201eff8be1b57bbedfb143a7d700cde192b8584c5c428e244",
+      "imports": [
+        "GraphMatrices.WalshFourthMoment"
+      ],
+      "lines": 91
+    },
+    "MI32.IndependentColumns": {
+      "path": "MI32/IndependentColumns.lean",
+      "sha256": "e30d10110c1a1a326b32cea3000c7553d152d07c0c027dbd88e5e84e8035830a",
+      "imports": [
+        "Mathlib.Probability.IdentDistribIndep",
+        "Mathlib.Probability.Independence.InfinitePi",
+        "Mathlib.MeasureTheory.Integral.Bochner.SumMeasure",
+        "Mathlib.Tactic"
+      ],
+      "lines": 126
+    },
+    "MI32.LocalLogMoment": {
+      "path": "MI32/LocalLogMoment.lean",
+      "sha256": "48beb8263f191e83def89a5c8c15f0d69fe797b6160ca11066902418b69ce3c2",
+      "imports": [
+        "MI32.LocalSymmetricMoment",
+        "MI32.SymmetricLinearAllOrders",
+        "MI32.VarianceScaleBasics",
+        "MI32.WeakMomentBasics"
+      ],
+      "lines": 263
+    },
+    "MI32.LocalSymmetricMoment": {
+      "path": "MI32/LocalSymmetricMoment.lean",
+      "sha256": "57c26a6939e25ea2db7769c972106eb537fe6f54137c49d6e87239d4bb62591d",
+      "imports": [
+        "MI32.BipartiteNorm",
+        "MI32.VacuumNormBound",
+        "MI32.BipartiteVacuumIteration"
+      ],
+      "lines": 92
+    },
+    "MI32.MaskedEntryLaw": {
+      "path": "MI32/MaskedEntryLaw.lean",
+      "sha256": "8c90ab039a6f847d42f76f1d11d66b83685f9d61249867c4fe0e007e859e3970",
+      "imports": [
+        "MI32.MomentDoubling",
+        "Mathlib.Probability.IdentDistrib"
+      ],
+      "lines": 260
+    },
+    "MI32.MaskedPolynomialAction": {
+      "path": "MI32/MaskedPolynomialAction.lean",
+      "sha256": "1af44f9224eddaab18f61cf9dd5f397e4ea6ea0aea53f99e5ea5c8acf88660d5",
+      "imports": [
+        "MI32.PositiveWordExtension",
+        "MI32.PolynomialSectorEnergy",
+        "MI32.ThinPolynomialInteraction"
+      ],
+      "lines": 70
+    },
+    "MI32.MatrixCopySymmetrization": {
+      "path": "MI32/MatrixCopySymmetrization.lean",
+      "sha256": "ec4c8961479910c39c187375eeead00128719599b32629e7f2cfa39c7305ca5b",
+      "imports": [
+        "MI32.Statement",
+        "MI32.MomentTools",
+        "MI32.DiagonalCopyComparison",
+        "Mathlib.MeasureTheory.SpecificCodomains.Pi",
+        "Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap"
+      ],
+      "lines": 159
+    },
+    "MI32.MatrixImages": {
+      "path": "MI32/MatrixImages.lean",
+      "sha256": "34550b625a8ffba362f3d429aad3f68fc9760ea6a30d63ae57876dbcb85957d7",
+      "imports": [
+        "Mathlib.Probability.Independence.Integration",
+        "Mathlib.Probability.Moments.Variance",
+        "Mathlib.MeasureTheory.Function.L2Space",
+        "Mathlib.Analysis.InnerProductSpace.PiL2",
+        "Mathlib.Analysis.Normed.Lp.MeasurableSpace",
+        "Mathlib.Tactic"
+      ],
+      "lines": 166
+    },
+    "MI32.MomentDoubling": {
+      "path": "MI32/MomentDoubling.lean",
+      "sha256": "29e3c72bfe38af09c7cce8949edac0535895e3ece0da32718604f8f7bd33ea87",
+      "imports": [
+        "MI32.Statement",
+        "Mathlib.Tactic"
+      ],
+      "lines": 43
+    },
+    "MI32.MomentTools": {
+      "path": "MI32/MomentTools.lean",
+      "sha256": "49bc060fd31ba26d85a0debed832c8b4e89d6f43d9e4be8bb1f3669dcbc817a7",
+      "imports": [
+        "MI32.Statement",
+        "Mathlib.MeasureTheory.Function.LpSeminorm.LpNorm",
+        "Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp",
+        "Mathlib.MeasureTheory.Function.L1Space.Integrable",
+        "Mathlib.Tactic"
+      ],
+      "lines": 210
+    },
+    "MI32.MultiplicationHolder": {
+      "path": "MI32/MultiplicationHolder.lean",
+      "sha256": "7a8f03d849852d7a091df32e53b3e1e28e0d233b4bd83bba9688a76004c30d67",
+      "imports": [
+        "MI32.MomentTools",
+        "Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp",
+        "Mathlib.MeasureTheory.Function.L2Space"
+      ],
+      "lines": 97
+    },
+    "MI32.NearBlockMoment": {
+      "path": "MI32/NearBlockMoment.lean",
+      "sha256": "205f648074d88bad1bdb508fc479d9d2b6ca184d99409acd1dd1f04e0d9f7434",
+      "imports": [
+        "MI32.RestrictedBlockFamily",
+        "MI32.BilinearHighOrder",
+        "MI32.BlockOrderArithmetic",
+        "MI32.NestedDeletionFamily",
+        "MI32.LocalSymmetricMoment",
+        "MI32.VarianceScaleBasics",
+        "MI32.MomentDoubling"
+      ],
+      "lines": 219
+    },
+    "MI32.NearMaskMean": {
+      "path": "MI32/NearMaskMean.lean",
+      "sha256": "671999def7cf94a60c84300ee9c345941b84887abb7ded8ecf9f0d09bc9d9efe",
+      "imports": [
+        "MI32.DeletionMasks",
+        "MI32.NearBlockMoment",
+        "MI32.BlockMaskMoment",
+        "MI32.FrobeniusMean",
+        "MI32.VarianceScaleBasics",
+        "MI32.WeakMomentBasics"
+      ],
+      "lines": 239
+    },
+    "MI32.NestedDeletionFamily": {
+      "path": "MI32/NestedDeletionFamily.lean",
+      "sha256": "98d4ac1d616df706664480cc683ebf7f11dfd57bee1717e34f7a2420d36b472a",
+      "imports": [
+        "MI32.NestedDeletionSelection",
+        "MI32.DeletionScheduleArithmetic",
+        "MI32.NestedShells",
+        "MI32.VarianceScaleBasics",
+        "MI32.WeakDeletionMonotonicity"
+      ],
+      "lines": 144
+    },
+    "MI32.NestedDeletionSelection": {
+      "path": "MI32/NestedDeletionSelection.lean",
+      "sha256": "b6bd5f9a0e9be634a7fe784ba34c3dce52deef4d7c312375aad1e9301c1b7700",
+      "imports": [
+        "MI32.DeletionVarianceSelection",
+        "MI32.WeakMomentBasics",
+        "MI32.WeakDeletionMonotonicity"
+      ],
+      "lines": 343
+    },
+    "MI32.NestedShells": {
+      "path": "MI32/NestedShells.lean",
+      "sha256": "619b2e6e1c17350b13ace525ce76a6ebbfe579c3be137d7535899e16b96affd6",
+      "imports": [
+        "Mathlib.Data.Nat.Find",
+        "Mathlib.Tactic"
+      ],
+      "lines": 172
+    },
+    "MI32.OutputPolynomialInteraction": {
+      "path": "MI32/OutputPolynomialInteraction.lean",
+      "sha256": "1ac1c7a03a4b109fdabe7454286b055e7b473c9c3e21cc818fa3ea1a58af42e8",
+      "imports": [
+        "MI32.ThinTranspose",
+        "MI32.ThinPolynomialInteraction"
+      ],
+      "lines": 141
+    },
+    "MI32.ParityGeometry": {
+      "path": "MI32/ParityGeometry.lean",
+      "sha256": "6efd441fab09071e69354467bf6e159d80ae23bc9fa66265fdf9a2f0e81624ba",
+      "imports": [
+        "Mathlib.Data.Finset.Card",
+        "Mathlib.Algebra.Order.BigOperators.Group.Finset",
+        "Mathlib.Data.Real.Basic",
+        "Mathlib.Tactic.SplitIfs"
+      ],
+      "lines": 377
+    },
+    "MI32.ParityWalshCompression": {
+      "path": "MI32/ParityWalshCompression.lean",
+      "sha256": "e8e8ab61dc31eb7c38219c680e361c49b03fb0431db5a9c3944e14905e99a2df",
+      "imports": [
+        "MI32.ParityGeometry",
+        "GraphMatrices.Walsh"
+      ],
+      "lines": 395
+    },
+    "MI32.PolynomialEnergyAssembly": {
+      "path": "MI32/PolynomialEnergyAssembly.lean",
+      "sha256": "2931c0f1bcba3a45542f5247c1ecd34bbc62776d0cae31cb8efc9bdb77a9e286",
+      "imports": [
+        "MI32.PolynomialSectorEnergy",
+        "MI32.MomentTools"
+      ],
+      "lines": 143
+    },
+    "MI32.PolynomialSectorEnergy": {
+      "path": "MI32/PolynomialSectorEnergy.lean",
+      "sha256": "80cc4eaeaa8d691356d24a4734c92485c4de0ce505150586ff07955444e3ee66",
+      "imports": [
+        "MI32.PolynomialSectorMasks",
+        "MI32.SymmetricPositiveCone"
+      ],
+      "lines": 168
+    },
+    "MI32.PolynomialSectorMasks": {
+      "path": "MI32/PolynomialSectorMasks.lean",
+      "sha256": "3d73055e2bb01e038758c30534c7a96be39260d88f7612aa1fde329276cf6811",
+      "imports": [
+        "MI32.RawParity",
+        "MI32.PositiveCone"
+      ],
+      "lines": 141
+    },
+    "MI32.PositiveCone": {
+      "path": "MI32/PositiveCone.lean",
+      "sha256": "90d38d28576fb0f26793c164f7351d1f781b05021f14c2ef678c8545ff30b679",
+      "imports": [
+        "MI32.HilbertWalsh",
+        "MI32.PositivePolynomial"
+      ],
+      "lines": 159
+    },
+    "MI32.PositiveLinearPowers": {
+      "path": "MI32/PositiveLinearPowers.lean",
+      "sha256": "c7952a052ccec15b035b663e624561602e8b6354c278d608d8af73c4e97aac12",
+      "imports": [
+        "MI32.RawPositiveCone",
+        "Mathlib.Algebra.BigOperators.Ring.Finset"
+      ],
+      "lines": 213
+    },
+    "MI32.PositiveMomentComparison": {
+      "path": "MI32/PositiveMomentComparison.lean",
+      "sha256": "7813a903522fb4c6aca4ac6628c91900e22f42e3efa9f91604ba183e80de8a00",
+      "imports": [
+        "MI32.PositivePolynomial"
+      ],
+      "lines": 81
+    },
+    "MI32.PositivePolynomial": {
+      "path": "MI32/PositivePolynomial.lean",
+      "sha256": "a0946d124a342f28df902fa213ed6e8617ad1ed8457d7380b3afbceabb23bab1",
+      "imports": [
+        "Mathlib.Probability.Independence.Integration",
+        "Mathlib.MeasureTheory.Function.L2Space",
+        "Mathlib.Tactic.Ring",
+        "Mathlib.Tactic.FunProp",
+        "Lean.Elab.Tactic.Omega"
+      ],
+      "lines": 322
+    },
+    "MI32.PositiveVacuumWords": {
+      "path": "MI32/PositiveVacuumWords.lean",
+      "sha256": "967cf1f848f17852a6894a905649e0beabea136e266b8ebd37a036f4db31d67f",
+      "imports": [
+        "MI32.PositiveWordExtension",
+        "MI32.SymmetricPositiveCone",
+        "Mathlib.Data.Matrix.Mul"
+      ],
+      "lines": 197
+    },
+    "MI32.PositiveWordExtension": {
+      "path": "MI32/PositiveWordExtension.lean",
+      "sha256": "cd514018f4623411bf973f67392ecd8afe2589356a41e2200cdcef997f53b272",
+      "imports": [
+        "MI32.PolynomialSectorMasks"
+      ],
+      "lines": 213
+    },
+    "MI32.RawAnnihilatorContraction": {
+      "path": "MI32/RawAnnihilatorContraction.lean",
+      "sha256": "32f361ac4d42f5230e6c851c7ffb18e1dc22b4f421e7287f1b5df5769cdbb9f0",
+      "imports": [
+        "MI32.RawSectorNorms",
+        "MI32.PolynomialEnergyAssembly"
+      ],
+      "lines": 152
+    },
+    "MI32.RawCountBlocks": {
+      "path": "MI32/RawCountBlocks.lean",
+      "sha256": "2aedf15594140b18306d5374d3637bea1f28f89de1ccf71a5b4ede08b3923af6",
+      "imports": [
+        "MI32.ActiveCountSectors",
+        "MI32.PositiveWordExtension",
+        "MI32.ParityWalshCompression",
+        "MI32.RawDirectionalActions"
+      ],
+      "lines": 177
+    },
+    "MI32.RawCreatorContraction": {
+      "path": "MI32/RawCreatorContraction.lean",
+      "sha256": "0c41d4a4a8df292006c3cea22a6953c4d9dad62bea656af8566f1eb3ad846a2b",
+      "imports": [
+        "MI32.PolynomialEnergyAssembly",
+        "MI32.RawSectorNorms"
+      ],
+      "lines": 195
+    },
+    "MI32.RawDirectionalActions": {
+      "path": "MI32/RawDirectionalActions.lean",
+      "sha256": "96f00e2a6786ec86983b9f09b58745c8ea420efe70c7fafda9de83d446193176",
+      "imports": [
+        "MI32.PositiveWordExtension",
+        "MI32.ParityWalshCompression"
+      ],
+      "lines": 254
+    },
+    "MI32.RawMultiplicationContraction": {
+      "path": "MI32/RawMultiplicationContraction.lean",
+      "sha256": "02d5aeeb0c7525e9deea4ce172611bb6ad65a6d29a82e1352625c29f738123c2",
+      "imports": [
+        "MI32.RawCreatorContraction",
+        "MI32.RawAnnihilatorContraction"
+      ],
+      "lines": 136
+    },
+    "MI32.RawParity": {
+      "path": "MI32/RawParity.lean",
+      "sha256": "d05dfd439c6f482fe18be1739ebb1062b30ce7bd16c514a57882b341ad66bf7f",
+      "imports": [
+        "MI32.PositivePolynomial",
+        "GraphMatrices.Walsh"
+      ],
+      "lines": 114
+    },
+    "MI32.RawPositiveCone": {
+      "path": "MI32/RawPositiveCone.lean",
+      "sha256": "f5e2a3e384f1a4f74b921cacf5aa792a8fe325bc2cc206d12500e5ccd355d856",
+      "imports": [
+        "MI32.RawParity",
+        "MI32.RegularPositiveCone"
+      ],
+      "lines": 63
+    },
+    "MI32.RawSectorNorms": {
+      "path": "MI32/RawSectorNorms.lean",
+      "sha256": "9185a8c6364fa412bdb49d41c219d01d919b289684816e5f591cbf87f4c708c7",
+      "imports": [
+        "MI32.CreationSectorContraction",
+        "MI32.AnnihilationSectorContraction",
+        "MI32.RawCountBlocks"
+      ],
+      "lines": 96
+    },
+    "MI32.RegularPositiveCone": {
+      "path": "MI32/RegularPositiveCone.lean",
+      "sha256": "58ee2cc95b7d57e2a20f733182b6e101cb392274b209780008e299b3cb734a00",
+      "imports": [
+        "MI32.MomentDoubling",
+        "MI32.PositiveCone"
+      ],
+      "lines": 76
+    },
+    "MI32.RegularPositivePolynomial": {
+      "path": "MI32/RegularPositivePolynomial.lean",
+      "sha256": "f4c810755b1b3124748f3e5c33bad9c5efb61e5d1ede6838b9e1c004c0776530",
+      "imports": [
+        "MI32.MomentDoubling",
+        "MI32.PositivePolynomial"
+      ],
+      "lines": 38
+    },
+    "MI32.RegularWitness": {
+      "path": "MI32/RegularWitness.lean",
+      "sha256": "bb82ae2834db538bb4cc9b8a02f58065254a2a223887dc8a6ed56c93f0954f1a",
+      "imports": [
+        "MI32.Statement",
+        "MI32.VarianceScaleBasics",
+        "Mathlib.Probability.Distributions.Bernoulli",
+        "Mathlib.Probability.Independence.Basic",
+        "Mathlib.MeasureTheory.Constructions.Pi",
+        "Mathlib.Tactic"
+      ],
+      "lines": 162
+    },
+    "MI32.RestrictedBlockFamily": {
+      "path": "MI32/RestrictedBlockFamily.lean",
+      "sha256": "cef0e2d39735f111727391fd56e04836df8dd443b6796c33264fdb79be5c7a4e",
+      "imports": [
+        "MI32.FiberBlockNorm",
+        "MI32.BipartiteNorm",
+        "MI32.ThinMatrix",
+        "MI32.WeakMomentBasics"
+      ],
+      "lines": 244
+    },
+    "MI32.RestrictedThinMatrix": {
+      "path": "MI32/RestrictedThinMatrix.lean",
+      "sha256": "282f0fc95efcb55acb457b48e51b6dcc4d47b5a1c8a0a588dd096868a30be89d",
+      "imports": [
+        "MI32.AxisRestriction"
+      ],
+      "lines": 109
+    },
+    "MI32.Statement": {
+      "path": "MI32/Statement.lean",
+      "sha256": "e96b2a8cd191641d7dc87f407c6a280691d1d438fd781547cf32170659e519ef",
+      "imports": [
+        "Mathlib.Analysis.CStarAlgebra.Matrix",
+        "Mathlib.Probability.Independence.Basic",
+        "Mathlib.MeasureTheory.Integral.Bochner.Basic",
+        "Mathlib.Analysis.SpecialFunctions.Pow.Real"
+      ],
+      "lines": 85
+    },
+    "MI32.StatementChecks": {
+      "path": "MI32/StatementChecks.lean",
+      "sha256": "bd1e6d169c0de6fd88424699c373c821a240e2da635f520c8eea8d94d688048c",
+      "imports": [
+        "MI32.Statement",
+        "Mathlib.Tactic"
+      ],
+      "lines": 53
+    },
+    "MI32.SupportedPolynomialInteraction": {
+      "path": "MI32/SupportedPolynomialInteraction.lean",
+      "sha256": "a5e4594cbc30aee74aecf3b25fbfcea235b4ff10a3a6cf194e320d2e1280ccec",
+      "imports": [
+        "MI32.ThinPolynomialInteraction",
+        "MI32.RestrictedThinMatrix"
+      ],
+      "lines": 122
+    },
+    "MI32.SymmetricConeInterpolation": {
+      "path": "MI32/SymmetricConeInterpolation.lean",
+      "sha256": "9f98d64c6c423ed1e6a8977d770d5da263c9253146c4e3e55aa1751c48161d4d",
+      "imports": [
+        "MI32.SymmetricPositiveCone",
+        "MI32.ConeInterpolation",
+        "Mathlib.Analysis.Normed.Lp.MeasurableSpace"
+      ],
+      "lines": 96
+    },
+    "MI32.SymmetricDeletion": {
+      "path": "MI32/SymmetricDeletion.lean",
+      "sha256": "5a8ab85529cfdd398628f1766ef6d994a4d3c6454765ca253f51e124b039755d",
+      "imports": [
+        "MI32.NearMaskMean",
+        "MI32.FarMaskMean",
+        "MI32.SymmetrizationReduction"
+      ],
+      "lines": 167
+    },
+    "MI32.SymmetricLaw": {
+      "path": "MI32/SymmetricLaw.lean",
+      "sha256": "4328b9c24c2a99f139b3f66ff41b30ee9cfc497f96d3c04f3efa74897034dc39",
+      "imports": [
+        "Mathlib.Probability.IdentDistrib",
+        "Mathlib.Probability.Independence.Integration",
+        "GraphMatrices.Walsh"
+      ],
+      "lines": 238
+    },
+    "MI32.SymmetricLinearAllOrders": {
+      "path": "MI32/SymmetricLinearAllOrders.lean",
+      "sha256": "42d686d729970284c3090b08c9a3184e73843dc7970e5624d2b37cae04935b12",
+      "imports": [
+        "MI32.SymmetricLinearRegularity",
+        "MI32.SymmetricConeInterpolation",
+        "MI32.MomentTools",
+        "Mathlib.Algebra.Order.Floor.Semiring"
+      ],
+      "lines": 218
+    },
+    "MI32.SymmetricLinearRegularity": {
+      "path": "MI32/SymmetricLinearRegularity.lean",
+      "sha256": "89b2ffb3ab677f3721062b07887debdbce3bea9bf990c5a81750c13129b047b9",
+      "imports": [
+        "MI32.PositiveLinearPowers",
+        "MI32.SymmetricLaw",
+        "MI32.IndependentColumns"
+      ],
+      "lines": 139
+    },
+    "MI32.SymmetricMomentComparison": {
+      "path": "MI32/SymmetricMomentComparison.lean",
+      "sha256": "33152c84cba3810dddb84dfb7c28447013725a1c950986095a9248e0a5fcbb42",
+      "imports": [
+        "MI32.PositiveMomentComparison",
+        "MI32.PositiveLinearPowers",
+        "Mathlib.Probability.IdentDistrib"
+      ],
+      "lines": 176
+    },
+    "MI32.SymmetricPositiveCone": {
+      "path": "MI32/SymmetricPositiveCone.lean",
+      "sha256": "c9cd0642c2dbef79c50772b80875946d092819537eb328e2b4ed7a53488a3710",
+      "imports": [
+        "MI32.RawPositiveCone",
+        "MI32.SymmetricLaw",
+        "Mathlib.Analysis.InnerProductSpace.PiL2"
+      ],
+      "lines": 154
+    },
+    "MI32.SymmetrizationReduction": {
+      "path": "MI32/SymmetrizationReduction.lean",
+      "sha256": "6a53dbfd1a3c86e2c2e319cc50689b88de013eef71427ad3d8cfb475f4d80d38",
+      "imports": [
+        "MI32.GeneralLawCopy",
+        "MI32.CopyDeletionScale",
+        "MI32.VarianceScaleBasics"
+      ],
+      "lines": 84
+    },
+    "MI32.ThinMatrix": {
+      "path": "MI32/ThinMatrix.lean",
+      "sha256": "be9d56de2e1ea762df1e580c5c3479ff5b3c9824e6bc8b2953903c0f8afb1c23",
+      "imports": [
+        "MI32.HilbertComparison",
+        "MI32.SymmetricLinearRegularity",
+        "MI32.MatrixImages",
+        "MI32.IndependentColumns",
+        "MI32.ThinMomentRoot",
+        "Mathlib.MeasureTheory.Constructions.BorelSpace.ContinuousLinearMap"
+      ],
+      "lines": 203
+    },
+    "MI32.ThinMomentRoot": {
+      "path": "MI32/ThinMomentRoot.lean",
+      "sha256": "0cc35fbd730b09263521aca696b028c6badbe3031d44e65affda04e518704788",
+      "imports": [
+        "MI32.ThinNetMoment",
+        "MI32.MomentTools",
+        "MI32.MomentDoubling"
+      ],
+      "lines": 89
+    },
+    "MI32.ThinNetMoment": {
+      "path": "MI32/ThinNetMoment.lean",
+      "sha256": "7963fa407bbe0f0a3b63c1c16b2306664f8e6401ba82df487861078a2ba66b7e",
+      "imports": [
+        "MI32.FiniteNet",
+        "Mathlib.MeasureTheory.Integral.Bochner.Basic",
+        "Mathlib.Analysis.SpecialFunctions.Pow.Real"
+      ],
+      "lines": 67
+    },
+    "MI32.ThinPolynomialInteraction": {
+      "path": "MI32/ThinPolynomialInteraction.lean",
+      "sha256": "da1eac80a2581031ea81d13edd189b00acc590a3773a911ddf946cf267ad3acc",
+      "imports": [
+        "MI32.ThinMatrix",
+        "MI32.MultiplicationHolder",
+        "MI32.SymmetricConeInterpolation"
+      ],
+      "lines": 156
+    },
+    "MI32.ThinTranspose": {
+      "path": "MI32/ThinTranspose.lean",
+      "sha256": "dc00e1425f485be9bb4966598f5e90e8c371f04a3d6cefc4194989ba3d69d1d4",
+      "imports": [
+        "MI32.RestrictedThinMatrix"
+      ],
+      "lines": 74
+    },
+    "MI32.TransposedPolynomialContraction": {
+      "path": "MI32/TransposedPolynomialContraction.lean",
+      "sha256": "6f5d494f5f1a1d852037ef7d7720ce52fa736365e3b94179a20af9046f26b3fe",
+      "imports": [
+        "MI32.ThinPolynomialInteraction",
+        "MI32.AxisRestriction",
+        "MI32.RawMultiplicationContraction"
+      ],
+      "lines": 143
+    },
+    "MI32.VacuumNormBound": {
+      "path": "MI32/VacuumNormBound.lean",
+      "sha256": "1b8a88363cf23efe54057dfa77bab488cc704c8972b94ec50069a490e046341f",
+      "imports": [
+        "MI32.MomentTools",
+        "Mathlib.Analysis.CStarAlgebra.Basic",
+        "Mathlib.LinearAlgebra.Matrix.Trace"
+      ],
+      "lines": 165
+    },
+    "MI32.VarianceScaleBasics": {
+      "path": "MI32/VarianceScaleBasics.lean",
+      "sha256": "06d1e21d9a6e96571019d888d421e6b35fe6685459e6ec38b620e9cd917255b4",
+      "imports": [
+        "MI32.Statement",
+        "Mathlib.Order.ConditionallyCompleteLattice.Finset",
+        "Mathlib.Tactic"
+      ],
+      "lines": 91
+    },
+    "MI32.WeakDeletionMonotonicity": {
+      "path": "MI32/WeakDeletionMonotonicity.lean",
+      "sha256": "28456284b174e26e963e94987e293426a61fd0f5ec5c4815733208c96b946a24",
+      "imports": [
+        "MI32.WeakMomentBasics"
+      ],
+      "lines": 135
+    },
+    "MI32.WeakMomentBasics": {
+      "path": "MI32/WeakMomentBasics.lean",
+      "sha256": "6102e3d74b86788061fb4c6015d2c515071b7c86ca3714e219a465f5a575c23b",
+      "imports": [
+        "MI32.MomentTools",
+        "MI32.StatementChecks",
+        "Mathlib.Order.ConditionallyCompleteLattice.Finset"
+      ],
+      "lines": 238
+    },
+    "Solution": {
+      "path": "Solution.lean",
+      "sha256": "3e53f2333ec43d0a826d26dc0591f33c380fa84c0cd40fd2df030af42fb76cd2",
+      "imports": [
+        "MI32"
+      ],
+      "lines": 26
+    }
+  },
+  "primary_pdf_sha256": "ad4012e86b0e3b6402f0bd2f3d95d181fb006d27ba1cbe8fceaee6a3fcd564f0",
+  "proof_worktree_status": "",
+  "catalog_worktree_status": ""
+}

@@ -1,0 +1,551 @@
+{
+  "challenge": {
+    "bytes": 5848,
+    "canonical_olean_sha256": "2b63ae09f330840a8317df34ec654565f5a908a3f41f972e2986d9a886b1c70b",
+    "dependencies": [
+      {
+        "provenance": "allowlisted",
+        "repository": "leanprover-community/mathlib4"
+      }
+    ],
+    "direct_imports": [
+      "Mathlib.Analysis.CStarAlgebra.Matrix",
+      "Mathlib.Analysis.SpecialFunctions.Pow.Real",
+      "Mathlib.MeasureTheory.Integral.Bochner.Basic",
+      "Mathlib.Probability.Independence.Basic"
+    ],
+    "lines": 116,
+    "module": "Challenge",
+    "path": "Challenge.lean",
+    "sha256": "5a95a8603e37c1223fae84c1460ed2638eebfca2f5ddc7474038e4d9b616d566",
+    "transitive_source_count": 5,
+    "trust_level": "high",
+    "untrusted_sources": []
+  },
+  "checked_at": "2026-09-14T14:07:31Z",
+  "classification": {
+    "arxiv": [
+      {
+        "code": "math.PR",
+        "name": "Probability"
+      },
+      {
+        "code": "math.FA",
+        "name": "Functional Analysis"
+      }
+    ],
+    "msc2020": [
+      {
+        "code": "60B20",
+        "name": "Random matrices (probabilistic aspects)"
+      },
+      {
+        "code": "60E15",
+        "name": "Inequalities; stochastic orderings"
+      },
+      {
+        "code": "47A30",
+        "name": "Norms (inequalities, more than one norm, etc.) of linear operators"
+      }
+    ]
+  },
+  "comparator": {
+    "challenge_module": "Challenge",
+    "definition_names": [],
+    "path": "comparator.json",
+    "permitted_axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "sha256": "b07babafd28006b80be40dabb3666e15fb517b4e2f0b7949fe8607d54bf1ec52",
+    "solution_module": "Solution",
+    "theorem_names": [
+      "MI32.main_upper"
+    ]
+  },
+  "comparator_commit": "575674928e239f5bc452aab72d1dd7b0f1326494",
+  "comparator_log_tail": "Building PalomarCanonical18e0bb6df0e922cdcca2a50b.Challenge\nExporting #[Nat, String, String.mk, Char, Quot, Quot.mk, Quot.lift, Quot.ind, MI32.main_upper, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce] from PalomarCanonical18e0bb6df0e922cdcca2a50b.Challenge\nBuilding Solution\n\u2714 [3458/3471] Built GraphMatrices.Basic (1.0s)\n\u2714 [3459/3474] Built MI32.Statement (3.7s)\n\u2714 [3460/3474] Built GraphMatrices.Walsh (4.7s)\n\u26a0 [3462/3474] Built GraphMatrices.FiniteL2 (5.0s)\nwarning: vendor/graph-matrices/GraphMatrices/FiniteL2.lean:55:0: automatically included section variable(s) unused in theorem `GraphMatrices.FiniteL2.WeightedONBasis.reconstruct`:\n  [DecidableEq I]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq I] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nwarning: vendor/graph-matrices/GraphMatrices/FiniteL2.lean:59:0: automatically included section variable(s) unused in theorem `GraphMatrices.FiniteL2.WeightedONBasis.expect_one`:\n  [DecidableEq I]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq I] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nwarning: vendor/graph-matrices/GraphMatrices/FiniteL2.lean:62:0: automatically included section variable(s) unused in theorem `GraphMatrices.FiniteL2.WeightedONBasis.coeff_mul_sum`:\n  [DecidableEq I]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq I] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nwarning: vendor/graph-matrices/GraphMatrices/FiniteL2.lean:73:0: automatically included section variable(s) unused in theorem `GraphMatrices.FiniteL2.WeightedONBasis.coeff_sum`:\n  [DecidableEq I]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq I] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nwarning: vendor/graph-matrices/GraphMatrices/FiniteL2.lean:124:0: automatically included section variable(s) unused in theorem `GraphMatrices.FiniteL2.WeightedONBasis.vacuum_mulOp`:\n  [DecidableEq I]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq I] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nwarning: vendor/graph-matrices/GraphMatrices/FiniteL2.lean:144:0: automatically included section variable(s) unused in theorem `GraphMatrices.FiniteL2.WeightedONBasis.matrixMulOp_one`:\n  [Fintype A]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype A] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nwarning: vendor/graph-matrices/GraphMatrices/FiniteL2.lean:153:30: This simp argument is unused:\n  Matrix.one_apply\n\nHint: Omit it from the simp argument list.\n  [apply] simp [matrixMulOp, coeff, hab]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nwarning: vendor/graph-matrices/GraphMatrices/FiniteL2.lean:155:0: automatically included section variable(s) unused in theorem `GraphMatrices.FiniteL2.WeightedONBasis.matrixMulOp_mul`:\n  [DecidableEq A]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq A] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n\u2714 [3463/3477] Built MI32.PositivePolynomial (5.5s)\n\u2139 [3465/3479] Built GraphMatrices.FiniteProbability (5.1s)\ninfo: vendor/graph-matrices/GraphMatrices/FiniteProbability.lean:368:0: 'GraphMatrices.FiniteLaw.markov' depends on axioms: [propext, Classical.choice, Quot.sound]\ninfo: vendor/graph-matrices/GraphMatrices/FiniteProbability.lean:369:0: 'GraphMatrices.FiniteLaw.prob_independentProduct_cylinder' depends on axioms: [propext, Classical.choice, Quot.sound]\n\u2714 [3466/3482] Built MI32.MomentDoubling (4.2s)\n\u2714 [3467/3483] Built MI32.StatementChecks (4.6s)\n\u2714 [3468/3483] Built GraphMatrices.GraphMatrix (2.5s)\n\u2714 [3469/3484] Built GraphMatrices.CrossedEdges (3.8s)\n\u2139 [3470/3485] Built GraphMatrices.FiniteLocalMoments (4.2s)\ninfo: vendor/graph-matrices/GraphMatrices/FiniteLocalMoments.lean:226:0: 'GraphMatrices.FiniteLocalMoments.HasLocalDegree.expect_eq_of_matchesUpTo' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n\u2714 [3471/3486] Built MI32.RegularPositivePolynomial (3.9s)\n\u2714 [3472/3487] Built GraphMatrices.FinitePaleyZygmund (5.1s)\n\u2714 [3473/3488] Built MI32.ParityGeometry (3.3s)\n\u2714 [3474/3488] Built GraphMatrices.GraphMomentTransfer (5.0s)\n\u2714 [3475/3488] Built GraphMatrices.SpectralNorm (6.6s)\n\u2714 [3476/3497] Built MI32.RawParity (4.8s)\n\u2714 [3485/3510] Built MI32.ConeInterpolation (5.0s)\n\u2714 [3493/3511] Built GraphMatrices.SignGraphDegree (4.3s)\n\u2714 [3494/3511] Built GraphMatrices.RoleColoring (5.4s)\n\u2714 [3495/3511] Built MI32.SymmetricLaw (5.7s)\n\u2714 [3496/3511] Built MI32.MatrixImages (4.7s)\n\u2714 [3497/3514] Built MI32.FiniteNet (5.5s)\n\u2714 [3498/3514] Built MI32.PositiveMomentComparison (3.7s)\n\u2714 [3500/3514] Built GraphMatrices.OffDiagonalModel (4.1s)\n\u26a0 [3501/3514] Built GraphMatrices.WalshFiniteL2 (5.3s)\nwarning: vendor/graph-matrices/GraphMatrices/WalshFiniteL2.lean:62:8: This simp argument is unused:\n  mul_assoc\n\nHint: Omit it from the simp argument list.\n  [apply] simp [mul_left_comm, mul_comm]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nwarning: vendor/graph-matrices/GraphMatrices/WalshFiniteL2.lean:67:25: This simp argument is unused:\n  Fintype.card_fun\n\nHint: Omit it from the simp argument list.\n  [apply] simp\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n\u2714 [3502/3532] Built MI32.ThinNetMoment (4.2s)\n\u2714 [3565/3589] Built MI32.HilbertConditioning (4.6s)\n\u2714 [3568/3599] Built MI32.CopySymmetrization (3.8s)\n\u26a0 [3579/3604] Built GraphMatrices.MatrixAverageContraction (3.8s)\nwarning: vendor/graph-matrices/GraphMatrices/MatrixAverageContraction.lean:22:0: automatically included section variable(s) unused in theorem `GraphMatrices.MatrixAverageContraction.signed_average_mean_norm_le`:\n  [DecidableEq \u03b9]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b9] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nwarning: vendor/graph-matrices/GraphMatrices/MatrixAverageContraction.lean:54:0: automatically included section variable(s) unused in theorem `GraphMatrices.MatrixAverageContraction.signed_average_mean_norm_rpow_le`:\n  [DecidableEq \u03b9]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b9] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n\u2714 [3581/3604] Built MI32.MomentTools (4.6s)\n\u2714 [3582/3604] Built MI32.DiagonalCopyComparison (5.3s)\n\u2714 [3583/3613] Built MI32.IndependentColumns (4.5s)\n\u26a0 [3584/3613] Built GraphMatrices.WalshFourthMoment (5.8s)\nwarning: vendor/graph-matrices/GraphMatrices/WalshFourthMoment.lean:17:0: automatically included section variable(s) unused in theorem `GraphMatrices.Walsh.sign_flipOne`:\n  [Fintype E]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype E] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nwarning: vendor/graph-matrices/GraphMatrices/WalshFourthMoment.lean:40:0: automatically included section variable(s) unused in theorem `GraphMatrices.Walsh.weightedEnergy_nonneg`:\n  [Fintype E]\n  [DecidableEq E]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype E] [DecidableEq E] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nwarning: vendor/graph-matrices/GraphMatrices/WalshFourthMoment.lean:63:0: automatically included section variable(s) unused in theorem `GraphMatrices.Walsh.weightedEnergy_insert`:\n  [Fintype E]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype E] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nwarning: vendor/graph-matrices/GraphMatrices/WalshFourthMoment.lean:99:39: This simp argument is unused:\n  h\n\nHint: Omit it from the simp argument list.\n  [apply] simp only [sign, Bool.false_eq_true, \u2193reduceIte]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n\u2714 [3585/3627] Built MI32.MultiplicationHolder (4.4s)\n\u2714 [3586/3630] Built MI32.ThinMomentRoot (4.8s)\n\u2714 [3587/3630] Built MI32.ParityWalshCompression (4.0s)\n\u2714 [3588/3633] Built MI32.HilbertWalsh (4.4s)\n\u2714 [3589/3633] Built MI32.VacuumNormBound (5.2s)\n\u2714 [3590/3634] Built MI32.BlockDiagonalNorm (5.2s)\n\u2714 [3591/3634] Built MI32.BlockMomentMaximum (4.8s)\n\u2714 [3592/3636] Built MI32.PositiveCone (4.7s)\n\u2714 [3593/3636] Built MI32.WeakMomentBasics (4.6s)\n\u2714 [3594/3636] Built MI32.DeletionVarianceSelection (4.3s)\n\u2714 [3595/3637] Built MI32.PolynomialSectorMasks (4.3s)\n\u2714 [3596/3639] Built MI32.RegularPositiveCone (4.0s)\n\u2714 [3597/3640] Built MI32.DeletionMomentEndpoints (8.6s)\n\u2714 [3598/3640] Built MI32.PositiveWordExtension (4.7s)\n\u2714 [3599/3640] Built MI32.ActiveCountSectors (4.3s)\n\u2714 [3600/3640] Built MI32.MatrixCopySymmetrization (8.3s)\n\u2714 [3601/3642] Built MI32.RawPositiveCone (4.3s)\n\u2714 [3602/3643] Built MI32.VarianceScaleBasics (3.8s)\n\u2714 [3603/3644] Built MI32.CopyDeletionScale (3.8s)\n\u2714 [3604/3644] Built MI32.GeneralLawCopy (4.3s)\n\u2714 [3605/3644] Built MI32.RawDirectionalActions (4.8s)\n\u2714 [3606/3645] Built MI32.DeletionScheduleArithmetic (4.1s)\n\u2714 [3607/3646] Built MI32.PositiveLinearPowers (4.7s)\n\u2714 [3608/3646] Built MI32.SymmetricPositiveCone (4.6s)\n\u2714 [3609/3646] Built MI32.GradedVarianceEnergy (4.5s)\n\u2714 [3610/3647] Built MI32.NestedShells (5.2s)\n\u2714 [3611/3647] Built MI32.SymmetrizationReduction (4.0s)\n\u2714 [3612/3648] Built MI32.WeakDeletionMonotonicity (4.0s)\n\u2714 [3613/3648] Built MI32.RawCountBlocks (4.3s)\n\u2714 [3614/3648] Built MI32.SymmetricLinearRegularity (4.2s)\n\u2714 [3615/3649] Built MI32.SymmetricMomentComparison (5.0s)\n\u2714 [3616/3649] Built MI32.PolynomialSectorEnergy (4.5s)\n\u2714 [3617/3650] Built MI32.PositiveVacuumWords (5.1s)\n\u2714 [3618/3650] Built MI32.SymmetricConeInterpolation (4.8s)\n\u2714 [3619/3651] Built MI32.NestedDeletionSelection (5.0s)\n\u2714 [3620/3652] Built MI32.BlockOrderArithmetic (4.9s)\n\u2714 [3621/3653] Built MI32.HilbertComparison (5.8s)\n\u2714 [3622/3654] Built MI32.FiberBlockNorm (5.9s)\n\u2714 [3623/3654] Built MI32.PolynomialEnergyAssembly (4.3s)\n\u2714 [3625/3666] Built MI32.MaskedEntryLaw (5.2s)\n\u2714 [3627/3666] Built MI32.SymmetricLinearAllOrders (6.9s)\n\u2714 [3628/3666] Built MI32.NestedDeletionFamily (4.1s)\n\u2714 [3629/3666] Built MI32.RegularWitness (3.6s)\n\u2714 [3630/3666] Built MI32.ThinMatrix (6.7s)\n\u2714 [3631/3666] Built MI32.DeletionMasks (5.1s)\n\u2714 [3632/3666] Built MI32.BlockDiagonalMoment (4.2s)\n\u2714 [3633/3666] Built MI32.BlockMaskMoment (4.6s)\n\u2714 [3634/3666] Built MI32.BipartiteNorm (6.6s)\n\u2714 [3635/3666] Built MI32.AxisRestriction (4.9s)\n\u2714 [3636/3666] Built MI32.ThinPolynomialInteraction (4.6s)\n\u2714 [3637/3666] Built MI32.RestrictedBlockFamily (4.0s)\n\u2714 [3638/3666] Built MI32.RestrictedThinMatrix (3.7s)\n\u2714 [3639/3666] Built MI32.MaskedPolynomialAction (3.0s)\n\u2714 [3640/3666] Built MI32.SupportedPolynomialInteraction (2.8s)\n\u2714 [3641/3666] Built MI32.ThinTranspose (3.2s)\n\u2714 [3642/3666] Built MI32.CreationSectorContraction (2.8s)\n\u2714 [3643/3666] Built MI32.OutputPolynomialInteraction (3.4s)\n\u2714 [3644/3666] Built MI32.AnnihilationSectorContraction (2.6s)\n\u2714 [3645/3666] Built MI32.RawSectorNorms (2.3s)\n\u2714 [3646/3666] Built MI32.RawCreatorContraction (2.9s)\n\u2714 [3647/3666] Built MI32.RawAnnihilatorContraction (3.2s)\n\u2714 [3648/3666] Built MI32.RawMultiplicationContraction (2.6s)\n\u2714 [3649/3666] Built MI32.TransposedPolynomialContraction (2.4s)\n\u2714 [3650/3666] Built MI32.BipartiteConeContraction (2.9s)\n\u2714 [3651/3666] Built MI32.BipartiteVacuumIteration (2.8s)\n\u2714 [3652/3666] Built MI32.LocalSymmetricMoment (3.0s)\n\u2714 [3653/3666] Built MI32.BipartiteWeakMoment (3.1s)\n\u2714 [3654/3666] Built MI32.LocalLogMoment (3.2s)\n\u2714 [3655/3666] Built MI32.BilinearHighOrder (2.0s)\n\u26a0 [3656/3666] Built MI32.CenteredGramNorm (3.4s)\nwarning: MI32/CenteredGramNorm.lean:27:0: automatically included section variable(s) unused in theorem `MI32.CenteredGramNorm.entryEnergy_nonneg`:\n  [DecidableEq C]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq C] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\nwarning: MI32/CenteredGramNorm.lean:28:24: Variable name `j` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _j\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: MI32/CenteredGramNorm.lean:28:53: Variable name `k` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _k\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: MI32/CenteredGramNorm.lean:44:0: automatically included section variable(s) unused in theorem `MI32.CenteredGramNorm.norm_sq_le_diagonal_add_centeredGram`:\n  [DecidableEq R]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq R] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n\u2714 [3657/3666] Built MI32.NearBlockMoment (3.4s)\n\u2714 [3658/3666] Built MI32.GramEntryMoments (4.6s)\n\u2714 [3659/3666] Built MI32.FrobeniusMean (4.8s)\n\u2714 [3660/3666] Built MI32.FarRemainderMoment (2.0s)\n\u2714 [3661/3666] Built MI32.NearMaskMean (2.9s)\n\u2714 [3662/3666] Built MI32.FarMaskMean (2.5s)\n\u2714 [3663/3666] Built MI32.SymmetricDeletion (2.6s)\n\u2714 [3664/3666] Built MI32 (2.1s)\n\u2714 [3665/3666] Built Solution (2.1s)\nBuild completed successfully (3666 jobs).\nExporting #[Nat, String, String.mk, Char, Quot, Quot.mk, Quot.lift, Quot.ind, MI32.main_upper, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce] from Solution\nRunning nanoda kernel on solution\nnanoda kernel accepts the solution\nRunning Lean default kernel on solution.\nLean default kernel accepts the solution\nYour solution is okay!",
+  "errors": [],
+  "existing_id": null,
+  "formalization": {
+    "automation_method_count": 1,
+    "path": "formalization.yaml",
+    "project_name": "MI-32: Lean formalization of the parity and positive-polynomial upper bound",
+    "review_status": "agent-reviewed",
+    "sha256": "12759b404bb50f755877db87cf8eea4a747368f26f6847682c39e28c2754ad45",
+    "source_count": 5
+  },
+  "lake_manifest": {
+    "path": "lake-manifest.json",
+    "sha256": "639377d4957d4bc72c0e2d05091c9478793c0df2eca5f01e2fe94cfd179092a7"
+  },
+  "lakefile": {
+    "format": "lean",
+    "path": "lakefile.lean",
+    "sha256": "9b98b09db10ecf1b49ed787f713e0bd320df3eea2da9ed7babadc2ae96398909"
+  },
+  "landrun_commit": "811cfff51ceaf3d9843708aa6d22e9b84ccac8b4",
+  "lean4export_commit": "15f6055e299ad5b89345e533cc2192f4cc00f659",
+  "lean_toolchain": "leanprover/lean4:v4.33.0",
+  "lean_toolchain_path": "lean-toolchain",
+  "license": {
+    "declared_identifier": "MIT",
+    "detected_identifier": "MIT",
+    "path": "LICENSE",
+    "sha256": "a01c70e99b619c289a6d59bb4e61deb9b49806f9c2738daf3ad354f3f3d6641a"
+  },
+  "mathlib_cache": {
+    "available": true,
+    "required": true
+  },
+  "nanoda_commit": "68d5ca9db226849b41a6fff59d796ff19d0a8840",
+  "orcid_validation": {
+    "checked_at": "2026-09-14T13:58:22Z",
+    "records": [],
+    "registry": "https://orcid.org",
+    "schema_version": 1
+  },
+  "phase": "verification",
+  "project_dependencies": [
+    {
+      "name": "mathlib",
+      "repository": "leanprover-community/mathlib4",
+      "revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "url": "https://github.com/leanprover-community/mathlib4.git"
+    },
+    {
+      "name": "plausible",
+      "repository": "leanprover-community/plausible",
+      "revision": "b7eb3304aeae834b12dda98993a37f6a41f6f0bb",
+      "url": "https://github.com/leanprover-community/plausible"
+    },
+    {
+      "name": "LeanSearchClient",
+      "repository": "leanprover-community/LeanSearchClient",
+      "revision": "5f4d51b81cbd3f6b32b156bfad9056621a040404",
+      "url": "https://github.com/leanprover-community/LeanSearchClient"
+    },
+    {
+      "name": "importGraph",
+      "repository": "leanprover-community/import-graph",
+      "revision": "16f02aa7642864af59f1ff0e384a015994db9118",
+      "url": "https://github.com/leanprover-community/import-graph"
+    },
+    {
+      "name": "proofwidgets",
+      "repository": "leanprover-community/ProofWidgets4",
+      "revision": "4be2e3d5087eeb272cf5a8853b8f9dd025ef5957",
+      "url": "https://github.com/leanprover-community/ProofWidgets4"
+    },
+    {
+      "name": "aesop",
+      "repository": "leanprover-community/aesop",
+      "revision": "3448c0bcc5ce01b2d1546e483ec3620e32df3d0e",
+      "url": "https://github.com/leanprover-community/aesop"
+    },
+    {
+      "name": "Qq",
+      "repository": "leanprover-community/quote4",
+      "revision": "92c15be17b7caf78c2ad767ec40f89052d908d81",
+      "url": "https://github.com/leanprover-community/quote4"
+    },
+    {
+      "name": "batteries",
+      "repository": "leanprover-community/batteries",
+      "revision": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+      "url": "https://github.com/leanprover-community/batteries"
+    },
+    {
+      "name": "Cli",
+      "repository": "leanprover/lean4-cli",
+      "revision": "6130a47896ce867c6a4a55373441e59e565bad0f",
+      "url": "https://github.com/leanprover/lean4-cli"
+    }
+  ],
+  "provenance": {
+    "mathematical_sources": [
+      {
+        "authors": [],
+        "contributors": [
+          {
+            "name": "Alex Townsend",
+            "role": "compiler and editor of the Open Problems in Numerical Linear Algebra collection"
+          }
+        ],
+        "identifier": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/d7fcfe7bfe8c02cd98d9463fa5a8ba12850d5bdb/matrix-inequalities-and-norms/MI-32/README.md",
+        "note": "This entry states the problem that the selected theorem MI32.main_upper formalises and proves, in exactly the form formalised: independent mean-zero real entries with finite absolute moments of every order and ||X_ij||_{L_2r} <= alpha ||X_ij||_{L_r} for r >= 1; the Euclidean spectral norm; M(X) the sum of the largest row and the largest column standard deviation; and D(X) the max-min weak moment at order log(k+1) over one shared deterministic deletion set applied to both axes. The entry itself attributes the conjecture to Lata\u0142a and \u015awi\u0105tkowski, recorded separately below as the mathematical origin of the result. Read on 14 September 2026, when the entry recorded \"Status: Partially resolved\" and \"Last checked: 2026-09-11\", and summarised the known partial results of Lata\u0142a and of Meller. The identifier is a commit permalink because the collection's main-branch URL is mutable; the collection states no licence, and no endorsement by the collection or its editor is claimed.",
+        "relationship": "formalizes",
+        "title": "MI-32 - Spectral norms of independent entries with regular moment growth, in Open Problems in Numerical Linear Algebra",
+        "type": "web discussion"
+      },
+      {
+        "author_endorsement": "not-contacted",
+        "authors": [
+          {
+            "name": "Rafa\u0142 Lata\u0142a"
+          },
+          {
+            "name": "Witold \u015awi\u0105tkowski"
+          }
+        ],
+        "identifier": "https://doi.org/10.1214/22-EJP799",
+        "location": "Electronic Journal of Probability 27 (2022), paper 80, 1-23; arXiv:2106.03139",
+        "note": "Conjecture 4.3 of this paper is the mathematical origin of the selected result: the inequality proved by MI32.main_upper is that conjecture. The paper itself proves the Gaussian-mixture case rather than the general statement, so this Lean development proves a conjecture of the source rather than re-deriving a theorem of the source. Remark 4.5 of the same paper is the structural model for the deletion reduction; the Lean proof follows its nested-selection idea but deliberately replaces its remainder step, as recorded in fidelity.divergences and docs/SOURCE_FIDELITY.md. Theorem 4.1, the matching lower bound, is credited to this paper and is neither formalized nor selected here.",
+        "relationship": "formalizes",
+        "title": "Norms of randomized circulant matrices",
+        "type": "paper"
+      },
+      {
+        "authors": [
+          {
+            "name": "Diar Heidary"
+          }
+        ],
+        "location": "docs/source/MI32_solution.md and linked research notes",
+        "note": "The author's own agent-assisted informal proof draft of 13-14 September 2026, and the argument that the Lean development formalises. Copies are bundled in this repository; the original research checkpoint is unchanged. It is unpublished and unrefereed, and prior agent reviews and exact finite numerical checks in it are not Lean proof evidence. The formal deletion argument deliberately diverges from this draft in two recorded ways; see fidelity.divergences.",
+        "relationship": "formalizes",
+        "title": "MI-32: a proof through parity counts and positive walk polynomials",
+        "type": "other"
+      },
+      {
+        "authors": [
+          {
+            "name": "Rafa\u0142 Lata\u0142a"
+          },
+          {
+            "name": "Marta Strzelecka"
+          }
+        ],
+        "identifier": "https://arxiv.org/abs/1612.02407",
+        "location": "Mathematika 64 (2018), 211-229",
+        "note": "The informal draft cites Theorem 1.1. The Lean chain does not use it and does not formalize it: MI32/HilbertComparison.lean proves the direct independent-coordinate comparison that the argument actually needs.",
+        "relationship": "background",
+        "title": "Comparison of weak and strong moments for vectors with independent coordinates",
+        "type": "paper"
+      },
+      {
+        "authors": [
+          {
+            "name": "Rafa\u0142 Lata\u0142a"
+          },
+          {
+            "name": "Ramon van Handel"
+          },
+          {
+            "name": "Pierre Youssef"
+          }
+        ],
+        "identifier": "https://web.math.princeton.edu/~rvan/dimfr180821.pdf",
+        "note": "The informal draft's remainder step invokes a variance-envelope consequence of Theorem 4.4. The Lean chain avoids that dependency entirely; nothing from this paper is formalized or assumed.",
+        "relationship": "background",
+        "title": "Dimension-free bounds and structured results in random matrix theory",
+        "type": "paper"
+      }
+    ],
+    "related_formalizations": [
+      {
+        "identifier": "https://github.com/DiarHaidary/Sharp-Bounds-for-Graph-Matrices/tree/01994362f8543743d556e7544d2538e93c62c02b",
+        "note": "Earlier Lean development by the same author, cited at the exact public commit DiarHaidary/Sharp-Bounds-for-Graph-Matrices@01994362f8543743d556e7544d2538e93c62c02b (MIT). It is a prior formalization reused as a Lean dependency, not a mathematical source: its own subject, sharp norm bounds for fixed-shape graph matrices, is unrelated to MI-32 and none of its graph-matrix results are reused or re-claimed here. What is reused is its scalar Boolean machinery. The necessary source closure of GraphMatrices.WalshFourthMoment is vendored byte-identically into vendor/graph-matrices/ with its original notices, its MIT licence and per-file SHA-256 hashes in vendor/graph-matrices/manifest.json; every one of those 16 files is byte-identical to that commit. The single load-bearing reused theorem is GraphMatrices.Walsh.polynomial_fourth_le_nine_pow, the scalar Boolean two-to-four fourth-moment inequality with constant 9^d, together with the supporting Walsh polynomial, independent-sign law and finite-law vocabulary. What this development adds on top of it is MI32.hilbert_walsh_fourth_le in MI32/HilbertWalsh.lean, a dimension-free finite-dimensional real Hilbert-space extension of that inequality for a family of Walsh polynomials with arbitrary real coefficients, proved here from the scalar case and a pairwise Cauchy-Schwarz argument. The vendored closure is broader than the part used, because of the upstream module import structure.",
+        "relationship": "builds-on"
+      }
+    ],
+    "repository_role": "substantive-development",
+    "responsible_maintainers": [
+      {
+        "name": "Diar Heidary"
+      }
+    ],
+    "result_origin": "source-based"
+  },
+  "resource_usage": [
+    {
+      "elapsed_seconds": 0.004,
+      "max_rss_kib": 13384,
+      "peak_tasks_observed": 1,
+      "phase": "touch",
+      "returncode": 0,
+      "system_cpu_seconds": 0.005,
+      "user_cpu_seconds": 0.0,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.007,
+      "max_rss_kib": 13368,
+      "peak_tasks_observed": 1,
+      "phase": "landrun",
+      "returncode": 0,
+      "system_cpu_seconds": 0.003,
+      "user_cpu_seconds": 0.005,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.004,
+      "max_rss_kib": 13232,
+      "peak_tasks_observed": 1,
+      "phase": "touch",
+      "returncode": 1,
+      "system_cpu_seconds": 0.003,
+      "user_cpu_seconds": 0.001,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.024,
+      "max_rss_kib": 13180,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 0,
+      "system_cpu_seconds": 0.007,
+      "user_cpu_seconds": 0.017,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.026,
+      "max_rss_kib": 13232,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 1,
+      "system_cpu_seconds": 0.004,
+      "user_cpu_seconds": 0.022,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.025,
+      "max_rss_kib": 13240,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 1,
+      "system_cpu_seconds": 0.004,
+      "user_cpu_seconds": 0.021,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.022,
+      "max_rss_kib": 13224,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 1,
+      "system_cpu_seconds": 0.005,
+      "user_cpu_seconds": 0.017,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 2.2,
+      "max_rss_kib": 898916,
+      "peak_tasks_observed": 1,
+      "phase": "lake",
+      "returncode": 0,
+      "system_cpu_seconds": 0.42,
+      "user_cpu_seconds": 1.836,
+      "workspace_disk_peak_bytes": 864256
+    },
+    {
+      "elapsed_seconds": 0.063,
+      "max_rss_kib": 91984,
+      "peak_tasks_observed": 1,
+      "phase": "lean",
+      "returncode": 0,
+      "system_cpu_seconds": 0.04,
+      "user_cpu_seconds": 0.041,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 48.516,
+      "max_rss_kib": 1021956,
+      "peak_tasks_observed": 1,
+      "phase": "lake",
+      "returncode": 0,
+      "system_cpu_seconds": 42.875,
+      "user_cpu_seconds": 71.762,
+      "workspace_disk_peak_bytes": 7787642880
+    },
+    {
+      "elapsed_seconds": 6.95,
+      "max_rss_kib": 1022612,
+      "peak_tasks_observed": 1,
+      "phase": "lake",
+      "returncode": 0,
+      "system_cpu_seconds": 3.362,
+      "user_cpu_seconds": 7.368,
+      "workspace_disk_peak_bytes": 1466368
+    },
+    {
+      "elapsed_seconds": 2.655,
+      "max_rss_kib": 894800,
+      "peak_tasks_observed": 1,
+      "phase": "lake",
+      "returncode": 0,
+      "system_cpu_seconds": 0.593,
+      "user_cpu_seconds": 2.012,
+      "workspace_disk_peak_bytes": 700416
+    },
+    {
+      "elapsed_seconds": 3.496,
+      "max_rss_kib": 2999160,
+      "peak_tasks_observed": 1,
+      "phase": "lean",
+      "returncode": 0,
+      "system_cpu_seconds": 0.768,
+      "user_cpu_seconds": 1.929,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.075,
+      "max_rss_kib": 98768,
+      "peak_tasks_observed": 1,
+      "phase": "lean",
+      "returncode": 0,
+      "system_cpu_seconds": 0.041,
+      "user_cpu_seconds": 0.049,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.06,
+      "max_rss_kib": 92172,
+      "peak_tasks_observed": 1,
+      "phase": "lean",
+      "returncode": 0,
+      "system_cpu_seconds": 0.031,
+      "user_cpu_seconds": 0.041,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.004,
+      "max_rss_kib": 13364,
+      "peak_tasks_observed": 1,
+      "phase": "touch",
+      "returncode": 0,
+      "system_cpu_seconds": 0.003,
+      "user_cpu_seconds": 0.001,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.007,
+      "max_rss_kib": 13368,
+      "peak_tasks_observed": 1,
+      "phase": "landrun",
+      "returncode": 0,
+      "system_cpu_seconds": 0.004,
+      "user_cpu_seconds": 0.004,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.004,
+      "max_rss_kib": 13368,
+      "peak_tasks_observed": 1,
+      "phase": "touch",
+      "returncode": 1,
+      "system_cpu_seconds": 0.002,
+      "user_cpu_seconds": 0.002,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.025,
+      "max_rss_kib": 13196,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 0,
+      "system_cpu_seconds": 0.003,
+      "user_cpu_seconds": 0.022,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.024,
+      "max_rss_kib": 13368,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 0,
+      "system_cpu_seconds": 0.008,
+      "user_cpu_seconds": 0.016,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.026,
+      "max_rss_kib": 13200,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 1,
+      "system_cpu_seconds": 0.007,
+      "user_cpu_seconds": 0.019,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.026,
+      "max_rss_kib": 13204,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 1,
+      "system_cpu_seconds": 0.008,
+      "user_cpu_seconds": 0.018,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.022,
+      "max_rss_kib": 13068,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 1,
+      "system_cpu_seconds": 0.004,
+      "user_cpu_seconds": 0.018,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 1.25,
+      "max_rss_kib": 845004,
+      "peak_tasks_observed": 1,
+      "phase": "lake",
+      "returncode": 0,
+      "system_cpu_seconds": 0.582,
+      "user_cpu_seconds": 0.698,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 1.255,
+      "max_rss_kib": 846028,
+      "peak_tasks_observed": 1,
+      "phase": "lake",
+      "returncode": 0,
+      "system_cpu_seconds": 0.589,
+      "user_cpu_seconds": 0.7,
+      "workspace_disk_peak_bytes": 40960
+    },
+    {
+      "elapsed_seconds": 272.519,
+      "max_rss_kib": 3835916,
+      "peak_tasks_observed": 1,
+      "phase": "comparator",
+      "returncode": 0,
+      "system_cpu_seconds": 115.586,
+      "user_cpu_seconds": 496.921,
+      "workspace_disk_peak_bytes": 568602624
+    }
+  ],
+  "schema_version": 1,
+  "solution": {
+    "module": "Solution",
+    "path": "Solution.lean",
+    "sha256": "3e53f2333ec43d0a826d26dc0591f33c380fa84c0cd40fd2df030af42fb76cd2"
+  },
+  "source": {
+    "bytes": 1563422,
+    "commit": "762bd5ec5050a96f5e6ba3926b6cda4816fcd4b0",
+    "repository": "DiarHaidary/Spectral-norms-of-independent-entries-with-regular-moment-growth",
+    "repository_url": "https://github.com/DiarHaidary/Spectral-norms-of-independent-entries-with-regular-moment-growth",
+    "tree_url": "https://github.com/DiarHaidary/Spectral-norms-of-independent-entries-with-regular-moment-growth/tree/762bd5ec5050a96f5e6ba3926b6cda4816fcd4b0"
+  },
+  "stage": "complete",
+  "status": "pass",
+  "submission": {
+    "authorization": {
+      "relationship": "maintainer"
+    },
+    "requested_paths": {
+      "comparator_config_path": "comparator.json",
+      "formalization_metadata_path": "",
+      "project_path": ""
+    },
+    "submission_id": "v03dd67uweif"
+  },
+  "warnings": [],
+  "workflow_url": "https://github.com/PalomarRegistry/PalomarSubmission/actions/runs/34852526384"
+}
