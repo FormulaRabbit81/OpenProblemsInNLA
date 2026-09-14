@@ -27,6 +27,10 @@ The passing scopes include AC-01's small-CW upper bound (also relevant to AC-04)
 
 ## Resolved catalog entries
 
+### 🟠 FR-05 — vanishing phase-retrieval injectivity probability — Zhangsong Li
+
+**Solution claimed, 14 September 2026.** Zhangsong Li's [manuscript](https://zhangsong-li.github.io/injectivity_phase_retrieval.pdf), Theorem 1.4, claims the stronger bound $`p_d\le C/d`$ for every $`d\ge2`$ in the retained [FR-05 target](frames-and-matrix-designs/FR-05/README.md). The claim has not been independently audited here and is not Lean verified; its status is therefore `Solution claimed`, not `Solved`. The [formalisation plan](frames-and-matrix-designs/FR-05/formalisation-plan.md) identifies the source freeze, statement boundary, and proof obligations needed for a future verification. The original ID, canonical path, and target are retained.
+
 ### MF-24 — a negative resolution of uniform boundedness — Georg Maierhofer
 
 **Solved negatively, 15 September 2026.** Georg Maierhofer (University of Cambridge), [manuscript dated 14 September 2026](references/mf24-counterexample/proof.pdf), **Theorem 1 and equation (15)**, gives super-identical-pseudospectral weighted shifts of order $`(m+1)^2`$ and a common polynomial with norm ratio at least $`(4/5)\sqrt m`$. This refutes the dimension-independent bound in the [retained original target](matrix-functions-and-stability/MF-24/README.md).
@@ -79,7 +83,6 @@ review is claimed.
 - **Partially resolved — [RA-14](randomized-and-low-rank-approximation/RA-14/README.md)**: [Sections 2–7](references/holden-further-2026-09-14/RA-14/manuscript.pdf) provide exact capacity and innovation-qualified results; the unrestricted finite-parameter gap remains. [Review](reviews/2026-09-14-further-submissions/RA-14-review.md).
 
 The repeated RA-01 tail-analysis package is excluded because its identical proof already merged in [PR #237](https://github.com/ajt60gaibb/OpenProblemsInNLA/pull/237). All original targets, permanent IDs, canonical paths and prior-source credit are preserved.
-
 
 ### RA-05 — further even-power high-accuracy partial result, Sidney Holden, 2026-09-13
 
