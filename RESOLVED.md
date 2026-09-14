@@ -21,6 +21,35 @@ result is formalized in Lean.
 
 ## Resolved catalog entries
 
+### 🏆 MI-32 — the Latała–Świątkowski upper comparison — Diar Heidary
+
+**Lean verified — 2026-09-14. Formalization: Diar Heidary**, unaffiliated,
+with AI-agent assistance. The complete original target of [MI-32](matrix-inequalities-and-norms/MI-32/README.md)
+is proved: for every $`\alpha\ge1`$ there is $`C_\alpha>0`$, independent of the
+dimension and of the entry laws, with
+$`\mathbb E\|X\|_2\le C_\alpha(M(X)+D(X))`$ for every square matrix of
+independent mean-zero entries satisfying the displayed moment-doubling
+condition at every real order $`r\ge1`$. The
+[immutable proof source](https://github.com/DiarHaidary/Spectral-norms-of-independent-entries-with-regular-moment-growth/tree/762bd5ec5050a96f5e6ba3926b6cda4816fcd4b0)
+exports the single declaration `MI32.main_upper` and is registered as
+[Palomar entry PALOMAR-2026-09-14-000006, version 1](https://palomar-registry.org/entry.html?id=PALOMAR-2026-09-14-000006&version=1),
+which preserves an archival fork of that commit. Palomar's
+[Linux Comparator, NanoDa and sandboxed kernel run 34852526384](https://github.com/PalomarRegistry/PalomarSubmission/actions/runs/34852526384)
+accepted the frozen statement and replayed the solution, admitting only
+`propext`, `Classical.choice` and `Quot.sound`; the entry records trust level
+`high` and an editorial review outcome of `neutral`. The arbitrary probability
+space, the single shared deterministic deletion set on both axes, and the
+subunit order $`\ln2`$ at $`k=1`$ are all retained literally, and the hypothesis
+class is separately shown to be non-vacuous. The
+[canonical verification evidence](matrix-inequalities-and-norms/MI-32/README.md#lean-proof-and-verification-evidence--2026-09-14)
+records the toolchain, dependency pins, definition correspondence, reproduction
+commands and axiom report. Conjecture credit remains with Rafał Latała and
+Witold Świątkowski (Conjecture 4.3, EJP 27 (2022), paper 80); their Theorem 4.1
+reverse inequality is credited and is outside the formalized scope. AI
+assistance and AI review are disclosed; this catalog reviewed a public
+verification record rather than rerunning the checks, and no external human peer
+review is claimed.
+
 ### RA-05 — further even-power high-accuracy partial result, Sidney Holden, 2026-09-13
 
 **Partially resolved.** [Theorems 1.1–1.2 and Corollary 1.3](references/holden-ra05-even-power-2026-09-13/manuscript.pdf) prove $`S_{2s}(k,\varepsilon)=\widetilde\Theta_s(k^{s-1}/\varepsilon^2)`$ for each fixed integer $`s\ge2`$ when $`\varepsilon\le k^{-(s+1)/2}`$, with arbitrary input rank and nonnegative original-row weights. The [canonical page](randomized-and-low-rank-approximation/RA-05/README.md) records the all-accuracy upper bound and remaining gaps. A separate [independent informal AI-agent review](references/holden-ra05-even-power-2026-09-13/verification/independent-review.md) passed this partial scope. No Lean verification or external human peer review is asserted. [Author, verified affiliation, provenance and reproduction](references/holden-ra05-even-power-2026-09-13/README.md). Earlier partial results are retained; the full joint classification remains open.
