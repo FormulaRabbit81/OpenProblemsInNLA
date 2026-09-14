@@ -1,0 +1,672 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype,booktabs,array,xcolor,enumitem}
+\usepackage{fancyhdr,needspace}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black,citecolor=blue!45!black]{hyperref}
+\usepackage{listings}
+\hypersetup{pdftitle={AC-04: A certified upper-bound refinement},
+pdfauthor={Research write-up prepared with ChatGPT},
+pdfsubject={Partial result: asymptotic rank of the small Coppersmith-Winograd tensor},
+pdfkeywords={AC-04, asymptotic rank, tensor, partial result, exact certificate}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small AC-04 \; / \; Asymptotic tensor rank}
+\fancyhead[R]{\small Partial result, not a resolution}
+\fancyfoot[C]{\thepage}
+\newcommand{\AR}{\widetilde{R}}
+\newcommand{\BR}{\underline{R}}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\Id}{\operatorname{id}}
+\newcommand{\degto}{\trianglelefteq}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\lstset{basicstyle=\ttfamily\small,breaklines=true,columns=fullflexible,frame=single,rulecolor=\color{black!15}}
+\title{\textbf{AC-04: A certified upper-bound refinement}\\[5pt]
+\large Iterated slice extraction for the small Coppersmith--Winograd tensor}
+\author{Research write-up prepared with ChatGPT}
+\date{Request date: 13 September 2026}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries AC-04: A certified upper-bound refinement\\[7pt]}
+{\large Iterated slice extraction for the small Coppersmith--Winograd tensor}\\[14pt]
+{\small Research write-up prepared with ChatGPT \quad | \quad Request date: 13 September 2026}
+\end{center}
+\vspace{6pt}
+\thispagestyle{fancy}
+\begin{center}
+\fcolorbox{black!30}{black!3}{\parbox{0.93\linewidth}{
+\textbf{Scope and status.} This document does \emph{not} prove or disprove
+$\AR(\mathrm{cw}_2)=3$. It derives the strict upper bound
+$\AR(\mathrm{cw}_2)<3.923038$ from the speedup framework of Alman and Li,
+with an analytic parameter argument and exact rational certificates.
+The underlying speedup method is existing work. No claim of research priority,
+independent peer review, or proof-assistant verification is made.}}
+\end{center}
+
+\begin{abstract}
+For the tensor in repository problem AC-04, a rank-four normal form supplies a
+full, isolated slice degeneration starting from the third tensor power. Repeated
+squaring and re-extraction lead to a closed recurrence for dimensions and spectral
+constraints. An analytic monotonicity lemma reduces the entire relevant spectral
+parameter interval to the endpoint $2/3$. Three re-extractions, certified using
+integer cube roots and rational interval arithmetic, give
+$3\leq\AR(T)<3.923038$; the scalar endpoint is approximately
+$3.923037967885872253$. The same recurrence, even with arbitrarily many iterations,
+allows a formal scalar value of $3.9$. This last observation is an obstruction
+\emph{only to deductions from these scalar constraints}, not a lower bound on
+$\AR(T)$. The original equality question remains unproved in this work.
+\end{abstract}
+
+\section{The question and the result actually established}
+The tensor is
+\begin{equation}\label{eq:T}
+T=\sum_{i=1}^{2}\bigl(e_0\otimes e_i\otimes e_i
++e_i\otimes e_0\otimes e_i+e_i\otimes e_i\otimes e_0\bigr)
+\in\C^3\otimes\C^3\otimes\C^3.
+\end{equation}
+All tensor powers in this document are grouped, three-mode Kronecker powers:
+the first factors are grouped together, and likewise the second and third.
+The question is whether
+\begin{equation}\label{eq:target}
+\AR(T):=\lim_{k\to\infty}R(T^{\otimes k})^{1/k}=3.
+\end{equation}
+This is the exact target in AC-04 \cite{repo}, not the assertion that some fixed
+power has rank or border rank $3^k$.
+
+\begin{theorem}[Upper-bound refinement]\label{thm:main}
+For the tensor \eqref{eq:T},
+\[
+\boxed{\qquad 3\leq\AR(T)<3.923038.\qquad}
+\]
+More precisely, $\AR(T)\leq\beta$, where $\beta$ is the unique nonnegative solution
+of the scalar equation in Section~\ref{sec:certificate}, and
+\[
+3.92303796788587225299<\beta<3.92303796788587225301.
+\]
+\end{theorem}
+
+The source benchmark is the bound $\AR(T)<3.931$ of Alman and Li
+\cite{alman}. Their framework explicitly permits further iteration. The present
+calculation changes the initial tensor power to three and makes the iteration
+and endpoint certification explicit; it is not a new speedup theorem.
+Their Table~1, using initial power four for the quoted second-method bound,
+reports $3.930872$. This comparison is to the displayed benchmark, not an
+assertion that all unpublished or subsequent optimizations have been ruled out.
+
+The equality in \eqref{eq:target} is known to imply $\omega=2$
+\cite[Theorem 1.2]{alman}. We do not use that implication to dismiss the problem,
+and we do not assert its converse. The stronger equality is simply not a
+conclusion of the proof below.
+
+\section{An exact rank-four normal form}
+Let
+\[
+P=\sum_{\sigma\in S_3}
+ a_{\sigma(1)}\otimes a_{\sigma(2)}\otimes a_{\sigma(3)},
+\]
+where $a_1,a_2,a_3$ is the standard basis of $\C^3$.
+Set $w_1=e_0$, $w_2=e_1+\mathrm i e_2$, and $w_3=e_1-\mathrm i e_2$.
+Then
+\[
+w_2\otimes w_3+w_3\otimes w_2
+=2(e_1\otimes e_1+e_2\otimes e_2),
+\]
+so, for the invertible map $L a_i=w_i$,
+\begin{equation}\label{eq:normal}
+T=\tfrac12L^{\otimes3}P.
+\end{equation}
+Nonzero scalar factors and invertible changes of basis preserve rank, border
+rank, and asymptotic rank. It is therefore enough to work with $P$.
+
+Define
+\[
+v_0=(1,1,1)^\mathsf T,\quad v_1=(1,-1,-1)^\mathsf T,\quad
+v_2=(-1,1,-1)^\mathsf T,\quad v_3=(-1,-1,1)^\mathsf T.
+\]
+A coefficient check gives the exact decomposition
+\begin{equation}\label{eq:rankfour}
+P=\frac14\sum_{\ell=0}^3v_\ell\otimes v_\ell\otimes v_\ell.
+\end{equation}
+Indeed, the coefficient is one when all three indices differ, and zero
+otherwise. In particular, $R(T)\leq4$.
+
+The three slices of a flattening of $P$ are linearly independent: each has its
+nonzero entries on a different pair of off-diagonal positions. Thus every
+flattening of $P$ has rank three. Flattening commutes with the grouped tensor
+product, and matrix ranks multiply. Consequently,
+\[
+R(T^{\otimes k})\geq3^k\quad(k\geq1).
+\]
+Submultiplicativity of tensor rank makes $\log R(T^{\otimes k})$ subadditive;
+its normalized limit is its infimum. This proves both existence of the
+asymptotic-rank limit and the lower bound in Theorem~\ref{thm:main}.
+
+For extraction, let $V=[v_0\;v_1\;v_2\;v_3]$ and
+$D=\diag(1,1,-1,-1)$. Direct multiplication gives
+\begin{equation}\label{eq:sign}
+VDV^\mathsf T=
+\begin{pmatrix}0&0&0\\0&0&4\\0&4&0\end{pmatrix}=XY^\mathsf T,
+\qquad
+X=\begin{pmatrix}0&0\\4&0\\0&4\end{pmatrix},\quad
+Y=\begin{pmatrix}0&0\\0&1\\1&0\end{pmatrix}.
+\end{equation}
+All four diagonal coefficients in $D$ are nonzero, while the contracted image
+has rank two. This is the finite algebra needed below.
+
+\section{The extraction mechanism and its hypotheses}
+We spell out the relevant mechanism so the numerical recurrence is not treated
+as a free-standing conjecture. It is the one-slice specialization of the
+free-lunch construction in \cite[Section 5]{alman}.
+
+Write
+\[
+D_r=\sum_{i=1}^r a_i\otimes b_i\otimes c_i,
+\qquad L_s=\sum_{i=1}^s u_i\otimes v_i\otimes w.
+\]
+Thus $D_r$ is diagonal and $L_s$ has dimensions $(s,s,1)$; in matrix multiplication
+notation it is $\langle1,s,1\rangle$. Put $L_0=0$.
+The notation $K\degto S$ means that $K$ is a degeneration of $S$, with maps
+allowed to have rational-function coefficients in a degeneration parameter.
+
+\subsection{A kernel-compression lemma}
+\begin{lemma}\label{lem:extract}
+Suppose maps $A,B,C$ send a tensor $S$ to $K$, and the first two target dimensions
+are $d_A,d_B$. Let $f$ be a functional on the third source space such that
+\[
+(A\otimes B\otimes f)S=0.
+\]
+If the source contraction $H=(\Id\otimes\Id\otimes f)S$ has matrix rank $M$,
+then $S$ degenerates to $K\oplus L_t$ for every positive integer
+$t\leq M-d_A-d_B$.
+The new slice is isolated in its third mode. Its source fullness index is $M$.
+The statement also applies over a rational-function field and can be composed
+with a degeneration to $K$.
+\end{lemma}
+\begin{proof}
+Regard rows of $A,B$ as functionals on the respective source spaces. Let
+\[
+E=\{u:uHB^\mathsf T=0\},\qquad
+F=\{v:AHv^\mathsf T=0\}.
+\]
+Their codimensions are at most $d_B,d_A$. Restricting a matrix to a subspace of
+codimension $c$ on either side decreases its rank by at most $c$. Hence the
+restriction of $H$ to $E\times F$ has rank at least $M-d_A-d_B$.
+Choose row maps $A',B'$ from these subspaces and then restrict and normalize a
+rank-$t$ submatrix so that
+$(A'\otimes B'\otimes f)S=L_t$.
+
+Augment the three maps to $(A,A')$, $(B,B')$, and $(C,f)$. There are eight
+blocks indexed by $1,2$ in the three modes. The $111$ block is $K$ and the
+$222$ block is $L_t$. By construction, blocks $112,122,212$ vanish identically.
+Assign weights $(1,\lambda)$ to the two first-mode blocks, the same weights
+to the second-mode blocks, and weights $(\lambda^2,1)$ to the third-mode
+blocks. Divide the resulting tensor by $\lambda^2$.
+The $111$ and $222$ blocks survive. Blocks $121$ and $211$ have an extra factor
+$\lambda$, and block $221$ an extra factor $\lambda^2$; they disappear.
+This proves the degeneration.
+
+Every block ending in the new third-mode coordinate, other than $222$, is
+identically zero even before taking the limit. This is isolation. The
+functional selecting that coordinate is a nonzero scalar multiple of $f$, so
+its contraction on the \emph{source} still has rank $M$; this is fullness index
+$M$.
+
+For rational-function input maps, perform these linear-algebra operations over
+that field. Normalize the extracted rank-$t$ matrix before taking the limit,
+so that rank is not lost in its leading coefficient. The finitely many entries
+of all maps have finite pole orders. Replacing the new parameter by a
+sufficiently high power of the original one makes every unwanted block tend
+to zero. The desired $K$ block retains its original limit, and the normalized
+slice stays constant. Isolation remains exact, and source contraction rank is
+unchanged over the rational-function field.
+\end{proof}
+
+\subsection{Why full and isolated are essential}
+For a degeneration $K\oplus L_t\degto S$, with maps $A_\lambda,B_\lambda,C_\lambda$,
+call the distinguished $L_t$ \emph{isolated} if the third-mode coordinate
+selecting it has identically zero coefficients outside its own first/second-mode
+block before the limit. Call it \emph{full} when the associated contraction of
+$S$ has rank equal to each of the first two source dimensions.
+These are properties of the maps defining the degeneration, not merely of the
+limiting direct sum.
+
+Tensor products preserve both properties: the relevant source contraction is a
+Kronecker product, so ranks multiply; and an off-block contribution to the
+product's distinguished third coordinate contains an identically zero factor.
+This is the mechanism also formalized in \cite[Propositions 5.1--5.6]{alman}.
+Deleting a full, isolated slice leaves its source functional satisfying the
+zero-contraction hypothesis of Lemma~\ref{lem:extract}. Without isolation, an
+$O(\lambda)$ cross-block term would not suffice for this argument.
+
+\section{The base degeneration: dimensions 27, 18, and 72}\label{sec:base}
+Use the rank-four decomposition \eqref{eq:rankfour} three times. Thus
+$P^{\otimes3}$ is a restriction of $D_{64}$ with first two maps
+$A=V^{\otimes3}$ and third map $4^{-3}V^{\otimes3}$.
+The source third-mode functional with coefficient matrix $D^{\otimes3}$ has
+64 nonzero entries, and its image contraction is
+\[
+A D^{\otimes3}A^\mathsf T
+=(VDV^\mathsf T)^{\otimes3}
+=X^{\otimes3}(Y^{\otimes3})^\mathsf T,
+\]
+of rank $2^3=8$.
+
+Adjoin $L_8$ to the source. Map its first two modes by $X^{\otimes3}$ and
+$Y^{\otimes3}$, and its third mode by zero for the map onto $P^{\otimes3}$.
+Extend the chosen third functional with coefficient $-1$ on the $L_8$ slice.
+The contracted image cancels exactly. On the source, the contraction matrix is
+\[
+H=D^{\otimes3}\oplus(-I_8),
+\]
+which is nonsingular of size 72. Lemma~\ref{lem:extract}, with $d_A=d_B=27$,
+yields a full and isolated degeneration
+\begin{equation}\label{eq:base}
+U_0:=P^{\otimes3}\oplus L_{18}\degto S:=D_{64}\oplus L_8,
+\qquad 18=72-2\cdot27.
+\end{equation}
+It holds in all three slice orientations, because $P$ is symmetric in its modes.
+
+The file \texttt{code/algebra\_check.py} checks the complete finite linear
+algebra here using exact SymPy matrices. The two annihilator spaces have
+dimension 45. Their contracted $45\times45$ matrix has rank 18; the certificate
+supplies an $18\times18$ minor with determinant $-1$. Thus the guaranteed slice
+size is realized by this explicit base construction, not inferred from a
+floating-point numerical rank.
+
+\Needspace{18\baselineskip}
+\section{Repeated squaring and re-extraction}\label{sec:iteration}
+\begin{proposition}\label{prop:recurrence}
+There are degenerations
+\[
+U_j=K_j\oplus L_{t_j}\degto S^{\otimes2^j}\qquad(j\geq0),
+\]
+whose distinguished slices are full and isolated. The first two dimensions of
+$K_j$ are $d_j$, and those of the source are $M_j$, where
+\begin{align}\label{eq:dimensions}
+(d_0,t_0,M_0)&=(27,18,72),\\
+d_{j+1}&=d_j^2+2d_jt_j,\nonumber\\
+t_{j+1}&=t_j^2+2d_j^2,\nonumber\\
+M_{j+1}&=M_j^2=t_{j+1}+2d_{j+1}.\nonumber
+\end{align}
+The third dimension of $K_j$ need not equal $d_j$.
+\end{proposition}
+\begin{proof}
+The base case is \eqref{eq:base}. Square the degeneration at step $j$ and
+separate its distinguished summand $L_{t_j^2}$. The remaining tensor is
+\[
+K_{j+1}=K_j^{\otimes2}\oplus(K_j\otimes L_{t_j})
+\oplus(L_{t_j}\otimes K_j),
+\]
+whose first two dimensions are $d_j^2+2d_jt_j$.
+The removed slice has source fullness $M_j^2$ and is isolated. Its source
+functional therefore meets the cancellation condition after its image
+variables are removed. Re-extract with Lemma~\ref{lem:extract} to obtain
+\begin{align*}
+t_{j+1}&=M_j^2-2(d_j^2+2d_jt_j)\\
+&=(t_j+2d_j)^2-2d_j^2-4d_jt_j=t_j^2+2d_j^2.
+\end{align*}
+The new slice is again full and isolated. This proves the induction, including
+$M_{j+1}=t_{j+1}+2d_{j+1}$.
+\end{proof}
+
+This is the repeated form of the mechanism in \cite[Theorem 6.2]{alman}.
+There is a useful exact closed form:
+\begin{equation}\label{eq:closed}
+d_j=\frac{72^{2^j}-(-9)^{2^j}}3,\qquad
+t_j=\frac{72^{2^j}+2(-9)^{2^j}}3,\qquad M_j=72^{2^j}.
+\end{equation}
+Indeed, both $2d_j+t_j$ and $t_j-d_j$ are squared by the recurrence, with initial
+values 72 and $-9$. The first values are
+\begin{center}\small
+\begin{tabular}{rrrr}
+\toprule
+$j$&$d_j$&$t_j$&$M_j$\\\midrule
+0&27&18&72\\
+1&1,701&1,782&5,184\\
+2&8,955,765&8,962,326&26,873,856\\
+3&240,734,697,754,005&240,734,740,800,726&722,204,136,308,736\\
+\bottomrule
+\end{tabular}
+\end{center}
+The large dimensions are tracked symbolically; no tensor of these dimensions
+is explicitly allocated in the computation.
+
+\Needspace{10\baselineskip}
+\section{Turning the degenerations into scalar bounds}\label{sec:spectral}
+We use Strassen's asymptotic-spectrum duality in its tensor form, as stated and
+applied in \cite[Section 4]{alman}. Precisely, for complex tensors there is a
+family of spectral points $\phi$ such that
+\[
+\AR(P)=\max_\phi\phi(P).
+\]
+A spectral point is additive for direct sums, multiplicative for grouped tensor
+products, monotone under degeneration, and normalized by $\phi(D_r)=r$.
+For the three orientations of $L_s$, its values are $s^{\theta_1}$,
+$s^{\theta_2}$, $s^{\theta_3}$, with
+\begin{equation}\label{eq:theta}
+0\leq\theta_i\leq1,\qquad\theta_1+\theta_2+\theta_3\geq2.
+\end{equation}
+These are standard external theorems used here, not assertions that the
+attached code proves. In particular, at least one orientation has
+$\theta\in[2/3,1]$.
+
+Fix a spectral point and choose that orientation. Write
+\[
+z=\phi(P),\qquad x=z^3,\qquad h(\theta)=64+8^\theta.
+\]
+The exact rank-four upper bound gives $0\leq z\leq4$, hence $0\leq x\leq64$.
+Define
+\begin{align}\label{eq:p}
+p_0(x,\theta)&=x+18^\theta,\\
+p_{j+1}(x,\theta)&=p_j(x,\theta)^2-t_j^{2\theta}+t_{j+1}^{\theta}.
+\nonumber
+\end{align}
+The subtraction removes precisely the square of the old distinguished slice,
+which is replaced by the new one. Additivity and multiplicativity give
+$\phi(U_j)=p_j(x,\theta)$. Consequently every spectral point obeys
+\begin{equation}\label{eq:spectralconstraint}
+p_j(x,\theta)\leq h(\theta)^{2^j}\qquad(j\geq0).
+\end{equation}
+Although the displayed recursion subtracts a constant, $p_j$ is the value of an
+actual direct sum: as a polynomial in $x$, all its coefficients are
+nonnegative, its constant term is $t_j^\theta$, and it is strictly increasing
+for $x\geq0$.
+
+\subsection{An analytic endpoint lemma}
+Numerically searching for the worst $\theta$ would not certify an interval of
+parameters. The next lemma eliminates that search.
+
+\begin{lemma}\label{lem:endpoint}
+For fixed $x\in[0,64]$ and each $j\geq0$, the function
+\[
+q_j(x,\theta)=\frac{p_j(x,\theta)}{h(\theta)^{2^j}}
+\]
+is strictly increasing for $\theta>0$.
+\end{lemma}
+\begin{proof}
+For $j=0$, the numerator of $\partial q_0/\partial\theta$, after multiplying
+by the positive denominator $h^2$, is
+\[
+64\,18^\theta\log18-x\,8^\theta\log8
++18^\theta8^\theta\log(18/8).
+\]
+It is strictly positive: $x\leq64$, $18>8$, and $\theta>0$.
+
+Normalize the recursion to obtain
+\begin{equation}\label{eq:q}
+q_{j+1}=q_j^2+E_j(\theta),\qquad
+E_j(\theta)=\frac{t_{j+1}^{\theta}-t_j^{2\theta}}
+                 {h(\theta)^{2^{j+1}}}.
+\end{equation}
+We have $t_{j+1}>t_j^2$ and, inductively from $t_0=18>8$,
+$t_j>8^{2^j}$. If $A>B>0$ and $\theta>0$, then
+\[
+\frac{d}{d\theta}\log(A^\theta-B^\theta)
+=\log B+\frac{A^\theta\log(A/B)}{A^\theta-B^\theta}>\log B.
+\]
+On the other hand, $h'/h<\log8$. Apply these inequalities with
+$A=t_{j+1}$ and $B=t_j^2$. They imply
+\[
+\frac{E'_j(\theta)}{E_j(\theta)}
+>2\log t_j-2^{j+1}\log8>0.
+\]
+Thus $E_j$ is positive and strictly increasing. Since $q_j$ is positive,
+\eqref{eq:q} proves the claim by induction.
+\end{proof}
+
+For the chosen orientation $\theta\geq2/3$, equations
+\eqref{eq:spectralconstraint} and Lemma~\ref{lem:endpoint} imply
+\begin{equation}\label{eq:endpointconstraint}
+p_j(z^3,2/3)\leq68^{2^j}.
+\end{equation}
+This is an \emph{upper} bound: monotonicity in $\theta$ makes the endpoint
+constraint weaker, so every actual spectral point must satisfy it.
+No permutation-invariance of $\phi$ was assumed; the symmetry of $P$ supplies
+three separate oriented degenerations.
+
+\section{Exact certificate for the strict bound}\label{sec:certificate}
+Define $\beta$ by
+\begin{equation}\label{eq:beta}
+p_3(\beta^3,2/3)=68^8.
+\end{equation}
+The left side is strictly increasing in $\beta\geq0$. The certified bracket
+below proves existence and uniqueness of the nonnegative root.
+Every spectral value $z$ satisfies \eqref{eq:endpointconstraint}, so
+$z\leq\beta$. Duality gives $\AR(P)\leq\beta$.
+
+Only cube roots of positive integers are needed for evaluation, because
+$t^{2/3}=\sqrt[3]{t^2}$. For any nonnegative integer $N$, let
+\[
+a=\left\lfloor\sqrt[3]{N\,10^{120}}\right\rfloor.
+\]
+Integer comparisons determine $a$ exactly. Then
+\[
+\frac{a}{10^{40}}\leq\sqrt[3]{N}\leq\frac{a+1}{10^{40}},
+\]
+with equality handled exactly for perfect cubes. Interval addition,
+subtraction, squaring, and division by positive rational numbers preserve
+rigorous enclosures.
+
+The standard-library checker \texttt{code/certify.py} propagates these intervals
+through \eqref{eq:p}. At the rational number $\alpha=3.923038$, it proves
+\[
+\frac{p_3(\alpha^3,2/3)}{68^8}>1.
+\]
+For a readable indication of the margin, the enclosed value is approximately
+\[
+1.0000001724140039588978237928635588.
+\]
+The comparison with one is made using exact rational endpoints, not this
+rounded decimal. It follows that $\beta<3.923038$.
+
+The same checker independently proves the two strict inequalities
+\begin{align*}
+p_3\bigl((3.92303796788587225299)^3,2/3\bigr)&<68^8,\\
+p_3\bigl((3.92303796788587225301)^3,2/3\bigr)&>68^8.
+\end{align*}
+Both inputs here are terminating rationals. These checks give the bracket in
+Theorem~\ref{thm:main}. Combining it with the flattening lower bound completes
+the proof of that theorem.
+
+\subsection{Numerical progression and its proper interpretation}
+For context, the scalar roots for successive values of $j$ are shown below.
+Rows not used in the exact certificate are exploratory high-precision
+evaluations, not additional computer-assisted theorems.
+\begin{center}
+\begin{tabular}{rl}
+\toprule
+Re-extractions $j$ & Initial power $n=3$: endpoint root\\\midrule
+0 & $3.939328446458942411\ldots$\\
+1 & $3.923413930957849239\ldots$\\
+2 & $3.923038786084391559\ldots$\\
+3 & $3.923037967885872253\ldots$ \quad(exact bracket certified)\\
+4 & $3.923037967878664608\ldots$\\
+5 & $3.923037967878664608\ldots$\\\bottomrule
+\end{tabular}
+\end{center}
+For comparison, starting with $n=4$ gives endpoint values approximately
+$3.9334837730$ at $j=0$ and $3.9308711169$ at $j=1$, consistent with the
+upward-rounded benchmark in \cite[Table 1]{alman}. The initial power that is
+best before re-extraction need not remain best after it. No global optimality
+over initial powers, mixing patterns, or other degeneration methods is claimed.
+
+The step $j=3$ involves a $24$th power of $P$ within a much larger direct sum.
+This does \emph{not} provide an explicit assertion
+$R(P^{\otimes24})\leq3.923038^{24}$. The argument passes from direct-sum
+constraints to asymptotic rank through spectral duality. Confusing these two
+claims would invalidate the interpretation of the result.
+
+\section{A rigorous limitation of this particular recurrence}\label{sec:barrier}
+The rapid apparent numerical stabilization has an analytic counterpart.
+We give a deliberately modest threshold, $3.9$, for which a simple uniform
+argument works.
+
+\begin{proposition}[Method-local scalar obstruction]\label{prop:barrier}
+The constraints \eqref{eq:spectralconstraint} for all $j\geq0$, generated by the
+$n=3$ binary re-extraction family in all three orientations and supplemented by
+\eqref{eq:theta} and $0\leq z\leq4$, admit the formal assignment
+\[
+z=39/10,\qquad \theta_1=\theta_2=\theta_3=2/3.
+\]
+Therefore these constraints alone cannot imply $z<3.9$, and in particular
+cannot establish the target $\AR(P)=3$.
+\end{proposition}
+\begin{proof}
+Put $x=(39/10)^3$, $h=68$, and $c=39/40$. Write $q_j=q_j(x,2/3)$.
+The exact checker verifies
+\[
+q_0=\frac{(39/10)^3+18^{2/3}}{68}<c,
+\qquad
+E_0=\frac{1782^{2/3}-18^{4/3}}{68^2}<c-c^2=\frac{39}{1600}.
+\]
+For reference, these values are approximately $0.9733424332$ and
+$0.02158547644$. The exact comparisons, not the decimal displays, are used.
+
+For $j\geq1$, formula \eqref{eq:closed} gives $t_{j+1}\leq72^{2^{j+1}}$, hence
+\begin{align*}
+0<E_j(2/3)
+&<\frac{t_{j+1}^{2/3}}{68^{2^{j+1}}}
+\leq\left(\frac{72^{2/3}}{68}\right)^{2^{j+1}}\\
+&<\left(\frac9{34}\right)^4<\frac{39}{1600}.
+\end{align*}
+Here $72^{2/3}<18$ follows from the integer inequality $72^2<18^3$.
+The last comparison is rational and exact. If $q_j<c$, the recurrence gives
+$q_{j+1}=q_j^2+E_j<c^2+(c-c^2)=c$. Thus $q_j<c<1$ for every $j$.
+All orientations have the same chosen exponent, so all displayed constraints
+are satisfied, as are $\theta_1+\theta_2+\theta_3=2$ and $z\leq4$.
+\end{proof}
+
+\textbf{This is not a tensor lower bound.} We have not constructed a spectral
+point with $\phi(P)=3.9$. A feasible assignment for a subset of the necessary
+spectral inequalities need not extend to a genuine spectral point on all
+tensors. Accordingly, Proposition~\ref{prop:barrier} says nothing of the form
+$\AR(P)\geq3.9$. Its use is to identify a precise missing ingredient: more
+iterations of these same scalar inequalities cannot close the gap to three.
+
+\section{What remains unproved, and two structural reformulations}
+A complete positive solution still needs to establish the quantified statement
+\begin{equation}\label{eq:quantifier}
+\text{for every }\varepsilon>0\text{ there exists }k\geq1\text{ such that }
+R(T^{\otimes k})<(3+\varepsilon)^k.
+\end{equation}
+By submultiplicativity this is equivalent to \eqref{eq:target}. Equivalently,
+one needs the upper growth estimate $R(T^{\otimes k})=3^{k+o(k)}$.
+Replacing rank by border rank leads to the same asymptotic target, using the
+standard rank/border-rank asymptotic relation discussed in \cite{alman}.
+No such estimate is supplied here.
+
+Two elementary descriptions locate the issue without asserting that it is
+solved. First, identify the three indices with the three nonzero elements of
+$G=(\mathbb Z/2\mathbb Z)^2$. Then the support of $P$ is exactly
+\[
+\{(a,b,c)\in(G\setminus\{0\})^3:a+b+c=0\}.
+\]
+Thus $P^{\otimes k}$ is a restricted group-convolution tensor. The ambient group
+has $4^k$ elements while each restricted mode has $3^k$ elements. An algorithm
+with $3^{k+o(k)}$ bilinear multiplications for this restricted convolution would
+prove the desired upper bound. The ambient Fourier decomposition merely
+recovers the four-term construction; it does not provide that improvement.
+This support identification follows by checking the three possible nonzero
+values in one coordinate.
+
+Second, index a cyclic group by $0,1,2$ and write
+\[
+C_3=\sum_{a+b+c=0\;({\rm mod}\,3)}e_a\otimes e_b\otimes e_c.
+\]
+Its nine terms consist of the six terms of $P$ (with indices relabeled) and
+three diagonal terms. Hence
+\[
+P=C_3-D_3.
+\]
+A Fourier decomposition gives $R(C_3)=3$. It is not valid to infer
+$\AR(C_3-D_3)\leq3$ from this identity: subtraction is not a tensor restriction,
+and asymptotic rank has no subtraction rule.
+
+There is even a small obstruction to a tempting diagonal degeneration of
+this identity. Suppose local monomial weights $a_i,b_j,c_k$ preserve all six
+permutation terms at a common total weight $m$. Swapping indices in those
+terms forces $a_i-b_i$ to be constant, and likewise $a_i-c_i$ to be constant.
+The weights of the three unwanted diagonal terms then have sum $3m$.
+They cannot all be strictly greater than $m$, so this local weighting alone
+cannot kill all three diagonal terms while preserving all six desired ones.
+This observation excludes only this elementary diagonal-weighting attempt;
+it does not exclude general degenerations, restrictions of larger powers,
+or a positive solution to AC-04.
+
+Finally, the known finite result $\BR(T^{\otimes2})=16$ \cite{conner} cannot
+be promoted to $\AR(T)=4$. The asymptotic rank is an infimum over all powers.
+Neither this finite lower bound nor the bound proved in this report resolves
+which point in the surviving interval is the asymptotic rank.
+
+\section{Audit, reproducibility, and delivery scope}
+The theorem proof uses an existing asymptotic-spectrum theorem and the
+slice-extraction mechanism, with their exact roles stated in
+Sections~3--6. The new calculations are the initial parameter choice,
+explicit repeated recurrence, all-parameter endpoint proof, exact bound
+certificate, and the limited scalar obstruction. Priority for these refinements
+has not been established by the literature search.
+
+The scalar certificate uses only the Python standard library. The separate
+finite-matrix audit requires SymPy; it was run with version 1.14.0.
+The following commands reproduce the supplied checks from the package root:
+\begin{lstlisting}
+python3 code/certify.py --output results/exact_certificate.json
+python3 code/algebra_check.py --output results/algebra_certificate.json
+(cd code && python3 -m unittest -v test_certify.py)
+\end{lstlisting}
+The delivered run passes eight regression tests and both exact certificate
+programs. The main numeric test uses no floating-point comparison. The
+high-precision exploratory table is generated separately and is not used as
+a proof of a strict inequality.
+
+No proof assistant was run. No independent referee has audited the full
+argument. Passing the algebra and interval checks is not equivalent to either
+formal verification or outside peer review. The local status of this package
+is \textbf{partial result}; the repository itself was not edited, and this
+package must not be reported as a solution or disproof of AC-04. The repository's
+resolution guidance likewise distinguishes supporting results from a
+complete resolution of the original target \cite{contributing}.
+
+\clearpage
+\begin{thebibliography}{9}
+\bibitem{repo}
+OpenProblemsInNLA, \emph{AC-04: Asymptotic rank of the small
+Coppersmith--Winograd tensor}, canonical problem entry, consulted for this
+request.\newline
+\url{https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/main/arithmetic-and-complexity/AC-04}
+
+\bibitem{alman}
+J. Alman and B. Li, \emph{Asymptotic Rank Speedup Theorems, Revisited}.
+41st Computational Complexity Conference (CCC 2026), LIPIcs 383,
+36:1--36:42, published 23 July 2026.
+DOI: \href{https://doi.org/10.4230/LIPIcs.CCC.2026.36}{10.4230/LIPIcs.CCC.2026.36}.
+Detailed theorem locators in this report refer to the arXiv v1 exposition:
+Theorem 4.1 and Propositions 4.1--4.2 (spectrum),
+Sections 5.2--5.3 (extraction, fullness and isolation),
+Theorems 6.1--6.2 (speedups), and Section 7.1/Table 1 (CW bounds).\newline
+\url{https://arxiv.org/html/2605.21738v1}
+
+\bibitem{conner}
+A. Conner, H. Huang, and J. M. Landsberg,
+\emph{Bad and good news for Strassen's laser method: Border rank of the
+$3\times3$ permanent and strict submultiplicativity},
+arXiv:2009.11391 (2020), Theorem 1.1.\newline
+\url{https://arxiv.org/abs/2009.11391}
+
+\bibitem{contributing}
+OpenProblemsInNLA, \emph{Contributing}, especially ``Reporting a resolution''
+and the distinction between supporting lemmas and complete target verification.\newline
+\url{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/CONTRIBUTING.md}
+\end{thebibliography}
+\end{document}

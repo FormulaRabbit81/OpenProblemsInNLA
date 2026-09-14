@@ -8,7 +8,7 @@
 **Importance:** broadly interesting  
 **Rating rationale:** Extreme because explicit superlinear tensor lower bounds remain far below generic quadratic behavior; broad importance is the construction of hard instances for bilinear computation and circuit lower bounds.  
 **Topic:** explicit lower bounds for tensor decompositions  
-**Last checked:** 2026-09-10  
+**Last checked:** 2026-09-14  
 **Status:** Open  
 
 ## Context and notation
@@ -48,3 +48,11 @@ statement. **Admitted: no resolution located.**
 ## Status check — 2026-09-10
 
 Rechecked the [2025 Landsberg–Michałek paper](https://www.theoryofcomputing.org/articles/v021a013/v021a013.pdf), and searched for explicit superlinear or quadratic border-rank constructions. The July 2026 [Arithmetic circuit lower bounds from sumset expansion](https://arxiv.org/abs/2607.15848), also [ECCC TR26-138](https://eccc.weizmann.ac.il/report/2026/138/), gives semi-explicit tensors over number fields. That does not meet the displayed polynomial-time rational-output requirement. No qualifying quadratic construction was located.
+
+## Reviewed research submission — 14 September 2026
+
+**Author:** Sidney Holden, Center for Computational Biology, Flatiron Institute, Simons Foundation. [Verified affiliation and submission record](../../references/holden-ac-2026-09-14/README.md).
+
+Theorems 2.1–5.3 prove compaction, conditional reductions and a scoped method ceiling. Section 6 supplies finite certificates for dimensions 2–9. A polynomial-time detecting family and all-dimension quadratic lower bound remain missing.
+
+**Status: Open.** [Report](../../references/holden-ac-2026-09-14/AC-06-submission.pdf) · [Independent AI-agent audit and limitations](../../references/holden-ac-2026-09-14/verification/review-ac05-ac06.md). AI assistance disclosed; no external human review, formal verification or Lean checks. Original target and prior-source credit retained.

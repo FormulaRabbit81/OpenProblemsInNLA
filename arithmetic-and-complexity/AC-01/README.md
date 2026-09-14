@@ -8,7 +8,7 @@
 **Importance:** broadly interesting  
 **Rating rationale:** Extreme because closing the exponent gap is a longstanding central barrier in algebraic algorithms; broad importance follows from matrix multiplication’s role throughout NLA and computational complexity.  
 **Topic:** arithmetic complexity of dense matrix multiplication  
-**Last checked:** 2026-09-10  
+**Last checked:** 2026-09-14  
 **Status:** Open  
 
 ## Problem statement
@@ -39,3 +39,11 @@ not a resolution. **Admitted: no resolution located.**
 ## Status check — 2026-09-10
 
 Rechecked [Dupont et al., August 2026](https://arxiv.org/abs/2608.16884), and searched for exponent-two proofs and newer matrix-multiplication bounds. Its reported bound is still strictly above two, at 2.371177. No proof of exponent two or a strict lower bound above two was located. Faster finite-size identities and improved numerical optimizations of existing bounds do not decide the asymptotic equality.
+
+## Reviewed research submission — 14 September 2026
+
+**Author:** Sidney Holden, Center for Computational Biology, Flatiron Institute, Simons Foundation. [Verified affiliation and submission record](../../references/holden-ac-2026-09-14/README.md).
+
+Sections 4–8 prove the auxiliary bound $`\widetilde R(\mathrm{cw}_2)<3.876919161`$, also relevant to [AC-04](../AC-04/README.md). The Section 10 scalar-tree obstruction is not a tensor-rank lower bound. Neither result proves $`\omega=2`$.
+
+**Status: Open.** [Report](../../references/holden-ac-2026-09-14/AC-01-submission.pdf) · [Independent AI-agent audit and limitations](../../references/holden-ac-2026-09-14/verification/review-ac01-ac02.md). AI assistance disclosed; no external human review, formal verification or Lean checks. Original target and prior-source credit retained.

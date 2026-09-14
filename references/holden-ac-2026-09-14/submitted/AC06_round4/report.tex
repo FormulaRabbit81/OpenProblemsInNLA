@@ -1,0 +1,569 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[letterpaper,margin=0.86in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array,longtable}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={AC-06: Certificate-preserving compaction and a nonlinear-method ceiling},pdfsubject={Partial mathematical research; not a completed AC-06 solution},pdfauthor={ChatGPT}}
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em}
+\setlength{\emergencystretch}{2em}
+\renewcommand{\arraystretch}{1.17}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\BR}{\underline R_{\C}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\height}{\operatorname{ht}}
+\newcommand{\bits}{\operatorname{bits}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\Var}{\mathcal V}
+\newcommand{\Witness}{\mathcal H}
+\newcommand{\KK}{\mathcal K}
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil}
+\title{\Large\bfseries AC-06: Certificate-preserving compaction\\and a nonlinear-method ceiling}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+\vspace{-2.5em}
+
+\textbf{Status: partial research, not a completed solution of AC-06.}
+The deterministic polynomial-time rational tensor construction with a proved quadratic complex border-rank lower bound is not established. The main positive result is a polynomial-time reduction: a short list detected by a bounded polynomial certificate can be converted to one integer tensor, without identifying the detected member or evaluating the certificate. The missing short list is not supplied.
+
+For a list $s_1,\ldots,s_L\in\Z^N$, degree bound $D$, and coefficient bound $H$, the construction returns $y\in\Z^N$ such that, simultaneously for every integer polynomial $P$ of those bounds,
+\[
+ \bigl(\exists h:\ P(s_h)\ne0\bigr)\quad\Longrightarrow\quad P(y)\ne0.
+\]
+There is no dimension increase. All computation and output lengths are polynomial in $N,L,D,\log H$ and the input coordinate bit length. Two explicit implementations are proved: Chinese remaindering and integer-valued interpolation.
+
+Within the retained controlled witness class, a second reduction removes the preceding unique-minimum and oddness requirements. For polynomially bounded integer weights, a nonzero bounded-coefficient pullback $P(t^{w_1},\ldots,t^{w_N})$ can be specialized at an explicitly bounded integer base. A unique monomial, an odd coefficient, and an efficient representation of $P$ are unnecessary. Nonzero pullback at the quadratic border-rank threshold remains unproved.
+
+A separate theorem concerns the \emph{published coloring-count threshold} for Kronecker--Koszul flattenings. Iterating the known $8n$ linear-rank-method bound gives a ceiling of
+\[
+ 11n-3
+\]
+on the border-rank lower bound obtainable directly from that threshold, for every tensor power and every permitted exterior-power pattern. An independent dimension argument gives the sometimes smaller ceiling $\ceil{n^{3/2}}+3(n-1)$. These are not upper bounds on tensor border rank, and do not cover sharpened thresholds or all nonlinear methods.
+
+The package includes exact finite certificates for the preceding shifted candidate in dimensions $2$ through $9$, forty passing new regression tests, editable source, and the unchanged third-round archive. The older $38$, $25$, and $16$ tests were rerun successfully. None of these checks is an independent review, a proof-assistant formalization, or an all-dimension quadratic lower bound. No novelty claim or repository status change is made.
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{The target and the retained certificate class}
+
+The public AC-06 statement asks for a deterministic algorithm that, given a positive integer $n$, writes all entries of $T_n\in\Q^{n\times n\times n}$ in polynomial time in $n$, with binary integer numerators and denominators, and proves
+\begin{equation}\label{eq:target}
+ \BR(T_n)\ge c n^2\qquad(n\ge n_0)
+\end{equation}
+for fixed $c>0$ and $n_0$. Border rank is defined over $\C$ using Euclidean limits of tensors of bounded exact rank \cite{repo}. Polynomially many field operations on enormously long integers do not meet this requirement.
+
+The third-round report \cite{round3} gave deterministic binary output with border rank greater than $n^2/12$, but its exact coefficient elimination costs $2^{O(n^3)}$ bit operations. It also supplied constant-alphabet output with a one-quarter quadratic bound and the same exponential-time limitation. No theorem below changes those construction costs to polynomial time.
+
+Write $N=n^3$, and index tensor coordinates by $\ell=i+nj+n^2k$ with $0\le i,j,k<n$. For $r\ge1$, define
+\begin{equation}\label{eq:phi}
+ \Phi_{n,r}(a,b,c)_{ijk}=\sum_{h=1}^{r}a_{hi}b_{hj}c_{hk},
+ \qquad \Phi_{n,r}:\C^{3nr}\longrightarrow\C^N.
+\end{equation}
+Its image is the set of tensors of rank at most $r$. Let $\Var_{n,r}$ be its Zariski closure. The Euclidean closure of the rank-at-most-$r$ tensors is contained in $\Var_{n,r}$.
+
+\begin{lemma}[Certificate principle]\label{lem:certificate}
+If $P\circ\Phi_{n,r}=0$ as a polynomial identity and $P(T)\ne0$, then $\BR(T)\ge r+1$.
+\end{lemma}
+\begin{proof}
+The identity makes $P$ vanish on every tensor of rank at most $r$. Polynomial continuity makes it vanish on every Euclidean limit of such tensors. A point where $P$ is nonzero is not in that closure.
+\end{proof}
+
+For an integer polynomial $P=\sum_\alpha c_\alpha x^\alpha$, define its coefficient height as $\height(P)=\max_\alpha|c_\alpha|$. The preceding work established the following precise existence result, reproved in Appendix~\ref{sec:height}.
+
+\begin{proposition}[Retained height-one witness]\label{prop:height}
+For every $n\ge2$, put
+\begin{equation}\label{eq:retained}
+ N=n^3,\qquad r=\floor{n^2/4},\qquad D=2^{16}N.
+\end{equation}
+There is a nonzero $P\in\Z[x_1,\ldots,x_N]$ with $\deg P\le D$, $\height(P)=1$, and $P\circ\Phi_{n,r}=0$.
+\end{proposition}
+
+Let $\Witness_n$ denote the set of all such nonzero height-one, degree-at-most-$D$ annihilators. Proposition~\ref{prop:height} says that this class is nonempty. It does \emph{not} say that the class has an efficient representation, or that its common zero set equals $\Var_{n,r}$. In particular, a point outside $\Var_{n,r}$ is not automatically known to be detected by a member of this bounded class. This distinction is essential in the list reduction.
+
+Polynomial pullback and degree bounds are established techniques in this setting \cite{kumarvolk}. The primary-source check also examined the 2026 Kronecker--Koszul framework \cite{dm} and the September 2026 border-apolarity work \cite{mandziuk}. They supplied relevant methods and finite examples, rather than the missing algorithm in \eqref{eq:target}. This bounded literature check is not a proof that a resolution cannot exist.
+
+\section{Short lists can be merged without selecting a good member}\label{sec:crt}
+
+The following result is independent of tensors. It is useful when a polynomial certificate is known to exist but is too large to compute.
+
+\begin{theorem}[Integer certificate-preserving compaction]\label{thm:crt}
+Let $s_1,\ldots,s_L\in\Z^N$, with $L,N\ge1$ and $|(s_h)_j|\le A$ for an integer $A\ge1$. Let $D\ge0$ and $H\ge1$ be integers. A deterministic algorithm returns $y\in\Z^N$ such that, for every $P\in\Z[x_1,\ldots,x_N]$ with $\deg P\le D$ and $\height(P)\le H$,
+\begin{equation}\label{eq:preserve}
+ \exists h\ P(s_h)\ne0\quad\Longrightarrow\quad P(y)\ne0.
+\end{equation}
+The algorithm receives the list, $D$, and $H$, but not $P$ or a detected index. Its bit time and output length are polynomial in $N,L,D,\log(H+1),\log(A+1)$.
+\end{theorem}
+
+\begin{proof}
+Put
+\[
+ U=\binom{N+D}{N},\qquad V=UH A^D,\qquad e=\floor{\log_2V}+1.
+\]
+There are at most $U$ possible monomials, and hence $|P(s_h)|\le V$. Set
+\begin{equation}\label{eq:moduli}
+ f=L!,\qquad a_h=1+hf,\qquad m_h=a_h^e\quad(1\le h\le L).
+\end{equation}
+The $a_h$ are pairwise coprime. Indeed, any common prime divisor $p$ of $a_i,a_j$, $i<j$, is coprime to $f$ but divides $(j-i)f$, and therefore divides $j-i\le L-1$. Then $p\le L$ and $p\mid f$, a contradiction. The moduli $m_h$ are consequently pairwise coprime. Also $a_h\ge2$, so $m_h\ge2^e>V$.
+
+Use the Chinese remainder theorem independently in each coordinate to choose
+\[
+ y_j\equiv(s_h)_j\pmod{m_h}\quad\text{for every }h,
+ \qquad 0\le y_j<M:=\prod_{h=1}^Lm_h.
+\]
+Since $P$ has integer coefficients, $P(y)\equiv P(s_h)\pmod{m_h}$. For a detected index, $P(s_h)$ is a nonzero integer of absolute value less than $m_h$. Thus it is nonzero modulo $m_h$, and $P(y)$ cannot be zero. This argument works simultaneously for every polynomial in the stated class.
+
+For the bit bound, use $U\le(D+1)^N$ and
+\[
+ e=O\bigl(1+\log H+N\log(D+1)+D\log A\bigr).
+\]
+Each $a_h$ has $O(L\log(L+1))$ bits. Therefore
+\begin{equation}\label{eq:crtbits}
+ \log_2 M=O\bigl(eL^2\log(L+1)\bigr).
+\end{equation}
+The $N$ output coordinates have at most $N(1+\log_2M)$ bits, apart from fixed-format delimiters and unit denominators. Factorials, integer powers, extended Euclidean computations, and CRT recombination all have polynomial bit cost in these bounds. No prime-generation algorithm is required.
+\end{proof}
+
+\begin{remark}[What is and is not preserved]
+The theorem is not a general border-rank monotonicity assertion for the map from a list to $y$. It preserves polynomial nonvanishing only when the degree and height promises apply. A polynomial vanishing at every listed point has no guarantee either way. The conclusion also does not require the list to hit every bounded polynomial: one detecting annihilator is enough for a tensor lower bound.
+\end{remark}
+
+\subsection{The resulting sufficient condition for AC-06}
+
+\begin{corollary}[Controlled-list reduction]\label{cor:list}
+Suppose a deterministic polynomial-time procedure outputs, for each sufficiently large $n$, a list of $L(n)=\poly(n)$ integer tensors $S_{n,h}$ of side $n$, each with polynomial-bit entries. Suppose one proves
+\begin{equation}\label{eq:listpremise}
+ \exists P_n\in\Witness_n\ \exists h:\quad P_n(S_{n,h})\ne0.
+\end{equation}
+Then AC-06 has a deterministic polynomial-time integer-output construction with $\BR(T_n)>n^2/4$. Neither $P_n$ nor the index $h$ has to be found by the algorithm.
+\end{corollary}
+\begin{proof}
+Apply Theorem~\ref{thm:crt} with $N=n^3$, $D=2^{16}n^3$, and $H=1$. All input bounds are polynomial in $n$, including $D$ as a numeric parameter and $\log A$. The resulting tensor has $P_n(T_n)\ne0$ by \eqref{eq:preserve}. Lemma~\ref{lem:certificate} gives the rank claim. A finite prefix of smaller dimensions can be assigned arbitrary rational tensors because AC-06 allows an $n_0$.
+\end{proof}
+
+The antecedent \eqref{eq:listpremise} is \textbf{not established}. A list merely known to contain a high-border-rank tensor does not automatically establish it: the height and degree of an equation detecting that tensor must also be controlled. More generally, the same reduction works with any annihilator family having polynomial degree and polynomial coefficient bit length, not only $\Witness_n$.
+
+This is a substantive change from requiring an efficient selector for a given list. Once \eqref{eq:listpremise} is proved for a short, efficiently generated list, selection is unnecessary and no factor-dimension blowup is incurred. It is not a construction of that list.
+
+\section{A second compactor by integer-valued interpolation}\label{sec:interpolation}
+
+The alternative below has the same logical guarantee but uses one polynomial curve through the listed points. It also returns integers for integer input, although its intermediate formula has a denominator.
+
+\begin{lemma}[A safe integer specialization]\label{lem:base}
+If $g(t)\in\Z[t]$ is nonzero and every coefficient has absolute value at most $C$, then $g(b)\ne0$ for every integer $b>C$ with $b\ge2$.
+\end{lemma}
+\begin{proof}
+Let $a_e t^e$ be the lowest nonzero term. The integer $g(b)/b^e$ is congruent to $a_e$ modulo $b$. Since $0<|a_e|<b$, this residue is nonzero.
+\end{proof}
+
+Index the candidates in this section by $s_0,\ldots,s_{L-1}$. For $L\ge2$, set
+\begin{equation}\label{eq:interpparams}
+ Q=(L-1)!,\qquad C=A2^{L-1}L!,\qquad U=\binom{N+D}{N},
+ \qquad B=\max\{L,1+UH C^D\}.
+\end{equation}
+Define an integer-coefficient curve by
+\begin{equation}\label{eq:interpf}
+ F_j(t)=\sum_{h=0}^{L-1}(-1)^{L-1-h}\binom{L-1}{h}(s_h)_j
+             \prod_{\substack{0\le m<L\\m\ne h}}(t-m).
+\end{equation}
+
+\begin{theorem}[Interpolation compaction]\label{thm:interpolation}
+With the hypotheses of Theorem~\ref{thm:crt}, the point
+\[
+ y_j=F_j(B)/Q
+\]
+belongs to $\Z^N$, satisfies \eqref{eq:preserve}, and can be computed in polynomial bit time in the same parameters. For $L=1$, simply return $s_0$.
+\end{theorem}
+\begin{proof}
+Evaluation at the nodes gives $F_j(h)=Q(s_h)_j$. The coefficient $\ell_1$ norm of each product in \eqref{eq:interpf} is
+\[
+ \prod_{m\ne h}(1+m)\le L!.
+\]
+Triangle inequality and $\sum_h\binom{L-1}{h}=2^{L-1}$ imply $\|F_j\|_1\le C$. Also $Q\le C$.
+
+For a bounded polynomial $P$, clear denominators in its restriction to this curve:
+\[
+ G(t)=Q^D P(F_1(t)/Q,\ldots,F_N(t)/Q)\in\Z[t].
+\]
+A term of degree $|\alpha|\le D$ contributes coefficient $\ell_1$ norm at most
+\[
+ |c_\alpha|Q^{D-|\alpha|}\prod_j\|F_j\|_1^{\alpha_j}\le H C^D.
+\]
+Summing at most $U$ terms gives $\|G\|_1\le UH C^D<B$. If $P(s_h)\ne0$, then $G(h)=Q^D P(s_h)\ne0$, so $G$ is a nonzero polynomial. Lemma~\ref{lem:base} implies $G(B)\ne0$, giving $P(y)\ne0$.
+
+To see that $y$ is integral, the Lagrange coefficient of $s_h$ at any integer $B\ge L$ is
+\begin{equation}\label{eq:intlagrange}
+ \frac{(-1)^{L-1-h}}{Q}\binom{L-1}{h}\prod_{m\ne h}(B-m)
+ =(-1)^{L-1-h}\binom{B}{h}\binom{B-h-1}{L-1-h}.
+\end{equation}
+The right side is an integer. Therefore the interpolation value is an integer linear combination of the input points.
+
+Finally,
+\begin{align*}
+ \log C&=O\bigl(\log A+L\log(L+1)\bigr),\\
+ \log B&=O\bigl(1+\log L+\log H+N\log(D+1)+D\log C\bigr).
+\end{align*}
+Since $\deg F_j\le L-1$, one has $|F_j(B)|\le C B^{L-1}$. Output lengths and exact evaluation costs are consequently polynomial. The maximum with $L$ in \eqref{eq:interpparams} handles $D=0$ and avoids an interpolation-node denominator of zero in the product-based implementation.
+\end{proof}
+
+For the list $(0,0),(1,0),(0,1)$ with $D=2,H=1$, this construction has
+\[
+ U=6,\quad Q=2,\quad C=24,\quad B=3457,
+ \qquad y=(-11943935,5973696).
+\]
+The tests enumerate all $3^6=729$ coefficient vectors in $\{-1,0,1\}$ for two-variable polynomials of degree at most two. Exactly $702$ are nonzero at one of the listed points, and all $702$ are nonzero at this output. The same exhaustive preservation test passes for the CRT output. This is a finite check of the theorem's implementation, not evidence of a suitable AC-06 list.
+
+\subsection{Rational-input extension}
+
+For rational candidates, let $q_0$ be a common denominator of all coordinates, and apply either integer construction to $z_h=q_0s_h$. A degree-at-most-$D$, height-at-most-$H$ integer polynomial $P$ becomes
+\[
+ R(z)=q_0^D P(z/q_0),
+ \qquad \height(R)\le Hq_0^D.
+\]
+If the integer compactor returns $z$, return $y=z/q_0$. Nonvanishing of $R(z)$ implies nonvanishing of $P(y)$. The bit length of a common denominator is bounded by the sum of the input denominator bit lengths, so all costs remain polynomial in the rational input size and $D,\log(H+1)$.
+
+\section{Specializing bounded-coefficient monomial curves}\label{sec:curves}
+
+The preceding report used a unique minimum-weight monomial with odd coefficient to prove nonvanishing at base two. Within a class with known degree and coefficient bounds, a larger base removes both extra conditions. This is not a claim that an unbounded-height witness from the old criterion automatically meets the new hypotheses.
+
+\begin{theorem}[Nonzero monomial-curve pullback suffices]\label{thm:curve}
+Let $P\in\Z[x_1,\ldots,x_N]$ have degree at most $D$ and coefficient height at most $H$. Let $w\in\N^N$ and set
+\[
+ b=1+H\binom{N+D}{N}.
+\]
+If
+\begin{equation}\label{eq:curvecondition}
+ P(t^{w_1},\ldots,t^{w_N})\not\equiv0,
+\end{equation}
+then $P(b^{w_1},\ldots,b^{w_N})\ne0$. With $W=\max_jw_j$, the integer point has
+\[
+ O\bigl(N(1+W\log b)\bigr)
+\]
+output bits and is computable in polynomial bit time in $N,D,W,\log(H+1)$.
+\end{theorem}
+\begin{proof}
+Under monomial substitution, coefficients belonging to the same weighted degree are added. At most $U=\binom{N+D}{N}$ original monomials contribute, so every coefficient of the resulting integer polynomial has absolute value at most $UH<b$. Under \eqref{eq:curvecondition} it is nonzero. Lemma~\ref{lem:base} gives the claim. The output estimate follows from $\log(b^{w_j})=w_j\log b$, and integer powers can be written with polynomial bit cost in this output bound.
+\end{proof}
+
+The change is strict. Consider
+\[
+ P(x_1,x_2)=x_1+x_2-x_1x_2,\qquad w=(1,1).
+\]
+The pullback is $2t-t^2$: its lowest weight is shared by two monomials, and their combined coefficient is even. At base two the evaluation is zero. The present construction uses $b=1+\binom{4}{2}=7$ and gives $P(7,7)=-35\ne0$.
+
+On the other hand, $P=x_1-x_2$ and $w=(1,1)$ have identically zero pullback. No choice of base repairs that failure. The theorem requires a nonzero polynomial restriction, not merely a nonzero multivariate polynomial.
+
+\begin{corollary}[Bounded-weight sufficient condition]\label{cor:weights}
+Suppose a deterministic polynomial-time algorithm outputs $w^{(n)}\in\N^{n^3}$ with $\max_jw_j^{(n)}=\poly(n)$, and one proves that for each sufficiently large $n$ some $P_n\in\Witness_n$ satisfies \eqref{eq:curvecondition} for this weight vector. Then
+\[
+ T_{n,j}=\left(1+\binom{n^3+2^{16}n^3}{n^3}\right)^{w_j^{(n)}}
+\]
+is a deterministic polynomial-time integer-output solution of AC-06 with $\BR(T_n)>n^2/4$.
+\end{corollary}
+\begin{proof}
+Use Theorem~\ref{thm:curve} and Lemma~\ref{lem:certificate}. The base is exponentially large in value but has $O(n^3)$ bits, since $D=2^{16}n^3$. Raising it to polynomially bounded weights retains polynomial output length. This differs from the earlier doubly large exponent encodings.
+\end{proof}
+
+No weight family satisfying this antecedent is proved here. The shifted family tested in Section~\ref{sec:finite} remains a candidate, not an instance of the corollary. A short list of weight vectors could also suffice: specialize every curve at the displayed base, then apply Corollary~\ref{cor:list}, provided a bounded witness has nonzero pullback on at least one curve. This removes selection of a successful curve, not the obligation to prove that one exists.
+
+The sufficient conditions in Corollaries~\ref{cor:list} and~\ref{cor:weights} concern \emph{one} annihilator detected somewhere. They do not require universal nonvanishing on every bounded polynomial. Thus they do not contradict the earlier output-bit obstruction for universal height-one avoidance.
+
+\section{The coloring-count Kronecker--Koszul criterion}\label{sec:kk}
+
+This section proves a limitation of a specified necessary inequality, not a limitation on tensor border rank itself. Let $T\in(\C^n)^{\otimes3}$ and choose a positive integer $k$. For each mode $i\in\{1,2,3\}$, partition $\{1,\ldots,k\}$ into blocks $\lambda_{ij}$ of sizes $t_{ij}$. Choose integers $p_{ij}\ge0$ satisfying $p_{ij}+t_{ij}\le n$; otherwise an exterior factor is zero and provides no test.
+
+The Kronecker--Koszul construction wedges the factors of $k$ copies according to these blocks, with auxiliary identity tensors on exterior powers. Its output factors have dimensions
+\begin{equation}\label{eq:factors}
+ a_{ij}=\binom n{p_{ij}+t_{ij}},\qquad
+ b_{ij}=\binom n{p_{ij}}.
+\end{equation}
+A classical flattening groups these factors into a matrix $M(T)$. Write
+\[
+ \rho=\prod_{i,j}\binom{n-t_{ij}}{p_{ij}}.
+\]
+Let $G$ have vertex set $\{1,\ldots,k\}$, putting an edge between vertices that share any block, and let $F_G(q)$ count proper colorings with $q$ labeled colors. The published criterion is \cite[Corollary 3.5]{dm}
+\begin{equation}\label{eq:published}
+ \BR(T)\le q\quad\Longrightarrow\quad\rank M(T)\le F_G(q)\rho.
+\end{equation}
+A direct certificate using this criterion requires the strict reverse inequality for the observed matrix rank.
+
+Keep the $k$ copies independent to obtain a $k$-linear map
+\[
+ \mathcal M(T_1,\ldots,T_k),\qquad M(T)=\mathcal M(T,\ldots,T).
+\]
+For any pure-tensor tuple, its matrix rank is at most $\rho$. To check this, in each block either the $t_{ij}$ vectors are dependent, giving zero, or extend them to a basis. The auxiliary $p_{ij}$-subsets disjoint from these vectors number $\binom{n-t_{ij}}{p_{ij}}$. Their products express the output as at most $\rho$ pure tensors. Every classical flattening therefore has rank at most $\rho$ on this tuple.
+
+\subsection{Iteration of the linear-rank-method bound}
+
+We use the following published theorem, in its three-factor case \cite[Theorem 3]{egow}:
+\begin{equation}\label{eq:egow}
+ \rank L(T)\le 8n\max_{u\ \mathrm{pure}}\rank L(u)
+\end{equation}
+for every linear map $L:(\C^n)^{\otimes3}\to\Mat_{a\times b}(\C)$ and every $T$. Rectangular matrices are covered by padding to square matrices with zeros. The theorem imposes no computational bound on $L$ or on the matrix dimensions.
+
+\begin{lemma}[Multilinear iteration]\label{lem:iterate}
+Let $\mathcal M$ be any $k$-linear matrix-valued map on $k$ copies of $(\C^n)^{\otimes3}$. If its rank is at most $\rho$ on every tuple of pure tensors, then
+\begin{equation}\label{eq:iterate}
+ \rank\mathcal M(T_1,\ldots,T_k)\le (8n)^k\rho
+\end{equation}
+for every tuple of arbitrary tensors.
+\end{lemma}
+\begin{proof}
+Fix every argument except the first and apply \eqref{eq:egow}. This bounds the rank by $8n$ times the maximum after replacing the first argument by a pure tensor. For each such first argument, fix all but the second and apply the same inequality. Repeating in all $k$ arguments gives $(8n)^k$ times the maximum on pure tuples, which is at most $\rho$. If a partially fixed map is zero, the corresponding inequality is automatic. Maxima exist because matrix ranks take finitely many integer values. There is no assumption that $k$ is fixed as $n$ grows.
+\end{proof}
+
+\begin{lemma}[Coloring lower bound]\label{lem:color}
+The graph $G$ above has maximum degree $\Delta\le3(n-1)$. For every integer $q>\Delta$,
+\[
+ F_G(q)\ge(q-\Delta)^k.
+\]
+\end{lemma}
+\begin{proof}
+A vertex belongs to one block in each mode, each of size at most $n$. Its neighbors lie in their union excluding the vertex, so there are at most $3(n-1)$. Color vertices in any fixed order. At each step at most $\Delta$ colors are forbidden by previously colored neighbors, leaving at least $q-\Delta$ choices. Multiply the lower bounds for the $k$ steps.
+\end{proof}
+
+\begin{theorem}[All-power linear ceiling for the coloring threshold]\label{thm:linearceiling}
+For every $n$, every $k$, every permitted pattern and auxiliary shifts, and every classical flattening in \eqref{eq:published}, the strict inequality
+\[
+ \rank M(T)>F_G(q)\rho
+\]
+is impossible for every $T$ and every integer $q\ge8n+\Delta$. In particular this criterion alone cannot certify a border-rank lower bound larger than $11n-3$.
+\end{theorem}
+\begin{proof}
+The pure-tuple bound and Lemma~\ref{lem:iterate} give $\rank M(T)\le(8n)^k\rho$. If $q\ge8n+\Delta$, Lemma~\ref{lem:color} gives $F_G(q)\rho\ge(q-\Delta)^k\rho\ge(8n)^k\rho$. Thus the strict detecting inequality is impossible. Since $\Delta\le3(n-1)$, every $q\ge11n-3$ is undetectable by that inequality. To certify a lower bound $b$ requires excluding $q=b-1$, so the largest possible integer lower bound is at most $11n-3$.
+\end{proof}
+
+The result combines a known linear barrier with the independently multilinear lift and the specific coloring threshold. It is not an assertion that the original map $T\mapsto M(T)$ is linear. A single direct application of \eqref{eq:egow} to that nonlinear diagonal map would be invalid; keeping the copies independent is what makes the proof work.
+
+\subsection{An independent dimension ceiling}
+
+The following calculation does not use \eqref{eq:egow}, and can be stronger for small $n$ or particular patterns.
+
+\begin{lemma}[One exterior block]\label{lem:block}
+For $1\le t\le n$ and $0\le p\le n-t$,
+\begin{equation}\label{eq:block}
+ \frac{\binom n{p+t}\binom n p}{\binom{n-t}p^2}
+ \le \binom nt\le n^t.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The ratio on the left equals
+\[
+ \frac{\binom nt^2}{\binom{p+t}t\binom{n-p}t}.
+\]
+Put $g(p)=\binom{p+t}t\binom{n-p}t$. Its endpoint values are $g(0)=g(n-t)=\binom nt$. Also
+\[
+ \frac{g(p+1)}{g(p)}=\frac{(p+t+1)(n-p-t)}{(p+1)(n-p)}.
+\]
+The numerator minus the denominator is $t(n-t-1-2p)$. Thus $g$ first increases and then decreases, and its minimum is an endpoint. This proves the first inequality. The second follows by bounding the number of $t$-subsets by the number of ordered $t$-tuples.
+\end{proof}
+
+\begin{proposition}[Dimension ceiling]\label{prop:dimceiling}
+The criterion \eqref{eq:published} cannot certify a lower bound greater than $\ceil{n^{3/2}}+3(n-1)$. Combining with Theorem~\ref{thm:linearceiling}, a uniform ceiling is
+\begin{equation}\label{eq:combined}
+ \min\{11n-3,\ \ceil{n^{3/2}}+3(n-1)\}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+If the classical matrix has $R$ rows and $C$ columns, then $RC=\prod_{i,j}a_{ij}b_{ij}$ and $\rank M(T)\le\sqrt{RC}$. Each partition has total block size $k$, so $\sum_{i,j}t_{ij}=3k$. Lemma~\ref{lem:block} gives
+\[
+ \frac{\rank M(T)}\rho
+ \le\left(\prod_{i,j}\frac{a_{ij}b_{ij}}{\binom{n-t_{ij}}{p_{ij}}^2}\right)^{1/2}
+ \le n^{3k/2}.
+\]
+For $q\ge\Delta+\ceil{n^{3/2}}$, the coloring lower bound is at least $n^{3k/2}$. The strict detecting inequality is again impossible. Taking $\Delta\le3(n-1)$ proves the uniform bound and its combination with the preceding theorem.
+\end{proof}
+
+The code also computes a pattern-specific ceiling from the exact products in \eqref{eq:factors}: find the least integer $x$ with $x^{2k}\rho^2\ge\prod a_{ij}b_{ij}$, and use $\Delta+\min\{x,8n\}$. This can improve the uniform constants without changing the scope of the result.
+
+\subsection{Scope and what a sharper threshold would need}
+
+The ceiling is for \eqref{eq:published}. It is \emph{not} an inequality $\BR(T)\le11n-3$, not a bound on all polynomial equations, and not a prohibition on border apolarity, general Kronecker--Young constructions, additional nonclassical operations, or more accurate rank bounds for the same matrices. The source explicitly records examples where its coloring threshold is not tight \cite[Examples 3.6--3.7]{dm}.
+
+The amount of improvement required can nevertheless be quantified. Suppose a refinement replaces $F_G(q)\rho$ by $F_G(q)\rho/S$ while keeping this matrix and the same $\rho$. A successful strict inequality requires
+\[
+ S>\frac{F_G(q)}{(8n)^k}
+ \ge\left(\frac{q-\Delta}{8n}\right)^k.
+\]
+At $q=\floor{cn^2}$ for fixed $c>0$, this lower bound is $(\Omega(n))^k$. A small constant improvement of the counting threshold therefore does not reach the quadratic target. This is a necessary amount of improvement relative to that threshold, not a proof that such improvements are impossible.
+
+\section{Exact finite tests of the retained shifted candidate}\label{sec:finite}
+
+The previous report proposed, but did not establish a quadratic lower bound for,
+\begin{equation}\label{eq:shifted}
+ C_{n,ijk}=2^{w_{ijk}},\qquad
+ w_{ijk}=n^2(ij+ik+jk)+ijk,\qquad0\le i,j,k<n.
+\end{equation}
+The weights are nonnegative and less than $4n^4$. Consequently this candidate is a deterministic polynomial-bit construction. The missing issue is the rank proof, not its implementation.
+
+We tested it using ordinary Koszul flattenings, obtaining exact finite \emph{lower} certificates. For $p=\floor{(n-1)/2}$, define
+\[
+ K_p(T):\bigwedge^p A\otimes B^*\longrightarrow\bigwedge^{p+1}A\otimes C,
+ \quad
+ (e_S\otimes e_j^*)\longmapsto
+ \sum_{i,k}T_{ijk}(e_i\wedge e_S)\otimes e_k.
+\]
+For a nonzero pure tensor, this map is the tensor product of wedge multiplication by one vector, of rank $\binom{n-1}p$, and a rank-one matrix. Matrix-rank subadditivity and the closedness of bounded matrix rank imply
+\begin{equation}\label{eq:ordinarykoszul}
+ \rank K_p(T)\le\binom{n-1}p\BR(T).
+\end{equation}
+This supplies the certificate proof directly.
+
+All entries of \eqref{eq:shifted} and of this signed flattening are integers. A nonzero minor modulo a prime is a nonzero integer minor, hence is also nonzero over $\C$. Thus computing a modular rank gives a rigorous lower bound on the complex matrix rank. This argument does not assume that an arbitrary finite-characteristic tensor equation lifts to characteristic zero.
+
+\begin{center}
+\begin{tabular}{rrrrr}
+\toprule
+$n$ & Matrix shape & Rank mod $65521$ & $\binom{n-1}p$ & Certified $\BR(C_n)\ge$\\
+\midrule
+2 & $4\times2$ & 2 & 1 & 2\\
+3 & $9\times9$ & 8 & 2 & 4\\
+4 & $24\times16$ & 15 & 3 & 5\\
+5 & $50\times50$ & 45 & 6 & 8\\
+6 & $120\times90$ & 84 & 10 & 9\\
+7 & $245\times245$ & 224 & 20 & 12\\
+8 & $560\times448$ & 420 & 35 & 12\\
+9 & $1134\times1134$ & 1050 & 70 & 15\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For each row the archive records pivot row and column indices selecting a nonsingular minor. A separate determinant routine, not using normalized pivot rows, verifies that minor modulo the same prime. Dimensions $2$ through $6$ were also checked at prime $65519$, with the same modular ranks. Finite agreement does not prove an all-dimension rank formula or a quadratic lower bound. The candidate remains explicitly unresolved.
+
+\section{Verification and the precise remaining obligation}\label{sec:status}
+
+The forty new tests all passed in the recorded run. They include exhaustive bounded-polynomial checks for both compactors, rational denominator clearing, interpolation identities, the integer-valued formula, a counterexample to keeping base two without the old oddness hypothesis, exterior-block dimension inequalities, small graph-coloring counts, implementation guards, and verification of the finite nonzero minors.
+
+The exhaustive compaction checks cover all $729$ two-variable, degree-at-most-two polynomials with coefficients in $\{-1,0,1\}$. The curve checks repeat that family for five weight vectors, testing every nonzero pullback. The exterior-block inequality is checked for every allowed $t,p$ with $1\le n\le35$. The independent determinant routine is cross-checked against exact symbolic determinants on small integer matrices. These tests complement the written proofs; none proves the external linear-rank-method theorem or verifies the asymptotic AC-06 claim.
+
+The third-, second-, and first-round suites, containing $38$, $25$, and $16$ tests, respectively, were rerun successfully in extracted working copies. The original third-round archive is retained byte-for-byte and itself retains both earlier archives. Evidence includes test logs, environment versions, prior-archive hashes, source notes, and the finite minor certificates.
+
+The main commands, from the new archive's directory, are:
+\begin{verbatim}
+python -m pip install -r requirements.txt
+python verify.py
+python src/ac06_round4.py compact-demo --integer-output
+python src/ac06_round4.py compact-demo
+python src/ac06_round4.py curve-demo
+python src/ac06_round4.py shifted-certificate 9
+python src/ac06_round4.py ceiling 100
+bash build_report.sh
+\end{verbatim}
+
+\textbf{The remaining obligation is an unfulfilled premise, not an implemented algorithm hidden in the proofs.} One sufficient premise is \eqref{eq:listpremise}: produce a polynomial-length, polynomial-time list on which some controlled annihilator is nonzero. Another is a bounded deterministic weight vector with a nonzero controlled pullback. This report proves the subsequent compaction and specialization steps, but proves neither premise.
+
+A degree bound alone does not give the needed coefficient bound at an arbitrary hard tensor. Existence of an annihilator alone does not say that it detects a proposed list. A finite modular lower bound does not prove a family grows quadratically. Finally, a ceiling for a particular threshold does not show that AC-06 or all nonlinear proof techniques are impossible.
+
+Accordingly, the output is a new set of rigorously stated reductions, a scoped method ceiling, and finite certificates. It is not a completed solution to \eqref{eq:target}. The most concrete next mathematical goal is a direct proof of \eqref{eq:listpremise} or \eqref{eq:curvecondition} for an explicit family; another decrease in the constants of an exponential elimination algorithm would not establish the requested polynomial running time.
+
+\appendix
+\section{Retained height-one annihilator proof}\label{sec:height}
+
+This appendix reproduces the prerequisite behind $\Witness_n$ so that the new reductions have explicit, checkable parameters. It is retained from the preceding reports \cite{round3}, not a new result of this round. The polynomial-image framework has established antecedents \cite{kumarvolk}.
+
+Use \eqref{eq:retained} and put $s=3nr\le3N/4$. Pullback of degree-at-most-$D$ polynomials under \eqref{eq:phi} has an integer coefficient matrix with
+\[
+ U=\binom{N+D}{N}\quad\text{columns},\qquad
+ V=\binom{s+3D}{s}\quad\text{rows}.
+\]
+Let $K=2^{16}$, so $D=KN$. The product formula and binomial upper bound give
+\[
+ U=\prod_{j=1}^N(1+D/j)\ge(K+1)^N>2^{16N},
+ \qquad U\le[e(K+1)]^N<2^{18N}.
+\]
+Also
+\[
+ V\le[e(1+3D/s)]^s\le[e(1+4K)]^{3N/4}<2^{15N}.
+\]
+The middle inequality uses the monotonicity of $t\log(e(1+A/t))$ for $t>0$, whose derivative is $1+\log(1+A/t)-A/(t+A)>0$. The last inequality uses $e(1+4K)<3(1+4K)<2^{20}$. Consequently $U/V>2^N$.
+
+Every pullback coefficient is a nonnegative integer at most $r^D$: the sum of coefficients in the column for a degree-$d$ monomial is $r^d$, obtained by setting all parameters to one. On a binary coefficient vector $\eta\in\{0,1\}^U$, the coefficient matrix therefore has at most
+\[
+ (Ur^D+1)^V
+\]
+possible images. We show this number is less than $2^U$.
+
+Indeed,
+\[
+ \log_2(Ur^D+1)<18N+KN\log_2r+1.
+\]
+For $n=2$, one has $N=8,r=1$ and the right side is $145<256=2^N$. For $n\ge3$, $N\ge27$ and $\log_2r\le N$, so the right side is less than $2^{17}N^2$. At $N=27$ this is less than $2^N$, and $2^N/N^2$ increases for subsequent integer $N$. Thus
+\[
+ \log_2(Ur^D+1)<2^N<U/V,
+\]
+which is equivalent to $(Ur^D+1)^V<2^U$.
+
+Two distinct binary vectors have the same pullback. Their difference is a nonzero coefficient vector in $\{-1,0,1\}^U$ lying in the kernel. Its polynomial is a nonzero annihilator of the required degree and height. It vanishes on the image of $\Phi_{n,r}$, hence on $\Var_{n,r}$ and on the relevant Euclidean closure. This proves Proposition~\ref{prop:height}.
+
+The proof finds an equation by counting but does not produce a polynomial-time representation or a detected short list. Its use in Corollaries~\ref{cor:list} and~\ref{cor:weights} does not silently assume either missing property.
+
+{\small
+\setlength{\parskip}{0.2em}
+\begin{thebibliography}{9}
+\setlength{\itemsep}{0.3em}
+\bibitem{repo}
+Open Problems in Numerical Linear Algebra.
+\emph{AC-06: Explicit tensors with quadratic border rank}.
+Public repository statement, consulted September 14, 2026; repository last-check date September 10, 2026.
+\url{https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/main/arithmetic-and-complexity/AC-06}.
+
+\bibitem{round3}
+\emph{AC-06: Deterministic finite-alphabet constructions and rational descent}.
+Third-round working report, 15 pages, supplied in this conversation.
+Original archive preserved as \texttt{previous\_work/AC06\_round3\_original.zip}.
+This is an unreviewed working report, not an independent publication.
+
+\bibitem{kumarvolk}
+M. Kumar and B. L. Volk.
+\emph{A Polynomial Degree Bound on Equations for Non-Rigid Matrices and Small Linear Circuits}.
+ITCS 2021, LIPIcs 185, Article 9.
+\url{https://doi.org/10.4230/LIPIcs.ITCS.2021.9}.
+Author version, tensor discussion in Section 4:
+\url{https://benleevo.lk/pdf/degbound.pdf}.
+
+\bibitem{dm}
+M. Dole\v{z}\'{a}lek and M. Micha\l{}ek.
+\emph{Nonlinear methods for tensors: determinantal equations for secant varieties beyond cactus}.
+arXiv:2602.12762v1, February 13, 2026. Section 3, Theorem 3.3, Corollary 3.5, and Examples 3.6--3.7.
+\url{https://arxiv.org/abs/2602.12762}.
+
+\bibitem{egow}
+K. Efremenko, A. Garg, R. Oliveira, and A. Wigderson.
+\emph{Barriers for Rank Methods in Arithmetic Complexity}.
+ITCS 2018, LIPIcs 94, Article 1, Theorem 3.
+\url{https://doi.org/10.4230/LIPIcs.ITCS.2018.1}.
+Author-hosted version:
+\url{https://www.math.ias.edu/~avi/PUBLICATIONS/EfremenkoGaOlWi2018.pdf}.
+
+\bibitem{mandziuk}
+T. Ma\'{n}dziuk.
+\emph{Border rank lower bounds beyond weak border apolarity}.
+arXiv:2609.12121v1, September 10, 2026.
+\url{https://arxiv.org/abs/2609.12121}.
+\end{thebibliography}
+}
+
+\end{document}
