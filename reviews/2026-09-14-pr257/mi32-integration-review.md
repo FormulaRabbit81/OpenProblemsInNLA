@@ -1,0 +1,9 @@
+# MI-32 final integration addendum
+
+**PASS.** Independently checked integration commit `0e4199ca09a949564f8ff9dca2733f237678fa7a`, tree `9deaf44254a56cfc46f6798615df48f3386a552f`, in a clean, read-only worktree. Both published base `01866d4589bc1df4144f7686fba0ba58947f7b0b` and audited PR #257 head `cc661b4170e590daeb2ca4232336ab8b6d2eeaaf` are ancestors.
+
+The fair-sign witness now states exactly `M(X) > 0`, matching the proved non-vacuity theorem. The original `## Statement` is byte-identical across the new published base, original PR, and final integration; SHA-256 remains `678c57f2122f25ae9682932adafa6f82621d72f9b65119078952ff06a0fa05cd`. The permanent-ID registry is unchanged.
+
+I reviewed the complete MI-32 README and generated LaTeX diff against the audited PR. Remaining edits add the maintainer-evidence link, clarify that the reproduction script is a local Lean gate, split the tool-version list, and wrap the axiom display. They preserve theorem scope, authorship, pinned proof revision, verification provenance, and explicit exclusion of the previously known reverse inequality from the formalized target. The correction commit changes only the MI-32 README and its generated LaTeX/PDF. No renderer change is introduced relative to the new published base. This addendum checks the source/layout edits; final PDF visual QA is a separate maintainer check.
+
+The maintainer reports that separate verification authentication passed: registry/run/artifact hashes, all 196 archived source files, permitted standard axioms, and NanoDa/default-kernel enforcement were checked. I did not repeat that operational audit. Combined with the independent semantic review of the exact pinned theorem and the now-correct witness explanation, **Lean verified is semantically supported for the complete retained MI-32 upper comparison**. No unresolved semantic concern remains in this integration.
