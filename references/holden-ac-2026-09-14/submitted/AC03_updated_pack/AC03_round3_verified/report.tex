@@ -1,0 +1,1128 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype,booktabs,longtable,array,enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyvrb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlist{nosep,leftmargin=*}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\br}{\underline{\mathrm R}}
+\newcommand{\crk}{\mathrm{cR}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\Seg}{\operatorname{Seg}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\Gr}{\operatorname{Gr}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\codim}{\operatorname{codim}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\calS}{\mathcal S}
+\newcommand{\calG}{\mathcal G}
+\newcommand{\ann}{\operatorname{ann}}
+\newcommand{\src}[2]{\footnote{#1. See source(s) [#2] in the Sources section.}}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries AC-03: Pair-space reduction and cubic obstructions}
+\end{center}
+
+\textbf{Status.} This report does not determine the exact complex border rank of
+$3\times3$ matrix multiplication. Its numerical conclusion remains
+\[
+\boxed{17\leq\br(M_3)\leq20.}
+\]
+The two endpoints are published results, not new bounds. The retained prior
+package verifies them and provides an exhaustive rank-17 reduction. This report
+builds on that reduction with an equivalent three-factor target, exact scheme
+sections, explicit grouped degenerations, and characteristic-zero obstructions
+to two substantial classes of cubic-order constructions.
+
+The reduced target is a $17\times9\times9$ tensor $F_E$ with 35 nonzero coordinates.
+Its border rank is 17 if and only if $\br(M_3)=17$. Its cactus rank is at least 18,
+but this is \emph{not} a border-rank exclusion. An explicit control tensor in the
+same format has border rank 17 and cactus rank at least 18, illustrating the gap.
+
+For the four-factor target inherited from the preceding report, all three
+versions obtained by grouping two of its original matrix factors have exact
+border rank 17. The displayed degenerations do not split into four-factor
+rank-one terms. On the exclusion side, a 154\,350-column exterior-contraction map
+rules out cubic-order constructions at all 24 normalized root-of-unity base
+configurations. A separate integral-kernel and quadratic-ideal certificate rules
+out the grid-plus-barycenter configuration. An independent 24-pattern calculation
+excludes a restricted monomial Fourier ansatz for the pair plane.
+
+Every restriction in those statements is essential. Arbitrary limiting
+configurations, nonreduced limiting schemes, and higher-order degenerations have
+not been excluded. No matching construction with 17, 18, or 19 terms is supplied.
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Problem, conventions, and the inherited reduction}
+
+The repository asks for the exact border rank over $\C$ of
+\begin{equation}\label{eq:M}
+ M_3=\sum_{i,j,k=1}^{3}x_{ij}\otimes y_{jk}\otimes z_{ki}
+ \in A\otimes B\otimes C,\qquad \dim A=\dim B=\dim C=9.
+\end{equation}
+The third factor uses the trace convention: contraction gives
+$\operatorname{tr}(XYZ)$. Border rank permits limits of sums of decomposable
+tensors; it is not the ordinary tensor rank asked for in AC-02. The public
+AC-03 statement continues to list the exact value as unresolved.\src{OpenProblemsInNLA,
+AC-03, statement retrieved 14 September 2026}{1}
+
+The lower bound 17 is due to Conner--Harper--Landsberg. The upper certificate
+retained here is Smirnov's length-20 degeneration.\src{Conner--Harper--Landsberg,
+\emph{New lower bounds for matrix multiplication and the $3\times3$ determinant};
+Smirnov, \emph{The bilinear complexity and practical algorithms for matrix
+multiplication}}{2, 3}
+The previous packages reproduce those bounds by exact arithmetic. The upper
+certificate has constant tensor $M_3$, no negative Laurent residual, and error
+at most $111|t|$ in Frobenius norm for $0<|t|\leq1$. The lower certificate
+eliminates all candidate Borel-fixed pair data at rank 16.
+
+For a projective variety $V\subset\PP W$, define
+\begin{equation}\label{eq:grass}
+\calG_r(V)=\overline{\{\Span(p_1,\ldots,p_r):p_i\in V,
+                      \dim\Span(p_1,\ldots,p_r)=r\}}
+             \subset\Gr(r,W).
+\end{equation}
+All dimensions of linear spaces in this report are vector-space dimensions.
+Membership in \eqref{eq:grass} concerns a limit of \emph{entire spans}. It does
+not require the limiting space to be spanned by a length-$r$ scheme contained
+in that space.
+
+Put
+\begin{align}\label{eq:core}
+ A'&=\Span(x_{21},x_{31}),&
+ B'&=\Span(y_{21},y_{22},y_{31},y_{32}),&
+ C'&=\Span(z_{31},z_{32}),\notag\\
+ L&=A'\otimes B'\otimes C',&
+ \calS&=\Span(M_3)\oplus L,&
+ X&=\Seg(\PP A\times\PP B\times\PP C).
+\end{align}
+The 16 coordinate tensors of $L$ have disjoint support from $M_3$, so
+$\dim\calS=17$. Let $D$ have basis $d_0$ and $d_{abc}$ indexed by those 16
+coordinate tensors. Define
+\begin{equation}\label{eq:Q}
+ Q=d_0\otimes M_3+\sum_{(a,b,c)\in\mathcal B_L}
+                         d_{abc}\otimes a\otimes b\otimes c.
+\end{equation}
+It has 43 nonzero unit coordinates and is concise in $D$.
+
+\subsection{Audited input from the preceding package}
+
+The preceding report proves the following computer-assisted statement. Its
+complete verifier and unchanged archive are included under \texttt{prior/}.
+
+\begin{theorem}[Inherited single-plane reduction]\label{thm:prior}
+One has
+\[
+ \br(M_3)=17\quad\Longleftrightarrow\quad
+ \calS\in\calG_{17}(X)\quad\Longleftrightarrow\quad
+ \br_{D,A,B,C}(Q)=17.
+\]
+Moreover, any Borel-fixed simultaneous span data of a rank-17 degeneration,
+after a cyclic rotation of $A,B,C$, have pair spaces
+\begin{equation}\label{eq:canonicalpairs}
+ E_{AB}=M_3(C^*)\oplus(A'\otimes B'),\qquad
+ E_{BC}=M_3(A^*)\oplus(B'\otimes C').
+\end{equation}
+\end{theorem}
+
+The classification starts from 343 Borel pair-space charts, including 29
+one-parameter charts. The pair tests and square test leave 55 fixed spaces and
+no parameter families. All $55^3=166\,375$ ordered triples are covered. Exactly
+87 pass the three-factor test; they form 29 cyclic orbits, and each surviving
+intersection is 17-dimensional. After cyclic rotation, each is exactly $\calS$.
+The square threshold uses first jets at 17 general points; its modern framework
+is discussed by Ma\'ndziuk.\src{Ma\'ndziuk, \emph{Border rank lower bounds beyond weak
+border apolarity}, submitted 10 September 2026}{4}
+
+The necessity in Theorem~\ref{thm:prior} is not merely an apolarity assertion.
+The proof retains actual pair and triple spans in a projective incidence
+closure, imposes $M_3$ in the triple span, and applies the Borel fixed-point
+theorem. Thus the resulting triple space remains in $\calG_{17}(X)$. The
+square and pair conditions are closed necessary conditions on those same data.
+The complete enumeration forces the triple space to be $\calS$.
+
+Conversely, a local basis of a family of 17-dimensional spans converging to
+$\calS$ lifts $M_3$ to tensors of rank at most 17. The first-factor flattening of
+$Q$ gives the last equivalence. Cyclic rotation is used to identify equivalent
+ordered triples, not to require equal pair spaces.
+
+\section{An equivalent 35-coordinate tensor}
+
+Let
+\begin{equation}\label{eq:E}
+ E=\Span\left\{s_{ik}=\sum_{j=1}^3x_{ij}\otimes y_{jk}:1\leq i,k\leq3\right\}
+       \oplus(A'\otimes B')\subset A\otimes B.
+\end{equation}
+Take a 17-dimensional space $D_E$ with basis $e_{ik}$ and $e_{ab}$ indexed by the
+nine slices and the eight core coordinate tensors. Its inclusion tensor is
+\begin{equation}\label{eq:FE}
+ F_E=\sum_{i,j,k=1}^3e_{ik}\otimes x_{ij}\otimes y_{jk}
+       +\sum_{a\in\mathcal B_{A'},\ b\in\mathcal B_{B'}}e_{ab}\otimes a\otimes b.
+\end{equation}
+The supports of the two sums are disjoint. Thus $F_E$ has 35 nonzero unit
+coordinates and is concise in $D_E$.
+
+\begin{theorem}[Single-pair equivalence]\label{thm:pair}
+With $Z=\Seg(\PP A\times\PP B)$,
+\[
+\boxed{\br(M_3)=17\ \Longleftrightarrow\ E\in\calG_{17}(Z)
+                   \ \Longleftrightarrow\ \br(F_E)=17.}
+\]
+The forward implication uses the audited exhaustive classification in
+Theorem~\ref{thm:prior}; the reverse implication does not require another
+classification.
+\end{theorem}
+\begin{proof}
+If $\br(M_3)=17$, the simultaneous Borel span data have the first pair plane in
+\eqref{eq:canonicalpairs} after cyclic rotation. A pair span remains a limit of
+17 rank-one matrix spans, so $E\in\calG_{17}(Z)$.
+
+For any $r$-dimensional matrix space, its inclusion tensor has border rank $r$
+if and only if the space belongs to $\calG_r$ of the rank-one matrix variety.
+Indeed, a convergent basis of rank-one matrix spans supplies the first-factor
+coefficients of a degeneration of the inclusion tensor. Conversely, conciseness
+in the $r$-dimensional first factor makes the image of the flattening continuous
+on a neighborhood of the limiting tensor. This proves the second equivalence.
+
+Finally, apply the linear map $D_E\to C$ given by $e_{ik}\mapsto z_{ki}$ and
+$e_{ab}\mapsto0$ to \eqref{eq:FE}. It gives $M_3$. Border rank cannot increase
+under a linear map, so $\br(F_E)=17$ implies $\br(M_3)\leq17$. The inherited
+lower bound gives equality.
+\end{proof}
+
+\subsection{Repeated diagonal blocks}
+
+Reorder rows of $A$ by the inner index $j$ first, then $i$, and columns of $B$ by
+the inner index first, then $k$. An arbitrary matrix in $E$ becomes
+\begin{equation}\label{eq:blockmatrix}
+ \begin{pmatrix}H&P&R\\0&H&0\\0&0&H\end{pmatrix},
+ \qquad H\in M_3(\C),
+\end{equation}
+where $P,R$ are supported on rows 2,3 and columns 1,2. The dimensions are
+$9+4+4=17$.
+
+\begin{lemma}\label{lem:rank3}
+Every matrix in \eqref{eq:blockmatrix} has rank at least $3\rank H$.
+\end{lemma}
+\begin{proof}
+If $q=\rank H$, select a nonsingular $q\times q$ submatrix of $H$. Select the
+corresponding rows and columns in each of the three diagonal blocks. The
+resulting $3q\times3q$ submatrix is upper block triangular with three copies of
+the same nonsingular submatrix on its diagonal. Its determinant is nonzero.
+\end{proof}
+
+\begin{proposition}[Reduced pair section]\label{prop:pairsection}
+Scheme-theoretically,
+\[
+ Z\cap\PP E=\Seg(\PP A'\times\PP B').
+\]
+In particular, its linear span has dimension eight.
+\end{proposition}
+\begin{proof}
+Set-theoretically, Lemma~\ref{lem:rank3} forces $H=0$ in any rank-one element
+of $E$. The resulting rank-one elements are exactly the small Segre variety.
+
+At a nonzero rank-one matrix $a\otimes b$, the affine tangent space of the
+rank-one variety is $a\otimes B+A\otimes b$. Every matrix in it has rank at most
+two. Its intersection with $E$ therefore again has $H=0$. Its intersection
+with $A'\otimes B'$ is precisely
+$a\otimes B'+A'\otimes b$, the tangent space of the small Segre variety. Thus
+every projective local tangent dimension is four, equal to the local dimension
+of the set-theoretic intersection. Each local ring is regular. The section is
+therefore reduced and has exactly the asserted scheme structure.
+\end{proof}
+
+\subsection{A cactus obstruction, not a border obstruction}
+
+The cactus rank $\crk(T)$ is the least length of a zero-dimensional scheme in
+the appropriate Segre variety whose linear span contains $T$. This differs
+from a limit of spans: a flat point-scheme limit can lose span dimension.
+The distinction is central in border apolarity.\src{Buczy\'nska--Buczy\'nski,
+\emph{Apolarity, border rank and multigraded Hilbert scheme}}{5}
+
+\begin{corollary}\label{cor:FEcactus}
+The tensor $F_E$ satisfies $\crk(F_E)\geq18$.
+\end{corollary}
+\begin{proof}
+Suppose a scheme of length at most 17 in
+$\Seg(\PP D_E\times\PP A\times\PP B)$ spans $F_E$. Its scheme-theoretic image
+in $Z$ has length at most 17 and its span contains the flattening image $E$.
+A scheme of length at most 17 spans a vector space of dimension at most 17.
+Since $\dim E=17$, this image would have to span exactly $E$ and hence be
+contained in $Z\cap\PP E$. Proposition~\ref{prop:pairsection} places its span
+in the eight-dimensional core, a contradiction.
+\end{proof}
+
+Corollary~\ref{cor:FEcactus} cannot be substituted for $\br(F_E)\geq18$.
+Section~\ref{sec:control} gives a verified counterexample to that inference in
+exactly the same tensor format.
+
+\section{The full scheme section of the 17-plane}
+
+Let $Y=\Seg(\PP A'\times\PP B'\times\PP C')$, so $\Span Y=\PP L$ and
+$\dim Y=5$. Use coordinates $\lambda,z_1,\ldots,z_{16}$ on $\calS$, with
+$\lambda$ the coefficient of $M_3$. Write $J_Y$ for the ideal of the small
+Segre variety in $\C[z_1,\ldots,z_{16}]$.
+
+\begin{theorem}[Restricted ideal and saturation]\label{thm:section}
+The restriction of the homogeneous Segre ideal to $\PP\calS$ is
+\begin{equation}\label{eq:restrictedideal}
+ I_X|_{\calS}=J_Y+\lambda(\lambda,z_1,\ldots,z_{16}).
+\end{equation}
+Its saturation is $J_Y+(\lambda)$. Consequently
+\[
+ X\cap\PP\calS=Y
+\]
+scheme-theoretically, with $Y$ reduced.
+\end{theorem}
+\begin{proof}
+The Segre ideal is generated by the $2\times2$ minors of its flattenings.
+Restrict a tensor coordinate to $\calS$. It is either zero, $\lambda$, or one
+of the 16 distinct variables $z_i$, because the two support sets are disjoint.
+The restriction of any flattening minor, after setting $\lambda=0$, is a
+small-Segre minor or zero. Thus every restricted minor belongs to the right
+side of \eqref{eq:restrictedideal}.
+
+Conversely, all small-Segre minors are restrictions of large-Segre minors.
+Here are explicit certificates for the extra 17 monomials, in zero-based
+row-major coordinate indices. The tensor coordinates of $M_3$ are
+$(3i+j,3j+k,3k+i)$. In the $A$-flattening, use diagonal coordinates
+$(0,0,0)$ and $(4,3,1)$. The off-diagonal product vanishes, so this minor is
+$\lambda^2$. For every core coordinate $\beta$, use diagonal coordinates
+$(0,0,0)$ and $\beta$. The off-diagonal product again vanishes, giving
+$\lambda z_\beta$. These certificates prove equality.
+
+The product of $\lambda$ with every degree-one coordinate belongs to the
+ideal, so $\lambda$ lies in its saturation. The quotient after adding
+$\lambda$ is the homogeneous coordinate ring of the reduced Segre variety
+$Y$, whose ideal is saturated. This proves the saturation formula.
+\end{proof}
+
+The exact quadratic-space dimensions are
+\[
+ \dim (J_Y)_2=46,\qquad
+ \dim (I_X|_{\calS})_2=63=46+17.
+\]
+The unsaturated coordinate ring has a one-dimensional extra degree-one class
+annihilated by the homogeneous maximal ideal. Its diagonal Hilbert function
+starts
+\[
+ 1,\ 17,\ 90,\ 320,\ 875,\ 2016,\ 4116,\ 7680,\ 13365.
+\]
+For $d\geq2$ the value is $(d+1)^2\binom{d+3}{3}$, the Hilbert function of $Y$.
+The extra class is at the vertex of the affine cone; it is not a nonreduced
+projective component of $X\cap\PP\calS$.
+
+\begin{corollary}\label{cor:schemelimit}
+Any flat limit of the 17 point schemes accompanying a span limit to $\calS$
+is contained scheme-theoretically in $Y$. No length-17 scheme in $X$ spans
+$\calS$. The four-factor tensor $Q$ has cactus rank at least 18.
+\end{corollary}
+\begin{proof}
+Containment of a scheme in its limiting linear span is closed, so a limiting
+scheme is contained in $X\cap\PP\calS=Y$. Every scheme in $Y$ spans a subspace
+of $L$, whose dimension is 16, not 17. For $Q$, project a hypothetical
+length-17 spanning scheme to the last three factors and use first-factor
+conciseness, exactly as in Corollary~\ref{cor:FEcactus}.
+\end{proof}
+
+\subsection{All positive prolongations}
+
+For $a,b,c\geq1$, let $K_{abc}$ be the space of partially symmetric tensors of
+multidegree $(a,b,c)$ all of whose contractions to degree $(1,1,1)$ belong to
+$\calS$. Equivalently, it is the annihilator in that degree of the ideal
+generated by $\calS^\perp$ in degree $(1,1,1)$.
+
+\begin{proposition}\label{prop:prolong}
+The first positive prolongations are
+\begin{align*}
+ K_{211}&=\Sym^2 A'\otimes B'\otimes C',&\dim K_{211}&=24,\\
+ K_{121}&=A'\otimes\Sym^2 B'\otimes C',&\dim K_{121}&=40,\\
+ K_{112}&=A'\otimes B'\otimes\Sym^2 C',&\dim K_{112}&=24.
+\end{align*}
+More generally, for $a+b+c\geq4$,
+\[
+ K_{abc}=\Sym^a A'\otimes\Sym^b B'\otimes\Sym^c C'.
+\]
+\end{proposition}
+\begin{proof}
+An element of $A\otimes\calS$ has a unique expression $u\otimes M_3+H$ with
+$H\in A\otimes L$. Project the $B$ factor to $B/B'$. The second summand
+disappears. If the two $A$ factors are symmetric, then
+$u\otimes\overline M_3$ is symmetric in them. If $u\ne0$, this forces the
+$A$-flattening image of $\overline M_3$ to lie in $\Span(u)$: contract the
+other factors and use $u\otimes v=v\otimes u$ only when $v$ is proportional
+to $u$. But that flattening has rank nine. Each of the nine slices has a
+nonzero coordinate, and their supports are disjoint. Thus $u=0$.
+
+Symmetry of $H\in A\otimes L$ then forces the extra $A$ factor into $A'$.
+This proves the first formula. The other two follow by the same argument,
+using a quotient in one of the other factors which preserves at least two
+independent slices (in fact nine). The supplied wedge-kernel computations
+check all three statements over $\Q$; their ranks are $129,113,129$ on
+153-dimensional domains.
+
+For higher degree, contract all but one additional slot. The degree-four
+statements show that every resulting coefficient is supported on the small
+factor spaces. Repeating this for each slot puts every factor in the
+corresponding small space. The reverse inclusion is immediate.
+\end{proof}
+
+These formulas describe necessary prolongation spaces. They do not force a
+limiting 17-dimensional degree-$(1,1,1)$ span to equal the span of the
+saturated limiting point scheme.
+
+\section{Exact rank-17 certificates after grouping factors}
+
+The next construction is a positive result for \emph{grouped} tensors. It
+also gives an explicit control against an invalid cactus-to-border inference.
+
+\subsection{A Fourier compression formula}
+
+Let $p,q,s$ be positive integers, $N=pq+1$, and $p\leq s\leq N-q$.
+Consider independent basis vectors $d_0,d_{rj}$ in an $N$-dimensional space,
+$e_k,e'_r$ in an $(s+q)$-dimensional space, and $c_k$ in an $s$-dimensional
+space. Define
+\begin{equation}\label{eq:compression}
+ T_{p,q,s}=d_0\otimes\sum_{k=1}^{s}e_k\otimes c_k
+       +\sum_{r=1}^{q}\sum_{j=1}^{p}d_{rj}\otimes e'_r\otimes c_j.
+\end{equation}
+
+\begin{theorem}\label{thm:compression}
+The tensor in \eqref{eq:compression} has border rank exactly $N$.
+\end{theorem}
+\begin{proof}
+Work with residue labels modulo $N$. Set
+\[
+ J=\{0,\ldots,p-1\},\qquad R=\{p,2p,\ldots,qp\}.
+\]
+Choose $K$ of size $s$ containing $J$ and disjoint from $R$, and put $H=K\cup R$.
+Define $w_j=0$ on $J$, $w_h=2$ on $R$, and $w_h=1$ on $K\setminus J$.
+Use the residue labels to index the corresponding $e$ and $c$ basis vectors.
+The differences $r-j$ for $r\in R,j\in J$ are exactly the distinct integers
+$1,\ldots,N-1$, so relabel $d_{rj}$ by $d_{r-j}$.
+
+For a primitive $N$th root of unity $\zeta$, put
+\begin{equation}\label{eq:fourier}
+ \frac1N\sum_{a=0}^{N-1}
+ \left(d_0+t^2\sum_{\ell=1}^{N-1}\zeta^{a\ell}d_\ell\right)
+ \otimes\left(\sum_{h\in H}t^{-w_h}\zeta^{-ah}e_h\right)
+ \otimes\left(\sum_{k\in K}t^{w_k}\zeta^{ak}c_k\right).
+\end{equation}
+The root average is zero unless $\ell-h+k=0$ modulo $N$, when it is one.
+For $\ell=0$, only $h=k$ occurs, with power zero, giving the first summand
+of \eqref{eq:compression}. For $\ell\ne0$, the power is
+$2+w_k-w_h\geq0$. It is zero exactly when $h\in R,k\in J$, giving all the
+second summands. All remaining terms have positive powers. Thus
+\eqref{eq:fourier} is an $N$-term degeneration of \eqref{eq:compression}.
+
+The flattening in the $d$ factor has rank $N$: the core matrix units are
+independent, and the diagonal $e_k\otimes c_k$ sum has disjoint support.
+This gives the matching lower bound.
+\end{proof}
+
+The verifier works at $N=17$ and checks root orthogonality in
+$\Q[\zeta]/(1+\zeta+\cdots+\zeta^{16})$. It expands the complete coefficient
+tensor, not just its prescribed nonzero entries.
+
+\subsection{Application to the four-factor target}
+
+In $Q$, keep $D$ separate and keep one of $A,B,C$ as a singleton. Group the
+other two matrix factors. The nine slices of $M_3$ in the grouped factor are
+independent and disjoint in support from its $q$ core coordinate vectors.
+Thus the grouped tensor is linearly equivalent to \eqref{eq:compression}:
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+Singleton&$p$&$q$&$s$&Grouped factor dimension&$N$\\
+\midrule
+$A$&2&8&9&17&17\\
+$B$&4&4&9&13&17\\
+$C$&2&8&9&17&17\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{corollary}\label{cor:grouped}
+The three grouped border ranks of $Q$ just described are exactly 17.
+\end{corollary}
+
+The coefficient expansions have residual degrees $1,2,3$. Their total
+coordinate $\ell^1$ residual coefficients are $272,236,272$, respectively,
+so the same numbers times $|t|$ are Frobenius error bounds for $0<|t|\leq1$.
+At $t=1$ and Fourier index zero, each grouped middle factor, reshaped in the
+two original factors, has matrix rank four. These particular middle factors
+are not decomposable. The formula is therefore not a four-factor
+border-rank-17 decomposition of $Q$.
+
+\subsection{A control tensor with border rank below cactus rank}\label{sec:control}
+
+Let $a_0,\ldots,a_8$ and $b_0,\ldots,b_8$ be bases and set
+\begin{equation}\label{eq:control}
+ W=d_0\otimes\sum_{i=0}^{8}a_i\otimes b_i
+  +\sum_{i=0}^{7}\sum_{j=0}^{1}d_{1+2i+j}\otimes a_i\otimes b_j
+       \in\C^{17}\otimes\C^9\otimes\C^9.
+\end{equation}
+This is a different tensor from $F_E$.
+
+\begin{theorem}[Exact counterexample to a tempting inference]\label{thm:wild}
+The tensor $W$ has $\br(W)=17$ and $\crk(W)\geq18$.
+\end{theorem}
+\begin{proof}
+Apply Theorem~\ref{thm:compression} at $(p,q,s)=(2,8,9)$, sending the nine
+$e_k$ to $a_0,\ldots,a_8$ and the eight $e'_r$ to $a_0,\ldots,a_7$. This
+linear restriction gives \eqref{eq:control}, so its border rank is at most 17.
+The $D$-flattening has rank 17, giving equality. The supplied expansion has
+25 constant unit coordinates and residual coordinate norms $70,44,14$ in
+degrees $1,2,3$.
+
+The matrix plane of $W$ is
+$E_W=\Span(I_9)\oplus(\Span(a_0,\ldots,a_7)\otimes\Span(b_0,b_1))$.
+A matrix with nonzero $I_9$ coefficient has rank at least seven: its columns
+2 through 8 are independent scalar multiples of the corresponding standard
+basis vectors. Hence its rank-one locus is the core Segre variety, whose
+span has dimension 16. The same rank-at-least-seven versus tangent-rank-at-
+most-two argument as in Proposition~\ref{prop:pairsection} proves that the
+section is reduced. First-factor conciseness then excludes a spanning
+scheme of length 17, as before.
+\end{proof}
+
+This control is included to prevent a false completion of AC-03 from
+Corollary~\ref{cor:FEcactus}. It is not used to assert that $F_E$ has border
+rank 17. No claim of publication-level novelty is made for this compression
+family or control; related constructive minimal-border-rank and wild-tensor
+phenomena occur in the recent literature.\src{Kassabov--Landsberg--Souza--Speegle,
+\emph{Disjoint and nearly disjoint sums of matrix multiplication tensors and
+their centroids}}{7}
+
+\section{Necessary conditions for cubic-order constructions}
+
+Suppose 17 normalized holomorphic factor curves have limiting points in $Y$:
+\[
+ a_s(t)\otimes b_s(t)\otimes c_s(t),\qquad 1\leq s\leq17.
+\]
+Normalization means that each factor curve has a nonzero limit. Scalar
+coefficients are allowed poles. Their order is measured \emph{after} this
+normalization; shifting powers between a factor and its scalar would
+otherwise make a pole-order statement meaningless.
+
+Let $\pi$ project all three factors to $A/A',B/B',C/C'$. Then
+\begin{equation}\label{eq:projection}
+\begin{split}
+\pi(M_3)={}&\bar x_{11}\otimes\bar y_{11}\otimes\bar z_{11}
+ +\bar x_{11}\otimes\bar y_{12}\otimes\bar z_{21}\\
+&+\bar x_{32}\otimes\bar y_{23}\otimes\bar z_{33}
+ +\bar x_{33}\otimes\bar y_{33}\otimes\bar z_{33}.
+\end{split}
+\end{equation}
+Its three flattening ranks are $(3,4,3)$.
+
+\begin{lemma}\label{lem:pole2}
+No such expression for $M_3$ can have all scalar poles of order at most two.
+\end{lemma}
+\begin{proof}
+Each projected factor is $O(t)$, so every projected decomposable term is
+$O(t^3)$. Poles of order at most two leave a sum tending to zero, contrary
+to \eqref{eq:projection}.
+\end{proof}
+
+For the cubic test, assume the 17 base points have 16 independent triple
+products with a unique relation whose 17 coefficients are nonzero. Identify
+functions on the 17 points with the semisimple algebra $R=\C^{17}$. Let
+$A_0,B_0,C_0\subset R$ be the factor-coordinate function spaces, of dimensions
+$2,4,2$, and write the relation as a functional $\lambda:R\to\C$ with
+\[
+ \lambda(A_0B_0C_0)=0.
+\]
+The bilinear form $(f,g)\mapsto\lambda(fg)$ is nondegenerate because all
+relation coefficients are nonzero.
+
+The first normal function spaces are
+\begin{equation}\label{eq:normalspaces}
+ U_A=\ann(B_0C_0)/A_0,\quad
+ U_B=\ann(A_0C_0)/B_0,\quad
+ U_C=\ann(A_0B_0)/C_0,
+\end{equation}
+where annihilators use this bilinear form. When the pair product dimensions
+are $8,4,8$, these spaces have dimensions $7,9,7$.
+
+\begin{lemma}[Second-normal conditions]\label{lem:normal}
+A cubic-pole expression for $M_3$ at these base points supplies subspaces of
+$U_A,U_B,U_C$ of dimensions at least $(3,4,3)$ satisfying
+\begin{equation}\label{eq:pairnormal}
+ \lambda(\mathsf A\mathsf B C_0)=0,\qquad
+ \lambda(\mathsf A B_0\mathsf C)=0,\qquad
+ \lambda(A_0\mathsf B\mathsf C)=0.
+\end{equation}
+The all-normal constant tensor is the restriction of
+$(f,g,h)\mapsto\lambda(fgh)$ to the first normal images. It must equal
+\eqref{eq:projection} after the physical coordinate maps.
+\end{lemma}
+\begin{proof}
+The coefficient of $t^{-3}$ is a relation among the base products, hence a
+scalar multiple of the unique $\lambda$. If it were zero, Lemma~\ref{lem:pole2}
+would apply. Project one factor outside its small space. The coefficient of
+$t^{-2}$ then says that each first normal coordinate annihilates the product
+of the other two base coordinate spaces. This gives \eqref{eq:normalspaces}.
+
+Project two factors outside. The coefficient of $t^{-1}$ involves exactly
+their first normal coordinates and the base value of the third factor,
+which gives \eqref{eq:pairnormal}. Project all three factors: the constant
+term contains exactly three first normal coordinates and the leading
+scalar relation. Its flattening ranks must be those of \eqref{eq:projection}.
+
+Passing to the quotient representatives in \eqref{eq:normalspaces} is
+legitimate. Terms added from a base space vanish in the second-normal
+conditions by the first conditions; they vanish in the cubic tensor by
+\eqref{eq:pairnormal}. Thus all the stated restrictions are well defined.
+\end{proof}
+
+\subsection{An exterior-contraction certificate}
+
+For a bilinear form $m$ on $U\times V$, define
+\[
+ \partial_m(u_1\wedge\cdots\wedge u_a\otimes
+             v_1\wedge\cdots\wedge v_b)
+ =\sum_{i,j}(-1)^{i+j}m(u_i,v_j)
+     u_1\wedge\cdots\widehat u_i\cdots\wedge u_a
+       \otimes v_1\wedge\cdots\widehat v_j\cdots\wedge v_b.
+\]
+Numbering signs from zero instead of one gives the same formula. Apply all
+the forms in \eqref{eq:pairnormal} to
+\begin{equation}\label{eq:exteriordomain}
+ \mathcal V=\Lambda^3U_A\otimes\Lambda^4U_B\otimes\Lambda^3U_C,
+ \qquad\dim\mathcal V=\binom73\binom94\binom73=154\,350.
+\end{equation}
+Let $\mathcal D$ be their joint contraction map.
+
+\begin{lemma}\label{lem:exterior}
+If $\mathcal D$ is injective, no subspaces of dimensions $(3,4,3)$ satisfy
+\eqref{eq:pairnormal}. Therefore no cubic-pole expression for $M_3$ exists
+at the specified base configuration.
+\end{lemma}
+\begin{proof}
+Bases of such subspaces give a nonzero decomposable product of three
+Pl\"ucker vectors in \eqref{eq:exteriordomain}. Every contraction is zero by
+\eqref{eq:pairnormal}, contradicting injectivity.
+\end{proof}
+
+\section{All normalized cyclic-root base configurations}
+
+Take $R=\C[z]/(z^{17}-1)$ and choose exponent sets $A_0,B_0,C_0$ of sizes
+$2,4,2$ whose triple sums are 16 distinct residues. The 17 evaluation points
+at the roots of unity give 16 independent base products. If $m$ is the
+missing residue, the unique relation is $\lambda(f)=[z^m]f$. Its evaluation
+weights are nonzero. Products and pairings have rational structure constants
+in the residue basis.
+
+Translations of the three exponent sets, interchange of their basis labels,
+and rescaling $z\mapsto z^a$, $a\ne0\pmod {17}$, normalize the sets to
+\begin{equation}\label{eq:rootnorm}
+ A_0=\{0,1\},\quad B_0=\{0,b_1,b_2,b_3\},\quad C_0=\{0,c\},
+ \quad 1\leq b_1<b_2<b_3\leq16.
+\end{equation}
+Exactly 24 normalized configurations have 16 distinct triple sums. This is
+a finite enumeration of \emph{exponent configurations}, not an enumeration
+of arbitrary complex point configurations.
+
+\begin{theorem}[Cyclic cubic obstruction]\label{thm:cyclic}
+For every configuration in \eqref{eq:rootnorm} with 16 distinct triple sums,
+the map $\mathcal D$ in \eqref{eq:exteriordomain} has full column rank
+154\,350 over $\Q$ and $\C$. Hence no normalized holomorphic factor curves
+with those limiting points and scalar poles of order at most three can
+express $M_3$ in the limit.
+\end{theorem}
+\begin{proof}[Computer-assisted proof]
+For each configuration, the normal quotient spaces are obtained exactly
+from the rule $\lambda(z^az^b)=1$ when $a+b=m$ modulo 17 and zero otherwise.
+Their dimensions are $7,9,7$. The coefficient of a contraction column is
+$0,1$, or $-1$.
+
+First apply the two $AB$ forms to
+$\Lambda^3U_A\otimes\Lambda^4U_B$, of dimension 4410. The computation splits
+by the sum of character labels modulo 17. It constructs a kernel basis
+modulo 101 and independently checks every kernel relation against the
+original columns. Tensor that kernel with $\Lambda^3U_C$, then apply the
+remaining four $AC$ and two $BC$ forms. Each residual character block has
+full column rank. The combined rank is exactly 154\,350 in each of the 24
+cases.
+
+A full-column-rank reduction modulo a prime certifies a nonzero maximal
+minor of the original integer matrix. It therefore certifies injectivity
+in characteristic zero. There is no claim that testing complex subspaces
+can be replaced by enumerating subspaces over a finite field.
+Lemma~\ref{lem:exterior} completes the proof.
+\end{proof}
+
+The two configurations
+\[
+ (\{0,1\},\{0,2,4,6\},\{0,8\}),\qquad
+ (\{0,1\},\{0,2,8,10\},\{0,4\})
+\]
+are independently checked modulo 103 as well. Appendix~\ref{app:hand}
+also gives a hand proof for the first, independent of the exterior rank
+calculation.
+
+\begin{corollary}[A generic reduced-configuration obstruction]\label{cor:generic}
+There is a nonempty Zariski-open subset of the ordered 17-point configurations
+in $Y$ for which cubic-pole expressions for $M_3$ are impossible.
+\end{corollary}
+\begin{proof}
+Restrict to the nonempty open set where triple evaluation has rank 16,
+the unique relation has no zero coefficient, and the pair product spaces
+have maximal dimensions. The normal spaces in \eqref{eq:normalspaces} form
+vector bundles of ranks $7,9,7$. On local charts their contractions depend
+algebraically on the points. Injectivity of $\mathcal D$ is open. The first
+configuration in Theorem~\ref{thm:cyclic} proves this open set is nonempty.
+The configuration variety is irreducible, so the open subset is also dense.
+\end{proof}
+
+The corollary does not cover the exceptional closed locus or higher poles.
+In particular, the grid in the next section has a nonzero exterior kernel,
+so a blanket injectivity statement would be false.
+
+\section{The grid-plus-barycenter obstruction}
+
+Take the 16 coordinate product points of $Y$ and the product of the three
+barycenter vectors. Normalize each barycenter factor so its coordinates
+sum to one. The product at the barycenter is $1/16$ times the sum of the 16
+grid products, so the unique relation has weights $-1$ on the grid and
+$16$ on the barycenter.
+
+Use the group $G=(\mathbb Z/2)^4$ to label functions on the grid. The constant
+function is one on all 17 points; each nontrivial character is extended by
+zero at the barycenter. A Fourier change of basis within the factors gives
+base character spaces
+\begin{equation}\label{eq:gridbase}
+ A_0=\langle1,\chi_1\rangle,\quad
+ B_0=\langle1,\chi_2,\chi_4,\chi_6\rangle,\quad
+ C_0=\langle1,\chi_8\rangle.
+\end{equation}
+For nontrivial characters, a relation moment is $-16$ when the binary
+exclusive-or sum of the labels is zero and otherwise zero. The irrelevant
+common factor $-16$ is dropped in the matrices.
+
+The three normal quotient bases are
+\begin{align*}
+ U_A&=(3,5,7,9,11,13,15),\\
+ U_B&=(3,5,7,10,11,12,13,14,15),\\
+ U_C&=(9,10,11,12,13,14,15).
+\end{align*}
+The joint exterior map is \emph{not} injective here. Its kernel has dimension
+135, and genuine $(3,4,3)$ subspaces satisfying the pair conditions exist.
+Appendix~\ref{app:gridcontrol} displays one. Further equations are necessary.
+
+\begin{theorem}[Grid cubic obstruction]\label{thm:grid}
+For the configuration \eqref{eq:gridbase}, every triple of normal subspaces
+of dimensions $(3,4,3)$ satisfying \eqref{eq:pairnormal} has identically zero
+cubic form $\lambda(fgh)$ on their product. Consequently the grid-plus-
+barycenter configuration cannot be the base of a cubic-pole expression
+for $M_3$.
+\end{theorem}
+\begin{proof}[Exact certificate and its algebraic interpretation]
+Let $\mathcal K=\ker\mathcal D\subset\mathcal V$.
+The proof uses five finite steps; all polynomial operations after the
+initial modular rank bound are over $\Q$.
+
+\textbf{The complete linear kernel.}
+The file \texttt{grid\_joint\_kernel.json} gives 135 integral vectors in
+$\mathcal V$. Each is substituted into the original contraction columns,
+and its image is checked to be zero over $\Q$. Their independence is checked
+by rational elimination. Independently, a block computation modulo 101
+gives rank $154\,215=154\,350-135$ for the original integer map. A
+characteristic-zero kernel has dimension at most the modular kernel
+dimension. The 135 independent rational vectors therefore form the entire
+kernel over $\Q$ and, by scalar extension, over $\C$.
+
+\textbf{Necessary quadratic equations.}
+A candidate product of Pl\"ucker vectors must be decomposable across the three
+exterior factors and must have a Grassmannian Pl\"ucker vector in each factor.
+Thus its coordinates satisfy the three-factor Segre minors and the
+Grassmann Pl\"ucker relations on every fixed fiber. Substitute a general
+linear combination of the 135 kernel vectors into these equations.
+Two batches of explicit Segre minors reduce to nonzero scalar multiples of
+individual parameter squares and eliminate 87 parameters, leaving 48.
+The selected, explicitly recorded necessary quadrics span a
+1143-dimensional subspace of the 1176-dimensional space of quadrics in
+those 48 parameters. It is not necessary to assert that these selected
+quadrics generate the whole ideal.
+
+\textbf{Linear consequences of quadratic ideal membership.}
+There are 17 independent linear forms $\ell$ whose products $\ell x_j$ with
+every remaining parameter lie in the selected quadratic span. The verifier
+computes them as a rational kernel and checks those memberships. Therefore
+$\ell^2$ belongs to that span, and every complex solution has $\ell=0$.
+Restricting to their common zero space leaves 31 parameters. The restricted
+quadratic span has rank 463.
+
+\textbf{The cubic contraction.}
+Contract one exterior slot in each factor against
+$\tau(f,g,h)=\lambda(fgh)$. This defines
+\[
+ \partial_\tau:\mathcal V\longrightarrow
+ \Lambda^2U_A\otimes\Lambda^3U_B\otimes\Lambda^2U_C.
+\]
+On the remaining 31-parameter linear space its coefficient functionals
+span a seven-dimensional space. Three independent such functionals have
+squares in the restricted necessary quadratic span; hence they vanish at
+every complex solution. After imposing them, 28 parameters remain and the
+image of $\partial_\tau$ lies in a four-dimensional tensor space.
+
+\textbf{An exact flattening contradiction.}
+For a basis $V_1,\ldots,V_4$ of that four-dimensional image, each $V_i$ has
+23 columns in its first-factor flattening which occur in no other $V_j$.
+Those exclusive columns have rank nine. Therefore every nonzero linear
+combination of the $V_i$ has first flattening rank at least nine: choose a
+nonzero coefficient and restrict to its exclusive columns.
+
+On the other hand, if the original exterior vector is a product of
+Pl\"ucker vectors of spaces $\mathsf A,\mathsf B,\mathsf C$ of dimensions
+$3,4,3$, its cubic contraction lies in
+\[
+ \Lambda^2\mathsf A\otimes\Lambda^3\mathsf B\otimes\Lambda^2\mathsf C.
+\]
+Its first flattening rank is at most $\dim\Lambda^2\mathsf A=3$.
+It must therefore be zero. The cofactor wedge bases in these three spaces
+are independent, so this is equivalent to $\tau$ being zero on
+$\mathsf A\times\mathsf B\times\mathsf C$.
+
+If larger first normal image spaces existed for $M_3$, any nonzero cubic
+coordinate could be extended to subspaces of dimensions $(3,4,3)$, since
+the projected flattening ranks are $(3,4,3)$. The preceding conclusion
+would make that coordinate zero. Thus Lemma~\ref{lem:normal} contradicts
+\eqref{eq:projection} in every case.
+\end{proof}
+
+This proof neither infers complex nonexistence from unsuccessful numerical
+searches nor treats a modular kernel as an exact rational kernel without
+checking it. The integral basis plus the one-sided modular rank bound
+provides the required characteristic-zero equality. The additional
+quadratic equations are essential: the pair conditions alone admit the
+control in Appendix~\ref{app:gridcontrol}.
+
+\section{A separate restricted monomial Fourier exclusion}
+
+There is a different root-of-unity search for the pair plane $E$, distinct
+from the cubic-base tests above. Consider curves indexed by $s\in\mathbb Z/17$
+whose every matrix coordinate has one nonzero character monomial:
+\[
+ a_{ij}^{(s)}(t)=c_{ij}t^{\alpha_{ij}}\zeta^{s e_{ij}},\qquad
+ b_{\ell k}^{(s)}(t)=d_{\ell k}t^{\beta_{\ell k}}\zeta^{s f_{\ell k}},
+\]
+with all $c_{ij},d_{\ell k}\ne0$. Arbitrary Laurent or rational exponents may
+be allowed; the obstruction below already holds for real exponents.
+
+A span limit equal to $E$ forces the nine repeated diagonal slices and the
+eight core units to occupy 17 distinct characters. Equality of characters
+within a diagonal slice implies
+\[
+ e_{ij}=u_i+v_j,\qquad f_{jk}=w_k-v_j\pmod {17}.
+\]
+Equality of valuations within each such slice likewise gives
+$\alpha_{ij}=a_i+b_j$ and $\beta_{jk}=c_k-b_j$.
+Normalize $u_0=w_0=v_0=0$, $u_1=1$, and interchange the last two inner labels
+so $v_1<v_2$. There are 810 possible distinct nine-character main sumsets;
+exactly 24 character patterns also assign eight disjoint characters to the
+core units.
+
+Every off-target matrix coordinate in a given character must have strictly
+larger valuation than that character's prescribed limiting slice or unit.
+There are 46 such strict inequalities in six independent real weights.
+
+\begin{theorem}[Restricted monomial obstruction]\label{thm:toric}
+No curves of the preceding single-character, single-monomial form have
+17-dimensional pair spans tending to $E$.
+\end{theorem}
+\begin{proof}[Exact finite certificate]
+The verifier enumerates all 810 main sumsets and all 24 normalized full
+patterns. For each full pattern it constructs the 46 integer gap rows
+$g_i\in\mathbb Z^6$. The certificate supplies positive rational coefficients
+$q_i$, on a nonempty subset of these rows, satisfying
+\[
+ \sum_iq_i=1,\qquad \sum_iq_i g_i=0.
+\]
+If all required gaps $g_i\cdot w$ were positive, their positive weighted
+sum would be positive, contradicting the displayed zero identity. Every
+row and rational dependence is regenerated and checked. Thus all 24
+patterns are impossible, even over arbitrary real valuation weights.
+\end{proof}
+
+Nonzero amplitudes cannot cancel an off-target coordinate in a fixed
+character column: it is a single product of two nonzero amplitudes.
+This justifies the strict-gap necessity. The theorem does not cover sums
+of character monomials in a coordinate, arbitrary factor curves, or
+non-diagonal changes of the ambient coordinates during the degeneration.
+The coincidence that this enumeration and Section 6 each contain 24
+normalized patterns does not make them the same classification.
+
+\section{What remains to determine the exact border rank}
+
+The new pair reduction sharpens the unresolved rank-17 question to
+\begin{equation}\label{eq:remaining}
+ E\stackrel{?}{\in}\calG_{17}(\Seg(\PP A\times\PP B)),
+ \qquad\text{equivalently}\qquad \br(F_E)\stackrel{?}{=}17.
+\end{equation}
+A positive certificate must provide a genuine limiting span or an exact
+17-term degeneration of $F_E$. A universal nonmembership proof would
+establish $\br(M_3)\geq18$. It would \emph{not} by itself determine whether
+the answer is 18, 19, or 20.
+
+The results here eliminate a monomial Fourier route and cubic constructions
+at the specified cyclic and grid bases. They do not eliminate arbitrary
+special reduced configurations, nonreduced limits, or higher normalized
+scalar poles. Corollaries about cactus rank do not fill that gap, as the
+control tensor proves. The positive grouped certificates do not fill it
+either, because grouping forgets the required decomposability of a merged
+factor.
+
+A separate exploratory route considers unrestrictions to concise
+minimal-border-rank tensors and necessary commutative-algebra conditions.
+The general framework is given by Jagie\l\l a--Jelisiejew.\src{Jagie\l\l a--Jelisiejew,
+\emph{Unrestrictions and concise secant varieties}, version 2}{6}
+The exploratory basis-line enumeration in this package is incomplete at
+parameter-bearing branches and is not used for an exclusion. Finite-field
+samples and floating-point optimization records are likewise not proofs of
+nonexistence over $\C$.
+
+The exact numerical interval is unchanged. None of the arguments in this
+report selects a value from $17,18,19,20$, and the package must not be
+represented as a completed solution of AC-03.
+
+\section{Reproducibility and audit boundaries}
+
+From the extracted directory, run
+\begin{Verbatim}[fontsize=\small]
+python code/check_manifest.py
+python -m pip install -r requirements.txt
+python code/verify_all.py
+\end{Verbatim}
+The new certificates use only Python's standard library. SymPy 1.14.0 is
+needed for the retained prior verifier. The tested interpreter is Python
+3.13.5. Do not use Python's \texttt{-O} option: assertions are verification
+checks, and the combined runner rejects optimized mode.
+
+The combined runner regenerates the scheme-section, pair-plane, grouped,
+control, cyclic, monomial, exterior, and grid results. It runs eight
+consistency tests and independently checks the two principal cyclic
+configurations modulo 103. It extracts the unchanged previous archive into
+a temporary directory, verifies its manifest, and recomputes its complete
+round-two and round-one checks. The optional \texttt{--skip-prior} switch
+checks only the new work and must not be described as revalidating the
+inherited bounds or classification.
+
+\begin{center}
+\begin{tabular}{p{0.37\linewidth}p{0.55\linewidth}}
+\toprule
+File&Role\\
+\midrule
+\texttt{code/pair\_geometry.py}&35-coordinate target, restriction, block conventions.\\
+\texttt{code/section\_geometry.py}&Restricted ideal and complete first prolongation kernels.\\
+\texttt{code/grouped\_degeneration.py}&All three exact grouped length-17 expansions.\\
+\texttt{code/wild\_control.py}&Independent border-17/cactus-at-least-18 control.\\
+\texttt{code/exterior\_obstruction.py}&Complete cyclic-root normalization and integer-rank certificates.\\
+\texttt{code/grid\_obstruction.py}&Integral kernel, necessary quadrics, and cubic flattening obstruction.\\
+\texttt{code/toric17\_verify.py}&All monomial patterns and positive rational gap certificates.\\
+\texttt{certificates/}&Exact input witnesses, not expected numerical answers alone.\\
+\texttt{results/}&Regenerated proof records and verification logs.\\
+\texttt{research/}&Exploratory calculations, with incompleteness and sampling boundaries.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The report contains the logical reductions interpreting the finite
+calculations. Universal rank and scheme arguments are not inferred from
+sample matrices. The modular computations prove nonzero integer minors or
+bound a rational kernel which is independently constructed; they do not
+enumerate complex solutions. The checks are computer-assisted mathematics,
+not proof-assistant formalization, independent peer review, or a guarantee
+against every implementation error.
+
+\appendix
+\section{A hand proof for one cyclic configuration}\label{app:hand}
+
+This appendix proves the cubic obstruction for
+\[
+ A_0=\langle1,z\rangle,\quad
+ B_0=\langle1,z^2,z^4,z^6\rangle,\quad
+ C_0=\langle1,z^8\rangle
+\]
+in $R=\C[z]/(z^{17}-1)$, with $\lambda=[z^{16}]$, without the large exterior
+rank certificate. The quotient representatives are
+\[
+ U_A=z^3\langle1,z^2,\ldots,z^{12}\rangle,\quad
+ U_B=\langle z,z^3,z^5,z^9,z^{10},z^{11},z^{12},z^{13},z^{14}\rangle,
+ \quad U_C=\langle z,\ldots,z^7\rangle.
+\]
+Suppose spaces $\mathsf A,\mathsf B,\mathsf C$ of dimensions $3,4,3$ satisfy
+the second-normal conditions.
+
+Put $u=z^2$ and write $\mathsf A=z^3\mathcal A(u)$ with
+$\mathcal A\subset\C[u]_{\leq6}$ of dimension three. The odd part of
+$\mathsf C$ has the form $z\mathcal D(u)$ with
+$\mathcal D\subset\C[u]_{\leq3}$. The even part is contained in
+$\langle z^2,z^4,z^6\rangle$. The $AC$ conditions say that the coefficients
+of $u^3,u^4,u^5,u^6$ in every product $ad$, $a\in\mathcal A,d\in\mathcal D$,
+vanish. The even part contributes zero to these conditions by parity.
+
+Pair $\C[u]_{\leq6}$ with itself by the coefficient of $u^6$. The condition
+is $\mathcal A\perp\mathcal D\C[u]_{\leq3}$. If $e=\dim\mathcal D>0$, then
+\[
+ \dim(\mathcal D\C[u]_{\leq3})\geq e+3.
+\]
+For example, choose a basis of $\mathcal D$ with distinct leading degrees;
+multiplication by $1,u,u^2,u^3$ produces at least $e+3$ distinct leading
+positions. Since $\dim\mathcal A=3$ in a seven-dimensional perfect pairing,
+$e+3\leq4$, so $e\leq1$.
+
+If $e=0$, the three-dimensional $\mathsf C$ is the entire even subspace.
+The $BC$ conditions with $A_0=\langle1,z\rangle$ give six independent
+conditions on the nine-dimensional $U_B$. Thus $\dim\mathsf B\leq3$, a
+contradiction.
+
+If $e=1$, choose $0\ne d\in\C[u]_{\leq3}$. The four forms imposing the
+central coefficient conditions are independent: multiplication by $d$ on
+$\C[u]_{\leq3}$ is injective and the coefficient pairing is perfect. Hence
+\[
+ \mathcal A=\mathcal A_d:=\{a\in\C[u]_{\leq6}:
+                       [u^3]ad=\cdots=[u^6]ad=0\},\qquad\dim\mathcal A_d=3.
+\]
+We claim the six-dimensional sum
+$z^3\mathcal A_d+z^{11}\mathcal A_d$ is direct and disjoint from
+$P=\langle1,z,z^8,z^9\rangle$.
+
+Indeed, suppose $z^3a(z^2)+z^{11}b(z^2)\in P$ modulo $z^{17}-1$.
+Comparison of the even and odd residues forces
+\[
+ b=b_{\mathrm{low}}+\beta u^3,\quad \deg b_{\mathrm{low}}\leq2,
+ \qquad a=\alpha u^3-u^4b_{\mathrm{low}}.
+\]
+Since $b\in\mathcal A_d$ and $\deg(bd)\leq6$, its central coefficients
+vanish only if $\deg(bd)\leq2$. The polynomial ring is a domain, so $\beta=0$.
+Now
+\[
+ ad=u^3(\alpha d-u b_{\mathrm{low}}d).
+\]
+The polynomial in parentheses has degree at most three. Its coefficients
+must all vanish, so $d(\alpha-u b_{\mathrm{low}})=0$. Again using the domain
+property gives $\alpha=0$ and $b_{\mathrm{low}}=0$, and then $a=b=0$.
+This proves the claim.
+
+Consequently
+\[
+ \dim\big(A_0C_0+\mathsf A C_0\big)=4+6=10.
+\]
+The first and second normal conditions put the full $B$ function space in
+its annihilator, of dimension $17-10=7$. This annihilator contains $B_0$,
+which has dimension four. Its quotient therefore has dimension at most
+three, again contradicting $\dim\mathsf B=4$.
+
+This proof covers every nonzero complex $d$. The 40 rational coefficient
+examples checked by \texttt{cyclic\_third\_order.py} are implementation
+controls, not a substitute for this universal argument.
+
+\section{A grid control for the pair conditions}\label{app:gridcontrol}
+
+In the ordered normal character bases of Section 7, the following columns
+span spaces of dimensions $(3,4,3)$:
+\[
+ A_1=\begin{pmatrix}
+ 1&0&0\\1&0&0\\0&1&0\\0&0&1\\-1&0&0\\-1&0&0\\0&0&1
+ \end{pmatrix},\qquad
+ C_1=\begin{pmatrix}
+ 0&0&-1\\1&0&0\\-1&0&0\\-1&0&0\\1&0&0\\0&1&0\\0&0&1
+ \end{pmatrix},
+\]
+\[
+ B_1=\begin{pmatrix}
+ 1&0&0&0\\0&1&0&0\\0&0&0&0\\0&0&1&0\\
+ \frac12&\frac12&\frac12&-\frac12\\0&0&0&1\\
+ \frac12&\frac12&-\frac12&\frac12\\0&0&0&0\\0&0&0&0
+ \end{pmatrix}.
+\]
+Direct rational substitution gives all eight families of pairwise
+conditions in \eqref{eq:pairnormal}. For every triple of columns the cubic
+moment is zero. The consistency suite checks both facts. This demonstrates
+why merely extending the cyclic injectivity claim to the grid would be
+incorrect; the additional quadratic and flattening argument is needed.
+
+\clearpage
+\section*{Sources}
+\addcontentsline{toc}{section}{Sources}
+\begingroup
+\raggedright
+\begin{enumerate}[label={[\arabic*]},leftmargin=2em]
+\item Andrew T., \emph{OpenProblemsInNLA}, AC-03 statement, public repository.
+Retrieved 14 September 2026.
+\url{https://raw.githubusercontent.com/ajt60gaibb/OpenProblemsInNLA/main/arithmetic-and-complexity/AC-03/README.md}.
+Used for the problem specification and published-status context.
+
+\item Austin Conner, Alicia Harper, J. M. Landsberg,
+\emph{New lower bounds for matrix multiplication and the $3\times3$ determinant},
+Forum of Mathematics, Pi 11 (2023), e17. Preprint arXiv:1911.07981.
+\url{https://doi.org/10.1017/fmp.2023.14}.
+Source of the inherited lower bound and border-apolarity classification framework.
+
+\item A. V. Smirnov, \emph{The bilinear complexity and practical algorithms
+for matrix multiplication}, Computational Mathematics and Mathematical Physics
+53(12) (2013), 1781--1795; Russian edition 53(12), 1970--1984.
+\url{https://doi.org/10.1134/S0965542513120129}.
+Table 6 of the Russian edition, pp. 1982--1983, is the source of the retained
+20-term degeneration. Bibliographic record:
+\url{https://www.mathnet.ru/eng/zvmmf9955}.
+
+\item Tomasz Ma\'ndziuk, \emph{Border rank lower bounds beyond weak border
+apolarity}, arXiv:2609.12121, submitted 10 September 2026.
+\url{https://arxiv.org/abs/2609.12121}.
+Source context for the square test in the preceding package, not a claimed
+new numerical bound for AC-03.
+
+\item Weronika Buczy\'nska and Jaros\l aw Buczy\'nski,
+\emph{Apolarity, border rank and multigraded Hilbert scheme}, arXiv:1910.01944,
+accepted version dated 7 November 2020.
+\url{https://arxiv.org/abs/1910.01944}.
+Used for the distinction between actual border-rank data and weaker apolar
+or saturated-scheme conditions.
+
+\item Jakub Jagie\l\l a and Joachim Jelisiejew,
+\emph{Unrestrictions and concise secant varieties}, arXiv:2604.24879v2,
+29 June 2026.
+\url{https://arxiv.org/abs/2604.24879}.
+Framework for the exploratory concise-extension route; it is not invoked
+to claim that the required extensions have been classified here.
+
+\item Martin Kassabov, J. M. Landsberg, Victor Souza, Philip Speegle,
+\emph{Disjoint and nearly disjoint sums of matrix multiplication tensors and
+their centroids}, arXiv:2608.27434, 27 August 2026.
+\url{https://arxiv.org/abs/2608.27434}.
+Related constructive and wild-tensor context. The displayed formulas in
+this report are independently expanded by the supplied code.
+
+\item Josh Alman and Baitian Li, \emph{Asymptotic Rank Speedup Theorems,
+Revisited}, CCC 2026, LIPIcs 383, pp. 36:1--36:42.
+\url{https://doi.org/10.4230/LIPIcs.CCC.2026.36}.
+Asymptotic rank is distinct from the finite-size exact border rank in AC-03;
+no asymptotic result is used as a finite-size certificate.
+
+\item \emph{AC03 round-two verified research package}, supplied prior artifact,
+\texttt{AC03\_round2\_research\_package.zip}, report Theorems 4.1, 5.1, 6.2.
+Retained unchanged under \texttt{prior/}; its included manifest and combined
+verifier are rerun. This is the computational dependency for
+Theorems~\ref{thm:prior} and \ref{thm:pair}, not an external peer-reviewed source.
+\end{enumerate}
+\endgroup
+\end{document}

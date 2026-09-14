@@ -1,0 +1,979 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.86in,headheight=15pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,longtable,array,enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{fancyhdr,hyperref,listings}
+\definecolor{ink}{HTML}{17344A}
+\definecolor{soft}{HTML}{EDF2F5}
+\hypersetup{colorlinks=true,linkcolor=ink,citecolor=ink,urlcolor=ink,
+ pdftitle={AC-02: Exact certificates and a component obstruction},
+ pdfauthor={ChatGPT research report},pdfsubject={Partial results on complex rank of 3 by 3 matrix multiplication}}
+\pagestyle{fancy}\fancyhf{}
+\lhead{\small\textcolor{ink}{AC-02 \;|\; Exact certificates}}
+\rhead{\small Research report}
+\cfoot{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\setlength{\parskip}{5pt}\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{3em}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\CC}{\mathbb C}\newcommand{\ZZ}{\mathbb Z}\newcommand{\QQ}{\mathbb Q}
+\newcommand{\Cstar}{\mathbb C^{\!*}}
+\DeclareMathOperator{\rank}{rank}\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\GL}{GL}\DeclareMathOperator{\diag}{diag}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\file}[1]{\nolinkurl{#1}}
+\lstset{basicstyle=\small\ttfamily,breaklines=true,columns=fullflexible,frame=single,
+ rulecolor=\color{soft},backgroundcolor=\color{soft},xleftmargin=5pt,xrightmargin=5pt}
+\setcounter{tocdepth}{1}
+\begin{document}
+\begin{titlepage}
+\vspace*{0.35in}
+{\large\sffamily\color{ink} OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}\par
+\vspace{0.55in}
+{\Huge\bfseries\color{ink} AC-02}\par\vspace{0.2in}
+{\LARGE\bfseries Exact certificates and a\par component obstruction}\par
+\vspace{0.25in}
+{\large Complex bilinear rank of the $3\times3$ matrix product}\par
+\vspace{0.35in}
+{\large Research report and reproducible verification package}\par
+14 September 2026\par
+\vspace{0.4in}
+\begingroup\setlength{\fboxsep}{13pt}
+\colorbox{soft}{\begin{minipage}{0.91\textwidth}
+\textbf{Status of the original problem: not resolved by this report.}\par
+The exact minimum is not established. The verified general interval remains
+$19\le R_{\CC}(M_3)\le23$. No rank-22 identity and no global lower bound of 23
+are supplied. The results below concern precisely specified families and
+necessary conditions for arbitrary decompositions.
+\end{minipage}}\endgroup\par
+\vspace{0.3in}
+\textbf{Main computer-assisted result.}
+The complete coefficient variety with the displayed Laderman zero pattern
+is an algebraic torus of dimension 58. Its closure under the standard three
+matrix changes of basis is a 76-dimensional irreducible component of the
+23-slot Brent variety. Every slot has a fixed nonzero polynomial signature
+on this component, so no zero-slot point lies on it.
+
+\textbf{Additional results.}
+Exact support obstructions are verified for Laderman's and Sun's
+23-product schemes. A reshuffling argument gives general matrix-rank-sum
+constraints and a sharper classification of the output-rank profile in a
+tight hypothetical 22-product decomposition.
+
+\vfill
+\small
+The archive contains the proofs, exact integer and Laurent certificates,
+a replay checker, attributed algorithm data, rational family instances,
+and numerical exploration logs. The checking is not a Lean formalization
+and has not undergone an independent external mathematical audit.
+No claim of priority for the restricted results is made.
+\end{titlepage}
+\tableofcontents
+\newpage
+
+\section{The target and the result actually obtained}
+\label{sec:scope}
+AC-02 asks for the least number of separated bilinear products needed to
+multiply arbitrary complex $3\times3$ matrices. Each product must multiply
+one linear form in the first input by one linear form in the second input;
+scalar linear combinations are free. This is the exact tensor-rank model,
+not an addition-count, approximate, border-rank, or mixed-input model
+\cite{ac02}.
+
+The established bounds used here are
+\begin{equation}\label{eq:interval}
+19\le R_{\CC}(M_3)\le23.
+\end{equation}
+Bl\"aser's survey records these bounds in its introduction and Example 5.10
+\cite{blaser}. The lower bound is imported from the literature, not reproved
+by this report. The upper bound is verified here from an explicit Laderman
+identity, and separately from Sun's displayed identity \cite{laderman,sun}.
+The source checks did not locate a qualifying improvement for the exact
+complex model; the repository's current statement and Alman--Li also
+identify the exact-rank question as unresolved \cite{ac02,almanli}.
+
+Wang's finite-field lower-bound work has a different field of coefficients
+\cite{wang}. In particular, a nonexistence result for coefficients in
+$\mathbb F_2$ does not establish nonexistence over $\CC$. No finite-field
+search result is used here to infer a complex tensor-rank lower bound.
+
+\subsection{An exact separation of conclusions}
+The principal conclusions proved with the accompanying finite certificates
+are summarized below. A ``slot'' means one ordered rank-one tensor summand,
+including its three coefficient vectors.
+
+\begin{center}
+\begin{tabular}{p{0.57\textwidth}p{0.33\textwidth}}
+\toprule
+Conclusion & Scope \\
+\midrule
+All 729 identities hold for two 23-slot decompositions & Existing upper bounds \\
+No factor vector can vanish with the prescribed supports & Laderman and Sun supports \\
+All three pairwise Khatri--Rao matrices have column rank 23 & The same support varieties \\
+The complete support variety is $(\Cstar)^{58}$ & Laderman support \\
+A 76-dimensional component contains no zero-slot point & The component through Laderman \\
+$\sum_t\rank W_t\ge27$, and analogues for $U,V$ & Every exact decomposition \\
+A tight 22-slot output profile is $2^5 1^{17}$ & Conditional on $\sum_t\rank W_t=27$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+These conclusions neither exhibit a 22-product algorithm nor exclude all
+such algorithms. In particular, the component theorem does not assert that
+every decomposition is equivalent to Laderman's. The failure of that global
+coverage statement is the central gap, not a missing computational check
+within the displayed component.
+
+\section{Coordinates, identities, and the coefficient variety}
+\label{sec:coordinates}
+Throughout, matrix indices $i,j,k$ range over $\{0,1,2\}$. A matrix entry
+$(i,j)$ has vector coordinate $3i+j$. Product slots are indexed
+$t=1,\ldots,r$ in the text and $t=0,\ldots,r-1$ in JSON and Python unless
+explicitly labeled otherwise.
+
+Write $U_t,V_t,W_t$ for $3\times3$ coefficient matrices and define
+\begin{equation}\label{eq:algorithm}
+AB=\sum_{t=1}^r
+ \left(\sum_{i,j}U_{t,ij}A_{ij}\right)
+ \left(\sum_{j,k}V_{t,jk}B_{jk}\right)W_t.
+\end{equation}
+There is no complex conjugation in this formula or in any algebraic
+signature below. Equality for every input pair is equivalent to the 729
+Brent equations
+\begin{equation}\label{eq:brent}
+\sum_{t=1}^r U_{t,ij}V_{t,j'k}W_{t,i'k'}
+  =\delta_{ii'}\delta_{jj'}\delta_{kk'}.
+\end{equation}
+Let $T\in\ZZ^{9\times9\times9}$ have entry 1 at
+$(3i+j,3j+k,3i+k)$ and 0 elsewhere. It has 27 entries equal to 1 and 702
+equal to 0. Equation \eqref{eq:brent} is
+$T=\sum_t u_t\otimes v_t\otimes w_t$, with row-major vectorized factors.
+
+\begin{definition}
+$X_{23}$ is the affine variety in $\CC^{621}$ cut out by
+\eqref{eq:brent} with $r=23$. All slots and all factors are ordered.
+Zero factor vectors are allowed. For a fixed baseline $F^{(0)}=(U,V,W)$,
+its support variety consists of the points in $X_{23}$ at which every
+coordinate zero in $F^{(0)}$ remains zero. Permitted coordinates are not
+assumed nonzero in this definition.
+\end{definition}
+
+A point has a zero slot exactly when at least one of its three vectors in
+that slot is zero: a tensor product of three nonzero vectors over a field
+is nonzero. Hence
+\begin{equation}\label{eq:zeroequiv}
+R_{\CC}(M_3)\le22
+\quad\Longleftrightarrow\quad
+X_{23}\text{ contains a zero-slot point}.
+\end{equation}
+The forward implication pads an algorithm with zeros; the reverse
+implication deletes the zero slot. An algorithm of fewer than 22 products
+can first be padded to 22 products as well.
+
+\subsection{Data and baseline verification}
+The files \file{data/laderman23.json} and \file{data/sun23.json} contain three
+$23\times9$ signed-integer arrays. They are reconstructed from explicit
+scalar formulas by \file{code/build_data.py}. Laderman's formulas are also
+printed in Appendix \ref{app:laderman}. Sun's data are transcribed from
+Section 5 of his paper \cite{sun}; the data are not an algorithm discovered
+in this work.
+
+The checker evaluates every left side of \eqref{eq:brent} as an integer and
+compares it to the corresponding Kronecker delta. All 729 checks pass for
+each baseline. This proves exact identities, not merely agreement on
+random numerical inputs. Because the identities have integer coefficients,
+the displayed algorithms also remain identities under extension to $\CC$.
+Their optimality does not follow from verification.
+
+\section{Nonvanishing on two prescribed support varieties}
+\label{sec:forcing}
+For each permitted coordinate, introduce a normalized variable
+$x_a=F_a/F_a^{(0)}$. Baseline coefficients are $\pm1$, so the normalization
+is harmless even before nonvanishing has been established.
+Each restricted Brent equation is a sum of signed cubic monomials, possibly
+including the constant $-1$.
+
+\begin{lemma}[Two-monomial propagation]\label{lem:forcing}
+Suppose a polynomial equation over a field is
+$c_1m_1+c_2m_2=0$, where $c_1,c_2$ are nonzero scalars and $m_1,m_2$ are
+monomials. If every variable in $m_1$ is nonzero at every solution of the
+system, then every variable in $m_2$ is also nonzero at every solution.
+The empty monomial 1 is nonzero without any assumptions.
+\end{lemma}
+\begin{proof}
+The first monomial is nonzero. The equation gives
+$m_2=-c_1m_1/c_2\ne0$. A product of field elements is nonzero only if each
+factor is nonzero. Applying the argument successively preserves its
+universal quantifier over all solutions.
+\end{proof}
+
+For example, the coefficient of $A_{00}B_{00}$ in output $(0,0)$, on
+Laderman's support, gives
+\[
+ x_{U_{6,00}}x_{V_{6,00}}x_{W_{6,00}}=1.
+\]
+These three coordinates are therefore forced nonzero. Other equations
+propagate nonvanishing from already established coordinates.
+
+\begin{proposition}[Exact support obstruction]\label{prop:support}
+On the Laderman support variety, every one of the 153 permitted
+coordinates is nonzero. On the Sun support variety, at least 162 of the
+175 permitted coordinates are nonzero. In both varieties all 69 factor
+vectors are nonzero, and consequently every one of the 23 slots is nonzero.
+\end{proposition}
+\begin{proof}
+The finite traces in \file{proofs/laderman23_forcing.json} and
+\file{proofs/sun23_forcing.json} contain respectively 87 and 99 applications
+of Lemma \ref{lem:forcing}. Each step specifies the Brent polynomial, the
+monomial already known to be nonzero, and the newly forced variables.
+The checker reconstructs the equations from the baseline data; it does
+not accept a polynomial supplied by the certificate. It verifies the
+hypotheses and conclusion of every step and then checks that each of the
+69 factor vectors contains a forced coordinate. The resulting sets have
+sizes 153 and 162, respectively.
+\end{proof}
+
+This does not assume that the original $\pm1$ entries stay $\pm1$. The
+allowed entries may vary arbitrarily in $\CC$, including attempted zeros.
+It is precisely the equations that prevent the stated coordinates from
+vanishing. For Sun, no claim is made that the remaining 13 permitted
+coordinates must be nonzero.
+
+\subsection{A stronger pairwise independence certificate}
+For two modes, define the $81\times23$ matrix
+\[
+ K_{UV}(:,t)=u_t\otimes v_t,
+\]
+and define $K_{VW}$ and $K_{WU}$ similarly. The ordering of their 81 rows is
+lexicographic in the two vector coordinates.
+
+\begin{lemma}[Triangular peeling]\label{lem:peel}
+Suppose the columns of a matrix have a fixed permitted support. Assume
+there is an ordering of the columns and a row for each column such that,
+among the columns not previously removed, the selected row has only that
+column as a permitted nonzero, and its entry is known to be nonzero.
+Then the columns are linearly independent for every permitted assignment.
+\end{lemma}
+\begin{proof}
+In a linear dependence, the first selected row forces the coefficient of
+its unique surviving column to be zero. Remove that column from the
+relation and repeat. Every coefficient is zero.
+\end{proof}
+
+\begin{proposition}\label{prop:pairwise}
+For every solution in either support variety of Proposition
+\ref{prop:support}, each of $K_{UV},K_{VW},K_{WU}$ has column rank 23.
+\end{proposition}
+\begin{proof}
+The two \file{*_pairwise.json} certificates each give three lists of
+23 row--column choices. The checker verifies the support uniqueness at
+each step and verifies that the two coordinates whose product is the
+selected entry belong to the forced-nonzero set. Lemma \ref{lem:peel}
+applies to each list.
+\end{proof}
+
+As one consequence, with the two input-factor arrays fixed at any such
+solution, the output-factor array is uniquely determined by the tensor
+identity: the matrix equation is $K_{UV}W=T_{UV|W}$ and $K_{UV}$ is
+injective. Reoptimizing only the output factors therefore cannot remove a
+slot. This is an obstruction for the displayed pairs, not a lower bound
+against all alternative pairs of factors.
+
+\section{The complete Laderman support variety is a torus}
+\label{sec:torus}
+Let $S\subseteq X_{23}$ denote the Laderman support variety. Proposition
+\ref{prop:support} places all its 153 allowed coordinates in $\Cstar$.
+Thus its equations may be treated as Laurent polynomial equations in the
+normalized coordinates $x_1,\ldots,x_{153}$.
+
+\subsection{Reduction to unit-monomial equations}
+Of the 729 restricted equations, 610 vanish identically. The other 119
+have the following forms: 23 equations have one cubic and a nonzero
+constant; 92 have two cubics and no constant; and four have three cubics
+and a constant. The first 115 therefore become equations $x^a=1$, with
+integer exponent vectors $a$.
+
+Let $A_0\in\ZZ^{115\times153}$ consist of these exponent rows. The
+certificate establishes $\rank A_0=91$ and gives a $91\times91$ minor
+whose inverse is an integer matrix. It also gives
+$E_0\in\ZZ^{153\times62}$ with an identity block on 62 free coordinates
+and $A_0E_0=0$.
+
+In each of the four remaining equations, two oppositely signed cubics
+have exponent difference in the integer row lattice generated by the
+selected rows of $A_0$. Explicit integer combinations in the certificate
+prove these four lattice memberships. Therefore those two cubics agree
+on every solution of $x^{A_0}=1$ and cancel. The survivor gives one further
+equation $x^a=1$.
+
+For clarity, the four affected coefficient coordinates are listed below.
+The entries in the first column are 0-based vector coordinates $(a,b,c)$;
+slot numbers in the last column are 1-based. All factor entries in that
+column are normalized by their baseline signs.
+\begin{center}
+\begin{tabular}{ccp{0.47\textwidth}}
+\toprule
+$(a,b,c)$ & Brent index $81a+9b+c$ & Surviving monomial \\
+\midrule
+$(3,1,4)$ & 256 & $x_{U_{5,10}}x_{V_{5,01}}x_{W_{5,11}}$ \\
+$(5,8,5)$ & 482 & $x_{U_{18,12}}x_{V_{18,22}}x_{W_{18,12}}$ \\
+$(6,2,8)$ & 512 & $x_{U_{9,20}}x_{V_{9,02}}x_{W_{9,22}}$ \\
+$(8,7,7)$ & 718 & $x_{U_{15,22}}x_{V_{15,21}}x_{W_{15,21}}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Let $A\in\ZZ^{119\times153}$ be $A_0$ with these four exponent rows
+appended. Its certified rank is 95, and a selected $95\times95$ minor has
+an integer inverse.
+
+\begin{lemma}[Unimodular monomial elimination]\label{lem:unimod}
+Let $A\in\ZZ^{m\times n}$. Select $r$ rows and $r$ pivot columns so that
+the resulting square matrix $B$ has an integer inverse. Let $C$ be the
+selected rows restricted to the other $n-r$ columns. Define
+$E\in\ZZ^{n\times(n-r)}$ by
+\[
+ E_{\mathrm{free},:}=I_{n-r},\qquad
+ E_{\mathrm{pivot},:}=-B^{-1}C.
+\]
+If $AE=0$, then the solution set of $x^A=1$ in $(\Cstar)^n$ is
+isomorphic to $(\Cstar)^{n-r}$ by $x_a=\prod_j z_j^{E_{aj}}$.
+\end{lemma}
+\begin{proof}
+For every $z$, the equations hold because their exponent vectors become
+zero after multiplication by $E$. Conversely, let $z$ be the free
+coordinates of a solution. The selected equations are
+$x_{\mathrm{pivot}}^Bz^C=1$. Taking the integer monomial combinations
+specified by $B^{-1}$ expresses each pivot variable uniquely as the
+corresponding row of $-B^{-1}C$. No extraction of roots is involved.
+All other equations hold for the parametrization by $AE=0$.
+Both the map and its inverse, coordinate projection to $z$, are regular
+maps of tori.
+\end{proof}
+
+\begin{theorem}[Complete fixed-support parametrization]\label{thm:torus}
+There is an explicit isomorphism
+\[
+ S\simeq (\Cstar)^{58}.
+\]
+More precisely, let $E$ be the $153\times58$ integer matrix in
+\file{proofs/laderman_torus.json}, under \file{final.E}. Then every point
+of $S$, and only such a point, is
+\begin{equation}\label{eq:param}
+ F_a(z)=F_a^{(0)}\prod_{j=1}^{58}z_j^{E_{aj}},\qquad
+ z\in(\Cstar)^{58},
+\end{equation}
+with all other coordinates zero. Every entry of $E$ has absolute value
+at most 2.
+\end{theorem}
+\begin{proof}
+Nonvanishing follows from Proposition \ref{prop:support}. The preceding
+integer row-lattice certificates reduce the restricted equations to
+$x^A=1$. The certificate contains the selected rows and pivot columns,
+the integer inverse, the 58 free indices, and $E$. The replay checker
+verifies both inverse identities, the identity block on the free
+coordinates, the pivot formula in Lemma \ref{lem:unimod}, and $AE=0$.
+That lemma proves completeness and uniqueness.
+
+As a redundant check of sufficiency, the checker substitutes
+\eqref{eq:param} into each of the 729 original equations, groups terms
+by their exact 58-dimensional exponent vectors, and verifies that every
+resulting integer coefficient is zero. Thus no ignored residual equation
+or numerical approximation enters the parametrization.
+\end{proof}
+
+The integer inverse is important. A rational rank computation alone would
+not exclude additional finite components, such as those arising from
+$x^2=1$. Here the selected minors are unimodular, so those extra root
+choices do not occur.
+
+\subsection{A six-parameter slice after elementary rescalings}
+There are 46 independent term-rescaling parameters:
+\[
+ U_t\mapsto\lambda_tU_t,\quad V_t\mapsto\mu_tV_t,\quad
+ W_t\mapsto(\lambda_t\mu_t)^{-1}W_t.
+\]
+Also allow diagonal basis changes
+$P=\diag(p_1,p_2,1)$, $Q=\diag(q_1,q_2,1)$,
+$R=\diag(r_1,r_2,1)$ in the action of Section \ref{sec:component}.
+These give a 52-parameter torus of support-preserving transformations.
+
+\begin{proposition}[Explicit elementary-gauge slice]\label{prop:slice}
+Every point of $S$ has a unique representative, under this 52-parameter
+rescaling group, for which 52 designated free coordinates in
+\eqref{eq:param} equal 1. The other six free coordinates have 0-based
+indices
+\[
+21,\ 37,\ 45,\ 47,\ 50,\ 52.
+\]
+The representative is obtained by retaining precisely these six columns
+of $E$ and setting all other parameters to 1.
+\end{proposition}
+\begin{proof}
+Let $B$ be the $153\times55$ exponent matrix for all 46 term rescalings
+and all nine diagonal entries of $P,Q,R$. Let $D$ be its restriction to
+the 58 free coordinate rows. Then $ED=B$; this identity is checked over
+$\ZZ$.
+
+Select the 52 columns corresponding to all term rescalings and the first
+two diagonal entries of each matrix. The certificate gives 52 rows of
+$D$ whose square submatrix has an integer inverse. These rows are exactly
+the complement of the six displayed indices. For any free-coordinate
+vector $z$, the monomial equations making these 52 coordinates equal to
+1 have a unique solution for the 52 rescaling parameters, by the same
+integer-inverse argument as Lemma \ref{lem:unimod}.
+The remaining three diagonal generators are integer monomial
+combinations of the selected generators on $S$, as is also verified in
+the certificate.
+\end{proof}
+
+This is a quotient by the stated elementary rescalings, not a claim that
+the six coordinates classify algorithms under every possible equivalence.
+The file \file{data/laderman_six_parameter_exponents.csv} prints all 153
+coefficient formulas as baseline signs and six exponent columns. The
+script \file{code/instantiate_family.py} creates exact rational instances.
+The sample with parameters $(2,3,5,7,11,13)$ passes all 729 identities.
+
+Parameterized matrix multiplication algorithms and heuristic ways of
+introducing parameters have substantial prior literature. In particular,
+Heule--Kauers--Seidl report that their particular iterative linear
+parameter-introduction procedure found no parameters for Laderman's
+scheme \cite[Section 7]{hks}. That is a statement about the output of a
+specified heuristic, not a theorem that every coupled nonlinear
+coefficient deformation is trivial. No priority claim is made here for
+the present torus calculation.
+
+\section{A 76-dimensional component without zero slots}
+\label{sec:component}
+The support theorem is not confined to algorithms that keep their zero
+patterns after a basis change. We now take an orbit closure inside the
+full coefficient variety $X_{23}$.
+
+\subsection{The action and a polynomial invariant}
+Let $G=\GL_3(\CC)^3$. Its action on coefficient matrices is
+\begin{equation}\label{eq:action}
+\begin{split}
+ U'_t&=P^\top U_tQ^{-\top},\\
+ V'_t&=Q^\top V_tR^{-\top},\\
+ W'_t&=P^{-1}W_tR.
+\end{split}
+\end{equation}
+It preserves \eqref{eq:algorithm}: apply the original algorithm to
+$A'=PAQ^{-1}$ and $B'=QBR^{-1}$, and transform its output by
+$P^{-1}(\,\cdot\,)R$. In particular, it preserves $X_{23}$.
+
+For a slot define the polynomial
+\begin{equation}\label{eq:sig}
+ \sigma_t(F)=\tr(U_tV_tW_t^\top)
+ =\sum_{i,j,k}U_{t,ij}V_{t,jk}W_{t,ik}.
+\end{equation}
+This is the familiar contraction signature in the theory of matrix
+multiplication decompositions \cite{tichavsky}. Its invariance can be
+checked directly here:
+\[
+ U'_tV'_t(W'_t)^\top
+   =P^\top U_tV_tW_t^\top P^{-\top}.
+\]
+Taking trace proves $\sigma_t(F')=\sigma_t(F)$.
+
+\begin{proposition}[Constant signatures on the torus]\label{prop:sig}
+On $S$ the signatures are
+\begin{equation}\label{eq:sigvalues}
+\sigma_t=\begin{cases}
+2,&t\in\{4,7,12,16\},\\
+1,&\text{all other slots}.
+\end{cases}
+\end{equation}
+The slot numbering is that of the included Laderman data.
+\end{proposition}
+\begin{proof}
+Substitute \eqref{eq:param} in \eqref{eq:sig}. The checker groups the
+resulting Laurent monomials by exponent vector. Every nonconstant
+coefficient is zero, and the constant coefficients are exactly
+\eqref{eq:sigvalues}. This holds symbolically for all 58 nonzero complex
+parameters, not just at the baseline point.
+\end{proof}
+
+Define
+\begin{equation}\label{eq:Z}
+ Z=\overline{G\cdot S}^{\,\mathrm{Zar}}\ \subseteq X_{23},
+\end{equation}
+where the closure is in affine coefficient space.
+
+\begin{theorem}[Orbit-closure obstruction]\label{thm:closure}
+$Z$ is irreducible, and no point of $Z$ has a zero slot.
+\end{theorem}
+\begin{proof}
+Both $G$ and $S$ are irreducible, so the closure of the image of the
+regular action map $G\times S\to X_{23}$ is irreducible. Every polynomial
+$\sigma_t-c_t$, with $c_t$ from \eqref{eq:sigvalues}, vanishes on $G\cdot S$
+and hence on its Zariski closure. At a zero slot, its cubic signature
+would be zero. This contradicts $c_t\in\{1,2\}$.
+\end{proof}
+
+This theorem also covers all finite coordinatewise limits of transformed
+family members. It does not cover limits in which the coefficient arrays
+diverge while only their summed tensor converges.
+
+\subsection{Exact local dimension and identification of the component}
+Let $L=F^{(0)}$ be the baseline Laderman point. Let $J$ be the Jacobian of
+the 729 Brent polynomials at $L$, with columns ordered by mode, slot,
+then row-major entry. It is an integer $729\times621$ matrix.
+For example, the column for the variable $U_{t,a}$ is
+$e_a\otimes v_t\otimes w_t$, vectorized in lexicographic order.
+
+Differentiate \eqref{eq:param} at $z=(1,\ldots,1)$. Its 58 derivative
+columns have entry $F_a^{(0)}E_{aj}$ at each allowed coordinate and zero
+at the forbidden coordinates. Add 18 derivatives of \eqref{eq:action},
+one for each off-diagonal elementary matrix $D$ in each group factor:
+\begin{equation}\label{eq:directions}
+\begin{array}{c|ccc}
+ &\delta U_t&\delta V_t&\delta W_t\\ \hline
+P&D^\top U_t&0&-DW_t\\
+Q&-U_tD^\top&D^\top V_t&0\\
+R&0&-V_tD^\top&W_tD
+\end{array}
+\end{equation}
+All derivatives are taken at the identity. Denote the resulting
+$621\times76$ matrix by $H$.
+
+\begin{lemma}[Exact tangent certificates]\label{lem:tangent}
+Over $\CC$, $\rank H=76$ and $\rank J=545$. Also $JH=0$ over $\ZZ$.
+\end{lemma}
+\begin{proof}
+The checker reconstructs both matrices from the baseline and the
+monomial exponent matrix. It verifies $JH=0$ with unbounded integer
+arithmetic. The file \file{proofs/laderman_component.json} lists a
+$76\times76$ minor of $H$ and a $545\times545$ minor of $J$ that are
+nonsingular modulo the prime $p=1000003$. Primality is checked by trial
+division, and nonsingularity is checked by exact modular elimination.
+
+An integer determinant nonzero modulo $p$ is a nonzero integer, hence is
+nonzero over $\CC$. Thus $\rank H\ge76$ and $\rank J\ge545$. The size of
+$H$ and the relation $JH=0$ imply
+$\rank J\le621-76=545$. All claimed ranks follow.
+\end{proof}
+
+\begin{theorem}[The Laderman component]\label{thm:component}
+$Z$ is the unique irreducible component of $X_{23}$ through $L$.
+It has dimension 76, and $L$ is a nonsingular point of $X_{23}$.
+In particular, this entire irreducible component has no zero-slot point.
+\end{theorem}
+\begin{proof}
+The columns of $H$ are derivatives of the action map $G\times S\to X_{23}$
+at $(I,L)$. Lemma \ref{lem:tangent} gives differential rank 76, so its
+image closure $Z$ has dimension at least 76. For instance, a nonzero
+76-dimensional derivative minor yields local analytic image dimension
+at least 76 over $\CC$.
+
+Every tangent vector to $X_{23}$ at $L$ lies in $\ker J$. Therefore
+\[
+\dim_L X_{23}\le\dim T_LX_{23}\le621-545=76.
+\]
+Since $Z$ is irreducible and contains $L$, its dimension gives the reverse
+lower bound $\dim_LX_{23}\ge\dim Z\ge76$. Consequently all these dimensions
+are 76. Equality between local dimension and tangent dimension makes $L$
+nonsingular, so exactly one irreducible component of $X_{23}$ passes
+through $L$. That component contains $Z$, and the equal dimensions force
+it to be $Z$ itself. Theorem \ref{thm:closure} gives the last assertion.
+\end{proof}
+
+Jacobian methods and orbit-dimension bounds for Brent varieties appear in
+Li--Bao--Zhang \cite{lbz}. The argument here does not assume that the ideal
+generated by the Brent polynomials is radical: even if it were not,
+$\ker J$ would still be an upper bound for the tangent space of its zero
+set. The 76-dimensional family provides the independent lower bound
+needed to close the dimension calculation.
+
+\subsection{Precisely what the component theorem excludes}
+It excludes reaching a zero slot by any sequence that stays inside $Z$,
+including arbitrary changes of basis and finite limiting operations.
+
+It does not show that $X_{23}=Z$. It does not exclude another irreducible
+component containing a padded rank-22 algorithm. Nor does it preclude a
+continuous path that leaves $Z$ through an intersection with another component
+elsewhere. Finally, all 23 slots being nonzero is not itself proof that
+the tensor cannot be expressed by a different collection of 22 nonzero
+slots. These distinctions prevent the local result from being mistaken
+for $R_{\CC}(M_3)=23$.
+
+\section{General reshuffling constraints and the tight case}
+\label{sec:reshuffle}
+The next arguments apply to arbitrary exact decompositions, without
+prescribing support, signs, reality, or a component. Here $n$ may be
+arbitrary, and all retained slots are assumed nonzero.
+
+\begin{theorem}[Three matrix-rank-sum inequalities]\label{thm:ranksum}
+For an exact decomposition of $n\times n$ matrix multiplication,
+\begin{equation}\label{eq:ranksum}
+\sum_t\rank U_t\ge n^3,\qquad
+\sum_t\rank V_t\ge n^3,\qquad
+\sum_t\rank W_t\ge n^3.
+\end{equation}
+These are ordinary ranks of the coefficient matrices, not tensor ranks.
+\end{theorem}
+\begin{proof}
+Reshape \eqref{eq:brent} into a matrix whose row is $(i,j,k')$ and column
+is $(i',j',k)$. The target becomes $I_{n^3}$. A summand becomes
+\[
+ K_t[(i,j,k'),(i',j',k)]=U_{t,ij}V_{t,j'k}W_{t,i'k'}.
+\]
+Factor $W_t=X_tY_t^\top$ with $q_t=\rank W_t$ independent columns in each
+of $X_t,Y_t$. Then $K_t=L_tR_t$, where
+\[
+ L_t[(i,j,k'),a]=U_{t,ij}Y_t[k',a],\qquad
+ R_t[a,(i',j',k)]=X_t[i',a]V_{t,j'k}.
+\]
+Thus $\rank K_t\le q_t$ (indeed equality holds for nonzero $U_t,V_t$).
+Subadditivity of matrix rank applied to $I_{n^3}=\sum_tK_t$ gives the
+$W$ inequality. Cyclically permuting the three factors in the trace
+form of the multiplication tensor gives the other two inequalities;
+transposes do not change ordinary matrix ranks.
+\end{proof}
+
+For a 22-slot decomposition with $n=3$, each inequality says
+$\sum_t(\rank W_t-1)\ge5$, and similarly for $U$ and $V$.
+This alone is much weaker than a lower bound of 23 products.
+
+\begin{definition}
+A decomposition is \emph{output-tight} when
+$\sum_t q_t=n^3$, where $q_t=\rank W_t$.
+\end{definition}
+
+\begin{theorem}[Dual block identities in the tight case]\label{thm:tight}
+For an output-tight decomposition, choose any full-column-rank
+factorizations $W_t=X_tY_t^\top$. Then for all slots $s,t$,
+\begin{equation}\label{eq:blocks}
+X_s^\top U_tV_sY_t=
+\begin{cases}
+I_{q_t},&s=t,\\
+0_{q_s\times q_t},&s\ne t.
+\end{cases}
+\end{equation}
+In particular,
+\begin{equation}\label{eq:tightself}
+q_t\le\min\{\rank U_t,\rank V_t\},\qquad
+\sigma_t=q_t.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Concatenate the matrices in the proof of Theorem \ref{thm:ranksum}:
+$L=[L_1\ \cdots\ L_r]$ and
+$R=[R_1^\top\ \cdots\ R_r^\top]^\top$.
+The exact identity gives $LR=I_{n^3}$.
+Tightness makes $L,R$ square, hence $RL=I_{n^3}$ as well.
+The $(s,t)$ block of $RL$ is
+\[
+\sum_{i,j,k}X_s[i,b]V_s[j,k]U_t[i,j]Y_t[k,a]
+   =\bigl(X_s^\top U_tV_sY_t\bigr)_{ba},
+\]
+proving \eqref{eq:blocks}. The diagonal blocks imply the rank inequalities
+in \eqref{eq:tightself}. Their traces give
+$q_t=\tr(X_t^\top U_tV_tY_t)
+=\tr(U_tV_tW_t^\top)=\sigma_t$.
+\end{proof}
+
+\begin{theorem}[An invertible output forces 25 slots]\label{thm:fullrank}
+For $n=3$, an output-tight decomposition with a rank-three output matrix
+has exactly 25 nonzero slots. Thus an output-tight decomposition with at
+most 24 nonzero slots has no rank-three output matrix.
+\end{theorem}
+\begin{proof}
+Let $q_0=3$. Then $X_0,Y_0$ are invertible, and the self-block identity
+$X_0^\top U_0V_0Y_0=I_3$ makes $U_0,V_0$ invertible.
+For any other slot $t$, the off-diagonal block with $s=0$ yields
+\[
+U_tV_0Y_t=0.
+\]
+The matrix $V_0Y_t$ has column rank $q_t$, so
+$\rank U_t\le3-q_t$.
+Using the block with second slot index 0 similarly gives
+\[
+X_t^\top U_0V_t=0,\qquad\rank V_t\le3-q_t.
+\]
+By \eqref{eq:tightself}, $q_t\le\rank U_t,\rank V_t$.
+Thus $2q_t\le3$, and every other $q_t=1$.
+Output tightness is now $27=3+(r-1)$, hence $r=25$.
+\end{proof}
+
+\begin{corollary}[The output-tight 22-slot profile]\label{cor:22}
+An output-tight 22-slot decomposition of $M_3$ must have exactly five
+rank-two outputs and seventeen rank-one outputs. It has no rank-three
+output. Its contraction signatures have the corresponding multiset
+$\{2,2,2,2,2,1,\ldots,1\}$.
+\end{corollary}
+\begin{proof}
+By Theorem \ref{thm:fullrank}, the output ranks lie in $\{1,2\}$. If $a$
+of them equal 2, output tightness gives $27=2a+(22-a)$, so $a=5$.
+The signature claim follows from Theorem \ref{thm:tight}.
+\end{proof}
+
+No argument here establishes that an arbitrary rank-22 decomposition must
+be output-tight in any orientation. Therefore Corollary \ref{cor:22}
+does not exclude every possible output profile.
+
+\subsection{Application to the Sun baseline}
+For the supplied Sun data, direct exact matrix-rank computations give
+\[
+ \sum_t\rank U_t=32,\qquad
+ \sum_t\rank V_t=30,\qquad
+ \sum_t\rank W_t=27.
+\]
+The four rank-two outputs are slots $5,8,10,23$; all other outputs have
+rank one. The certificate \file{proofs/sun_tight.json} gives explicit
+integer factorizations $W_t=X_tY_t^\top$. The checker verifies their
+ranks, forms the $27\times27$ matrices $L,R$, checks both $LR=I$ and
+$RL=I$, and independently verifies all 529 block identities.
+
+Consequently, one cannot delete any Sun slot while requiring the ordinary
+matrix rank of each remaining output to stay at or below its current
+value. Such a deletion would lower the output-rank sum below 27, in
+contradiction to Theorem \ref{thm:ranksum}, regardless of how the two input
+factor arrays are changed. A successful reduction would have to escape
+that output-rank restriction.
+
+\section{Verification, reproducibility, and numerical experiments}
+\label{sec:verification}
+\subsection{Trust boundaries of the certificate checker}
+The exact checker does not import the certificate generator and does not
+use a symbolic algebra system or floating-point tolerances. It does share
+indexing and matrix-building helpers with the generator. Consequently it
+is a replay checker, not an independent authorship or formal-verification
+claim. A second, stand-alone checker evaluates arbitrary rational-complex
+identities directly from six matrix indices and uses only the Python
+standard library.
+
+The exact operations used are integer arithmetic, integer matrix products,
+Laurent exponent addition, rational elimination for small coefficient
+matrices, and finite-field elimination for selected integer minors. Large
+integer products use unbounded Python integers. Modular operations use
+64-bit integer arrays with prime $1000003$; every multiplication before
+reduction is below $10^{12}$, within the integer range.
+
+The modular-minor argument is different from transferring a tensor-rank
+lower bound across fields. A specific nonzero integer determinant remains
+nonzero over $\CC$. A statement that a polynomial system has no solutions
+with coordinates in $\mathbb F_2$ says nothing comparable about its
+complex solutions.
+
+\subsection{Commands}
+From the root of the extracted archive, with the recorded dependencies
+installed:
+\begin{lstlisting}
+python code/verify.py
+python code/self_tests.py
+python code/verify_candidate.py data/laderman23.json
+python code/verify_candidate.py data/sun23.json
+\end{lstlisting}
+Regeneration, which additionally uses SymPy, is:
+\begin{lstlisting}
+python code/build_data.py
+python code/generate_certificates.py
+python code/verify.py
+\end{lstlisting}
+A nontrivial exact rational family member can be created by:
+\begin{lstlisting}
+python code/instantiate_family.py --parameters 2 3 5 7 11 13 \
+  --output results/example.json
+python code/verify_candidate.py results/example.json
+\end{lstlisting}
+The candidate checker supports $\QQ(i)$ coefficients represented by exact
+rational strings or separate real and imaginary rational parts. It rejects
+floating-point coefficients. It does not implement arbitrary algebraic
+number fields, so its accepted coefficient format must not be mistaken
+for a restriction in the mathematical statement of AC-02.
+
+The seven regression tests include correct real and complex-gauged
+identities, a nontrivial rational family member, and deliberately
+corrupted identities, forcing traces, and Laurent certificates. All seven
+pass. A corruption being rejected is a software regression test, not a
+replacement for the proof of the verification method.
+
+\subsection{Unrestricted numerical exploration}
+The numerical search frees every coefficient in 22 slots, including
+entries that were zero in the starting schemes. It is not a support-fixed
+search. The recorded run uses seed 20260914 and 54 starting points:
+46 obtained by deleting each slot of each baseline, plus four random real
+and four random complex starts. Each receives 500 alternating
+least-squares sweeps. The four best starts and two complex starts receive
+up to 30 damped Gauss--Newton steps.
+
+The best recorded point, from deleting Sun slot 21, has
+\[
+ \left\|\sum_{t=1}^{22}u_t\otimes v_t\otimes w_t-T\right\|_F
+ =0.16307567682559754,
+\]
+with relative residual $0.031383928637846385$. This is not an exact
+identity. The file \file{results/numerical_rank22_search.json} contains
+all settings and iteration records; the best arrays are retained in
+\file{results/numerical_best_rank22.npz}.
+
+\textbf{No mathematical lower bound follows from these failures.}
+Nor would a very small residual by itself establish an exact rank-22
+identity. Coefficients escaping to infinity can represent an approximation
+phenomenon rather than a finite exact decomposition. The numerical run is
+reported solely as reproducible exploration and is not used in any proof.
+
+\section{The remaining global step}
+\label{sec:gap}
+Let
+\[
+ \mathcal N=\{F\in X_{23}:\text{at least one slot of }F\text{ is zero}\}.
+\]
+By \eqref{eq:zeroequiv}, a proof that $\mathcal N$ is empty would, together
+with the verified upper bound, establish $R_{\CC}(M_3)=23$.
+Theorem \ref{thm:component} proves only $Z\cap\mathcal N=\varnothing$.
+No certificate in this archive establishes emptiness on every other
+component of $X_{23}$.
+
+There is an equivalent unrestricted polynomial target. Let
+$I_{22}\subset\QQ[U,V,W]$ be the ideal of the 729 Brent polynomials in
+594 variables for 22 slots. A global nonexistence proof can be represented
+by an exact polynomial identity
+\begin{equation}\label{eq:nullstellensatz}
+ 1=\sum_{a,b,c=0}^{8}h_{abc}(U,V,W)
+ \left(\sum_{t=1}^{22}U_{t,a}V_{t,b}W_{t,c}-T_{abc}\right).
+\end{equation}
+Such an identity would be a directly checkable certificate of
+$R_{\CC}(M_3)>22$. Conversely, if the complex zero set is empty, the
+Nullstellensatz provides an identity over $\CC$; since the generators
+are rational and only finitely many monomial coefficients occur, linear
+algebra over $\QQ$ yields rational $h_{abc}$ as well. No identity of the
+form \eqref{eq:nullstellensatz} is supplied here.
+
+An exact 22-slot construction is the alternative global direction. It
+would improve the upper bound but would still require a matching lower
+bound to determine the exact minimum. Restricting such a construction to
+small integer coefficients, a prescribed support, a symmetric ansatz, or
+a known component would need an additional completeness theorem before
+a negative search could resolve AC-02.
+
+\subsection{Consequences for further work}
+The component theorem identifies a concrete unproductive route for a
+zero-slot reduction: staying within the Laderman component and trying to
+make a product vanish. Further rank-reduction searches must leave that
+component or pursue a different decomposition mechanism. The output-tight
+profile theorem gives a smaller, explicitly conditional branch of a
+possible classification argument. What is still needed in that branch is
+a proof that the five rank-two and seventeen rank-one outputs cannot
+satisfy all the cross-block identities, or a construction showing they
+can. Neither conclusion is asserted.
+
+The repository's rules require a full resolution of the original field,
+model, assumptions, and quantifiers for a solved status; a checked special
+case does not suffice \cite{contributing}. This archive should therefore
+be treated as partial research with exact supporting certificates, not as
+a submission claiming that AC-02 is solved. No repository files were
+modified.
+
+\appendix
+\section{The explicit Laderman identity used here}
+\label{app:laderman}
+This appendix uses the conventional 1-based matrix indices. Let
+$A=(a_{ij})$, $B=(b_{ij})$, and define the following products. This is the
+existing Laderman identity \cite{laderman}, not a new algorithm.
+\input{laderman_products.tex}
+The output entries are
+\input{laderman_outputs.tex}
+The data ordering, support variety, signature slot labels, and all exact
+certificates refer to this particular displayed ordering.
+
+\section{Certificate format and audit map}
+\label{app:cert}
+All JSON label triples $(g,t,k)$ are 0-based: $g=0,1,2$ denotes $U,V,W$,
+$t$ is the slot, and $k$ is the row-major coordinate. Restricted variables
+are enumerated lexicographically over those triples where the baseline
+entry is nonzero. A Brent polynomial has index $81a+9b+c$.
+
+\begin{longtable}{p{0.39\textwidth}p{0.54\textwidth}}
+\toprule
+Certificate & What must be checked \\
+\midrule\endhead
+\file{*_forcing.json} & Each referenced equation has two nonzero-coefficient monomials; the designated known monomial is nonzero; the listed new variables are exactly the new factors forced. \\
+\file{*_pairwise.json} & In each of three mode pairs, each selected row is supported on a unique remaining column and its two coefficients were forced nonzero. \\
+\file{laderman_torus.json} & Initial and final selected minors have integer inverses; pivot formulas and identity free blocks hold; integer row combinations prove four cancellations; all 729 Laurent residuals vanish. \\
+\file{laderman_gauge_slice.json} & The gauge exponent matrix is reconstructed; $ED=B$; the selected gauge minor is unimodular; the six remaining parameter indices and exponent columns agree. \\
+\file{laderman_component.json} & $JH=0$ over the integers; the specified 545- and 76-dimensional minors are nonsingular modulo the verified prime. \\
+\file{sun_tight.json} & Every output factorization and its rank is exact; $LR=RL=I_{27}$; all 529 cross-block identities hold. \\
+\bottomrule
+\end{longtable}
+
+\textbf{No hidden oracle.} The generator may use SymPy to find inverse
+matrices and decompositions, but the checker verifies the resulting
+finite identities directly. The correctness argument for the component
+theorem additionally uses the explicitly written algebraic-geometric
+reasoning in Section \ref{sec:component}; a successful Python run alone
+is not a formal verification of that reasoning.
+
+\textbf{Integrity and reproducibility.} \file{MANIFEST.sha256} records the
+files in the distributed archive. The environment versions and exact
+run commands are in \file{environment.json} and \file{README.md}.
+Historical source papers are cited rather than bundled. Numeric residuals
+can vary slightly with numerical linear-algebra libraries, whereas the
+exact verification assertions must have the same truth value.
+
+\begin{thebibliography}{99}
+\bibitem{ac02}
+\emph{Open Problems in Numerical Linear Algebra}, AC-02,
+``Exact bilinear rank of the $3\times3$ matrix product.'' Canonical
+repository statement, last checked in the entry 10 September 2026;
+accessed 14 September 2026.
+\url{https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/main/arithmetic-and-complexity/AC-02}
+
+\bibitem{blaser}
+M. Bl\"aser, \emph{Fast Matrix Multiplication}, Theory of Computing Library,
+Graduate Surveys 5 (2013), 1--60. Introduction and Example 5.10.
+DOI: 10.4086/toc.gs.2013.005.
+\url{https://theoryofcomputing.org/articles/gs005/gs005.pdf}
+
+\bibitem{laderman}
+J. D. Laderman, ``A noncommutative algorithm for multiplying $3\times3$
+matrices using 23 multiplications,'' Bulletin of the American Mathematical
+Society 82 (1976), 126--128.
+DOI: 10.1090/S0002-9904-1976-13988-2.
+
+\bibitem{sun}
+Y. Sun, \emph{An Exact 56-Addition, Rank-23 Scheme for General $3\times3$
+Matrix Multiplication}, arXiv:2604.27645v1 (2026), Section 5.
+\url{https://arxiv.org/html/2604.27645v1}
+
+\bibitem{wang}
+C. Wang, \emph{Automated Lower Bounds for Bilinear Complexity over Finite
+Fields}, arXiv:2603.07280v11 (2026).
+\url{https://arxiv.org/html/2603.07280v11}
+
+\bibitem{almanli}
+J. Alman and B. Li, \emph{Asymptotic Rank Speedup Theorems, Revisited},
+arXiv:2605.21738v1 (2026), introduction.
+\url{https://arxiv.org/html/2605.21738v1}
+
+\bibitem{tichavsky}
+P. Tichavsk\'y, \emph{Characterization of Decomposition of Matrix
+Multiplication Tensors}, arXiv:2104.05323v1 (2021), Section IV and
+Proposition 2.
+\url{https://arxiv.org/html/2104.05323v1}
+
+\bibitem{lbz}
+X. Li, Y. Bao, and L. Zhang, \emph{On the local dimensions of solutions
+of Brent equations}, arXiv:2303.09754v2 (2024).
+\url{https://arxiv.org/html/2303.09754v2}
+
+\bibitem{hks}
+M. J. H. Heule, M. Kauers, and M. Seidl, \emph{New ways to multiply
+$3\times3$-matrices}, arXiv:1905.10192v1 (2019), Section 7.
+\url{https://arxiv.org/html/1905.10192v1}
+
+\bibitem{contributing}
+\emph{Open Problems in Numerical Linear Algebra}, contribution and
+resolution requirements; accessed 14 September 2026.
+\url{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/CONTRIBUTING.md}
+\end{thebibliography}
+\end{document}

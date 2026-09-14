@@ -1,0 +1,623 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,mathtools,booktabs,longtable,array}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={AC-04: Symmetric extraction and local rigidity},pdfsubject={Research continuation; exact-value question unresolved},pdfauthor={Research write-up prepared with ChatGPT}}
+\usepackage{xurl}
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{2em}
+\setlist{nosep,leftmargin=1.5em}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\newcommand{\C}{\mathbb C}
+\newcommand{\F}{\mathbb F}
+\newcommand{\R}{\mathrm R}
+\newcommand{\BR}{\underline{\mathrm R}}
+\newcommand{\AR}{\widetilde{\mathrm R}}
+\newcommand{\AQ}{\widetilde{\mathrm Q}}
+\newcommand{\cw}{\mathrm{cw}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\degen}{\trianglelefteq}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator{\codim}{codim}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries AC-04: Symmetric extraction and local rigidity}
+\end{center}
+
+\begin{abstract}
+A symmetric degeneration extracts a whole small Coppersmith--Winograd tensor, rather than separate identity slices. For the six-permutation normal form $P$ of $\cw_2$, it gives
+\[
+P^{\otimes n}\oplus\cw_{4^n+2^n-2\cdot3^n}
+\degen D_{4^n}\oplus\cw_{2^n}.
+\]
+At power four, Strassen's spectral duality, the standard border-rank construction for $\cw_{16}$, and the tight-support subrank theorem yield
+\[
+3\le\AR(\cw_2)\le
+\bigl(274-3\sqrt[3]{3025}\bigr)^{1/4}<3.896914.
+\]
+This improves the supplied bound $3.923037967879$. All Laurent coefficients of the power-four construction and an exact rational bracket for the endpoint are checked in the accompanying code.
+
+The continuation also proves a local classification near the standard sixteen-term decomposition of $P^{\otimes2}$. Its reduced symmetric decomposition fiber has precisely two local branches, both adaptive, and every sufficiently nearby ordinary three-mode decomposition is termwise symmetric after rescaling. Thus a fully supported rank-three contraction cannot arise by a sufficiently small deformation of that formula. An independent all-power support inequality covers zero weights in adaptive expansions.
+
+\textbf{Status.} Neither $\AR(\cw_2)=3$ nor its negation is established. The numerical bound is an actual asymptotic-rank upper bound, not a solution of the exact-value question. The general proofs are written mathematical arguments; the finite certificates do not constitute proof-assistant verification or independent peer review.
+\end{abstract}
+
+\section{Question, notation, and provenance}
+All tensors and linear maps are over $\C$ unless a different coefficient field is explicitly stated. Tensor powers are grouped three-mode Kronecker powers. Repository problem AC-04 asks whether
+\begin{equation}\label{eq:target}
+\AR(T)=3,\qquad
+T=\cw_2=\sum_{i=1}^{2}
+(e_0\otimes e_i\otimes e_i+e_i\otimes e_0\otimes e_i+e_i\otimes e_i\otimes e_0).
+\end{equation}
+The exact equality, rather than a better upper bound, is the completion target.\footnote{OpenProblemsInNLA, AC-04, canonical statement, accessed 14 September 2026; source \cite{repo}.}
+Write $D_r=\sum_{a=1}^r e_a^{\otimes3}$, and write $K\degen S$ when $K$ is a degeneration of $S$. For $q\ge1$,
+\[
+\cw_q=\sum_{i=1}^{q}
+(e_0\otimes e_i\otimes e_i+e_i\otimes e_0\otimes e_i+e_i\otimes e_i\otimes e_0),
+\]
+with $\cw_0=0$. The asymptotic rank is
+\[
+\AR(K)=\lim_{m\to\infty}\R(K^{\otimes m})^{1/m}.
+\]
+Submultiplicativity proves that this limit exists and equals the infimum of the displayed roots. The subrank $\mathrm Q(K)$ is the largest $k$ for which $D_k$ is a restriction of $K$, and $\AQ(K)=\lim_m\mathrm Q(K^{\otimes m})^{1/m}$ is its asymptotic version.
+
+The supplied reports established the upper bound $3.923037967879$, analyzed one-slice extraction trees, and proved a fully supported contraction lower bound for adaptive four-term expansions.\footnote{The supplied reports are retained under \texttt{prior/AC04\_continuation/}; see \cite{prioradaptive,priorinitial,priorlater}. Their claims are distinguished from the new statements here.} The principal numerical improvement in this report does not continue their scalar recurrence. It uses a different auxiliary tensor whose three orientations retain shared coordinates.
+
+We import two standard asymptotic results, with their roles made explicit. A tensor spectral point $\phi$ is additive on direct sums, multiplicative on grouped products, monotone under degeneration, and normalized by $\phi(D_r)=r$. Strassen duality gives
+\begin{equation}\label{eq:spectrum}
+\AR(K)=\max_\phi\phi(K),\qquad
+\AQ(K)\le\phi(K)\le\BR(K).
+\end{equation}
+The bound $\phi(K)\le\BR(K)$ follows directly from degeneration monotonicity, and $\AQ(K)\le\phi(K)$ follows from asymptotic diagonal restrictions.\footnote{For the spectral framework and its application to speedups, see Alman--Li, Section 4, especially Theorem 4.1, in \cite{almanli}.} We also use Strassen's entropy formula for the asymptotic subrank of a tight three-tensor, stated precisely in Section~\ref{sec:subrank}.\footnote{Christandl--Vrana--Zuiddam, Theorem 1.1.31, restating Strassen's tight-three-tensor theorem; source \cite{cvz}.}
+
+\section{Normal form and the lower bound three}
+Let
+\[
+P=\sum_{\sigma\in S_3}f_{\sigma(1)}\otimes f_{\sigma(2)}\otimes f_{\sigma(3)}.
+\]
+The invertible map $L$ with columns $e_0,e_1+\mathrm i e_2,e_1-\mathrm i e_2$ satisfies
+\begin{equation}\label{eq:normal}
+T=\tfrac12 L^{\otimes3}P.
+\end{equation}
+Indeed, the symmetrized product of the last two columns is $2(e_1\otimes e_1+e_2\otimes e_2)$. Nonzero scalars and invertible mode maps preserve rank and asymptotic rank.
+
+Identify the three indices of $P$ with the nonzero elements of $G_0=\F_2^2$. Then
+\begin{equation}\label{eq:group}
+P=\sum_{a,b,c\in G_0\setminus\{0\}\atop a+b+c=0}e_a\otimes e_b\otimes e_c.
+\end{equation}
+For characters $\chi_a(g)=(-1)^{a\cdot g}$, character orthogonality gives
+\[
+P=\frac14\sum_{g\in G_0}v_g^{\otimes3},\qquad
+v_g=(\chi_a(g))_{a\ne0}.
+\]
+This is an exact four-term formula. The three matrix slices of a flattening have disjoint nonzero supports, so each flattening has rank three. Flattening ranks multiply under grouped tensor products, hence
+\[
+\R(P^{\otimes m})\ge3^m,\qquad 3\le\AR(P)\le4.
+\]
+The new work concerns the upper bound.
+
+\section{A simultaneous symmetric CW extraction}\label{sec:extraction}
+\begin{theorem}\label{thm:extraction}
+For every integer $n\ge1$, set
+\[
+r=4^n,\quad d=3^n,\quad s=2^n,\quad t=r+s-2d.
+\]
+There is a symmetric Laurent degeneration
+\begin{equation}\label{eq:main-degen}
+P^{\otimes n}\oplus\cw_t\degen D_r\oplus\cw_s.
+\end{equation}
+\end{theorem}
+The direct sums in this statement are actual tensor direct sums, with disjoint target spaces. The fact that each appended tensor is a whole $\cw_q$ is essential. Replacing it by three unrelated identity slices changes its spectral cost and loses the improvement below.
+
+\subsection{Sets and quadratic forms}
+Let $G=G_0^n$, $S=(G_0\setminus\{0\})^n$, and choose $w=(1,\ldots,1)\in S$, where $1$ is any fixed nonzero element of $G_0$. Define
+\begin{equation}\label{eq:sets}
+F=S\cap(S+w),\qquad E=G\setminus\bigl(S\cup(S+w)\bigr).
+\end{equation}
+In one coordinate, the intersection excludes $0$ and $1$, leaving two values. Therefore
+\[
+|S|=3^n=d,\quad |F|=2^n=s,\quad |E|=4^n-2\cdot3^n+2^n=t.
+\]
+Both $F$ and $E$ are invariant under translation by $w$. Neither contains $0$, and $w\ne0$, so this translation partitions either set into two-cycles.
+
+For such an invariant set $B$, introduce a new coordinate $u$ and put
+\begin{equation}\label{eq:paired}
+C_B=\sum_{b\in B}\left(
+ u\otimes e_b\otimes e_{b+w}
++e_b\otimes u\otimes e_{b+w}
++e_b\otimes e_{b+w}\otimes u\right).
+\end{equation}
+The matrix of its quadratic form on the $B$ coordinates is the permutation matrix $J_B$ of translation by $w$. It is symmetric and nonsingular. Over $\C$, it is congruent to the identity, so
+\begin{equation}\label{eq:paired-cw}
+C_B\cong\cw_{|B|}.
+\end{equation}
+An exact congruence on each two-cycle is
+\[
+Q=\begin{pmatrix}1&\mathrm i\\[1pt]1/2&-\mathrm i/2\end{pmatrix},
+\qquad QQ^T=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad \det Q=-\mathrm i.
+\]
+Thus the identification introduces no unverified numerical change of basis.
+
+\subsection{The maps and every nonpositive Laurent coefficient}
+Let
+\[
+\Gamma_G=\sum_{a+b+c=0}e_a\otimes e_b\otimes e_c.
+\]
+Fourier character vectors are a basis, and
+\[
+\Gamma_G=\frac1{|G|}\sum_{\chi\in\widehat G}
+\left(\sum_{g\in G}\chi(g)e_g\right)^{\otimes3}.
+\]
+Consequently $\Gamma_G\cong D_r$. Its restriction to $S$ in all three modes is $P^{\otimes n}$.
+
+Take the source $\Gamma_G\oplus C_F$. In each target mode use mutually disjoint core coordinates $c_g$ for $g\in S$, auxiliary large coordinates $b_g$ for $g\in E$, and one auxiliary small coordinate $a$. Apply the same map in all three modes:
+\begin{align}
+ e_g^{\Gamma}&\longmapsto
+ \mathbf1_{g\in S}c_g+\lambda\mathbf1_{g\in E}b_g
+ +\lambda^{-2}\mathbf1_{g=w}a,\label{eq:maps1}\\
+ e_f^F&\longmapsto c_f\quad(f\in F),
+ &u_F&\longmapsto-\lambda^{-2}a.\label{eq:maps2}
+\end{align}
+Although some entries contain negative powers of $\lambda$, all negative coefficients of the represented tensor vanish. The following exhaustive block check proves this.
+
+With no auxiliary small coordinate, the all-core block is $P^{\otimes n}$. Every other surviving term has at least one auxiliary large coordinate, hence positive exponent. With exactly one small coordinate and two core coordinates, the exponent is $-2$ and the two group indices sum to $w$. They therefore lie in $F$; the image of $C_F$ cancels these terms, coefficient for coefficient, in all three orientations.
+
+A term with one small coordinate, one core coordinate and one large coordinate would have exponent $-1$. Its indices would require an element of $E\cap(S+w)$, which is empty. A term with two small coordinates would require its remaining group index to be $0$; that index is in neither $S$ nor $E$ and is mapped to zero. Three small coordinates would require $w+w+w=w=0$, which is false.
+
+The remaining terms with one small and two large coordinates have exponent zero. They are exactly $C_E$. Hence the constant term is
+\[
+P^{\otimes n}\oplus C_E,
+\]
+proving \eqref{eq:main-degen} by \eqref{eq:paired-cw}. This proof uses explicit maps, not an assumed cancellation rule for asymptotic rank.\qed
+
+\subsection{Exact finite audit}
+The script \texttt{code/symmetric\_extraction.py} expands all support terms of $\Gamma_G$ for $n=1,2,3,4$, includes the padding, collects coefficients by output triple and Laurent exponent, checks that every negative coefficient vanishes, and compares the entire constant term with the required direct sum.
+
+\begin{center}
+\begin{tabular}{rrrrrr}
+\toprule
+$n$&$r$&$s$&$t$&Group terms checked&Limit terms\\\midrule
+1&4&2&0&16&6\\
+2&16&4&2&256&42\\
+3&64&8&18&4,096&270\\
+4&256&16&110&65,536&1,626\\\bottomrule
+\end{tabular}
+\end{center}
+The limit has $6^n+3t$ nonzero coefficients. For the fourth power, the padding contributes $48$ terms. Regression tests deliberately omit the padding or reverse its sign; both corrupted constructions are rejected because negative Laurent coefficients remain.
+
+
+\subsection{An explicit border decomposition with polynomial error}
+There is a direct formula for the $r+s+2$ rank-one terms, without treating composition of degenerations as a black box. Choose one ordered representative $(f,g)$ of each two-cycle of $F$, with $g=f+w$, and write $\mathcal P_F$ for the resulting $s/2$ pairs. Set
+\[
+h=-\lambda^{-2}a,\qquad \mu=\lambda^3,\qquad V_F=\sum_{(f,g)\in\mathcal P_F}c_g.
+\]
+Define
+\begin{align*}
+\mathcal A_\lambda&=\frac1r\sum_{\chi\in\widehat G}
+\left(\sum_{g\in S}\chi(g)c_g+
+\lambda\sum_{g\in E}\chi(g)b_g+\lambda^{-2}\chi(w)a\right)^{\otimes3},\\
+\mathcal B_\lambda&=
+\frac1{2\mu^2}\sum_{(f,g)\in\mathcal P_F}
+\left[(h+\mu(c_f+c_g))^{\otimes3}-(h+\mu(c_f-c_g))^{\otimes3}\right]\\
+&\hspace{8mm}-\mu^{-3}(h+\mu^2V_F)^{\otimes3}+\mu^{-3}h^{\otimes3}.
+\end{align*}
+The first expression has $r$ rank-one terms and the second has $s+2$. Expanding the latter, the $\mu^{-2}h^{\otimes3}$ terms cancel in pairs, and the $\mu^{-1}$ terms cancel against the term involving $V_F$. Its nonpositive Laurent part is exactly $-\lambda^{-2}C_F$, using $a$ as the small coordinate. All remaining exponents belong to $\{1,3,9\}$.
+
+The nonpositive part of $\mathcal A_\lambda$ was already analyzed in the preceding proof. It follows that
+\begin{equation}\label{eq:explicit-border}
+\mathcal A_\lambda+\mathcal B_\lambda
+=P^{\otimes n}\oplus C_E+\sum_{j=1}^{9}\lambda^j Z_j,
+\qquad \R(\mathcal A_\lambda+\mathcal B_\lambda)\le r+s+2
+\end{equation}
+for every nonzero $\lambda$. Some $Z_j$ may vanish. Scalar coefficients of the rank-one terms can be absorbed into one mode, so no choice of cube roots is required for this rank assertion. The coefficient audit verifies the paired padding formula and character sums exactly in powers one through four.
+
+In particular,
+\[
+\BR(P^{\otimes4}\oplus\cw_{110})\le274.
+\]
+There is also an elementary ordinary-rank consequence for this \emph{direct sum}. The $k$th grouped power of the polynomial in \eqref{eq:explicit-border} has degree at most $9k$. Interpolating its constant coefficient at $9k+1$ distinct nonzero parameter values gives
+\[
+\R\!\left((P^{\otimes n}\oplus\cw_t)^{\otimes k}\right)
+\le(9k+1)(4^n+2^n+2)^k.
+\]
+This does not by itself subtract the auxiliary tensor or give an ordinary-rank bound for $P^{\otimes n}$ alone.
+
+\section{The resulting asymptotic-rank bound}\label{sec:bound}
+\subsection{The auxiliary tensor's subrank}\label{sec:subrank}
+A support is \emph{tight} when each mode admits an injective integer labeling such that the three labels sum to zero on every supported triple. Strassen's theorem for a tight three-tensor $K$ says
+\begin{equation}\label{eq:tight}
+\log_2\AQ(K)=
+\max_{p\in\mathcal P(\supp K)}\min_{i=1,2,3}H(p_i),
+\end{equation}
+where $p_i$ are the three marginals and $H$ is Shannon entropy in bits. The statement includes ordinary asymptotic subrank, not only its monomial version.\footnote{The precise version used is \cite{cvz}, Theorem 1.1.31. The proof of that external theorem is not reproduced or formalized by the certificate code.}
+
+\begin{lemma}\label{lem:cwsubrank}
+For even $q\ge2$,
+\begin{equation}\label{eq:cwsubrank}
+\AQ(\cw_q)=3(q/2)^{2/3}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Use the paired quadratic form in \eqref{eq:paired-cw} and index its large variables by $\pm1,\ldots,\pm(q/2)$. Its support consists of the six permutations of $(0,j,-j)$ for each $j>0$. The labels themselves are injective integer tight weights.
+
+For the uniform distribution on the $3q$ support triples, each marginal has mass $1/3$ at zero and $2/(3q)$ at each of the $q$ nonzero coordinates. Its entropy is
+\[
+-\frac13\log_2\frac13-q\frac{2}{3q}\log_2\frac{2}{3q}
+=\log_2 3+\frac23\log_2(q/2).
+\]
+For any distribution on this support, every triple contains exactly one zero. Thus the average of its three marginals has zero mass $1/3$. Entropy concavity and the maximum-entropy distribution on the remaining $q$ coordinates give
+\[
+\min_i H(p_i)\le\tfrac13\sum_iH(p_i)
+\le H\!\left(\tfrac13\sum_i p_i\right)
+\le\log_2 3+\tfrac23\log_2(q/2).
+\]
+The uniform distribution attains equality. Apply \eqref{eq:tight} and exponentiate.
+\end{proof}
+
+\subsection{The padding's border rank}
+The following classical $q+2$-term construction is included to specify the source cost exactly.\footnote{The formula is due to Coppersmith--Winograd and is displayed in \cite{almanli}, Section 7.1.}
+\begin{align}\label{eq:border}
+&\sum_{i=1}^q\lambda^{-2}(e_0+\lambda e_i)^{\otimes3}
+-\lambda^{-3}\left(e_0+\lambda^2\sum_{i=1}^q e_i\right)^{\otimes3}\notag\\
+&\hspace{25mm}+(\lambda^{-3}-q\lambda^{-2})e_0^{\otimes3}
+=\cw_q+O(\lambda).
+\end{align}
+All negative powers cancel, and the constant terms are exactly the $3q$ terms defining $\cw_q$. Therefore
+\begin{equation}\label{eq:padding-cost}
+\BR(\cw_q)\le q+2.
+\end{equation}
+The code checks the full polynomial identity at $q=2,4,8,16$. This is a border-rank bound; no claim that the ordinary rank is at most $q+2$ is needed.
+
+\begin{theorem}\label{thm:upper}
+For the tensor in AC-04,
+\begin{equation}\label{eq:newbound}
+3\le\AR(T)\le\beta
+:=\bigl(274-3\sqrt[3]{3025}\bigr)^{1/4}<3.896914.
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:bracket}
+3.89691367400556951923<\beta<3.89691367400556951924.
+\end{equation}
+\end{theorem}
+\begin{proof}
+At $n=4$, Theorem~\ref{thm:extraction} reads
+\begin{equation}\label{eq:n4}
+P^{\otimes4}\oplus\cw_{110}\degen D_{256}\oplus\cw_{16}.
+\end{equation}
+For any spectral point, set $z=\phi(P)$. Additivity, multiplicativity and degeneration monotonicity give
+\[
+z^4+\phi(\cw_{110})\le256+\phi(\cw_{16}).
+\]
+By \eqref{eq:spectrum}, Lemma~\ref{lem:cwsubrank} and \eqref{eq:padding-cost},
+\[
+\phi(\cw_{110})\ge3\cdot55^{2/3}=3\sqrt[3]{3025},
+\qquad \phi(\cw_{16})\le18.
+\]
+Thus every spectral value satisfies $z^4\le274-3\sqrt[3]{3025}$. Spectral duality and \eqref{eq:normal} prove the upper bound. The flattening argument already proves the lower bound three.
+
+For the numerical statements, put
+\[
+f(x)=(274-x^4)^3-81675.
+\]
+On the interval of positive $x$ with $x^4<274$, $f$ is strictly decreasing and $f(\beta)=0$. The checker uses the terminating decimals in \eqref{eq:bracket} as exact rational numbers and verifies $f(b_-)>0$, $f(b_+)<0$, and $f(3.896914)<0$. All three inner quantities $274-x^4$ are positive. These integer/rational comparisons prove \eqref{eq:bracket} and the displayed strict bound; no floating-point root estimate is a premise.
+\end{proof}
+
+This improves the supplied upper bound by more than $0.026124$ in its numerical endpoint. It does not identify $\beta$ with the actual asymptotic rank. Nor does the argument assert an explicit finite bound $\R(P^{\otimes4})\le\beta^4$. The fourth-power statement is the direct-sum degeneration \eqref{eq:n4}; its conversion into an asymptotic-rank bound uses \eqref{eq:spectrum}.
+
+\subsection{Optimal power for these particular estimates}
+Using only the source cost $s+2$ and the auxiliary subrank \eqref{eq:cwsubrank}, the uniterated construction yields
+\begin{equation}\label{eq:Bn}
+B_n=\left(4^n+2^n+2-3(t_n/2)^{2/3}\right)^{1/n},
+\qquad t_n=4^n+2^n-2\cdot3^n.
+\end{equation}
+\begin{proposition}\label{prop:seedopt}
+Among the bounds \eqref{eq:Bn} for all $n\ge1$, $n=4$ is strictly best.
+\end{proposition}
+\begin{proof}
+$B_1=8$. Exact cube-root intervals give $B_n>3.9$ for $n=2,3,5$. For $n\ge6$, $t_n<4^n$ and $3/2^{2/3}<2$, so
+\[
+B_n^n>4^n-2\cdot4^{2n/3}.
+\]
+The exact rational inequality
+\[
+1-(39/40)^6>1/8=2\cdot4^{-6/3}
+\]
+persists for all larger $n$ because its left side increases and its right side decreases. Therefore $B_n>3.9$ for every $n\ge6$. Finally $B_4=\beta<3.896914<3.9$.
+\end{proof}
+This proposition optimizes a stated one-parameter family with stated spectral estimates. It does not optimize all symmetric extractions, all possible padding costs, or all consequences of the underlying tensor relations.
+
+\section{Local symmetry of decompositions in every power}\label{sec:localsym}
+The next results address the previous report's finite search target: a sixteen-term decomposition of $P^{\otimes2}$ admitting a fully supported contraction of rank three. The new upper bound above bypasses that target numerically, since even its previously proposed conditional bound $3.918501$ would be weaker than Theorem~\ref{thm:upper}. The local question nevertheless has a useful exact answer.
+
+Let $G=G_0^n$, $S=(G_0\setminus0)^n$, $r=4^n$, $d=3^n$, and
+\[
+X_g(q)=\chi_q(g)\quad(q\in S,\ g\in G).
+\]
+Then $P^{\otimes n}=r^{-1}\sum_gX_g^{\otimes3}$. Consider the ordinary three-mode decomposition map
+\[
+\Psi(A,B,C)=r^{-1}\sum_{g\in G}A_g\otimes B_g\otimes C_g.
+\]
+We work with ordered nonzero columns in a complex analytic neighborhood of $(X,X,X)$. No claim about all distant decompositions is implicit in this choice.
+
+\begin{theorem}\label{thm:localsym}
+For every $n\ge1$, every sufficiently nearby tuple $(A,B,C)$ for which $\Psi(A,B,C)$ is symmetric is termwise symmetric after nonzero rescalings: there are vectors $x_g$ and scalars $\lambda_g,\mu_g\ne0$ such that
+\[
+A_g=\lambda_gx_g,\quad B_g=\mu_gx_g,
+\quad C_g=(\lambda_g\mu_g)^{-1}x_g.
+\]
+\end{theorem}
+\begin{proof}
+Write variations in charged Fourier coordinates:
+\[
+\delta A_g(q)=\sum_{t\in G}\chi_{q+t}(g)h^A_t(q),
+\]
+and similarly for $B,C$. Character orthogonality says that the derivative at an output triple $(q_1,q_2,q_3)$, with charge $t=q_1+q_2+q_3$, is
+\[
+h^A_t(q_1)+h^B_t(q_2)+h^C_t(q_3).
+\]
+The antisymmetry equation obtained by exchanging the first two modes requires $h^A_t-h^B_t$ to have equal values at $q,q'$ whenever $q+q'+t\in S$.
+
+This graph on $S$ is connected; in fact every pair has a common neighbor. Coordinatewise, choose a nonzero $s_i$ different from the two possibly forbidden values $q_i+t_i$ and $q'_i+t_i$. Among three nonzero choices at most two are forbidden. Then both $q+s+t$ and $q'+s+t$ are in $S$. Thus $h^A_t-h^B_t$ is constant. Exchanging the other modes proves the same for the other two differences.
+
+For each $t$, the kernel of the derivative of all symmetry equations therefore has dimension $d+2$: one arbitrary common function on $S$ and two constants. Its total dimension is $(d+2)r$, so the derivative rank is $2(d-1)r$.
+
+The termwise-symmetric tuples in the statement form a smooth manifold of dimension $(d+2)r$ near $(X,X,X)$, with precisely this tangent space. Smoothness can be seen directly from the displayed parameterization: its differential has trivial kernel there, and local nonzero coordinates recover the proportionality factors. This manifold lies in the zero set of every symmetry equation.
+
+Select $2(d-1)r$ symmetry equations with independent differentials. The analytic implicit function theorem makes their common zero set a smooth manifold of dimension $(d+2)r$. The termwise-symmetric manifold, having the same dimension and tangent space, is locally open in it. The zero set of all symmetry equations is squeezed between these two identical germs. This proves the theorem.
+\end{proof}
+This is a local statement near a specified decomposition, not a global equality between ordinary tensor rank and symmetric rank. The general connectivity proof is supplemented by $47,988$ exact common-neighbor checks in powers one through three.
+
+\section{The exact local fiber in the second power}\label{sec:fiber}
+Set $S=\{1,2,3\}^2$, $G=G_0^2$, and index columns by $(a,b)\in G$. Write
+\[
+X_{ab}(i,j)=\chi_i(a)\chi_j(b),\qquad
+F(x)=\tfrac1{16}\sum_{a,b}x_{ab}^{\otimes3}.
+\]
+The symmetric domain has dimension $16\cdot9=144$, and the target $\Sym^3\C^9$ has dimension $165$. We classify the reduced analytic germ of $F^{-1}(P^{\otimes2})$ at $X$.
+
+\subsection{The derivative and its kernel}
+For a charge $t\in G$, let $E_t$ have one row for each unordered triple $q_1\le q_2\le q_3$ in $S$ of charge $t$. Its entry in column $q$ is the multiplicity of $q$ in that triple. This is exactly the corresponding Fourier block of $DF_X$.
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+Charge type&Blocks&Rows&Rank&Kernel& Cokernel\\\midrule
+$(0,0)$&1&6&5&4&1\\
+Exactly one nonzero coordinate&6&7&7&2&0\\
+Both coordinates nonzero&9&13&9&0&4\\\bottomrule
+\end{tabular}
+\end{center}
+Here ``kernel'' and ``cokernel'' are dimensions per block. The total derivative rank is $128$ and its kernel dimension is $16$.
+
+These ranks also admit direct descriptions. At charge zero, the six equations are the sums along permutations of a $3\times3$ array. Subtracting two equations that swap two entries forces all mixed $2\times2$ differences to vanish. Thus the kernel consists of
+\[
+h(i,j)=\rho_i+\sigma_j,\qquad\sum_i\rho_i=\sum_j\sigma_j=0,
+\]
+and has dimension four. For a charge $(I,0)$ with $I\ne0$, the kernel consists of arrays independent of $i$ and with zero sum in $j$. The roles reverse for $(0,J)$. To see the former, the row with first coordinates all $I$ gives its row sum zero; the rows with first coordinates $I,K,K$ then force every row $K$ to equal that row, with zero sum.
+
+For a charge $t=(I,J)\in S$, the nine rows $(t,t,t)$ and $(t,q,q)$ for $q\ne t$ give a $9\times9$ minor of determinant $3\cdot2^8$, up to row and column ordering. Thus these blocks have full column rank. The exact matrices and all ranks are stored in the certificate.
+
+\subsection{Two explicit adaptive families}
+Use zero-sum three-vectors $\rho,\sigma$, $a_J$ for $J=1,2,3$, and $b_I$ for $I=1,2,3$. Put
+\begin{align}
+r_{b,i}&=\rho_i+\sum_{J=1}^3 a_{J,i}\chi_J(b),\label{eq:params-r}\\
+s_{a,j}&=\sigma_j+\sum_{I=1}^3 b_{I,j}\chi_I(a),\label{eq:params-s}\\
+x_{ab}(i,j)&=\chi_i(a)\chi_j(b)\exp(r_{b,i}+s_{a,j}).\label{eq:ansatz}
+\end{align}
+Let $u=(\rho,\sigma)$, $y=(a_1,a_2,a_3)$ and $z=(b_1,b_2,b_3)$. Their dimensions are $4,6,6$ respectively. The derivatives of \eqref{eq:ansatz} span the entire kernel of $DF_X$.
+
+If $z=0$, expand the second copy first and choose for each of its four branches a diagonally rescaled four-term formula for the first copy. The zero-sum conditions make all these diagonal rescalings have determinant one. This proves $F(x)=P^{\otimes2}$ exactly, not merely to first order. The same holds with the two copies exchanged when $y=0$. These are two smooth ten-dimensional adaptive families, sharing the four-dimensional family $y=z=0$.
+
+\begin{theorem}\label{thm:two-branches}
+The reduced analytic germ of the symmetric decomposition fiber at $X$ is exactly the union of the two families $y=0$ and $z=0$ in \eqref{eq:ansatz}. It has two smooth branches of dimension ten, with a four-dimensional intersection germ. Its tangent space has dimension sixteen.
+\end{theorem}
+\begin{proof}
+Choose $128$ complementary normal directions $N$ to the tangent kernel and use
+\[
+x=x(u,y,z)+Nv
+\]
+as a local analytic chart, with $v\in\C^{128}$. Select $128$ independent output equations. The implicit function theorem solves them uniquely as $v=\psi(u,y,z)$. Since both adaptive axes already solve every equation, uniqueness gives
+\[
+\psi(u,y,0)=\psi(u,0,z)=0.
+\]
+Thus the normal correction has no constant or linear terms, and vanishes on both axes.
+
+Project the remaining equations onto a cokernel of $DF_X$. There are $37$ dimensions in this cokernel. We use the $36$ dimensions from charges $(I,J)$ with $I,J\ne0$. For these charges, the mixed second derivative in $a_J,b_I$ on an unordered triple is
+\begin{equation}\label{eq:mixed}
+Q_{I,J}(q_1,q_2,q_3)=
+\left(\sum_{\ell=1}^3a_{J,i_\ell}\right)
+\left(\sum_{\ell=1}^3b_{I,j_\ell}\right).
+\end{equation}
+All other mixed pairs have a different charge. A normal correction cannot alter this projected quadratic term, since the linear image of $N$ is annihilated by the cokernel projection.
+
+For each $(I,J)$ the four products of the two coordinates of $a_J$ and the two coordinates of $b_I$ map invertibly to its four-dimensional cokernel. This is an exact finite linear-algebra assertion verified below. Consequently the full map on the $36$ mixed products $y_kz_l$ is invertible.
+
+Every residual analytic equation vanishes whenever $y=0$ or $z=0$. Its convergent power series therefore contains in every monomial at least one $y$ variable and at least one $z$ variable. Equivalently it belongs to the ideal generated by the $36$ products $y_kz_l$. Factoring those products, the selected residual equations have the form
+\[
+G(u,y,z)=H(u,y,z)\operatorname{vec}(y\otimes z),
+\]
+where $H(0,0,0)$ is the invertible mixed quadratic map. Shrinking the neighborhood makes $H$ invertible throughout. Thus $G=0$ forces $y\otimes z=0$, which over $\C$ means $y=0$ or $z=0$. Either axis solves all equations, including the unused thirty-seventh one. This proves the exact analytic germ statement.
+\end{proof}
+
+\subsection{The mixed obstruction certificate}
+Choose the zero-sum basis $(-1,1,0),(-1,0,1)$ for every three-vector. For $(I,J)=(1,1)$, enumerate the thirteen unordered triples lexicographically, form $E=E_{(1,1)}$, and let $K$ be a rational basis of its left nullspace. The certificate gives $KE=0$, $\rank K=4$, and
+\begin{equation}\label{eq:obstruction}
+KQ=
+\begin{pmatrix}
+8&4&4&2\\
+4&2&8&4\\
+4&8&2&4\\
+2&4&4&8
+\end{pmatrix},\qquad \det(KQ)=-1296.
+\end{equation}
+Here $Q$ is the $13\times4$ matrix of \eqref{eq:mixed} on the four basis products. All nine charges are checked, with nonzero determinants. The independent Fourier expansion checks the mixed coefficient at every one of the $165$ output coordinates, including the vanishing coefficients at other charges. The full $E,K,Q,KQ$ matrices, rather than only the determinants, are in \texttt{results/exact\_certificates.json}.
+
+The invertible quadratic map is used together with the exact adaptive axes and the analytic ideal factorization. The result is not an inference that a quadratic obstruction alone always determines a nonlinear fiber.
+
+\subsection{Ordinary decompositions and the rank-three search}
+Theorem~\ref{thm:localsym} adds two independent rescaling parameters per leaf to the symmetric description. Thus the ordinary three-mode fiber has two local branches of dimension $10+32=42$, with intersection germ of dimension $4+32=36$ and tangent dimension $16+32=48$.
+
+For clarity, the contraction bound needed for the search consequence has an elementary proof. Every local four-term formula for $P$ has full-spark factor frames: any dependent triple of columns would give a nonzero matrix slice of $P$ of rank at most one. But a nonzero slice is
+\[
+\begin{pmatrix}0&c&b\\c&0&a\\b&a&0\end{pmatrix},
+\]
+and any nonzero off-diagonal entry gives a nonzero principal $2\times2$ minor. Normalize any two full-spark frames to $U=[I_3\mid\one]$, absorbing nonzero column factors into the weights.
+
+The contraction at an adaptive tree node then has block form
+\begin{equation}\label{eq:block}
+M=\diag(A_1,A_2,A_3)+\one\one^T\otimes A_4.
+\end{equation}
+Its submatrix in block rows $1,2$ and block columns $2,3$ has rank $\rank A_2+\rank A_4$, as block row and column subtraction makes it block anti-diagonal. The analogous comparisons hold after relabeling the four columns. Inducting from a nonzero scalar gives rank at least $2^n$ for every fully supported adaptive contraction in power $n$.
+
+\begin{corollary}\label{cor:local-rank3}
+Every sufficiently nearby exact sixteen-term three-mode decomposition of $P^{\otimes2}$ has contraction rank at least four for every weighting nonzero on all sixteen terms. In particular, the rank-three contraction proposed in the previous continuation cannot be obtained by a sufficiently small deformation of the standard formula.
+\end{corollary}
+The weights need not be close to a fixed weight vector. The neighborhood restriction concerns the decomposition frames. Leaf rescaling and column relabeling do not change the conclusion.
+
+\subsection{The components through the standard point}
+There is also a global statement with a carefully limited scope. One symmetric branch is the image
+\begin{equation}\label{eq:torus}
+x_{ab}(i,j)=\chi_i(a)\chi_j(b)R_{b,i}S_j,
+\qquad \prod_iR_{b,i}=1,\quad\prod_jS_j=1,
+\end{equation}
+with all parameters nonzero. This is a monomial image of a ten-dimensional algebraic torus, with finite kernel. The other branch exchanges the two copies.
+
+Each image is closed in the ambient coordinate torus: after dividing by the fixed character coordinates, a monomial image is a subtorus described by the integer character relations of its exponent matrix. It is closed in affine space as well. Indeed, on either image every leaf satisfies $\prod_{i,j}x_{ab}(i,j)=1$, so its affine closure cannot acquire a zero coordinate. These are therefore closed irreducible ten-dimensional subsets of the exact symmetric fiber.
+
+Theorem~\ref{thm:two-branches} implies that they are exactly the two irreducible components of the reduced ordered symmetric fiber that contain the standard point. Otherwise the local germ would have an additional component or larger dimension. Their points are all adaptive. Adding the two leaf gauges similarly gives closed irreducible forty-two-dimensional components of the ordinary fiber through the standard tuple: the identity $\prod_{i,j}A_{ab}(i,j)B_{ab}(i,j)C_{ab}(i,j)=1$ again excludes zero coordinates in their closure.
+
+This does not classify components elsewhere in the decomposition variety. It does not exclude a remote exact decomposition, a family escaping this affine chart, or an unrelated border decomposition. The numerical search described later is not a substitute for such a global classification.
+
+\section{Zero weights in adaptive contractions}\label{sec:support}
+The earlier adaptive lower bound assumed full support. The following statement permits arbitrary zero weights and will also explain why a simple support deletion does not improve the canonical first-step parameter estimate.
+
+\begin{theorem}\label{thm:support}
+Consider an adaptive four-term expansion of $P^{\otimes n}$: at every branch one chooses a copy and a four-term formula for it, with subsequent choices permitted to depend on the branch. For any weighting, let $K$ be its number of nonzero leaves and $s$ its two-mode contraction rank. Then
+\begin{equation}\label{eq:support}
+K\le s^2.
+\end{equation}
+The inequality holds over any coefficient field in which the local frames are full spark. It is sharp, including the fully supported case $K=4^n$, $s=2^n$.
+\end{theorem}
+\begin{proof}
+Use induction on the tree depth. At depth zero, the weighted scalar has $(K,s)=(0,0)$ or $(1,1)$. At a node let $r_i$ be the ranks of the four child contractions and $K_i$ their support sizes. Full spark permits any selected column to play the exceptional fourth role in \eqref{eq:block}. Thus for every pair $i\ne j$,
+\[
+s\ge r_i+r_j.
+\]
+By induction, $K=\sum_iK_i\le\sum_ir_i^2$. Order the child ranks as $r_1\ge r_2\ge r_3\ge r_4$. Then
+\[
+\sum_ir_i^2\le r_1^2+3r_2^2
+\le(r_1+r_2)^2\le s^2.
+\]
+To attain equality with $K=4^m$ and $s=2^m$, keep a single branch on $n-m$ copies and use minimum rank-two fully supported local contractions on the remaining $m$ copies.
+\end{proof}
+For a valid Laurent-field adaptive border expansion, the full-spark assertion follows by the same slice-minor argument: normalize a hypothetical annihilating Laurent functional to have a nonzero constant coefficient, and specialize its identically zero $2\times2$ minors. The theorem concerns rank over the coefficient field, not the possibly smaller rank of a truncated constant term.
+
+\subsection{A precise first-step consequence}
+Fix $n\ge3$, the source $D_r$ with $r=4^n$, and the core dimension $d=3^n$. Suppose one applies the canonical one-slice dimension estimate with a weighting of support $K$, contraction rank $s$, and padding size $u\ge s$. Its guaranteed extracted size is
+\[
+t=K+u-2d.
+\]
+For a slice exponent $0<\theta\le1$, the reduction in the scalar source bound is $t^\theta-u^\theta$ when $t\ge0$. If $K\le2d$, this gain is nonpositive. If $K>2d$, it is nonincreasing as $u$ increases, and Theorem~\ref{thm:support} gives
+\[
+t^\theta-u^\theta\le
+f(K):=(K+\sqrt K-2d)^\theta-K^{\theta/2}.
+\]
+For $K>2d$, differentiation shows $f'(K)>0$. To check its sign explicitly, set $v=\sqrt K$ and multiply the comparison by the positive factors in the derivative. It reduces to
+\[
+2v+1>\left(\frac{K+v-2d}{v}\right)^{1-\theta}.
+\]
+The fraction lies between $1$ and $v+1$, so its $(1-\theta)$th power is at most $v+1<2v+1$. Hence the maximal gain in this estimate is at $K=4^n$, $u=2^n$, and is attained by the canonical fully supported product contraction.
+
+\textbf{Scope of this optimization.} It fixes the guaranteed size $K+u-2d$. It does not optimize a sharper compression using the ranks of restricted core maps, subsequent extractions, other padding tensors, or the symmetric CW construction of Section~\ref{sec:extraction}. Support deletion is excluded as an improvement to this particular first-step parameter formula, not to every conceivable extraction method.
+
+\section{Exact examples and exploratory search}\label{sec:experiments}
+\subsection{A rational adaptive minimizer with genuinely nonproduct weights}
+To test the classification and its scope, the certificate constructs a rational example inside one adaptive component. Use
+\[
+R_b=(p_b,q_b,1/(p_bq_b)),\qquad
+(p_b,q_b)=(2,3),(3,5),(5,7),(7,11),
+\]
+and columns
+\[
+x_{ab}(i,j)=\chi_i(a)\chi_j(b)R_{b,i}.
+\]
+Since each $\prod_iR_{b,i}=1$, this is an exact adaptive sixteen-term formula $P^{\otimes2}=16^{-1}\sum_{a,b}x_{ab}^{\otimes3}$.
+
+The code chooses nonzero weights on each child so that its rank-two contraction has kernel $\operatorname{span}\{(1,1,1)^T\}$. On the common two-dimensional quotient, it solves a rational linear relation among the four inverse matrices. Rescaling the children by the reciprocal coefficients makes their inverse sum zero. The equality case of the block lemma then gives an outer contraction of rank four. Alternatively, the full $9\times9$ contraction is checked directly.
+
+The certificate verifies all $729$ tensor coefficients and all sixteen weights are nonzero. The $4\times4$ weight array has rank four, so these weights are not a product. The complete rational columns, weights, child matrices and contraction matrix are stored. This example reinforces the correct distinction: adaptive frames allow additional minimum contractions, but not a minimum below four.
+
+\subsection{Distant numerical starts}
+A separate exploratory program used twenty-four complex-valued starts, including unstructured random frames and distant perturbations of diagonal adaptive frames. It minimized the sum of squared relative tensor residual and squared relative rank-three singular-value tail, with a small factor regularizer. Weight parametrization kept all weights nonzero but allowed them to become small. Each run allowed $1,000$ L-BFGS iterations; termination was controlled by the optimizer.
+
+No run produced an exact candidate or simultaneously brought both reported residuals below $10^{-6}$. The run with the smallest maximum of the two residuals had tensor residual approximately $1.489\cdot10^{-3}$, rank-three tail approximately $5.091\cdot10^{-4}$, and smallest weight magnitude approximately $5.841\cdot10^{-3}$. These numbers are numerical search diagnostics, not exact certificates or lower bounds. They neither exclude a remote component nor prove global infeasibility.
+
+The exploratory source, parameters, seeds and all twenty-four run records are included separately. None of the numerical optimizer's outputs is used in Theorem~\ref{thm:upper}, the local analytic classification, or the support inequality.
+
+\section{Verification record and the remaining target}\label{sec:status}
+Run
+\begin{verbatim}
+python code/run_all.py
+\end{verbatim}
+from the extracted package root. This regenerates the two new certificate files and runs forty new regression tests, twenty-five tests from the supplied adaptive continuation, and eight tests from the initial report. The standard checks use Python's standard library. To rerun the optional inherited exact matrix audit as well, install SymPy and run
+\begin{verbatim}
+python code/run_all.py --with-algebra
+\end{verbatim}
+The recorded run includes that audit; every requested check passed. Do not use Python's \texttt{-O} option, because inherited tests use assertions.
+
+The finite checks cover the complete power-four Laurent map, the explicit $274$-term border formula with degree-nine error, the complex pairing congruence, the padding border formulas, the auxiliary tight support and its uniform marginals, the exact algebraic endpoint bracket, all charged derivative blocks, all nine invertible mixed-obstruction blocks, and the rational adaptive example. Corruption tests verify that the checked identities fail when the padding or obstruction data are changed. The all-power and nonlinear statements additionally require the mathematical arguments in the preceding sections.
+
+\begin{center}
+\begin{tabular}{p{0.59\linewidth}p{0.31\linewidth}}
+\toprule
+Claim&Status\\\midrule
+$\AR(\cw_2)<3.896914$&New derived upper bound\\
+Symmetric CW direct-sum extraction&Explicit maps and coefficient audit\\
+Two local decomposition branches at $P^{\otimes2}$&Analytic classification with exact finite obstruction\\
+No fully supported rank-three contraction nearby&Consequence of classification and block rank\\
+Adaptive support bound $K\le s^2$&All-power induction\\
+No remote rank-three-contraction decomposition&Not established\\
+$\AR(\cw_2)=3$ or $\AR(\cw_2)>3$&Neither established\\\bottomrule
+\end{tabular}
+\end{center}
+
+A positive resolution still requires, for example,
+\begin{equation}\label{eq:missing}
+\forall\eps>0\ \exists m\ge1:
+\R(P^{\otimes m})<(3+\eps)^m.
+\end{equation}
+Together with the flattening lower bound and submultiplicativity, this is equivalent to \eqref{eq:target}. A negative resolution would require a genuine asymptotic lower bound above three. A contraction obstruction in an algorithm class, a local component classification, and a failed numerical search provide no such lower bound.
+
+The symmetric extraction gives new tensor relations and a real improvement in the bound, but the estimates used here leave the explicit endpoint $\beta>3$. Proposition~\ref{prop:seedopt} shows that increasing the single seed power in this evaluated family does not remove that gap. Stronger relations between the spectral values of the different CW tensors, a more effective auxiliary tensor, or a construction meeting \eqref{eq:missing} would be additional mathematical ingredients, not consequences supplied by this package.
+
+No independent priority assessment, peer review or proof-assistant verification is claimed. The package does not edit the repository or mark AC-04 solved.
+
+\begin{thebibliography}{9}
+\bibitem{repo} OpenProblemsInNLA. \emph{AC-04: Minimal asymptotic rank of the small Coppersmith--Winograd tensor}. Canonical problem statement, repository last-checked date 10 September 2026; accessed 14 September 2026.\\
+\url{https://raw.githubusercontent.com/ajt60gaibb/OpenProblemsInNLA/main/arithmetic-and-complexity/AC-04/README.md}
+
+\bibitem{almanli} Josh Alman and Baitian Li. \emph{Asymptotic Rank Speedup Theorems, Revisited}. CCC 2026, LIPIcs 383, 36:1--36:42. DOI: 10.4230/LIPIcs.CCC.2026.36. arXiv:2605.21738v1. Sections 4 and 7.1 supply the spectral framework and the standard CW border formula used here.\\
+\url{https://arxiv.org/html/2605.21738v1}
+
+\bibitem{cvz} Matthias Christandl, P\'eter Vrana, and Jeroen Zuiddam. \emph{Asymptotic tensor rank of graph tensors: beyond matrix multiplication}. Computational Complexity 28 (2019), 57--111. DOI: 10.1007/s00037-018-0172-8. arXiv:1609.07476v2. Definition 1.1.27 and Theorem 1.1.31 give the tight-support definition and Strassen subrank theorem used in Lemma~\ref{lem:cwsubrank}.\\
+\url{https://arxiv.org/html/1609.07476v2}
+
+\bibitem{prioradaptive} \emph{AC-04: Adaptive contraction rigidity}. Supplied research continuation, 14 September 2026. Preserved as \texttt{prior/AC04\_continuation/report.pdf} and its editable source. Research work product, not independently reviewed literature.
+
+\bibitem{priorinitial} \emph{AC-04: A certified upper-bound refinement}. Supplied initial research report, request dated 13 September 2026. Preserved under \texttt{prior/AC04\_continuation/prior/initial/}.
+
+\bibitem{priorlater} \emph{AC-04: Contraction optimality and a finite-tree obstruction}. Supplied continuation, 14 September 2026. Preserved as \texttt{prior/AC04\_continuation/prior/later\_report.pdf}.
+\end{thebibliography}
+\end{document}

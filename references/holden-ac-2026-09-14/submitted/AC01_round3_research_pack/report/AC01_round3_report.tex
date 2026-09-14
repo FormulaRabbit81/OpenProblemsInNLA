@@ -1,0 +1,780 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.9in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{booktabs,array,longtable}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{needspace}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\setlength{\emergencystretch}{2em}
+\linespread{1.035}
+\lstset{basicstyle=\small\ttfamily,breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\AR}{\widetilde{\mathrm R}}
+\newcommand{\AQ}{\widetilde{\mathrm Q}}
+\newcommand{\R}{\mathrm R}
+\newcommand{\BR}{\underline{\mathrm R}}
+\newcommand{\rad}{\operatorname{rad}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\perm}{\operatorname{Perm}}
+\newcommand{\X}{\mathcal X}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\C}{\mathbb C}
+\newcommand{\J}{\mathsf J}
+\newcommand{\B}{\mathsf B}
+\newcommand{\A}{\mathsf A}
+\newcommand{\V}{\mathsf V}
+\newcommand{\U}{\mathsf U}
+\newcommand{\cwb}{b}
+\newcommand{\file}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\sref}[2]{\footnote{#1. See reference [#2] for the original source and URL.}}
+\hypersetup{pdftitle={AC-01: non-coordinate residual extraction},pdfauthor={},pdfsubject={Exact tensor-degeneration certificates and a partial asymptotic-rank result}}
+\begin{document}
+{\LARGE AC-01: non-coordinate residual extraction\par}\vspace{0.4em}
+
+\section{Scope and main conclusions}
+
+This report does not establish exponent-two matrix multiplication. It derives a new upper bound on a related asymptotic tensor rank, proves the non-coordinate extraction mechanism supporting it, and proves an all-depth limitation for the scalar recurrence tests considered here. The finite algebraic certificates are supplied with exact verification code.
+
+The problem AC-01 asks whether arbitrary complex $n\times n$ matrix products can be computed with $O(n^{2+\varepsilon})$ scalar arithmetic operations for every $\varepsilon>0$. The quantifier over every positive $\varepsilon$ is essential; a fixed improved exponent is not a resolution.\sref{AC-01, problem statement and computation model, checked September 14, 2026}{1}
+
+Write $P=\mathrm{cw}_2$ in its rational paired presentation, defined in Section~\ref{sec:notation}. The principal derived bound is
+\begin{equation}\label{eq:main}
+ \boxed{\AR(P)<3.876919161.}
+\end{equation}
+This improves the preceding supplied report's bound $3.878657073$. That report and its certificates are preserved in the archive, and its verifier was rerun. For a published comparison, Alman and Li's Table~1 displays $3.930872$.\sref{Alman and Li, \emph{Asymptotic Rank Speedup Theorems, Revisited}, Table~1, printed page 24 of the arXiv version}{3} No claim of priority or independent peer review is made for \eqref{eq:main}.
+
+The new ingredient is a three-dimensional isotropic space of matrices that is \emph{not} obtained by selecting coordinates. It permits a literal copy of $P$ to survive inside a tensor retained from two CW residuals. More precisely, for positive odd $\ell_1,\ell_2$, the retained tensor is
+\begin{equation}\label{eq:retained-intro}
+ P\otimes Z_{\ell_1,\ell_2},
+\end{equation}
+where $Z_{\ell_1,\ell_2}$ is the symmetric tensor of a complete bipartite graph, defined in Section~\ref{sec:lift}. For every spectral point $\phi$, with $\rho=\phi(P)$, its value has the lower bound
+\[
+ \phi(P\otimes Z_{\ell_1,\ell_2})\geq 3\rho(\ell_1\ell_2)^{2/3}.
+\]
+The factor $\rho$ comes from an exact tensor-product identity, not from a conjectural relative entropy inequality.
+
+At the smallest size this gives a completely stored rational degeneration
+\begin{equation}\label{eq:small-intro}
+ P^{\otimes2}\oplus C_{10}\ \unlhd\ C_4^{\otimes2}.
+\end{equation}
+Its row map has size $20\times25$. All $20^3=8{,}000$ ordered output coefficients are covered by exact expansion, including cancellation of all negative Laurent degrees.
+
+A separate theorem places a definite limit on merely deepening the present scalar tests. With the fixed seed used for \eqref{eq:main}, the candidate
+\begin{equation}\label{eq:barrier-intro}
+ \rho_-=3.652
+\end{equation}
+is feasible for every finite binary-tree recurrence in the explicitly defined relaxation of Section~\ref{sec:barrier}. This includes the new lifted recurrences and the prior coordinate-graph estimates, and allows unbalanced trees and mixtures covered by the stated inequalities. This is \emph{not} a tensor-rank lower bound, a constructed spectral point, or a barrier to every use of those tensor degenerations.
+
+\clearpage
+\section{Tensor notation and external inputs}\label{sec:notation}
+
+All tensor products below are Kronecker products, with corresponding modes grouped. Direct sums use disjoint spaces in each mode. A tensor is \emph{concise} when each of its three mode flattenings has full row rank. Rank is denoted $\R$, border rank $\BR$, asymptotic rank $\AR$, and asymptotic subrank $\AQ$:
+\[
+ \AR(T)=\lim_{n\to\infty}\R(T^{\otimes n})^{1/n},
+ \qquad
+ \AQ(T)=\lim_{n\to\infty}\mathrm Q(T^{\otimes n})^{1/n}.
+\]
+A degeneration $T\unlhd S$ means that rational-function row maps in a parameter transform $S$ into $T+O(\lambda)$. At each fixed stage the construction has finitely many coefficients. Rational functions may be expanded or truncated after clearing poles; no analytic approximation is used in a certificate.
+
+A symmetric tensor is also a trilinear form on its row space. Contraction with a row $f$ gives the symmetric bilinear form $F=S(f,\cdot,\cdot)$. This form can have a radical even when the tensor $S$ is concise.
+
+\subsection{Paired CW tensors}
+
+For even $t$, let $\J_t$ be the $t\times t$ matrix whose only nonzero entries are $(\J_t)_{i,i\mathbin{\mathrm{xor}}1}=1$, using indices $0,\ldots,t-1$. Thus $\J_t$ is a direct sum of matrices $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$. If $G$ is any nonsingular symmetric $t\times t$ matrix, define
+\begin{equation}\label{eq:Cform}
+ C(G)=\sum_{i,j}G_{ij}
+ \bigl(h\otimes e_i\otimes e_j+e_i\otimes h\otimes e_j+e_i\otimes e_j\otimes h\bigr).
+\end{equation}
+Set $C_t=C(\J_t)$. A change of basis in the large coordinates changes $G$ by congruence. Over $\C$, every nonsingular symmetric form of a fixed dimension is congruent to the identity, so $C_t\simeq\mathrm{cw}_t$.
+
+Our main tensor is
+\begin{equation}\label{eq:P}
+ P=\sum_{(a,b,c)\in\perm(0,1,2)}e_a\otimes e_b\otimes e_c.
+\end{equation}
+It is exactly $C_2$ after taking $e_0$ as the head. The three coordinate weights $-1,0,1$ make its support tight. Its uniform support distribution has uniform marginals, and therefore $\AQ(P)=3$: the lower bound follows from the tight-support theorem below and the upper bound from a flattening.
+
+For completeness, let $\mathcal U$ be the four vectors in $\{\pm1\}^3$ whose coordinate product is $1$. Expanding gives
+\[
+ P=\frac14\sum_{u\in\mathcal U}u^{\otimes3}.
+\]
+Indeed, the six coefficients with three distinct coordinates equal one and all other coefficients vanish. Consequently $\R(P)\leq4$.
+
+\subsection{The two structural theorems used}
+
+\begin{proposition}[External spectral input]\label{prop:spectrum}
+There is a family $\X$ of nonnegative functions on complex tensors, called spectral points, that are additive under direct sum, multiplicative under Kronecker product, normalized by $\phi(\langle r\rangle)=r$, and monotone under degeneration. Moreover,
+\[
+ \AQ(T)\leq\phi(T)\leq\BR(T)\leq\R(T),\qquad
+ \AR(T)=\max_{\phi\in\X}\phi(T).
+\]
+\end{proposition}
+These are the parts of Strassen's spectral theory used in the argument. Precise statements appear in Christandl--Vrana--Zuiddam, Theorem~1.1 and Remark~1.2, and in Alman--Li, Section~4.\sref{Spectral duality, normalization, and degeneration monotonicity}{2,3} Additivity is applied to $\phi$, never asserted for asymptotic rank itself.
+
+\begin{proposition}[External tight-support input]\label{prop:tight}
+Suppose a three-tensor has support $\Phi\subseteq I_1\times I_2\times I_3$ admitting injective integer weights $w_j:I_j\to\mathbb Z$ with $w_1(i)+w_2(j)+w_3(k)=0$ on every support triple. For any probability distribution $p$ on that support, with marginals $p_1,p_2,p_3$,
+\[
+ \AQ(T)\geq\min_{j=1,2,3}2^{H(p_j)}.
+\]
+\end{proposition}
+This is the lower-bound direction of Strassen's tight-support subrank theorem, as restated in Theorem~4.4 and Corollary~4.5 of reference~[2]. It concerns three-tensors. Every Kronecker product here is regrouped into three modes, so no invalid higher-mode extension is used.\sref{Christandl--Vrana--Zuiddam, Theorem~4.4, Corollary~4.5, and Remark~4.7}{2}
+
+\subsection{Uniform scalar bounds on CW residuals}
+
+Put
+\begin{equation}\label{eq:b}
+ b(t)=3(t/2)^{2/3}=\kappa t^{2/3},\qquad \kappa=3/2^{2/3}.
+\end{equation}
+Give the head of $C_t$ weight zero, and the two coordinates in each paired block opposite distinct nonzero integer weights. This support is tight. Under the uniform distribution on its $3t$ ordered terms, each mode has head probability $1/3$ and probability $2/(3t)$ at each other coordinate. Hence its entropy is $\log_2 3+\frac23\log_2(t/2)$, proving
+\begin{equation}\label{eq:cw-lower}
+ \phi(C_t)\geq b(t)\quad(\phi\in\X).
+\end{equation}
+
+We also use $\phi(C_8)\leq10$. An elementary border-rank identity proves the more general bound $\BR(C_q)\leq q+2$. With $s=\sum_{i=1}^q e_i$, expand
+\begin{equation}\label{eq:cw-border}
+ \varepsilon^{-2}\left[
+ \sum_{i=1}^q(h+\varepsilon e_i)^{\otimes3}
+ -(h+\varepsilon s)^{\otimes3}-(q-1)h^{\otimes3}\right].
+\end{equation}
+The constant and linear terms cancel. The limit is $C(I-J)$, where $J$ is the all-ones matrix, and $\det(I-J)=1-q\ne0$. Over $\C$ this is congruent to $C_q$. The expression uses $q+2$ rank-one tensors. This also separates border rank from ordinary rank in the needed estimate.
+
+\section{The initial state, with its exact contraction}\label{sec:initial}
+
+The initial state comes from the preceding pack, but the construction and its hypotheses are proved again here. The archived literal maps provide independent finite checks.
+
+\subsection{A Fourier exchange}
+
+Let $n\geq2$, let $u\geq2^n$ be even, and set
+\[
+ r=4^n,\qquad d=3^n,\qquad t=u+r-2d.
+\]
+Write $D_r=\frac1r\sum_{g=0}^{r-1}e_g^{\otimes3}$; its rank is $r$. Identify the diagonal coordinates with $G=(\F_2^2)^n$. Let $S$ consist of words with every two-bit digit nonzero, and let $a=(1,\ldots,1)$. Define
+\[
+ I=S\cap(S+a),\qquad R=G\setminus\bigl(S\cup(S+a)\bigr).
+\]
+Their sizes are $|S|=d$, $|I|=2^n$, and $|R|=r-2d+2^n$. Both $I$ and $R$ are paired without fixed points by $x\mapsto x+a$.
+
+The source is $D_r\oplus C_u$, with auxiliary head $h_*$. Write $\chi_x(g)=(-1)^{x\cdot g}$. Associate the first $2^n$ auxiliary large coordinates with $I$, ordered in its pairs. For $x\in S$, let the main row $A_x$ equal $\chi_x$ on the diagonal block and, when $x\in I$, have one additional entry $1$ in its associated auxiliary coordinate. Set
+\[
+ f_0=(\chi_a,-h_*).
+\]
+Let the rows $C_0$ consist of the characters indexed by $R$, followed by the unused auxiliary paired coordinates, with opposite signs on each unused pair. There are exactly $t$ such rows.
+
+\begin{lemma}[Fourier exchange]\label{lem:fourier}
+The identical row maps in the three modes
+\[
+ \begin{pmatrix}A\\ \varepsilon^{-2}f_0\\ \varepsilon C_0\end{pmatrix}
+\]
+give
+\begin{equation}\label{eq:fourier}
+ P^{\otimes n}\oplus C_t\unlhd D_r\oplus C_u.
+\end{equation}
+The extracted head is exactly isolated. Its source contraction has rank $r+u$, and its class modulo the contraction radical belongs to the main-row span.
+\end{lemma}
+
+\begin{proof}
+Let $F_0=(D_r\oplus C_u)(f_0,\cdot,\cdot)$. It has diagonal block $r^{-1}\diag(\chi_a)$, auxiliary large block $-\J_u$, and the auxiliary head as its only radical direction. Its rank is $r+u$.
+
+Character orthogonality gives $r^{-1}\sum_g\chi_x(g)\chi_y(g)\chi_a(g)=1_{x+y=a}$. For $x,y\in S$, precisely the pairs in $I$ contribute, and the auxiliary block cancels them. Orthogonality to the $R$ and padded rows follows from their definitions. The pairing on $R$ is its translation matching; the opposite padding signs turn $-\J_2$ into $\J_2$. Therefore
+\begin{equation}\label{eq:fourier-grams}
+ F_0(A,A)=0,\qquad F_0(A,C_0)=0,\qquad F_0(C_0,C_0)=\J_t.
+\end{equation}
+Since $a\notin I$, the main row $A_a$ has no auxiliary component and $f_0-A_a=-h_*\in\rad F_0$. Thus all pairings of $f_0$ with $A,C_0,f_0$ vanish.
+
+It follows that every negative Laurent coefficient vanishes. A head and two large rows have degree $-2+1+1=0$ and coefficient $\J_t$, producing $C_t$. On three main rows the coefficient is $1_{x+y+z=0}$. Three nonzero two-bit digits have xor zero exactly when they are the three distinct nonzero digits, so this main tensor is $P^{\otimes n}$. Every other block has positive degree. These statements also prove exact head isolation before the limit.
+\end{proof}
+
+\subsection{Composition and the initial numerical data}
+
+Apply Lemma~\ref{lem:fourier} with $(n,u)=(3,8)$ and $(4,18)$. This gives
+\[
+ P^{\otimes3}\oplus C_{18}\unlhd D_{64}\oplus C_8,
+ \qquad
+ P^{\otimes4}\oplus C_{112}\unlhd D_{256}\oplus C_{18}.
+\]
+Substitution of the first into the second yields
+\begin{equation}\label{eq:initial-degeneration}
+ Q_0\oplus C_{112}\unlhd S_0,
+ \qquad
+ Q_0=P^{\otimes3}\oplus P^{\otimes4},\quad
+ S_0=D_{64}\oplus D_{256}\oplus C_8.
+\end{equation}
+Use $\varepsilon=\lambda^7$ for the first exchange and $\delta=\lambda$ for the second. Each second-stage mode map has pole order at most two, so its three-mode action lowers error order by at most six. The first error remains $O(\lambda^{7-6})$, and the second is $O(\lambda)$. This proves a one-parameter degeneration.
+
+The complete stored map has 221 rows and 329 columns. Its composed head is
+\begin{equation}\label{eq:initial-head}
+ f=(-\lambda^{-16}\chi_{a_3},\ \lambda^{-2}\chi_{a_4},\ \lambda^{-16},\ 0^8).
+\end{equation}
+Its source contraction $F=S_0(f,\cdot,\cdot)$ has rank 328: the 320 diagonal entries are nonzero, its auxiliary large block is $\lambda^{-16}\J_8$, and only the original auxiliary head is radical.
+
+Let $A,C$ be the composed main and large rows. Exact isolation in the first exchange preserves the cancellation identities of the second, giving
+\begin{equation}\label{eq:initial-exact}
+ F(A,A)=0,\quad F(A,C)=0,\quad F(C,C)=\J_{112}.
+\end{equation}
+The 27 first-block main characters are independent, and the 81 second-block main characters are independent in the other diagonal block. This triangular structure gives 108 independent main classes modulo the radical. Moreover,
+\[
+ f=\lambda^{-2}A_{a_4}^{(4)}-\lambda^{-16}A_{a_3}^{(3)}+\lambda^{-16}h_*.
+\]
+The head class is therefore in the main span.
+
+The exact initial parameters are
+\begin{equation}\label{eq:initial-data}
+ v_0=d_0=108,\quad t_0=112,\quad D_0=2d_0+t_0=328,\quad
+ \phi(S_0)\leq H_0=330.
+\end{equation}
+Here $v$ counts actual main coordinates, whereas $d$ counts their classes modulo the contraction radical. They need not agree after an extraction. The archived verifier checks all $221^3=10{,}793{,}861$ ordered coefficients of the composed map, its head identities, and the initial rank statements.
+
+\section{Symmetric extraction with a radical}\label{sec:extraction}
+
+\begin{definition}[State]\label{def:state}
+A state consists of symmetric tensors $S,Q$, a degeneration to $Q\oplus C_t$ with rows $A,f,C$, and the exact data
+\begin{align}
+ F&=S(f,\cdot,\cdot),&
+ F(A,A)&=0,& F(A,C)&=0,& F(C,C)&=\J_t,\label{eq:state1}\\
+ \rank F&=2d+t,&
+ \dim\Span\overline A&=d,&
+ \overline f&\in\Span\overline A.&&\label{eq:state2}
+\end{align}
+Bars mean classes modulo $\rad F$. The tensor $Q$ is concise and has $v$ coordinates per mode. The integer $d$ is its \emph{active dimension}; $v$ is its actual dimension.
+\end{definition}
+
+\begin{lemma}[Adapted split form]\label{lem:adapted}
+For a state, the quotient by $\rad F$ has a rational-function basis $\A,\B,\mathsf C$, of sizes $d,d,t$, with Gram matrix
+\begin{equation}\label{eq:adapted}
+ \begin{pmatrix}0&I_d&0\\I_d&0&0\\0&0&\J_t\end{pmatrix}.
+\end{equation}
+The basis $\A$ consists of independent main classes, and $\mathsf C$ is the given large-row basis.
+\end{lemma}
+\begin{proof}
+The large span is nondegenerate and orthogonal to the isotropic main span. Its orthogonal complement has dimension $2d$. Choose vectors $b_i$ dual to a basis $a_i$ of the main span. If their mutual Gram matrix is $K$, replace $b_i$ by $b_i-\frac12\sum_jK_{ij}a_j$. The resulting $b_i$ are mutually isotropic and remain dual to the $a_i$. Every operation is rational linear algebra.
+\end{proof}
+
+\begin{lemma}[Rational paired complement]\label{lem:complement}
+Let a nondegenerate symmetric form be split over a characteristic-zero field, and let $W$ be an isotropic subspace of dimension $m$. There is a split nondegenerate subspace of dimension $D-2m$ orthogonal to $W$, obtainable by rational operations from a paired basis and a basis of $W$.
+\end{lemma}
+\begin{proof}
+Start with a paired basis $e_i$, with partner $e_{i\mathbin{\mathrm{xor}}1}$. For a nonzero isotropic vector $w$, choose $e_h$ with $F(w,e_h)\ne0$. The vector $u=w-e_h$ has $F(u,u)=-2F(w,e_h)\ne0$. The reflection
+\[
+ x\longmapsto x-\frac{2F(x,u)}{F(u,u)}u
+\]
+is defined over the same field, preserves $F$, and sends $w$ to $e_h$. The other isotropic vectors are orthogonal to $e_h$. Subtract their $e_h$ components and remove the hyperbolic pair containing $e_h$. Repeat in the remaining paired space. The unused pairs, transported back by the reflections, give the required complement. There are exactly $m$ steps, and no extraction of a square root occurs.
+\end{proof}
+
+\begin{lemma}[Extraction]\label{lem:extraction}
+Suppose rows $U$ transform symmetric $S$ into $R+O(\lambda)$. Let $f$ define $F=S(f,\cdot,\cdot)$, and suppose
+\[
+ F(U,U)=0,\qquad \overline f\in\Span\overline U.
+\]
+If $V$ has $s$ rows with $F(U,V)=0$ and $F(V,V)=\J_s$, then
+\[
+ \begin{pmatrix}U\\\mu^{-2}f\\\mu V\end{pmatrix}
+\]
+gives a degeneration to $R\oplus C_s$ for $\mu=\lambda^K$ with sufficiently large integer $K$. The new head is exactly isolated, and its class remains in the main span modulo the new contraction radical.
+\end{lemma}
+\begin{proof}
+Write $f=u+z$ with $u\in\Span U$ and $z\in\rad F$. The hypotheses give
+\[
+ F(f,U)=F(f,V)=F(f,f)=0.
+\]
+Consequently every coefficient containing a head and any forbidden combination of main rows or further heads is zero identically. A head and two large rows have degree $-2+1+1=0$ and coefficient matrix $\J_s$. The old main block tends to $R$; every other new block has positive $\mu$-degree.
+
+Each such coefficient is a rational function of $\lambda$ with finite pole order. There are finitely many coefficients, so choosing $K$ larger than the maximum pole-order-to-positive-degree ratio makes them all tend to zero after $\mu=\lambda^K$. The new contraction is $\mu^{-2}F$, which has the same radical. Its pairing on the scaled large rows is exactly $\J_s$, and the head-class relation is unchanged up to scalar.
+\end{proof}
+
+The distinction between actual and active dimensions is not optional. Rows that become dependent modulo $\rad F$ may be independent in the source row space and may remain essential coordinates of the limiting tensor. Only quotient dimensions are used for the bilinear complement calculation.
+
+\section{A non-coordinate isotropic core}\label{sec:core}
+
+Let the three matrix slices of $P$ be
+\[
+ N_0=E_{12}+E_{21},\qquad N_1=E_{02}+E_{20},\qquad N_2=E_{01}+E_{10}.
+\]
+Consider the rational symmetric matrices
+\begin{equation}\label{eq:core-forms}
+ B_1=\begin{pmatrix}-1&0&-1\\0&-1&0\\-1&0&1\end{pmatrix},\qquad
+ B_2=\begin{pmatrix}1&0&1\\0&-1&0\\1&0&-1\end{pmatrix}.
+\end{equation}
+Both determinants are two.
+
+\begin{lemma}[Isotropic slice space]\label{lem:core}
+The span of $N_0,N_1,N_2$, viewed as row vectors of length nine, is three-dimensional and isotropic for $B_1\otimes B_2$:
+\begin{equation}\label{eq:core-zero}
+ \tr(N_c^TB_1N_dB_2)=0\qquad(0\leq c,d\leq2).
+\end{equation}
+\end{lemma}
+\begin{proof}
+The supports of the three slices are disjoint, giving independence. Direct substitution in \eqref{eq:core-forms} gives the Gram matrix
+\[
+ \bigl[\tr(N_c^TB_1N_dB_2)\bigr]_{c,d}=\begin{pmatrix}0&0&0\\0&0&0\\0&0&0\end{pmatrix}.
+\]
+For example, the three diagonal entries are respectively $1-1$, $1+1-2$, and $1-1$; the potentially nonzero off-diagonal cancellation is $-1+1$. This proves all nine identities. The certificate checks the same matrix multiplication with exact fractions.
+\end{proof}
+
+This is different from coordinate-graph retention: a slice such as $N_1$ combines two coordinates, and its self-pairing cancels between nonzero terms. It does not select an isotropic subset of coordinate axes.
+
+\subsection{Explicit split extensions}
+
+The four-dimensional forms $B_i\oplus[2]$ are split over $\Q$. Explicit row bases are
+\begin{equation}\label{eq:witt-bases}
+ W_1=\begin{pmatrix}
+ -1&-1&0&-1\\-1/4&1/2&1/4&-1/4\\-1&0&-1&-1\\1/2&-1/4&-1/4&0
+ \end{pmatrix},\qquad
+ W_2=\begin{pmatrix}
+ -1&-1&0&0\\-1/2&1/2&0&0\\-1&0&1&-1\\1/4&0&-1/4&-1/4
+ \end{pmatrix}.
+\end{equation}
+Their exact identities are $W_i(B_i\oplus[2])W_i^T=\J_4$.
+
+For positive odd $\ell$, set
+\begin{equation}\label{eq:lift-forms}
+ J_\ell=\J_{\ell-1}\oplus[1],\qquad
+ G_i(\ell)=(B_i\otimes J_\ell)\oplus[2],\qquad t=3\ell+1.
+\end{equation}
+When $\ell=1$, $J_\ell=[1]$.
+
+\begin{lemma}[Odd-size split extension]\label{lem:odd-split}
+Every $G_i(\ell)$ in \eqref{eq:lift-forms} is rationally congruent to $\J_{3\ell+1}$. Its paired basis is explicit for every positive odd $\ell$.
+\end{lemma}
+\begin{proof}
+For each hyperbolic pair $p,p+1$ in $J_\ell$, use the three pairs of rows
+\[
+ e_{a,p},\qquad \sum_b(B_i^{-1})_{ab}e_{b,p+1}\quad(a=0,1,2).
+\]
+Their pairings are $\delta_{ab}$, and the rows of each kind pair to zero among themselves. Different hyperbolic pairs are orthogonal. On the three remaining coordinates and the padded coordinate the form is $B_i\oplus[2]$, where \eqref{eq:witt-bases} supplies the final two pairs. This constructs all $3\ell+1$ rows by rational operations.
+\end{proof}
+
+\section{The lifted retained tensor}\label{sec:lift}
+
+\subsection{A complete-bipartite tensor}
+
+On the disjoint labels $a_i$, $b_j$, and $c_{ij}$, with $0\leq i<\ell_1$ and $0\leq j<\ell_2$, define
+\begin{equation}\label{eq:Z}
+ Z_{\ell_1,\ell_2}=\sum_{i,j}\sum_{\sigma\in S_3}
+ \sigma(a_i\otimes b_j\otimes c_{ij}).
+\end{equation}
+There are $6\ell_1\ell_2$ ordered terms and $\ell_1+\ell_2+\ell_1\ell_2$ coordinates in each mode. This is a symmetric graph tensor defined by \eqref{eq:Z}; no convention from graph-state tensor literature is required. In particular $Z_{1,1}=P$ after relabelling.
+
+\begin{lemma}[Uniform spectral lower bound]\label{lem:Z}
+For positive integers $\ell_1,\ell_2$ and every $\phi\in\X$,
+\begin{equation}\label{eq:Z-value}
+ \phi(Z_{\ell_1,\ell_2})\geq3(\ell_1\ell_2)^{2/3}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Assign weights $w(a_i)=i$, $w(b_j)=\ell_1(j+1)$, and $w(c_{ij})=-1-i-\ell_1(j+1)$. The ranges are disjoint; each range is injective, including the last because $i+\ell_1(j+1)$ determines $(i,j)$. Every support triple has total weight $-1$. Replacing $w$ by $3w+1$ gives injective zero-sum integer weights, identically in the three modes.
+
+In the uniform support distribution, each mode has probabilities $1/(3\ell_1)$ at every $a_i$, $1/(3\ell_2)$ at every $b_j$, and $1/(3\ell_1\ell_2)$ at every $c_{ij}$. The entropy is
+\[
+ \tfrac13\log_2(3\ell_1)+\tfrac13\log_2(3\ell_2)+\tfrac13\log_2(3\ell_1\ell_2)
+ =\log_2 3+\tfrac23\log_2(\ell_1\ell_2).
+\]
+Propositions~\ref{prop:tight} and \ref{prop:spectrum} prove the claim.
+\end{proof}
+
+\subsection{Literal restriction and the isotropic span}
+
+Let $t_i=3\ell_i+1$, where both $\ell_i$ are positive and odd. Change the large forms of the two residuals to $G_1(\ell_1)$ and $G_2(\ell_2)$ using Lemma~\ref{lem:odd-split}. Write $e_{a,i}$ for the coordinates in the $3\ell_1$ core of the first large space, and $e_{b,j}$ for those in the second. The padding coordinates will not be retained.
+
+Keep three classes of rows in $C(G_1)\otimes C(G_2)$:
+\begin{align}
+ A_{a,i}&=(G_1^{-1}e_{a,i})\otimes h_2,\label{eq:retained-rows}\\
+ B_{b,j}&=h_1\otimes(G_2^{-1}e_{b,j}),\nonumber\\
+ C_{c,i,j}&=\sum_{a,b}(N_c)_{ab}\,e_{a,i}\otimes e_{b,j}.\nonumber
+\end{align}
+Here the inverse-form rows are written using the symmetric coordinate identification; they are the rows dual to the indicated large coordinates. All row coefficients are rational. There are $3(\ell_1+\ell_2+\ell_1\ell_2)$ retained rows.
+
+\begin{theorem}[Non-coordinate lifted restriction]\label{thm:retention}
+The rows \eqref{eq:retained-rows}, used identically in all three modes, restrict $C(G_1)\otimes C(G_2)$ exactly to
+\begin{equation}\label{eq:literal-PZ}
+ P\otimes Z_{\ell_1,\ell_2}.
+\end{equation}
+The $m=3\ell_1\ell_2$ large--large rows $C_{c,i,j}$ are independent and form an isotropic subspace for $G_1\otimes G_2$.
+\end{theorem}
+\begin{proof}
+A nonzero retained coefficient must use one row from each of the three classes. Any other combination either puts two heads in one CW factor or leaves one factor without a head. For an ordered triple consisting of $A_{a,i},B_{b,j},C_{c,i',j'}$, contraction with the inverse-form rows gives
+\[
+ (N_c)_{ab}\,\delta_{ii'}\delta_{jj'}=P_{abc}\,\delta_{ii'}\delta_{jj'}.
+\]
+The same holds for its six class permutations. This is precisely the product support and coefficient rule of $P\otimes Z_{\ell_1,\ell_2}$, after grouping the core index with the graph label. No other coefficients survive.
+
+The large--large rows are independent because, for each $(i,j)$, the three $N_c$ have disjoint support, and distinct $(i,j)$ use disjoint coordinates. Their pairings factor as
+\[
+ \tr(N_c^TB_1N_dB_2)\,(J_{\ell_1})_{ii'}(J_{\ell_2})_{jj'}=0
+\]
+by Lemma~\ref{lem:core}. The padding does not contribute. This proves isotropy and the dimension count.
+\end{proof}
+
+Multiplicativity, not an assumed factorization of a CW tensor, now gives the crucial estimate
+\begin{equation}\label{eq:retained-value}
+ \phi(P\otimes Z_{\ell_1,\ell_2})
+ =\rho\phi(Z_{\ell_1,\ell_2})
+ \geq3\rho(\ell_1\ell_2)^{2/3}.
+\end{equation}
+The exact checker expands this restriction for six rectangular sizes, including $(37,37)$. In that largest stored test the target dimension is 4,329 and its 49,284 nonzero ordered coefficients are all checked.
+
+\needspace{24\baselineskip}
+\section{A mixed-state extraction theorem}\label{sec:mixed}
+
+\begin{theorem}[Binary lifted extraction]\label{thm:mixed}
+Let two states have data $(S_i,Q_i,d_i,t_i,v_i)$ as in Definition~\ref{def:state}. Suppose $t_i=3\ell_i+1$ for positive odd $\ell_i$. Put $m=3\ell_1\ell_2$. There is a state with source $S_1\otimes S_2$, main tensor
+\begin{align}\label{eq:Qprime}
+ Q'={}&Q_1\otimes Q_2
+ \oplus Q_1\otimes C_{t_2}
+ \oplus C_{t_1}\otimes Q_2
+ \oplus(P\otimes Z_{\ell_1,\ell_2}),
+\end{align}
+and residual $C_{t'}$, where
+\begin{align}
+ d'&=d_1d_2+d_1t_2+t_1d_2+m,\label{eq:mixed-d}\\
+ t'&=t_1t_2+2d_1d_2-2m,\label{eq:mixed-t}\\
+ 2d'+t'&=(2d_1+t_1)(2d_2+t_2).\label{eq:mixed-D}
+\end{align}
+Its actual main dimension is
+\begin{equation}\label{eq:mixed-v}
+ v'=v_1v_2+v_1(t_2+1)+(t_1+1)v_2+3(\ell_1+\ell_2+\ell_1\ell_2).
+\end{equation}
+All head-isolation and head-class hypotheses hold exactly for the new state.
+\end{theorem}
+
+\begin{proof}
+First take the product of the two old row maps. If the maps initially use different parameters, use the same variable after a monomial substitution; their transformed tensors still tend to the product of their limits. Retain the full first three summands in \eqref{eq:Qprime} and the rows of Theorem~\ref{thm:retention} in the residual--residual summand. These use disjoint actual coordinate blocks, so their limit is the displayed direct sum.
+
+The unscaled new head is $f'=f_1\otimes f_2$. Its contraction is $F'=F_1\otimes F_2$, of rank $D_1D_2$, where $D_i=2d_i+t_i$. The quotient by its radical identifies with the product of the old active quotients. By Lemma~\ref{lem:adapted}, each old quotient is split with subspaces $\A_i,\B_i,\mathsf C_i$.
+
+Because $\overline f_i\in\A_i$, the active span of all retained main rows is exactly
+\begin{equation}\label{eq:active-span}
+ W=(\A_1\otimes\A_2)\oplus(\A_1\otimes\mathsf C_2)
+ \oplus(\mathsf C_1\otimes\A_2)\oplus\U,
+\end{equation}
+where $\U$ is the $m$-dimensional isotropic large--large space in Theorem~\ref{thm:retention}. The head-containing rows add no further active dimension: for example, the graph head--large rows project into $\A_1\otimes\mathsf C_2$ or $\mathsf C_1\otimes\A_2$, already supplied by the full cross summands. Conversely, every space on the right of \eqref{eq:active-span} is supplied by retained rows. The sum is direct in the adapted tensor-product basis, proving \eqref{eq:mixed-d}.
+
+The first three summands in \eqref{eq:active-span} are isotropic for $F'$ and orthogonal to $\U$. The last summand is isotropic by Theorem~\ref{thm:retention}. Thus $W$ is isotropic. The head class $\overline{f'}$ lies in $\A_1\otimes\A_2\subseteq W$.
+
+The product of two split forms is split: in paired bases, each product coordinate is paired with exactly its product partner, and there are no fixed points. Lemma~\ref{lem:complement} therefore gives a paired complement of dimension $D_1D_2-2d'=t'$, orthogonal to all retained main classes. Lift its rows to the source row space. Radical components of retained rows do not affect any of these pairings.
+
+Apply Lemma~\ref{lem:extraction} to the retained main rows, $f'$, and this complement. The new contraction has rank $D_1D_2$, the main active dimension is $d'$, and the head class remains in the main span. All new identities are exact. The resulting $Q'$ is concise: the old main tensors, the CW tensors, $P$, and the complete-bipartite tensor are concise, and tensor products and direct sums preserve this property. Thus it is a state.
+
+Finally, counting the actual rows in the four disjoint blocks gives \eqref{eq:mixed-v}. No rows are discarded merely because their classes are dependent modulo a radical.
+\end{proof}
+
+The residual dimension is positive for these parameters. In fact $t_1t_2-2m=(3\ell_1+1)(3\ell_2+1)-6\ell_1\ell_2>0$. For continuation, if $3\mid d_i$ and $t_i\equiv4\pmod6$, then \eqref{eq:mixed-d}--\eqref{eq:mixed-t} give $3\mid d'$ and $t'\equiv4\pmod6$. Hence $(t'-1)/3$ is again positive and odd. The seed \eqref{eq:initial-data} satisfies these congruences.
+
+\subsection{Finite rational continuation}
+
+The theorem does not assume a sequence of infinitely many limits at a fixed stage. A paired basis is built by rational linear algebra, a complement by finitely many reflections, and a final monomial substitution makes the finitely many positive-degree errors vanish. At any specified finite tree, this yields rational-function maps. Scaling the head changes the form by a nonzero rational-function scalar; rescaling one coordinate of each hyperbolic pair restores a paired basis if needed.
+
+The later maps in the bound below have enormous dimensions and were not enumerated. Their existence follows from this general construction. The exact program checks its finite algebraic core, its parameter hypotheses, and representative literal instances; it is not a formal verification of Theorem~\ref{thm:mixed} for every dimension.
+
+\section{The certified improved bound}\label{sec:bound}
+
+For a real variable $x\geq0$, initialize
+\begin{equation}\label{eq:scalar-initial}
+ a_0(x)=x^3+x^4,\qquad d_0=v_0=108,\quad t_0=112,\quad H_0=330.
+\end{equation}
+Use three squaring instances of Theorem~\ref{thm:mixed}. At stage $j$, let $\ell_j=(t_j-1)/3$ and set
+\begin{align}
+ a_{j+1}(x)&=a_j(x)^2+2a_j(x)b(t_j)+3x\ell_j^{4/3},\label{eq:a-recur}\\
+ d_{j+1}&=d_j^2+2d_jt_j+3\ell_j^2,\label{eq:d-recur}\\
+ t_{j+1}&=t_j^2+2d_j^2-6\ell_j^2,\label{eq:t-recur}\\
+ H_{j+1}&=H_j^2,\qquad
+ v_{j+1}=v_j^2+2v_j(t_j+1)+3(2\ell_j+\ell_j^2).\label{eq:Hv-recur}
+\end{align}
+The exact active dimensions and residual sizes are
+\begin{center}\small
+\begin{tabular}{r r r}
+\toprule
+Stage $j$ & $d_j$ & $t_j$\\\midrule
+0 &108&112\\
+1 &39,963&27,658\\
+2 &4,062,604,560&3,449,107,936\\
+3 &48,494,927,584,144,357,995&36,974,960,144,523,791,146\\
+\bottomrule
+\end{tabular}
+\end{center}
+The three lifted block sizes are $37$, $9{,}219$, and $1{,}149{,}702{,}645$. All are odd. Also $D_j=328^{2^j}$ and $H_j=330^{2^j}$ exactly. At the first step the actual main dimension is $40{,}401$, not the active dimension $39{,}963$.
+
+\begin{lemma}[Necessary scalar inequalities]\label{lem:scalar}
+For every $\phi\in\X$, put $\rho=\phi(P)$. Then the constructed states satisfy
+\begin{equation}\label{eq:scalar-necessary}
+ a_j(\rho)+b(t_j)\leq330^{2^j}\qquad(0\leq j\leq3).
+\end{equation}
+\end{lemma}
+\begin{proof}
+At the initial state, $\phi(Q_0)=\rho^3+\rho^4=a_0(\rho)$ and $\phi(S_0)\leq330$. Each extraction gives a degeneration to $Q_j\oplus C_{t_j}$ from $S_0^{\otimes2^j}$. Theorem~\ref{thm:mixed}, additivity, multiplicativity, \eqref{eq:cw-lower}, and \eqref{eq:retained-value} give inductively $\phi(Q_j)\geq a_j(\rho)$. Every term in the recursion is nonnegative, so substituting the lower bounds preserves the inequality direction. Apply degeneration monotonicity to finish.
+\end{proof}
+
+\subsection{Integer-cube enclosures}
+
+Set
+\begin{equation}\label{eq:xstar}
+ x_* = \frac{3876919161}{10^9}=3.876919161,
+ \qquad B=10^{40}.
+\end{equation}
+For every radicand $N$ in the certificate, a stored integer $L$ satisfies
+\begin{equation}\label{eq:cubes}
+ L^3\leq NB^3<(L+1)^3.
+\end{equation}
+Thus $L/B\leq N^{1/3}<(L+1)/B$. For $b(t_j)$ use $N=(t_j/2)^2$ and multiply by three. For $3x_*\ell_j^{4/3}$ use $N=\ell_j$ and multiply by $3x_*\ell_j$. Appendix~\ref{app:radicals} gives the integer records; no numerical root approximation is trusted without \eqref{eq:cubes}.
+
+Start with $\underline a_0=x_*^3+x_*^4$. Evaluate \eqref{eq:a-recur} with lower rational endpoints throughout. The exact fraction calculation gives
+\begin{equation}\label{eq:strict-certificate}
+ \underline a_3+\underline b(t_3)
+ >330^8(1+10^{-9})>330^8.
+\end{equation}
+The lower relative gap has the certified decimal floor
+\begin{equation}\label{eq:gap-decimal}
+ \frac{\underline a_3+\underline b(t_3)}{330^8}-1
+ >0.000000005073886235854041.
+\end{equation}
+The printed decimal summarizes a rational comparison; it is not the certificate's arithmetic format.
+
+\begin{theorem}[Derived asymptotic-rank bound]\label{thm:bound}
+Over $\C$, $\AR(\mathrm{cw}_2)=\AR(P)<3.876919161$.
+\end{theorem}
+\begin{proof}
+Equation~\eqref{eq:strict-certificate} proves $a_3(x_*)+b(t_3)>330^8$. The function $a_3(x)$ is strictly increasing for $x>0$, since its initial polynomial is strictly increasing and all recursion coefficients are nonnegative. Hence \eqref{eq:scalar-necessary} excludes $\phi(P)\geq x_*$ for every spectral point.
+
+More explicitly, continuity and strict monotonicity give a scalar boundary strictly below $x_*$ for this same inequality. All spectral values lie below that boundary, so taking the maximum in Proposition~\ref{prop:spectrum} preserves the strict conclusion. This avoids confusing pointwise strict inequalities with a possibly non-strict supremum bound.
+\end{proof}
+
+This conclusion is an asymptotic-rank bound from spectral duality. It does not exhibit a rank-$\lfloor x_*^{n}\rfloor$ decomposition of any particular displayed finite power of $P$. It is also not a numerical bound on $\omega$.
+
+\section{A fully stored finite degeneration}\label{sec:small}
+
+At $\ell_1=\ell_2=1$, Theorem~\ref{thm:retention} gives $P\otimes Z_{1,1}=P^{\otimes2}$ as a literal restriction of $C(G_1(1))\otimes C(G_2(1))$. These source tensors are rationally congruent to $C_4$ by \eqref{eq:witt-bases}.
+
+Let $f=h_1\otimes h_2$. The source contraction has active part $G_1(1)\otimes G_2(1)$, of dimension 16. The six retained head--large and large--head rows lie in its radical. The other three retained rows are the isotropic slices $N_0,N_1,N_2$. Thus the nine actual main rows have active rank three.
+
+Apply Lemma~\ref{lem:complement} to these three slices in the split 16-dimensional form. It supplies ten rows $V$ with paired Gram matrix, orthogonal to all retained main rows. Lemma~\ref{lem:extraction} gives
+\[
+ P^{\otimes2}\oplus C_{10}\unlhd C_4^{\otimes2}.
+\]
+There is only one new parameter: the retained nine rows have degree zero, the head degree $-2$, and the ten complementary rows degree one.
+
+The file \file{certificates/small_degeneration.json} stores all 500 rational entries of the $20\times25$ matrix, the 20 row degrees, the two source forms, and the ten paired-complement rows on the 16-dimensional active block. The verifier does not accept a successful rank count in place of coefficient correctness. It expands every nonzero source term through the supplied matrix and accumulates all output coefficients.
+
+The exact outcome is
+\begin{center}
+\begin{tabular}{l r}
+\toprule
+Check & Result\\\midrule
+Ordered output coefficients covered &8,000\\
+Nonzero constant coefficients &66\\
+Nonzero positive-degree coefficients &450\\
+Uncancelled negative-degree coefficients &0\\
+Rank of the complete row map &20\\
+Rank of the source contraction &16\\
+Actual / active main dimensions &9 / 3\\
+Extracted residual size &10\\\bottomrule
+\end{tabular}
+\end{center}
+The 66 constant coefficients are the 36 terms of $P^{\otimes2}$ and the 30 terms of $C_{10}$. Coefficients absent from the sparse expansion are exactly zero; none are omitted by a tolerance or sampling rule.
+
+This finite certificate illustrates the non-coordinate extraction on a complete small example. The rank bound in Theorem~\ref{thm:bound} also uses the separately proved all-size construction and the initial state; the small certificate alone is not a proof of that bound.
+
+\section{An obstruction for all finite binary-tree scalar tests}\label{sec:barrier}
+
+The improved bound does not justify extrapolating the recurrence to three. An induction gives a more precise conclusion: the following fixed-seed scalar relaxation admits a value strictly above three at every finite depth.
+
+\subsection{The exact relaxation being limited}
+
+A leaf has
+\[
+ (d,t,D,H,a)=(108,112,328,330,x^3+x^4).
+\]
+At a binary node combine two child states by
+\begin{align}
+ d'&=d_1d_2+d_1t_2+t_1d_2+m,\label{eq:relax-d}\\
+ t'&=t_1t_2+2d_1d_2-2m,\label{eq:relax-t}\\
+ D'&=D_1D_2=2d'+t',\qquad H'=H_1H_2,\label{eq:relax-D}\\
+ a'&=a_1a_2+a_1b(t_2)+a_2b(t_1)+z.\label{eq:relax-a}
+\end{align}
+Assume $0\leq m\leq t_1t_2/2$ and nonnegative $z$. The test imposed at every node is
+\begin{equation}\label{eq:node-test}
+ a+b(t)\leq H.
+\end{equation}
+The recurrence uses the specified \emph{lower estimates} on the retained tensors and the upper source estimate $H$. It does not retain all identities and inequalities of the tensor semiring.
+
+The new P-lift uses $m=3\ell_1\ell_2$ and $z=3x(\ell_1\ell_2)^{2/3}$, where $t_i=3\ell_i+1$. In particular,
+\begin{equation}\label{eq:new-z-envelope}
+ z\leq \frac{x}{3^{1/3}}(t_1t_2)^{2/3}.
+\end{equation}
+The prior coordinate-graph entropy estimates, when available for a given dimension, have $z=3(t_1t_2m)^{1/3}$ and therefore
+\begin{equation}\label{eq:old-z-envelope}
+ z\leq\frac{3}{2^{1/3}}(t_1t_2)^{2/3}.
+\end{equation}
+For equal residual sizes and a $k$-regular graph, this reduces to $m=tk$ and $z=3tk^{1/3}$, exactly the estimate used previously. We may allow every scalar choice obeying the envelopes, whether or not that choice is realized by a graph; proving feasibility for this larger family also proves it for the indicated actual constructions.
+
+\begin{lemma}[Product envelope]\label{lem:envelope}
+Let $c>0$ and $C=c^2-c\geq0$, with $\kappa\leq c$. Suppose at each node $z\leq C(t_1t_2)^{2/3}$. Then
+\begin{equation}\label{eq:envelope-product}
+ a'+c(D_1D_2)^{2/3}
+ \leq(a_1+cD_1^{2/3})(a_2+cD_2^{2/3}).
+\end{equation}
+\end{lemma}
+\begin{proof}
+The nonnegative dimension rules imply $t_i\leq D_i$. Hence $b(t_i)\leq cD_i^{2/3}$ and
+\[
+ z+c(D_1D_2)^{2/3}
+ \leq(C+c)(D_1D_2)^{2/3}
+ =c^2D_1^{2/3}D_2^{2/3}.
+\]
+Substitute these bounds into \eqref{eq:relax-a} and expand the product in \eqref{eq:envelope-product}.
+\end{proof}
+
+\begin{theorem}[All-binary-tree scalar obstruction]\label{thm:barrier}
+At $x=913/250=3.652$, every finite binary tree generated from the above leaf satisfies \eqref{eq:node-test} at every node whenever its $z$ values use the new P-lift estimate, the prior coordinate-graph estimate, or any mixture bounded as in \eqref{eq:new-z-envelope}--\eqref{eq:old-z-envelope}. Thus these scalar recurrence tests from this fixed seed cannot exclude $\rho=3.652$ and cannot prove $\rho=3$.
+\end{theorem}
+\begin{proof}
+Take
+\begin{equation}\label{eq:envelope-constants}
+ x=\frac{913}{250},\qquad c=\frac{217}{100},\qquad
+ C=c^2-c=\frac{25389}{10000}.
+\end{equation}
+All required comparisons are exact rational cube comparisons:
+\begin{equation}\label{eq:cube-comparisons}
+ \frac{27}{4}<c^3,\qquad
+ \frac{27}{2}<C^3,\qquad
+ \frac{x^3}{3}<C^3.
+\end{equation}
+They imply $\kappa<c$ and that both coefficients in \eqref{eq:new-z-envelope}--\eqref{eq:old-z-envelope} are less than $C$ at this fixed candidate $x$.
+
+A cubed rational enclosure of $328^{2/3}$ certifies the leaf inequality
+\begin{equation}\label{eq:leaf-anchor}
+ x^3+x^4+c\,328^{2/3}<330-\frac1{10}.
+\end{equation}
+The exact lower bound on its slack has decimal floor $0.207598537129028079409070$. Lemma~\ref{lem:envelope} now proves by induction on the number of leaves that every node satisfies
+\[
+ a+cD^{2/3}\leq H.
+\]
+Since $b(t)\leq cD^{2/3}$, the desired test follows. The induction covers every finite binary tree, not just a fixed depth, balanced trees, or the trees enumerated in the supplementary tests.
+\end{proof}
+
+\subsection{Scope of the obstruction}
+
+The theorem constructs feasible numbers for a specified relaxation. It does not assign consistent values to all tensors, and it does not produce a spectral point with $\phi(P)=3.652$. In particular, it proves neither $\AR(P)\geq3.652$ nor $\omega>2$.
+
+Even for the same tensor constructions, additional spectral information can strengthen the scalar inequalities. An actual retained tensor may have value larger than the lower estimate used here. Identifying tensors arising in distinct branches may impose further relations. A smaller source upper bound, another initial exchange, a different retained tensor, or additional inequalities could invalidate this feasible assignment. None is ruled out by the theorem.
+
+Within the explicitly defined tests, however, choosing larger depths or unbalanced trees cannot reach three. This is a mathematical reason to change the available information or the construction, rather than to extrapolate a short numerical sequence.
+
+\section{What is still missing for AC-01}\label{sec:gap}
+
+Let $M_2$ denote the $2\times2$ matrix-multiplication tensor,
+\[
+ M_2=\sum_{i,j,k=0}^{1}e_{ij}^{*}\otimes e_{jk}^{*}\otimes e_{ik}.
+\]
+The dual markers identify the input spaces; they do not change the tensor-rank question. The exact rank target is
+\begin{equation}\label{eq:missing}
+ \boxed{\R(M_2^{\otimes n})=4^n\exp(o(n)).}
+\end{equation}
+This report does not prove \eqref{eq:missing}.
+
+For clarity, the standard equivalence is
+\begin{equation}\label{eq:omega-equivalence}
+ \AR(M_2)=2^\omega,\qquad
+ \omega=2\ \Longleftrightarrow\ \eqref{eq:missing}.
+\end{equation}
+The relation between the arithmetic model and tensor rank is developed in Bl\"aser's survey, especially Sections~4--5 and Theorem~5.2.\sref{Bl\"aser, \emph{Fast Matrix Multiplication}, arithmetic and bilinear complexity}{5}
+
+Here is a direct explanation of the relevant asymptotic issues. A rank-$r$ bilinear algorithm for fixed block size $b$ recursively multiplies larger matrices with exponent at most $\log_b r$; its additions satisfy a recurrence with quadratic overhead. The block size is fixed before the input size grows, so constants may depend on the desired exponent slack. Padding handles arbitrary sizes. Taking $b=2^n$ and the infimum over $n$ gives the upper direction of \eqref{eq:omega-equivalence}.
+
+Conversely, a straight-line arithmetic computation of a bilinear map can be bilinearized with a constant-factor increase in the number of bilinear products. Expand each gate in two formal input-scaling parameters and retain bidegrees at most $(1,1)$. Each multiplication creates at most two products of a first-input linear form and a second-input linear form, while existing bilinear components propagate linearly. At a reciprocal gate, expanding about a nonzero constant term has the same bounded-product property. A generic input shift avoids the finitely many denominator zero sets when such a shift is needed; the bilinear part of matrix multiplication is unchanged. Thus tensor rank is at most a constant times arithmetic cost. Finally a flattening of $M_2^{\otimes n}$ has rank $4^n$, supplying the matching lower exponential rate.
+
+The route through the present tensor uses the sufficient implication
+\begin{equation}\label{eq:cw-sufficient}
+ \AR(\mathrm{cw}_2)=3\quad\Longrightarrow\quad\omega=2,
+\end{equation}
+stated as Theorem~1.2 in Alman--Li from the CW laser analysis.\sref{Alman--Li, Theorem~1.2, attributing the sufficient implication to Coppersmith and Winograd}{3} The bound in Theorem~\ref{thm:bound} does not establish its hypothesis. No claim is made here that a sequence of strict finite speedups must converge to three.
+
+Indeed, if a chosen rank decomposition of $P^{\otimes n}$ has size $r_n$, knowing $r_n^{1/n}\to\AR(P)$ does not bound its additive overhead $r_n-\AR(P)^n$ by the saving in a proposed extraction. A subexponential relative overhead can exceed an exponentially small relative saving. Any argument that closes \eqref{eq:cw-sufficient} through near-optimal starting decompositions must control this issue uniformly; no such control has been proved here.
+
+For external context, the August 2026 paper by Dupont and coauthors reports $\omega<2.371177$.\sref{Dupont et al., abstract, arXiv:2608.16884}{4} The result in this report does not improve that numerical bound on $\omega$. The work completed here concerns $\AR(P)$ and the algebraic extraction mechanism, not an exponent-two algorithm.
+
+\section{Verification and dependency audit}\label{sec:verification}
+
+Run the exact suite from the extracted package root:
+\begin{lstlisting}
+python3 code/verify_all.py --output results/verification_rerun.json
+\end{lstlisting}
+Python 3.10 or later is sufficient; the verifier uses only the standard library. The recorded run completed with \file{ALL CHECKS PASSED}. It also unpacks and reruns the preserved round-two verifier in a temporary directory. The new suite checks the nine zero Gram identities, both rational four-dimensional split bases, eight lifted split bases, the complete $20\times25$ degeneration, six literal rectangular restrictions, the tight graph weights and marginal counts, the exact recurrence and seven cube-root enclosures, and the all-tree proof's finite leaf and coefficient comparisons.
+
+Thirty additional finite tree instances, with two through sixteen leaves and two tree-shape recipes per size, pass conservative upper-enclosure checks at $x=3.652$. These are supplementary tests; the infinite family is proved by Lemma~\ref{lem:envelope}, not inferred from them.
+
+Ten corrupted or invalid cases are rejected: a changed core-form entry, a changed $P$ slice, a changed split basis, a changed literal head row, a wrong head exponent, a wrong cube-root endpoint, an unsupported bound of $3.876$, an incorrect active dimension, an unsupported leaf-envelope candidate of $3.66$, and an even lifting parameter.
+
+\begin{center}\small
+\begin{tabular}{p{0.25\linewidth}p{0.68\linewidth}}
+\toprule
+Claim & Basis and limitation\\\midrule
+Initial composed exchange & Reproved Fourier construction and exact head data; archived literal $221\times329$ map and rerun verifier.\\[3pt]
+Non-coordinate core & Two explicit $3\times3$ forms; nine zero Gram entries and two explicit split extensions.\\[3pt]
+Lifted tensor identity & Exact coefficient proof for all odd rectangular sizes; literal expansions through $(37,37)$.\\[3pt]
+General binary extraction & Rational paired-complement proof and finite separated-parameter construction; huge later maps are not materialized.\\[3pt]
+Bound $3.876919161$ & General extraction, initial state, external spectral and tight-support theorems, exact integer-cube certificate.\\[3pt]
+All-tree candidate $3.652$ & Analytic product-envelope induction and rational leaf/comparison certificate; not a spectral point or tensor-rank lower bound.\\[3pt]
+Exponent-two conclusion & Not established. Equation~\eqref{eq:missing} and the hypothesis of \eqref{eq:cw-sufficient} remain unproved.\\\bottomrule
+\end{tabular}
+\end{center}
+
+The code is not a proof assistant. It does not formalize the external spectral theorems, the all-size geometric construction, or the full mathematical argument. Conversely, the report does not claim that finite numerical tests prove those general statements. The supplied algebraic proofs and exact finite certificates should be independently reviewed before the derived bounds are treated as established literature.
+
+\appendix
+\section{Integer radical records}\label{app:radicals}
+
+Every bound entry uses denominator $B=10^{40}$ and certifies \eqref{eq:cubes}. The four CW entries concern $(t_j/2)^{2/3}$, and the three lift entries concern $\ell_j^{1/3}$. The following records are copied from the JSON certificate rather than rounded root displays.
+\input{radical_records.tex}
+
+The entire upper-bound calculation can be written as the following exact-fraction pseudocode. Here \file{L_cw[j]} and \file{L_lift[j]} are the certified integer numerators, not floating-point numbers.
+\begin{lstlisting}
+from fractions import Fraction as F
+B = 10**40
+x = F(3876919161, 10**9)
+a = x**3 + x**4
+for j in range(3):
+    q = F(3 * L_cw[j], B)
+    z = 3 * x * ell[j] * F(L_lift[j], B)
+    a = a*a + 2*a*q + z
+q_final = F(3 * L_cw[3], B)
+assert a + q_final > 330**8 * (1 + F(1,10**9))
+\end{lstlisting}
+
+For the tree envelope, one additional enclosure is used, with radicand $328^2$ and the same denominator. Its \emph{upper} endpoint bounds $328^{2/3}$ from above, making the leaf slack estimate conservative. The three comparisons in \eqref{eq:cube-comparisons} are direct rational comparisons after cubing; there is no transcendental numerical step in their verification.
+
+\section{Package contents}
+
+\file{certificates/isotropic_core.json} contains the core forms, the three slices, and both four-dimensional split bases. \file{certificates/small_degeneration.json} contains the full rational small degeneration. \file{certificates/bound.json} records all active and actual dimensions, source bounds, and the seven integer radical enclosures. \file{certificates/tree_envelope.json} records the all-tree leaf certificate and the rational envelope constants.
+
+The \file{code} directory contains the exact matrix operations, literal tensor checks, bound and envelope verification, and the master runner. \file{results} preserves actual successful outputs. \file{prior/AC01_round2_research_pack.zip} preserves the preceding report and certificates, including its own archived first round. \file{notes/CLAIM_AUDIT.md} states the scope of each result, and \file{notes/REMAINING_GAP.md} records the missing exponent-two implication without presenting it as a proved lemma. This report's editable LaTeX and its build script are included.
+
+\begin{thebibliography}{9}
+\bibitem{repo} Open Problems in Numerical Linear Algebra, AC-01, ``Is the matrix multiplication exponent two?'' Repository statement, checked September 14, 2026.\newline
+\url{https://raw.githubusercontent.com/ajt60gaibb/OpenProblemsInNLA/main/arithmetic-and-complexity/AC-01/README.md}.
+\bibitem{cvz} M. Christandl, P. Vrana, and J. Zuiddam, \emph{Universal points in the asymptotic spectrum of tensors}, arXiv:1709.07851, version 3, May 2018. Theorem 1.1 and Remark 1.2: spectral duality and degeneration. Theorem 4.4 and Corollary 4.5: tight three-tensor subrank.\newline
+\url{https://arxiv.org/html/1709.07851}.
+\bibitem{almanli} J. Alman and B. Li, \emph{Asymptotic Rank Speedup Theorems, Revisited}, CCC 2026, LIPIcs 383, Article 36; arXiv:2605.21738v1, May 20, 2026. Theorem 1.2, Section 4, and Table 1.\newline
+\url{https://arxiv.org/html/2605.21738v1};\newline
+\url{https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.CCC.2026.36}.
+\bibitem{dupont} E. Dupont, M. Eisenberger, B. Kozlovskii, A. Mehrabian, F. J. R. Ruiz, A. See, R. Zhou, J. Alman, V. Vassilevska Williams, and M. Balog, \emph{Improving the matrix multiplication exponent with modern optimization and AlphaEvolve}, arXiv:2608.16884, August 17, 2026. Used for the reported comparison bound on $\omega$.\newline
+\url{https://arxiv.org/abs/2608.16884}.
+\bibitem{blaeser} M. Bl\"aser, \emph{Fast Matrix Multiplication}, Theory of Computing Library, Graduate Surveys 5 (2013), 1--60. Sections 4--5 and Theorem 5.2.\newline
+\url{https://theoryofcomputing.org/articles/gs005/gs005.pdf}.
+\bibitem{prior} \emph{AC-01: symmetric residual extraction}, preceding supplied research report and exact verification pack. Preserved as \file{prior/AC01_round2_research_pack.zip}. Unreviewed working material, not a refereed publication.
+\end{thebibliography}
+\end{document}

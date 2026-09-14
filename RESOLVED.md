@@ -19,6 +19,12 @@ None of these statuses is counted as open. A partial result leaves the
 surviving target in the open catalog with **🟡 PARTIAL**, even if that partial
 result is formalized in Lean.
 
+## Reviewed AC-01–AC-06 research — 14 September 2026
+
+**All six remain Open.** Sidney Holden (Center for Computational Biology, Flatiron Institute, Simons Foundation) submits independently audited supporting tensor research. The [submission record](references/holden-ac-2026-09-14/README.md) gives verified affiliation, attributed reports, exact theorem locators, original-target comparisons and three separate informal Codex AI-agent reviews.
+
+The passing scopes include AC-01's small-CW upper bound (also relevant to AC-04), restricted AC-02 support and Sun-block results, elementary AC-03 geometric/Fourier arguments, AC-04 symmetric extraction and local rigidity, AC-05 power classifications, and AC-06 certificate compaction and finite checks. Missing verifier artifacts prevent a full audit of the AC-02 continuation and AC-03 package; their stronger unverified claims are explicitly excluded from the passing scope. None settles its original target or supports a Solved designation. No external human peer review, formal verification or novelty claim is asserted. No Lean verification was performed. Permanent IDs, original targets and the open count are unchanged.
+
 ## Resolved catalog entries
 
 ### 🏆 MI-32 — the Latała–Świątkowski upper comparison — Diar Heidary

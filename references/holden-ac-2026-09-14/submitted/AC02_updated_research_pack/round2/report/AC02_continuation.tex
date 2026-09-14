@@ -1,0 +1,685 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.9in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,booktabs,longtable,tabularx,array}
+\usepackage{microtype,xcolor,fancyhdr,enumitem,xurl,hyperref,listings}
+\definecolor{navy}{HTML}{18334D}
+\definecolor{teal}{HTML}{006C75}
+\definecolor{pale}{HTML}{F1F5F7}
+\hypersetup{colorlinks=true,linkcolor=teal,urlcolor=teal,citecolor=teal,pdftitle={AC-02: Completion obstructions beyond fixed supports},pdfauthor={ChatGPT research continuation}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{navy} AC-02 | Research continuation}
+\fancyhead[R]{\small\sffamily\color{navy} Exact completion obstructions}
+\fancyfoot[C]{\small\thepage}
+\setlength{\headheight}{14pt}
+\emergencystretch=2em
+\setlength{\parskip}{5pt}\setlength{\parindent}{0pt}
+\setlist{nosep,leftmargin=*}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\C}{\mathbb C}\newcommand{\Q}{\mathbb Q}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\vecm}{\operatorname{vec}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\GL}{\operatorname{GL}}
+\newcommand{\file}[1]{\nolinkurl{#1}}
+\newcommand{\bb}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\lstset{basicstyle=\ttfamily\small,breaklines=true,columns=fullflexible,frame=single,rulecolor=\color{gray!35},backgroundcolor=\color{pale}}
+\begin{document}
+\begin{titlepage}
+{\sffamily\color{teal}\large OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}\par
+\vspace{0.8in}
+{\sffamily\bfseries\color{navy}\fontsize{38}{43}\selectfont AC-02}\par
+\vspace{0.2in}
+{\sffamily\bfseries\color{navy}\LARGE Completion obstructions\\beyond fixed supports}\par
+\vspace{0.25in}
+{\large Exact complex bilinear rank of the $3\times3$ matrix product}\par
+\vspace{0.12in}
+Research continuation, proofs, finite certificates, and replay code\par
+14 September 2026\par
+\vspace{0.45in}
+\fcolorbox{navy}{pale}{\begin{minipage}{0.92\textwidth}
+\textbf{Status of AC-02: not resolved by this report.}\par
+The general interval supported by the sources checked remains
+\[19\le R_{\C}(M_3)\le23.\]
+No exact 22-product algorithm, and no global exclusion of all such algorithms, is provided. The results below are exact but restricted completion theorems. They do not determine the minimum in AC-02.
+\end{minipage}}
+\vspace{0.3in}
+\textbf{Principal advance.} Two explicit rational sets of five compatible rank-two output blocks are constructed. One has all fifteen coefficient matrices of rank two. Each satisfies all high-block compatibility equations, but neither can be completed by seventeen rank-one-output products, even with arbitrary complex coefficients. Finite algebraic certificates prove both noncompletion statements.
+
+\textbf{Additional advance.} Preserving Sun's four rank-two output blocks forces any output-tight completion to have exactly 23 products. A two-parameter family shows why merely excluding five compatible blocks cannot be the general proof strategy. A defect-projector identity covers the non-tight case without imposing support restrictions.
+
+\vfill
+\small The original archive is included unchanged for provenance. The new checking uses exact rational arithmetic and polynomial identities, not numerical tolerances. These are computer-assisted proofs with a written correctness argument, not Lean formalizations or an independent external human audit. No priority claim is made for the restricted results.
+\end{titlepage}
+\setcounter{tocdepth}{1}
+\tableofcontents
+\newpage
+
+\section{The question, the advance, and its scope}
+AC-02 asks for the least number of separated bilinear products computing arbitrary complex $3\times3$ matrix multiplication. Additions and scalar linear combinations are free. Each counted multiplication must take one linear form in the first input and one in the second. Mixed-input factors, approximate algorithms, border rank, and counts of additions are different questions \cite{repo}.
+
+The classical interval used here is
+\begin{equation}\label{eq:bounds}
+19\le R_{\C}(M_3)\le23.
+\end{equation}
+The lower bound is imported from the literature; Bl\"aser's survey records it together with the upper bound \cite{blaeser}. The two existing 23-product constructions in the archive are directly rechecked in exact arithmetic. They are Laderman's algorithm and Sun's displayed scheme, not algorithms first discovered in this continuation \cite{laderman,sun}.
+
+The source check was repeated on 14 September 2026. The repository entry, last checked there on 10 September, still gives no resolution of the complex minimum. Wang's 11 September preprint states a lower bound of 21 over $\mathbb F_2$ \cite{wang21}; it is not a complex-field improvement, and its external exhaustive computation is not independently replayed here. Nothing in this report transfers finite-field nonexistence to $\C$.
+
+The prior archive established a complete Laderman support parametrization and a 76-dimensional component without a zero slot. It also isolated an important conditional case: an output-tight 22-product algorithm would have five rank-two outputs and seventeen rank-one outputs. The present work studies the missing completion step in that conditional case, rather than repeating the support argument.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}lX@{}}\toprule
+Result & Exact scope \\\midrule
+Defect projector & Every exact decomposition; no support or tightness assumption.\\
+Sun four-block obstruction & No additional compatible output block of rank at least two while these four blocks are fixed.\\
+Two-parameter family & Five compatible rank-two output blocks, not a complete algorithm.\\
+All-rank-two example & Five compatible blocks with every $U_t,V_t,W_t$ of matrix rank two.\\
+Two noncompletion certificates & Neither of the two displayed five-block sets admits seventeen further rank-one-output products over $\C$.\\
+Global minimum & Not established; \eqref{eq:bounds} is not improved.\\\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Definitions and indexing}
+For coefficient matrices $U_t,V_t,W_t\in\C^{3\times3}$, write
+\begin{equation}\label{eq:algorithm}
+AB=\sum_{t=1}^{r}\left(\sum_{i,j=0}^{2}U_{t,ij}A_{ij}\right)
+\left(\sum_{j',k=0}^{2}V_{t,j'k}B_{j'k}\right)W_t.
+\end{equation}
+There is \emph{no complex conjugation} in this pairing. Matrix coordinates are row-major, with entry $(i,j)$ assigned coordinate $3i+j$. A slot is one summand in \eqref{eq:algorithm}. All retained slots are nonzero.
+
+Equality for every pair of inputs is equivalent to the 729 coefficient equations
+\begin{equation}\label{eq:brent}
+\sum_t U_{t,ij}V_{t,j'k}W_{t,i'k'}
+=\delta_{ii'}\delta_{jj'}\delta_{kk'}.
+\end{equation}
+These equations define the multiplication tensor $T\in\Q^{9\times9\times9}$, which has 27 unit entries and all other entries zero.
+
+The five-block examples below use slots $0,\ldots,4$, exactly as their JSON files. The four retained Sun slots are $4,7,9,22$ in zero-based notation, or $5,8,10,23$ in the one-based printed scheme. Rows and columns of certificate matrices are also zero-based.
+
+A block associated with a slot of output matrix rank $q_t$ consists of $q_t$ columns and rows in the reshuffling introduced next. Thus a ``rank-two output block'' is still one bilinear product, not two bilinear products.
+
+\section{Reshuffling and the general defect projector}\label{sec:defect}
+Let $W_t=X_tY_t^\top$, where $X_t,Y_t\in\C^{3\times q_t}$ have full column rank and $q_t=\rank W_t$. Set $q=\sum_t q_t$. Define
+\begin{align}
+L_t[(i,j,k),a]&=U_{t,ij}Y_t[k,a],\label{eq:L}\\
+R_t[a,(i,j,k)]&=X_t[i,a]V_{t,jk}.\label{eq:R}
+\end{align}
+Concatenate $L=[L_1\ \cdots\ L_r]\in\C^{27\times q}$ and stack the $R_t$ into $R\in\C^{q\times27}$.
+
+\begin{lemma}\label{lem:reshape}
+The coefficient equations \eqref{eq:brent} are equivalent to $LR=I_{27}$.
+\end{lemma}
+\begin{proof}
+The entry of $LR$ with row $(i,j,k')$ and column $(i',j',k)$ is
+\[
+\sum_{t,a}U_{t,ij}Y_t[k',a]X_t[i',a]V_{t,j'k}
+=\sum_t U_{t,ij}V_{t,j'k}W_{t,i'k'}.
+\]
+Its required value is the corresponding identity-matrix entry by \eqref{eq:brent}.
+\end{proof}
+
+\begin{theorem}[Defect projector]\label{thm:defect}
+For every exact decomposition, $q\ge27$. Write $q=27+d$ and define
+\begin{equation}\label{eq:defect}
+D=I_q-RL.
+\end{equation}
+Then
+\[
+D^2=D,\qquad \rank D=d,\qquad \tr D=d.
+\]
+Its blocks satisfy
+\begin{equation}\label{eq:defectblocks}
+D_{st}=\delta_{st}I_{q_t}-X_s^\top U_tV_sY_t,
+\end{equation}
+where the diagonal identity occurs only when $s=t$. Consequently
+\begin{equation}\label{eq:defectranks}
+\rank D_{st}\le d,\qquad
+q_t\le\min\{\rank U_t,\rank V_t\}+d.
+\end{equation}
+Also
+\begin{equation}\label{eq:sigsum}
+\sum_t\sigma_t=27,\qquad \sigma_t=\tr(U_tV_tW_t^\top).
+\end{equation}
+\end{theorem}
+\begin{proof}
+Since $LR=I_{27}$, $L$ has rank 27, giving $q\ge27$. The map $RL$ is a projector onto $\im R$: indeed $(RL)^2=R(LR)L=RL$. Its rank is 27 because $R$ is injective. The complementary projector $D$ has image $\ker L$, of dimension $q-27=d$. A projector has eigenvalues zero and one, so its trace equals its rank.
+
+Direct multiplication gives $(RL)_{st}=X_s^\top U_tV_sY_t$. Every submatrix of $D$ has rank at most $d$. On the diagonal, $I_{q_t}=X_t^\top U_tV_tY_t+D_{tt}$ and matrix-rank subadditivity give \eqref{eq:defectranks}. Finally,
+\[
+\tr(RL)=\tr(LR)=27
+=\sum_t\tr(X_t^\top U_tV_tY_t)=\sum_t\sigma_t.
+\]
+\end{proof}
+
+The contraction $\sigma_t$ and related characteristic-polynomial invariants are established tools for matrix multiplication decompositions \cite{signature}. Here only their displayed algebraic definitions are needed. They are not nonnegative quantities for arbitrary complex coefficients.
+
+When $d=1$, the projector can be written $D=ab^\top$ with $b^\top a=1$. This replaces every off-diagonal tightness equation by a common rank-one factorization. It is a necessary condition, not an exclusion of this defect. In a hypothetical 22-slot scheme, $q\le66$ gives only $0\le d\le39$ from output ranks alone. The present work does not eliminate all positive defects.
+
+The same reshuffling after cyclically rotating the trace form gives
+\[
+\sum_t\rank U_t\ge27,\qquad \sum_t\rank V_t\ge27.
+\]
+Thus the ordinary coefficient-matrix ranks constrain every decomposition, but these inequalities are not a tensor-rank lower bound of 23.
+
+\subsection{The output-tight branch}
+\begin{definition}
+A decomposition is \emph{output-tight} when $\sum_t\rank W_t=27$, equivalently $d=0$ in \eqref{eq:defect}.
+\end{definition}
+In that case $L,R$ are square inverses and
+\begin{equation}\label{eq:blocks}
+X_s^\top U_tV_sY_t=\begin{cases}I_{q_t},&s=t,\\0_{q_s\times q_t},&s\ne t.\end{cases}
+\end{equation}
+In particular $q_t\le\min(\rank U_t,\rank V_t)$ and $\sigma_t=q_t$.
+
+\begin{proposition}[Tight 22-slot profile; restated with proof]\label{prop:profile}
+An output-tight 22-slot decomposition has exactly five outputs of matrix rank two and seventeen of matrix rank one. It has no rank-three output.
+\end{proposition}
+\begin{proof}
+Suppose a slot, numbered 0 for this proof, has $q_0=3$. Its $X_0,Y_0$ are invertible, and its diagonal identity makes $U_0,V_0$ invertible. For another slot $t$, the $(0,t)$ block gives $U_tV_0Y_t=0$, so $\rank U_t\le3-q_t$. The $(t,0)$ block similarly gives $\rank V_t\le3-q_t$. On the other hand, $q_t\le\rank U_t,\rank V_t$ by the diagonal block. Hence $2q_t\le3$, and each other output has rank one. Output tightness then implies $27=3+(r-1)$, or $r=25$, contradicting $r=22$.
+
+All 22 ranks therefore belong to $\{1,2\}$. If $a$ of them are two, then $27=22+a$, giving $a=5$.
+\end{proof}
+
+This proposition does not assert that every 22-product algorithm is output-tight in any orientation. Proving impossibility in the tight branch would still leave other profiles from Theorem~\ref{thm:defect}.
+
+\section{Sun's four blocks admit no fifth high-rank block}\label{sec:sun}
+Take the four output-rank-two slots $4,7,9,22$ of \file{data/sun23.json}, and retain their $U_s,V_s,W_s$ exactly. The complete Sun algorithm is verified by all 729 integer coefficient equations; its output-rank sum is 27.
+
+Choose the exact factorizations $W_s=X_sY_s^\top$ in \file{certificates/sun_four_block_extension.json}. For an unknown matrix
+\[
+U=\bb{a&b&c\\d&e&f\\g&h&i},
+\]
+form the $8\times3$ matrix
+\begin{equation}\label{eq:sunF}
+F(U)=\begin{bmatrix}X_4^\top UV_4\\X_7^\top UV_7\\X_9^\top UV_9\\X_{22}^\top UV_{22}\end{bmatrix}.
+\end{equation}
+For the supplied factorizations this is
+\input{sun_matrix.tex}
+
+\begin{lemma}[Nine explicit determinantal identities]\label{lem:sunminors}
+Every $2\times2$ minor of $U$ is a rational linear combination of the $2\times2$ minors of $F(U)$.
+\end{lemma}
+\begin{proof}
+The certificate contains one identity for each of the nine row-pair/column-pair choices in $U$. The replay checker reconstructs $F(U)$ from the Sun data and expands both sides as degree-two polynomials in $a,\ldots,i$. Every coefficient agrees. The combinations contain respectively $2,6,12,2,5,6,3,9,13$ minors, and all coefficients in this supplied certificate are $1$ or $-1$.
+
+For example, writing $\Delta^M_{rs;uv}$ for the indicated minor with zero-based indices, the first identity is
+\[
+\Delta^U_{01;01}=-\Delta^{F(U)}_{23;01}-\Delta^{F(U)}_{24;01}.
+\]
+The remaining eight identities are checked in the same exact polynomial representation. No assignment to the unknown entries of $U$ is sampled in this check.
+\end{proof}
+
+\begin{theorem}[No additional compatible high-rank output]\label{thm:sun}
+No output block of rank $q\ge2$ can satisfy both its diagonal block identity and the off-diagonal block identities with these four fixed Sun blocks. This holds over $\C$ with unrestricted coefficients in the proposed additional block.
+\end{theorem}
+\begin{proof}
+Let the proposed output factorization be $W=XY^\top$, with $Y$ of full column rank $q$. The off-diagonal equations require $F(U)Y=0$. Therefore
+\[
+\rank F(U)\le3-q\le1.
+\]
+All its $2\times2$ minors vanish. Lemma~\ref{lem:sunminors} forces every $2\times2$ minor of $U$ to vanish, so $\rank U\le1$. But the new diagonal equation $X^\top UVY=I_q$ requires $\rank U\ge q\ge2$, a contradiction.
+\end{proof}
+
+\begin{corollary}[Conditional exact product count]\label{cor:sun23}
+Every output-tight algorithm containing these four fixed Sun blocks has exactly 23 nonzero products. In particular, it cannot have 22 products.
+\end{corollary}
+\begin{proof}
+Theorem~\ref{thm:sun} makes every other output rank one. Thus output tightness reads $27=4\cdot2+(r-4)$, or $r=23$. Sun's full identity supplies an example attaining that count.
+\end{proof}
+
+The statements also apply after a common invertible matrix change of basis, a permutation of slots, or nonzero term rescalings. One pulls a proposed completion back by the same equivalence. They do not claim that every output-tight algorithm contains a copy of these four blocks.
+
+\section{Five compatible blocks do exist}\label{sec:five}
+The Sun obstruction might suggest proving that no five compatible rank-two output blocks exist at all. That stronger assertion is false. This section gives two exact rational counterexamples to it and a family containing the first. The noncompletion proofs in later sections are therefore genuinely needed.
+
+\subsection{A normalization that makes the identities explicit}
+Use the following $3\times2$ matrices $Y_t$ and $2\times3$ matrices $Z_t$:
+\input{yz_table.tex}
+Here $h$ is a parameter; it equals 2 in both rational examples. For proposed $U_t,V_t$, set
+\begin{equation}\label{eq:normalization}
+B_t=Z_tU_tV_tY_t,\qquad
+X_t^\top=B_t^{-1}Z_t,\qquad W_t=X_tY_t^\top.
+\end{equation}
+Whenever every $B_t$ is invertible and $Z_sU_tV_sY_t=0$ for $s\ne t$, the complete set of 25 block identities \eqref{eq:blocks} follows. Each block is $2\times2$, so these are 100 scalar equations.
+
+\subsection{Example A and a two-parameter family}\label{subsec:A}
+For parameters $h,\ell\in\C$, choose
+\input{family_uv.tex}
+The parameter domain is
+\begin{equation}\label{eq:familydomain}
+h(h-1)(h-3)(\ell+2)(2\ell+1)(3\ell-2)\ne0.
+\end{equation}
+The five determinants of the matrices $B_t$ in \eqref{eq:normalization}, in slot order, are
+\begin{equation}\label{eq:familydets}
+-42,\quad-2h(\ell+2),\quad-2(h-1)(2\ell+1),\quad-(h-3)(h-1),\quad-4(3\ell-2).
+\end{equation}
+
+\begin{theorem}[Exact five-block family]\label{thm:family}
+On the domain \eqref{eq:familydomain}, formulas \eqref{eq:normalization} and the displayed matrices give five compatible blocks satisfying
+\[
+X_s^\top U_tV_sY_t=\delta_{st}I_2\qquad(0\le s,t\le4).
+\]
+Every output has matrix rank two. All five $U_t$ have rank two. $V_0$ has rank three and the other four $V_t$ have rank two.
+\end{theorem}
+\begin{proof}
+The determinants \eqref{eq:familydets} are nonzero on the stated domain. The certificate \file{five_family_polynomial.json} supplies the numerators of $X_t$ and $W_t$ after multiplication by $\det B_t$. The checker verifies the five determinant factorizations, the identities $B_tX_t^\top=Z_t$, and $W_t=X_tY_t^\top$, all after clearing those denominators. It then verifies every one of the 100 block equations as an identity in $\Q[h,\ell]$. Each denominator in the published rational formulas is explicitly accounted for by a divisor of the corresponding $\det B_t$, so no unrecorded pole is ignored.
+
+The displayed $Y_t,Z_t$ have rank two. Invertibility of $B_t$ makes $X_t$ full column rank, giving $\rank W_t=2$. The asserted ranks of $U_t,V_t$ follow directly from their supports and nonzero $2\times2$ minors on \eqref{eq:familydomain}; $\det V_0=36\ne0$.
+\end{proof}
+
+\textbf{Example A} is the specialization $(h,\ell)=(2,2)$, with the fifth $V$ divided by 2 and its $W$ multiplied by 2. This harmless term rescaling gives the rational arrays in Appendix~\ref{app:data} and \file{data/exact_five_blocks.json}. The replay checker verifies the specialization, including that rescaling, rather than assuming the data match the formulas.
+
+\subsection{Example B: every coefficient matrix has rank two}\label{subsec:B}
+A second rational example uses the same $Y_t,Z_t$ at $h=2$, the same $U_0,U_1,U_3,U_4$, and the same $V_1,V_2,V_3,V_4$ as Example A. Replace only
+\begin{equation}\label{eq:Bchanges}
+U_2=\bb{0&0&0\\5&5&0\\-4&2&0},\qquad
+V_0=\bb{2&1&-3\\-2&-1&3\\-2&1&1},
+\end{equation}
+and define the outputs again by \eqref{eq:normalization}. The determinants of $B_t$ now are
+\[
+8,\quad-16,\quad-60,\quad1,\quad-4.
+\]
+The changed outputs are
+\[
+W_0=\bb{1/8&1/4&0\\-3/8&1/4&0\\0&0&0},\qquad
+W_2=\bb{-1/3&0&-1/6\\1/6&0&1/30\\1/3&0&1/6}.
+\]
+All other outputs agree with Example A.
+
+\begin{proposition}[All-rank-two counterexample]\label{prop:alltwo}
+Example B satisfies all 100 high-block equations exactly over $\Q$, and all fifteen matrices $U_t,V_t,W_t$ have ordinary matrix rank two.
+\end{proposition}
+\begin{proof}
+The checker reconstructs every $X_t^\top U_sV_tY_s$ using rational arithmetic and compares it to the corresponding identity or zero block. It also verifies $W_t=X_tY_t^\top$ and computes the fifteen ranks by exact rational elimination. All tests give the stated values. Equivalently, the small displayed matrices and \eqref{eq:normalization} provide a direct hand-checkable construction.
+\end{proof}
+
+Thus even the additional restriction that all high-block input matrices are singular does not restore an ``at most four compatible blocks'' theorem. Neither Example A nor Example B is a multiplication algorithm with five products: only the high-block identities are asserted. The independent coefficient checker rejects both as full multiplication identities, as it must.
+
+\section{The exact completion criterion}\label{sec:criterion}
+Let $H$ be any five compatible rank-two blocks, including either example above. Use \eqref{eq:L}--\eqref{eq:R} to form $L_H\in\C^{27\times10}$ and $R_H\in\C^{10\times27}$. Compatibility says
+\begin{equation}\label{eq:partial}
+R_HL_H=I_{10}.
+\end{equation}
+The complementary projector
+\[
+P=I_{27}-L_HR_H
+\]
+has rank 17. A further rank-one-output product has $W=xy^\top$, and contributes the column and row
+\begin{equation}\label{eq:low}
+l=\vecm(U)\otimes y,\qquad r=x^\top\otimes\vecm(V)^\top.
+\end{equation}
+The different tensor groupings in these two expressions are intentional: the common 27-coordinate order is $(i,j,k)$.
+
+Define the allowed product sets
+\begin{align*}
+\mathcal A&=\{\vecm(U)\otimes y\ne0:R_H(\vecm(U)\otimes y)=0\},\\
+\mathcal B&=\{x^\top\otimes\vecm(V)^\top\ne0:(x^\top\otimes\vecm(V)^\top)L_H=0\}.
+\end{align*}
+These sets include arbitrary complex input matrices $U,V$; they do not impose a support pattern or a rank bound on either input.
+
+\begin{lemma}[Biorthogonal completion]\label{lem:completion}
+A completion of $H$ by seventeen rank-one-output products exists if and only if there are $l_1,\ldots,l_{17}\in\mathcal A$ and $r_1,\ldots,r_{17}\in\mathcal B$ with
+\begin{equation}\label{eq:biorth}
+r_i l_j=\delta_{ij}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+In a completed algorithm, $L=[L_H\ L_0]$ and $R=[R_H^\top\ R_0^\top]^\top$ are square and obey $LR=I_{27}$. Hence also $RL=I_{27}$, which supplies the two membership conditions and $R_0L_0=I_{17}$.
+
+Conversely, \eqref{eq:partial}, the membership conditions, and \eqref{eq:biorth} give $RL=\diag(I_{10},I_{17})$. The square matrices are therefore inverse, so $LR=I_{27}$ and Lemma~\ref{lem:reshape} gives the required algorithm.
+\end{proof}
+
+\begin{theorem}[Viable-row obstruction]\label{thm:viable}
+For a putative $d$-pair biorthogonal completion, define
+\[
+\mathcal B_{\mathrm{viable}}=
+\left\{r\in\mathcal B:\dim\Span(\mathcal A\cap\ker r)\ge d-1\right\}.
+\]
+If $\dim\Span\mathcal B_{\mathrm{viable}}<d$, no such completion exists. Here $d=17$.
+\end{theorem}
+\begin{proof}
+Every row $r_i$ of a biorthogonal completion annihilates the other $d-1$ linearly independent columns $l_j$, so it is viable. The $d$ rows themselves are linearly independent by their pairings with the columns. They cannot lie in a space of dimension less than $d$.
+\end{proof}
+
+This criterion is used only as a necessary obstruction below. A large viable-row span by itself would not prove that a mutually biorthogonal completion exists.
+
+\subsection{Constraint matrices and projective factors}
+Write a nonzero three-vector as $p=(x,y,z)^\top$. For a prospective left column, define $M(p)\in\C^{10\times9}$ by
+\begin{equation}\label{eq:M}
+M(p)\vecm(U)=\begin{bmatrix}X_0^\top UV_0p\\\vdots\\X_4^\top UV_4p\end{bmatrix}.
+\end{equation}
+For a prospective right row, define $N(p)\in\C^{10\times9}$ by
+\begin{equation}\label{eq:N}
+N(p)\vecm(V)=\begin{bmatrix}(p^\top U_0VY_0)^\top\\\vdots\\(p^\top U_4VY_4)^\top\end{bmatrix}.
+\end{equation}
+All entries are linear in $x,y,z$. A factor direction can occur only where the associated matrix has rank at most eight. Accordingly, its ten maximal minors must vanish.
+
+The term ``at infinity'' below means merely the chart $z=0$ in the projective factor plane. It does not refer to coefficients of an algorithm diverging, and it is unrelated to a border-rank limit.
+
+\section{Example A cannot be completed}\label{sec:noncompA}
+\begin{theorem}[First exact noncompletion theorem]\label{thm:noncompA}
+There is no complex multiplication identity consisting of the five fixed slots of Example A and seventeen additional products whose output matrices have rank one. The additional input coefficient matrices and output factors are otherwise unrestricted.
+\end{theorem}
+The proof has three parts: a complete cover of possible left directions, a complete cover of possible right directions, and exact nonzero-pairing certificates. The finite data are in \file{five_noncompletion_base.json} and \file{five_noncompletion_pairings.json}.
+
+\subsection{The left core and the finite affine cover}
+Let $C_0$ be the kernel of $R_H$ among vectors supported on coordinates with $k\in\{0,1\}$, and let $C_1$ be the corresponding kernel among vectors supported on $k=2$. Exact ranks of the two restrictions of $R_H$ are 9 and 7. Hence
+\[
+\dim C_0=18-9=9,\qquad \dim C_1=9-7=2.
+\]
+Their supports are disjoint, so $C=C_0\oplus C_1$ has dimension 11. Every allowed left column with factor $z=0$, and every one with factor $[0:0:1]$, lies in $C$.
+
+Multiply each row of $M$ by the nonzero rational scale recorded in the certificate. Let $\Delta_j(M)$ denote the determinant after deleting row $j$. The checked factorization is
+\begin{align}\label{eq:Aleftfactor}
+\Delta_2(M)&=-28z^2 A(x,y,z)Q(x,y,z)B(x,y,z),\\
+A&=5xy-5xz-8yz,\nonumber\\
+Q&=3x^2+xy-5xz+3y^2,\nonumber\\
+B&=2x^3-9x^2y+4x^2z+39xyz-10xz^2-24yz^2.\nonumber
+\end{align}
+Thus every remaining affine factor, with $z\ne0$, lies on one of these three curves. Complete parametrizations, written as homogeneous triples, are
+\begin{center}
+\begin{tabular}{@{}cl@{}}\toprule
+Curve & $p(t)$ \\\midrule
+$A$ & $(8t,\ 5t(t-1),\ 5(t-1))$\\
+$Q$ & $(5,\ 5t,\ 3t^2+t+3)$\\
+$B$ & $(tD,\ 2t(t^2+2t-5),\ D)$, $D=9t^2-39t+24$\\\bottomrule
+\end{tabular}
+\end{center}
+For $A$, one solves for $x$ in terms of $y=t$. For $Q$, a nonzero $x$ permits $t=y/x$; the missed case $x=0$ is the already covered origin $[0:0:1]$. For $B$, use the affine coordinate $x=t$ and solve the equation, which is linear in $y$. In each rational solve, a zero denominator cannot give another affine solution: the pertinent numerator and denominator are coprime. The checker verifies those coprimalities.
+
+Substitute each parametrization into all ten maximal minors and take their exact univariate greatest common divisor. The factorizations, including multiplicities and the factors excluded because $z=0$, are recorded and replayed. Two surviving nodes represent the origin in $C$. The ten remaining point nodes have polynomial degrees
+\begin{equation}\label{eq:Adegrees}
+1,2,2,1,2,3,4,1,3,3.
+\end{equation}
+Here a node with polynomial $f(t)$ represents all its complex roots, not a single numerical approximation.
+
+For each point node the certificate supplies a kernel vector with one coordinate equal to 1, and an inverse of an $8\times8$ submatrix modulo $f$. Therefore, at every root of $f$, the matrix has rank exactly eight and the allowed $U$ is a single line. A polynomial of degree $e$ contributes at most $e$ such lines. Duplicate parameter descriptions of a direction only overcount, which is safe for the upper bounds used below.
+
+\subsection{Right directions and their small infinity span}
+For the similarly row-scaled $N$, the verified factorization is
+\begin{align}\label{eq:Arightfactor}
+\Delta_8(N)&=-x(x+3z)A_2B_2C_3,\\
+A_2&=xy+3xz-4yz+8z^2,\nonumber\\
+B_2&=3xy+5xz+y^2+5yz+8z^2,\nonumber\\
+C_3&=4xy^2+4xyz-4xz^2+y^3-y^2z-2yz^2.\nonumber
+\end{align}
+On $z\ne0$, all possible factor directions therefore occur in the following five covers:
+\begin{center}\small
+\begin{tabular}{@{}cl@{}}\toprule
+Curve & $p(t)$ \\\midrule
+$x=0$ & $(0,t,1)$\\
+$x=-3z$ & $(-3,t,1)$\\
+$A_2$ & $(4t-8,\ t(t+3),\ t+3)$\\
+$B_2$ & $(-t^2-5t-8,\ t(3t+5),\ 3t+5)$\\
+$C_3$ & $(-t(t-2)(t+1),\ 4t(t^2+t-1),\ 4(t^2+t-1))$\\\bottomrule
+\end{tabular}\end{center}
+The last three solve for $x$ in terms of affine $y=t$; again, all denominator exceptions are excluded by exact coprimality. Substitution into all ten minors gives twenty point nodes. At every root, an explicit nonzero kernel vector and invertible eight-dimensional minor establish a one-dimensional $V$ fiber.
+
+On $z=0$, two exact identities are
+\[
+\Delta_0(N)=3x^4y^4(3x+y),\qquad
+\Delta_1(N)=-2x^4y^4(x-2y).
+\]
+Their common projective zeros are contained in $[1:0:0]$ and $[0:1:0]$. At each direction, $N$ has rank six, so the corresponding $V$ space has dimension three. All allowed right rows at infinity consequently lie in a subspace of dimension at most six.
+
+\subsection{Pairing all algebraic nodes without approximating roots}
+For a left node with polynomial $f(s)$ and a right node with polynomial $g(t)$, let $l(s)$ and $r(t)$ be the certified product column and row. Their pairing is represented in
+\[
+\Q[s,t]/(f(s),g(t)).
+\]
+For 194 of the 200 node pairs, the certificate gives a polynomial $b(s,t)$ satisfying
+\begin{equation}\label{eq:unit}
+(r(t)l(s))b(s,t)\equiv1\pmod{f(s),g(t)}.
+\end{equation}
+At any pair of complex roots, this identity makes the pairing nonzero. Irreducibility and numerical root isolation are not required: the identity applies to every root of each displayed polynomial.
+
+The six other pairs are conservatively marked ``possibly zero.'' For each fixed right node, sum the degrees of its possibly paired left-node polynomials. The checked maximum is two. Therefore every affine right row annihilates left product columns contained in the sum of the 11-dimensional core and at most two further lines. In particular
+\begin{equation}\label{eq:A13}
+\dim\Span(\mathcal A\cap\ker r)\le13<16
+\quad\text{for every affine }r\in\mathcal B.
+\end{equation}
+This deliberately loose bound does not even subtract a dimension when $r$ acts nontrivially on the core.
+
+\begin{proof}[Conclusion of Theorem~\ref{thm:noncompA}]
+By \eqref{eq:A13}, no affine right row is viable for a 17-pair completion. All viable rows must therefore belong to the infinity fibers, whose total span has dimension at most six. Theorem~\ref{thm:viable}, with $6<17$, gives the contradiction.
+\end{proof}
+
+\section{The all-rank-two example also cannot be completed}\label{sec:noncompB}
+\begin{theorem}[Second exact noncompletion theorem]\label{thm:noncompB}
+Example B cannot be completed by seventeen rank-one-output products over $\C$, with arbitrary complex coefficients in the additional products.
+\end{theorem}
+The same mechanism works, but the curve covers and dimensions change. The two certificates have filenames beginning \file{all_two_noncompletion_}. They are checked independently of the first pair of certificate files by \file{verify_all_two_completion.py}; the implementations share the small exact polynomial-arithmetic library.
+
+\subsection{Left cover and its exceptional point}
+The kernel of $R_H$ in coordinates $k=0,1$ has dimension nine, because the restricted matrix has rank nine. This is the left core $C$ for Example B. There is no need to add an affine-origin fiber.
+
+After the specified row scalings,
+\begin{align}\label{eq:Bleftfactor}
+\Delta_8(M)&=192z^3(2x-y-5z)(2x-y-z)A Q_B,\\
+A&=5xy-5xz-8yz,\nonumber\\
+Q_B&=2x^2+3xy-7xz-y^2-3yz+6z^2.\nonumber
+\end{align}
+The four affine curve parametrizations are
+\begin{center}\small
+\begin{tabular}{@{}cl@{}}\toprule
+Curve & $p(t)$ \\\midrule
+$2x-y-5z=0$ & $(t,2t-5,1)$\\
+$2x-y-z=0$ & $(t,2t-1,1)$\\
+$A=0$ & $(8t,5t(t-1),5(t-1))$\\
+$Q_B=0$ & $(3+3t-2t^2,\ -t-3t^2,\ 2+3t-t^2)$\\\bottomrule
+\end{tabular}\end{center}
+The last parametrization uses lines of slope $t$ through the rational point $(2,0)$ on the affine conic. It covers that point as well, but its vertical-direction limit is the additional point $(2,3)$. The missing projective factor $[2:3:1]$ is explicitly included as a separate constant-point node. At that point the constraint matrix has rank eight. Omitting this exception would leave the proof incomplete.
+
+Each curve has the same denominator-coprimality check as before. The four curve greatest common divisors, together with the separate constant point, produce thirteen point nodes. Their degrees are
+\[
+2,2,3,1,1,1,2,3,1,2,3,4,1.
+\]
+Every node has a one-dimensional kernel fiber, certified by its normalized kernel vector and an invertible $8\times8$ minor. All possible left product columns are thus in the nine-dimensional core or on one of the finitely covered affine lines.
+
+\subsection{Right cover}
+For Example B the factorization used is
+\begin{align}\label{eq:Brightfactor}
+\Delta_0(N)&=2xz(x+3z)(3x-10y+8z)B_2D_3,\\
+B_2&=3xy+5xz+y^2+5yz+8z^2,\nonumber\\
+D_3&=10xy^2+13xyz+20y^2z+15yz^2-8z^3.\nonumber
+\end{align}
+On the affine chart, the covers are
+\begin{center}\small
+\begin{tabular}{@{}cl@{}}\toprule
+Curve & $p(t)$ \\\midrule
+$x=0$ & $(0,t,1)$\\
+$x=-3z$ & $(-3,t,1)$\\
+$3x-10y+8z=0$ & $(10t-8,3t,3)$\\
+$B_2=0$ & $(-t^2-5t-8,\ t(3t+5),\ 3t+5)$\\
+$D_3=0$ & $(8-15t-20t^2,\ t(10t^2+13t),\ 10t^2+13t)$\\\bottomrule
+\end{tabular}\end{center}
+All denominator exceptions are excluded by exact coprimality. Nineteen point nodes, each with a one-dimensional kernel, cover the affine right directions.
+
+At infinity the two checked polynomials are
+\[
+\Delta_3(N)=-50x^3y^4(3x+y)(x-y),\qquad
+\Delta_5(N)=10x^4y^3(3x+y)(x-y).
+\]
+Thus all right factors on $z=0$ are among
+\[
+[1:0:0],\ [0:1:0],\ [-1:3:0],\ [1:1:0].
+\]
+The corresponding exact ranks of $N$ are $6,6,8,8$. Their kernel dimensions are $3,3,1,1$, giving a total right-row span bound of eight.
+
+\subsection{The 247 pairing checks and the contradiction}
+There are $13\cdot19=247$ pairs of finite nodes. The second pairing certificate gives inverses of the form \eqref{eq:unit} for 227 pairs. The other twenty are retained as possibly zero. For any one right node, the sum of degrees of its possibly paired left nodes is at most four. Hence every affine right row satisfies
+\[
+\dim\Span(\mathcal A\cap\ker r)\le9+4=13<16.
+\]
+All viable rows must again lie at infinity, now in a span of dimension at most eight. Since $8<17$, Theorem~\ref{thm:viable} proves Theorem~\ref{thm:noncompB}.
+
+\subsection{Consequences and non-consequences}
+Both noncompletion theorems are preserved by common invertible basis changes, slot permutations, and nonzero rescalings of the retained terms. They therefore exclude more than a fixed zero pattern. They exclude every completion with arbitrary complex new entries once an equivalent copy of the relevant five summands is retained.
+
+Equivalently, regard the residual after subtracting either five-block sum as a four-way tensor in $\C^9\otimes\C^9\otimes\C^3\otimes\C^3$. Its rank under four fully separated factors is at least 18: a 17-term expression would be precisely the forbidden completion, and the reshuffled residual matrix already has rank 17. This is a four-way residual-rank statement, not the three-way rank of the original multiplication tensor. No matching residual upper bound of 18 is established here.
+
+The two-parameter family is a family of compatible high blocks only. Noncompletion is proved at Example A, at the separately defined Example B, and at their stated equivalents. This report does \emph{not} claim that every parameter value in the family is noncompletable or that every possible five-block set is equivalent to one of these examples.
+
+\section{Why the finite computations prove statements over all of $\C$}\label{sec:certificates}
+The noncompletion proofs use only finite exact rational identities and elementary facts about polynomial roots. This section describes the trust boundary in detail.
+
+\subsection{The maximal minors are checked on an exact determining grid}
+Each entry of $M,N$ is homogeneous linear in $x,y,z$, so each maximal minor is homogeneous of degree nine. The certificate stores its complete rational coefficient list. Rather than repeatedly expand a symbolic determinant in the verifier, the program evaluates the determinant and the claimed polynomial at all 55 points
+\[
+(i,j,1),\qquad i,j\in\mathbb Z_{\ge0},\quad i+j\le9.
+\]
+These are not random test inputs. They determine every bivariate polynomial of total degree at most nine.
+
+\begin{lemma}[Determining grid]\label{lem:grid}
+If a polynomial $p(x,y)$ of total degree at most $m$ vanishes at all nonnegative integer pairs $(i,j)$ with $i+j\le m$, then $p=0$ over $\Q$ or $\C$.
+\end{lemma}
+\begin{proof}
+On $y=0$, the polynomial $p(x,0)$ has $m+1$ distinct roots and degree at most $m$, so it vanishes identically and $y$ divides $p$. On $y=1$, the quotient $p/y$ has $m$ distinct roots in $x$ and degree at most $m-1$, so $y-1$ divides it. Repeating on $y=2,\ldots,m$ shows that the degree-$m$ polynomial is divisible by a degree-$m+1$ polynomial in $y$. It must be zero.
+\end{proof}
+
+Dehomogenization at $z=1$ is injective on homogeneous degree-nine forms, so the grid proves the original homogeneous identities too. Each example uses twenty maximal minors and 55 points, for 1,100 exact determinant equalities. The selected factorizations are checked on the same grid. The degree-nine restrictions at infinity are checked on ten distinct points of the one-variable dehomogenization. All determinant evaluations use fractions, not machine floating-point numbers.
+
+\subsection{Complete factor covers}
+After a rational curve substitution, the checker recomputes the greatest common divisor of all ten maximal minors in $\Q[t]$. It checks the supplied factorization, with multiplicities, by exact polynomial multiplication. Every factor is accounted for as an affine node or a proven zero-denominator factor. Nodes are required to be referenced exactly once by their recorded curve.
+
+For a point-node polynomial $f$, the checker verifies an inverse of its third coordinate modulo $f$. It then verifies the normalized kernel vector and the inverse of an eight-dimensional submatrix modulo $f$. These identities hold at every complex root, including roots not represented in the rational data. A factor need not be asserted irreducible, and repeated roots do not invalidate the argument. Counting at most $\deg f$ distinct directions is always safe.
+
+Example B's extra constant point is not misrepresented as a nonzero curve gcd. Its coordinates are fixed by the verifier, its maximal minors vanish exactly, and it is represented once by a formal parameter with equation $t=0$. The separate proof of conic coverage explains why this one exceptional point suffices.
+
+\subsection{Nonzero pairings and conservative zero counts}
+The verifier reconstructs $r(t)l(s)$ from the certified kernels and factor directions. It multiplies by the recorded inverse and reduces separately modulo $f(s)$ and $g(t)$. The remainder must be the constant polynomial 1. Any zero pairing at a complex root pair would contradict this identity.
+
+The program never concludes that a missing inverse means a pairing vanishes. It only allows the conservative label ``possibly zero,'' and then counts the full degree of that left-node polynomial. It checks every pair, the count for each right node, and the strict inequality needed for the viable-row obstruction. Duplicate projective descriptions can only increase these upper bounds; they cannot hide an omitted line.
+
+\begin{center}
+\begin{tabular}{@{}lrr@{}}\toprule
+Checked quantity & Example A & Example B\\\midrule
+Maximal-minor grid equalities & 1,100 & 1,100\\
+Left core dimension & 11 & 9\\
+Finite left point nodes & 10 & 13\\
+Finite right point nodes & 20 & 19\\
+Node pairs & 200 & 247\\
+Certified nonzero pairs & 194 & 227\\
+Maximum possibly-zero left degree & 2 & 4\\
+Affine annihilated-column span bound & 13 & 13\\
+Required bound for a viable row & 16 & 16\\
+Right infinity span bound & 6 & 8\\
+Required independent rows & 17 & 17\\\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{What successful replay does and does not establish}
+The new exact checkers use only the Python standard library. SymPy is used in certificate generation, but is not called by those checkers. The coefficient formulas, scales, minor polynomials, factorizations, kernels, and inverse witnesses are all checked against the original rational blocks.
+
+The checker and generator were produced in the same research interaction and share some small arithmetic utilities. Their separation is computational, not an independent-authorship claim. Successful replay is also not a formalization of the algebraic reasoning in this report. In particular, the curve-coverage proofs, determining-grid lemma, and biorthogonal-completion argument must be audited as mathematics. The package includes an explicit audit map to support that work.
+
+\section{Numerical exploration, without rank claims}\label{sec:numeric}
+The exact results were not inferred from a failed optimizer. Numerical work supplied candidate high-block configurations and tested additional search directions. Only subsequent exact constructions and certificates enter the theorems.
+
+\subsection{Unrestricted 22-slot complex search}
+The recorded unrestricted run uses all $3\cdot22\cdot9=594$ complex coefficient variables. It starts from the prior best 22-slot numerical point, with eight noise levels and two initialization modes, giving sixteen runs. Eight runs first take 1,000 alternating least-squares sweeps; every run then permits up to 1,200 damped complex Gauss--Newton steps. The analytic Jacobian receives a separate directional finite-difference sanity check; that numerical sanity check is not part of an exact proof.
+
+The best observed residual is
+\[
+\left\|\sum_{t=1}^{22}u_t\otimes v_t\otimes w_t-T\right\|_F
+=0.00979617984743414.
+\]
+The largest absolute coefficient at that retained point is approximately $16.3025$, compared with about $3.58$ near the first step of that run. This is an improvement over the previous residual $0.1630756768$, but it is still not an identity. The observed decrease while coefficient magnitudes grow is compatible with an approximation phenomenon; neither divergence nor exact border rank is proved by these finite traces.
+
+The best arrays and all recorded iteration traces are included. The residual is recomputed independently from the stored arrays by \file{exploration/check_numerical_records.py}. There is no tolerance threshold that turns this point into an exact algorithm.
+
+\subsection{Output-tight search and exploratory high blocks}
+A separate 76-start complex alternating least-squares run enforces five outputs of rank at most two and seventeen of rank at most one. It perturbs Sun-derived initializations after deleting one rank-one-output slot and promoting another. Each run uses 4,000 sweeps. No exact 22-product identity was obtained.
+
+The high-block search, which does not impose the other seventeen products, did reach floating-point compatibility. That observation was not accepted as a theorem: it led to the exact rational constructions and polynomial family above. A later search also suggested all-rank-two high blocks; Example B verifies that possibility with rational data.
+
+Additional exploratory logs are explicitly labeled as such. Failure to find a completion, a small residual, or the convergence behavior of an optimizer is not used as a lower bound anywhere in this report.
+
+\section{The remaining global gap}\label{sec:gap}
+There are three distinct unresolved tasks. First, within the output-tight branch, Proposition~\ref{prop:profile} allows arbitrary five-block configurations. Theorems~\ref{thm:noncompA} and \ref{thm:noncompB} exclude the displayed configurations and their equivalents, not all configurations. Theorem~\ref{thm:family} and Proposition~\ref{prop:alltwo} show why compatibility alone, even with all high-block coefficient ranks equal to two, cannot be the missing contradiction.
+
+Second, a 22-product decomposition need not be output-tight. The positive-defect cases in Theorem~\ref{thm:defect} have not been excluded, and no theorem here transforms every decomposition into a tight one. Proving the tight branch impossible would therefore still not settle AC-02.
+
+Third, the previous Laderman component result is local-to-component, not a classification of the entire coefficient variety. The previous archive proves that the closure of its 58-parameter support family under the standard matrix changes of basis is a 76-dimensional component, with fixed nonzero signatures at every slot. Its exact Jacobian and family-tangent certificates replay successfully. Work on local dimensions of Brent varieties provides relevant context, but not the missing global coverage theorem \cite{local}. Nothing here shows every 23-slot solution lies on that component or on one of the newly treated completion families.
+
+The global target can still be written as the absence of a complex zero of the unrestricted 22-slot Brent system. Equivalently, one could seek an exact rational polynomial identity
+\[
+1=\sum_{a,b,c}h_{abc}(U,V,W)
+\left(\sum_{t=1}^{22}U_{t,a}V_{t,b}W_{t,c}-T_{abc}\right).
+\]
+Such a certificate would prove the lower bound 23, and the checked existing algorithm would make it sharp. No such identity is supplied. Conversely, an exact 22-slot construction would improve the upper bound, but a matching lower bound would still be needed to determine the minimum.
+
+\textbf{Productive next mathematical target.} The viable-row criterion isolates a precise completion obstruction. Extending it to a proved exhaustive classification of five-block configurations would settle the output-tight 22-slot branch. That requires handling exceptional families and degenerations, not just more examples. A separate argument must then handle all positive-defect profiles or justify a reduction to tightness. The current package contains exact test cases and counterexamples for such a classification, but does not claim that the classification has been achieved.
+
+Under the repository's resolution requirements, a restricted or conditional theorem is not a full resolution of the original field, model, and quantifiers \cite{contributing}. No repository files were modified, and this package is not a submission asserting that AC-02 is solved.
+
+\section{Reproduction and audit map}\label{sec:repro}
+From the extracted directory, the new exact checks require Python 3.10 or later; the recorded run used Python 3.13.5. Run
+\begin{lstlisting}
+python code/check_all.py
+\end{lstlisting}
+This runs both noncompletion checkers, the family and Sun checks, the defect examples, twenty regression tests, and the independent coefficient check on the two full 23-product algorithms. To also extract and replay the first archive in a temporary directory, with its dependencies installed, run
+\begin{lstlisting}
+python code/check_all.py --prior
+\end{lstlisting}
+The twenty new regressions include correct constructions and deliberately corrupted determinant, factor-cover, exceptional-point, kernel, inverse, and pairing data. They also verify that the two five-block sets are rejected as full multiplication algorithms. The prior seven regression tests are separate and also pass.
+
+Certificate regeneration additionally uses SymPy 1.14.0:
+\begin{lstlisting}
+python code/generate_sun_extension.py
+python code/generate_family_certificate.py
+python code/generate_completion_certificate.py
+python code/generate_pairing_certificate.py
+python code/generate_all_two_completion.py
+python code/generate_all_two_pairings.py
+python code/check_all.py
+\end{lstlisting}
+Regeneration may choose equivalent exact witnesses if a symbolic-library implementation changes; replay of the distributed certificates is the primary deterministic check. Mathematical equality, not byte identity with a regenerated JSON file, is the requirement.
+
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}lX@{}}\toprule
+Artifact & Audit obligation\\\midrule
+\file{sun_four_block_extension.json} & Verify the four output factorizations and all nine quadratic minor identities.\\
+\file{five_family_polynomial.json} & Account for every denominator and verify all 100 bivariate identities.\\
+\file{*_noncompletion_base.json} & Rebuild the constraint matrices, verify all maximal minors, covers, gcd factorizations, normalized kernels, and invertible submatrices.\\
+\file{*_noncompletion_pairings.json} & Recompute all pairings, verify every unit inverse, and bound all remaining possibilities conservatively.\\
+\file{verify_defect.py} & Check the projector formulas on known exact algorithms; read Theorem~\ref{thm:defect} for the general proof.\\
+\file{prior/AC02_research_pack.zip} & Preserve and replay the earlier support/component certificates; do not assume global coverage.\\\bottomrule
+\end{tabularx}
+\end{center}
+
+The mathematical report, checker sources, data, and certificates are included together. \file{MANIFEST.sha256} records the distributed files. \file{AUDIT.md} states the remaining gaps and the common-code trust boundary. The source papers are cited rather than bundled. No font files are included.
+
+\appendix
+\section{Exact matrices for Example A}\label{app:data}
+The following tables are generated directly from \file{data/exact_five_blocks.json}. The slot numbering is zero-based. Outputs for Example B differ only as specified in \eqref{eq:Bchanges} and the following display there.
+\input{example_a_data.tex}
+
+\section{Compact certificate format}
+A homogeneous minor is stored as a dictionary from comma-separated exponent triples to rational coefficient strings. All its exponents have total degree nine. A univariate polynomial is stored as a list of coefficients in ascending degree. A quotient-ring matrix is a matrix of such lists. Bivariate pairing inverses are rectangular coefficient arrays, reduced in the first parameter modulo the left-node polynomial and in the second modulo the right-node polynomial.
+
+A point node stores its curve name, its monic polynomial, an inverse for its third coordinate, a normalized nine-entry kernel vector, eight selected rows and columns, and the inverse of that $8\times8$ submatrix in the quotient ring. A curve stores the complete gcd, all node identifiers, and any excluded zero-denominator factors with multiplicities. The exceptional constant point in Example B is explicitly tagged and has separately fixed coordinates in the checker.
+
+Neither certificate accepts a claimed ``rank 8'' or ``nonzero pairing'' as an oracle. The relevant inverse identity must be replayed. Pair labels without a unit certificate are allowed only as conservative possibilities and count against the annihilated-span bound.
+
+\begin{thebibliography}{10}
+\bibitem{repo} Open Problems in Numerical Linear Algebra. AC-02, ``Exact bilinear rank of the $3\times3$ matrix product.'' Entry last checked 10 September 2026; accessed 14 September 2026. \url{https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/main/arithmetic-and-complexity/AC-02}.
+\bibitem{blaeser} M. Bl\"aser. \emph{Fast Matrix Multiplication}. Theory of Computing Library, Graduate Surveys 5 (2013), 1--60. Introduction and Example 5.10. DOI: 10.4086/toc.gs.2013.005. \url{https://theoryofcomputing.org/articles/gs005/gs005.pdf}.
+\bibitem{laderman} J. D. Laderman. A noncommutative algorithm for multiplying $3\times3$ matrices using 23 multiplications. \emph{Bulletin of the American Mathematical Society} 82 (1976), 126--128. DOI: 10.1090/S0002-9904-1976-13988-2.
+\bibitem{sun} Y. Sun. \emph{An Exact 56-Addition, Rank-23 Scheme for General $3\times3$ Matrix Multiplication}. arXiv:2604.27645v1 (2026), Section 5. \url{https://arxiv.org/html/2604.27645v1}.
+\bibitem{wang21} C. Wang. \emph{A Lower Bound of 21 for $3\times3$ Matrix Multiplication over $\mathbb F_2$}. arXiv:2609.06725v2, 11 September 2026. \url{https://arxiv.org/html/2609.06725v2}.
+\bibitem{signature} P. Tichavsk\'y. \emph{Characterization of Decomposition of Matrix Multiplication Tensors}. arXiv:2104.05323v1 (2021), Section IV. \url{https://arxiv.org/html/2104.05323v1}.
+\bibitem{local} X. Li, Y. Bao, and L. Zhang. \emph{On the local dimensions of solutions of Brent equations}. arXiv:2303.09754v2 (2024). \url{https://arxiv.org/html/2303.09754v2}.
+\bibitem{contributing} Open Problems in Numerical Linear Algebra. Contribution and resolution requirements, accessed 14 September 2026. \url{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/CONTRIBUTING.md}.
+\end{thebibliography}
+\end{document}

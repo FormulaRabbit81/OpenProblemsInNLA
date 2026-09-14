@@ -8,7 +8,7 @@
 **Importance:** broadly interesting  
 **Rating rationale:** Extreme because reaching the minimal asymptotic rank for this tensor would force the foundational exponent-two breakthrough; broad importance therefore extends well beyond its fixed small format.  
 **Topic:** asymptotic tensor algorithms  
-**Last checked:** 2026-09-10  
+**Last checked:** 2026-09-14  
 **Status:** Open  
 
 ## Context and notation
@@ -46,3 +46,11 @@ results for a fixed tensor power do not alone determine this limit.
 ## Status check — 2026-09-10
 
 Rechecked [Alman–Li, abstract and Theorems 1.2–1.3](https://arxiv.org/html/2605.21738v1), and searched for later small Coppersmith–Winograd asymptotic-rank results. The paper improves the upper bound below 3.931 and confirms that equality with three would imply exponent two. No proof or disproof of that equality was located. An improved upper bound or a border-rank result for one finite power is not a solved portion of this single exact-value target.
+
+## Reviewed research submission — 14 September 2026
+
+**Author:** Sidney Holden, Center for Computational Biology, Flatiron Institute, Simons Foundation. [Verified affiliation and submission record](../../references/holden-ac-2026-09-14/README.md).
+
+Theorems 3.1 and 4.2 give $`\widetilde R(T)<3.896914`$; later sections prove local rigidity. The separately reviewed [AC-01 report](../../references/holden-ac-2026-09-14/AC-01-submission.pdf), Section 8, strengthens the bound to $`3.876919161`$. Neither settles equality with three.
+
+**Status: Open.** [Report](../../references/holden-ac-2026-09-14/AC-04-submission.pdf) · [Independent AI-agent audit and limitations](../../references/holden-ac-2026-09-14/verification/review-ac03-ac04.md). AI assistance disclosed; no external human review, formal verification or Lean checks. Original target and prior-source credit retained.

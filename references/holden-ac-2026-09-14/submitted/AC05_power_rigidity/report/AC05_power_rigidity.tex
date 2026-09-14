@@ -1,0 +1,707 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,mathtools,booktabs,longtable,array}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={AC-05: Tensor-power rigidity and exact lower bounds}}
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\C}{\mathbb C}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\AR}{\widetilde R}
+\newcommand{\BR}{\underline R}
+\newcommand{\gp}{\boxtimes}
+\newcommand{\biggp}{\mathop{\boxtimes}}
+\newcommand{\g}{\mathfrak g}
+\newcommand{\s}{\mathfrak s}
+\newcommand{\cl}[1]{\overline{#1}}
+\newcommand{\orb}{\mathcal O}
+\newcommand{\mc}{\mathcal M}
+\DeclareMathOperator{\conv}{conv}
+\title{AC-05: Tensor-power rigidity and exact lower bounds}
+\author{}\date{}
+\begin{document}
+\maketitle
+\vspace{-13mm}
+\textbf{Status.} This report does not prove or disprove AC-05. It gives complete finite-power orbit and degeneration results for the central dimension-three families, exact stabilizer formulas for every grouped tensor power, and lower bounds valid for every power. The lower bounds have exponential base three, not a base larger than three. The upper-bound gap in the inherited work is not closed.
+
+Put $e_{ijk}=e_i\otimes e_j\otimes e_k$, and define
+\begin{align*}
+ U&=e_{002}+e_{021}+e_{111}+e_{120}+e_{201}+e_{210},\\
+ Q_\lambda&=e_{012}+e_{021}+e_{102}+e_{120}+e_{201}+\lambda e_{210},\\
+ F_\lambda&=Q_\lambda+e_{111},\qquad P=Q_1.
+\end{align*}
+For nonzero parameters other than $-1$, an arbitrary invertible change of basis on each of the three $3^m$-dimensional grouped factors identifies two products of $F$ tensors, or two products of $Q$ tensors, \emph{exactly} when their parameter lists agree up to permutation and independent reciprocation. This is not limited to diagonal or tensor-product changes of basis.
+
+Moreover, a product of $F$ tensors degenerates to a product of $Q$ tensors of the same size exactly under that same parameter condition. The converse degeneration is impossible. A common auxiliary product of these families cannot remove a mismatch of parameter multisets. In particular, the generic central target cannot be converted to or from $P^{\gp m}$ by a same-size degeneration, even with those auxiliary products.
+
+Independently, writing $N=3^m$, we prove
+\[
+ \BR(U^{\gp m}),\ \BR(F_1^{\gp m}),\ \BR(P^{\gp m})\ \geq\frac{3N-1}{2},
+ \qquad
+ \BR(F_\lambda^{\gp m})\geq\frac{3N+1}{2}\quad(\lambda\notin\{0,1\}).
+\]
+Thus no finite blocking of these tensors admits a border-rank-$3^m$ construction. These inequalities remain fully compatible with asymptotic rank three.
+
+The package contains written proofs, exact local minors, a separate standard-library replay, and an unchanged inherited archive. Thirty-six replay groups passed, including thirteen grouped-product action computations and four deliberately corrupted-certificate tests. Finite checks do not replace the proofs of the unbounded statements. No claim of novelty, external peer review, or proof-assistant verification is made.
+
+\newpage
+\tableofcontents
+\newpage
+\section{The exact target and the change of direction}
+All spaces and ranks are over $\C$. The grouped product $S\gp T$ groups corresponding factors, so $T^{\gp m}$ has three factors of dimension $d^m$ when $T\in(\C^d)^{\otimes3}$. Conciseness means that all three flattenings have rank $d$. Tightness means that in some bases there are injective integer weights in the three factors whose sum is zero at every nonzero coefficient.
+
+The exact target is
+\begin{equation}\label{eq:target}
+ \forall d\geq1\ \forall T\text{ concise and tight in }(\C^d)^{\otimes3},
+ \qquad \AR(T):=\lim_{m\to\infty}R(T^{\gp m})^{1/m}=d.
+\end{equation}
+This is the repository formulation, not a reformulation restricted to one named tensor.\footnote{OpenProblemsInNLA, AC-05, problem statement and product convention; see \cite{repo}.} Rank submultiplicativity gives existence of the limit. Flattenings give $R(T^{\gp m})\geq d^m$. The missing affirmative ingredient is an upper bound with exponential base $d$.
+
+The inherited 16-page report gives uniform upper bounds
+\begin{equation}\label{eq:old}
+ \AR(T)<4.64429449\quad(T\in(\C^3)^{\otimes3}),
+ \qquad
+ \BR(T)\leq4\Longrightarrow\AR(T)<3.92304.
+\end{equation}
+It also shows that its rank-five/rank-one scalar speedup inequalities admit the value four at every seed power and every squaring depth. These are results of the inherited report \cite{inherited}, whose finite-certificate replay was rerun. The present report does not improve the constants in \eqref{eq:old}, and its main theorems do not depend on their validity.
+
+A different possible route was to take powers and remove the central family's coefficient parameter by larger changes of basis or degenerations. Sections \ref{sec:F}--\ref{sec:git} determine precisely what is possible in the equal-size setting. The key is to compute the \emph{entire} infinitesimal stabilizer after grouping, rather than assume that only the obvious local symmetries survive. Section \ref{sec:lower} instead proves quantitative border-rank bounds on all powers.
+
+For reference, the prior dimension-three reduction singled out $U$ and $F_\tau$, with $\tau$ transcendental over $\mathbb Q$, as sufficient targets for the dimension-three conjecture. That reduction is retained as an inherited result, not reproved here. The current theorems directly treat those tensors without needing the component classification. The small-support normal forms and their first- and second-power symmetry calculations appear in \cite{cglv}; the all-product argument below is given in full.
+
+\section{Action images and the scalar-intersection condition}\label{sec:action}
+For $T\in A\otimes B\otimes C$, define
+\[
+ E_A(T)=\{(X\otimes I\otimes I)T:X\in\End(A)\},
+\]
+and define $E_B(T),E_C(T)$ similarly. If $T$ is concise, the map $\End(A)\to E_A(T)$ is injective: write $T=\sum_i a_i\otimes M_i$ with the $M_i$ independent; then $\sum_i Xa_i\otimes M_i=0$ forces $X=0$. Thus $\dim E_A(T)=(\dim A)^2$.
+
+We use the actual three-factor general-linear Lie algebra, \emph{including} the two universal scalar directions:
+\[
+ \g(T)=\{(X,Y,Z):(X\otimes I\otimes I+I\otimes Y\otimes I+I\otimes I\otimes Z)T=0\}.
+\]
+Let $\s(T)=\g(T)\cap(\mathfrak{sl}(A)\oplus\mathfrak{sl}(B)\oplus\mathfrak{sl}(C))$. The universal subspace in $\g(T)$ is
+\begin{equation}\label{eq:scalar}
+ \{(xI_A,yI_B,zI_C):x+y+z=0\}.
+\end{equation}
+This convention differs by two dimensions from a symmetry algebra defined after quotienting out the kernel of the tensor action.
+
+The condition needed below is
+\begin{equation}\label{eq:pair}
+ E_A(T)\cap E_B(T)=E_A(T)\cap E_C(T)=E_B(T)\cap E_C(T)=\C T.
+\end{equation}
+Set $r(T)=\dim\g(T)-2$. Condition \eqref{eq:pair} is an exact linear-algebraic hypothesis, not a genericity assumption hidden in a tensor-power limit.
+
+\section{A tensor-product theorem for three subspaces}\label{sec:product}
+\begin{lemma}[Three-subspace normal form]\label{lem:three}
+Let $E_1,E_2,E_3\subset V$ contain a common line $L$, with $E_i\cap E_j=L$ for $i\ne j$. There are vector spaces $K,P_1,P_2,P_3,Z$ and a direct-sum decomposition
+\[
+ V=L\oplus(K\otimes\C^2)\oplus P_1\oplus P_2\oplus P_3\oplus Z
+\]
+such that, for a basis $a,b$ of $\C^2$,
+\begin{align*}
+ E_1&=L\oplus(K\otimes a)\oplus P_1,\\
+ E_2&=L\oplus(K\otimes b)\oplus P_2,\\
+ E_3&=L\oplus(K\otimes(a+b))\oplus P_3.
+\end{align*}
+The kernel of $E_1\oplus E_2\oplus E_3\to V$, given by addition, has dimension $2+\dim K$.
+\end{lemma}
+\begin{proof}
+Choose a complement to $L$. In that complement the three resulting subspaces $E'_i$ have pairwise zero intersection. Let
+\[
+ K=\{(u_1,u_2,u_3)\in E'_1\oplus E'_2\oplus E'_3:u_1+u_2+u_3=0\}.
+\]
+Each coordinate projection of $K$ is injective: a relation with one coordinate zero would put a vector in a pairwise intersection. Its three images $K_i\subset E'_i$ therefore have dimension $\dim K$.
+
+The subspace $K_1+K_2$ is a direct sum. Under the identifications by $K$, the third image is the graph of the sum, with a sign that can be absorbed into its identification. This gives the summand $K\otimes\C^2$ and the three displayed lines in its second factor.
+
+Choose complements $P_i$ to $K_i$ in $E'_i$. The sum of $K_1+K_2$ and the three $P_i$ is direct. Indeed, a dependence can be rewritten as a relation among the $E'_i$; its third coordinate lies both in $P_3$ and $K_3$, hence is zero. Pairwise zero intersection then makes the other two coordinates zero, and their chosen complements force each term to vanish. Complete the ambient space by $Z$. The common line contributes the two scalar relations; the graph summand contributes $\dim K$ more.
+\end{proof}
+
+\begin{theorem}[No new nonlocal Lie-algebra relations]\label{thm:product}
+Let $T_1,\ldots,T_m$ be concise three-tensors, not necessarily of the same format, each satisfying \eqref{eq:pair}. Then
+\begin{equation}\label{eq:dimprod}
+ \dim\g(T_1\gp\cdots\gp T_m)=2+\sum_{q=1}^m r(T_q).
+\end{equation}
+More precisely, the stabilizer is spanned by the two global scalar directions and the local nonscalar stabilizers inserted at individual tensor coordinates. There are no additional infinitesimal symmetries coming from arbitrary endomorphisms of the grouped factors. The product also satisfies \eqref{eq:pair}.
+\end{theorem}
+\begin{proof}
+The natural identification
+\[
+ \End(A_1\otimes\cdots\otimes A_m)\cong\bigotimes_{q=1}^m\End(A_q)
+\]
+shows that the first action image of the product is $\bigotimes_q E_A(T_q)$; likewise for the other two images. This identification permits all grouped-factor endomorphisms, not only decomposable ones.
+
+Apply Lemma \ref{lem:three} to each triple of action images, with $L_q=\C T_q$ and $\dim K_q=r(T_q)$. Expand the tensor product of the ambient direct sums. A sector containing a private summand $P_{i,q}$ occurs in at most one of the three action images, so no relation can have a nonzero component there.
+
+In a sector containing only common lines and graph summands, let $J$ be the set of graph coordinates. After omitting one-dimensional line factors, the three subspaces are
+\[
+ \Big(\bigotimes_{q\in J}K_q\Big)\otimes a^{\otimes |J|},\quad
+ \Big(\bigotimes_{q\in J}K_q\Big)\otimes b^{\otimes |J|},\quad
+ \Big(\bigotimes_{q\in J}K_q\Big)\otimes(a+b)^{\otimes |J|}.
+\]
+When $J$ is empty, their sum has the two scalar relations. If $J=\{q\}$, the relation space has dimension $\dim K_q$ and is exactly the inserted local relation space. If $|J|\geq2$, the three lines are independent. To see this, project onto a word using $a$ at the first active position and $b$ at the second: only the third vector contributes. Its coefficient must vanish; then the all-$a$ and all-$b$ words force the other two coefficients to vanish. The same argument works for vector coefficients in $\bigotimes K_q$.
+
+Consequently no further relations occur, proving both the spanning assertion and \eqref{eq:dimprod}. Finally, for any two families of subspaces,
+\[
+ (\bigotimes_q U_q)\cap(\bigotimes_q V_q)=\bigotimes_q(U_q\cap V_q).
+\]
+This follows by choosing in each ambient factor a basis adapted to the intersection and the two complementary subspaces. Applying it to each pair of action images gives the common line of the product.
+\end{proof}
+
+This theorem supplies the all-$m$ quantifier used below. A computed rank of a square or cube, by itself, would not do so.
+
+\begin{remark}[The hypothesis is essential]
+For the diagonal tensor $\Delta_d=\sum_{i=1}^d e_{iii}$, the pairwise action-image intersection has dimension $d$, not one. Its stabilizer has dimension $2d$: off-diagonal actions cannot cancel, while the three diagonal entries at each index satisfy one sum-zero equation. Since $\Delta_d^{\gp m}\cong\Delta_{d^m}$, the product stabilizer dimension is $2d^m$, not $2+m(2d-2)$. At $d=3,m=2$ these are 18 and 10. The checker includes this negative control; the theorem cannot be applied by dropping \eqref{eq:pair}.
+\end{remark}
+
+
+\section{Exact local certificates and all-power stabilizers}\label{sec:local}
+Use row order $9i+3j+k$ for the tensor coordinates. In the full action matrix, column $9h+3p+q$ is the action of the matrix unit $E_{pq}$ in factor $h$; it replaces index $q$ by $p$ in that factor. Explicitly,
+\begin{equation}\label{eq:actentry}
+ (\mathcal A_T)_{(i,j,k),(h,p,q)}
+ =\mathbf1_{i_h=p}\,T_{i_0\ldots i_{h-1}\,q\,i_{h+1}\ldots i_2}.
+\end{equation}
+For a two-factor action matrix, keep the corresponding two blocks of nine columns.
+
+The following minors are reconstructed from \eqref{eq:actentry}. Complete row and column selections are in Appendix \ref{app:minors} and \texttt{certificates/local.json}.
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Tensor & full minor & pair $AB$ & pair $AC$ & pair $BC$\\
+\midrule
+$U$ & $24\times24:\ 12$ & $-1$ & $1$ & $-1$\\
+$F_\lambda$ & $24\times24:\ (1+\lambda)^6$ & $\lambda$ & $1$ & $-\lambda$\\
+$Q_\lambda$ & $23\times23:\ (1+\lambda)^6$ & $-\lambda$ & $1$ & $-\lambda$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Every pair minor in the last three columns has size $17\times17$. Each pair map has rank at most 17 because its two scalar action images agree. For $\lambda\ne0$, these minors therefore prove \eqref{eq:pair}. Conciseness follows independently: the displayed supports meet every index, and two fixed indices determine the third, so flattening rows have disjoint nonempty supports.
+
+The matching full-action kernels are particularly simple. In addition to \eqref{eq:scalar}, put
+\begin{equation}\label{eq:localgens}
+ \begin{array}{c|c}
+ U&(D,D,E),\quad D=\diag(0,1,2),\quad E=\diag(-3,-2,0)\\[2pt]
+ F_\lambda&(H,H,H),\quad H=\diag(-1,0,1)\\[2pt]
+ Q_\lambda&(H',H',H')\quad\text{for every traceless diagonal }H'.
+ \end{array}
+\end{equation}
+Each triple annihilates its tensor entry by entry. They are independent modulo the two scalar directions. The nonzero full minors prove that these lists exhaust the kernels for $\lambda\notin\{0,-1\}$.
+
+\begin{corollary}\label{cor:stabs}
+For every $m\geq1$, with $N=3^m$, and for arbitrary lists $\lambda_1,\ldots,\lambda_m\in\C\setminus\{0,-1\}$,
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Tensor & $\dim\g$ & $\dim\s$\\
+\midrule
+$U^{\gp m}$ & $m+2$ & $m-1$\\
+$F_{\lambda_1}\gp\cdots\gp F_{\lambda_m}$ & $m+2$ & $m$\\
+$Q_{\lambda_1}\gp\cdots\gp Q_{\lambda_m}$ & $2m+2$ & $2m$\\
+\bottomrule
+\end{tabular}
+\end{center}
+For the $F$ product, $\s$ is exactly the span of $(H_q,H_q,H_q)$, where $H_q$ acts by $H$ at position $q$. For the $Q$ product it is the corresponding direct sum of common traceless diagonal algebras, two dimensions per position.
+\end{corollary}
+\begin{proof}
+The general-linear dimensions and generators follow from Theorem \ref{thm:product}. All displayed nonscalar $F$ and $Q$ generators are traceless in each factor. Imposing three traces equal to zero removes just the two universal scalar directions.
+
+For $U^{\gp m}$, let $u$ be the sum of the coefficients of the $m$ inserted $(D,D,E)$ generators. If the remaining global scalar triple is $(xI,yI,zI)$ with $x+y+z=0$, vanishing of the three traces is equivalent to
+\[
+ x+u=0,\qquad y+u=0,\qquad z-\tfrac53u=0.
+\]
+Their sum forces $u=0$, and then $x=y=z=0$. The inserted coefficients therefore have one relation, giving dimension $m-1$.
+\end{proof}
+
+The exceptional values are not silently included in the parameter classifications. At $\lambda=-1$, exact kernels and minors give
+\[
+ \dim\g(F_{-1})=7,\qquad \dim\g(Q_{-1})=10.
+\]
+The pair minors remain nonzero. Theorem \ref{thm:product} consequently also gives
+\[
+ \dim\g(F_{-1}^{\gp m})=2+5m,\qquad
+ \dim\g(Q_{-1}^{\gp m})=2+8m.
+\]
+These dimension statements do not assert that the generic normalizer arguments below apply to the exceptional tensors.
+
+\section{Rigidity of the seven-term family in every power}\label{sec:F}
+For a nonzero number $\lambda$, let $[\lambda]$ denote its class under $\lambda\sim\lambda^{-1}$. For a parameter list $\boldsymbol\lambda=(\lambda_1,\ldots,\lambda_m)$, write
+\[
+ F(\boldsymbol\lambda)=\biggp_{q=1}^m F_{\lambda_q},\qquad
+ Q(\boldsymbol\lambda)=\biggp_{q=1}^m Q_{\lambda_q},\qquad
+ \mc(\boldsymbol\lambda)=\{[\lambda_1],\ldots,[\lambda_m]\},
+\]
+where the last object is a multiset, with multiplicities retained. Here and below $\biggp$ denotes the iterated grouped product.
+
+\begin{theorem}[Seven-term product equivalence]\label{thm:F}
+Assume all entries of $\boldsymbol\lambda$ and $\boldsymbol\mu$ avoid $0,-1$. Then
+\begin{equation}\label{eq:Fclass}
+ F(\boldsymbol\lambda)\cong F(\boldsymbol\mu)
+ \quad\Longleftrightarrow\quad
+ \mc(\boldsymbol\lambda)=\mc(\boldsymbol\mu).
+\end{equation}
+Equivalence is under $\GL_N^3$, $N=3^m$, with no restriction to local or monomial maps. Allowing permutations of the three large tensor factors does not change the criterion.
+\end{theorem}
+\begin{proof}
+An equivalence $g=(g_A,g_B,g_C)$ conjugates the special-linear stabilizer of the first tensor to that of the second. By Corollary \ref{cor:stabs}, both are the same subspace spanned by the common triples $(H_q,H_q,H_q)$. Hence the three conjugations induce the \emph{same} linear automorphism of this $m$-dimensional space.
+
+On each grouped factor, the joint eigencharacters of the $H_q$ are the distinct points
+\[
+ \{-1,0,1\}^m.
+\]
+The induced linear automorphism on the dual space must preserve this set. It is a signed coordinate permutation. To prove this, its matrix is real because the set contains the standard basis. It preserves the convex hull $[-1,1]^m$, so its inverse transpose preserves the polar crosspolytope, whose vertices are exactly $\{\pm e_q\}$. A permutation of these vertices preserving linear relations permutes the $m$ opposite pairs, with an independent sign for each pair.
+
+Every joint eigenspace is one-dimensional. It follows that each $g_A,g_B,g_C$ is diagonal times a permutation of the word basis, and that the word permutation is the same in all three factors. It consists precisely of a permutation of tensor positions and, at selected positions, reversal of the letters $0$ and $2$.
+
+It remains to recover the parameters under arbitrary diagonal maps on the large factors. Fix a tensor position $q$, put the triple $012$ at every other position, and vary the $q$th triple over the six permutations of $012$. For any tensor with these six coefficients nonzero, define the ratio
+\begin{equation}\label{eq:ratio}
+ \mathcal C_q=
+ \frac{t_{021[q]}t_{102[q]}t_{210[q]}}
+      {t_{012[q]}t_{120[q]}t_{201[q]}}.
+\end{equation}
+The notation $abc[q]$ means the three words just specified, not a single coordinate of the original small tensor. In each of the three grouped factors, every word in the numerator appears once in the denominator. Thus \eqref{eq:ratio} is invariant under all diagonal $N\times N$ maps, including those which do not factor over tensor positions. For $F(\boldsymbol\lambda)$ it equals $\lambda_q$.
+
+Permuting positions permutes these ratios. Reversal at one position exchanges the two products, replacing its ratio by its reciprocal. Other fixed positions may contribute a common nonzero coefficient, but its third power cancels between numerator and denominator. This proves necessity in \eqref{eq:Fclass}.
+
+For sufficiency, positions can plainly be permuted. The reciprocal equivalence has an exact formula. Choose $z\ne0$ with $z^3=\lambda$, reverse $0$ and $2$ in all three factors, and then multiply by
+\begin{equation}\label{eq:inverse}
+ \diag(1,z,z^{-1}),\qquad
+ \diag(1,z^{-2},z^{-1}),\qquad
+ \diag(1,z,z^{-1}).
+\end{equation}
+These maps send $F_{z^3}$ to $F_{z^{-3}}$; substitution in its seven entries proves the identity. Apply this independently at any selected positions. Finally, an even permutation of the three tensor factors preserves the ratio, and an odd one reciprocates it. Thus large-factor permutations produce no additional parameter identifications.
+\end{proof}
+
+\begin{corollary}[No distinct equal-size boundary orbit]\label{cor:Fboundary}
+Under the same assumptions, a same-format degeneration between two $F$ products exists if and only if they are equivalent, hence if and only if their parameter multisets agree modulo reciprocation.
+\end{corollary}
+\begin{proof}
+Every product has general-linear orbit dimension $3N^2-m-2$ by Corollary \ref{cor:stabs}. An algebraic group orbit is open in its closure; any different orbit in the boundary has strictly smaller dimension. Equal-dimensional orbits therefore cannot degenerate to one another unless they are the same orbit. Apply Theorem \ref{thm:F}.
+\end{proof}
+
+For example, no power of $F_2$ is equivalent to, or a same-size degeneration of, the corresponding power of $F_1$ in either direction. The result is stronger than the failure of a particular diagonal normalization: it includes every invertible map on each grouped factor and every same-format algebraic degeneration.
+
+\section{Rigidity of the six-term family}\label{sec:Q}
+\begin{theorem}[Six-term product equivalence]\label{thm:Q}
+For parameter lists avoiding $0,-1$,
+\[
+ Q(\boldsymbol\lambda)\cong Q(\boldsymbol\mu)
+ \quad\Longleftrightarrow\quad
+ \mc(\boldsymbol\lambda)=\mc(\boldsymbol\mu).
+\]
+The assertion allows arbitrary $\GL_N^3$ changes of basis, and remains true with large-factor permutations allowed.
+\end{theorem}
+\begin{proof}
+Corollary \ref{cor:stabs} says that the entire special-linear stabilizer is the common diagonal torus Lie algebra with two dimensions per tensor position. In each position use the basis $\diag(1,0,-1)$ and $\diag(0,1,-1)$. Its three characters are
+\[
+ v_0=(1,0),\qquad v_1=(0,1),\qquad v_2=(-1,-1).
+\]
+The joint character set is the Cartesian product of $m$ copies of these three points. All characters are distinct. An equivalence must induce the same linear permutation of that set in all three grouped factors.
+
+We show that such a linear permutation only permutes the positions and independently permutes the three letters in each position. Let $\Delta=\conv\{v_0,v_1,v_2\}$. The character set is the vertex set of $\Delta^m$. The origin is interior, and its polar is the convex hull of $m$ polar triangles embedded in complementary two-dimensional subspaces. The vertices of one polar triangle are
+\[
+ (1,1),\quad(1,-2),\quad(-2,1).
+\]
+They have the unique minimal positive linear dependence given by their sum being zero. In the direct sum of all positions, the minimal positive dependencies among polar vertices are exactly these triples: a positive relation projects separately to every two-dimensional summand, and any nonempty projection must contain the whole triple. An automorphism of the polar therefore permutes these triples. Dualizing proves that positions are permuted, with an arbitrary permutation of the three vertices within each position.
+
+The distinct-character property now forces each change of basis to be diagonal times the same resulting word permutation. The ratios \eqref{eq:ratio} are defined using the supported background $012$ at other positions, so they apply to $Q$ products without any middle entry. They recover the parameters and are invariant under arbitrary grouped diagonal scalings. An even letter permutation preserves the outer-product ratio; an odd one inverts it. This proves necessity.
+
+Formula \eqref{eq:inverse} also sends $Q_{z^3}$ to $Q_{z^{-3}}$, since it does not introduce a middle coefficient. It supplies sufficiency together with permutation of positions. Large-factor permutations again only preserve or invert the ratios.
+\end{proof}
+
+The character-set argument is essential. Merely counting stabilizer dimensions would not distinguish different parameter values; all generic $Q$ products have dimension $2m+2$ for $\g$.
+
+\section{Closed-orbit representatives and same-size degenerations}\label{sec:git}
+The passage from an $F$ product to a $Q$ product needs more than orbit dimension: the latter orbit has smaller dimension, so a boundary relation is not excluded by dimension alone. We use two standard results of geometric invariant theory, with explicit hypotheses.
+
+For $\SL_N^3$ acting on $(\C^N)^{\otimes3}$, a nonzero tensor whose three one-factor Gram matrices are scalar multiples of the identity has closed affine orbit. This follows from the critical-point formulation of Kempf--Ness.\footnote{Acuaviva et al., Theorem 2.5, especially the implication from criticality to a closed orbit; see \cite{kn}.} In projective space, a semistable orbit closure has a unique orbit closed within the semistable locus. Two semistable points related by degeneration have the same such representative.\footnote{Woodward, Proposition 4.2.5 and Theorem 4.2.6; projective polystability and affine closedness are related by Lemma 4.2.3. See \cite{woodward}.}
+
+Here semistable means that zero is not in the affine special-linear orbit closure; polystable means that the nonzero affine orbit is closed. Projective language is necessary when using general-linear degenerations, because general-linear actions also permit scalar rescaling. Their projective orbits agree with the special-linear projective orbits.
+
+\begin{lemma}[Explicit balanced representative]\label{lem:balanced}
+For $z\ne0$, define
+\[
+ B_z=e_{012}+e_{120}+e_{201}+z(e_{021}+e_{102}+e_{210}).
+\]
+Then $Q_{z^3}$ is special-linearly equivalent to $B_z$. Each of its three one-factor Gram matrices is $(1+|z|^2)I_3$. Consequently every $Q_\lambda$ with $\lambda\ne0$, and every grouped product of such tensors, is polystable.
+\end{lemma}
+\begin{proof}
+The three diagonal maps
+\begin{equation}\label{eq:balancedmap}
+ \diag(1,z^{-1},z^2),\qquad
+ \diag(1,1,z),\qquad
+ \diag(1,z^{-2},1)
+\end{equation}
+send $B_z$ to $Q_{z^3}$, as can be checked at its six entries. Their determinants are $z,z,z^{-2}$, whose product is one. Choose $w$ with $w^3=z$ and multiply the three maps by $w^{-1},w^{-1},w^2$, respectively. They then all have determinant one, and the product of the three extra scalars is one, so the tensor image is unchanged.
+
+The support of $B_z$ is free, so off-diagonal Gram entries vanish. Each index in each factor occurs once with coefficient 1 and once with coefficient $z$. This gives $(1+|z|^2)I_3$ in every factor. Equivalently, the derivative of the squared norm in any traceless Hermitian direction is zero: it is twice the trace pairing of that direction with the corresponding Gram matrix. Kempf--Ness therefore gives a closed orbit.
+
+The Gram matrices of a grouped tensor product are tensor products of the individual Gram matrices, hence remain scalar identities. Tensoring the special-linear maps also gives special-linear maps on the large factors. Thus the same argument proves the product statement.
+\end{proof}
+
+\begin{lemma}[The closed representative of an $F$ product]\label{lem:FQ}
+For every nonzero parameter list, the unique polystable projective orbit in the closure of $F(\boldsymbol\lambda)$ is the orbit of $Q(\boldsymbol\lambda)$. The same conclusion holds for a mixed product with either $F_{\lambda_q}$ or $Q_{\lambda_q}$ at each position.
+\end{lemma}
+\begin{proof}
+Apply $\diag(1,t,t^{-1})$ in each of the three small factors. Each permutation entry has multiplier one, whereas $e_{111}$ has multiplier $t^3$. Thus
+\begin{equation}\label{eq:FQlimit}
+ Q_\lambda+t^3e_{111}\ \longrightarrow\ Q_\lambda
+ \qquad(t\to0)
+\end{equation}
+is a special-linear degeneration of $F_\lambda$. Tensor these maps in all $F$ positions of a product and use identity maps in the $Q$ positions. The limiting tensor is $Q(\boldsymbol\lambda)$, which is nonzero and polystable by Lemma \ref{lem:balanced}. The source is semistable: an invariant polynomial nonzero on that closed orbit has the same value along the degeneration. Uniqueness of the polystable projective orbit gives the assertion.
+\end{proof}
+
+\begin{theorem}[Complete same-size classification for the two pure product types]\label{thm:deg}
+Let $m\geq1$ and let both parameter lists avoid $0,-1$. In the following table, ``source $\to$ target'' means that the target lies in the general-linear orbit closure of the source, in the same format $(\C^{3^m})^{\otimes3}$.
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Source & Target & Necessary and sufficient condition\\
+\midrule
+$F(\boldsymbol\lambda)$ & $F(\boldsymbol\mu)$ & $\mc(\boldsymbol\lambda)=\mc(\boldsymbol\mu)$\\
+$Q(\boldsymbol\lambda)$ & $Q(\boldsymbol\mu)$ & $\mc(\boldsymbol\lambda)=\mc(\boldsymbol\mu)$\\
+$F(\boldsymbol\lambda)$ & $Q(\boldsymbol\mu)$ & $\mc(\boldsymbol\lambda)=\mc(\boldsymbol\mu)$\\
+$Q(\boldsymbol\lambda)$ & $F(\boldsymbol\mu)$ & Never\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{theorem}
+\begin{proof}
+The first row is Corollary \ref{cor:Fboundary}. For the second, the orbit dimensions are all $3N^2-2m-2$, so a degeneration between two such orbits is an equivalence; apply Theorem \ref{thm:Q}.
+
+For the third row, both source and target are semistable. Lemma \ref{lem:FQ} and uniqueness of the polystable orbit imply that a degeneration forces $Q(\boldsymbol\lambda)$ and $Q(\boldsymbol\mu)$ to be projectively equivalent. Projective special-linear equivalence is the same as affine general-linear equivalence, since a nonzero scalar can be absorbed into one factor. Theorem \ref{thm:Q} gives the necessary multiset equality. Conversely, that equality gives an equivalence between the $F$ products, followed by the explicit degeneration \eqref{eq:FQlimit} in each position.
+
+For the last row, the source orbit has dimension $3N^2-2m-2$, strictly smaller than the target orbit dimension $3N^2-m-2$. An orbit closure cannot contain an orbit of larger dimension.
+\end{proof}
+
+\begin{corollary}[A common product cannot cancel a parameter mismatch]\label{cor:catalyst}
+Consider two same-length mixed products of $F$ and $Q$ tensors, with all parameters outside $\{0,-1\}$. If their parameter multisets differ modulo reciprocation, neither is a same-format degeneration of the other. This remains true after tensoring both sides with any common finite product of $F$ and $Q$ tensors having parameters outside $\{0,-1\}$.
+\end{corollary}
+\begin{proof}
+The closed representative of each mixed product is its $Q$ product by Lemma \ref{lem:FQ}. A degeneration would force the closed representatives to be equivalent. Theorem \ref{thm:Q} forbids this when the multisets differ. Appending the same finite multiset on both sides cannot change inequality of multisets, because multiplicities cancel.
+\end{proof}
+
+For example, for $\tau\notin\{0,1,-1\}$ and every $m\geq1$, no same-size degeneration exists in either direction between $F_\tau^{\gp m}$ and $P^{\gp m}$. Corollary \ref{cor:catalyst} also excludes the specified common auxiliary products. It does \emph{not} exclude arbitrary catalysts, extra unmatched source copies, direct sums of resources, or maps between unequal formats.
+
+\section{The separate \texorpdfstring{$U$}{U} target survives blocking}\label{sec:U}
+\begin{theorem}\label{thm:Useparate}
+For every $m\geq1$ and every list $\boldsymbol\lambda$ avoiding $0,-1$, neither $U^{\gp m}$ nor $F(\boldsymbol\lambda)$ is a same-format degeneration of the other. The statement still holds after both are tensor-multiplied by the same finite product of the generic $F$ and $Q$ families.
+\end{theorem}
+\begin{proof}
+Without an auxiliary product, the two general-linear stabilizers have the same dimension $m+2$, but their special-linear stabilizers have different dimensions $m-1$ and $m$. Thus the tensors are not equivalent, while their general-linear orbit dimensions agree. The boundary-dimension argument excludes both degeneration directions.
+
+Let the common auxiliary product contribute $r_C$ nonscalar local generators. Theorem \ref{thm:product} still applies, including to the mixed products. The general-linear dimensions are both $m+r_C+2$. All auxiliary nonscalar generators are traceless; the trace computation in Corollary \ref{cor:stabs} therefore gives special-linear dimensions $m-1+r_C$ and $m+r_C$. The same argument applies.
+\end{proof}
+
+There is an additional direct separation of $U$ from $P$. The special-linear weights
+\begin{equation}\label{eq:Uweights}
+ (3,0,-3),\qquad(3,0,-3),\qquad(4,1,-5)
+\end{equation}
+have sum one at each of the six supported entries of $U$. Each individual weight list has sum zero. Hence the associated one-parameter subgroup sends $U$ to $tU$ and then to zero. Every $U^{\gp m}$ is in the special-linear nullcone. The nullcone is closed and general-linearly invariant, whereas $P^{\gp m}$ is polystable by Lemma \ref{lem:balanced}. Thus $U^{\gp m}$ cannot degenerate to $P^{\gp m}$. The reverse degeneration is excluded by orbit dimension: the $P$ product has stabilizer dimension $2m+2$, larger than $m+2$ for $U$.
+
+Instability is not itself a lower bound on asymptotic rank. The preceding argument only separates these same-format orbits and their closures.
+
+\section{Border-rank lower bounds for every tensor power}\label{sec:lower}
+This section is independent of geometric invariant theory and of the parameter classifications. It uses the classical commutator mechanism, with the proof included.
+
+\begin{lemma}[Commutator bound]\label{lem:comm}
+Let a three-tensor have square matrix slices of size $n$, and suppose $S$ is an invertible linear combination of its slices. If $A,B$ are any two further slice combinations, then
+\begin{equation}\label{eq:commbound}
+ \BR(T)\geq n+\left\lceil\frac{\rank[AS^{-1},BS^{-1}]}2\right\rceil.
+\end{equation}
+The first factor need not have dimension $n$.
+\end{lemma}
+\begin{proof}
+First suppose $R(T)\leq r$. Approximate a chosen decomposition, if necessary, so that the $r$ coefficients of the slice $S$ are all nonzero and $S$ stays invertible. Such perturbations are dense in decomposition parameters. After absorbing the coefficients into the two matrix-factor columns and normalizing $S$ to $I_n$, there are $n\times r$ matrices $V,W$ with $VW^{\mathsf T}=I_n$ and diagonal matrices $D,E$ such that
+\[
+ AS^{-1}=VDW^{\mathsf T},\qquad BS^{-1}=VEW^{\mathsf T}.
+\]
+The matrix $P_0=W^{\mathsf T}V$ is an idempotent of rank $n$. Put $Q_0=I_r-P_0$, whose rank is $r-n$. Since $D$ and $E$ commute,
+\[
+ [VDW^{\mathsf T},VEW^{\mathsf T}]
+ =V(EQ_0D-DQ_0E)W^{\mathsf T}.
+\]
+Its rank is at most $2(r-n)$. Replacing inverses by adjugates and multiplying by powers of $\det S$ gives polynomial minor equations, so the inequality extends from the dense perturbations to every tensor of rank at most $r$, and then to their closure. This proves \eqref{eq:commbound} for border rank.
+\end{proof}
+
+\begin{lemma}[A rank-$(3^m-1)$ commutator]\label{lem:ternary}
+Suppose a $3\times3\times3$ tensor has slice combinations $S,A,B$ with $S$ invertible and $K=[AS^{-1},BS^{-1}]$ diagonalizable with eigenvalues $-\kappa,0,\kappa$, where $\kappa\ne0$. Then every grouped power has an invertible slice and two normalized slice combinations whose commutator has rank $3^m-1$.
+\end{lemma}
+\begin{proof}
+Use $S^{\otimes m}$ as invertible slice. The normalized slice space contains the operators $X_q$ and $Y_q$ which insert $AS^{-1}$ and $BS^{-1}$ at position $q$ and put identities elsewhere. Choose
+\[
+ X=\sum_{q=1}^m3^{q-1}X_q,\qquad Y=\sum_{q=1}^mY_q.
+\]
+Operators on different positions commute, so
+\[
+ [X,Y]=\sum_{q=1}^m3^{q-1}K_q.
+\]
+The $K_q$ are simultaneously diagonalizable. Their eigenvalues are
+\[
+ \kappa\sum_{q=1}^m3^{q-1}\epsilon_q,\qquad \epsilon_q\in\{-1,0,1\}.
+\]
+Only the all-zero word gives zero. Indeed, the largest nonzero place has absolute contribution $3^{q-1}$, larger than the sum of all smaller powers, $(3^{q-1}-1)/2$. The kernel therefore has dimension one.
+\end{proof}
+
+\begin{theorem}[All-power lower bounds]\label{thm:lower}
+For every $m\geq1$, set $N=3^m$. Then
+\begin{align}
+ \BR(U^{\gp m}),\ \BR(F_1^{\gp m}),\ \BR(P^{\gp m})
+ &\geq\frac{3N-1}{2},\label{eq:rank2lower}\\
+ \BR(F_\lambda^{\gp m})&\geq\frac{3N+1}{2}
+ &&\bigl(\lambda\notin\{0,1\}\bigr),\label{eq:fullcommF}\\
+ \BR(Q_\lambda^{\gp m})&\geq\frac{3N+1}{2}
+ &&\bigl(\lambda\notin\{0,1,-1\}\bigr).\label{eq:fullcommQ}
+\end{align}
+All these bounds also hold for ordinary rank. No sharpness claim is made for $m>1$.
+\end{theorem}
+\begin{proof}
+Let $A_0,A_1,A_2$ denote first-factor slices, with rows indexed by the second factor. For $F_\lambda$, use $S=A_1$. Direct multiplication gives
+\[
+ A_0S^{-1}=\begin{pmatrix}0&0&0\\1&0&0\\0&1&0\end{pmatrix},\qquad
+ A_2S^{-1}=\begin{pmatrix}0&1&0\\0&0&\lambda\\0&0&0\end{pmatrix},
+\]
+and therefore
+\begin{equation}\label{eq:KF}
+ K_F=\diag(-1,1-\lambda,\lambda).
+\end{equation}
+If $\lambda\notin\{0,1\}$, insert these two normalized slices at just one tensor position and use identities elsewhere. Their commutator is $K_F\otimes I_{3^{m-1}}$, which is invertible of size $N$. Lemma \ref{lem:comm} gives $N+\lceil N/2\rceil=(3N+1)/2$. At $\lambda=1$, use Lemma \ref{lem:ternary} with $\kappa=1$, then Lemma \ref{lem:comm}.
+
+For $U$, use $S=A_0+A_2$. The explicit matrices are
+\[
+ S=\begin{pmatrix}0&1&1\\1&0&0\\0&1&0\end{pmatrix},\quad
+ A_0S^{-1}=\begin{pmatrix}1&0&-1\\0&0&0\\0&0&1\end{pmatrix},\quad
+ A_1S^{-1}=\begin{pmatrix}0&0&0\\0&0&1\\0&1&0\end{pmatrix}.
+\]
+Here $\det S=1$ and the commutator is
+\begin{equation}\label{eq:KU}
+ K_U=\begin{pmatrix}0&-1&0\\0&0&-1\\0&1&0\end{pmatrix},
+ \qquad \det(xI-K_U)=x(x^2+1).
+\end{equation}
+It has the distinct eigenvalues $0,i,-i$. Apply the two lemmas.
+
+For $Q_\lambda$, use $S=A_0+A_1+A_2$, whose determinant is $1+\lambda$. For $\lambda\ne-1$ the normalized $A_0,A_1$ commutator is
+\begin{equation}\label{eq:KQ}
+ K_Q=\frac1{1+\lambda}
+ \begin{pmatrix}
+ 0&-1&\lambda\\
+ \lambda&0&-\lambda\\
+ -1&1&0
+ \end{pmatrix},\qquad
+ \det K_Q=\frac{\lambda(\lambda-1)}{(1+\lambda)^3}.
+\end{equation}
+It is invertible under the conditions of \eqref{eq:fullcommQ}; insert it at one position. At $\lambda=1$, it has eigenvalues $0,\pm i\sqrt3/2$, giving the bound for $P$ by Lemma \ref{lem:ternary}.
+\end{proof}
+
+The numerical sizes of these certified bounds begin as follows:
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+$m$ & $N=3^m$ & $(3N-1)/2$ & $(3N+1)/2$\\
+\midrule
+1&3&4&5\\2&9&13&14\\3&27&40&41\\4&81&121&122\\
+\bottomrule
+\end{tabular}
+\end{center}
+The theorem is proved for every $m$, not inferred from these four rows. Stronger lower bounds may exist at particular finite powers.
+
+\begin{corollary}[No minimal-border-rank finite block]\label{cor:block}
+None of the tensors covered by Theorem \ref{thm:lower} has $\BR(T^{\gp m})=3^m$ for any $m\geq1$. Consequently no tensor-valued polynomial pencil of rank at most $3^m$ away from its limiting point can have that block as its limit.
+\end{corollary}
+\begin{proof}
+Each lower bound is strictly greater than $3^m$. A limit of tensors of rank at most $3^m$ has border rank at most $3^m$ by definition.
+\end{proof}
+
+This is not an asymptotic counterexample. In fact
+\[
+ \lim_{m\to\infty}\left(\frac{3\cdot3^m\pm1}{2}\right)^{1/m}=3.
+\]
+An upper bound of the form $3^m\exp(o(m))$ remains possible. The obstruction concerns exact minimal border rank of a fixed block, not subexponential overhead.
+
+\section{An explicit two-by-two matrix trace lift}\label{sec:trace}
+For completeness, the central family also has a simple constructive realization by small matrices. Let
+\[
+ E_+=\begin{pmatrix}0&1\\0&0\end{pmatrix},\qquad
+ E_-=\begin{pmatrix}0&0\\1&0\end{pmatrix},\qquad
+ D_\lambda=\diag(\lambda,1),
+\]
+and set
+\[
+ (X_0,X_1,X_2)=(E_+,I_2,E_-),\quad
+ (Y_0,Y_1,Y_2)=(E_+,D_\lambda,E_-),\quad
+ (Z_0,Z_1,Z_2)=(E_+,I_2,E_-).
+\]
+A direct check of the 27 coefficients gives
+\begin{equation}\label{eq:trace}
+ \sum_{i,j,k=0}^2\tr(X_iY_jZ_k)e_{ijk}
+ =Q_\lambda+(1+\lambda)e_{111}.
+\end{equation}
+This is a restriction of the $2\times2$ matrix-multiplication trace tensor. If $\lambda\ne-1$, apply $\diag(1,t,t^{-1})$ in each physical factor, with $t^3=(1+\lambda)^{-1}$, to obtain $F_\lambda$.
+
+At the exceptional parameter, replace $\lambda$ by $-1+t^3$ in \eqref{eq:trace} and apply $\diag(1,t^{-1},t)$ in each physical factor. The resulting tensor is exactly $F_{-1+t^3}$, whose limit is $F_{-1}$. Thus every $F_\lambda$ is a degeneration of that matrix-multiplication tensor.
+
+The ambient triangle-network interpretation is established in \cite{triangle}, especially Theorem 5.3. Equation \eqref{eq:trace} specifies a direct matrix formula for this family. It does not achieve the required rank base three and is not used to improve \eqref{eq:old}.
+
+\section{What remains unproved}\label{sec:gap}
+The new results are exact structural and lower-bound statements. They do not establish
+\[
+ \AR(U)=3,\qquad \AR(F_\tau)=3,
+\]
+nor do they construct any concise tight tensor with asymptotic rank strictly above its factor dimension. In particular, parameter rigidity under equal-size transformations must not be reinterpreted as an asymptotic conversion-rate lower bound.
+
+There are three distinct statements that must be kept separate:
+\begin{center}
+\begin{tabular}{p{0.62\textwidth}p{0.28\textwidth}}
+\toprule
+Statement & Conclusion here\\
+\midrule
+A fixed blocked hard tensor has minimal border rank $3^m$. & Ruled out for the stated families.\\[3pt]
+Different generic parameter products become equivalent, or undergo the classified same-size degenerations. & Exactly characterized; parameter mismatch is forbidden.\\[3pt]
+Every concise tight tensor admits exact decompositions of rank $d^m\exp(o(m))$. & Not proved or disproved.\\
+\bottomrule
+\end{tabular}
+\end{center}
+The second row includes only the catalyst class in Corollary \ref{cor:catalyst}; it is not a theorem about every possible auxiliary tensor. The third row allows overhead and changes of format that the equal-size results do not control.
+
+A sufficient affirmative completion would give, for every concise tight $T$ and every $\varepsilon>0$, an integer $m_0$ such that
+\[
+ R(T^{\gp m})\leq(d+\varepsilon)^m\qquad(m\geq m_0).
+\]
+A negative completion requires an actual lower bound $\AR(T)>d$ for a specified concise tight tensor. Neither follows from any theorem above. The package's exact lower bounds approach the permitted base $d=3$.
+
+The completed inherited special cases remain available inside the unchanged baseline archive. They are not enlarged into a universal claim. The present report rules out two particular ways to bypass the missing constructions: exact minimal-border-rank blocking, and equal-size parameter elimination through the specified families. A successful upper-bound argument must permit nonminimal finite blocks or a different type of asymptotic construction.
+
+\section{Verification and evidence boundaries}\label{sec:verification}
+The generator constructs the action matrices from the displayed supports and uses exact symbolic arithmetic to produce minors and local kernels. The replay uses only the Python standard library and reconstructs the matrices without importing the generator or SymPy.
+
+For a size-$n$ minor with entries affine-linear in $\lambda$, its determinant has degree at most $n$. The replay checks the claimed determinant polynomial at $n+1$ distinct integer nodes using fraction-free integer elimination. Equality at those nodes is therefore a proof of the polynomial identity, not numerical sampling. It also verifies the explicit kernels and their independence, so both sides of each rank equality are checked.
+
+The recorded replay passed 36 check groups. These include 163 successful determinant evaluations, thirteen independent grouped-product action-rank computations through three tensor factors, direct checks of the nonlocal diagonal-gauge ratios, the reciprocal and balanced maps, and exhaustive small character-configuration tests. The latter find 8 and 48 linear automorphisms of the two- and three-dimensional ternary cubes, and 72 for the product of two triangles. The proofs in Sections \ref{sec:F} and \ref{sec:Q}, not the enumerations, establish the general normalizer assertions.
+
+Grouped-product ranks are certified by modular elimination at the prime 65521 together with exact annihilating, independent kernel vectors. A nonzero minor modulo the prime is nonzero over $\mathbb Q$; the kernels give the reverse rank inequality. The program separately checks the trace restrictions distinguishing $\g$ from $\s$.
+
+The replay also checks the commutator formulas at enough exact nodes for the cleared-denominator polynomial identities, the rank-two characteristic-polynomial anchors, and balanced-ternary sums through eight positions. The written proof of Lemma \ref{lem:ternary} supplies the statement for arbitrary $m$. Four intentionally changed certificates are rejected: a determinant, a reciprocal map, a balancing map, and a floating-point value.
+
+The unchanged inherited archive's standard-library checker passed again, including its 42 finite check groups. This does not constitute a new external audit of all geometric and spectral arguments in that archive. No independent authorship, external referee approval, or proof-assistant formalization is claimed for either package.
+
+From the extracted package root:
+\begin{verbatim}
+python code/replay_certificates.py
+python code/audit_inherited.py
+\end{verbatim}
+\begin{samepage}
+To regenerate the local certificates, install the listed SymPy dependency and run:
+\begin{verbatim}
+python -m pip install -r requirements.txt
+python code/generate_certificates.py
+python code/replay_certificates.py
+\end{verbatim}
+\end{samepage}
+The combined material is research progress, not a solution claim for \eqref{eq:target}. Under the repository's definitions, existing substantive equality cases can support a partial-results submission; the new obstruction statements do not themselves add a proved equality case. No repository file or status has been changed.\footnote{OpenProblemsInNLA, root README, status definitions; see \cite{status}.}
+
+\appendix
+\section{Exact minor selections}\label{app:minors}
+The row and column conventions are those of \eqref{eq:actentry}. All indices in this appendix are zero-based. The full action minors use the following selections.
+
+\textbf{$U$, size 24, determinant 12.}
+\begin{align*}
+\text{rows}&=0,1,\ldots,22,24,\\
+\text{columns}&=0,1,\ldots,16,18,19,20,21,23,24,25.
+\end{align*}
+\textbf{$F_\lambda$, size 24, determinant $(1+\lambda)^6$.}
+\begin{align*}
+\text{rows}&=1,2,\ldots,20,22,23,24,25,\\
+\text{columns}&=0,1,\ldots,16,18,19,20,21,23,24,25.
+\end{align*}
+\textbf{$Q_\lambda$, size 23, determinant $(1+\lambda)^6$.}
+\begin{align*}
+\text{rows}&=1,2,\ldots,12,14,15,16,17,18,19,20,22,23,24,25,\\
+\text{columns}&=0,1,\ldots,16,19,20,21,23,24,25.
+\end{align*}
+
+For each pair action, columns are numbered afresh in the indicated pair of nine-column blocks. All pair minors take columns $0,1,\ldots,16$. Their row lists are:
+\begin{center}\small
+\begin{tabular}{llp{0.70\textwidth}}
+\toprule
+Tensor & pair & rows\\
+\midrule
+$U$ & $AB$ & $1,2,3,4,5,6,7,8,10,11,12,13,15,16,19,20,22$\\
+$U$ & $AC$ & $0,1,2,3,4,6,7,8,10,11,13,15,16,17,19,20,22$\\
+$U$ & $BC$ & $0,1,2,4,5,6,7,8,9,10,13,14,15,16,17,19,22$\\[2pt]
+$F_\lambda$ & $AB$ & $1,2,3,4,5,6,7,8,10,11,13,14,16,17,19,20,23$\\
+$F_\lambda$ & $AC$ & $1,2,3,4,5,6,7,8,10,11,14,15,16,17,19,20,23$\\
+$F_\lambda$ & $BC$ & $1,2,3,4,5,6,7,8,10,11,13,14,15,16,17,20,23$\\[2pt]
+$Q_\lambda$ & all & $1,2,3,4,5,6,7,8,10,11,14,15,16,17,19,20,23$\\
+\bottomrule
+\end{tabular}\end{center}
+The determinants are given in Section \ref{sec:local}. For the exceptional values, the certificate file also supplies all kernel vectors and nonzero minors: a $20\times20$ minor of determinant 9 for $F_{-1}$, and a $17\times17$ minor of determinant 1 for $Q_{-1}$. The replay checks both matching nullities, not only those lower-rank certificates.
+
+\section{Recorded product-action ranks}\label{app:ranks}
+In the following table, each listed full action has $3N^2$ columns. A modular lower-rank certificate and exact independent kernel generators agree on its rank. These finite examples supplement Theorem \ref{thm:product}.
+\begin{center}\small
+\begin{tabular}{lrrrr}
+\toprule
+Tensor & $N$ & action rank & $\dim\g$ & $\dim\s$\\
+\midrule
+$U\gp U$ &9&239&4&1\\
+$F_2\gp F_2$ &9&239&4&2\\
+$F_2\gp F_3$ &9&239&4&2\\
+$Q_2\gp Q_2$ &9&237&6&4\\
+$P\gp P$ &9&237&6&4\\
+$F_2\gp Q_3$ &9&238&5&3\\
+$U\gp F_3$ &9&239&4&1\\
+$F_{-1}\gp F_{-1}$ &9&231&12&10\\
+$Q_{-1}\gp Q_{-1}$ &9&225&18&16\\
+$F_2^{\gp3}$ &27&2182&5&3\\
+$U^{\gp3}$ &27&2182&5&2\\
+$Q_2^{\gp3}$ &27&2179&8&6\\
+$F_2\gp Q_3\gp U$ &27&2181&6&3\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Package map}
+\begin{center}\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.43\textwidth}>{\raggedright\arraybackslash}p{0.48\textwidth}}
+\toprule
+Path & Purpose\\
+\midrule
+\texttt{report/AC05\_power\_rigidity.pdf} & This report.\\
+\texttt{report/AC05\_power\_rigidity.tex} & Editable mathematical source.\\
+\texttt{code/generate\_certificates.py} & Symbolic certificate generation.\\
+\texttt{code/replay\_certificates.py} & Standard-library reconstruction and checking.\\
+\texttt{code/audit\_inherited.py} & Replay the unchanged inherited ZIP in a temporary directory.\\
+\texttt{certificates/local.json} & Supports, full action matrices, kernels, minors and exceptional values.\\
+\texttt{certificates/constructions.json} & Reciprocal and balanced maps, weights, commutators and matrix trace lift.\\
+\texttt{results/} & Recorded successful runs and scope statements.\\
+\texttt{baseline/AC05\_rank\_speedup.zip} & Unchanged inherited package, including its earlier baseline.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\newpage
+\begin{thebibliography}{9}
+\bibitem{repo} A. Townsend, \emph{OpenProblemsInNLA, AC-05: Strassen's asymptotic rank conjecture for tight tensors}. Canonical statement, accessed 14 September 2026. \url{https://raw.githubusercontent.com/ajt60gaibb/OpenProblemsInNLA/main/arithmetic-and-complexity/AC-05/README.md}.
+\bibitem{status} A. Townsend, \emph{OpenProblemsInNLA, root README: problem status definitions}. Accessed 14 September 2026. \url{https://raw.githubusercontent.com/ajt60gaibb/OpenProblemsInNLA/main/README.md}.
+\bibitem{inherited} \emph{AC-05: Uniform bounds from rank-one completion}. Supplied 16-page report and verification archive, 14 September 2026. Preserved without modification in \texttt{baseline/AC05\_rank\_speedup.zip}. In particular Sections 7--10 for the two upper bounds and scalar-recursion obstruction. Its included baseline also contains \emph{AC-05: Explicit decompositions and a dimension-three reduction}, 21 pages, whose Sections 5 and 9 define the hard targets and completion criterion.
+\bibitem{cglv} A. Conner, F. Gesmundo, J. M. Landsberg and E. Ventura, \emph{Rank and border rank of Kronecker powers of tensors and Strassen's laser method}. Computational Complexity 31 (2022), Article 1. Consulted arXiv version: \url{https://arxiv.org/abs/1909.04785}, especially Section 5 and Proposition 5.3 on printed page 25 of the arXiv PDF for the symmetry table. No numerical tensor decomposition in that paper is used here as an exact certificate.
+\bibitem{kn} A. Acuaviva, V. Makam, H. Nieuwboer, D. P\'erez-Garc\'ia, F. Sittner, M. Walter and F. Witteveen, \emph{The minimal canonical form of a tensor network}. arXiv:2209.14358v1, 28 September 2022. Section 2, especially Theorem 2.5 and Lemma 2.6. \url{https://arxiv.org/abs/2209.14358v1}.
+\bibitem{woodward} C. Woodward, \emph{Moment maps and geometric invariant theory}. arXiv:0912.1132v6, 29 June 2011. Lemma 4.2.3, Proposition 4.2.5, Theorem 4.2.6 and Theorem 5.2.1. \url{https://arxiv.org/abs/0912.1132v6}.
+\bibitem{triangle} A. Bernardi and F. Gesmundo, \emph{Triangular tensor networks, pencils of matrices and beyond}. arXiv:2602.15114v1, 16 February 2026. Theorem 5.3. \url{https://arxiv.org/abs/2602.15114v1}.
+\bibitem{speedup} J. Alman and B. Li, \emph{Asymptotic Rank Speedup Theorems, Revisited}. arXiv:2605.21738v1, 20 May 2026. Background for the inherited speedup method; no additional numeric bound is deduced from it in this report. \url{https://arxiv.org/abs/2605.21738v1}.
+\end{thebibliography}
+\end{document}
