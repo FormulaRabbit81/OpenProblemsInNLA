@@ -1,0 +1,471 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.95in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,mathtools,booktabs,longtable}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\setlist{nosep}
+\allowdisplaybreaks
+\setlength{\parskip}{0.35em}
+\setlength{\parindent}{0pt}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\spanop}{span}
+\newcommand{\AR}{\widetilde R}
+\newcommand{\BR}{\underline R}
+\newcommand{\F}{\mathbb F}
+\newcommand{\C}{\mathbb C}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\degto}{\trianglelefteq}
+\newcommand{\Pten}{P}
+\title{AC-04: Adaptive contraction rigidity}
+\author{}\date{}
+\begin{document}
+\maketitle
+\vspace{-2.5em}
+\begin{abstract}
+This continuation does not establish $\AR(\mathrm{cw}_2)=3$ or its negation. It extends the previous contraction lower bound from fixed product decompositions to adaptive four-term expansion trees, including valid Laurent-field border constructions. Every fully supported contraction in this larger class has rank at least $2^n$ in power $n$. A block-matrix lemma describes equality. For fixed product frames, equality forces the coefficient tensor itself to be a product; consequently the standard construction has exactly $2\cdot3^n$ minimum-rank sign patterns. The next possible rank, $2^n+1$, is attained by single-coefficient perturbations.
+
+An explicit rational adaptive decomposition of $P^{\otimes2}$, checked in all 729 coordinates, attains contraction rank four with nonproduct weights. It delineates the scope of the product-rigidity theorem. A separate simultaneous two-slice degeneration is constructed and audited. Its entire displayed seed family admits the formal balanced value $3.95$, so these inequalities do not improve the inherited bound
+\[
+3\leq\AR(\mathrm{cw}_2)<3.923037967879.
+\]
+That numerical upper bound is independently recertified here, not newly improved. Written proofs supply the all-power statements; exact finite checks are supplementary rather than a formalization of those proofs.
+\end{abstract}
+
+\section{The target and the change from the previous work}
+The repository defines, over $\C$,
+\begin{equation}\label{eq:T}
+T=\mathrm{cw}_2=\sum_{i=1}^{2}\bigl(e_0\otimes e_i\otimes e_i+e_i\otimes e_0\otimes e_i+e_i\otimes e_i\otimes e_0\bigr),
+\end{equation}
+and asks whether $\AR(T)=3$. All tensor powers here are grouped three-mode Kronecker powers. The exact-value target is not replaced by a contraction minimization problem or by an upper-bound improvement.\footnote{OpenProblemsInNLA, \emph{AC-04: Minimal asymptotic rank of the small Coppersmith--Winograd tensor}, canonical statement, accessed 14 September 2026; source [1].}
+
+The initial supplied report established an upper bound $3.923038$. A later supplied Library report sharpened the numerical certificate to $3.923037967879$, proved the fixed-product contraction lower bound, and established an obstruction for specified one-slice extraction trees. These are inherited results, not new claims of this continuation.\footnote{The two earlier reports are retained as \texttt{prior/initial/report.pdf} and \texttt{prior/later\_report.pdf}; sources [3] and [4].}
+
+The changes proved here are structural. The contraction lower bound now permits the four-term formula for a later copy to depend on earlier choices. For the smaller fixed-product class, the complete equality case replaces a lower bound alone. A rational example separates the two classes. Finally, a genuinely simultaneous, rather than separately scalar, two-slice construction is given with explicit maps and a quantified limitation.
+
+None of these conclusions is an asymptotic tensor-rank lower bound greater than three. In particular, a contraction rank of $2^n$ is not the rank of $T^{\otimes n}$. No claim of research priority, independent peer review, or proof-assistant verification is made.
+
+\section{Normal form and the inherited upper bound}
+Let
+\[
+P=\sum_{\sigma\in S_3}f_{\sigma(1)}\otimes f_{\sigma(2)}\otimes f_{\sigma(3)},
+\qquad
+V=\begin{pmatrix}1&1&-1&-1\\1&-1&1&-1\\1&-1&-1&1\end{pmatrix}
+=[v_1\ v_2\ v_3\ v_4].
+\]
+The invertible map with columns $e_0,e_1+ie_2,e_1-ie_2$ satisfies $T=\frac12L^{\otimes3}P$. A coefficient expansion gives
+\begin{equation}\label{eq:four}
+P=\frac14\sum_{a=1}^{4}v_a^{\otimes3}.
+\end{equation}
+Every flattening has rank three. Matrix rank multiplies under Kronecker products, so $R(P^{\otimes n})\geq3^n$. Rank submultiplicativity then gives $3\leq\AR(P)\leq4$ and existence of its defining limit.
+
+A nonzero matrix slice of $P$ is
+\begin{equation}\label{eq:slice}
+\begin{pmatrix}0&c&b\\c&0&a\\b&a&0\end{pmatrix},\qquad (a,b,c)\ne0,
+\end{equation}
+and has rank at least two: any nonzero off-diagonal entry supplies a nonzero principal $2\times2$ minor. This observation is also the source of the full-spark property needed below.
+
+\subsection{What is retained from the speedup calculation}
+Write $D_r$ for a diagonal tensor of rank $r$ and $L_s$ for the identity slice of dimensions $(s,s,1)$. The inherited construction starts with
+\[
+P^{\otimes3}\oplus L_{18}\degto D_{64}\oplus L_8.
+\]
+Its defining maps have a full, isolated distinguished slice. Re-extraction gives parameters
+\begin{align*}
+(d_0,t_0,M_0)&=(27,18,72),\\
+d_{j+1}&=d_j^2+2d_jt_j,&t_{j+1}&=t_j^2+2d_j^2,&M_{j+1}&=M_j^2.
+\end{align*}
+The earlier reports supply the defining maps and their kernel-compression proof. Their external framework is the tensor asymptotic spectrum and the speedup constructions of Alman--Li.\footnote{J. Alman and B. Li, \emph{Asymptotic Rank Speedup Theorems, Revisited}, CCC 2026, Sections 4--6; source [2]. The present report does not claim a new spectral-duality theorem.}
+
+For clarity, the exact finite certificate rerun here is as follows. If $z=\phi(P)$ is a spectral value, one of the three oriented slice exponents is at least $2/3$. The inherited analytic monotonicity argument yields
+\begin{equation}\label{eq:old}
+p_j(z)\leq68^{2^j},\qquad
+p_0(z)=z^3+18^{2/3},\qquad
+p_{j+1}(z)=p_j(z)^2-t_j^{4/3}+t_{j+1}^{2/3}.
+\end{equation}
+For the rational $b=3.923037967879$, the new checker independently proves
+\[
+p_4(b)/68^{16}>1.
+\]
+The polynomial $p_4$ is strictly increasing on nonnegative inputs. With the inherited argument connecting (\ref{eq:old}) to every spectral point, this recertifies $\AR(P)<b$. It is not an assertion that $R(P^{\otimes48})\leq b^{48}$.
+
+The arithmetic certificate encloses $x^{2/3}$ for rational $x\geq0$ using integers. With $D=10^{70}$ and
+\[
+k=\left\lfloor\sqrt[3]{\left\lfloor x^2D^3\right\rfloor}\right\rfloor,
+\qquad k/D\leq x^{2/3}\leq(k+1)/D,
+\]
+it propagates rational intervals through (\ref{eq:old}). Perfect cubes are recognized exactly. No rounded decimal determines the strict sign. The original 72-dimensional matrix audit and all eight original regression tests were also rerun.
+
+\section{A block-rank lemma and its equality case}
+All matrices in this section are over an arbitrary field. Transpose, when used, is ordinary transpose, not conjugate transpose.
+
+\begin{lemma}[Block rigidity]\label{lem:block}
+Let $A_1,A_2,A_3,B$ be $N\times N$ matrices of rank at least $k$. Set
+\begin{equation}\label{eq:block}
+\mathcal M=
+\begin{pmatrix}
+A_1+B&B&B\\ B&A_2+B&B\\ B&B&A_3+B
+\end{pmatrix}.
+\end{equation}
+Then $\rank\mathcal M\geq2k$. If equality holds, all four blocks have rank $k$, the same kernel, and the same image. Conversely, under these rank, kernel, and image conditions, let $\bar A_i,\bar B$ be the induced invertible maps from the common quotient domain to the common image. Then
+\begin{equation}\label{eq:matrixharmonic}
+\rank\mathcal M=2k
+\quad\Longleftrightarrow\quad
+\bar A_1^{-1}+\bar A_2^{-1}+\bar A_3^{-1}+\bar B^{-1}=0.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The submatrix in block rows $1,2$ and block columns $2,3$ is
+\[
+\begin{pmatrix}B&B\\A_2+B&B\end{pmatrix}.
+\]
+Subtracting the second block column from the first, then the first block row from the second, makes it block anti-diagonal with blocks $B,A_2$. Its rank is $\rank B+\rank A_2\geq2k$. Permuting the three block indices gives the corresponding comparison for each $A_i$.
+
+If $\rank\mathcal M=2k$, those comparisons force $\rank B=\rank A_i=k$. The restriction to block columns $2,3$ has rank $2k$, and its projection onto block rows $1,2$ still has rank $2k$. The projection is therefore injective on that column image. For $x\in\ker B$, input $(0,x)$ in these two block columns has zero projection. Its third block output is $A_3x$, which must vanish. Thus $\ker B\subseteq\ker A_3$, and equality follows from equal ranks. Permuting indices proves the same for every $A_i$. Applying this argument to the transpose proves equality of images.
+
+Now pass to the common quotient domain and common image, both $k$-dimensional. Put $s=x_1+x_2+x_3$. The kernel equations for (\ref{eq:block}) become
+\[
+x_i=-\bar A_i^{-1}\bar B s,\qquad
+\left(I+\sum_i\bar A_i^{-1}\bar B\right)s=0.
+\]
+The vector $s$ determines the entire kernel vector, and conversely every solution for $s$ gives one. Hence the reduced $3k\times3k$ matrix has rank $2k$ exactly when the displayed $k\times k$ coefficient is zero. Right multiplication by $\bar B^{-1}$ gives (\ref{eq:matrixharmonic}). No commutativity assumption is used.
+\end{proof}
+
+\section{Adaptive four-term expansions cannot lower the contraction rank}
+\begin{definition}[Adaptive expansion tree]
+To expand $P^{\otimes n}$, choose a copy of $P$ and a four-term rank-one formula for it. On each of the four resulting branches, independently choose such an expansion for the remaining copies. Continue until every copy has been expanded. Formula choices and the next copy chosen may depend on the branch. The resulting decomposition has $4^n$ labeled leaves. A fully supported weighting assigns a nonzero coefficient to every leaf.
+\end{definition}
+A fixed product decomposition is a special case, with no branch dependence. This definition does not include every possible $4^n$-term decomposition of the full tensor power.
+
+\begin{lemma}[Full-spark local frames]\label{lem:spark}
+In every four-term decomposition of $P$, any three columns of each $3\times4$ factor matrix are independent. The same statement holds over a Laurent field for a four-term decomposition representing $P+O(\lambda)$.
+\end{lemma}
+\begin{proof}
+If three columns in a factor are dependent, choose a nonzero functional annihilating them. Contraction of the four-term formula has rank at most one. This contradicts (\ref{eq:slice}), including the possibility of a zero contracted matrix because $P$ is concise.
+
+For a Laurent-field formula, choose such a functional over the field and multiply by a power of $\lambda$ to write it as $\ell_0+O(\lambda)$ with $\ell_0\ne0$. All $2\times2$ minors of its contraction vanish over the field. The contraction is also $\ell_0\mathbin{\lrcorner}P+O(\lambda)$; taking constant coefficients in the minors contradicts (\ref{eq:slice}). A Puiseux parameter can first be reparameterized.
+\end{proof}
+
+\begin{lemma}[Normalization of two local frames]\label{lem:normal}
+If $A,B$ are full-spark $3\times4$ matrices, invertible changes of basis on the two row spaces and nonzero column rescalings turn their weighted contraction into one using
+\[
+U=[I_3\mid\one]
+\]
+in both modes. The changes in the four coefficients are individual nonzero scalar multipliers.
+\end{lemma}
+\begin{proof}
+First normalize the first three columns to $I_3$, writing $A=[I_3\mid a]$ and $B=[I_3\mid b]$. Full spark says every entry of $a,b$ is nonzero. Multiplying on the left by $\diag(a)^{-1}$ or $\diag(b)^{-1}$ gives $U\diag(a_1^{-1},a_2^{-1},a_3^{-1},1)$ and its $b$ analogue. Absorb the two column multipliers into each corresponding weight.
+\end{proof}
+
+\begin{theorem}[Adaptive-tree lower bound]\label{thm:adaptive}
+For any adaptive expansion tree of $P^{\otimes n}$ and any fully supported leaf weighting, the contraction in any two retained modes has rank at least $2^n$. The bound is attained. It also holds over the coefficient field of a valid adaptive four-term border expansion.
+\end{theorem}
+\begin{proof}
+Induct on the number of copies, starting with a nonzero scalar at depth zero. Normalize the two factor frames at the root using Lemmas \ref{lem:spark}--\ref{lem:normal}; put its chosen copy first in the tensor order. The weighted contraction has the block form (\ref{eq:block}). Its four blocks are the weighted child contractions, with nonzero scalar multipliers absorbed into their leaf weights. By induction each block has rank at least $k=2^{n-1}$. Lemma \ref{lem:block} gives rank at least $2k=2^n$.
+
+Branch-dependent ordering of the remaining copies causes no problem: the child theorem is a statement about matrix rank, invariant under the resulting coordinate permutations. Attainment follows by taking the same rank-two signed local contraction in every copy:
+\[
+V\diag(1,1,-1,-1)V^T=
+\begin{pmatrix}0&0&0\\0&0&4\\0&4&0\end{pmatrix}.
+\]
+All operations work over a Laurent field as well. In that case the rank bound concerns the full coefficient-field matrix, not a rank obtained by discarding higher-order terms. Validity of the assembled degeneration is still required when using such an expansion as a tensor construction.
+\end{proof}
+
+The equality case is recursive and explicit. Every child must attain its own minimum; after the local normalization, the four child contractions must share kernel and image and satisfy the inverse-sum identity (\ref{eq:matrixharmonic}). These conditions are necessary and sufficient at each node. In particular, minimum contractions in adaptive trees need not come from product weights, as Section~\ref{sec:example} demonstrates.
+
+This theorem rules out lowering the padding parameter from $2^n$ by branching between four-term formulas for individual copies. It does not rule out a decomposition that couples copies in a way unavailable to such a tree. It does not prove a lower bound on $R(P^{\otimes n})$.
+
+\section{Complete rigidity for fixed product frames}
+For $w\in(\F\setminus\{0\})^{4^n}$, define
+\[
+M_n(w)=U^{\otimes n}\diag(w)(U^{\otimes n})^T.
+\]
+For one copy,
+\begin{equation}\label{eq:H}
+H(u)=\diag(u_1,u_2,u_3)+u_4\one\one^T.
+\end{equation}
+The matrix determinant lemma, or direct expansion, gives
+\begin{equation}\label{eq:harmonic}
+\rank H(u)=2\quad\Longleftrightarrow\quad
+\sum_{a=1}^{4}\frac1{u_a}=0,
+\qquad u_a\ne0.
+\end{equation}
+Rank below two is excluded by the diagonal-plus-rank-one rank inequality.
+
+\begin{lemma}[Recovery from the image]\label{lem:image}
+If fully supported $u,v$ satisfy (\ref{eq:harmonic}) and $\im H(u)=\im H(v)$, then $u$ and $v$ are proportional. For nonzero subspaces $E_i,F_i$, equality $\bigotimes_i E_i=\bigotimes_i F_i$ implies $E_i=F_i$ for every $i$.
+\end{lemma}
+\begin{proof}
+The kernel of the symmetric matrix $H(u)$ is generated by $(u_1^{-1},u_2^{-1},u_3^{-1})^T$. Equal images give equal kernels. Thus the first three weights are proportional, and (\ref{eq:harmonic}) fixes the fourth by the same factor. The subspace assertion follows by recovering each local subspace as the span of partial contractions against all functionals in the other factors.
+\end{proof}
+
+\begin{theorem}[Fixed-product equality classification]\label{thm:product}
+For all $n\geq1$ and all fully supported $w$,
+\begin{equation}\label{eq:classification}
+\rank M_n(w)=2^n
+\quad\Longleftrightarrow\quad
+w=u^{(1)}\otimes\cdots\otimes u^{(n)},\qquad
+\sum_{a=1}^{4}\frac1{u^{(j)}_a}=0\quad(1\leq j\leq n),
+\end{equation}
+where every factor entry is nonzero. A separate global scalar can be absorbed into any one factor.
+\end{theorem}
+\begin{proof}
+The reverse implication is immediate from $M_n(w)=\bigotimes_jH(u^{(j)})$. For the forward implication, use induction, with (\ref{eq:harmonic}) as base case. Split $w$ into four first-coordinate slices $w_1,\ldots,w_4$. Then
+\[
+M_n(w)=\diag\bigl(M_{n-1}(w_1),M_{n-1}(w_2),M_{n-1}(w_3)\bigr)
++\one\one^T\otimes M_{n-1}(w_4).
+\]
+The block induction of Lemma \ref{lem:block}, starting from a nonzero scalar, gives rank at least $2^{n-1}$ for each child block over any field. Equality in the total rank and Lemma \ref{lem:block} force all four child blocks to have rank $2^{n-1}$ and the same image.
+
+By induction, each child block is a product of rank-two local matrices. Lemma \ref{lem:image} recovers each local image from the common product image, and then recovers the local matrices up to scalar. Hence all four child matrices are proportional.
+
+The linear map $w\mapsto M_{n-1}(w)$ is injective. For one copy its four coefficient matrices are the three diagonal coordinate matrices and $\one\one^T$, which are linearly independent. Tensor products preserve this independence. Consequently $w_i=c_iw_4$ for nonzero scalars $c_i$, with $c_4=1$. Thus
+\[
+M_n(w)=H(c_1,c_2,c_3,1)\otimes M_{n-1}(w_4).
+\]
+Its rank forces the first factor to have rank two. Equation (\ref{eq:harmonic}) and the induction hypothesis finish the proof.
+\end{proof}
+
+For arbitrary fixed products of full-spark factor pairs, Lemma \ref{lem:normal} changes $w$ only by a product of local nonzero coordinate multipliers. Therefore the same conclusion holds in the original frames: minimum rank occurs exactly for product weights whose local weighted contractions have rank two. This covers arbitrary four-term formulas for the separate copies, including valid formulas over a Laurent field. It does not extend the product-weight conclusion to adaptive frames.
+
+\subsection{All powers of the sign problem}
+For the particular $V$, normalization gives $[I_3\mid-\one]$ in both modes, so no change to the weights is needed in the contraction matrix. For signs, (\ref{eq:harmonic}) says exactly that two entries are positive and two negative.
+
+\begin{corollary}[Minimum sign patterns]\label{cor:sign}
+Among the $2^{4^n}$ sign vectors $w\in\{\pm1\}^{4^n}$, exactly $2\cdot3^n$ give
+\[
+\rank\bigl(V^{\otimes n}\diag(w)(V^{\otimes n})^T\bigr)=2^n.
+\]
+They are precisely a global sign times a product of the three nonconstant four-point Walsh characters in every coordinate.
+\end{corollary}
+\begin{proof}
+Theorem \ref{thm:product} forces a product. Normalize each local factor to have first entry one and retain a single global sign. Ratios of global sign entries show that the local entries are also signs. There are three balanced choices with first entry one, independently in every coordinate, and two global signs. Conversely all these patterns satisfy the local rank-two condition.
+\end{proof}
+The counts for $n=1,2,3,4$ are $6,18,54,162$. In particular, the $n=3$ statement is a classification among $2^{64}$ sign patterns, not a claim that all of them were enumerated.
+
+\begin{corollary}[The first rank gap is sharp]\label{cor:gap}
+For fixed product frames and $n\geq2$, a fully supported nonproduct weight tensor has contraction rank at least $2^n+1$. Starting from a minimum weight tensor, changing any one coefficient by a nonzero amount while retaining support gives rank exactly $2^n+1$.
+\end{corollary}
+\begin{proof}
+The classification and integrality give the lower bound. A single-coefficient change destroys the product property: a $2\times2$ minor using that corner and a word differing in two coordinates changes from zero to a nonzero value. The contraction matrix changes by a rank-one matrix, giving the matching upper bound.
+\end{proof}
+For sign weights, this exhibits $2\cdot12^n$ distinct rank-$2^n+1$ patterns for $n\geq2$. Indeed, flip one of the $4^n$ coordinates in each minimum pattern. Distinct minimum characters, except their negatives, have Hamming distance $4^n/2\geq8$, so these radius-one families are disjoint. This count is for the exhibited family; it is not asserted to classify all matrices in the next rank stratum.
+
+\section{An exact adaptive example with nonproduct weights}\label{sec:example}
+This example is important for preventing an overextension of Theorem \ref{thm:product}. Put
+\[
+D_1=D_3=I_3,\qquad D_2=D_4=\diag(1,2,2),
+\]
+\[
+u=\tfrac18(-1,3,3,3),\qquad v=\tfrac1{32}(-3,5,15,15),\qquad
+W=\begin{pmatrix}u\\v\\-u\\-v\end{pmatrix}.
+\]
+For $a,b\in\{1,2,3,4\}$, define $x_{ab}=v_a\otimes D_av_b$. Then
+\begin{equation}\label{eq:adaptiveidentity}
+P^{\otimes2}=\sum_{a,b=1}^{4}\frac{x_{ab}\otimes x_{ab}\otimes x_{ab}}{16\det D_a}.
+\end{equation}
+This follows directly from (\ref{eq:four}) because $D^{\otimes3}P=(\det D)P$ for every invertible diagonal $D$.
+
+The weighted child contractions are $A,B,-A,-B$, where
+\[
+A=\begin{pmatrix}1&-1/2&-1/2\\-1/2&1&-1/2\\-1/2&-1/2&1\end{pmatrix},\quad
+B=\begin{pmatrix}1&-1/2&-1/2\\-1/2&4&-7/2\\-1/2&-7/2&4\end{pmatrix}.
+\]
+Both have rank two and kernel $\spanop\{(1,1,1)^T\}$. They have the same image, and their induced inverse maps satisfy
+\[
+\bar A^{-1}+\bar B^{-1}+(-\bar A)^{-1}+(-\bar B)^{-1}=0.
+\]
+Lemma \ref{lem:block}, after the outer $V$ normalization, therefore gives
+\begin{equation}\label{eq:adaptiverank}
+\rank\left(\sum_{a,b}W_{ab}x_{ab}x_{ab}^{T}\right)=4.
+\end{equation}
+But $W$ is not a product: its rank as a $4\times4$ matrix is two. For example, the minor in its first two rows and first two columns is $1/64$.
+
+The checker verifies all 729 coefficients of (\ref{eq:adaptiveidentity}) with rational arithmetic, checks the child ranks and kernels, and computes rank four in (\ref{eq:adaptiverank}). All sixteen weights are nonzero. Thus adaptive formulas enlarge the family of minimum contractions without lowering the minimum. In particular, one must not apply the product-weight classification after silently allowing the local frames to vary by branch.
+
+\section{A simultaneous two-slice construction}
+The following family leaves the one-functional setup of the earlier calculation. It is useful to state both its maps and its limitation rather than assuming that more distinguished coordinates automatically yield a stronger rank bound.
+
+Identify $\F_2^2$ with $\{0,1,2,3\}$ under bitwise exclusive-or. Set
+\[
+G=(\F_2^2)^n,\qquad S=(\F_2^2\setminus\{0\})^n,
+\qquad \Gamma_G=\sum_{a+b+c=0}e_a\otimes e_b\otimes e_c.
+\]
+Character orthogonality gives an exact $4^n$-term Fourier decomposition of $\Gamma_G$, and $P^{\otimes n}=\Gamma_G|_{S,S,S}$ after relabeling coordinates.
+
+Choose $u=(1,\ldots,1)$ and $v$ which is $2$ in $k$ coordinates and $1$ in the remaining $\ell=n-k$, where $1\leq k\leq n$. Write
+\[
+\mathcal W=\{u,v\},\qquad E=G\setminus\bigl(S\cup(S+u)\cup(S+v)\bigr),
+\]
+\[
+K=\Gamma_G|_{S,S,\mathcal W},\qquad Q=\Gamma_G|_{E,E,\mathcal W}.
+\]
+Unused zero coordinates can be removed from these tensors.
+
+\begin{proposition}[Simultaneous extraction]\label{prop:two}
+For these sets there is a degeneration
+\begin{equation}\label{eq:twomap}
+P^{\otimes n}\oplus Q\degto\Gamma_G\oplus K.
+\end{equation}
+\end{proposition}
+\begin{proof}
+Map the first two modes of $\Gamma_G$ onto a core copy of $S$ and an auxiliary copy of $E$. Map its third mode onto a core copy of $S$ together with the two auxiliary coordinates in $\mathcal W$. Map the first two modes of the padding $K$ to the core coordinates and its third mode to minus the corresponding auxiliary coordinates.
+
+The core/core/auxiliary block cancels exactly. Both cross blocks ending in an auxiliary third coordinate vanish because $E+\mathcal W$ is disjoint from $S$. The all-core block is $P^{\otimes n}$ and the all-auxiliary block is $Q$. Assign weights $(1,\lambda)$ to the two first-mode blocks and to the two second-mode blocks, and weights $(\lambda^2,1)$ to the third-mode blocks; divide by $\lambda^2$. The two desired blocks remain. The uncancelled other blocks have positive powers $\lambda$ or $\lambda^2$ and vanish in the limit.
+\end{proof}
+
+\subsection{Evaluation by four-point cosets}
+Put $H=\{0,u,v,u+v\}$, which has four elements. Define integers
+\begin{equation}\label{eq:parameters}
+N=2^\ell,\qquad a=2^n-2^{\ell+1},\qquad
+F=4^{n-1}-3^n+2^n+2^{k-1}3^\ell-2^\ell.
+\end{equation}
+The nonnegative number $F$ counts the cosets of $H$ disjoint from $S$.
+
+Here is a complete count. Each of the $k$ coordinates where $u,v$ differ forbids one of the four coset vertices from lying in $S$. A coordinate where they agree either forbids two vertices or forbids none. There are exactly $N=2^\ell$ cosets with three vertices in $S$: all agreeing coordinates must avoid $\{0,1\}$, and all the other forbidden vertices must coincide.
+
+The intersection sizes are $|S\cap(S+u)|=|S\cap(S+v)|=2^n$ and $|S\cap(S+u+v)|=2^k3^\ell$. A three-vertex coset contains one pair of each type. It follows that the two-vertex coset counts are
+\[
+N_u=N_v=2^{n-1}-N=a/2,\qquad
+N_{u+v}=2^{k-1}3^\ell-N.
+\]
+Counting the $3^n$ vertices in $S$ gives the one-vertex count
+\[
+N_1=3^n-2^{n+1}-2^k3^\ell+3N.
+\]
+Subtracting the nonempty cosets from $4^{n-1}$ gives $F$ in (\ref{eq:parameters}).
+
+A coset disjoint from $S$ contributes all four of its vertices to $E$. A coset with one vertex in $S$ leaves at most the opposite vertex in $E$, which has no $u$- or $v$-edge to itself. Cosets with two or three vertices in $S$ leave no such edge in $E$. Therefore only the $F$ empty cosets contribute to $Q$.
+
+The two translation matrices on a four-point coset simultaneously diagonalize by the four-point Fourier transform. Their two projective eigenvalue pairs have multiplicity two each. Consequently
+\begin{equation}\label{eq:Q}
+Q\simeq L_{2F}\oplus L_{2F}.
+\end{equation}
+The two third-mode coordinates here are independent; cosets with the same eigenvalue pair combine into one identity slice.
+
+For $K$, a three-vertex coset contributes the path pencil
+\[
+B_0=(e_0e_1+e_1e_0)f_1+(e_0e_2+e_2e_0)f_2.
+\]
+The $N$ such cosets together give $B_0\otimes L_N$; they share the same third-mode coordinates. The two adjacent-pair types contribute two size-$a$ identity slices, whose third coordinates may be merged with those of $B_0$. Hence $K$ is a restriction of
+\begin{equation}\label{eq:K}
+(B_0\otimes L_N)\oplus L_a\oplus L_a.
+\end{equation}
+The formula
+\[
+\lambda^{-1}\left[(e_0+\lambda e_1)^{\otimes2}f_1+(e_0+\lambda e_2)^{\otimes2}f_2-e_0^{\otimes2}(f_1+f_2)\right]
+=B_0+\lambda(e_1^{\otimes2}f_1+e_2^{\otimes2}f_2)
+\]
+proves $\BR(B_0)\leq3$ using exactly three rank-one terms.
+
+\subsection{The resulting inequalities and an all-power limitation}
+For a spectral point write $z=\phi(P)$ and $\phi(L_s)=s^\theta$ in the selected orientation. Equations (\ref{eq:twomap})--(\ref{eq:K}) give, for $\theta>0$,
+\begin{equation}\label{eq:twoscalar}
+z^n+2(2F)^\theta\leq4^n+3N^\theta+2a^\theta.
+\end{equation}
+All three oriented copies hold. The maps establish these inequalities, but no claim is made that the new auxiliary pencil satisfies every fullness hypothesis needed for an unrestricted repetition of the earlier scalar recursion.
+
+\begin{theorem}[Feasibility of the entire displayed two-slice seed family]\label{thm:twobarrier}
+Every inequality (\ref{eq:twoscalar}), for every $n\geq1$ and $1\leq k\leq n$, holds strictly at the formal assignment
+\[
+z=79/20=3.95,\qquad \theta_1=\theta_2=\theta_3=2/3.
+\]
+Thus these seed inequalities alone do not force a bound below $3.95$. This is a statement about necessary scalar constraints, not an asymptotic tensor-rank lower bound.
+\end{theorem}
+\begin{proof}
+For $1\leq n\leq6$, there are 21 pairs $(n,k)$. The supplied rational interval certificate verifies the strictly positive slack in every case.
+
+For $n\geq7$, put $r=4^n$. Because $F\leq r/4$, the extracted term is bounded by
+\[
+2(2F)^{2/3}\leq2^{1/3}r^{2/3}<\frac43r^{2/3}.
+\]
+The exact rational comparisons
+\[
+2<(4/3)^3,\qquad 4^7>24^3,\qquad
+1-(79/80)^7>1/18
+\]
+show
+\[
+1-(79/80)^7>\frac43\,4^{-7/3}.
+\]
+The left side increases with $n$ and the right side decreases. Therefore
+\[
+(79/20)^n+2(2F)^{2/3}<4^n\qquad(n\geq7),
+\]
+which is stronger than (\ref{eq:twoscalar}) since its padding terms are nonnegative.
+\end{proof}
+
+This family therefore does not supply an improved numerical upper bound in this continuation. Since the left side is increasing in $z$, the same balanced assignment is feasible at every smaller nonnegative $z$. Products followed by a genuinely new extraction or compression are not included in this limitation theorem.
+
+\section{Verification, scope, and the unresolved step}
+The principal exact command is
+\begin{center}\texttt{python code/verify.py}\end{center}
+from the extracted package root. It uses the Python standard library. Regression tests run with
+\begin{center}\texttt{cd code}\qquad\texttt{python -m unittest -v test\_verification.py}.\end{center}
+The stored run passes 25 new tests and reruns the eight inherited tests. The original exact SymPy matrix audit also passes; SymPy is needed only to reproduce that optional inherited audit.
+
+The new exact checks include the finite-depth upper-bound certificate, rational minimum-rank and single-perturbation examples, injectivity of the local and two-copy contraction dictionaries, all 78 classified sign minimizers in powers one through three, and 3,744 distinct one-flip examples in powers two and three. Modular ranks in those sign checks are paired with the analytic rank upper bounds; a modular rank is never silently equated with complex rank without that upper bound.
+
+The adaptive example is checked in all 729 tensor coordinates. The simultaneous construction is checked by sparse coefficient and valuation identities at six parameter pairs, including both a nonzero auxiliary example and zero-auxiliary edge cases. Coset formulas are independently enumerated at all 28 pairs with $n\leq7$. The 21 interval checks and three rational tail comparisons support Theorem \ref{thm:twobarrier}.
+
+These finite computations do not establish the all-depth adaptive induction, the all-power equality classification, or spectral duality by themselves. Those are mathematical arguments in the text or expressly inherited external machinery. No proof assistant or independent referee has certified the complete manuscript.
+
+\begin{longtable}{p{0.66\textwidth}p{0.27\textwidth}}
+\toprule
+Claim & Status in this continuation\\\midrule
+\endfirsthead
+\toprule
+Claim (continued) & Status in this continuation\\\midrule
+\endhead
+$3\leq\AR(P)<3.923037967879$ & Inherited; strict endpoint recertified\\
+Contraction rank at least $2^n$ in adaptive four-term expansion trees & Proved by block induction\\
+All minimum contractions in fixed product frames & Classified by Theorem \ref{thm:product}\\
+Exactly $2\cdot3^n$ minimum sign patterns & Proved for all $n$\\
+Adaptive, nonproduct-weight rank-four example & Exact identity and certificate\\
+Simultaneous two-slice degeneration and balanced seed limitation & Proved, with exact finite checks\\
+$\AR(P)=3$ or $\AR(P)>3$ & Neither established\\\bottomrule
+\end{longtable}
+
+A positive resolution of AC-04 still needs, for example,
+\begin{equation}\label{eq:missing}
+\forall\varepsilon>0\ \exists m\geq1:\quad
+R(P^{\otimes m})<(3+\varepsilon)^m.
+\end{equation}
+Together with the flattening lower bound and submultiplicativity, this is equivalent to the requested equality. A negative resolution needs a genuine asymptotic lower bound above three. Neither a feasible scalar assignment nor a contraction lower bound in a specified algorithm class provides one.
+
+The concrete missing ingredient in this continuation is a construction satisfying (\ref{eq:missing}), or a valid stronger spectral argument. More branch-dependent choices inside the adaptive expansion class cannot reduce its fully supported contraction rank. The displayed two-slice seeds do not bridge the gap either. A further search must add an ingredient outside these proved limitations; unrestricted nonhierarchical power decompositions and new simultaneous compression operations have not been excluded.
+
+\subsection*{A concrete conditional target outside the excluded class}
+A finite intermediate search target is a 16-term decomposition of $P^{\otimes2}$ with a fully supported weighting whose two-mode contraction has rank three. The adaptive-tree theorem excludes every decomposition of that hierarchical kind; a candidate must therefore leave that class.
+
+If such a decomposition exists, tensoring it with the four-term formula (\ref{eq:four}) gives source parameters $r=64$, $d=27$, $s=6$. The inherited extraction mechanism would then start from
+\[
+P^{\otimes3}\oplus L_{16}\degto D_{64}\oplus L_6,
+\]
+with a full isolated slice. The same analytic endpoint proof works because $16>6$. Three re-extractions, with $h=64+6^{2/3}$ and initial $p=z^3+16^{2/3}$, give the conditional conclusion
+\[
+\text{the required decomposition exists}\quad\Longrightarrow\quad
+\AR(P)<3.918501.
+\]
+The finite scalar sign for this implication is certified using rational intervals in \texttt{conditional\_target} in the verification JSON. \emph{The required decomposition is not supplied, so this is not an improved bound obtained here.} Even this intermediate improvement would remain above the exact target three.
+
+\clearpage
+\section*{Sources}
+\begin{enumerate}[label={[\arabic*]},leftmargin=2em,itemsep=0.5em]
+\item OpenProblemsInNLA. \emph{AC-04: Minimal asymptotic rank of the small Coppersmith--Winograd tensor}. Canonical repository statement, last checked in the repository 10 September 2026; accessed 14 September 2026.\newline
+\url{https://raw.githubusercontent.com/ajt60gaibb/OpenProblemsInNLA/main/arithmetic-and-complexity/AC-04/README.md}
+\item Josh Alman and Baitian Li. \emph{Asymptotic Rank Speedup Theorems, Revisited}. 41st Computational Complexity Conference, LIPIcs 383, 36:1--36:42, 23 July 2026. DOI: 10.4230/LIPIcs.CCC.2026.36. Also arXiv:2605.21738v1. Sections 4--6 supply the external spectral and extraction framework used by the inherited report.\newline
+\url{https://arxiv.org/html/2605.21738v1}
+\item \emph{AC-04: A certified upper-bound refinement}. Supplied earlier research package, request dated 13 September 2026. Preserved under \texttt{prior/initial/}. Research work product, not independently reviewed literature.
+\item \emph{AC-04: Contraction optimality and a finite-tree obstruction}. Supplied Library continuation dated 14 September 2026, original filename \texttt{report(20260914-161717).pdf}. Preserved as \texttt{prior/later\_report.pdf}. Used for provenance of the previous best bound and the previous fixed-product theorem.
+\end{enumerate}
+\end{document}

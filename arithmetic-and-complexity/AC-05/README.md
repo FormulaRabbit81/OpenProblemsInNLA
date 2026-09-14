@@ -8,7 +8,7 @@
 **Importance:** broadly interesting  
 **Rating rationale:** Extreme because it predicts minimal asymptotic complexity for every concise tight tensor; broad importance follows from consequences for matrix multiplication and exponential-time combinatorial algorithms.  
 **Topic:** complexity of structured tensor powers  
-**Last checked:** 2026-09-10  
+**Last checked:** 2026-09-14  
 **Status:** Open  
 
 ## Context and notation
@@ -50,3 +50,9 @@ is not a proof. **Admitted: no resolution located.**
 ## Status check — 2026-09-10
 
 Rechecked [Lee, Conjecture 1](https://arxiv.org/html/2601.08119v1) and [Björklund–Kaski](https://arxiv.org/abs/2310.11926), then searched for 2026 proofs and counterexamples. The tight/concise asymptotic-rank formulation remains explicitly conjectural. Its incompatibility with the Set Cover Conjecture is conditional and does not refute it. No unconditional full resolution was located; numerical rank estimates do not prove the universal limit.
+
+## Reviewed research submission — 14 September 2026
+
+**Author:** Sidney Holden, Center for Computational Biology, Flatiron Institute, Simons Foundation. [Verified affiliation](../../references/holden-ac-2026-09-14/README.md) · [Report](../../references/holden-ac-2026-09-14/AC-05-submission.pdf) · [Independent AI audit](../../references/holden-ac-2026-09-14/verification/review-ac05-ac06.md).
+
+Theorems 3.2–9.3 give scoped power classifications and finite lower bounds, not the missing asymptotic upper bound. Inherited claims are excluded from this audit. **Open** is retained. AI assistance disclosed; no external human review, formal verification or Lean checks.

@@ -8,7 +8,7 @@
 **Importance:** interesting to the community  
 **Rating rationale:** Extreme because the exact rank of this small multiplication tensor remains a decades-old barrier despite extensive algorithm searches; community importance concerns recursive matrix multiplication and bilinear algorithm design.  
 **Topic:** small matrix multiplication algorithms  
-**Last checked:** 2026-09-10  
+**Last checked:** 2026-09-14  
 **Status:** Open  
 
 ## Problem statement
@@ -46,3 +46,11 @@ or matching lower bound. **Admitted: no resolution located.**
 ## Status check — 2026-09-10
 
 Rechecked [Sun’s rank-23 construction](https://arxiv.org/abs/2604.27645) and [Alman–Li, §1](https://arxiv.org/html/2605.21738v1), which explicitly identifies both exact rank and border rank of the 3×3 product as unresolved. Searches for 22-product complex bilinear algorithms found no qualifying construction or matching lower bound. Fewer additions at rank 23 and finite-field lower bounds do not settle this complex-field minimum.
+
+## Reviewed research submission — 14 September 2026
+
+**Author:** Sidney Holden, Center for Computational Biology, Flatiron Institute, Simons Foundation. [Verified affiliation and submission record](../../references/holden-ac-2026-09-14/README.md).
+
+Reviewed results cover fixed-support calculations, the Sun four-block conditional obstruction and two five-block examples. Unrestricted complex rank remains undetermined. Missing continuation checkers prevent certification of its larger noncompletion claims; these are excluded from the passing audit.
+
+**Status: Open.** [Report](../../references/holden-ac-2026-09-14/AC-02-submission.pdf) · [Independent AI-agent audit and limitations](../../references/holden-ac-2026-09-14/verification/review-ac01-ac02.md). AI assistance disclosed; no external human review, formal verification or Lean checks. Original target and prior-source credit retained.

@@ -8,7 +8,7 @@
 **Importance:** interesting to the community  
 **Rating rationale:** Extreme because exact border rank remains unknown even for this fixed matrix-product tensor; community importance reflects degenerating bilinear algorithms and the geometry behind fast multiplication.  
 **Topic:** approximate bilinear algorithms  
-**Last checked:** 2026-09-10  
+**Last checked:** 2026-09-14  
 **Status:** Open  
 
 ## Problem statement
@@ -43,3 +43,11 @@ Theorem 1.1, proves $`\underline R(M_3)\ge17`$. J. Alman and B. Li,
 ## Status check — 2026-09-10
 
 Rechecked [Alman–Li, §1](https://arxiv.org/html/2605.21738v1), and searched for a 2026 exact border-rank determination of the 3×3 multiplication tensor. The May 2026 source explicitly lists this value as open. Neither its asymptotic-rank improvements nor an exact-rank algorithm determines the border rank. No full resolution was located; the previously cited lower bound remains a bound, not an exact answer.
+
+## Reviewed research submission — 14 September 2026
+
+**Author:** Sidney Holden, Center for Computational Biology, Flatiron Institute, Simons Foundation. [Verified affiliation and submission record](../../references/holden-ac-2026-09-14/README.md).
+
+The audit supports the elementary pair-section/cactus and grouped Fourier arguments in Sections 2–4. Missing verifier modules and certificates prevent a full-package audit. Stronger computer-assisted claims are excluded; no exact border rank or improved endpoint is established.
+
+**Status: Open.** [Report](../../references/holden-ac-2026-09-14/AC-03-submission.pdf) · [Independent AI-agent audit and limitations](../../references/holden-ac-2026-09-14/verification/review-ac03-ac04.md). AI assistance disclosed; no external human review, formal verification or Lean checks. Original target and prior-source credit retained.
