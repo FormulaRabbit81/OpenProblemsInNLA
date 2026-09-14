@@ -38,3 +38,14 @@ Each `AC-XX-submission.pdf` adds an authorship/affiliation cover to the latest o
 The branch starts from upstream `main` at `27540c80`. All six canonical pages were Open there. All 77 fetched fork remote refs were inspected for Solved, Lean verified or Solution claimed statuses for these IDs, with no match. The author's [upstream PR history snapshot](verification/pr-history.json) likewise contained no prior full-solution submission for these six problems. Their relationship (notably AC-01's auxiliary AC-04 bound) is cross-referenced without creating or changing any problem ID.
 
 This submission is intended for a new pull request from the author's fork against `ajt60gaibb/OpenProblemsInNLA:main`. It requests maintainer review and integration of the bounded research record, not a full-resolution designation. No direct push or merge to upstream main is authorized or performed.
+
+## Subsequent maintainer audit — 14 September 2026
+
+The [fresh maintainer audit of PR #261](../../reviews/2026-09-14-pr261/README.md)
+records independent mathematical checks, executable replays, document review
+and source-preservation evidence at the submitted revision. It accepts the
+bounded research scopes above with the stated AC-02/AC-03 exclusions; all six
+original problems remain Open. This is informal AI review, not external human
+peer review or Lean verification. The supplied reviews remain as historical
+records; the fresh audit corrects the AC-06 controlled-list corollary locator
+to 2.3.

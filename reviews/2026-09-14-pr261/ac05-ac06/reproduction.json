@@ -1,0 +1,20 @@
+{
+  "commands": [
+    "python3 code/replay_certificates.py --output evidence/ac05-replay.json",
+    "python3 -O code/replay_certificates.py --output evidence/ac05-replay-optimized.json",
+    "/private/tmp/nla-batch-python/bin/python verify.py --no-write",
+    "/private/tmp/nla-batch-python/bin/python -O verify.py --no-write",
+    "/private/tmp/nla-batch-python/bin/python independent_checks.py SCRATCH_SUBMITTED",
+    "/private/tmp/nla-batch-python/bin/python -O independent_checks.py SCRATCH_SUBMITTED"
+  ],
+  "all_exit_codes": 0,
+  "scientific_runtime": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "sympy": "1.14.0"
+  },
+  "default_python": "3.13.14",
+  "scratch_root": "/private/tmp/nla-review-261/ac05-ac06/scratch",
+  "no_source_worktree_mutation": true,
+  "inherited_archive_execution": "Not performed in this audit; excluded from fresh PASS scope."
+}
