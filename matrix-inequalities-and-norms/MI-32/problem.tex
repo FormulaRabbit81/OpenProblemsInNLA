@@ -204,15 +204,18 @@ sharp.
 The hypothesis class is not vacuous.
 \textit{MI32.RegularWitness.exists\_regularEntries} exhibits an
 independent fair-sign matrix satisfying the hypotheses at \(\alpha=1\)
-with \(M(X)=\sqrt n>0\), so the displayed bound is a genuine constraint
-rather than a statement about an empty class.
+with \(M(X)>0\), so the displayed bound is a genuine constraint rather
+than a statement about an empty class.
 
 \subsubsection{Verification record}\label{verification-record}
 
 This catalog \textbf{reviewed a public verification record}; it did not
-rerun the checks itself. Palomar's mechanical verification of the
-registered commit ran on Palomar's own Linux infrastructure on
-2026-09-14T14:07:31Z:
+rerun the checks itself.
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/reviews/2026-09-14-pr257/README.md}{Independent
+maintainer review and authenticated evidence} record the statement
+checks and the public run inspected for this catalog. Palomar's
+mechanical verification of the registered commit ran on Palomar's own
+Linux infrastructure on 2026-09-14T14:07:31Z:
 
 \begin{itemize}
 \tightlist
@@ -228,8 +231,9 @@ registered commit ran on Palomar's own Linux infrastructure on
   \textit{68d5ca9db226849b41a6fff59d796ff19d0a8840};
 \item
   \textit{lean4export} at
-  \textit{15f6055e299ad5b89345e533cc2192f4cc00f659} and the
-  \textit{landrun} sandbox at
+  \textit{15f6055e299ad5b89345e533cc2192f4cc00f659};
+\item
+  the \textit{landrun} sandbox at
   \textit{811cfff51ceaf3d9843708aa6d22e9b84ccac8b4}.
 \end{itemize}
 
@@ -249,15 +253,16 @@ lake env lean FullTargetAudit.lean
 python3 scripts/verify.py
 \end{verbatim}
 
-The last of these exits zero only when the whole gate passes, and writes
-a dated record to \textit{verification/status.json}. A successful build
-is not on its own evidence of the result; the Comparator and
-kernel-replay run above is.
+The last of these exits zero only when the whole local Lean gate passes,
+and writes a dated record to \textit{verification/status.json}. A
+successful build is not on its own evidence of the result; the
+Comparator and kernel-replay run above is.
 
 \subsubsection{Transitive axiom report}\label{transitive-axiom-report}
 
 \begin{verbatim}
-'MI32.main_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MI32.main_upper' depends on axioms:
+[propext, Classical.choice, Quot.sound]
 \end{verbatim}
 
 produced by \textit{lake env lean FullTargetAudit.lean} and retained

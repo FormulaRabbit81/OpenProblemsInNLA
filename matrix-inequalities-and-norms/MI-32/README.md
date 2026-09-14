@@ -131,14 +131,16 @@ is conservative and is not claimed to be sharp.
 
 The hypothesis class is not vacuous. `MI32.RegularWitness.exists_regularEntries`
 exhibits an independent fair-sign matrix satisfying the hypotheses at
-$`\alpha=1`$ with $`M(X)=\sqrt n>0`$, so the displayed bound is a genuine
+$`\alpha=1`$ with $`M(X)>0`$, so the displayed bound is a genuine
 constraint rather than a statement about an empty class.
 
 ### Verification record
 
 This catalog **reviewed a public verification record**; it did not rerun the
-checks itself. Palomar's mechanical verification of the registered commit ran on
-Palomar's own Linux infrastructure on 2026-09-14T14:07:31Z:
+checks itself. [Independent maintainer review and authenticated evidence](../../reviews/2026-09-14-pr257/README.md)
+record the statement checks and the public run inspected for this catalog.
+Palomar's mechanical verification of the registered commit ran on Palomar's own
+Linux infrastructure on 2026-09-14T14:07:31Z:
 
 - [workflow run 34852526384](https://github.com/PalomarRegistry/PalomarSubmission/actions/runs/34852526384)
   in `PalomarRegistry/PalomarSubmission`;
@@ -146,8 +148,8 @@ Palomar's own Linux infrastructure on 2026-09-14T14:07:31Z:
   Solution declaration proves the Challenge statement in a separate environment;
 - an independent NanoDa kernel replay at
   `68d5ca9db226849b41a6fff59d796ff19d0a8840`;
-- `lean4export` at `15f6055e299ad5b89345e533cc2192f4cc00f659` and the `landrun`
-  sandbox at `811cfff51ceaf3d9843708aa6d22e9b84ccac8b4`.
+- `lean4export` at `15f6055e299ad5b89345e533cc2192f4cc00f659`;
+- the `landrun` sandbox at `811cfff51ceaf3d9843708aa6d22e9b84ccac8b4`.
 
 The registry entry records trust level `high`, and its AI editorial review
 returned outcome `neutral`, meaning that no blocking problem was identified.
@@ -163,14 +165,15 @@ lake env lean FullTargetAudit.lean
 python3 scripts/verify.py
 ```
 
-The last of these exits zero only when the whole gate passes, and writes a dated
+The last of these exits zero only when the whole local Lean gate passes, and writes a dated
 record to `verification/status.json`. A successful build is not on its own
 evidence of the result; the Comparator and kernel-replay run above is.
 
 ### Transitive axiom report
 
 ```
-'MI32.main_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MI32.main_upper' depends on axioms:
+[propext, Classical.choice, Quot.sound]
 ```
 
 produced by `lake env lean FullTargetAudit.lean` and retained at
