@@ -3,6 +3,11 @@
 A collection of precise open problems drawn from books and research
 publications, with references and dated checks for subsequent solutions.
 
+I have several motivations for starting this repository: 
+1. We are a few weeks away from an AI company or undergraduates or hobbyists from looping over our literature and solving many of our precise conjectures, without much understanding. I would like our community to solve them first and digest the consequences. 
+2. I would like to show the community that most of our precise conjectures can now be solved by the best AI models on the market. I am mourning just like you are.  
+3. I would like to collect the solutions in one place because they are coming in fast.
+
 <!-- catalog-summary -->
 **114 problems with open targets:** 42 open and 72 partially resolved. **103 other retained entries**, excluded from the open count.
 
