@@ -34,7 +34,7 @@ pivoting},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}IE-15}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-11}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-15}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -51,7 +51,7 @@ small-order growth factors for rook pivoting\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} hard\quad\textbf{Importance:} interesting
 to specialist\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
@@ -59,6 +59,45 @@ to specialist\par}
 finite-dimensional extremal constants within an established pivoting
 model; specialist impact concerns exact small-order rook-pivoting
 behavior.
+
+\subsection{Lean verification ---
+2026-09-15}\label{lean-verification-2026-09-15}
+
+The complete exact-value resolution is \textbf{Lean verified}:
+\(g_{\mathrm{RP}}(3)=3\) and \(g_{\mathrm{RP}}(4)=14/3\). The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/linear-systems-and-elimination/IE-15/lean}{Lean
+project} proves the universal upper bounds for every real nonsingular
+input, every admissible rook choice and tie, and every intermediate
+active entry. Exact rational witnesses attain both values, and the final
+theorem identifies the actual real suprema.
+
+Two independent AI referees approved the exact statements before proof
+development and the complete final proof afterward. The fresh Ubuntu
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35010138599/attempts/1}{verification
+run 35010138599, attempt 1} accepted all eight exports against those
+statements through Lean4 Comparator and Lean's default kernel at
+immutable candidate
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/591690a3ca1715b61e769e7fae68cbda84565f07/linear-systems-and-elimination/IE-15/lean}{\textit{591690a3}}.
+Only \textit{propext}, \textit{Classical.choice} and \textit{Quot.sound}
+occur in the target axiom closures. The used LeanCert certificate runs
+explicitly in kernel mode. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/linear-systems-and-elimination/IE-15/lean/verification/linux-2026-09-15}{permanent
+evidence archive} retains the sandbox, kernel replay and rejection
+controls; both independent
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/linear-systems-and-elimination/IE-15/lean/reviews/linux-referee-1.md}{operational
+audits}
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/linear-systems-and-elimination/IE-15/lean/reviews/linux-referee-2.md}{approved
+the evidence}.
+
+\textbf{Original mathematical proof and Lean formalization:} George
+Stepaniants, Department of Computing and Mathematical Sciences,
+California Institute of Technology, with substantial OpenAI Codex
+assistance. Higham's original problem attribution and Colbrook's
+separate order-five construction remain below. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/linear-systems-and-elimination/IE-15/lean/formalization.yaml}{metadata}
+identifies the implementation and independent AI-review roles; no
+external human review or official Tau Ceti endorsement is asserted.
+Earlier pending-verification language is retained as dated history.
 
 \subsection{Resolution --- 2026-09-11}\label{resolution-2026-09-11}
 
@@ -114,13 +153,11 @@ column interchanges, and form the trailing Schur complement.
 For an admissible path \(\pi\) on \(A\in\mathbb R^{n\times n}\), let
 \(S_1=A,\ldots,S_n\) be the active matrices and define
 
-\[
-\rho(A,\pi)=\frac{\max_{1\le k\le n}\|S_k\|_{\max}}{\|A\|_{\max}},
-\qquad \|M\|_{\max}=\max_{i,j}|m_{ij}|,
-\] \[
-g_{\mathrm{RP}}(n)=\sup_{\substack{A\in\mathbb R^{n\times n}\\\det A\ne0}}\
-\sup_{\pi\text{ permitted by rook pivoting}}\rho(A,\pi).
-\]
+\[\rho(A,\pi)=\frac{\max_{1\le k\le n}\|S_k\|_{\max}}{\|A\|_{\max}},
+\qquad \|M\|_{\max}=\max_{i,j}|m_{ij}|,\]
+
+\[g_{\mathrm{RP}}(n)=\sup_{\substack{A\in\mathbb R^{n\times n}\\\det A\ne0}}\
+\sup_{\pi\text{ permitted by rook pivoting}}\rho(A,\pi).\]
 
 Determine the two exact constants \(g_{\mathrm{RP}}(3)\) and
 \(g_{\mathrm{RP}}(4)\), with matching upper and lower bounds. All

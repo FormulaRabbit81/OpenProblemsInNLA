@@ -6,10 +6,39 @@
 
 **Difficulty:** hard  
 **Importance:** interesting to specialist  
-**Status:** Solved  
-**Last checked:** 2026-09-11  
+**Status:** Lean verified  
+**Last checked:** 2026-09-15  
 
 **Rating rationale (historical):** Hard reflects two focused finite-dimensional extremal constants within an established pivoting model; specialist impact concerns exact small-order rook-pivoting behavior.
+
+## Lean verification — 2026-09-15
+
+The complete exact-value resolution is **Lean verified**: $`g_{\mathrm{RP}}(3)=3`$
+and $`g_{\mathrm{RP}}(4)=14/3`$. The [Lean project](lean/) proves the universal
+upper bounds for every real nonsingular input, every admissible rook choice and
+tie, and every intermediate active entry. Exact rational witnesses attain both
+values, and the final theorem identifies the actual real suprema.
+
+Two independent AI referees approved the exact statements before proof development
+and the complete final proof afterward. The fresh Ubuntu
+[verification run 35010138599, attempt 1](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35010138599/attempts/1)
+accepted all eight exports against those statements through Lean4 Comparator and
+Lean's default kernel at immutable candidate
+[`591690a3`](https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/591690a3ca1715b61e769e7fae68cbda84565f07/linear-systems-and-elimination/IE-15/lean).
+Only `propext`, `Classical.choice` and `Quot.sound` occur in the target axiom
+closures. The used LeanCert certificate runs explicitly in kernel mode. The
+[permanent evidence archive](lean/verification/linux-2026-09-15/) retains the
+sandbox, kernel replay and rejection controls; both independent
+[operational audits](lean/reviews/linux-referee-1.md)
+[approved the evidence](lean/reviews/linux-referee-2.md).
+
+**Original mathematical proof and Lean formalization:** George Stepaniants,
+Department of Computing and Mathematical Sciences, California Institute of
+Technology, with substantial OpenAI Codex assistance. Higham's original problem
+attribution and Colbrook's separate order-five construction remain below. The
+[metadata](lean/formalization.yaml) identifies the implementation and independent
+AI-review roles; no external human review or official Tau Ceti endorsement is
+asserted. Earlier pending-verification language is retained as dated history.
 
 ## Resolution — 2026-09-11
 

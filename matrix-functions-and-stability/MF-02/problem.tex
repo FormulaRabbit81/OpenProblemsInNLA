@@ -34,7 +34,7 @@ compositions},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}MF-02}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-12}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-15}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -51,7 +51,7 @@ overhead of cubic sign compositions\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to the community\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
@@ -106,9 +106,10 @@ source and attribution review} confirms the scope and prior-work
 distinctions. The
 \href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/stepaniants-mf02-2026-09-12/README.md}{submission
 record} preserves both reviews, the original candidate and exact checks.
-Substantial AI assistance is disclosed. This is informal automated-agent
-review, not external human peer review or formal verification. No
-novelty or priority certification is asserted.
+Substantial AI assistance is disclosed. Those original reviews were
+informal automated-agent reviews; the separate Lean verification is
+documented below. No external human peer review, novelty or priority
+certification is asserted.
 
 The original target, permanent ID, references and dated history remain
 below. The displayed ratings are retained as historical ratings of that
@@ -116,22 +117,124 @@ target.
 
 \newpage
 
+\subsection{Lean proof and verification
+evidence}\label{lean-proof-and-verification-evidence}
+
+The complete canonical asymptotic-order result has a
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/b873ead85b3c71cdba017a915d5ef6e73b1711ae/matrix-functions-and-stability/MF-02/lean/Solution.lean}{Lean
+proof at immutable revision b873ead8}. The package pins Lean
+\textbf{4.33.1}, Mathlib
+\textit{0df444a360eaa60ab8c11dca51a86af692955474} and LeanCert
+\textit{621a43d7cf21f87872392a01e874f2f1dbddc926}.
+
+In namespace \textit{NLA.MF02}, the main declarations are:
+
+\begin{itemize}
+\tightlist
+\item
+  \textit{stage\_minimum\_attained}: the stage minimum is finite and
+  attained.
+\item
+  \textit{stage\_minimum\_small\_budgets}: both small-budget values
+  equal one.
+\item
+  \textit{stage\_minimum\_bounds}: the displayed explicit bounds for
+  every budget.
+\item
+  \textit{uniform\_asymptotic\_order}: uniform constant-factor order.
+\end{itemize}
+
+The nine supporting declarations are listed with their proofs and roles
+in
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-02/lean/formalization.yaml}{the
+manifest}:
+
+\begin{itemize}
+\tightlist
+\item
+  \textit{uniform\_error\_is\_maximum}
+\item
+  \textit{program\_degree\_bound}
+\item
+  \textit{cubic\_degree\_and\_cost}
+\item
+  \textit{degree\_error\_lower\_bound}
+\item
+  \textit{optimized\_cubic\_interval}
+\item
+  \textit{optimized\_cubic\_ratio}
+\item
+  \textit{cubic\_error\_bounds}
+\item
+  \textit{cubic\_error\_strictly\_decreases}
+\item
+  \textit{unrestricted\_error\_small\_budgets}
+\end{itemize}
+
+All thirteen are compared with independently reviewed
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-02/lean/Challenge.lean}{Challenge
+statements}.
+
+The definitions retain arbitrary real gaps, every multiplication budget,
+free real linear combinations, stored-product reuse, the actual maximum
+error on both closed intervals and true coefficient infima. No
+coefficient optimizer is assumed. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-02/lean/SourceCorrespondence.md}{source
+correspondence} explains the exact connection to the original target.
+The precise optimum beyond the two small budgets and the stronger
+same-budget comparison remain outside the resolved target.
+
+On \textbf{15 September 2026}, GitHub's non-root Linux runner
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35016473743/job/104541199904}{verified
+this exact proof commit} using the repository's shared pinned checker.
+The actual thirteen Solution exports passed LeanCert kernel assertions,
+Comparator statement/definition matching and a separate default-kernel
+replay. Every transitive axiom report contains only \textit{propext},
+\textit{Classical.choice} and \textit{Quot.sound}; no proof hole or
+native-execution axiom supports a target. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-02/lean/verification/linux-2026-09-15}{retained
+raw evidence} includes source hashes and successful controls rejecting
+invalid proofs, mismatched statements and forbidden axioms. These checks
+ran on GitHub Linux; no local macOS Lean run is claimed.
+
+Two independent AI-agent referees accepted the complete mathematical
+source and inspected those actual logs:
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-02/lean/reviews/final/referee-elimination.md}{referee
+1} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-02/lean/reviews/final/referee-inequalities.md}{referee
+2}. They applied the repository's scoped Tau Ceti review protocol. This
+is distinct from external human peer review or certification of the
+checker software.
+
+To build the proof yourself, open
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-02/lean/README.md}{the
+Lean project directory} and run with Lean installed:
+
+\begin{verbatim}
+lake exe cache get && lake build +Solution
+\end{verbatim}
+
+For the additional sandboxed Comparator, replay and rejection checks,
+follow the
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/docs/lean/README.md}{Linux
+verification commands}. The Challenge's deliberate placeholders belong
+to the independent contract environment and are never imported by
+Solution. Mathematical attribution above remains unchanged.
+
+\newpage
+
 \subsection{Context and notation}\label{context-and-notation}
 
 For \(m\in\mathbb N_0\) and \(0<\delta<1\), put
 
-\[
-I_\delta=[-1,-\delta]\cup[\delta,1].
-\]
+\[I_\delta=[-1,-\delta]\cup[\delta,1].\]
 
 Let \(\mathcal P_m\) consist of real polynomials computed from \(1,x\)
 by straight-line programs using at most \(m\) nonscalar multiplications;
 real linear combinations cost nothing. Define
 
-\[
-E_m(\delta)=\inf_{p\in\mathcal P_m}
-\max_{x\in I_\delta}|p(x)-\operatorname{sign}(x)|.
-\]
+\[E_m(\delta)=\inf_{p\in\mathcal P_m}
+\max_{x\in I_\delta}|p(x)-\mathop{\mathrm{sign}}\nolimits(x)|.\]
 
 The arithmetic model concerns a single polynomial identity valid for
 matrices of every size.
@@ -140,17 +243,13 @@ matrices of every size.
 
 Define
 
-\[
-C_T(\delta)=\inf_{a_t,b_t\in\mathbb R}
-\max_{x\in I_\delta}|(q_T\circ\cdots\circ q_1)(x)-\operatorname{sign}(x)|,
-\qquad q_t(x)=a_tx+b_tx^3.
-\]
+\[C_T(\delta)=\inf_{a_t,b_t\in\mathbb R}
+\max_{x\in I_\delta}|(q_T\circ\cdots\circ q_1)(x)-\mathop{\mathrm{sign}}\nolimits(x)|,
+\qquad q_t(x)=a_tx+b_tx^3.\]
 
 Determine the asymptotic dependence on \(m,\delta\) of
 
-\[
-T_{\min}(m,\delta)=\inf\{T\in\mathbb N_0:C_T(\delta)\le E_m(\delta)\},
-\]
+\[T_{\min}(m,\delta)=\inf\{T\in\mathbb N_0:C_T(\delta)\le E_m(\delta)\},\]
 
 where the empty composition is \(x\) and \(\inf\varnothing=+\infty\).
 Each stage costs at most two matrix products.
