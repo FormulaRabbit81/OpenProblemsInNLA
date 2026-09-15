@@ -1,9 +1,8 @@
 # PF-02: minimal positive semidefinite factorization orbits can be disconnected
 
-**Verification stage: complete local proof candidate.** All nine exported
-statements compile and pass local kernel-trust and permitted-axiom checks.
-Independent final source review and fresh isolated Linux Comparator verification
-remain pending. The canonical problem remains **Solved**.
+**Verification status: Lean verified.** All nine complete-target declarations
+passed fresh isolated Linux Comparator, default-kernel replay and permitted-axiom
+checks. Both independent complete-source reviews and both operational audits passed.
 
 **Formalization:** George Stepaniants, Department of Computing and Mathematical
 Sciences, California Institute of Technology, with substantial OpenAI Codex
@@ -102,18 +101,54 @@ tools/lean/verify.sh nonnegative-and-positive-factorizations/PF-02/lean /absolut
 
 The shared [harness instructions](../../../tools/lean/HARNESS.md) specify real
 Landrun/Bubblewrap isolation, a fresh committed-input snapshot, default-kernel
-replay, axiom gates and rejection controls. No isolated Linux run is claimed yet.
+replay, axiom gates and rejection controls. The successful authoritative run is
+recorded below.
 
 ## Independent review and metadata
 
 Two non-implementing AI agents approved the exact boundary before proofs, frozen
 at commit `a128cc3a`. The [freeze record](reviews/statement-freeze.json) and
 both statement reports retain all ten input hashes. Those inputs remain unchanged.
-Final review follows the repository [Tau Ceti adaptation](../../../docs/lean/REVIEW.md).
+Both independent complete-source reviews approved: [referee 1](reviews/final-referee-1.md)
+and [referee 2](reviews/final-referee-2.md), following the repository
+[Tau Ceti adaptation](../../../docs/lean/REVIEW.md).
 All reviews are AI-agent reviews; no external human peer review or official Tau
 Ceti endorsement is asserted.
 
 [formalization.yaml](formalization.yaml) records authorship, source attribution,
-automation, all nine exports and the actual verification stage. Status promotion
-requires complete-target correspondence, both full-source approvals and
-reproducible Linux verification with permitted-axiom checks.
+automation, all nine exports and the completed verification stage. Complete-target
+correspondence, both full-source approvals and reproducible Linux verification
+with permitted-axiom checks support this status.
+
+
+## Authoritative Linux verification
+
+[Run 35021020857, attempt 1](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35021020857/attempts/1) verified immutable proof revision
+[`a3e984ce`](https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/a3e984ced348f4d8529c5d0f8f87c9be7dd979e2/nonnegative-and-positive-factorizations/PF-02/lean)
+on Ubuntu 24.04. The target verification job completed all nine Challenge/Solution
+comparisons, transitive permitted-axiom checks, default-kernel replay, real sandbox
+probes, three raw-kernel controls, five Comparator regressions, and separate
+sorry/native rejection controls.
+
+The [permanent archive](verification/linux-2026-09-15/) retains the original ZIP,
+all extracted members, GitHub provenance and the full source receipt. Artifact
+`10418540042` has SHA-256
+`a62edf32bfdf4ef70abcabe572ca8fffb6ba2b0d2f4f6ddc879df99229ffb6c9`.
+
+```bash
+cd verification/linux-2026-09-15
+shasum -a 256 -c SHA256SUMS
+```
+
+Both independent operational audits approved: [referee 1](reviews/linux-referee-1.md)
+and [referee 2](reviews/linux-referee-2.md). Each checked all
+70 candidate input hashes against the verified Git revision
+and previously approved source. The standalone checker-controls workflow job was
+skipped because shared tools were unchanged; all required controls ran within
+the actual PF-02 verify job.
+
+Publication changes update status, documentation, evidence and rendered artifacts.
+The mathematical statements, proofs and dependency inputs remain those verified
+at the immutable proof revision. Pending-stage wording inside historical reports
+is closed by these later approvals. No second independent Linux execution or
+external human review is claimed.

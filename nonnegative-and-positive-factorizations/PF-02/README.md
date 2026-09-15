@@ -7,9 +7,17 @@
 **Difficulty:** challenging  
 **Importance:** interesting to the community  
 **Rating rationale:** Challenging because topology of optimal PSD factorizations must be controlled beyond size two; community importance concerns nonuniqueness and separated solution families in constrained factorization algorithms.  
-**Status:** Solved  
+**Status:** Lean verified  
 **Area:** geometry of constrained matrix factorizations  
-**Last checked:** 2026-09-11  
+**Last checked:** 2026-09-15  
+
+<!-- lean-verification -->
+## Lean verification — 2026-09-15
+
+The complete original negative answer is **Lean verified**. An explicit positive integer matrix has ordinary rank six, attained real PSD rank three, and a disconnected quotient of its entire size-three PSD factorization space under all real invertible congruences. The proof establishes the actual quotient topology and a continuous two-valued separator on all factorizations. All nine independently reviewed targets passed [fresh Linux Comparator and default-kernel verification](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35021020857). The additional all-size constructions in the preserved manuscript are not claimed as formal results here.
+
+**Formalization:** George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology, with substantial OpenAI Codex assistance. **Original mathematical counterexample:** Matthew J. Colbrook, as credited in the preserved resolution below. [Lean project and reproduction](lean/README.md) · [formalization metadata](lean/formalization.yaml) · [two source and two operational reviews](lean/reviews/).
+<!-- /lean-verification -->
 
 <!-- colbrook-factorization -->
 ## Resolution — 2026-09-11
