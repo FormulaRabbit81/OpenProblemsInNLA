@@ -1,0 +1,141 @@
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'PF-02: disconnected minimal PSD factorization orbits'
+  description: 'Complete exact counterexample to the original universal connectedness question: a positive
+    integer matrix of actual rank six and attained PSD rank three has a disconnected full real congruence quotient
+    with its Euclidean quotient topology.'
+  authors:
+  - George Stepaniants
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California Institute of Technology
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+repository:
+  role: substantive-development
+  note: Complete local proof candidate. Independent final source reviews and isolated Linux Comparator/default-kernel
+    verification are pending. Canonical status remains Solved.
+sources:
+- title: PF-02 — Connectedness of minimal positive semidefinite factorization orbits
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/8f04b905eb2e0827b6b84f37d9d080ae1f05b202/nonnegative-and-positive-factorizations/PF-02/README.md
+  type: web-post
+  relationship: formalizes
+  location: Entire original universally quantified connectedness question, including ordinary rank, minimum
+    PSD rank and actual quotient topology
+  author_endorsement: not-contacted
+  note: Permanent ID, canonical path, complete original mathematical target and prior source attribution are
+    preserved.
+- title: 'PF-02: disconnected minimal positive semidefinite factorization orbits'
+  authors:
+  - Matthew J. Colbrook
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/8f04b905eb2e0827b6b84f37d9d080ae1f05b202/references/colbrook-factorization-2026-09-11/manuscripts/PF-02_disconnected_orbits.tex
+  type: manuscript
+  relationship: formalizes
+  location: 'Theorem 1: the explicit size-three counterexample, trace-coordinate orientation and actual disconnected
+    congruence quotient'
+  author_endorsement: not-contacted
+  note: Original mathematical counterexample remains attributed to Matthew J. Colbrook, Department of Applied
+    Mathematics and Theoretical Physics, University of Cambridge. The source remains complete. Optional extensions
+    to every factor size, positive rational perturbations and component classification are not claimed by this
+    formalization. Formalization credit is supplied as requested by the campaign user; no separate author endorsement
+    or external human review is asserted.
+related_formalizations:
+- id: https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof
+  relationship: other
+  note: Structure/API and explicit LeanCert kernel-trust reference; shared repository checker uses hash-locked
+    Comparator and exporter sources.
+- id: https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1
+  relationship: other
+  note: Statement/proof structure reference. No mathematical implementation copied.
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    tool_setup: Pinned Lean 4.33.1, LeanCert 621a43d7cf21f87872392a01e874f2f1dbddc926, Mathlib 0df444a360eaa60ab8c11dca51a86af692955474.
+      Two independent statement reviews preceded proof implementation.
+    prompting_notes: Preserve all real PSD factor tuples, full ordinary rank, an attained minimum over every
+      positive factor size, every real invertible congruence, Euclidean subspace topology and actual quotient
+      topology. Minimize computation through exact quadratic identities, the sufficient general rank bound
+      k squared, and a fully symbolic kernel-certified determinant identity.
+  notes: 'Substantial AI assistance. Proof contributors: coordinator /root and /root/target_inventory. Independent
+    statement/final referees /root/reference_api_review and /root/existing_verification_audit contributed no
+    proof code. Reviews follow the repository Tau Ceti adaptation; no official Tau Ceti endorsement, human
+    peer review, priority certification or unmeasured costs claimed.'
+status:
+  scope: 'Complete original-target proof candidate compiles locally: one explicit size-three counterexample
+    negates the full universal question. Actual minimum PSD rank, all real factors and congruences, and true
+    quotient disconnectedness are proved. The optional all-size source extensions are not claimed. All nine
+    exported closures pass local kernel-trust and permitted-axiom checks. Independent final reviews and fresh
+    isolated Linux Comparator/default-kernel verification remain pending; canonical status is still Solved.
+    Challenge contains nine deliberate specification-only placeholders, excluded from proof-development sorry
+    counts.'
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: &id001
+  - propext
+  - Classical.choice
+  - Quot.sound
+  main_results:
+  - declaration: NLA.PF02.witness_data
+    file: NLA/PF02/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.PF02.witness_factorizations
+    file: NLA/PF02/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.PF02.witness_minimal_rank
+    file: NLA/PF02/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.PF02.orbit_semantics
+    file: NLA/PF02/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.PF02.orientation_nonvanishing
+    file: NLA/PF02/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.PF02.orientation_preserved
+    file: NLA/PF02/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.PF02.quotient_separation
+    file: NLA/PF02/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.PF02.witness_disconnected
+    file: NLA/PF02/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.PF02.canonical_counterexample
+    file: NLA/PF02/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+review:
+  status: independent statements approved; complete source and operational review pending
+  reviewers:
+  - /root/reference_api_review (independent Codex AI agent)
+  - /root/existing_verification_audit (independent Codex AI agent)
+  notes: Exact pre-proof freeze a128cc3a and both statement approvals are retained under reviews/. All ten
+    frozen inputs are unchanged. Local compilation and kernel-trust checks are not final complete-target or
+    operational approval.
