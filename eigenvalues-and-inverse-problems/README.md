@@ -31,7 +31,7 @@
 | [KE-03](KE-03/README.md) | Find a near-largest nonnormal eigenvalue using few matrix-vector products | **✅ SOLVED** | challenging | interesting to the community | [PDF](KE-03/problem.pdf) · [TeX](KE-03/problem.tex) |
 | [KE-04](KE-04/README.md) | Strict interlacing across block Lanczos iterations | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](KE-04/problem.pdf) · [TeX](KE-04/problem.tex) |
 | [SP-04](SP-04/README.md) | The smallest-multiplier rule for nearest unit-absolute-determinant matrices | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](SP-04/problem.pdf) · [TeX](SP-04/problem.tex) |
-| [SP-05](SP-05/README.md) | Symmetric minimizer for a positive definite Jordan–Kronecker product | **✅ SOLVED** | challenging | interesting to the community | [PDF](SP-05/problem.pdf) · [TeX](SP-05/problem.tex) |
+| [SP-05](SP-05/README.md) | Symmetric minimizer for a positive definite Jordan–Kronecker product | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](SP-05/problem.pdf) · [TeX](SP-05/problem.tex) |
 | [SP-06](SP-06/README.md) | A real-valued symbol on a Jordan curve and real Toeplitz spectra | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](SP-06/problem.pdf) · [TeX](SP-06/problem.tex) |
 | [SP-11](SP-11/README.md) | The delta conjecture for minimum symmetric rank | **✅ SOLVED** | extreme | interesting to the community | [PDF](SP-11/problem.pdf) · [TeX](SP-11/problem.tex) |
 | [SP-12](SP-12/README.md) | A chromatic lower bound for positive-semidefinite nullity with SAP | **✅ SOLVED** | challenging | interesting to specialist | [PDF](SP-12/problem.pdf) · [TeX](SP-12/problem.tex) |

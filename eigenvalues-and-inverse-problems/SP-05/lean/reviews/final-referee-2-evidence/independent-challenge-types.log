@@ -1,0 +1,120 @@
+NLA.SP05.numerical_bound : @LT.lt.{0} Real Real.instLT
+  (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+  (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+@NLA.SP05.column_vectorization : ∀ {n : Nat} (A B X : NLA.SP05.Mat n),
+  And
+    (@Eq.{1} (Prod.{0, 0} (Fin n) (Fin n) → Real)
+      (@Matrix.mulVec.{0, 0, 0} (Prod.{0, 0} (Fin n) (Fin n)) (Prod.{0, 0} (Fin n) (Fin n)) Real
+        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Real
+          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Real
+            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Real
+              (@CommRing.toNonUnitalCommRing.{0} Real Real.commRing))))
+        (@instFintypeProd.{0, 0} (Fin n) (Fin n) (Fin.fintype n) (Fin.fintype n))
+        (@Matrix.kronecker.{0, 0, 0, 0, 0} Real (Fin n) (Fin n) (Fin n) (Fin n) Real.instMul A B)
+        (@NLA.SP05.columnVec n X))
+      (@NLA.SP05.columnVec n
+        (@HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin n) (Fin n) Real) (Matrix.{0, 0, 0} (Fin n) (Fin n) Real)
+          (Matrix.{0, 0, 0} (Fin n) (Fin n) Real)
+          (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin n) (Fin n) (Fin n) Real (Fin.fintype n)
+            Real.instMul Real.instAddCommMonoid)
+          (@HMul.hMul.{0, 0, 0} (NLA.SP05.Mat n) (NLA.SP05.Mat n) (Matrix.{0, 0, 0} (Fin n) (Fin n) Real)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin n) (Fin n) (Fin n) Real (Fin.fintype n)
+              Real.instMul Real.instAddCommMonoid)
+            B X)
+          (@Matrix.transpose.{0, 0, 0} (Fin n) (Fin n) Real A))))
+    (And
+      (@Eq.{1} (Prod.{0, 0} (Fin n) (Fin n) → Real)
+        (@Matrix.mulVec.{0, 0, 0} (Prod.{0, 0} (Fin n) (Fin n)) (Prod.{0, 0} (Fin n) (Fin n)) Real
+          (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Real
+            (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Real
+              (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Real
+                (@CommRing.toNonUnitalCommRing.{0} Real Real.commRing))))
+          (@instFintypeProd.{0, 0} (Fin n) (Fin n) (Fin.fintype n) (Fin.fintype n)) (NLA.SP05.commutationMatrix n)
+          (@NLA.SP05.columnVec n X))
+        (@NLA.SP05.columnVec n (@Matrix.transpose.{0, 0, 0} (Fin n) (Fin n) Real X)))
+      (@Eq.{1} Real
+        (@dotProduct.{0, 0} (Prod.{0, 0} (Fin n) (Fin n)) Real
+          (@instFintypeProd.{0, 0} (Fin n) (Fin n) (Fin.fintype n) (Fin.fintype n)) Real.instMul Real.instAddCommMonoid
+          (@NLA.SP05.columnVec n X) (@NLA.SP05.columnVec n X))
+        (@NLA.SP05.frobeniusSq n X)))
+NLA.SP05.skew_witness : ∀ (n : Nat),
+  @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) n →
+    And
+      (@Eq.{1} (Matrix.{0, 0, 0} (Fin n) (Fin n) Real)
+        (@Matrix.transpose.{0, 0, 0} (Fin n) (Fin n) Real (NLA.SP05.skewExample n))
+        (@Neg.neg.{0} (NLA.SP05.Mat n) (@Matrix.neg.{0, 0, 0} (Fin n) (Fin n) Real Real.instNeg)
+          (NLA.SP05.skewExample n)))
+      (And
+        (@Eq.{1} Real (@NLA.SP05.frobeniusSq n (NLA.SP05.skewExample n))
+          (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+        (@Ne.{1} (NLA.SP05.Mat n) (NLA.SP05.skewExample n)
+          (@OfNat.ofNat.{0} (NLA.SP05.Mat n) (nat_lit 0)
+            (@Zero.toOfNat0.{0} (NLA.SP05.Mat n) (@Matrix.zero.{0, 0, 0} (Fin n) (Fin n) Real Real.instZero)))))
+NLA.SP05.positive_minimizer : ∀ (n : Nat),
+  @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) n →
+    ∀ (A B : NLA.SP05.Mat n),
+      @Matrix.PosDef.{0, 0} (Fin n) Real Real.instRing Real.partialOrder instStarRingReal A →
+        @Matrix.PosDef.{0, 0} (Fin n) Real Real.instRing Real.partialOrder instStarRingReal B →
+          ∃ μ X,
+            And
+              (@LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+                μ)
+              (And (@Matrix.PosSemidef.{0, 0} (Fin n) Real Real.instRing Real.partialOrder instStarRingReal X)
+                (And
+                  (@Ne.{1} (NLA.SP05.Mat n) X
+                    (@OfNat.ofNat.{0} (NLA.SP05.Mat n) (nat_lit 0)
+                      (@Zero.toOfNat0.{0} (NLA.SP05.Mat n)
+                        (@Matrix.zero.{0, 0, 0} (Fin n) (Fin n) Real Real.instZero))))
+                  (And
+                    (@Eq.{1} (Prod.{0, 0} (Fin n) (Fin n) → Real)
+                      (@Matrix.mulVec.{0, 0, 0} (Prod.{0, 0} (Fin n) (Fin n)) (Prod.{0, 0} (Fin n) (Fin n)) Real
+                        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Real
+                          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Real
+                            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Real
+                              (@CommRing.toNonUnitalCommRing.{0} Real Real.commRing))))
+                        (@instFintypeProd.{0, 0} (Fin n) (Fin n) (Fin.fintype n) (Fin.fintype n))
+                        (@NLA.SP05.jordanMatrix n A B) (@NLA.SP05.columnVec n X))
+                      (@HSMul.hSMul.{0, 0, 0} Real (NLA.SP05.Vec n) (NLA.SP05.Vec n)
+                        (@instHSMul.{0, 0} Real (NLA.SP05.Vec n)
+                          (@Function.hasSMul.{0, 0, 0} (Prod.{0, 0} (Fin n) (Fin n)) Real Real
+                            (@instSMulOfMul.{0} Real Real.instMul)))
+                        μ (@NLA.SP05.columnVec n X)))
+                    (∀ (v : NLA.SP05.Vec n),
+                      @Ne.{1} (NLA.SP05.Vec n) v
+                          (@OfNat.ofNat.{0} (NLA.SP05.Vec n) (nat_lit 0)
+                            (@Zero.toOfNat0.{0} (NLA.SP05.Vec n)
+                              (@Pi.instZero.{0, 0} (Prod.{0, 0} (Fin n) (Fin n)) (fun a => Real) fun i =>
+                                Real.instZero))) →
+                        @LE.le.{0} Real Real.instLE μ (@NLA.SP05.rayleigh n (@NLA.SP05.jordanMatrix n A B) v)))))
+NLA.SP05.sector_minima : ∀ (n : Nat),
+  @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) n →
+    ∀ (A B : NLA.SP05.Mat n),
+      @Matrix.PosDef.{0, 0} (Fin n) Real Real.instRing Real.partialOrder instStarRingReal A →
+        @Matrix.PosDef.{0, 0} (Fin n) Real Real.instRing Real.partialOrder instStarRingReal B →
+          ∃ a b,
+            And
+              (@IsLeast.{0} Real Real.instLE
+                (@NLA.SP05.sectorValues n A B (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+                a)
+              (@IsLeast.{0} Real Real.instLE
+                (@NLA.SP05.sectorValues n A B
+                  (@Neg.neg.{0} Real Real.instNeg
+                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+                b)
+NLA.SP05.canonical_result : ∀ (n : Nat),
+  @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) n →
+    ∀ (A B : NLA.SP05.Mat n),
+      @Matrix.PosDef.{0, 0} (Fin n) Real Real.instRing Real.partialOrder instStarRingReal A →
+        @Matrix.PosDef.{0, 0} (Fin n) Real Real.instRing Real.partialOrder instStarRingReal B →
+          ∃ a b,
+            And
+              (@IsLeast.{0} Real Real.instLE
+                (@NLA.SP05.sectorValues n A B (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+                a)
+              (And
+                (@IsLeast.{0} Real Real.instLE
+                  (@NLA.SP05.sectorValues n A B
+                    (@Neg.neg.{0} Real Real.instNeg
+                      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+                  b)
+                (@LE.le.{0} Real Real.instLE a b))
