@@ -1,0 +1,31 @@
+def NLA.SP04.RegularData : {n : ℕ} → NLA.SP04.Mat n → Prop :=
+fun {n} U => Matrix.det U ≠ 0 ∧ (Matrix.transpose U * U).charpoly.roots.Nodup
+def NLA.SP04.GenericSelectionRule : ℕ → Prop :=
+fun n =>
+  ∃ p,
+    p ≠ 0 ∧
+      ∀ (U : NLA.SP04.Mat n),
+        (MvPolynomial.eval fun ij => U ij.1 ij.2) p ≠ 0 →
+          NLA.SP04.RegularData U →
+            (NLA.SP04.stationaryPairs U).Finite →
+              ∀ (X : NLA.SP04.Mat n) (c : ℝ), NLA.SP04.UniqueLeastStationary U X c → NLA.SP04.IsNearest U X
+def NLA.SP04.SelectionFails : NLA.SP04.Mat 3 → Prop :=
+fun U =>
+  NLA.SP04.RegularData U ∧
+    (NLA.SP04.stationaryPairs U).Finite ∧
+      ∃ X c,
+        NLA.SP04.UniqueLeastStationary U X c ∧
+          ∃ Y, NLA.SP04.Feasible Y ∧ NLA.SP04.frobeniusNorm (U - Y) < NLA.SP04.frobeniusNorm (U - X)
+Matrix.IsHermitian.splits_charpoly.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {n : Type u_2} [Fintype n] {A : Matrix n n 𝕜}
+  [DecidableEq n] (hA : A.IsHermitian) : A.charpoly.Splits
+Matrix.IsHermitian.roots_charpoly_eq_eigenvalues.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {n : Type u_2} [Fintype n]
+  {A : Matrix n n 𝕜} [DecidableEq n] (hA : A.IsHermitian) :
+  A.charpoly.roots = Multiset.map (RCLike.ofReal ∘ hA.eigenvalues) Finset.univ.val
+Matrix.IsHermitian.spectral_theorem.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {n : Type u_2} [Fintype n] {A : Matrix n n 𝕜}
+  [DecidableEq n] (hA : A.IsHermitian) :
+  A =
+    ((Unitary.conjStarAlgAut 𝕜 (Matrix n n 𝕜)) hA.eigenvectorUnitary) (Matrix.diagonal (RCLike.ofReal ∘ hA.eigenvalues))
+instTopologicalSpaceMatrix
+'NLA.SP04.RegularData' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.SP04.GenericSelectionRule' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.SP04.frobeniusNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
