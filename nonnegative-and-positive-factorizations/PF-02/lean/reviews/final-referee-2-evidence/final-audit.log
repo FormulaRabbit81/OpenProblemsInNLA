@@ -1,0 +1,57 @@
+instDiscreteTopologyBool
+instTopologicalSpaceSubtype
+instTopologicalSpaceQuot
+'NLA.PF02.witness_data' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.PF02.witness_data :
+  (∀ (i j : Fin 6), 0 < witnessM i j) ∧
+    Matrix.det witnessM = 8192 ∧
+      Matrix.rank witnessM = 6 ∧
+        Matrix.det (rowCoordinates (witnessFactors 1)) = 32 ∧ Matrix.det (rowCoordinates (witnessFactors (-1))) = -32
+'NLA.PF02.witness_factorizations' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.PF02.witness_factorizations :
+  IsFactorization witnessM (witnessTuple 1) ∧
+    IsFactorization witnessM (witnessTuple (-1)) ∧
+      (∀ (i : Fin 6), Matrix.PosDef (witnessFactors 1 i)) ∧ ∀ (i : Fin 6), Matrix.PosDef (witnessFactors (-1) i)
+'NLA.PF02.witness_minimal_rank' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.PF02.witness_minimal_rank : IsPSDRank witnessM 3
+'NLA.PF02.orbit_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.PF02.orbit_semantics {p q k : ℕ} (M : Mat p q) :
+  Topology.IsQuotientMap (Quot.mk Congruent) ∧
+    ∀ (F G : Factorization M k), Quot.mk Congruent F = Quot.mk Congruent G ↔ Congruent F G
+'NLA.PF02.orientation_nonvanishing' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.PF02.orientation_nonvanishing (F : Factorization witnessM 3) : orientationDet F ≠ 0
+'NLA.PF02.orientation_preserved' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.PF02.orientation_preserved (F G : Factorization witnessM 3) :
+  Congruent F G → (0 < orientationDet F ↔ 0 < orientationDet G)
+'NLA.PF02.quotient_separation' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.PF02.quotient_separation : ∃ f, Continuous f ∧ Function.Surjective f
+'NLA.PF02.witness_disconnected' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.PF02.witness_disconnected : ¬IsConnected Set.univ
+'NLA.PF02.canonical_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.PF02.canonical_counterexample : ¬AllMinimalOrbitsConnected
+'NLA.PF02.thirty_two_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.witnessFactors_posDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.witness_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.witness_coordinate_det' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.witness_matrix_det' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.trace_coordinate_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.factorization_coordinate_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.congruence_covariance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.rowCoordinates_congruence' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.congruenceCoordinates_det' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.orientation_congruent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.changeBasis_preserves_factorization' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.changeBasis_congruent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.congruent_iff_changeBasis' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.trace_factor_rank_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.minimal_three_of_rank_six' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.congruent_refl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.congruent_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.congruent_trans' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.actual_orbit_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.continuous_orientationDet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.continuous_fiberSign' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.fiberSign_congruent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.continuous_orbitSign' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.orbitSign_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.PF02.orbit_quotient_disconnected' depends on axioms: [propext, Classical.choice, Quot.sound]

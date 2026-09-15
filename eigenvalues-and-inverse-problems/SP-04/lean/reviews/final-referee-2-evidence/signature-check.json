@@ -1,0 +1,17 @@
+{
+  "method": "normalized source signatures, supplementary and not Lean4 Comparator",
+  "all_11_signatures_identical": true,
+  "signatures": {
+    "numerical_bounds": ": (99 / 100 : \u211d) ^ 2 < 49 / 16 - 52 / 25 \u2227 (275 / 198 : \u211d) < 2 \u2227 (13 / 25 : \u211d) * (44 / 25) * (51 / 50) < 1 \u2227 (201 / 400 : \u211d) < 13 / 25",
+    "diagonal_stationary_iff": "(s : Fin 3 \u2192 \u211d) (hs : Admissible s) (X : Mat 3) (c : \u211d) : Stationary (Matrix.diagonal s) X c \u2194 \u2203 x : Fin 3 \u2192 \u211d, X = Matrix.diagonal x \u2227 (\u2200 i, (x i) ^ 2 - s i * x i + c = 0) \u2227 |\u220f i, x i| = 1",
+    "diagonal_counterexample": "(s : Fin 3 \u2192 \u211d) (hs : Admissible s) : \u2203 t : \u211d, 0 < t \u2227 t < 13 / 25 \u2227 UniqueLeastStationary (Matrix.diagonal s) (selectedMatrix s t) (-t) \u2227 Feasible (improvedMatrix s t) \u2227 frobeniusNorm (Matrix.diagonal s - improvedMatrix s t) < frobeniusNorm (Matrix.diagonal s - selectedMatrix s t)",
+    "diagonal_finite": "(s : Fin 3 \u2192 \u211d) (hs : Admissible s) : (stationaryPairs (Matrix.diagonal s)).Finite",
+    "orthogonal_transport": "{n : \u2115} (P Q U X : Mat n) (c : \u211d) (hP : Orthogonal P) (hQ : Orthogonal Q) : (Feasible (P * X * Q\u1d40) \u2194 Feasible X) \u2227 frobeniusNorm (P * (U - X) * Q\u1d40) = frobeniusNorm (U - X) \u2227 (Stationary (P * U * Q\u1d40) (P * X * Q\u1d40) c \u2194 Stationary U X c)",
+    "spectral_family": ": IsOpen counterexampleFamily \u2227 sampleMatrix \u2208 counterexampleFamily \u2227 \u2200 U \u2208 counterexampleFamily, \u2203 s : Fin 3 \u2192 \u211d, Admissible s \u2227 HasSVD U s",
+    "regular_svd": "(U : Mat 3) (s : Fin 3 \u2192 \u211d) (hs : Admissible s) (hsvd : HasSVD U s) : RegularData U",
+    "open_family_counterexamples": ": \u2200 U \u2208 counterexampleFamily, SelectionFails U",
+    "algebraic_avoidance": "(S : Set (Mat 3)) (hS : IsOpen S) (hne : S.Nonempty) (p : MvPolynomial (Fin 3 \u00d7 Fin 3) \u211d) (hp : p \u2260 0) : \u2203 U \u2208 S, MvPolynomial.eval (fun ij => U ij.1 ij.2) p \u2260 0",
+    "generic_counterexamples": "(p : MvPolynomial (Fin 3 \u00d7 Fin 3) \u211d) (hp : p \u2260 0) : \u2203 U : Mat 3, MvPolynomial.eval (fun ij => U ij.1 ij.2) p \u2260 0 \u2227 SelectionFails U",
+    "canonical_counterexample": ": \u00ac AllGenericSelectionRules"
+  }
+}

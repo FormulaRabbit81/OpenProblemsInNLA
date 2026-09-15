@@ -34,7 +34,7 @@ orbits},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}PF-02}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-11}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-15}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -52,7 +52,7 @@ of minimal positive semidefinite factorization orbits\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to the community\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
@@ -62,6 +62,34 @@ concerns nonuniqueness and separated solution families in constrained
 factorization algorithms.
 
 \textbf{Area:} geometry of constrained matrix factorizations
+
+\subsection{Lean verification ---
+2026-09-15}\label{lean-verification-2026-09-15}
+
+The complete original negative answer is \textbf{Lean verified}. An
+explicit positive integer matrix has ordinary rank six, attained real
+PSD rank three, and a disconnected quotient of its entire size-three PSD
+factorization space under all real invertible congruences. The proof
+establishes the actual quotient topology and a continuous two-valued
+separator on all factorizations.
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/a3e984ced348f4d8529c5d0f8f87c9be7dd979e2/nonnegative-and-positive-factorizations/PF-02/lean}{All
+nine independently reviewed targets} passed
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35021020857}{fresh
+Linux Comparator and default-kernel verification}. The additional
+all-size constructions in the preserved manuscript are not claimed as
+formal results here.
+
+\textbf{Formalization:} George Stepaniants, Department of Computing and
+Mathematical Sciences, California Institute of Technology, with
+substantial OpenAI Codex assistance. \textbf{Original mathematical
+counterexample:} Matthew J. Colbrook, as credited in the preserved
+resolution below.
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/nonnegative-and-positive-factorizations/PF-02/lean/README.md}{Lean
+project and reproduction} ·
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/nonnegative-and-positive-factorizations/PF-02/lean/formalization.yaml}{formalization
+metadata} ·
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/nonnegative-and-positive-factorizations/PF-02/lean/reviews}{two
+source and two operational reviews}.
 
 \subsection{Resolution --- 2026-09-11}\label{resolution-2026-09-11}
 
@@ -100,11 +128,9 @@ semidefinite \(k\times k\) matrices. For an entrywise nonnegative matrix
 \(M\in\mathbb R_+^{p\times q}\), its \textbf{real positive semidefinite
 rank} is
 
-\[
-\operatorname{rank}_{\rm psd}(M)
+\[\mathop{\mathrm{rank}}\nolimits_{\rm psd}(M)
 =\min\{k\ge1:\ \exists A_1,\ldots,A_p,B_1,\ldots,B_q\in\mathbb S_+^k,\quad
-M_{ij}=\operatorname{tr}(A_iB_j)\ \text{for all }i,j\}.
-\]
+M_{ij}=\mathop{\mathrm{tr}}\nolimits(A_iB_j)\ \text{for all }i,j\}.\]
 
 This definition concerns a family of matrix factors indexed by the rows
 and columns of \(M\).
@@ -114,22 +140,18 @@ and columns of \(M\).
 Let \(k\ge3\) and \(p,q\ge1\) be integers. Suppose
 \(M\in\mathbb R_+^{p\times q}\) satisfies
 
-\[
-\operatorname{rank}(M)=\frac{k(k+1)}2,
-\qquad \operatorname{rank}_{\rm psd}(M)=k.
-\]
+\[\mathop{\mathrm{rank}}\nolimits(M)=\frac{k(k+1)}2,
+\qquad \mathop{\mathrm{rank}}\nolimits_{\rm psd}(M)=k.\]
 
 Let \(\mathcal F_k(M)\) be the set of all tuples
 \((A_1,\ldots,A_p,B_1,\ldots,B_q)\) in \((\mathbb S_+^k)^{p+q}\)
-satisfying \(\operatorname{tr}(A_iB_j)=M_{ij}\) for every \(i,j\). Give
-it the Euclidean subspace topology. Identify tuples under the changes of
-basis
+satisfying \(\mathop{\mathrm{tr}}\nolimits(A_iB_j)=M_{ij}\) for every
+\(i,j\). Give it the Euclidean subspace topology. Identify tuples under
+the changes of basis
 
-\[
-A_i\longmapsto S^\mathsf T A_iS,\qquad
+\[A_i\longmapsto S^\mathsf T A_iS,\qquad
 B_j\longmapsto S^{-1}B_jS^{-\mathsf T},
-\qquad S\in GL(k,\mathbb R).
-\]
+\qquad S\in GL(k,\mathbb R).\]
 
 Give the resulting orbit space the quotient topology.
 

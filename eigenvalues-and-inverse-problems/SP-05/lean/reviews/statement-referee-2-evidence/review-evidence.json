@@ -1,0 +1,68 @@
+{
+  "base_commit": "d8c38a795876b132c90df8d1be8682d3dcde394c",
+  "commands": [
+    {
+      "command": "PATH=/private/tmp/nla-campaign-toolchain/lean-4.33.1-darwin_aarch64/bin:$PATH lake build Challenge",
+      "cwd": "/private/tmp/nla-campaign-existing-review/SP05-statement-build",
+      "exit_code": 0,
+      "intentional_placeholder_warnings": 6,
+      "log": "fresh-challenge-build.log"
+    },
+    {
+      "command": "PATH=/private/tmp/nla-campaign-toolchain/lean-4.33.1-darwin_aarch64/bin:$PATH lake env lean reviews/initial/ApiProbe.lean",
+      "cwd": "/private/tmp/nla-campaign-existing-review/SP05-statement-build",
+      "exit_code": 0,
+      "log": "fresh-api-probe.log"
+    },
+    {
+      "command": "PATH=/private/tmp/nla-campaign-toolchain/lean-4.33.1-darwin_aarch64/bin:$PATH lake env lean StatementAudit.lean",
+      "cwd": "/private/tmp/nla-campaign-existing-review/SP05-statement-build",
+      "exit_code": 0,
+      "log": "statement-type-and-placeholder-audit.log"
+    },
+    {
+      "command": "python3 reviews/statement-referee-2-evidence/independent-audit.py /private/tmp/nla-formalization-sp05-20260915",
+      "cwd": "/private/tmp/nla-formalization-sp05-20260915/eigenvalues-and-inverse-problems/SP-05/lean",
+      "exit_code": 0,
+      "output": "independent-audit.json"
+    }
+  ],
+  "date": "2026-09-15",
+  "dependency_package_cache_reused": true,
+  "evidence_sha256": {
+    "StatementAudit.lean": "0cd1d9170ab4122b012f75dbc715d02c0c1542c36ca75d2ea02bd4eed0325863",
+    "final-checks.json": "cb77a117ca007caba20517d8b7c23ffbbb9ed97efacf18f32e1614052672b2ee",
+    "fresh-api-probe.log": "f481bbd256a05c051293cd45addc9f837fac89483cc376beb6d73d84479eae62",
+    "fresh-challenge-build.log": "8e9eff626b1f167097bdf8218aa9a5d9b1e19d913b40d48bc015447eddfe095e",
+    "independent-audit.json": "32eae2ab8522519d073aa11df4d699f443b69c0c7fdf83a6ea588ac7808189fd",
+    "independent-audit.py": "6f25c88a2aed14d4495e8d2a43a88846f08e6b3b43031107ea5ecb7fc9fe8524",
+    "initial-checks.json": "12737cc4259df2736291cc0995d07d21071df4f875cd7c2a949dbf0b131c3786",
+    "statement-type-and-placeholder-audit.log": "30955fb22494c8466eb14789858498b636eb5046c7d5e25dd418fced25326b4d"
+  },
+  "input_sha256": {
+    "Challenge.lean": "df243901a25385eab79a8218526f788f8ded2516f607bad33dc0e9284b31b214",
+    "NLA/SP05/Definitions.lean": "2dfb4549c6ad2fbab5b31d0fdac18510c49d68846cab79deabc794068188a5fb",
+    "NUMERICAL_TARGETS.md": "699affc08fc1c49e472ee45532666727f0bd92fe76d507db44da35b9d2f15cc1",
+    "comparator.json": "7fbf962523d010b2ad65d7bbcdf7c1d1d8b563b3bcdf151f07757746dee36d64",
+    "lake-manifest.json": "a6d69cb5b925415edfbd2a68d86668713c13b703ae28154a3f67bdc30ababf9a",
+    "lakefile.toml": "fec57fbcbb1718db75a2606961d3c2531752b478ff97ea55efb1c0cb19405760",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+    "reviews/initial/independent-exact-check.json": "e78725b0b384e31e8a1a6732d47b203a3117392ef48293fcd9cc4cbe7f05d03c",
+    "reviews/initial/independent-exact-check.py": "ab688c7595ce49bc863fda9241484b038f1dcf9494abfa7b57e9a379db0ba9fa",
+    "reviews/initial/source-hashes.json": "b69eb8f51dd41ceac1af86fd778b7bd861b46da11f4565b5a234ab0f66969243"
+  },
+  "later_gates_pending": [
+    "proof implementation",
+    "independent final source reviews",
+    "implemented proof kernel and permitted axiom checks",
+    "actual Linux Comparator and sandbox/rejection controls"
+  ],
+  "phase": "independent exact-byte pre-proof statement review",
+  "post_checks_all_ten_unchanged": true,
+  "project_olean_reuse": false,
+  "report_sha256": "7c20df0a8af3245e0c04219c0631fe7b020a8760fcf60588a01c64acf285149f",
+  "reviewer": "OpenAI Codex AI agent /root/existing_verification_audit; non-implementer",
+  "snapshot": "/private/tmp/nla-campaign-existing-review/SP05-statement-build",
+  "statement_inputs_sha256": "69efa93665a3cbaaf26037402329e8d9f7aa552358e5e300dbfaf27af71e0e89",
+  "verdict": "APPROVE"
+}
