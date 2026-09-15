@@ -5,14 +5,19 @@ California Institute of Technology, Pasadena, California, USA.
 AI-assisted formalization. Mathematical attribution is recorded in
 [SourceCorrespondence.md](SourceCorrespondence.md).
 
-The complete thirteen-target proof passed Linux development compilation and
-LeanCert kernel assertions at bb3188268137f84e521763242b46251395ae2f4b.
-**Standalone Comparator, default-kernel replay, controls and final review are
-pending. This package does not yet promote the canonical problem's status.**
-The [development run](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35015144656)
-failed overall on the separate IE-17 candidate; MF-02's build and statement
-commands both exited zero. The full receipt and logs are retained in
-[verification/development-2026-09-15](verification/development-2026-09-15).
+The complete thirteen-target formalization passed the repository's actual
+non-root Linux verification on 15 September 2026 at immutable proof commit
+`b873ead85b3c71cdba017a915d5ef6e73b1711ae`.
+[The actual verification job](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35016473743/job/104541199904)
+ran LeanCert kernel assertions, all13 Comparator contracts, default-kernel replay
+and rejection controls. Every target uses only `propext`, `Classical.choice`
+and `Quot.sound`. [Raw evidence and hashes](verification/linux-2026-09-15)
+and both [independent final referees](reviews/final) are retained.
+
+The earlier [shared development run](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35015144656)
+passed MF-02's complete component but failed on IE-17. Its original full receipt
+is retained as development history, separate from the successful standalone run.
+Later documentation commits are not presented as that earlier run's checkout.
 
 ## Scope
 
@@ -25,7 +30,7 @@ including the two small-budget cases.
 The proof uses exact polynomial identities and Mathlib's exterior Chebyshev
 bound. No interval subdivision or sampled-input argument is needed. All thirteen
 exports are listed in [comparator.json](comparator.json), with their source
-locations and actual development axiom reports in
+locations and actual transitive axiom reports in
 [formalization.yaml](formalization.yaml).
 
 ## Run the proof
@@ -51,6 +56,6 @@ draft labels are provenance, not current verification claims. The only package
 configuration change after that phase selects Solution as the default target.
 
 Two independent proof-source reviews are in
-[reviews/proof-source](reviews/proof-source). Final acceptance will require
-addenda binding the accepted publication source and actual standalone logs.
+[reviews/proof-source](reviews/proof-source). Their [final addenda](reviews/final) bind the accepted mathematical source and
+actual standalone logs.
 AI-agent review is distinct from human peer review and mechanical checking.

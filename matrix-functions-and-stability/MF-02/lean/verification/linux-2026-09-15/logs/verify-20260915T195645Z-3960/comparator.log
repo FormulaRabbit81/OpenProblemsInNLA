@@ -1,0 +1,76 @@
+$ systemd-run --user --quiet --wait --pipe --collect -p 'RestrictAddressFamilies=~AF_UNIX' --working-directory /home/runner/work/_temp/nla-lean-tools/.verification-tmp/nla-fresh-proof-9ia0oqby/project /usr/bin/env -i PATH=/home/runner/.elan/toolchains/leanprover--lean4---v4.33.1/bin:/home/runner/.elan/bin:/home/runner/go/bin:/opt/hostedtoolcache/go/1.27.1/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin HOME=/home/runner LANG=C.UTF-8 XDG_RUNTIME_DIR=/run/user/1001 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus GIT_TERMINAL_PROMPT=0 GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null COMPARATOR_BIN=/home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator COMPARATOR_LEAN4EXPORT=/home/runner/work/_temp/nla-lean-tools/.tools/lean4export/.lake/build/bin/lean4export COMPARATOR_LANDRUN=/home/runner/work/_temp/nla-lean-tools/scripts/strict_landrun.py XDG_CACHE_HOME=/home/runner/work/_temp/nla-lean-tools/.tools/cache TMPDIR=/home/runner/work/_temp/nla-lean-tools/.verification-tmp lake env /home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator comparator.json
+Building Challenge
+⚠ [1590/1592] Built NLA.MF02.Definitions (1.5s)
+warning: NLA/MF02/Definitions.lean:13:0: 'Mathlib.Data.Real.Sqrt' has been deprecated: please replace this import by
+
+import Mathlib.Analysis.Real.Sqrt
+⚠ [1591/1592] Built Challenge (1.2s)
+warning: Challenge.lean:24:8: declaration uses `sorry`
+warning: Challenge.lean:31:8: declaration uses `sorry`
+warning: Challenge.lean:37:8: declaration uses `sorry`
+warning: Challenge.lean:43:8: declaration uses `sorry`
+warning: Challenge.lean:50:8: declaration uses `sorry`
+warning: Challenge.lean:59:8: declaration uses `sorry`
+warning: Challenge.lean:65:8: declaration uses `sorry`
+warning: Challenge.lean:71:8: declaration uses `sorry`
+warning: Challenge.lean:76:8: declaration uses `sorry`
+warning: Challenge.lean:83:8: declaration uses `sorry`
+warning: Challenge.lean:90:8: declaration uses `sorry`
+warning: Challenge.lean:96:8: declaration uses `sorry`
+warning: Challenge.lean:104:8: declaration uses `sorry`
+Build completed successfully (1592 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.MF02.uniform_error_is_maximum, NLA.MF02.program_degree_bound, NLA.MF02.cubic_degree_and_cost, NLA.MF02.degree_error_lower_bound, NLA.MF02.optimized_cubic_interval, NLA.MF02.optimized_cubic_ratio, NLA.MF02.cubic_error_bounds, NLA.MF02.cubic_error_strictly_decreases, NLA.MF02.unrestricted_error_small_budgets, NLA.MF02.stage_minimum_attained, NLA.MF02.stage_minimum_small_budgets, NLA.MF02.stage_minimum_bounds, NLA.MF02.uniform_asymptotic_order, propext, Classical.choice, Quot.sound, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+Building Solution
+⚠ [1589/1879] Replayed NLA.MF02.Definitions
+warning: NLA/MF02/Definitions.lean:13:0: 'Mathlib.Data.Real.Sqrt' has been deprecated: please replace this import by
+
+import Mathlib.Analysis.Real.Sqrt
+✔ [3015/3025] Built LeanCert.Tactic.Verification (1.6s)
+ℹ [3016/3025] Built NLA.MF02.Model (2.7s)
+info: NLA/MF02/Model.lean:155:0: 'NLA.MF02.program_degree_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF02/Model.lean:157:0: 'NLA.MF02.cubic_degree_and_cost' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3017/3025] Built NLA.MF02.Cubic (3.7s)
+info: NLA/MF02/Cubic.lean:163:0: 'NLA.MF02.optimized_cubic_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF02/Cubic.lean:165:0: 'NLA.MF02.optimized_cubic_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3018/3025] Built NLA.MF02.Errors (2.3s)
+info: NLA/MF02/Errors.lean:190:0: 'NLA.MF02.uniform_error_is_maximum' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3019/3025] Built NLA.MF02.Parity (2.4s)
+✔ [3020/3025] Built NLA.MF02.Iteration (2.6s)
+⚠ [3021/3025] Built NLA.MF02.Chebyshev (5.5s)
+warning: NLA/MF02/Chebyshev.lean:44:59: Variable name `he1` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _he1
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF02/Chebyshev.lean:156:0: 'NLA.MF02.degree_error_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3022/3025] Built NLA.MF02.Bounds (2.2s)
+info: NLA/MF02/Bounds.lean:122:0: 'NLA.MF02.unrestricted_error_small_budgets' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF02/Bounds.lean:124:0: 'NLA.MF02.cubic_error_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF02/Bounds.lean:126:0: 'NLA.MF02.cubic_error_strictly_decreases' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3023/3025] Built NLA.MF02.Minimum (2.3s)
+info: NLA/MF02/Minimum.lean:133:0: 'NLA.MF02.stage_minimum_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF02/Minimum.lean:135:0: 'NLA.MF02.stage_minimum_small_budgets' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF02/Minimum.lean:137:0: 'NLA.MF02.stage_minimum_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF02/Minimum.lean:139:0: 'NLA.MF02.uniform_asymptotic_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3024/3025] Built Solution (1.0s)
+info: Solution.lean:31:0: 'NLA.MF02.uniform_error_is_maximum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:32:0: 'NLA.MF02.program_degree_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:33:0: 'NLA.MF02.cubic_degree_and_cost' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:34:0: 'NLA.MF02.degree_error_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:35:0: 'NLA.MF02.optimized_cubic_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:36:0: 'NLA.MF02.optimized_cubic_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:37:0: 'NLA.MF02.cubic_error_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:38:0: 'NLA.MF02.cubic_error_strictly_decreases' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:39:0: 'NLA.MF02.unrestricted_error_small_budgets' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:40:0: 'NLA.MF02.stage_minimum_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:41:0: 'NLA.MF02.stage_minimum_small_budgets' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:42:0: 'NLA.MF02.stage_minimum_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:43:0: 'NLA.MF02.uniform_asymptotic_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (3025 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.MF02.uniform_error_is_maximum, NLA.MF02.program_degree_bound, NLA.MF02.cubic_degree_and_cost, NLA.MF02.degree_error_lower_bound, NLA.MF02.optimized_cubic_interval, NLA.MF02.optimized_cubic_ratio, NLA.MF02.cubic_error_bounds, NLA.MF02.cubic_error_strictly_decreases, NLA.MF02.unrestricted_error_small_budgets, NLA.MF02.stage_minimum_attained, NLA.MF02.stage_minimum_small_budgets, NLA.MF02.stage_minimum_bounds, NLA.MF02.uniform_asymptotic_order, propext, Classical.choice, Quot.sound, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+Running Lean default kernel on solution.
+Lean default kernel accepts the solution
+Your solution is okay!
+
+EXIT_STATUS=0
