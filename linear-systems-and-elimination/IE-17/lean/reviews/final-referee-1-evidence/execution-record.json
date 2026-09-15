@@ -1,0 +1,117 @@
+{
+  "candidate_commit": "0382f57e2d7da770563cc016b84fa3c89e086931",
+  "platform": "arm64-apple-darwin24.6.0",
+  "lean_version": "4.33.1",
+  "lean_commit": "819816b2e0a3bf405af45ae5c7af2491d8f5bee6",
+  "commands": [
+    {
+      "command": "lake build Challenge",
+      "exit_code": 0,
+      "log": "referee1-challenge-build.log",
+      "jobs": 2379,
+      "expected_specification_placeholders": 8
+    },
+    {
+      "command": "lake build Solution",
+      "exit_code": 0,
+      "log": "referee1-solution-build.log",
+      "jobs": 3651
+    },
+    {
+      "command": "lake env lean AuditFull.lean",
+      "exit_code": 0,
+      "log": "referee1-axioms.log",
+      "checked_kernel_trust_closures": 23,
+      "exact_frozen_challenge_type_assignments": 8
+    },
+    {
+      "command": "/private/tmp/nla-lean-audit-python/bin/python tools/lean/validate_manifest.py linear-systems-and-elimination/IE-17/lean",
+      "exit_code": 0,
+      "log": "manifest-validation.log"
+    },
+    {
+      "command": "python3 independent_arithmetic.py",
+      "exit_code": 0,
+      "exact_fraction_checks": 42
+    }
+  ],
+  "dependency_commits": [
+    {
+      "name": "leancert",
+      "sha": "621a43d7cf21f87872392a01e874f2f1dbddc926",
+      "tracked_modifications": []
+    },
+    {
+      "name": "mathlib",
+      "sha": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "tracked_modifications": []
+    },
+    {
+      "name": "plausible",
+      "sha": "b7eb3304aeae834b12dda98993a37f6a41f6f0bb",
+      "tracked_modifications": []
+    },
+    {
+      "name": "LeanSearchClient",
+      "sha": "5f4d51b81cbd3f6b32b156bfad9056621a040404",
+      "tracked_modifications": []
+    },
+    {
+      "name": "importGraph",
+      "sha": "16f02aa7642864af59f1ff0e384a015994db9118",
+      "tracked_modifications": []
+    },
+    {
+      "name": "proofwidgets",
+      "sha": "4be2e3d5087eeb272cf5a8853b8f9dd025ef5957",
+      "tracked_modifications": []
+    },
+    {
+      "name": "aesop",
+      "sha": "3448c0bcc5ce01b2d1546e483ec3620e32df3d0e",
+      "tracked_modifications": []
+    },
+    {
+      "name": "Qq",
+      "sha": "92c15be17b7caf78c2ad767ec40f89052d908d81",
+      "tracked_modifications": []
+    },
+    {
+      "name": "batteries",
+      "sha": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+      "tracked_modifications": []
+    },
+    {
+      "name": "Cli",
+      "sha": "6130a47896ce867c6a4a55373441e59e565bad0f",
+      "tracked_modifications": []
+    }
+  ],
+  "axiom_closures": {
+    "NLA.IE17.referee1_spectralNorm_semantics": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.referee1_witness_full_column_rank": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.referee1_exact_lsmr_run": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.referee1_optimal_errors": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.referee1_approximation_values": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.referee1_terminal_errors_zero": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.referee1_both_errors_increase": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.referee1_canonical_counterexamples": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.certificate_cutoffs": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.exists_optimal_error": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.feasible_direction_bounds": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.witnessE_feasible": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.witnessE_norm_sq_bound": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.lower_quadratic_certificate": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.zero_new_residual_certificate": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.optimal_error_bounds": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.penrose_projection_unique": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.penroseAt_correct": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.projection_norm_sq": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.actualQ_one_sq": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.actualQ_two_sq": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.approximation_error_values": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.witness_run_exact": "propext, Classical.choice, Quot.sound"
+  },
+  "local_source_check_only": true,
+  "authoritative_linux_and_comparator_run": "not performed by this review"
+}
