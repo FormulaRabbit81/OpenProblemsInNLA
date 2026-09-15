@@ -1,0 +1,162 @@
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'IE-15: exact rook-pivoting growth factors in orders three and four'
+  description: Complete proof that the canonical all-path, all-active-entry growth suprema are 3 and 14/3, with
+    exact attained rational witnesses.
+  authors:
+  - George Stepaniants
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California Institute of Technology
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+repository:
+  role: substantive-development
+  note: Complete source and authoritative Linux evidence approved by both independent referees. Verified proof revision 591690a3ca1715b61e769e7fae68cbda84565f07.
+sources:
+- title: IE-15 — Exact small-order growth factors for rook pivoting
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/c7f399b1694e0a68756e8d060e2a71775c044301/linear-systems-and-elimination/IE-15/README.md
+  type: web-post
+  relationship: formalizes
+  location: Complete Problem statement, both dimensions, all admissible rook choices and ties
+  author_endorsement: not-contacted
+  note: 'Preserves the permanent ID and canonical original statement. Historical source: Nicholas J. Higham, Accuracy
+    and Stability of Numerical Algorithms, second edition (2002), Problem 9.18.'
+- title: 'IE-15: exact rook-pivoting growth factors in orders three and four'
+  authors:
+  - George Stepaniants
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/c7f399b1694e0a68756e8d060e2a71775c044301/linear-systems-and-elimination/IE-15/solution.md
+  type: manuscript
+  relationship: formalizes
+  location: Theorem 1 and Sections 1–5
+  author_endorsement: not-contacted
+  note: Original mathematical proof and exact rational witnesses retain George Stepaniants attribution. Formalization
+    credit is supplied as requested by the campaign user; no separate source-author endorsement or external human
+    review is asserted. The earlier related order-five construction remains attributed to Matthew J. Colbrook and
+    is outside this proof.
+- title: IE-05 padded Schur trajectories and finite maxima
+  authors:
+  - George Stepaniants
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/c7f399b1694e0a68756e8d060e2a71775c044301/linear-systems-and-elimination/IE-05/lean/NLA/IE05
+  type: software
+  relationship: background
+  author_endorsement: not-contacted
+  note: Definitions and Basic adapt the same author’s Apache-2.0 finite-maximum and padded-trajectory implementation,
+    adding genuine row-and-column rook choices. No unrelated IE-05 mathematical target is imported.
+related_formalizations:
+- id: https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof
+  relationship: other
+  note: Structure/API and explicit LeanCert kernel-trust reference; shared repository checker uses its hash-locked
+    Comparator and exporter sources.
+- id: https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1
+  relationship: other
+  note: Statement/proof structure reference only. No mathematical implementation copied from this project.
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    tool_setup: Pinned Lean 4.33.1, LeanCert 621a43d7cf21f87872392a01e874f2f1dbddc926, Mathlib 0df444a360eaa60ab8c11dca51a86af692955474.
+      Two independent statement reviews preceded all proof implementation. Separate agents implemented scalar inequalities,
+      witnesses/normalized bounds, and permutation/normalization bridges.
+    prompting_notes: Preserve both dimensions, every admissible rook path and tie, all intermediate active entries,
+      exact real arithmetic and canonical supremum semantics. Use exact algebra to reduce computation without weakening
+      domains.
+  notes: 'Substantial AI assistance. Proof contributors: coordinator /root, /root/target_inventory, /root/ie15_witness_proof
+    and /root/ie15_path_permutation. Independent statement/final referees /root/reference_api_review and /root/existing_verification_audit
+    contributed no proof code. Reviews follow the repository’s Tau Ceti adaptation; no official Tau Ceti endorsement,
+    human peer review, priority certification or unmeasured costs claimed.'
+status:
+  scope: >-
+    Complete original target verified: both exact growth suprema, universal all-path/all-active-entry bounds and attained witnesses.
+    All eight reviewed declarations passed fresh sandboxed Linux Comparator and default-kernel replay in run 35010138599, attempt 1.
+    Both independent source and operational reviews approved; the canonical problem is Lean verified.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+  main_results:
+  - declaration: NLA.IE15.entryMax_semantics
+    file: NLA/IE15/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.IE15.all_entries_bound_three
+    file: NLA/IE15/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.IE15.all_entries_bound_four
+    file: NLA/IE15/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.IE15.witness_three
+    file: NLA/IE15/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.IE15.witness_four
+    file: NLA/IE15/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.IE15.greatest_growth_three
+    file: NLA/IE15/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.IE15.greatest_growth_four
+    file: NLA/IE15/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.IE15.exact_rook_growth
+    file: NLA/IE15/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+review:
+  status: independent statements, complete proof source and authoritative Linux evidence approved
+  reviewers:
+  - /root/reference_api_review (independent Codex AI agent)
+  - /root/existing_verification_audit (independent Codex AI agent)
+  notes: Exact pre-proof freeze, both statement approvals, both final source approvals and both operational audits are retained under reviews/.
+    The authoritative run is https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35010138599/attempts/1 at proof revision
+    591690a3ca1715b61e769e7fae68cbda84565f07. Raw artifact, GitHub provenance, source hashes and all controls are retained under
+    verification/linux-2026-09-15/. Artifact 10413826406 has SHA-256 5d077ee46dd308baff55ff85b92e41097af144f224e5bdbdb389395aaca4af94.
+    Publication updates change documentation and evidence only; mathematical statements, proofs and dependency inputs match that run.

@@ -1,0 +1,46 @@
+{
+  "proof_commit": "591690a3ca1715b61e769e7fae68cbda84565f07",
+  "linux_run": 35010138599,
+  "published_base": "8f04b905eb2e0827b6b84f37d9d080ae1f05b202",
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "tools/validate_problem_ids.py",
+        "--base-ref",
+        "origin/main"
+      ],
+      "exit_code": 0,
+      "stdout": "Validated 217 permanent problem IDs against origin/main\n"
+    },
+    {
+      "command": [
+        "/private/tmp/nla-pr153-venv/bin/python",
+        "tools/lean/validate_manifest.py",
+        "linear-systems-and-elimination/IE-15/lean"
+      ],
+      "exit_code": 0,
+      "stdout": "Manifest schema and comparator coverage: PASS (8 declarations)\n"
+    }
+  ],
+  "source_preservation": "Original canonical README recovered byte-for-byte by removing only inserted verification notice and reverting status/date. All existing verified receipt files except publication README/manifest remain unchanged.",
+  "pdf": {
+    "path": "../problem.pdf",
+    "sha256": "b2250d5c13d1ef5ffe0a870d0562e423f8cdb500fc7f5491f27cfbbe0e1615c2",
+    "pages": 3,
+    "renderer": "tools/render_problems.py IE-15; Pandoc 3.9 + XeLaTeX",
+    "renderer_result": "IE-15: OK; no overfull or missing character warnings",
+    "visual_review": "Coordinator inspected all three rendered pages: complete original statement on page2; readable formulas/links/attribution; no clipping or overlapping text."
+  },
+  "permanent_id_tests": {
+    "command": "python3 -m unittest discover -s tests -p 'test_problem_ids.py' -v",
+    "tests_passed": 17
+  },
+  "catalog_counts": {
+    "total": 217,
+    "Lean verified": 32,
+    "Solved": 72,
+    "Open": 42,
+    "Partially resolved": 71
+  }
+}

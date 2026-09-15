@@ -2,8 +2,16 @@
 
 **Difficulty:** challenging  
 **Importance:** interesting to the community  
-**Status:** Solved
-**Last checked:** 2026-09-11
+**Status:** Lean verified
+**Last checked:** 2026-09-15
+
+<!-- lean-verification -->
+## Lean verification — 2026-09-15
+
+The complete original negative resolution is **Lean verified**: both canonical errors strictly increase between the same successive nonzero exact LSMR iterates. The proof establishes the attained minimum over all real matrix-only spectral perturbations, the literal Moore–Penrose approximation and its unique value, and the complete minimizing LSMR run through first termination. [All eight independently reviewed targets](https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/6e53192977d87097666c039f6d8134a800ff7501/linear-systems-and-elimination/IE-17/lean) passed [fresh Linux Comparator and default-kernel verification](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35016724809).
+
+**Formalization:** George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology, with substantial OpenAI Codex assistance. **Original mathematical counterexample:** Matthew J. Colbrook, as credited in the preserved resolution below. [Lean project and reproduction](lean/README.md) · [formalization metadata](lean/formalization.yaml) · [two source and two operational reviews](lean/reviews/).
+<!-- /lean-verification -->
 
 <!-- colbrook-recovered -->
 ## Independently reviewed resolution - 2026-09-11

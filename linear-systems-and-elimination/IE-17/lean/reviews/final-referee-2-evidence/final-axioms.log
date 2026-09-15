@@ -1,0 +1,66 @@
+'NLA.IE17.spectralNorm_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.IE17.spectralNorm_semantics {m n : ℕ} (E : NLA.IE17.Mat m n) (c : ℝ) (hc : 0 ≤ c) :
+  0 ≤ NLA.IE17.spectralNorm E ∧
+    (NLA.IE17.spectralNorm E ≤ c ↔ ∀ (y : NLA.IE17.Vec n), ‖(Matrix.toEuclideanLin E) y‖ ≤ c * ‖y‖)
+'NLA.IE17.witness_full_column_rank' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.IE17.witness_full_column_rank : Function.Injective ⇑(Matrix.toEuclideanLin NLA.IE17.witnessA)
+'NLA.IE17.exact_lsmr_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.IE17.exact_lsmr_run :
+  NLA.IE17.IsTerminatingLSMRRun NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessRun ∧
+    NLA.IE17.witnessX₁ ≠ 0 ∧ NLA.IE17.witnessX₂ ≠ 0 ∧ NLA.IE17.witnessX₃ ≠ 0
+'NLA.IE17.optimal_errors' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.IE17.optimal_errors :
+  ∃ μ₁ μ₂,
+    NLA.IE17.IsOptimalError NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₁ μ₁ ∧
+      NLA.IE17.IsOptimalError NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₂ μ₂ ∧
+        0 ≤ μ₁ ∧ 0 ≤ μ₂ ∧ μ₁ ^ 2 ≤ 1979 / 2000 ∧ 99 / 100 < μ₂ ^ 2
+'NLA.IE17.approximation_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.IE17.approximation_values :
+  ∃ q₁ q₂,
+    NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₁ q₁ ∧
+      NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₂ q₂ ∧
+        (∀ (q : ℝ), NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₁ q → q = q₁) ∧
+          (∀ (q : ℝ), NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₂ q → q = q₂) ∧
+            0 ≤ q₁ ∧
+              0 ≤ q₂ ∧
+                q₁ ^ 2 = 69694107852573439503892031925 / 69323394392991282508138323472 ∧
+                  q₂ ^ 2 = 5430772101137459612205263871781350 / 5387955615790281743396033884265233
+'NLA.IE17.terminal_errors_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.IE17.terminal_errors_zero :
+  NLA.IE17.IsOptimalError NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₃ 0 ∧
+    NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₃ 0
+'NLA.IE17.both_errors_increase' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.IE17.both_errors_increase :
+  ∃ μ₁ μ₂ q₁ q₂,
+    NLA.IE17.IsOptimalError NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₁ μ₁ ∧
+      NLA.IE17.IsOptimalError NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₂ μ₂ ∧
+        NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₁ q₁ ∧
+          NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₂ q₂ ∧
+            μ₁ < μ₂ ∧
+              q₁ < q₂ ∧
+                μ₁ ^ 2 ≤ 1979 / 2000 ∧
+                  1979 / 2000 < 99 / 100 ∧
+                    99 / 100 < μ₂ ^ 2 ∧ q₁ ^ 2 < 503 / 500 ∧ 503 / 500 < 1007 / 1000 ∧ 1007 / 1000 < q₂ ^ 2
+'NLA.IE17.canonical_counterexamples' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.IE17.canonical_counterexamples : ¬NLA.IE17.OptimalErrorsNonincreasing ∧ ¬NLA.IE17.ApproximationErrorsNonincreasing
+'NLA.IE17.penrose_projection_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.approximation_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.stackAt_gram' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.penroseAt_left_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.penroseAt_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.projection_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.actualQ_approximation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.actualQ_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.actualQ_one_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.actualQ_two_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.approximation_error_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.isLSMR_of_normal_orthogonality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.normal_orthogonality_of_generators' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.witnessA_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.witness_run_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.exists_optimal_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.feasible_direction_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.feasible_zero_residual_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.every_feasible_second_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.certificate_cutoffs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE17.optimal_error_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
