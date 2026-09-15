@@ -5,7 +5,9 @@ contributor-owned dependencies `Complexification`, `Sylvester`, and `Modulus`.
 `build.json` records exact source hashes, root-owned dependency hashes, the
 unchanged ten pre-proof inputs, build exit code 0, and permitted axioms.
 `build.log` contains exact compiler messages extracted from the retained
-Lake `.trace` files under `lake-traces/`. These raw logs contain temporary
+Lake `.trace` files under `lake-traces/`, retained byte-for-byte with `.trace.json`
+filenames so Git includes these evidence records despite the build-cache ignore rule.
+These raw logs contain temporary
 local checkout paths; they are provenance records, not portable commands.
 
 Reproduce from this Lean project with:
