@@ -60,3 +60,16 @@ Do not commit `.venv/`, `__pycache__/` or the auxiliary LaTeX files. Recheck any
 A separate Codex AI assistant reviewed the complete manuscript and found no mathematical error. See [the audit](independent-review.md), [independently written checker](independent_check.py), and [its recorded results](independent-results.json). The original exact and numerical scripts were also rerun: [exact output](original-exact-rerun.txt), [numerical output](original-numeric-rerun.txt). This is informal AI-agent review, not external human peer review or formal verification. The proposed status remains Solution claimed pending maintainer assessment.
 
 The earlier SELF_REVIEW.md and verification.txt remain historical records of the original package. Their statements about the absence of independent review refer to that earlier stage. The original verification.txt hashes the original README, before this attribution and review addendum; the proof, TeX and three original checking/construction scripts remain unchanged. Run `python3 independent_check.py --pdf proof.pdf` for the independent exact checks; add `--numeric` when NumPy is installed.
+
+## Maintainer assessment, 15 September 2026
+
+The [fresh maintainer audit of PR #264](../../reviews/2026-09-15-pr264/README.md)
+accepts the complete negative resolution of MF-24's original uniform-boundedness
+target. Its canonical status is now **Solved**. Exact dimension-dependent
+constants and optimal growth remain open. The audit records separate proof
+review, fresh exact/numerical checks and document review; it is informal AI
+review, not external human peer review or Lean verification. The original
+manuscript, checking scripts and historical reviews are preserved.
+
+The stated Cambridge affiliation is supported by the
+[current university profile](https://www.damtp.cam.ac.uk/user/gam37/).

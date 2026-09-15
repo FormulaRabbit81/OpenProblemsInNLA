@@ -27,11 +27,11 @@ The passing scopes include AC-01's small-CW upper bound (also relevant to AC-04)
 
 ## Resolved catalog entries
 
-### MF-24 — a claimed negative resolution of uniform boundedness
+### MF-24 — a negative resolution of uniform boundedness — Georg Maierhofer
 
-**Solution claimed, 14 September 2026.** The [manuscript](references/mf24-counterexample/proof.pdf), **Theorem 1 and equation (15)**, gives super-identical-pseudospectral weighted shifts of order $`(m+1)^2`$ and a common polynomial with norm ratio at least $`(4/5)\sqrt m`$. This refutes the dimension-independent bound in the [retained original target](matrix-functions-and-stability/MF-24/README.md).
+**Solved negatively, 15 September 2026.** Georg Maierhofer (University of Cambridge), [manuscript dated 14 September 2026](references/mf24-counterexample/proof.pdf), **Theorem 1 and equation (15)**, gives super-identical-pseudospectral weighted shifts of order $`(m+1)^2`$ and a common polynomial with norm ratio at least $`(4/5)\sqrt m`$. This refutes the dimension-independent bound in the [retained original target](matrix-functions-and-stability/MF-24/README.md).
 
-**Corollary 3** proves $`C_N\ge\sqrt{\lfloor\sqrt N\rfloor-1}`$ for $`N\ge9`$. Exact values and optimal growth of $`C_N`$ remain open. [Source, exact checks, numerical checks and AI-assistance disclosure](references/mf24-counterexample/README.md). A separate [informal Codex AI-agent audit](references/mf24-counterexample/independent-review.md) found no mathematical error and reran the checks; no external peer review, Lean verification or publication-priority claim is asserted.
+**Corollary 3** proves $`C_N\ge\sqrt{\lfloor\sqrt N\rfloor-1}`$ for $`N\ge9`$. Exact values and optimal growth of $`C_N`$ remain open. [Source, exact checks, numerical checks and AI-assistance disclosure](references/mf24-counterexample/README.md). The [fresh maintainer audit](reviews/2026-09-15-pr264/README.md) confirms the full negative resolution; the [submitted informal Codex AI-agent audit](references/mf24-counterexample/independent-review.md) is retained. No external peer review, Lean verification or publication-priority claim is asserted.
 
 
 ### 🏆 MI-32 — the Latała–Świątkowski upper comparison — Diar Heidary
