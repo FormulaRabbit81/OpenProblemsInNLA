@@ -1,0 +1,18 @@
+PASS: 1080 shifted SVD comparisons
+      maximum absolute error after common scaling: 1.088e-14
+PASS: 24 dense polynomial and block-norm comparisons
+PASS: 133 norm-bound comparisons, including t=1 and t=1e200
+PASS: shifted SVD test rejects the misplaced-bridge control
+
+  m       N       computed ratio      lower-bound formula
+  2       9           1.18083218               1.13137085
+  3      16           1.45388581               1.41713248
+  4      25           1.71276809               1.68421053
+  9     100           2.74262452               2.73033708
+ 19     400           4.15677065               4.15188000
+ 49    2500           6.86413918               6.86280114
+ 99   10000           9.85185691               9.85137072
+
+Both columns are rounded floating-point values.
+Large-order polynomial norms use residue blocks, not dense shifted SVDs.
+All numerical checks passed. Small singular values have no relative-error guarantee.

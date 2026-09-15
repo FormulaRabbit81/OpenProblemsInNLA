@@ -9,13 +9,13 @@ I have several motivations for starting this repository:
 3. I would like to collect the solutions in one place because they are coming in fast.
 
 <!-- catalog-summary -->
-**114 problems with open targets:** 42 open and 72 partially resolved. **103 other retained entries**, excluded from the open count.
+**113 problems with open targets:** 42 open and 71 partially resolved. **104 other retained entries**, excluded from the open count.
 
-**Resolution evidence:** 72 solved (published or independently audited); 31 solved with Lean verification.
+**Resolution evidence:** 73 solved (published or independently audited); 31 solved with Lean verification.
 
 Each entry records its own literature-check date. Literature checks are bounded; ratings are editorial. “Impact” uses the canonical `Importance` field.
 
-**[Browse all 114 open targets →](CATALOG.md)** · **[Solved and claimed solutions →](RESOLVED.md)**
+**[Browse all 113 open targets →](CATALOG.md)** · **[Solved and claimed solutions →](RESOLVED.md)**
 <!-- /catalog-summary -->
 
 ## Browse by category
@@ -24,7 +24,7 @@ Each entry records its own literature-check date. Literature checks are bounded;
 | --- | ---: |
 | [Linear systems and elimination](linear-systems-and-elimination/README.md) | 9 |
 | [Eigenvalues and inverse problems](eigenvalues-and-inverse-problems/README.md) | 13 |
-| [Matrix functions and stability](matrix-functions-and-stability/README.md) | 14 |
+| [Matrix functions and stability](matrix-functions-and-stability/README.md) | 13 |
 | [Randomized and low-rank approximation](randomized-and-low-rank-approximation/README.md) | 12 |
 | [Tensor computations](tensor-computations/README.md) | 17 |
 | [Nonnegative and positive factorizations](nonnegative-and-positive-factorizations/README.md) | 4 |
