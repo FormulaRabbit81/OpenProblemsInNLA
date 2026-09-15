@@ -29,6 +29,10 @@ def plain_pdf_title(title):
 
 def restore_pdf_layout(identifier, body):
     """Keep document commands out of the public mathematical statements."""
+    if identifier == "SP-04":
+        # Keep the complete retained question together after verification notices.
+        heading = "## Original problem statement\n"
+        body = body.replace(heading, "\\newpage\n\n" + heading, 1)
     if identifier == "MF-02":
         body = body.replace("## Lean proof and verification evidence", "\\newpage\n\n## Lean proof and verification evidence", 1)
     if identifier == "MF-22":
@@ -84,6 +88,9 @@ def render(source):
             input=body.strip(), text=True, capture_output=True, check=True,
         )
         tex = result.stdout
+        if identifier == "SP-04":
+            # This publication date records formal verification, not a literature search.
+            tex = tex.replace("Literature check:", "Verification check:")
         # The code spans in this catalog are literal search phrases. Set them
         # in italics with ordinary spaces so long queries wrap naturally.
         tex = re.sub(r"(\\texttt\{[^{}]*)", lambda m: m[0].replace(r"\texttt", r"\textit").replace(r"\ ", " "), tex)

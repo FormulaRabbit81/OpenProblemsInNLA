@@ -1,20 +1,18 @@
 # SP-04: generic failure of the smallest-absolute-multiplier rule
 
-**Stage: complete local proof; independent final review and authoritative Linux
-verification pending.** All eleven reviewed declarations compile with explicit
-kernel-trust assertions and only `propext`, `Classical.choice`, and `Quot.sound`.
-The ten pre-proof statement/dependency inputs remain unchanged from the two
-independent approvals at boundary commit `623e14e6`. The canonical problem remains
-**Solved** until full-source review, actual Comparator correspondence, isolated
-Linux verification and operational review pass. No completed Linux verification
-or final referee approval is claimed at this stage.
+**Verification status: Lean verified.** All eleven complete-target declarations
+passed fresh isolated Linux Comparator, default-kernel replay and permitted-axiom
+checks. Both independent complete-source reviews and both operational audits passed.
+The ten pre-proof inputs remain unchanged from the two independent approvals
+at boundary commit `623e14e6`.
 
 **Formalization:** George Stepaniants, Department of Computing and Mathematical
 Sciences, California Institute of Technology, with substantial OpenAI Codex
 assistance. **Original mathematical resolution:** Matthew J. Colbrook, Department
 of Applied Mathematics and Theoretical Physics, University of Cambridge.
 The [canonical statement](../README.md) and [complete original proof](../solution.md)
-are preserved unchanged, including their historical attribution.
+are preserved in full, including their historical attribution. The canonical page
+adds only verification information and updates status/date.
 
 ## Full intended target
 
@@ -37,9 +35,9 @@ Neither a default matrix norm nor a diagonal-only genericity claim is used.
 The definitions are literal mathematical objects, and
 [comparator.json](comparator.json) permits no definition holes. The proof
 consumes four explicit LeanCert kernel-mode certificates and uses only
-`propext`, `Classical.choice`, and `Quot.sound`. The current
-[formalization.yaml](formalization.yaml) reports local completion and the remaining
-independent and operational gates.
+`propext`, `Classical.choice`, and `Quot.sound`. The
+[formalization.yaml](formalization.yaml) records complete verification, attribution,
+all eleven exports and the reviewed evidence.
 
 ## Proof structure and computation
 
@@ -76,13 +74,46 @@ of every exported result, and every result also asserts kernel trust.
 The [review protocol](../../../docs/lean/REVIEW.md) requires two independent
 non-implementing agents to approve exact mathematical and numerical statements
 before implementation. Both approvals and their sealed inputs are retained in
-`reviews/`. Complete-source reviews and the pinned
-[Linux harness](../../../tools/lean/HARNESS.md) remain separate gates. The Linux
-run must use actual Lean4 Comparator, default-kernel replay, the real sandbox,
-and successful rejection controls; local compilation does not replace it.
+`reviews/`. Both complete-source reviews approved: [referee 1](reviews/final-referee-1.md)
+and [referee 2](reviews/final-referee-2.md). The pinned
+[Linux harness](../../../tools/lean/HARNESS.md) then ran actual Lean4 Comparator,
+default-kernel replay, the real sandbox and successful rejection controls.
 
 The pinned [Forsythe](https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof)
 and [Schiffer](https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1)
 projects supply structure/API references. Reviews follow the repository's Tau
 Ceti adaptation and are disclosed as AI-agent reviews, without claiming
 external human review or official endorsement.
+
+
+## Authoritative Linux verification
+
+[Run 35025876241, attempt 1](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35025876241/attempts/1) verified immutable proof revision
+[`fcd722e9`](https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/fcd722e923a339dfeee89051886e82c7384a04d7/eigenvalues-and-inverse-problems/SP-04/lean)
+on Ubuntu 24.04. All eleven Challenge/Solution targets passed actual Comparator
+correspondence, transitive permitted-axiom checks and default-kernel replay.
+The target verification also passed real sandbox probes, three raw-kernel controls,
+five Comparator regressions, and separate sorry/native rejection controls.
+
+The [permanent archive](verification/linux-2026-09-15/) retains the original ZIP,
+all thirteen extracted members, GitHub provenance and the full source receipt.
+Artifact `10419254479` has SHA-256
+`eae47bb19e2a64ffc99e383b204c8be89136cfe5755deb86f1e49981c9d1aa6a`.
+
+```bash
+cd verification/linux-2026-09-15
+shasum -a 256 -c SHA256SUMS
+```
+
+Both independent operational audits approved: [referee 1](reviews/linux-referee-1.md)
+and [referee 2](reviews/linux-referee-2.md). They checked all
+88 candidate input hashes against the immutable verified Git revision
+and approved source. The standalone checker-controls job was skipped because
+shared tools were unchanged; all required controls ran within the actual SP-04
+verify job.
+
+Publication changes update status, documentation, evidence and rendered artifacts.
+Mathematical statements, proofs and dependency inputs remain those verified at
+the immutable proof revision. Historical pending-stage reports are closed by
+the later approvals. No second independent Linux execution, external human review
+or official Tau Ceti endorsement is claimed.
