@@ -1,0 +1,56 @@
+{
+  "phase": "statement-boundary-frozen-proof-implementation-authorized",
+  "time": "2026-09-15T18:40:57.927838+00:00",
+  "problem": "MF-02",
+  "source_hashes": {
+    "Challenge.lean": "7731b4023acf5747a6d08bdb9f0fd3b180199cdbcef946cd66dde21825cae611",
+    "DRAFT-STATUS.json": "b71685af87483f61c7f16a807e41dcae8abe40656a8856c2664a0a2a9572a429",
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "NLA/MF02/Definitions.lean": "905203d0f31ea8f28f1fcba791efe54684897df0e6df76358b3783351a51d771",
+    "NUMERICAL_TARGETS.md": "3a978022d54763b5fa1b5be85d18c9e925b5a7cf8bb14d3ce679efb804ed9b6a",
+    "comparator.json": "2bfa63c3696e91b92207af8b95e0c82cba1a512916ac9fe6a8a89688989443f7",
+    "lake-manifest.json": "3b85aeaa75361d299ea942bbac70315a611474b1167fe6ee42e221a35f17b756",
+    "lakefile.toml": "d77d5eb3fd90c8090330a9dbcee3ef115983b9deae9f263431a017efa3d7de52",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71"
+  },
+  "reviews": {
+    "/tmp/nla-lean-next-20260915/reviews/root-statements/MF02-REVIEW.md": "0208f7e01d6fecdb41dc4c64e2ee80aa1ed3c72f4b3854a001d193db7b9a5726",
+    "/tmp/nla-lean-next-20260915/reviews/MF-02-statement-next-elimination/REVIEW.md": "c76382fc940db62d17003fe43bebcc5c77666e03ff8064455a24dc3aa7fa88c4"
+  },
+  "linux_component_receipt": {
+    "run_id": 35008092670,
+    "commit": "ca3da6ac7f78369db7339a9a6a2d777adbc3ca6f",
+    "receipt_sha256": "566a49e6cd10f999d1fe293e8b955e4188143288c7e5a6f0c085f6597aaada7b",
+    "commands": [
+      {
+        "argv": [
+          "lake",
+          "build",
+          "NLA.MF02.Definitions"
+        ],
+        "exit_code": 0,
+        "log": "MF-02-module-0.log",
+        "sha256": "1e22f58bf32e70ed719bcfdf16c3154058f0ecf257d9965a0defd0cd2ce9a15d"
+      },
+      {
+        "argv": [
+          "lake",
+          "env",
+          "lean",
+          "Challenges/MF02.lean"
+        ],
+        "exit_code": 0,
+        "log": "MF-02-challenge.log",
+        "sha256": "057ae2c1d6e3e1d6b827640d0b4e1f786488f95ac24feedff69195b77ee5898d"
+      }
+    ],
+    "global_batch_status": "failed on later unrelated IE-17 Challenge syntax",
+    "component_status": "MF-02 Definitions and all13 Challenge declarations elaborated successfully",
+    "mathematical_verification": false
+  },
+  "constraints": [
+    "No changes to frozen definitions or public statement types without renewed reviews",
+    "No local Lean or Lake builds",
+    "Complete full target with actual Comparator and kernel replay before verification count or publication"
+  ]
+}
