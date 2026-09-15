@@ -1,0 +1,30 @@
+'NLA.IE15.entryMax_semantics_proved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.schurStep_bound_proved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.entryMax_pos_of_admissible_proved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.growth_le_of_entries_proved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.rook_stage_bound_proved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.trajectory_reorderForPath' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.admissiblePath_reorderForPath' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.activeMax_reorderForPath' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.exists_noSwap_representative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.schurStep_signedScale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.trajectory_signedScale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.admissiblePath_signedScale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.exists_normalized_noSwap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.entry_prefix_coordinates' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE15.all_entries_bound_from_normalized' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.IE15.all_entries_bound_from_normalized {n : ℕ} (hn : 1 ≤ n) (C : ℝ) (hC : 0 ≤ C)
+  (hstage : ∀ (k : Fin n), ↑k < n - 1 → 2 ^ ↑k ≤ C)
+  (hfinal :
+    ∀ (B : NLA.IE15.Mat n) (last : Fin n),
+      ↑last = n - 1 →
+        NLA.IE15.AdmissiblePath B (NLA.IE15.noSwapPath n) →
+          (∀ (i j : Fin n), |B i j| ≤ 1) →
+            (∀ (i : Fin n), 0 < NLA.IE15.trajectory B (NLA.IE15.noSwapPath n) (↑i) i i) →
+              (∀ i < last,
+                  0 ≤
+                    NLA.IE15.trajectory B (NLA.IE15.noSwapPath n) (↑i) last i /
+                      NLA.IE15.trajectory B (NLA.IE15.noSwapPath n) (↑i) i i) →
+                NLA.IE15.trajectory B (NLA.IE15.noSwapPath n) (↑last) last last ≤ C)
+  (A : NLA.IE15.Mat n) (path : NLA.IE15.PivotPath n) (hp : NLA.IE15.AdmissiblePath A path) (k i j : Fin n) :
+  k ≤ i → k ≤ j → |NLA.IE15.trajectory A path (↑k) i j| ≤ C * NLA.IE15.entryMax A
