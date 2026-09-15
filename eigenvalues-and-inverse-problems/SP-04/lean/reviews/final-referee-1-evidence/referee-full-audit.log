@@ -1,0 +1,72 @@
+'Referee1.exact_numerical_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Referee1.exact_diagonal_stationary_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Referee1.exact_diagonal_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Referee1.exact_diagonal_finite' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Referee1.exact_orthogonal_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Referee1.exact_spectral_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Referee1.exact_regular_svd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Referee1.exact_open_family_counterexamples' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Referee1.exact_algebraic_avoidance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Referee1.exact_generic_counterexamples' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Referee1.exact_canonical_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.scalar_numerical_bounds :
+  (99 / 100) ^ 2 < 49 / 16 - 52 / 25 ∧ 275 / 198 < 2 ∧ 13 / 25 * (44 / 25) * (51 / 50) < 1 ∧ 201 / 400 < 13 / 25
+'NLA.SP04.scalar_numerical_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.selected_parameter_exists (s : Fin 3 → ℝ) (hs : Admissible s) :
+  ∃ t, 0 < t ∧ t < 13 / 25 ∧ selectedProduct s t = 1
+'NLA.SP04.selected_parameter_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.nonnegative_scalar_impossible (s : Fin 3 → ℝ) (hs : Admissible s) (x : Fin 3 → ℝ) (c : ℝ) (hc : 0 ≤ c)
+  (hC : c ≤ 13 / 25) : ¬ScalarStationary s x c
+'NLA.SP04.nonnegative_scalar_impossible' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.negative_scalar_comparison (s : Fin 3 → ℝ) (hs : Admissible s) (x : Fin 3 → ℝ) (t : ℝ) (ht : 0 < t)
+  (hx : ScalarStationary s x (-t)) : 1 ≤ selectedProduct s t ∧ (selectedProduct s t ≤ 1 → x = selectedEntries s t)
+'NLA.SP04.negative_scalar_comparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.scalar_least_unique (s : Fin 3 → ℝ) (hs : Admissible s) (t : ℝ) (ht : 0 < t) (hT : t < 13 / 25)
+  (hg : selectedProduct s t = 1) (x : Fin 3 → ℝ) (c : ℝ) (hx : ScalarStationary s x c) :
+  t ≤ |c| ∧ (t = |c| → x = selectedEntries s t ∧ c = -t)
+'NLA.SP04.scalar_least_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.scalar_distance_improves (s : Fin 3 → ℝ) (hs : Admissible s) (t : ℝ) (ht : 0 < t) :
+  ∑ i, (s i - improvedEntries s t i) ^ 2 < ∑ i, (s i - selectedEntries s t i) ^ 2
+'NLA.SP04.scalar_distance_improves' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.stationary_gram_commutes {n : ℕ} {U X : Mat n} {c : ℝ} (h : Stationary U X c) :
+  Xᵀ * X * (Uᵀ * U) = Uᵀ * U * (Xᵀ * X)
+'NLA.SP04.stationary_gram_commutes' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.stationary_diagonal_matrix {s : Fin 3 → ℝ} (hs : Admissible s) {X : Mat 3} {c : ℝ}
+  (h : Stationary (Matrix.diagonal s) X c) : X = Matrix.diagonal fun i => X i i
+'NLA.SP04.stationary_diagonal_matrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.stationaryEliminant_at_zero (s : Fin 3 → ℝ) :
+  Polynomial.eval 0 (stationaryEliminant s) = 1 - (s 0 * s 1 * s 2) ^ 2
+'NLA.SP04.stationaryEliminant_at_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.stationaryEliminant_ne_zero (s : Fin 3 → ℝ) (hs : Admissible s) : stationaryEliminant s ≠ 0
+'NLA.SP04.stationaryEliminant_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.scalar_stationary_eliminant (s x : Fin 3 → ℝ) (c : ℝ) (hq : ∀ (i : Fin 3), x i ^ 2 - s i * x i + c = 0)
+  (hp : |∏ i, x i| = 1) : Polynomial.eval c (stationaryEliminant s) = 0
+'NLA.SP04.scalar_stationary_eliminant' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.diagonal_stationary_finite (s : Fin 3 → ℝ) (hs : Admissible s) : (stationaryPairs (Matrix.diagonal s)).Finite
+'NLA.SP04.diagonal_stationary_finite' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.frobeniusNorm_orthogonal {n : ℕ} {P Q : Mat n} (hP : Orthogonal P) (hQ : Orthogonal Q) (A : Mat n) :
+  frobeniusNorm (P * A * Qᵀ) = frobeniusNorm A
+'NLA.SP04.frobeniusNorm_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.stationaryPairs_orthogonal_eq {n : ℕ} {P Q : Mat n} (hP : Orthogonal P) (hQ : Orthogonal Q) (U : Mat n) :
+  stationaryPairs (P * U * Qᵀ) = (fun p => (P * p.1 * Qᵀ, p.2)) '' stationaryPairs U
+'NLA.SP04.stationaryPairs_orthogonal_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.uniqueLeastStationary_orthogonal_iff {n : ℕ} {P Q : Mat n} (hP : Orthogonal P) (hQ : Orthogonal Q)
+  (U X : Mat n) (c : ℝ) : UniqueLeastStationary (P * U * Qᵀ) (P * X * Qᵀ) c ↔ UniqueLeastStationary U X c
+'NLA.SP04.uniqueLeastStationary_orthogonal_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.gram_root_in_interval (U : Mat 3) (hU : U ∈ counterexampleFamily) (i : Fin 3) :
+  ∃ r, lowerEndpoint i ^ 2 < r ∧ r < upperEndpoint i ^ 2 ∧ Polynomial.eval r (Uᵀ * U).charpoly = 0
+'NLA.SP04.gram_root_in_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.reordered_gram_basis (U : Mat 3) (e : Fin 3 ≃ Fin 3) :
+  ∃ Q, Orthogonal Q ∧ Qᵀ * (Uᵀ * U) * Q = Matrix.diagonal fun i => ⋯.eigenvalues (e i)
+'NLA.SP04.reordered_gram_basis' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.family_has_admissible_svd (U : Mat 3) (hU : U ∈ counterexampleFamily) : ∃ s, Admissible s ∧ HasSVD U s
+'NLA.SP04.family_has_admissible_svd' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.admissible_svd_regular (U : Mat 3) (s : Fin 3 → ℝ) (hs : Admissible s) (hsvd : HasSVD U s) : RegularData U
+'NLA.SP04.admissible_svd_regular' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.polynomial_avoids_open (S : Set (Mat 3)) (hS : IsOpen S) (hne : S.Nonempty)
+  (p : MvPolynomial (Fin 3 × Fin 3) ℝ) (hp : p ≠ 0) : ∃ U ∈ S, (MvPolynomial.eval fun ij => U ij.1 ij.2) p ≠ 0
+'NLA.SP04.polynomial_avoids_open' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.SP04.selectionFails_of_admissible_svd (U : Mat 3) (s : Fin 3 → ℝ) (hs : Admissible s) (hsvd : HasSVD U s)
+  (hregular : RegularData U) : SelectionFails U
+'NLA.SP04.selectionFails_of_admissible_svd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Referee1.actual_nonempty_failure' depends on axioms: [propext, Classical.choice, Quot.sound]
