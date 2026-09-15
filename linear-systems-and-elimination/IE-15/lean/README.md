@@ -1,8 +1,8 @@
 # IE-15: exact small-order rook-pivoting growth
 
-**Current verification stage:** complete local Lean build and two independent final
-source approvals; fresh Linux Comparator verification is pending. The canonical
-entry remains **Solved** until all required checks pass.
+**Verification status: Lean verified.** Both independent final source reviews
+and both independent audits of fresh Linux Comparator/default-kernel verification
+are complete for all eight original-target declarations.
 
 **Original mathematical proof and formalization credit:** George Stepaniants,
 Department of Computing and Mathematical Sciences, California Institute of
@@ -84,8 +84,37 @@ tools/lean/verify.sh linear-systems-and-elimination/IE-15/lean /absolute/path/to
 The shared [harness instructions](../../../tools/lean/HARNESS.md) specify the real
 Landrun/Bubblewrap sandbox, user service prerequisites, raw-kernel replay, and
 negative controls. The verifier uses a fresh copy of committed inputs before any
-solution build in that copy. An authoritative successful IE-15 run has not yet been
-recorded at this development stage.
+solution build in that copy. The successful authoritative run and original
+artifact are recorded below.
+
+## Authoritative Linux evidence
+
+[Run 35010138599, attempt 1](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35010138599/attempts/1)
+verified immutable proof candidate
+[`591690a3`](https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/591690a3ca1715b61e769e7fae68cbda84565f07/linear-systems-and-elimination/IE-15/lean)
+on Ubuntu 24.04. Its [target job](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35010138599/job/104519877952)
+completed the fresh Challenge/Solution comparison, default-kernel replay,
+transitive permitted-axiom checks, actual sandbox tests, three kernel controls,
+five Comparator regressions, and additional sorry/native rejection controls.
+
+The [permanent archive](verification/linux-2026-09-15/) contains the original
+ZIP, extracted raw logs, full source-hash receipt, and GitHub run/job/artifact
+provenance. Artifact `10413826406` has SHA-256
+`5d077ee46dd308baff55ff85b92e41097af144f224e5bdbdb389395aaca4af94`.
+Every archived ZIP member matched that authenticated artifact. For archive integrity:
+
+```bash
+cd verification/linux-2026-09-15
+shasum -a 256 -c SHA256SUMS
+```
+
+Both independent operational audits approved the actual evidence:
+[referee 1](reviews/linux-referee-1.md) and [referee 2](reviews/linux-referee-2.md).
+They checked all 48 candidate input hashes against the verified Git revision and
+the previously reviewed source. Later publication changes update documentation,
+status and evidence; the mathematical and dependency inputs remain those verified
+at the immutable candidate revision. Earlier pending-stage descriptions inside
+retained reports are historical and are closed by the later approvals.
 
 ## Review and metadata
 
