@@ -7,6 +7,7 @@ were checked, why candidates were excluded, and how statuses and ratings were
 assessed. Canonical problem statements and current statuses live in the
 category folders; the dated notes preserve the scope and limits of earlier checks.
 
+- [IE-18 prior-work correction — September 15, 2026](colbrook-recovered-2026-09-11/verification/IE-18-prior-work-2026-09-15.md): credit Yunhui He (2025) for the prior counterexamples; retain the later examples and Lean verification.
 - [Full status and rating audit — September 10, 2026](STATUS-AUDIT-2026-09-10.md), with an individual decision for every entry.
 - [Acceptance of reviewed submissions — September 11, 2026](SUBMISSION-ACCEPTANCE-2026-09-11.md), with the reviewed commits, scope, and permanent-numbering guarantee.
 - [Five resolutions by Matthew J. Colbrook — September 11, 2026](colbrook-2026-09-11/README.md), with independently reviewed proofs and supporting diagnostics.

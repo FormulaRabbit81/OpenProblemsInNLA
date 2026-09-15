@@ -6,6 +6,12 @@ Recorded 11 September 2026 from `OpenProblemsInNLA_recovered_GitHub.zip`.
 
 The notes and software were reconstructed with substantial AI assistance, as disclosed in the [original recovery record](submitted/research/RECOVERY_AND_CORRECTIONS.md). This is not a bit-for-bit recovery of an earlier archive. Independent agents checked the complete proofs against the current canonical targets. Their checks are not external human peer review or formal proof-assistant certification. No novelty, publication priority, or repository acceptance is asserted. The smallest right-inverse matrix is expressly attributed to Dokmanic and Gribonval's prior example.
 
+## IE-18 prior-work correction - 15 September 2026
+
+Yunhui He's [17 January 2025 paper](https://arxiv.org/pdf/2501.10248v1#page=15), Section 2.3, equation (2.36) and Example 2.1, already disproves the exact four-step Anderson identity. The September source searches missed it. Credit for the prior negative resolution belongs to He. Colbrook's later positive-definite-contraction examples and unbounded-underestimation analysis remain available as supplementary results, without a first-discovery claim. The existing Lean proof formalizes Colbrook's specific example. [Exact comparison and correction record](verification/IE-18-prior-work-2026-09-15.md).
+
+The linked IE-18 manuscript now opens with this correction. Its complete reviewed mathematical body, the original submission archive, and all frozen Lean proof/review evidence are preserved. `record-sha256.json` remains the historical export manifest; [the dated correction manifest](verification/IE-18-attribution-update-2026-09-15.json) records the updated exports separately. The separate asymptotic question is not settled by these counterexamples.
+
 ## Reviewed results
 
 | Canonical target | Result and primary proof | Independent review |
@@ -13,7 +19,7 @@ The notes and software were reconstructed with substantial AI assistance, as dis
 | IE-13 | **Solved:** sharp unequal-bandwidth growth recurrence; [Theorem 1, Sections 2-4](manuscripts/IE-13.pdf) | [Full proof review](verification/reviews/IE-13-review.md) |
 | IE-14 | **Solved:** exact cyclic tridiagonal growth $F_{n+1}+1$; [Theorem 1, Sections 2-4](manuscripts/IE-14.pdf) | [Full proof review](verification/reviews/IE-14-review.md) |
 | IE-17 | **Solved negatively:** both specified LSMR errors can increase; [Sections 1-4](manuscripts/IE-17.pdf) | [Full proof review and source caveat](verification/reviews/IE-17-review.md) |
-| IE-18 | **Solved negatively:** four-step Anderson identity fails, with unbounded underestimation; [Sections 2-3](manuscripts/IE-18.pdf) | [Full proof review](verification/reviews/IE-18-review.md) |
+| IE-18 | **Previously disproved by He (2025):** later positive-definite counterexamples and unbounded underestimation; [Sections 2-3](manuscripts/IE-18.pdf) | [Full proof review](verification/reviews/IE-18-review.md) |
 | IE-19 | **Solved negatively:** inverse-norm counterexample and sharp unattained infimum; [Section 1 and Theorem 1](manuscripts/IE-19.pdf) | [Full proof review](verification/reviews/IE-19-review.md) |
 | IE-21 | **Solved:** spherical row-deletion probability limit and error bounds; [Theorem 1, Sections 2-5](manuscripts/IE-21-22.pdf) | [Full analytic review](verification/reviews/IE-21-22-review.md) |
 | IE-22 | **Solved:** matching universal row-deletion constant; [Theorem 2, Sections 6-7](manuscripts/IE-21-22.pdf) | [Full analytic review](verification/reviews/IE-21-22-review.md) |
