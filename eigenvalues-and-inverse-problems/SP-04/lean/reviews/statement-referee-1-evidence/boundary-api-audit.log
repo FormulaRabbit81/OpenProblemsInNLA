@@ -1,0 +1,93 @@
+def NLA.SP04.Feasible : {n : ℕ} → Mat n → Prop :=
+fun {n} X => |Matrix.det X| = 1
+def NLA.SP04.frobeniusSq : {n : ℕ} → Mat n → ℝ :=
+fun {n} X => ∑ i, ∑ j, X i j ^ 2
+def NLA.SP04.frobeniusNorm : {n : ℕ} → Mat n → ℝ :=
+fun {n} X => √(frobeniusSq X)
+def NLA.SP04.Stationary : {n : ℕ} → Mat n → Mat n → ℝ → Prop :=
+fun {n} U X c => Feasible X ∧ Xᵀ * (U - X) = c • 1
+def NLA.SP04.stationaryPairs : {n : ℕ} → Mat n → Set (Mat n × ℝ) :=
+fun {n} U => {p | Stationary U p.1 p.2}
+def NLA.SP04.UniqueLeastStationary : {n : ℕ} → Mat n → Mat n → ℝ → Prop :=
+fun {n} U X c => Stationary U X c ∧ ∀ (Y : Mat n) (d : ℝ), Stationary U Y d → |c| ≤ |d| ∧ (|c| = |d| → Y = X ∧ d = c)
+def NLA.SP04.IsNearest : {n : ℕ} → Mat n → Mat n → Prop :=
+fun {n} U X => Feasible X ∧ ∀ (Y : Mat n), Feasible Y → frobeniusNorm (U - X) ≤ frobeniusNorm (U - Y)
+def NLA.SP04.RegularData : {n : ℕ} → Mat n → Prop :=
+fun {n} U => Matrix.det U ≠ 0 ∧ (Uᵀ * U).charpoly.roots.Nodup
+def NLA.SP04.GenericSelectionRule : ℕ → Prop :=
+fun n =>
+  ∃ p,
+    p ≠ 0 ∧
+      ∀ (U : Mat n),
+        (MvPolynomial.eval fun ij => U ij.1 ij.2) p ≠ 0 →
+          RegularData U →
+            (stationaryPairs U).Finite → ∀ (X : Mat n) (c : ℝ), UniqueLeastStationary U X c → IsNearest U X
+def NLA.SP04.AllGenericSelectionRules : Prop :=
+∀ (n : ℕ), 2 ≤ n → GenericSelectionRule n
+def NLA.SP04.Orthogonal : {n : ℕ} → Mat n → Prop :=
+fun {n} Q => Qᵀ * Q = 1 ∧ Q * Qᵀ = 1
+def NLA.SP04.HasSVD : Mat 3 → (Fin 3 → ℝ) → Prop :=
+fun U s => ∃ P Q, Orthogonal P ∧ Orthogonal Q ∧ U = P * Matrix.diagonal s * Qᵀ
+def NLA.SP04.Admissible : (Fin 3 → ℝ) → Prop :=
+fun s => 7 / 4 < s 0 ∧ s 0 < s 1 ∧ s 1 < s 2 ∧ s 2 < 44 / 25
+def NLA.SP04.counterexampleFamily : Set (Mat 3) :=
+{U | ∀ (i : Fin 3), gramPolynomialValue U (lowerEndpoint i ^ 2) * gramPolynomialValue U (upperEndpoint i ^ 2) < 0}
+def NLA.SP04.SelectionFails : Mat 3 → Prop :=
+fun U =>
+  RegularData U ∧
+    (stationaryPairs U).Finite ∧
+      ∃ X c, UniqueLeastStationary U X c ∧ ∃ Y, Feasible Y ∧ frobeniusNorm (U - Y) < frobeniusNorm (U - X)
+NLA.SP04.numerical_bounds :
+  (99 / 100) ^ 2 < 49 / 16 - 52 / 25 ∧ 275 / 198 < 2 ∧ 13 / 25 * (44 / 25) * (51 / 50) < 1 ∧ 201 / 400 < 13 / 25
+NLA.SP04.diagonal_stationary_iff (s : Fin 3 → ℝ) (hs : Admissible s) (X : Mat 3) (c : ℝ) :
+  Stationary (Matrix.diagonal s) X c ↔
+    ∃ x, X = Matrix.diagonal x ∧ (∀ (i : Fin 3), x i ^ 2 - s i * x i + c = 0) ∧ |∏ i, x i| = 1
+NLA.SP04.diagonal_counterexample (s : Fin 3 → ℝ) (hs : Admissible s) :
+  ∃ t,
+    0 < t ∧
+      t < 13 / 25 ∧
+        UniqueLeastStationary (Matrix.diagonal s) (selectedMatrix s t) (-t) ∧
+          Feasible (improvedMatrix s t) ∧
+            frobeniusNorm (Matrix.diagonal s - improvedMatrix s t) <
+              frobeniusNorm (Matrix.diagonal s - selectedMatrix s t)
+NLA.SP04.diagonal_finite (s : Fin 3 → ℝ) (hs : Admissible s) : (stationaryPairs (Matrix.diagonal s)).Finite
+NLA.SP04.orthogonal_transport {n : ℕ} (P Q U X : Mat n) (c : ℝ) (hP : Orthogonal P) (hQ : Orthogonal Q) :
+  (Feasible (P * X * Qᵀ) ↔ Feasible X) ∧
+    frobeniusNorm (P * (U - X) * Qᵀ) = frobeniusNorm (U - X) ∧
+      (Stationary (P * U * Qᵀ) (P * X * Qᵀ) c ↔ Stationary U X c)
+NLA.SP04.spectral_family :
+  IsOpen counterexampleFamily ∧
+    sampleMatrix ∈ counterexampleFamily ∧ ∀ U ∈ counterexampleFamily, ∃ s, Admissible s ∧ HasSVD U s
+NLA.SP04.regular_svd (U : Mat 3) (s : Fin 3 → ℝ) (hs : Admissible s) (hsvd : HasSVD U s) : RegularData U
+NLA.SP04.open_family_counterexamples (U : Mat 3) : U ∈ counterexampleFamily → SelectionFails U
+NLA.SP04.algebraic_avoidance (S : Set (Mat 3)) (hS : IsOpen S) (hne : S.Nonempty) (p : MvPolynomial (Fin 3 × Fin 3) ℝ)
+  (hp : p ≠ 0) : ∃ U ∈ S, (MvPolynomial.eval fun ij => U ij.1 ij.2) p ≠ 0
+NLA.SP04.generic_counterexamples (p : MvPolynomial (Fin 3 × Fin 3) ℝ) (hp : p ≠ 0) :
+  ∃ U, (MvPolynomial.eval fun ij => U ij.1 ij.2) p ≠ 0 ∧ SelectionFails U
+NLA.SP04.canonical_counterexample : ¬AllGenericSelectionRules
+instTopologicalSpaceMatrix
+instT2SpaceMatrix
+9
+Matrix.IsHermitian.spectral_theorem.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {n : Type u_2} [Fintype n] {A : Matrix n n 𝕜}
+  [DecidableEq n] (hA : A.IsHermitian) :
+  A =
+    ((Unitary.conjStarAlgAut 𝕜 (Matrix n n 𝕜)) hA.eigenvectorUnitary) (Matrix.diagonal (RCLike.ofReal ∘ hA.eigenvalues))
+Matrix.IsHermitian.splits_charpoly.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {n : Type u_2} [Fintype n] {A : Matrix n n 𝕜}
+  [DecidableEq n] (hA : A.IsHermitian) : A.charpoly.Splits
+Matrix.IsHermitian.roots_charpoly_eq_eigenvalues.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {n : Type u_2} [Fintype n]
+  {A : Matrix n n 𝕜} [DecidableEq n] (hA : A.IsHermitian) :
+  A.charpoly.roots = Multiset.map (RCLike.ofReal ∘ hA.eigenvalues) Finset.univ.val
+MvPolynomial.funext_set.{u_1, u_2} {R : Type u_1} [CommRing R] [IsDomain R] {σ : Type u_2} {p q : MvPolynomial σ R}
+  (s : σ → Set R) (hs : ∀ (i : σ), (s i).Infinite)
+  (h : ∀ x ∈ Set.univ.pi s, (MvPolynomial.eval x) p = (MvPolynomial.eval x) q) : p = q
+MvPolynomial.funext.{u_1, u_2} {R : Type u_1} [CommRing R] [IsDomain R] [Infinite R] {σ : Type u_2}
+  {p q : MvPolynomial σ R} (h : ∀ (x : σ → R), (MvPolynomial.eval x) p = (MvPolynomial.eval x) q) : p = q
+Polynomial.finite_setOfPred_isRoot.{u} {R : Type u} [CommRing R] [IsDomain R] {p : Polynomial R} (hp : p ≠ 0) :
+  {x | p.IsRoot x}.Finite
+Matrix.kronecker.{u_3, u_9, u_10, u_11, u_12} {α : Type u_3} {l : Type u_9} {m : Type u_10} {n : Type u_11}
+  {p : Type u_12} [Mul α] : Matrix l m α → Matrix n p α → Matrix (l × n) (m × p) α
+Continuous.matrix_det.{u_1, u_5, u_8} {X : Type u_1} {n : Type u_5} {R : Type u_8} [TopologicalSpace X]
+  [TopologicalSpace R] [Fintype n] [DecidableEq n] [CommRing R] [IsTopologicalRing R] {A : X → Matrix n n R}
+  (hA : Continuous A) : Continuous fun x => (A x).det
+Matrix.frobenius_norm_def.{u_3, u_4, u_5} {m : Type u_3} {n : Type u_4} {α : Type u_5} [Fintype m] [Fintype n]
+  [SeminormedAddCommGroup α] (A : Matrix m n α) : ‖A‖ = (∑ i, ∑ j, ‖A i j‖ ^ 2) ^ (1 / 2)

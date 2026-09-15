@@ -1,0 +1,118 @@
+OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA                                                         SP-05
+
+
+
+
+Eigenvalues and inverse problems
+
+
+Symmetric minimizer for a positive definite
+Jordan–Kronecker product
+Diﬀiculty: challenging       Importance: interesting to the community
+Status: Lean verified
+
+Topic: Structured eigenvalue problems and semidefinite optimization.
+Rating rationale: Challenging reflects a structured minimum-eigenvalue comparison for arbitrary pos-
+itive definite pairs; community impact connects Kronecker eigenproblems and semidefinite optimiza-
+tion.
+
+Lean verification — 2026-09-15
+
+The complete original inequality is Lean verified for every dimension 𝑛 ≥ 2 and every real symmetric
+positive definite pair 𝐴, 𝐵. Both Rayleigh minima are attained over their full nonzero symmetric and
+skew sectors. The stronger source theorem supplies a real nonzero positive-semidefinite eigenmatrix
+at the global minimum of 𝐴 ⊗ 𝐵 + 𝐵 ⊗ 𝐴 for every 𝑛 ≥ 1. All six independently reviewed targets passed
+fresh Linux Comparator and default-kernel verification.
+Formalization: George Stepaniants, Department of Computing and Mathematical Sciences, Califor-
+nia Institute of Technology, with substantial OpenAI Codex assistance. Original mathematical proof:
+Matthew J. Colbrook, as credited below. The original conjecture remains credited to N. Kalantarova
+and L. Tunçel. Lean project and reproduction · formalization metadata · two source and two opera-
+tional reviews.
+
+Resolution — 2026-09-11
+
+Aﬀirmative resolution by Matthew J. Colbrook (Department of Applied Mathematics and Theoretical
+Physics, University of Cambridge). See the complete manuscript, Theorem SP-05, sections 1–3 (PDF ·
+LaTeX), prepared 11 September 2026.
+For arbitrary real symmetric positive definite 𝐴, 𝐵, a nonzero real positive-semidefinite eigenmatrix
+attains the smallest eigenvalue of 𝑋 ↦ 𝐴𝑋𝐵 + 𝐵𝑋𝐴. Section 3 derives the exact symmetric/skew-
+symmetric Rayleigh-quotient inequality in the original target, without commutativity, rank restrictions
+or a simple-eigenvalue assumption.
+The original proof draft was generated in a ChatGPT conversation. A separate Codex agent indepen-
+dently verified the full proof and its match to the exact target on 11 September 2026: detailed PASS
+review. The review records a hash of the unchanged proof text. This is independent agent verification,
+not external human peer review or formal certification. The submission history and diagnostic record
+preserve the initial solution claim. The ratings above are historical, and the earlier literature checks
+below are retained.
+
+
+
+
+Editorial ratings; a bounded search cannot certify that a problem remains unsolved.
+Verification check: 2026-09-15                                                                        1
+OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA                                                     SP-05
+
+
+
+
+Problem statement
+                                                                                      2   2
+Let 𝑛 ≥ 2 and let 𝐴, 𝐵 ∈ ℝ𝑛×𝑛 be symmetric positive definite. Let 𝑇 ∈ ℝ𝑛 ×𝑛 be the commutation
+matrix defined by 𝑇 vec(𝑋) = vec(𝑋 𝑇 ), where vec stacks columns. Is it always true that
+
+                                            𝑢𝑇 (𝐴 ⊗ 𝐵)𝑢             𝑤𝑇 (𝐴 ⊗ 𝐵)𝑤
+                                     min                ≤   min                 ?
+                                      2
+                                  𝑢∈ℝ𝑛 ∖{0}     𝑢𝑇 𝑢          2
+                                                          𝑤∈ℝ𝑛 ∖{0}     𝑤𝑇 𝑤
+                                     𝑇𝑢=𝑢                             𝑇𝑤=−𝑤
+
+Equivalently, must the smallest eigenvalue of 𝐴⊗𝐵+𝐵⊗𝐴 have an eigenvector vec(𝑋) with 𝑋 = 𝑋 𝑇 ≠ 0?
+
+Why it matters
+
+An aﬀirmative answer would identify which invariant subspace contains the smallest eigenvalue of an
+important structured matrix operator, relevant to positivity checks in semidefinite optimization.
+
+
+
+
+Editorial ratings; a bounded search cannot certify that a problem remains unsolved.
+Verification check: 2026-09-15                                                                   2
+OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA                                                           SP-05
+
+
+
+
+References
+
+ • N. Kalantarova and L. Tunçel, On the spectral structure of Jordan–Kronecker products of symmetric
+   and skew-symmetric matrices, Linear Algebra and its Applications 608 (2021), 343–362. Conjecture 1,
+   equation (7), p. 12 of arXiv v3; the preceding discussion explains the optimization connection.
+ • D. Kressner and B. Vandereycken, A counterexample to the symmetric-maximizer conjecture for
+   Lyapunov operators, 2026, abstract. This resolves a different symmetric-maximizer conjecture and
+   is included to distinguish the recent result from this problem.
+
+Earlier status check — 2026-09-08
+
+On 2026-09-08, checked arXiv v3 (2020-08-08, still the latest listed version) and searched combinations of
+“Jordan-Kronecker”, “positive definite”, “conjecture”, “smallest”, “counterexample”, and the authors’
+names, including 2025–2026 results. No resolution of Conjecture 1 was located. The source’s counterex-
+amples to general symmetric-matrix interlacing do not dispose of its separately stated positive definite
+conjecture. The August 2026 Lyapunov result concerns an operator norm maximizer, rather than this
+positive definite Jordan–Kronecker minimum. No recent explicit reaﬀirmation of this exact conjecture
+was found; the status evidence is therefore bounded.
+
+Audit update — 2026-09-10
+
+Rechecked the author manuscript, Conjecture 1 and equation (7). Its positive definite, minimum-
+eigenvalue formulation matches this entry. Searches for the Jordan–Kronecker symmetric-minimizer
+conjecture and later counterexamples found no resolution. Results for indefinite inputs or a maximum-
+eigenvalue objective do not settle the displayed claim.
+
+
+
+
+Editorial ratings; a bounded search cannot certify that a problem remains unsolved.
+Verification check: 2026-09-15                                                                          3
+

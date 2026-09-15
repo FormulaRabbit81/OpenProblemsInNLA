@@ -1,0 +1,128 @@
+OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA                                                              SP-04
+
+
+
+
+Eigenvalues and inverse problems
+
+
+The smallest-multiplier rule for nearest
+unit-absolute-determinant matrices
+Diﬀiculty: challenging       Importance: interesting to specialist
+Status: Lean verified
+
+Rating rationale: Challenging reflects a global root-selection rule across all dimensions and singular-
+value data; specialist impact is the exact projection onto a specific determinant constraint.
+
+Lean verification — 2026-09-15
+
+The complete original generic selection rule is Lean verified false. In dimension three, the proof defeats
+every nonzero polynomial exception with an invertible data matrix having distinct squared singular
+values, a finite full stationary set, a unique least-absolute-multiplier pair, and a strictly closer feasible
+matrix in the actual Frobenius norm. Both determinant signs and every real stationary matrix and
+multiplier are included. All eleven independently reviewed targets passed fresh Linux Comparator
+and default-kernel verification.
+Formalization: George Stepaniants, Department of Computing and Mathematical Sciences, California
+Institute of Technology, with substantial OpenAI Codex assistance. Original mathematical resolution:
+Matthew J. Colbrook, as credited in the preserved resolution below. Lean project and reproduction ·
+formalization metadata · two source and two operational reviews.
+
+Resolution — 2026-09-11
+
+Negative resolution by Matthew J. Colbrook (Department of Applied Mathematics and Theoretical
+Physics, University of Cambridge). See the complete manuscript, Theorem SP-04, sections 1–4 (PDF ·
+LaTeX), prepared 11 September 2026.
+The stationary pair with uniquely smallest absolute multiplier fails to minimize the Frobenius distance
+on a nonempty open set of real 3 × 3 data matrices with distinct singular values in (7/4, 44/25). Both
+determinant signs are allowed, and the open-set argument refutes the algebraic-generic formulation.
+The original proof draft was generated in a ChatGPT conversation. A separate Codex agent indepen-
+dently verified the full proof and its match to the exact target on 11 September 2026: detailed PASS
+review. The review records a hash of the unchanged proof text. This is independent agent verification,
+not external human peer review or formal certification. The submission history and diagnostic record
+preserve the initial solution claim. The ratings above are historical, and the earlier literature checks
+below are retained.
+
+
+
+
+Editorial ratings; a bounded search cannot certify that a problem remains unsolved.
+Verification check: 2026-09-15                                                                             1
+OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA                                                                SP-04
+
+
+
+
+Original problem statement
+
+For 𝑛 ≥ 2, define
+
+                               𝒢𝑛 = {𝑋 ∈ ℝ𝑛×𝑛 ∶ det 𝑋 ∈ {−1, 1}},                     ‖𝑌‖2𝐹 = ∑ 𝑦𝑖𝑗2 .
+                                                                                               𝑖,𝑗
+
+
+For a real data matrix 𝑈, consider the real stationary pairs
+
+                                     𝒞(𝑈) = {(𝑋, 𝑐) ∈ 𝒢𝑛 × ℝ ∶ 𝑋 𝑇 (𝑈 − 𝑋) = 𝑐𝐼𝑛 }.
+
+For generic 𝑈, this set is finite. Choose a pair (𝑋∗ , 𝑐∗ ) whose multiplier has minimum absolute value.
+Does
+
+                                                ‖𝑈 − 𝑋∗ ‖𝐹 = min ‖𝑈 − 𝑋‖𝐹
+                                                                 𝑋∈𝒢𝑛
+
+
+hold for every 𝑛 ≥ 2 and generic real 𝑈?
+Here generic means outside an exceptional proper real algebraic set; in particular 𝑈 is invertible and its
+squared singular values are distinct. If minimum absolute multipliers tie, the question can be restricted
+to the generic locus where the choice is unique. The source phrases the same selection question using
+the real roots of its elimination polynomial 𝑅1 (𝑐), which correspond one-to-one to stationary matrices
+for generic data.
+
+Relevance
+
+This is a concrete question about selecting the global nearest matrix from the stationary solutions of a
+structured matrix nearness problem. A positive answer would supply a scalar criterion for identifying
+the global solution. Both determinant signs are allowed; this must not be silently replaced by projection
+onto SL𝑛 (ℝ) alone.
+
+
+
+
+Editorial ratings; a bounded search cannot certify that a problem remains unsolved.
+Verification check: 2026-09-15                                                                              2
+OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA                                                              SP-04
+
+
+
+
+References
+
+ • J. A. Baaijens and J. Draisma, Euclidean distance degrees of real algebraic groups, Linear Algebra and its
+   Applications 467 (2015), 174–187, §4.1, equations (4)–(5), elimination algorithm, and Problem 4.3
+   on p.186 (version of record; journal).
+ • P. Jaap and O. Sander, How to project onto SL(n), arXiv:2501.19310 (2025), introduction pp.1–2, dis-
+   cussing the Baaijens–Draisma conjectural global selection rule (primary manuscript); Journal of
+   Optimization Theory and Applications 209 (2026), article 40 (journal).
+
+Status check — 2026-09-08
+
+The January 2025 manuscript explicitly describes the earlier proposed global-minimum selection as
+conjectural. Its journal version appeared in April 2026; the accessible journal abstract and arXiv version
+history were checked, but the subscription-only journal body was not inspected. Searches for “near-
+est determinant-one matrix”, “Baaijens”, “smallest absolute value”, “projection SL(n)”, and 2025–2026
+found no resolution of this exact rule. The problem retains the source’s generic-data scope.
+
+Audit update — 2026-09-10
+
+Rechecked Baaijens–Draisma, §4.1, Problem 4.3, and Sander’s 2025 manuscript, introduction. The lat-
+ter still describes the global selection step as conjectural. Searches for smallest-multiplier projection
+results found no general proof. The positive-determinant projection problem and algorithms reaching
+stationary points must be distinguished from the stated det = ±1 global rule; impact is narrowed to
+specialist.
+
+
+
+
+Editorial ratings; a bounded search cannot certify that a problem remains unsolved.
+Verification check: 2026-09-15                                                                             3
+

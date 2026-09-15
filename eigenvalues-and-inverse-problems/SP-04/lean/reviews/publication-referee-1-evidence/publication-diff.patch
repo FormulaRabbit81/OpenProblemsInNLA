@@ -1,0 +1,354 @@
+diff --git a/CATALOG.md b/CATALOG.md
+index d2c68ae5..94af27ab 100644
+--- a/CATALOG.md
++++ b/CATALOG.md
+@@ -2,7 +2,7 @@
+ 
+ **113 problems with open targets:** 42 open and 71 partially resolved. **104 other retained entries**, excluded from the open count.
+ 
+-**Resolution evidence:** 70 solved (published or independently audited); 34 solved with Lean verification.
++**Resolution evidence:** 69 solved (published or independently audited); 35 solved with Lean verification.
+ 
+ Each entry records its own literature-check date. Literature checks are bounded; ratings are editorial. “Impact” uses the canonical `Importance` field.
+ 
+@@ -73,7 +73,7 @@ Retained entries outside the open count:
+ | [IS-03](eigenvalues-and-inverse-problems/IS-03/README.md) | Johnson's derivative-realizability conjecture | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](eigenvalues-and-inverse-problems/IS-03/problem.pdf) · [TeX](eigenvalues-and-inverse-problems/IS-03/problem.tex) |
+ | [KE-03](eigenvalues-and-inverse-problems/KE-03/README.md) | Find a near-largest nonnormal eigenvalue using few matrix-vector products | **✅ SOLVED** | challenging | interesting to the community | [PDF](eigenvalues-and-inverse-problems/KE-03/problem.pdf) · [TeX](eigenvalues-and-inverse-problems/KE-03/problem.tex) |
+ | [KE-04](eigenvalues-and-inverse-problems/KE-04/README.md) | Strict interlacing across block Lanczos iterations | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](eigenvalues-and-inverse-problems/KE-04/problem.pdf) · [TeX](eigenvalues-and-inverse-problems/KE-04/problem.tex) |
+-| [SP-04](eigenvalues-and-inverse-problems/SP-04/README.md) | The smallest-multiplier rule for nearest unit-absolute-determinant matrices | **✅ SOLVED** | challenging | interesting to specialist | [PDF](eigenvalues-and-inverse-problems/SP-04/problem.pdf) · [TeX](eigenvalues-and-inverse-problems/SP-04/problem.tex) |
++| [SP-04](eigenvalues-and-inverse-problems/SP-04/README.md) | The smallest-multiplier rule for nearest unit-absolute-determinant matrices | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](eigenvalues-and-inverse-problems/SP-04/problem.pdf) · [TeX](eigenvalues-and-inverse-problems/SP-04/problem.tex) |
+ | [SP-05](eigenvalues-and-inverse-problems/SP-05/README.md) | Symmetric minimizer for a positive definite Jordan–Kronecker product | **✅ SOLVED** | challenging | interesting to the community | [PDF](eigenvalues-and-inverse-problems/SP-05/problem.pdf) · [TeX](eigenvalues-and-inverse-problems/SP-05/problem.tex) |
+ | [SP-06](eigenvalues-and-inverse-problems/SP-06/README.md) | A real-valued symbol on a Jordan curve and real Toeplitz spectra | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](eigenvalues-and-inverse-problems/SP-06/problem.pdf) · [TeX](eigenvalues-and-inverse-problems/SP-06/problem.tex) |
+ | [SP-11](eigenvalues-and-inverse-problems/SP-11/README.md) | The delta conjecture for minimum symmetric rank | **✅ SOLVED** | extreme | interesting to the community | [PDF](eigenvalues-and-inverse-problems/SP-11/problem.pdf) · [TeX](eigenvalues-and-inverse-problems/SP-11/problem.tex) |
+diff --git a/README.md b/README.md
+index ee6e6442..0a9be8f3 100644
+--- a/README.md
++++ b/README.md
+@@ -13,7 +13,7 @@ If one of your favorite open problems is solved here, we strongly encourage you
+ <!-- catalog-summary -->
+ **113 problems with open targets:** 42 open and 71 partially resolved. **104 other retained entries**, excluded from the open count.
+ 
+-**Resolution evidence:** 70 solved (published or independently audited); 34 solved with Lean verification.
++**Resolution evidence:** 69 solved (published or independently audited); 35 solved with Lean verification.
+ 
+ Each entry records its own literature-check date. Literature checks are bounded; ratings are editorial. “Impact” uses the canonical `Importance` field.
+ 
+diff --git a/eigenvalues-and-inverse-problems/README.md b/eigenvalues-and-inverse-problems/README.md
+index a1bbddc8..71490858 100644
+--- a/eigenvalues-and-inverse-problems/README.md
++++ b/eigenvalues-and-inverse-problems/README.md
+@@ -30,7 +30,7 @@
+ | [IS-03](IS-03/README.md) | Johnson's derivative-realizability conjecture | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](IS-03/problem.pdf) · [TeX](IS-03/problem.tex) |
+ | [KE-03](KE-03/README.md) | Find a near-largest nonnormal eigenvalue using few matrix-vector products | **✅ SOLVED** | challenging | interesting to the community | [PDF](KE-03/problem.pdf) · [TeX](KE-03/problem.tex) |
+ | [KE-04](KE-04/README.md) | Strict interlacing across block Lanczos iterations | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](KE-04/problem.pdf) · [TeX](KE-04/problem.tex) |
+-| [SP-04](SP-04/README.md) | The smallest-multiplier rule for nearest unit-absolute-determinant matrices | **✅ SOLVED** | challenging | interesting to specialist | [PDF](SP-04/problem.pdf) · [TeX](SP-04/problem.tex) |
++| [SP-04](SP-04/README.md) | The smallest-multiplier rule for nearest unit-absolute-determinant matrices | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](SP-04/problem.pdf) · [TeX](SP-04/problem.tex) |
+ | [SP-05](SP-05/README.md) | Symmetric minimizer for a positive definite Jordan–Kronecker product | **✅ SOLVED** | challenging | interesting to the community | [PDF](SP-05/problem.pdf) · [TeX](SP-05/problem.tex) |
+ | [SP-06](SP-06/README.md) | A real-valued symbol on a Jordan curve and real Toeplitz spectra | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](SP-06/problem.pdf) · [TeX](SP-06/problem.tex) |
+ | [SP-11](SP-11/README.md) | The delta conjecture for minimum symmetric rank | **✅ SOLVED** | extreme | interesting to the community | [PDF](SP-11/problem.pdf) · [TeX](SP-11/problem.tex) |
+diff --git a/eigenvalues-and-inverse-problems/SP-04/README.md b/eigenvalues-and-inverse-problems/SP-04/README.md
+index f01c2afb..b94d44b4 100644
+--- a/eigenvalues-and-inverse-problems/SP-04/README.md
++++ b/eigenvalues-and-inverse-problems/SP-04/README.md
+@@ -2,11 +2,19 @@
+ 
+ **Difficulty:** challenging  
+ **Importance:** interesting to specialist  
+-**Status:** Solved  
+-**Last checked:** 2026-09-11  
++**Status:** Lean verified  
++**Last checked:** 2026-09-15  
+ 
+ **Rating rationale:** Challenging reflects a global root-selection rule across all dimensions and singular-value data; specialist impact is the exact projection onto a specific determinant constraint.
+ 
++<!-- lean-verification -->
++## Lean verification — 2026-09-15
++
++The complete original generic selection rule is **Lean verified false**. In dimension three, the proof defeats every nonzero polynomial exception with an invertible data matrix having distinct squared singular values, a finite full stationary set, a unique least-absolute-multiplier pair, and a strictly closer feasible matrix in the actual Frobenius norm. Both determinant signs and every real stationary matrix and multiplier are included. All eleven independently reviewed targets passed [fresh Linux Comparator and default-kernel verification](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35025876241).
++
++**Formalization:** George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology, with substantial OpenAI Codex assistance. **Original mathematical resolution:** Matthew J. Colbrook, as credited in the preserved resolution below. [Lean project and reproduction](lean/README.md) · [formalization metadata](lean/formalization.yaml) · [two source and two operational reviews](lean/reviews/).
++<!-- /lean-verification -->
++
+ ## Resolution — 2026-09-11
+ 
+ **Negative resolution by Matthew J. Colbrook** (Department of Applied Mathematics and Theoretical Physics, University of Cambridge). See the [complete manuscript](solution.md), **Theorem SP-04, sections 1–4** ([PDF](solution.pdf) · [LaTeX](solution.tex)), prepared 11 September 2026.
+diff --git a/eigenvalues-and-inverse-problems/SP-04/lean/README.md b/eigenvalues-and-inverse-problems/SP-04/lean/README.md
+index e6c18b08..548ea683 100644
+--- a/eigenvalues-and-inverse-problems/SP-04/lean/README.md
++++ b/eigenvalues-and-inverse-problems/SP-04/lean/README.md
+@@ -1,20 +1,18 @@
+ # SP-04: generic failure of the smallest-absolute-multiplier rule
+ 
+-**Stage: complete local proof; independent final review and authoritative Linux
+-verification pending.** All eleven reviewed declarations compile with explicit
+-kernel-trust assertions and only `propext`, `Classical.choice`, and `Quot.sound`.
+-The ten pre-proof statement/dependency inputs remain unchanged from the two
+-independent approvals at boundary commit `623e14e6`. The canonical problem remains
+-**Solved** until full-source review, actual Comparator correspondence, isolated
+-Linux verification and operational review pass. No completed Linux verification
+-or final referee approval is claimed at this stage.
++**Verification status: Lean verified.** All eleven complete-target declarations
++passed fresh isolated Linux Comparator, default-kernel replay and permitted-axiom
++checks. Both independent complete-source reviews and both operational audits passed.
++The ten pre-proof inputs remain unchanged from the two independent approvals
++at boundary commit `623e14e6`.
+ 
+ **Formalization:** George Stepaniants, Department of Computing and Mathematical
+ Sciences, California Institute of Technology, with substantial OpenAI Codex
+ assistance. **Original mathematical resolution:** Matthew J. Colbrook, Department
+ of Applied Mathematics and Theoretical Physics, University of Cambridge.
+ The [canonical statement](../README.md) and [complete original proof](../solution.md)
+-are preserved unchanged, including their historical attribution.
++are preserved in full, including their historical attribution. The canonical page
++adds only verification information and updates status/date.
+ 
+ ## Full intended target
+ 
+@@ -37,9 +35,9 @@ Neither a default matrix norm nor a diagonal-only genericity claim is used.
+ The definitions are literal mathematical objects, and
+ [comparator.json](comparator.json) permits no definition holes. The proof
+ consumes four explicit LeanCert kernel-mode certificates and uses only
+-`propext`, `Classical.choice`, and `Quot.sound`. The current
+-[formalization.yaml](formalization.yaml) reports local completion and the remaining
+-independent and operational gates.
++`propext`, `Classical.choice`, and `Quot.sound`. The
++[formalization.yaml](formalization.yaml) records complete verification, attribution,
++all eleven exports and the reviewed evidence.
+ 
+ ## Proof structure and computation
+ 
+@@ -76,13 +74,46 @@ of every exported result, and every result also asserts kernel trust.
+ The [review protocol](../../../docs/lean/REVIEW.md) requires two independent
+ non-implementing agents to approve exact mathematical and numerical statements
+ before implementation. Both approvals and their sealed inputs are retained in
+-`reviews/`. Complete-source reviews and the pinned
+-[Linux harness](../../../tools/lean/HARNESS.md) remain separate gates. The Linux
+-run must use actual Lean4 Comparator, default-kernel replay, the real sandbox,
+-and successful rejection controls; local compilation does not replace it.
++`reviews/`. Both complete-source reviews approved: [referee 1](reviews/final-referee-1.md)
++and [referee 2](reviews/final-referee-2.md). The pinned
++[Linux harness](../../../tools/lean/HARNESS.md) then ran actual Lean4 Comparator,
++default-kernel replay, the real sandbox and successful rejection controls.
+ 
+ The pinned [Forsythe](https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof)
+ and [Schiffer](https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1)
+ projects supply structure/API references. Reviews follow the repository's Tau
+ Ceti adaptation and are disclosed as AI-agent reviews, without claiming
+ external human review or official endorsement.
++
++
++## Authoritative Linux verification
++
++[Run 35025876241, attempt 1](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35025876241/attempts/1) verified immutable proof revision
++[`fcd722e9`](https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/fcd722e923a339dfeee89051886e82c7384a04d7/eigenvalues-and-inverse-problems/SP-04/lean)
++on Ubuntu 24.04. All eleven Challenge/Solution targets passed actual Comparator
++correspondence, transitive permitted-axiom checks and default-kernel replay.
++The target verification also passed real sandbox probes, three raw-kernel controls,
++five Comparator regressions, and separate sorry/native rejection controls.
++
++The [permanent archive](verification/linux-2026-09-15/) retains the original ZIP,
++all thirteen extracted members, GitHub provenance and the full source receipt.
++Artifact `10419254479` has SHA-256
++`eae47bb19e2a64ffc99e383b204c8be89136cfe5755deb86f1e49981c9d1aa6a`.
++
++```bash
++cd verification/linux-2026-09-15
++shasum -a 256 -c SHA256SUMS
++```
++
++Both independent operational audits approved: [referee 1](reviews/linux-referee-1.md)
++and [referee 2](reviews/linux-referee-2.md). They checked all
++88 candidate input hashes against the immutable verified Git revision
++and approved source. The standalone checker-controls job was skipped because
++shared tools were unchanged; all required controls ran within the actual SP-04
++verify job.
++
++Publication changes update status, documentation, evidence and rendered artifacts.
++Mathematical statements, proofs and dependency inputs remain those verified at
++the immutable proof revision. Historical pending-stage reports are closed by
++the later approvals. No second independent Linux execution, external human review
++or official Tau Ceti endorsement is claimed.
+diff --git a/eigenvalues-and-inverse-problems/SP-04/lean/formalization.yaml b/eigenvalues-and-inverse-problems/SP-04/lean/formalization.yaml
+index 14346766..35a757c0 100644
+--- a/eigenvalues-and-inverse-problems/SP-04/lean/formalization.yaml
++++ b/eigenvalues-and-inverse-problems/SP-04/lean/formalization.yaml
+@@ -14,8 +14,8 @@ project:
+   license: Apache-2.0
+ repository:
+   role: substantive-development
+-  note: Complete locally compiled candidate. Independent final source reviews, actual Comparator and authoritative
+-    isolated Linux verification are pending; canonical status remains Solved.
++  note: Complete source and authoritative Linux evidence approved by both independent referees. Verified proof
++    revision fcd722e923a339dfeee89051886e82c7384a04d7.
+ sources:
+ - title: SP-04 — The smallest-multiplier rule for nearest unit-absolute-determinant matrices
+   id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/8f04b905eb2e0827b6b84f37d9d080ae1f05b202/eigenvalues-and-inverse-problems/SP-04/README.md
+@@ -64,12 +64,13 @@ automation:
+     code. Repository Tau Ceti adaptation; no official endorsement, external human review, novelty certification
+     or unmeasured cost claims.'
+ status:
+-  scope: All eleven frozen declarations are implemented and compile locally with kernel-trust assertions and the
+-    permitted three axioms. The proof covers every ordered scalar triple in the original box, all actual admissible
+-    SVDs, and a nonempty full-nine-dimensional polynomial-sign open family; it defeats every nonzero polynomial
+-    exception and negates the full original universal rule. Complete-source reviews, real Comparator, reproducible
+-    isolated Linux verification and operational audits remain pending. Canonical status remains Solved. Challenge
+-    has eleven deliberate specification-only placeholders, excluded from proof-development sorry counts.
++  scope: 'Complete original generic rule refuted: every ordered scalar triple in the source box, all actual admissible
++    SVDs and a nonempty open family in all nine real matrix entries are covered. Every nonzero polynomial exception
++    is defeated by an invertible simple-spectrum example with a finite full stationary set, unique least-absolute
++    multiplier pair and strict actual Frobenius improvement. All eleven reviewed declarations passed fresh sandboxed
++    Linux Comparator and default-kernel replay in run 35025876241, attempt 1. Both independent source and operational
++    reviews approved; canonical status is Lean verified. Challenge contains eleven deliberate specification-only
++    placeholders, excluded from proof-development sorry counts.'
+   sorry_count: 0
+   sorry_in_definitions: 0
+   axioms: &id001
+@@ -144,11 +145,13 @@ status:
+     comparator_config: comparator.json
+     literature_dependencies: []
+ review:
+-  status: independent statements approved; complete local candidate awaiting final source and operational review
++  status: independent statements, complete proof source and authoritative Linux evidence approved
+   reviewers:
+   - /root/reference_api_review (independent Codex AI agent)
+   - /root/existing_verification_audit (independent Codex AI agent)
+-  notes: Both exact pre-proof statement approvals and all ten frozen inputs are retained under reviews/. The interim
+-    review of eight modules is explicitly not final approval. Current local logs show complete proof compilation
+-    and transitive permitted axioms. No completed Comparator, isolated Linux run, final source approval or Lean
+-    verified promotion is claimed.
++  notes: Exact pre-proof freeze, both statement approvals, both final source approvals and both operational audits
++    are retained under reviews/. Authoritative run https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35025876241/attempts/1
++    at proof revision fcd722e923a339dfeee89051886e82c7384a04d7. Raw artifact, provenance, source hashes and all
++    controls are retained under verification/linux-2026-09-15/. Artifact 10419254479 has SHA-256 eae47bb19e2a64ffc99e383b204c8be89136cfe5755deb86f1e49981c9d1aa6a.
++    Publication updates change documentation and evidence only; mathematical statements, proofs and dependency
++    inputs match that run.
+diff --git a/eigenvalues-and-inverse-problems/SP-04/problem.tex b/eigenvalues-and-inverse-problems/SP-04/problem.tex
+index f995b3b4..9f38dd36 100644
+--- a/eigenvalues-and-inverse-problems/SP-04/problem.tex
++++ b/eigenvalues-and-inverse-problems/SP-04/problem.tex
+@@ -34,7 +34,7 @@ matrices},pdfauthor={Open Problems in Numerical Linear Algebra}}
+ \fancyhf{}
+ \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
+ \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}SP-04}
+-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-11}}
++\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Verification check: 2026-09-15}}
+ \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
+ \renewcommand{\headrulewidth}{0.3pt}
+ \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
+@@ -52,7 +52,7 @@ matrices\par}
+ \vspace{7pt}
+ {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
+ to specialist\par}
+-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
++{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
+ \vspace{4pt}
+ {\color{accent}\hrule height 0.8pt}
+ \vspace{6pt}
+@@ -60,6 +60,32 @@ to specialist\par}
+ rule across all dimensions and singular-value data; specialist impact is
+ the exact projection onto a specific determinant constraint.
+ 
++\subsection{Lean verification ---
++2026-09-15}\label{lean-verification-2026-09-15}
++
++The complete original generic selection rule is \textbf{Lean verified
++false}. In dimension three, the proof defeats every nonzero polynomial
++exception with an invertible data matrix having distinct squared
++singular values, a finite full stationary set, a unique
++least-absolute-multiplier pair, and a strictly closer feasible matrix in
++the actual Frobenius norm. Both determinant signs and every real
++stationary matrix and multiplier are included. All eleven independently
++reviewed targets passed
++\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35025876241}{fresh
++Linux Comparator and default-kernel verification}.
++
++\textbf{Formalization:} George Stepaniants, Department of Computing and
++Mathematical Sciences, California Institute of Technology, with
++substantial OpenAI Codex assistance. \textbf{Original mathematical
++resolution:} Matthew J. Colbrook, as credited in the preserved
++resolution below.
++\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/eigenvalues-and-inverse-problems/SP-04/lean/README.md}{Lean
++project and reproduction} ·
++\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/eigenvalues-and-inverse-problems/SP-04/lean/formalization.yaml}{formalization
++metadata} ·
++\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/eigenvalues-and-inverse-problems/SP-04/lean/reviews}{two
++source and two operational reviews}.
++
+ \subsection{Resolution --- 2026-09-11}\label{resolution-2026-09-11}
+ 
+ \textbf{Negative resolution by Matthew J. Colbrook} (Department of
+@@ -90,20 +116,28 @@ submission history and diagnostic record} preserve the initial solution
+ claim. The ratings above are historical, and the earlier literature
+ checks below are retained.
+ 
++\newpage
++
+ \subsection{Original problem
+ statement}\label{original-problem-statement}
+ 
+-For \(n\ge2\), define \[
+-\mathcal G_n=\{X\in\mathbb R^{n\times n}:\det X\in\{-1,1\}\},
++For \(n\ge2\), define
++
++\[\mathcal G_n=\{X\in\mathbb R^{n\times n}:\det X\in\{-1,1\}\},
+ \qquad
+-\|Y\|_F^2=\sum_{i,j}y_{ij}^2.
+-\] For a real data matrix \(U\), consider the real stationary pairs \[
+-\mathcal C(U)=
+-\{(X,c)\in\mathcal G_n\times\mathbb R:X^T(U-X)=cI_n\}.
+-\] For generic \(U\), this set is finite. Choose a pair \((X_*,c_*)\)
+-whose multiplier has minimum absolute value. Does \[
+-\|U-X_*\|_F=\min_{X\in\mathcal G_n}\|U-X\|_F
+-\] hold for every \(n\ge2\) and generic real \(U\)?
++\|Y\|_F^2=\sum_{i,j}y_{ij}^2.\]
++
++For a real data matrix \(U\), consider the real stationary pairs
++
++\[\mathcal C(U)=
++\{(X,c)\in\mathcal G_n\times\mathbb R:X^T(U-X)=cI_n\}.\]
++
++For generic \(U\), this set is finite. Choose a pair \((X_*,c_*)\) whose
++multiplier has minimum absolute value. Does
++
++\[\|U-X_*\|_F=\min_{X\in\mathcal G_n}\|U-X\|_F\]
++
++hold for every \(n\ge2\) and generic real \(U\)?
+ 
+ Here generic means outside an exceptional proper real algebraic set; in
+ particular \(U\) is invertible and its squared singular values are
+@@ -119,8 +153,8 @@ This is a concrete question about selecting the global nearest matrix
+ from the stationary solutions of a structured matrix nearness problem. A
+ positive answer would supply a scalar criterion for identifying the
+ global solution. Both determinant signs are allowed; this must not be
+-silently replaced by projection onto \(\operatorname{SL}_n(\mathbb R)\)
+-alone.
++silently replaced by projection onto
++\(\mathop{\mathrm{SL}}\nolimits_n(\mathbb R)\) alone.
+ 
+ \newpage
+ \subsection{References}\label{references}
+diff --git a/tools/render_problems.py b/tools/render_problems.py
+index ede245bc..9b54e1d2 100644
+--- a/tools/render_problems.py
++++ b/tools/render_problems.py
+@@ -29,6 +29,10 @@ def plain_pdf_title(title):
+ 
+ def restore_pdf_layout(identifier, body):
+     """Keep document commands out of the public mathematical statements."""
++    if identifier == "SP-04":
++        # Keep the complete retained question together after verification notices.
++        heading = "## Original problem statement\n"
++        body = body.replace(heading, "\\newpage\n\n" + heading, 1)
+     if identifier == "MF-02":
+         body = body.replace("## Lean proof and verification evidence", "\\newpage\n\n## Lean proof and verification evidence", 1)
+     if identifier == "MF-22":
+@@ -84,6 +88,9 @@ def render(source):
+             input=body.strip(), text=True, capture_output=True, check=True,
+         )
+         tex = result.stdout
++        if identifier == "SP-04":
++            # This publication date records formal verification, not a literature search.
++            tex = tex.replace("Literature check:", "Verification check:")
+         # The code spans in this catalog are literal search phrases. Set them
+         # in italics with ordinary spaces so long queries wrap naturally.
+         tex = re.sub(r"(\\texttt\{[^{}]*)", lambda m: m[0].replace(r"\texttt", r"\textit").replace(r"\ ", " "), tex)

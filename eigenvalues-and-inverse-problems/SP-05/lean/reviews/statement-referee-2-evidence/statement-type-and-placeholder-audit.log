@@ -1,0 +1,25 @@
+NLA.SP05.numerical_bound : 0 < 2
+'NLA.SP05.numerical_bound' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA.SP05.column_vectorization {n : ℕ} (A B X : NLA.SP05.Mat n) :
+  (Matrix.kronecker A B).mulVec (NLA.SP05.columnVec X) = NLA.SP05.columnVec (B * X * Matrix.transpose A) ∧
+    Matrix.mulVec (NLA.SP05.commutationMatrix n) (NLA.SP05.columnVec X) = NLA.SP05.columnVec (Matrix.transpose X) ∧
+      NLA.SP05.columnVec X ⬝ᵥ NLA.SP05.columnVec X = NLA.SP05.frobeniusSq X
+'NLA.SP05.column_vectorization' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA.SP05.skew_witness (n : ℕ) (hn : 2 ≤ n) :
+  Matrix.transpose (NLA.SP05.skewExample n) = -NLA.SP05.skewExample n ∧
+    NLA.SP05.frobeniusSq (NLA.SP05.skewExample n) = 2 ∧ NLA.SP05.skewExample n ≠ 0
+'NLA.SP05.skew_witness' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA.SP05.positive_minimizer (n : ℕ) (hn : 1 ≤ n) (A B : NLA.SP05.Mat n) (hA : Matrix.PosDef A) (hB : Matrix.PosDef B) :
+  ∃ μ X,
+    0 < μ ∧
+      Matrix.PosSemidef X ∧
+        X ≠ 0 ∧
+          Matrix.mulVec (NLA.SP05.jordanMatrix A B) (NLA.SP05.columnVec X) = μ • NLA.SP05.columnVec X ∧
+            ∀ (v : NLA.SP05.Vec n), v ≠ 0 → μ ≤ NLA.SP05.rayleigh (NLA.SP05.jordanMatrix A B) v
+'NLA.SP05.positive_minimizer' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA.SP05.sector_minima (n : ℕ) (hn : 2 ≤ n) (A B : NLA.SP05.Mat n) (hA : Matrix.PosDef A) (hB : Matrix.PosDef B) :
+  ∃ a b, IsLeast (NLA.SP05.sectorValues A B 1) a ∧ IsLeast (NLA.SP05.sectorValues A B (-1)) b
+'NLA.SP05.sector_minima' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA.SP05.canonical_result (n : ℕ) (hn : 2 ≤ n) (A B : NLA.SP05.Mat n) (hA : Matrix.PosDef A) (hB : Matrix.PosDef B) :
+  ∃ a b, IsLeast (NLA.SP05.sectorValues A B 1) a ∧ IsLeast (NLA.SP05.sectorValues A B (-1)) b ∧ a ≤ b
+'NLA.SP05.canonical_result' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
