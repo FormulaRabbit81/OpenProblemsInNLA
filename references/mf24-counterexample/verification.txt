@@ -1,0 +1,76 @@
+MF-24: verification of the minimal submission
+=============================================
+
+Recorded (UTC): 2026-09-14T17:25:31.583046+00:00
+Python: 3.13.5
+NumPy: 2.3.5
+SymPy: 1.14.0
+mpmath (optional high-precision checks): 1.3.0
+Environment: OPENBLAS_NUM_THREADS=1, OMP_NUM_THREADS=1, PYTHONDONTWRITEBYTECODE=1
+
+These are local computations, not independent review, Lean verification,
+or repository-wide CI. The universal theorem is proved in proof.pdf.
+
+SHA-256 of the eight other submitted files
+---------------------------------------------
+835c4810d2e820afb9aba64eedde9d25b78943cda454a16e65769a2c0e2145a0  README.md
+56dca9a89d6b3b6067cbbfa7e984ce0fe5a4f13666679f673eab52eb03ad2058  SELF_REVIEW.md
+a0a1407b6090dadcc4fb902f8cbe280849b9a81daca960599419705efc301c65  check_exact.py
+3585827743dd123e469c782332db7d886afb4ff65d86dfa71c46ee3fd4ec4d42  check_numeric.py
+78bfe23710b3296cd092008dabdf9aada81af5ce00244e38619b1df5498d2d79  mf24.py
+1ae9316d7c935f6133a54b133d36bc55dce34f3a252b44c314b3b45a54514139  proof.pdf
+208f99dff23b0dedeb8f94595bd751f2863e0f69f6d8aa79f38cdd77a9b10970  proof.tex
+11c495c6fd22a834f03652c1be83034c9a747b39e16b60ffae0249f92e6e4a09  requirements.txt
+
+Completed runs
+---------------------------------------------
+
+Command: python check_exact.py
+Started (UTC): 2026-09-14T17:06:47.864352+00:00
+Finished (UTC): 2026-09-14T17:06:52.831093+00:00
+Exit status: 0
+
+PASS: generic bridge commutator and Cayley-Hamilton identities
+PASS: independent words, prefix heights and residue sizes, m=2,...,30
+PASS: 18 full bivariate determinant identities
+PASS: 6 direct Gram identities with eta, z and zbar symbolic
+PASS: 6 direct polynomial-matrix evaluations and block decompositions
+PASS: exact rational counterexample certificate, m=t=4, ratio > 32/19
+PASS: exact rational counterexample certificate, m=t=9, ratio > 243/89
+PASS: a misplaced bridge and a zero LDL pivot are both rejected
+All exact checks passed. This is not an end-to-end formal proof.
+
+Command: python check_numeric.py
+Started (UTC): 2026-09-14T17:06:58.296635+00:00
+Finished (UTC): 2026-09-14T17:06:59.550052+00:00
+Exit status: 0
+
+PASS: 1080 shifted SVD comparisons
+      maximum absolute error after common scaling: 1.110e-14
+PASS: 24 dense polynomial and block-norm comparisons
+PASS: 133 norm-bound comparisons, including t=1 and t=1e200
+PASS: shifted SVD test rejects the misplaced-bridge control
+
+  m       N       computed ratio      lower-bound formula
+  2       9           1.18083218               1.13137085
+  3      16           1.45388581               1.41713248
+  4      25           1.71276809               1.68421053
+  9     100           2.74262452               2.73033708
+ 19     400           4.15677065               4.15188000
+ 49    2500           6.86413918               6.86280114
+ 99   10000           9.85185691               9.85137072
+
+Both columns are rounded floating-point values.
+Large-order polynomial norms use residue blocks, not dense shifted SVDs.
+All numerical checks passed. Small singular values have no relative-error guarantee.
+
+Additional run: python -O check_exact.py
+Started (UTC): 2026-09-14T17:07:00.118320+00:00
+Finished (UTC): 2026-09-14T17:07:07.425307+00:00
+Exit status: 0; output identical to the corresponding run above.
+
+Additional run: python -O check_numeric.py
+Started (UTC): 2026-09-14T17:07:07.973849+00:00
+Finished (UTC): 2026-09-14T17:07:10.450564+00:00
+Exit status: 0; output identical to the corresponding run above.
+

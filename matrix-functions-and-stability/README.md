@@ -2,7 +2,7 @@
 
 [← All categories](../README.md) · [Full catalog](../CATALOG.md) · [Solved and claimed solutions](../RESOLVED.md)
 
-**14 problems with open targets.** 11 retained entries are excluded from the open count.
+**13 problems with open targets.** 12 retained entries are excluded from the open count.
 
 | ID | Problem | Status | Difficulty | Impact | Read / source |
 | --- | --- | --- | --- | --- | --- |
@@ -19,7 +19,6 @@
 | [MF-19](MF-19/README.md) | Decidability of zero hitting by rational matrix powers | **🟡 PARTIAL** | extreme | broadly interesting | [PDF](MF-19/problem.pdf) · [TeX](MF-19/problem.tex) |
 | [MF-20](MF-20/README.md) | Decidability of zero hitting by a matrix exponential | **🟡 PARTIAL** | extreme | broadly interesting | [PDF](MF-20/problem.pdf) · [TeX](MF-20/problem.tex) |
 | [MF-23](MF-23/README.md) | Complete Crouzeix conjecture | **🟡 PARTIAL** | extreme | broadly interesting | [PDF](MF-23/problem.pdf) · [TeX](MF-23/problem.tex) |
-| [MF-24](MF-24/README.md) | A dimension-independent polynomial norm bound from super-identical pseudospectra | **🟡 PARTIAL** | challenging | interesting to the community | [PDF](MF-24/problem.pdf) · [TeX](MF-24/problem.tex) |
 
 ## Retained entries outside the open count
 
@@ -35,6 +34,7 @@
 | [MF-18](MF-18/README.md) | Imaginary-part rank in a limiting Green-function matrix equation | **✅ SOLVED** | challenging | interesting to specialist | [PDF](MF-18/problem.pdf) · [TeX](MF-18/problem.tex) |
 | [MF-21](MF-21/README.md) | The uniform expansion threshold for Toeplitz symbols with higher-order zeros | **✅ SOLVED** | challenging | interesting to specialist | [PDF](MF-21/problem.pdf) · [TeX](MF-21/problem.tex) |
 | [MF-22](MF-22/README.md) | Polynomial conditioning of the cubic C1 spline Schrödinger Toeplitz family | **✅ SOLVED** | hard | interesting to specialist | [PDF](MF-22/problem.pdf) · [TeX](MF-22/problem.tex) |
+| [MF-24](MF-24/README.md) | A dimension-independent polynomial norm bound from super-identical pseudospectra | **🟠 SOLUTION CLAIMED** | challenging | interesting to the community | [PDF](MF-24/problem.pdf) · [TeX](MF-24/problem.tex) |
 | [SF-01](SF-01/README.md) | Preservation of real H-matrix structure by Newton square-root iterates | **✅ SOLVED** | challenging | interesting to specialist | [PDF](SF-01/problem.pdf) · [TeX](SF-01/problem.tex) |
 
 Ratings are editorial; each entry explains both ratings and the scope of its status evidence. [Definitions](../README.md#problem-status).
