@@ -1,0 +1,81 @@
+{
+  "reviewer": "OpenAI Codex GPT-6 agent /root/existing_verification_audit; independent, not proof implementer",
+  "phase": "pre-proof exact statement review",
+  "verdict": "APPROVE",
+  "published_base": "8f04b905eb2e0827b6b84f37d9d080ae1f05b202",
+  "statement_inputs_sha256": "bd45a690495a0a396448925b057cf2d1e5368ba6dd2fab377f4598b5961ef7ef",
+  "boundary_sha256": {
+    "NLA/SP04/Definitions.lean": "6ec0afd466bfb054b9a46353f37a01e39333259e2579f21ae5fd52b5e9d57161",
+    "Challenge.lean": "79aa3fe4ce1d75157f153b259660a8abd08cd8f0cecc7d0fad3ebcca0cf98381",
+    "NUMERICAL_TARGETS.md": "e14351bfa611bf6f1d1c7302b0584866bb54074c9db3c1e8f43c1f5dee571290",
+    "comparator.json": "d0783ec075a831cee2a501a46e02e42258b995f9fbf377dab1c749bba95457ff",
+    "lakefile.toml": "1f4038f5e6c2f3ed9409d51f444f1ca2256b03a828d69b0dca855f61f2b082fd",
+    "lake-manifest.json": "0b777416633b6ab6cecb4b739da1148251ec285a20225da94da6f72b56bddcab",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+    "reviews/initial/independent-exact-check.py": "41729e1a69cb0b5e3aa314f6dfb4a427e16467edec5022de0ff29229b06123dc",
+    "reviews/initial/independent-exact-check.json": "8333c86c264642f175a0134ccc085dbfd6b8051ee0ab1fdb08836e1d15e33873",
+    "reviews/initial/source-hashes.json": "a5aa8f0e6f552ebd9045a18b623792a1af8155e5ba312685028776370dc210ea"
+  },
+  "original_sources_sha256": {
+    "eigenvalues-and-inverse-problems/SP-04/README.md": "2dfa12b2eee5e312bbd45d023d8fa33e1c40e2d598f6538e651d6df519ae38ca",
+    "eigenvalues-and-inverse-problems/SP-04/solution.md": "d7a9e5a9d0fa0bb43e45a3d5c37b6e52d86373cbf4391980d0c1c54ff2ebc45c",
+    "eigenvalues-and-inverse-problems/SP-04/solution.tex": "4709776d1b91f8eefc4521495057cbc0451f897c7232ee7c838214f7627da481",
+    "references/colbrook-2026-09-11/verification/reviews/SP-04-review.md": "1fd8f31078c42a84572ab0714b4e776f99d5ae09c149edcccf388af0d4ec159e"
+  },
+  "original_sources_match_published_base": true,
+  "historical_mathematical_block_sha256": "77b6c6240eab1eab1cd7f9326a95a4bb7455188f951c11718c1b8c07cf691d95",
+  "comparator_names_exactly_match_challenge": [
+    "NLA.SP04.numerical_bounds",
+    "NLA.SP04.diagonal_stationary_iff",
+    "NLA.SP04.diagonal_counterexample",
+    "NLA.SP04.diagonal_finite",
+    "NLA.SP04.orthogonal_transport",
+    "NLA.SP04.spectral_family",
+    "NLA.SP04.regular_svd",
+    "NLA.SP04.open_family_counterexamples",
+    "NLA.SP04.algebraic_avoidance",
+    "NLA.SP04.generic_counterexamples",
+    "NLA.SP04.canonical_counterexample"
+  ],
+  "fresh_project_build_directory": "/private/tmp/nla-campaign-existing-review/SP04-statement-build",
+  "project_artifacts_reused": false,
+  "dependency_cache_reused": "/private/tmp/nla-formalization-campaign-20260915/linear-systems-and-elimination/IE-15/lean/.lake/packages",
+  "lean_toolchain": "leanprover/lean4:v4.33.1",
+  "mathlib_commit": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "leancert_commit": "621a43d7cf21f87872392a01e874f2f1dbddc926",
+  "mathlib_api_source_sha256": {
+    "Mathlib/Analysis/Matrix/Spectrum.lean": "1ad47effa0a5fbc373ebb6cf52a6b85a66b25d3c5a86394f3dd5932ffbfc3afe",
+    "Mathlib/Analysis/Matrix/Normed.lean": "f47bfccf19da0082e9b2a298457485b1c6ba5c4b19df97a69e89598180e30d2e"
+  },
+  "commands": [
+    "PATH=/private/tmp/nla-campaign-toolchain/lean-4.33.1-darwin_aarch64/bin:$PATH lake build Challenge",
+    "python3 referee-independent-arithmetic.py",
+    "python3 reviews/initial/independent-exact-check.py /private/tmp/nla-formalization-sp04-20260915",
+    "PATH=/private/tmp/nla-campaign-toolchain/lean-4.33.1-darwin_aarch64/bin:$PATH lake env lean BoundaryAPI.lean"
+  ],
+  "checks": {
+    "fresh_challenge_exit": 0,
+    "intentional_hole_warnings": 11,
+    "independent_exact_arithmetic": true,
+    "submitted_diagnostic_replay_byte_identical": true,
+    "boundary_api_exit": 0,
+    "three_definition_axiom_closures_standard_only": true,
+    "all_10_frozen_inputs_unchanged": true,
+    "canonical_status": "Solved"
+  },
+  "limitations": [
+    "No proof implementation exists or is certified.",
+    "Challenge holes establish no mathematics.",
+    "No Comparator, Linux verification, or final proof axiom check is claimed.",
+    "BoundaryAPI only prints definitions and checks existing Mathlib APIs; it implements no new mathematics."
+  ],
+  "evidence_sha256": {
+    "fresh-challenge-build.log": "2cff137f730f81d26bee4ed420913f206f542913e822ea5097c2a0c04ca2488d",
+    "referee-independent-arithmetic.py": "e21a47afcc449ae3a562474f7258012ce1ffc91ed8bf5e229d58626f8cb6b981",
+    "referee-independent-arithmetic.json": "61240868bdb49fbe5edda4e0b0f018879d946442a4b7d16c10d5ae9ba389f685",
+    "referee-independent-arithmetic.log": "cd72a8e337a8baea5c0891f413769c1c447da15d62844a347ff965f80d6b66cb",
+    "submitted-diagnostic-replay.log": "94c61636169fccad4f46955a8c6c5b8cfaa7bb62f064283d302004d9902cfa06",
+    "BoundaryAPI.lean": "e8e8dcaa6eea569ab6cbbc4b31fe59504187e34b580595fd3736e7af716c6a1e",
+    "boundary-api.log": "60a1bb25896bacdc1277a64eb42a48fbef417cbe2d71104b79d369b983bff67f"
+  }
+}
