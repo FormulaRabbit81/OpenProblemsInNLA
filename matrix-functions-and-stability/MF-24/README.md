@@ -7,10 +7,25 @@
 **Topic:** Polynomial matrix norms and pseudospectral information  
 **Difficulty:** challenging  
 **Importance:** interesting to the community  
-**Status:** Partially resolved  
-**Last checked:** 2026-09-11
+**Status:** Solution claimed
+**Last checked:** 2026-09-14
 
 **Rating rationale:** Existing information controls polynomial norms with a dimension-dependent constant; a uniform comparison would strengthen pseudospectral inference about nonnormal dynamics and polynomial matrix functions.
+
+## Resolution claim (14 September 2026)
+
+**A negative resolution is claimed for uniform boundedness. The exact constants and their optimal growth remain open.**
+
+The [counterexample manuscript](../../references/mf24-counterexample/proof.pdf), **Theorem 1 and equation (15)**, constructs real nonnegative nilpotent weighted shifts of order $`N=(m+1)^2`$, for every integer $`m\ge2`$ and real $`t>1`$. All singular values agree after every complex scalar shift. For the common polynomial $`p_m(z)=\sum_{j=1}^m z^{(m+2)j}`$, it proves
+
+```math
+\frac{\|p_m(X_{m,t})\|_2}{\|p_m(Y_{m,t})\|_2}
+\ge \frac{\sqrt m}{1+(m-1)/t^2},\qquad p_m(Y_{m,t})\ne0.
+```
+
+Taking $`t=m`$ gives a ratio at least $`(4/5)\sqrt m`$, so the original uniform-boundedness target is refuted. **Corollary 3** gives $`C_N\ge\sqrt{\lfloor\sqrt N\rfloor-1}`$ for $`N\ge9`$. It does not determine the sharp $`C_N`$ or close the gap to the known upper bound.
+
+**Evidence level:** a complete written argument with reproducible exact and numerical checks, developed and self-reviewed with AI assistance. A separate [informal Codex AI-agent audit](../../references/mf24-counterexample/independent-review.md) found no mathematical error and reran the checks. No external human peer review or Lean verification is asserted. See the [source, checks and provenance](../../references/mf24-counterexample/README.md). The existing difficulty and importance ratings are retained as historical ratings of the original boundedness question.
 
 ## Context and notation
 
@@ -60,7 +75,10 @@ question, retained here rather than split into another entry.
 Thus $`C_N\leq\sqrt{N-2}`$ for $`N\geq4`$. The small-dimensional unitary/transpose
 classification gives $`C_1=C_2=C_3=1`$.
 
-## Scope and status check
+## Original scope and literature check
+
+The following is the repository's pre-claim literature record, retained unchanged.
+
 
 The unknown absolute constant, not the superseded $`\sqrt N`$ sharpness guess, is
 the admission target. This comparison does not follow just from ordinary
