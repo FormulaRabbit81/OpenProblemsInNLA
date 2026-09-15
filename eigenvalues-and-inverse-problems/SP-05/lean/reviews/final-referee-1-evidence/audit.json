@@ -1,0 +1,868 @@
+{
+  "reviewer": "OpenAI GPT-6 Codex /root/reference_api_review, independent non-implementing AI",
+  "phase": "complete source review; authoritative Linux/Comparator pending",
+  "result": "PASS",
+  "candidate_commit": "081423df8a2445285261bcef2edc8fd66945f200",
+  "published_base": "d8c38a795876b132c90df8d1be8682d3dcde394c",
+  "preproof_commit": "04d1de395494800390405f3df1645316fe7943c2",
+  "candidate_inputs_sha256": {
+    ".gitignore": "3b8ef443f22e1029ffe4683cc0b3950064f9559bba9b202d604e658bd3370bf6",
+    "Challenge.lean": "df243901a25385eab79a8218526f788f8ded2516f607bad33dc0e9284b31b214",
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "NLA/SP05/Basic.lean": "2083f47e17507e45d66920d8866cb61a2eee37000410ced4151f3eb66d6ae339",
+    "NLA/SP05/Certificates.lean": "bc76925b25739cfc56f50c39a23abc48a927c91c4bb5e727edccc7996e9c66ef",
+    "NLA/SP05/Complexification.lean": "e66e6fc9fb30d955ee536e24ad16d369302e7016495c2b8a11f7a03b95955ced",
+    "NLA/SP05/Cone.lean": "2325a49743efb806591b938564f37979b40cc393427a7741b28dbc4820b84e5b",
+    "NLA/SP05/Definitions.lean": "2dfb4549c6ad2fbab5b31d0fdac18510c49d68846cab79deabc794068188a5fb",
+    "NLA/SP05/Jordan.lean": "80682d0d0164399ad34147860bcc1c605a93f6624778706188f2867def71c414",
+    "NLA/SP05/Minimizer.lean": "66f011cd270ae3b6fbe61f5880eb6eb54e6f7f03dd91dd0d0c4f9400f2e9acaf",
+    "NLA/SP05/Modulus.lean": "7b873ab8f1a9fe9987e518a0812f209f6a778dd05aca370a79a12934bdfc9cf1",
+    "NLA/SP05/Proof.lean": "605c5f5e5a79aa9f8155a2b6f472045d1e8d089368752b873a595b6756d95449",
+    "NLA/SP05/Sectors.lean": "fc0bf91a271e042568880666fbd285eb23452a06d888b58a6b70e2003899bdd5",
+    "NLA/SP05/Spectral.lean": "6e9ca0b67b4dcee8cbb15c998f0e827b82703dcef3be41f2f76516a7061a7d8b",
+    "NLA/SP05/Sylvester.lean": "88e4aff58b5eb2b564d7b27173de83548d768a22400e77bf296c8e1d06ae9c15",
+    "NUMERICAL_TARGETS.md": "699affc08fc1c49e472ee45532666727f0bd92fe76d507db44da35b9d2f15cc1",
+    "README.md": "89915860131b57f0a6a2cd93d63e64591ab1b40c28697f520b3fc08ce7ff19f2",
+    "Solution.lean": "66753a1b36829f3edb9a4e23c4c7ebc37c5897c2fe94644ba5aea0ed0e6635b2",
+    "comparator.json": "7fbf962523d010b2ad65d7bbcdf7c1d1d8b563b3bcdf151f07757746dee36d64",
+    "formalization.yaml": "5f9a3d9b0b0fe99d429fe3974c359d4b66da9a4028497172456c9511646dfe2b",
+    "lake-manifest.json": "a6d69cb5b925415edfbd2a68d86668713c13b703ae28154a3f67bdc30ababf9a",
+    "lakefile.toml": "fec57fbcbb1718db75a2606961d3c2531752b478ff97ea55efb1c0cb19405760",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71"
+  },
+  "candidate_input_seal_sha256": "e2f04725624543606dbf1041a756385822944051ab9d1dac8557dbd35385c0e6",
+  "frozen_inputs_sha256": {
+    "NLA/SP05/Definitions.lean": "2dfb4549c6ad2fbab5b31d0fdac18510c49d68846cab79deabc794068188a5fb",
+    "Challenge.lean": "df243901a25385eab79a8218526f788f8ded2516f607bad33dc0e9284b31b214",
+    "NUMERICAL_TARGETS.md": "699affc08fc1c49e472ee45532666727f0bd92fe76d507db44da35b9d2f15cc1",
+    "comparator.json": "7fbf962523d010b2ad65d7bbcdf7c1d1d8b563b3bcdf151f07757746dee36d64",
+    "lakefile.toml": "fec57fbcbb1718db75a2606961d3c2531752b478ff97ea55efb1c0cb19405760",
+    "lake-manifest.json": "a6d69cb5b925415edfbd2a68d86668713c13b703ae28154a3f67bdc30ababf9a",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+    "reviews/initial/independent-exact-check.py": "ab688c7595ce49bc863fda9241484b038f1dcf9494abfa7b57e9a379db0ba9fa",
+    "reviews/initial/independent-exact-check.json": "e78725b0b384e31e8a1a6732d47b203a3117392ef48293fcd9cc4cbe7f05d03c",
+    "reviews/initial/source-hashes.json": "b69eb8f51dd41ceac1af86fd778b7bd861b46da11f4565b5a234ab0f66969243"
+  },
+  "source_sha256": {
+    "eigenvalues-and-inverse-problems/SP-05/README.md": "fa620c21fbfda744d3e4689168cc9519bfbd5df9a61b9e7662d53133e6fd5056",
+    "eigenvalues-and-inverse-problems/SP-05/problem.pdf": "836e69e61e154357c209478587f085e3dd0f805bed3dd24b61b2be847bdd2a6d",
+    "eigenvalues-and-inverse-problems/SP-05/problem.tex": "07606a6d2bfee121cae8c38b21eef337c2dc2cada460f3e857a73267d5f23fcd",
+    "eigenvalues-and-inverse-problems/SP-05/solution.md": "8a92479b0631d48ef15c2a435adf6cd3ae0ca4697d4be6a3696f3a386e61bf8a",
+    "eigenvalues-and-inverse-problems/SP-05/solution.pdf": "8c6eb5ce827f56ab9d2a12d4df8cf628dfa617ab87e62cbf2ce9592ce804d6be",
+    "eigenvalues-and-inverse-problems/SP-05/solution.tex": "6dfec6f26bf0e20b4fa4e35530dd2e8692a520c2e78fb723192ae0c4415f1d4c",
+    "references/colbrook-2026-09-11/verification/reviews/SP-05-review.md": "1dd8ce4a5b84e0b2cb2855142df85c7f980de7b6556151e5f18c0740e9e7161c"
+  },
+  "source_proof_block_sha256": "54ef24c91eb717efca2c3a04fdbbbcba91485e214984c45245904aba55209f42",
+  "literal_public_signatures": {
+    "numerical_bound": ": (0 : \u211d) < 2",
+    "column_vectorization": "{n : \u2115} (A B X : Mat n) : Matrix.kronecker A B *\u1d65 columnVec X = columnVec (B * X * A\u1d40) \u2227 commutationMatrix n *\u1d65 columnVec X = columnVec X\u1d40 \u2227 dotProduct (columnVec X) (columnVec X) = frobeniusSq X",
+    "skew_witness": "(n : \u2115) (hn : 2 \u2264 n) : (skewExample n)\u1d40 = -skewExample n \u2227 frobeniusSq (skewExample n) = 2 \u2227 skewExample n \u2260 0",
+    "positive_minimizer": "(n : \u2115) (hn : 1 \u2264 n) (A B : Mat n) (hA : A.PosDef) (hB : B.PosDef) : \u2203 \u03bc : \u211d, \u2203 X : Mat n, 0 < \u03bc \u2227 X.PosSemidef \u2227 X \u2260 0 \u2227 jordanMatrix A B *\u1d65 columnVec X = \u03bc \u2022 columnVec X \u2227 \u2200 v : Vec n, v \u2260 0 \u2192 \u03bc \u2264 rayleigh (jordanMatrix A B) v",
+    "sector_minima": "(n : \u2115) (hn : 2 \u2264 n) (A B : Mat n) (hA : A.PosDef) (hB : B.PosDef) : \u2203 a b : \u211d, IsLeast (sectorValues A B 1) a \u2227 IsLeast (sectorValues A B (-1)) b",
+    "canonical_result": "(n : \u2115) (hn : 2 \u2264 n) (A B : Mat n) (hA : A.PosDef) (hB : B.PosDef) : \u2203 a b : \u211d, IsLeast (sectorValues A B 1) a \u2227 IsLeast (sectorValues A B (-1)) b \u2227 a \u2264 b"
+  },
+  "checks_count": 248,
+  "checks": [
+    "exact candidate HEAD",
+    "current exact reviewed source .gitignore",
+    "committed exact reviewed source .gitignore",
+    "current exact reviewed source Challenge.lean",
+    "committed exact reviewed source Challenge.lean",
+    "current exact reviewed source LICENSE",
+    "committed exact reviewed source LICENSE",
+    "current exact reviewed source NLA/SP05/Basic.lean",
+    "committed exact reviewed source NLA/SP05/Basic.lean",
+    "current exact reviewed source NLA/SP05/Certificates.lean",
+    "committed exact reviewed source NLA/SP05/Certificates.lean",
+    "current exact reviewed source NLA/SP05/Complexification.lean",
+    "committed exact reviewed source NLA/SP05/Complexification.lean",
+    "current exact reviewed source NLA/SP05/Cone.lean",
+    "committed exact reviewed source NLA/SP05/Cone.lean",
+    "current exact reviewed source NLA/SP05/Definitions.lean",
+    "committed exact reviewed source NLA/SP05/Definitions.lean",
+    "current exact reviewed source NLA/SP05/Jordan.lean",
+    "committed exact reviewed source NLA/SP05/Jordan.lean",
+    "current exact reviewed source NLA/SP05/Minimizer.lean",
+    "committed exact reviewed source NLA/SP05/Minimizer.lean",
+    "current exact reviewed source NLA/SP05/Modulus.lean",
+    "committed exact reviewed source NLA/SP05/Modulus.lean",
+    "current exact reviewed source NLA/SP05/Proof.lean",
+    "committed exact reviewed source NLA/SP05/Proof.lean",
+    "current exact reviewed source NLA/SP05/Sectors.lean",
+    "committed exact reviewed source NLA/SP05/Sectors.lean",
+    "current exact reviewed source NLA/SP05/Spectral.lean",
+    "committed exact reviewed source NLA/SP05/Spectral.lean",
+    "current exact reviewed source NLA/SP05/Sylvester.lean",
+    "committed exact reviewed source NLA/SP05/Sylvester.lean",
+    "current exact reviewed source NUMERICAL_TARGETS.md",
+    "committed exact reviewed source NUMERICAL_TARGETS.md",
+    "current exact reviewed source README.md",
+    "committed exact reviewed source README.md",
+    "current exact reviewed source Solution.lean",
+    "committed exact reviewed source Solution.lean",
+    "current exact reviewed source comparator.json",
+    "committed exact reviewed source comparator.json",
+    "current exact reviewed source formalization.yaml",
+    "committed exact reviewed source formalization.yaml",
+    "current exact reviewed source lake-manifest.json",
+    "committed exact reviewed source lake-manifest.json",
+    "current exact reviewed source lakefile.toml",
+    "committed exact reviewed source lakefile.toml",
+    "current exact reviewed source lean-toolchain",
+    "committed exact reviewed source lean-toolchain",
+    "independently compiled snapshot NLA/SP05/Sylvester.lean",
+    "independently compiled snapshot NLA/SP05/Jordan.lean",
+    "independently compiled snapshot NLA/SP05/Definitions.lean",
+    "independently compiled snapshot NLA/SP05/Sectors.lean",
+    "independently compiled snapshot NLA/SP05/Complexification.lean",
+    "independently compiled snapshot NLA/SP05/Cone.lean",
+    "independently compiled snapshot NLA/SP05/Minimizer.lean",
+    "independently compiled snapshot NLA/SP05/Basic.lean",
+    "independently compiled snapshot NLA/SP05/Proof.lean",
+    "independently compiled snapshot NLA/SP05/Spectral.lean",
+    "independently compiled snapshot NLA/SP05/Modulus.lean",
+    "independently compiled snapshot NLA/SP05/Certificates.lean",
+    "independently compiled snapshot Challenge.lean",
+    "independently compiled snapshot Solution.lean",
+    "independently compiled snapshot lakefile.toml",
+    "independently compiled snapshot lake-manifest.json",
+    "independently compiled snapshot lean-toolchain",
+    "independently compiled snapshot comparator.json",
+    "independently compiled snapshot NUMERICAL_TARGETS.md",
+    "10 pre-proof boundary inputs",
+    "frozen bytes current NLA/SP05/Definitions.lean",
+    "frozen bytes before proof NLA/SP05/Definitions.lean",
+    "frozen bytes current Challenge.lean",
+    "frozen bytes before proof Challenge.lean",
+    "frozen bytes current NUMERICAL_TARGETS.md",
+    "frozen bytes before proof NUMERICAL_TARGETS.md",
+    "frozen bytes current comparator.json",
+    "frozen bytes before proof comparator.json",
+    "frozen bytes current lakefile.toml",
+    "frozen bytes before proof lakefile.toml",
+    "frozen bytes current lake-manifest.json",
+    "frozen bytes before proof lake-manifest.json",
+    "frozen bytes current lean-toolchain",
+    "frozen bytes before proof lean-toolchain",
+    "frozen bytes current reviews/initial/independent-exact-check.py",
+    "frozen bytes before proof reviews/initial/independent-exact-check.py",
+    "frozen bytes current reviews/initial/independent-exact-check.json",
+    "frozen bytes before proof reviews/initial/independent-exact-check.json",
+    "frozen bytes current reviews/initial/source-hashes.json",
+    "frozen bytes before proof reviews/initial/source-hashes.json",
+    "independent statement approval unchanged reviews/statement-referee-1.md",
+    "independent statement approval unchanged reviews/statement-referee-2.md",
+    "complete original source preserved eigenvalues-and-inverse-problems/SP-05/README.md",
+    "complete original source preserved eigenvalues-and-inverse-problems/SP-05/problem.pdf",
+    "complete original source preserved eigenvalues-and-inverse-problems/SP-05/problem.tex",
+    "complete original source preserved eigenvalues-and-inverse-problems/SP-05/solution.md",
+    "complete original source preserved eigenvalues-and-inverse-problems/SP-05/solution.pdf",
+    "complete original source preserved eigenvalues-and-inverse-problems/SP-05/solution.tex",
+    "complete original source preserved references/colbrook-2026-09-11/verification/reviews/SP-05-review.md",
+    "original reviewed mathematical proof block",
+    "canonical still Solved",
+    "registry all 217 IDs preserved",
+    "all six literal public signatures identical to independent Challenge",
+    "exact Comparator selection all six",
+    "no definition holes and exact permitted axioms",
+    "proof solution imports actual Proof only",
+    "no admissions unsafe or custom axioms Sylvester.lean",
+    "no Challenge import Sylvester.lean",
+    "no admissions unsafe or custom axioms Jordan.lean",
+    "no Challenge import Jordan.lean",
+    "no admissions unsafe or custom axioms Definitions.lean",
+    "no Challenge import Definitions.lean",
+    "no admissions unsafe or custom axioms Sectors.lean",
+    "no Challenge import Sectors.lean",
+    "no admissions unsafe or custom axioms Complexification.lean",
+    "no Challenge import Complexification.lean",
+    "no admissions unsafe or custom axioms Cone.lean",
+    "no Challenge import Cone.lean",
+    "no admissions unsafe or custom axioms Minimizer.lean",
+    "no Challenge import Minimizer.lean",
+    "no admissions unsafe or custom axioms Basic.lean",
+    "no Challenge import Basic.lean",
+    "no admissions unsafe or custom axioms Proof.lean",
+    "no Challenge import Proof.lean",
+    "no admissions unsafe or custom axioms Spectral.lean",
+    "no Challenge import Spectral.lean",
+    "no admissions unsafe or custom axioms Modulus.lean",
+    "no Challenge import Modulus.lean",
+    "no admissions unsafe or custom axioms Certificates.lean",
+    "no Challenge import Certificates.lean",
+    "explicit kernel numerical certificate",
+    "consumed witness positivity certificate",
+    "actual witness enters attained skew minimum",
+    "fresh independent Challenge 2710 jobs six deliberate holes",
+    "fresh independent Solution 3738 jobs no holes",
+    "only two harmless exact-wrapper unused assumption warnings",
+    "fresh reviewer exact types/kernel audit compile",
+    "all 81 actual project theorem declarations checked",
+    "six literal wrappers plus two nonvacuity instantiations also checked",
+    "permitted transitive closure Referee1.exact_numerical_bound",
+    "permitted transitive closure Referee1.exact_column_vectorization",
+    "permitted transitive closure Referee1.exact_skew_witness",
+    "permitted transitive closure Referee1.exact_positive_minimizer",
+    "permitted transitive closure Referee1.exact_sector_minima",
+    "permitted transitive closure Referee1.exact_canonical_result",
+    "permitted transitive closure NLA.SP05.kronecker_columnVec",
+    "permitted transitive closure NLA.SP05.commutation_mulVec",
+    "permitted transitive closure NLA.SP05.commutation_columnVec",
+    "permitted transitive closure NLA.SP05.columnVec_dot_self",
+    "permitted transitive closure NLA.SP05.columnVec_ne_zero",
+    "permitted transitive closure NLA.SP05.dot_self_pos",
+    "permitted transitive closure NLA.SP05.skew_transpose",
+    "permitted transitive closure NLA.SP05.skew_frobenius",
+    "permitted transitive closure NLA.SP05.skew_frobenius_pos",
+    "permitted transitive closure NLA.SP05.skew_ne_zero",
+    "permitted transitive closure NLA.SP05.skew_norm_positive_certificate",
+    "permitted transitive closure NLA.SP05.complexify_apply",
+    "permitted transitive closure NLA.SP05.complexifyHom_apply",
+    "permitted transitive closure NLA.SP05.complexify_injective",
+    "permitted transitive closure NLA.SP05.complexify_zero",
+    "permitted transitive closure NLA.SP05.complexify_eq_zero",
+    "permitted transitive closure NLA.SP05.complexify_add",
+    "permitted transitive closure NLA.SP05.complexify_sub",
+    "permitted transitive closure NLA.SP05.complexify_smul",
+    "permitted transitive closure NLA.SP05.complexify_star",
+    "permitted transitive closure NLA.SP05.complexify_conjTranspose",
+    "permitted transitive closure NLA.SP05.complexify_transpose",
+    "permitted transitive closure NLA.SP05.complexify_one",
+    "permitted transitive closure NLA.SP05.complexify_mul",
+    "permitted transitive closure NLA.SP05.complexify_posSemidef",
+    "permitted transitive closure NLA.SP05.complexify_posDef",
+    "permitted transitive closure NLA.SP05.complexify_inv",
+    "permitted transitive closure NLA.SP05.complexify_sqrt",
+    "permitted transitive closure NLA.SP05.complexify_abs",
+    "permitted transitive closure NLA.SP05.complexify_abs_I_smul",
+    "permitted transitive closure NLA.SP05.complexify_kronecker",
+    "permitted transitive closure NLA.SP05.complex_jordan_columnVec",
+    "permitted transitive closure NLA.SP05.actual_jordan_inverse_equation",
+    "permitted transitive closure NLA.SP05.actual_jordan_inverse_cone",
+    "permitted transitive closure NLA.SP05.jordan_posDef",
+    "permitted transitive closure NLA.SP05.jordan_commutation",
+    "permitted transitive closure NLA.SP05.jordan_inverse_commutation",
+    "permitted transitive closure NLA.SP05.real_eigenmatrix_sign",
+    "permitted transitive closure NLA.SP05.jordan_inverse_top_sign",
+    "permitted transitive closure NLA.SP05.inverse_eigen_to_eigen",
+    "permitted transitive closure NLA.SP05.rayleigh_lower_of_slack",
+    "permitted transitive closure NLA.SP05.global_positive_minimizer",
+    "permitted transitive closure NLA.SP05.vec_realMatrixAction",
+    "permitted transitive closure NLA.SP05.vec_complexMatrixAction",
+    "permitted transitive closure NLA.SP05.complexMatrixAction_real",
+    "permitted transitive closure NLA.SP05.complexPairing_trace",
+    "permitted transitive closure NLA.SP05.complexPairing_real",
+    "permitted transitive closure NLA.SP05.complexPairing_I",
+    "permitted transitive closure NLA.SP05.trace_product_posSemidef_nonneg",
+    "permitted transitive closure NLA.SP05.complexPairing_posSemidef_nonneg",
+    "permitted transitive closure NLA.SP05.hermitian_modulus_pairing_le",
+    "permitted transitive closure NLA.SP05.real_abs_vec_norm_sq",
+    "permitted transitive closure NLA.SP05.modulus_quadratic_improves",
+    "permitted transitive closure NLA.SP05.numerical_bound",
+    "permitted transitive closure NLA.SP05.column_vectorization",
+    "permitted transitive closure NLA.SP05.skew_witness",
+    "permitted transitive closure NLA.SP05.positive_minimizer",
+    "permitted transitive closure NLA.SP05.sector_minima",
+    "permitted transitive closure NLA.SP05.canonical_result",
+    "permitted transitive closure NLA.SP05.dot_self_smul",
+    "permitted transitive closure NLA.SP05.rayleigh_smul",
+    "permitted transitive closure NLA.SP05.normalize_sector",
+    "permitted transitive closure NLA.SP05.unitSector_isCompact",
+    "permitted transitive closure NLA.SP05.unitSector_ne_zero",
+    "permitted transitive closure NLA.SP05.sector_minimum_exists",
+    "permitted transitive closure NLA.SP05.symmetric_sector_nonempty",
+    "permitted transitive closure NLA.SP05.skew_sector_nonempty",
+    "permitted transitive closure NLA.SP05.both_sector_minima",
+    "permitted transitive closure NLA.SP05.commutation_dot",
+    "permitted transitive closure NLA.SP05.commutation_kronecker",
+    "permitted transitive closure NLA.SP05.sector_rayleigh_twice",
+    "permitted transitive closure NLA.SP05.rayleigh_of_eigenvector",
+    "permitted transitive closure NLA.SP05.sector_comparison_of_psd_minimizer",
+    "permitted transitive closure NLA.SP05.real_spectral_max",
+    "permitted transitive closure NLA.SP05.psd_slack_eigenvector",
+    "permitted transitive closure NLA.SP05.inverse_slack_lower",
+    "permitted transitive closure NLA.SP05.sylvester_posSemidef",
+    "permitted transitive closure NLA.SP05.complex_jordan_injective",
+    "permitted transitive closure NLA.SP05.complex_jordan_preimage_hermitian",
+    "permitted transitive closure NLA.SP05.complex_jordan_preimage_posSemidef",
+    "permitted transitive closure NLA.SP05.complex_jordan_solution_posSemidef",
+    "permitted transitive closure Referee1.nonvacuous_positive_dimension",
+    "permitted transitive closure Referee1.nonvacuous_original_dimension",
+    "actual pinned compiler",
+    "pinned dependency leancert",
+    "tracked clean dependency leancert",
+    "pinned dependency mathlib",
+    "tracked clean dependency mathlib",
+    "pinned dependency plausible",
+    "tracked clean dependency plausible",
+    "pinned dependency LeanSearchClient",
+    "tracked clean dependency LeanSearchClient",
+    "pinned dependency importGraph",
+    "tracked clean dependency importGraph",
+    "pinned dependency proofwidgets",
+    "tracked clean dependency proofwidgets",
+    "pinned dependency aesop",
+    "tracked clean dependency aesop",
+    "pinned dependency Qq",
+    "tracked clean dependency Qq",
+    "pinned dependency batteries",
+    "tracked clean dependency batteries",
+    "pinned dependency Cli",
+    "tracked clean dependency Cli",
+    "183 independent exact arithmetic checks",
+    "metadata6 schema coverage passes"
+  ],
+  "fresh_snapshot_inputs_sha256": {
+    "NLA/SP05/Sylvester.lean": "88e4aff58b5eb2b564d7b27173de83548d768a22400e77bf296c8e1d06ae9c15",
+    "NLA/SP05/Jordan.lean": "80682d0d0164399ad34147860bcc1c605a93f6624778706188f2867def71c414",
+    "NLA/SP05/Definitions.lean": "2dfb4549c6ad2fbab5b31d0fdac18510c49d68846cab79deabc794068188a5fb",
+    "NLA/SP05/Sectors.lean": "fc0bf91a271e042568880666fbd285eb23452a06d888b58a6b70e2003899bdd5",
+    "NLA/SP05/Complexification.lean": "e66e6fc9fb30d955ee536e24ad16d369302e7016495c2b8a11f7a03b95955ced",
+    "NLA/SP05/Cone.lean": "2325a49743efb806591b938564f37979b40cc393427a7741b28dbc4820b84e5b",
+    "NLA/SP05/Minimizer.lean": "66f011cd270ae3b6fbe61f5880eb6eb54e6f7f03dd91dd0d0c4f9400f2e9acaf",
+    "NLA/SP05/Basic.lean": "2083f47e17507e45d66920d8866cb61a2eee37000410ced4151f3eb66d6ae339",
+    "NLA/SP05/Proof.lean": "605c5f5e5a79aa9f8155a2b6f472045d1e8d089368752b873a595b6756d95449",
+    "NLA/SP05/Spectral.lean": "6e9ca0b67b4dcee8cbb15c998f0e827b82703dcef3be41f2f76516a7061a7d8b",
+    "NLA/SP05/Modulus.lean": "7b873ab8f1a9fe9987e518a0812f209f6a778dd05aca370a79a12934bdfc9cf1",
+    "NLA/SP05/Certificates.lean": "bc76925b25739cfc56f50c39a23abc48a927c91c4bb5e727edccc7996e9c66ef",
+    "Challenge.lean": "df243901a25385eab79a8218526f788f8ded2516f607bad33dc0e9284b31b214",
+    "Solution.lean": "66753a1b36829f3edb9a4e23c4c7ebc37c5897c2fe94644ba5aea0ed0e6635b2",
+    "lakefile.toml": "fec57fbcbb1718db75a2606961d3c2531752b478ff97ea55efb1c0cb19405760",
+    "lake-manifest.json": "a6d69cb5b925415edfbd2a68d86668713c13b703ae28154a3f67bdc30ababf9a",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+    "comparator.json": "7fbf962523d010b2ad65d7bbcdf7c1d1d8b563b3bcdf151f07757746dee36d64",
+    "NUMERICAL_TARGETS.md": "699affc08fc1c49e472ee45532666727f0bd92fe76d507db44da35b9d2f15cc1"
+  },
+  "actual_compiler": "Lean (version 4.33.1, arm64-apple-darwin24.6.0, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "dependencies": [
+    {
+      "name": "leancert",
+      "commit": "621a43d7cf21f87872392a01e874f2f1dbddc926",
+      "tracked_clean": true
+    },
+    {
+      "name": "mathlib",
+      "commit": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "tracked_clean": true
+    },
+    {
+      "name": "plausible",
+      "commit": "b7eb3304aeae834b12dda98993a37f6a41f6f0bb",
+      "tracked_clean": true
+    },
+    {
+      "name": "LeanSearchClient",
+      "commit": "5f4d51b81cbd3f6b32b156bfad9056621a040404",
+      "tracked_clean": true
+    },
+    {
+      "name": "importGraph",
+      "commit": "16f02aa7642864af59f1ff0e384a015994db9118",
+      "tracked_clean": true
+    },
+    {
+      "name": "proofwidgets",
+      "commit": "4be2e3d5087eeb272cf5a8853b8f9dd025ef5957",
+      "tracked_clean": true
+    },
+    {
+      "name": "aesop",
+      "commit": "3448c0bcc5ce01b2d1546e483ec3620e32df3d0e",
+      "tracked_clean": true
+    },
+    {
+      "name": "Qq",
+      "commit": "92c15be17b7caf78c2ad767ec40f89052d908d81",
+      "tracked_clean": true
+    },
+    {
+      "name": "batteries",
+      "commit": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+      "tracked_clean": true
+    },
+    {
+      "name": "Cli",
+      "commit": "6130a47896ce867c6a4a55373441e59e565bad0f",
+      "tracked_clean": true
+    }
+  ],
+  "all_theorem_closures": {
+    "Referee1.exact_numerical_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Referee1.exact_column_vectorization": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Referee1.exact_skew_witness": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Referee1.exact_positive_minimizer": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Referee1.exact_sector_minima": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Referee1.exact_canonical_result": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.kronecker_columnVec": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.commutation_mulVec": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.commutation_columnVec": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.columnVec_dot_self": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.columnVec_ne_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.dot_self_pos": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.skew_transpose": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.skew_frobenius": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.skew_frobenius_pos": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.skew_ne_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.skew_norm_positive_certificate": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_apply": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexifyHom_apply": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_injective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_eq_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_add": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_sub": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_smul": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_star": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_conjTranspose": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_transpose": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_one": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_mul": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_posSemidef": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_posDef": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_inv": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_sqrt": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_abs": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_abs_I_smul": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexify_kronecker": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complex_jordan_columnVec": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.actual_jordan_inverse_equation": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.actual_jordan_inverse_cone": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.jordan_posDef": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.jordan_commutation": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.jordan_inverse_commutation": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.real_eigenmatrix_sign": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.jordan_inverse_top_sign": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.inverse_eigen_to_eigen": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.rayleigh_lower_of_slack": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.global_positive_minimizer": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.vec_realMatrixAction": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.vec_complexMatrixAction": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexMatrixAction_real": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexPairing_trace": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexPairing_real": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexPairing_I": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.trace_product_posSemidef_nonneg": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complexPairing_posSemidef_nonneg": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.hermitian_modulus_pairing_le": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.real_abs_vec_norm_sq": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.modulus_quadratic_improves": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.numerical_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.column_vectorization": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.skew_witness": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.positive_minimizer": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.sector_minima": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.canonical_result": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.dot_self_smul": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.rayleigh_smul": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.normalize_sector": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.unitSector_isCompact": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.unitSector_ne_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.sector_minimum_exists": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.symmetric_sector_nonempty": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.skew_sector_nonempty": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.both_sector_minima": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.commutation_dot": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.commutation_kronecker": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.sector_rayleigh_twice": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.rayleigh_of_eigenvector": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.sector_comparison_of_psd_minimizer": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.real_spectral_max": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.psd_slack_eigenvector": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.inverse_slack_lower": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.sylvester_posSemidef": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complex_jordan_injective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complex_jordan_preimage_hermitian": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complex_jordan_preimage_posSemidef": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP05.complex_jordan_solution_posSemidef": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Referee1.nonvacuous_positive_dimension": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Referee1.nonvacuous_original_dimension": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "reviewed_mathlib_source_sha256": {
+    "Mathlib/LinearAlgebra/Matrix/Vec.lean": "629d8691b6dd8fd3775f09c8cefa5dc4583902b7b538302bfac79d1bf9887f67",
+    "Mathlib/LinearAlgebra/Matrix/PosDef.lean": "09290b5923e167fcf959df64d00b039c7b99c4b236755728219bf5b5feaac24a",
+    "Mathlib/Analysis/Matrix/PosDef.lean": "d019fb2cae81293d8505e2a2543a6f5fe7c1819e4860454d00e15ef74528a43d",
+    "Mathlib/Analysis/Matrix/Order.lean": "eb786ba4435f1955c504da52de2beae76647d814922266c8aac8f082bbc3e2da",
+    "Mathlib/Analysis/SpecialFunctions/ContinuousFunctionalCalculus/Abs.lean": "660c178d7405446d3ec489aa0554c65bb104ce95d58ae5134beba961f37e6932",
+    "Mathlib/Analysis/SpecialFunctions/ContinuousFunctionalCalculus/Rpow/Basic.lean": "5c87ec96e95be9c21e52857acc4892f9a6b7e69d7358f8d6fbbef93b0d249ef7",
+    "Mathlib/Order/Bounds/Defs.lean": "e5a38e3cf5b12a87a53bbd64d4d458bacb2f707aa75e1b3dca1c33014aa23c2d"
+  },
+  "fresh_builds": {
+    "Challenge": {
+      "exit": 0,
+      "jobs": 2710,
+      "deliberate_placeholders": 6
+    },
+    "Solution": {
+      "exit": 0,
+      "jobs": 3738,
+      "proof_holes": 0
+    },
+    "AuditFull.lean": {
+      "exit": 0,
+      "kernel_assertions_and_axiom_closures": 89
+    }
+  },
+  "independent_exact_diagnostic_checks": 183,
+  "authoritative_Linux_or_Comparator_run_performed": false,
+  "limits": [
+    "Local fresh project source builds reuse pinned dependency .olean cache; no project .olean cache was reused.",
+    "Literal source signatures and independent elaboration checked locally; actual isolated Comparator and Linux operation remain pending.",
+    "Independent AI review; no external human review or official endorsement."
+  ]
+}
