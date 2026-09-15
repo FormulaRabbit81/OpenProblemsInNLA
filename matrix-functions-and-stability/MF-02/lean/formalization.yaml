@@ -1,0 +1,245 @@
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'MF-02: uniform cubic-composition overhead'
+  description: Full uniform asymptotic stage-count comparison for real sign approximation on [-1,-δ] union
+    [δ,1], with unrestricted real polynomial programs, shared registers, and all real 0 < δ < 1, including
+    both small multiplication budgets.
+  authors:
+  - George Stepaniants
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California Institute of Technology,
+      Pasadena, California, USA
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+repository:
+  role: substantive-development
+sources:
+- title: MF-02 — Multiplication overhead of cubic sign compositions
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/8f04b905eb2e0827b6b84f37d9d080ae1f05b202/matrix-functions-and-stability/MF-02/README.md
+  type: web-post
+  location: Complete retained canonical uniform asymptotic-order target
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: Permanent ID and full original target are preserved. The program is a formal polynomial identity
+    valid independently of matrix size, without a particular matrix's minimal-polynomial shortcut.
+- title: 'MF-02: A uniform constant-factor bound for cubic composition overhead'
+  authors:
+  - George Stepaniants
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/8f04b905eb2e0827b6b84f37d9d080ae1f05b202/matrix-functions-and-stability/MF-02/solution.md
+  type: manuscript
+  location: Sections 1–6, including Lemmas 1–3, both endpoint cases and the full theorem
+  relationship: formalizes
+  author_endorsement: participated
+  note: The source was supplied and formalization authorized by its author. This records participation,
+    not an independent mathematical endorsement. No new priority claim is made for uniform constant-factor
+    complexity.
+- title: A Stable Scaling of Newton-Schulz for Improving the Sign Function Computation of a Hermitian
+    Matrix
+  authors:
+  - J. Chen
+  - E. Chow
+  id: https://www.mcs.anl.gov/papers/P5059-0114.pdf
+  type: manuscript
+  location: Section 3, equations (3.3)–(3.6), Theorems 3.1–3.2
+  relationship: background
+  author_endorsement: not-contacted
+  note: Original optimized cubic and endpoint recurrence; all needed properties are proved internally.
+- title: Efficient Homomorphic Comparison Methods with Optimal Complexity
+  authors:
+  - J. H. Cheon
+  - D. Kim
+  - D. Kim
+  id: https://doi.org/10.1007/978-3-030-64834-3_8
+  type: article
+  location: Lemma 3, Theorem 3, Table 1 and Section 3.4
+  relationship: background
+  author_endorsement: not-contacted
+  note: Prior constant-factor optimality credit; no unproved literature theorem is assumed by the Lean
+    proof.
+related_formalizations:
+- id: https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof
+  relationship: other
+  note: Statement/proof separation, kernel trust and Comparator organization studied; no mathematical
+    theorem imported.
+- id: https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1
+  relationship: other
+  note: Independent Challenge/Solution organization studied; no mathematical theorem imported.
+- id: https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/Analysis/SpecialFunctions/Trigonometric/Chebyshev/Extremal.lean
+  relationship: builds-on
+  note: Reuses Yuval Filmus's formal exterior Chebyshev comparison at derivative order zero, retaining
+    library attribution and license.
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    tool_setup: Multiple problem agents. Independent source and numerical-statement reviews before proof
+      implementation. Source edits on macOS; Lean development checks on non-root Linux managed by the
+      coordinator. No local Lean or Lake builds.
+    prompting_notes: Preserve the complete free-linear-combination and shared-product-register model.
+      Optimize away all interval subdivisions using exact factorization, and reuse Mathlib's Chebyshev
+      theorem with an exact Joukowski recurrence. Use actual maxima, actual coefficient infima and a finite
+      attained stage minimum. LeanCert kernel trust is selected explicitly for all exports.
+  notes: AI-assisted implementation by /root/next_matrix_functions. Statement referees /root/next_elimination
+    and /root approved the frozen boundary before bodies. The author is not an independent final referee.
+    No external human peer review, official Tau Ceti endorsement, source-author endorsement beyond participation,
+    or novelty claim is asserted. Final proof referees and mechanical evidence must be recorded after
+    the actual final candidate passes.
+status:
+  scope: Complete proof source for all thirteen frozen targets passed actual non-root Linux compilation
+    and LeanCert kernel assertions in development run 35015144656 at bb3188268137f84e521763242b46251395ae2f4b.
+    The shared run failed on the independent IE-17 candidate; the MF-02 build and Challenge commands both
+    exited zero. Fresh standalone Comparator, default-kernel replay, rejection controls and final source-bound
+    referee addenda are pending. No canonical status promotion or completed-goal count is claimed.
+  main_results:
+  - declaration: NLA.MF02.uniform_error_is_maximum
+    file: NLA/MF02/Errors.lean
+    comparator_config: comparator.json
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF02.program_degree_bound
+    file: NLA/MF02/Model.lean
+    comparator_config: comparator.json
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF02.cubic_degree_and_cost
+    file: NLA/MF02/Model.lean
+    comparator_config: comparator.json
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF02.degree_error_lower_bound
+    file: NLA/MF02/Chebyshev.lean
+    comparator_config: comparator.json
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF02.optimized_cubic_interval
+    file: NLA/MF02/Cubic.lean
+    comparator_config: comparator.json
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF02.optimized_cubic_ratio
+    file: NLA/MF02/Cubic.lean
+    comparator_config: comparator.json
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF02.cubic_error_bounds
+    file: NLA/MF02/Bounds.lean
+    comparator_config: comparator.json
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF02.cubic_error_strictly_decreases
+    file: NLA/MF02/Bounds.lean
+    comparator_config: comparator.json
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF02.unrestricted_error_small_budgets
+    file: NLA/MF02/Bounds.lean
+    comparator_config: comparator.json
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF02.stage_minimum_attained
+    file: NLA/MF02/Minimum.lean
+    comparator_config: comparator.json
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF02.stage_minimum_small_budgets
+    file: NLA/MF02/Minimum.lean
+    comparator_config: comparator.json
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF02.stage_minimum_bounds
+    file: NLA/MF02/Minimum.lean
+    comparator_config: comparator.json
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF02.uniform_asymptotic_order
+    file: NLA/MF02/Minimum.lean
+    comparator_config: comparator.json
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+  - Classical.choice
+  - Quot.sound
+  - propext
+fidelity:
+  divergences: No target restriction. The formal proof reverses the affine interval map so that only the
+    positive exterior Chebyshev comparison is needed. It uses an arbitrary strict positive tolerance to
+    include zero actual error without a separate polynomial identity theorem. Derivative and hyperbolic-function
+    arguments are replaced by exact polynomial factors and recurrence identities. The coefficient infima
+    are never assumed attained. Neither exact optimal stage counts beyond m=0,1 nor an optimal leading
+    constant is claimed.
+review:
+  status: two independent mathematical proof-source approvals; final standalone mechanical and source-bound
+    acceptance pending
+  reviewers:
+  - 'OpenAI Codex agent /root/next_elimination: independent statement and proof-source referee'
+  - 'OpenAI Codex agent /root/next_inequalities: independent proof-source referee'
+  - 'OpenAI Codex agent /root: independent original statement referee and coordinator; implemented the
+    two final Nat.cast_one rewrites, so not a final proof referee'
+  notes: The numerical obligations, definitions and all thirteen Challenge signatures were frozen after
+    two independent approvals and actual Linux component statement typechecking. The original numerical
+    draft remains immutable as historical evidence. This metadata is a publication draft; final source
+    hashes, raw mechanical evidence, proof referees and operational review are required before any verified
+    status.
+alignment:
+  source_correspondence: SourceCorrespondence.md
+  numerical_boundary: NUMERICAL_TARGETS.md
+  frozen_statements: Challenge.lean
+  implementation_entry: Solution.lean
+  statement_freeze: STATEMENT-FREEZE.json
+acknowledgements: Chen and Chow for the optimized cubic; Cheon, Kim and Kim for prior constant-factor
+  complexity; the workshop problem's authors for the original target; Yuval Filmus and Mathlib contributors
+  for the formal Chebyshev, polynomial and order APIs; LeanCert and Comparator contributors for trust
+  and independent statement checking. Their mathematical and software credit is distinct from George Stepaniants's
+  proof-note and formalization authorship.
+verification:
+  whole_problem_verified: false
+  development_run: https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35015144656
+  development_commit: bb3188268137f84e521763242b46251395ae2f4b
+  development_scope: MF-02 component passed; shared job failed on IE-17
+  evidence: verification/development-2026-09-15/receipt.json
+  comparator_status: pending
+  note: Zero sorry counts describe the accepted solution graph. Challenge and its frozen historical copy
+    intentionally contain contract placeholders and are never imported by Solution.
