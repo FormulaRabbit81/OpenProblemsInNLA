@@ -3,11 +3,11 @@ version: v0.4
 project:
   name: 'FR-05: deterministic rank-two seed for phase-retrieval noninjectivity'
   description: >-
-    A checked deterministic checkpoint for the phase-retrieval construction:
+    A checked partial checkpoint for the phase-retrieval construction:
     exact all-signal measurement semantics, an explicit noninjective frame,
-    a scaled Gaussian-frame interface, and the source's final conditional
-    inverse-bound reduction. It does not formalize the source's probabilistic
-    O(d^-1) theorem.
+    a scaled Gaussian-frame interface, and conditional algebraic reductions
+    at the ends of Proposition 3.2 and Theorem 1.4. It does not formalize the
+    source's probabilistic O(d^-1) theorem.
   authors:
   - OpenAI Codex AI
   license: Apache-2.0
@@ -22,8 +22,9 @@ sources:
   author_endorsement: n/a
   note: >-
     The permanent problem number, canonical target, source credit, and
-    solution-claimed catalog status are unchanged. This project certifies only
-    a deterministic lemma, not the claimed resolution.
+    solution-claimed catalog status are unchanged. This project certifies an
+    explicit deterministic witness and conditional algebraic reductions, not
+    the claimed resolution.
 - title: "Resolution of Vinzant's Conjecture on Phase Retrieval Injectivity"
   authors:
   - Zhangsong Li
@@ -45,20 +46,21 @@ automation:
       matching dependency cache; no isolated Comparator verification was run.
     prompting_notes: >-
       Preserve the original all-pairs entrywise-modulus predicate and state
-      only completed deterministic results as exports. Do not add axioms or
-      represent analytic source steps by placeholders in Solution.
+      only completed results as exports. Do not add axioms or represent
+      analytic source steps by placeholders in Solution.
   notes: >-
     Implemented at the user's request. No human author endorsement, external
     review, priority claim, measured cost, or full theorem verification is
     inferred from this checkpoint.
 status:
   scope: >-
-    Incomplete deterministic checkpoint, locally type-checked on arm64 macOS.
-    The exported result supplies a simple explicit noninjective 4d-5 row
-    frame, a real-Gaussian representation of a complex frame law, and a
-    conditional final reduction. It neither proves injectivity-event
-    measurability, an open neighbourhood of noninjectivity, Haar/Stiefel
-    estimates, nor p_d <= C/d without the analytic comparison hypothesis.
+    Incomplete checkpoint, locally type-checked on arm64 macOS. The exports
+    supply a simple explicit noninjective 4d-5 row frame, a real-Gaussian
+    representation of a complex frame law, and conditional final reductions
+    for Proposition 3.2 and Theorem 1.4. They neither prove
+    injectivity-event measurability, an open neighbourhood of noninjectivity,
+    source likelihoods, Haar/Stiefel estimates, nor p_d <= C/d without the
+    analytic comparison hypotheses.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms:
@@ -72,6 +74,12 @@ status:
     axioms: [propext, Classical.choice, Quot.sound]
     comparator_config: comparator.json
     literature_dependencies: []
+  - declaration: NLA.FR05.likelihood_l2_bound_of_second_moment_estimates
+    file: Solution.lean
+    sorry_count: 0
+    axioms: [propext, Classical.choice, Quot.sound]
+    comparator_config: comparator.json
+    literature_dependencies: []
 verification_plan:
   permitted_axioms:
   - propext
@@ -80,18 +88,20 @@ verification_plan:
   definition_names: []
   note: >-
     The exact signatures are duplicated in Challenge solely for future
-    Comparator checking. Challenge contains two isolated deliberate
+    Comparator checking. Challenge contains three isolated deliberate
     placeholders and is not imported by Solution. A fresh non-root Linux
     Comparator run, statement review, source-to-definition audit, and proof
     review remain outstanding.
 fidelity:
   divergences: >-
     The source's target is a probability estimate p_d <= C/d. This project
-    exports a deterministic witness, a related Q_0 identity, and a conditional
-    final reduction, but not the analytic comparison which would discharge
-    that condition. The all-ones frame is not the source's random or locally
-    regular frame, so the export remains a checkpoint rather than the
-    manuscript's theorem or its finite-dimensional kernel criterion.
+    exports a deterministic witness, a related Q_0 identity, and conditional
+    algebraic reductions. Its Proposition 3.2 result assumes the two
+    second-moment estimates rather than deriving them from the source
+    likelihoods, cone kernels, or overlap law. The all-ones frame is not the
+    source's random or locally regular frame, so the export remains a
+    checkpoint rather than the manuscript's theorem or its
+    finite-dimensional kernel criterion.
 review:
   status: unchecked
   notes: >-
@@ -110,6 +120,7 @@ alignment:
   - NLA.FR05.explicit_noninjective_frame
   - NLA.FR05.inverse_bound_of_source_comparison
   - NLA.FR05.phaseRetrieval_injective_probability_le_inv_of_source_comparison
+  - NLA.FR05.likelihood_l2_bound_of_second_moment_estimates
 acknowledgements: >-
   The Lean and Mathlib contributors provide the proof assistant and library.
   Zhangsong Li is credited as the manuscript author, separately from this

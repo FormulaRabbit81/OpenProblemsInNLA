@@ -29,8 +29,8 @@ row-modulus measurements and the relation `y = exp(θ i) • x`. The explicit
 frame is intentionally simple (all entries one); its witnesses are the first
 two standard basis vectors. This establishes the deterministic exact-ambiguity
 bridge used by the source, but it does **not** assert an open neighbourhood,
-positive Gaussian probability, a planted law, an `L²` likelihood comparison,
-or the claimed `C/d` bound.
+positive Gaussian probability, a planted law, a source-specific `L²`
+likelihood comparison, or the claimed `C/d` bound.
 
 `NLA.FR05.RankTwoSeed` additionally checks the finite identities
 
@@ -41,6 +41,30 @@ Q₀ = diag(1,-1,0,...),   Q₀ = Q₀ᴴ,   1ᴴ Q₀ 1 = 0.
 The last equality is the source's exact seed cancellation for a constant row.
 It is not a proof that the flat frame has the locally regular, rank-two kernel
 structure or probability behavior required by the manuscript.
+
+## Checked conditional L² step of Proposition 3.2
+
+`LikelihoodAlgebra.lean` proves the source's final algebraic transition in
+an explicit family-level form. For every $M \ge D$, assume the three product
+integrands are integrable and
+
+```math
+\left|\int L_g^2\,d\mu_M-\int L_r^2\,d\mu_M\right| \le C/M,
+\qquad
+\left|\int L_gL_r\,d\mu_M-\int L_r^2\,d\mu_M\right| \le C/M.
+```
+
+It then proves
+
+```math
+\int (L_g-L_r)^2\,d\mu_M \le 3C/M.
+```
+
+This is the exact expansion-and-triangle-inequality end of Proposition 3.2,
+after the source has established its pairwise moment estimates. It does not
+define the planted/reference likelihoods, prove equation (3.17), construct
+the Haar two-frame overlap law, or establish Lemmas 3.3--3.5 and the
+local/tail bounds. It is therefore not a proof of source Proposition 3.2.
 
 ## Kernel-checked quantitative assembly
 

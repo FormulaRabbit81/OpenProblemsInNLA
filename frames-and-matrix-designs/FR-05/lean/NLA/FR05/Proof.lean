@@ -6,6 +6,7 @@ represented by axioms or unproved declarations.
 import NLA.FR05.Obstruction
 import NLA.FR05.RankTwoSeed
 import NLA.FR05.MainReduction
+import NLA.FR05.LikelihoodAlgebra
 
 set_option autoImplicit false
 noncomputable section

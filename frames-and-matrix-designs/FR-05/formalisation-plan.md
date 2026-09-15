@@ -13,9 +13,10 @@ where $`A_d\in\mathbb C^{(4d-5)\times d}`$ has independent standard complex Gaus
 
 The exact PDF has been archived with its SHA-256 and retrieval date in the Lean
 project's source freeze. The deterministic checkpoint, a concrete
-complex-Gaussian frame interface, and the source's final conditional numerical
-reduction are now present; they remain deliberately below the full target. The
-full-probability signature is recorded, unproved, in `Challenge.lean`. Two
+complex-Gaussian frame interface, the source's final conditional numerical
+reduction, and the exact algebraic last step of Proposition 3.2 are now
+present; they remain deliberately below the full target. The full-probability
+signature is recorded, unproved, in `Challenge.lean`. Two
 independent statement reviews must still approve it before any analytic module
 is promoted to an advertised result. The public PDF is a live web source, so
 its URL alone is not a stable statement boundary.
@@ -33,9 +34,11 @@ These choices reduce proof burden while preserving the target.
 
 The current `frames-and-matrix-designs/FR-05/lean/` project contains the
 source-frozen checkpoint and follows the repository's standard layout. It has
-an explicit scaled-Gaussian frame law and proves the last algebraic implication
-from the source's eventual comparison inequality to the full target; it does
-not prove that analytic comparison. The unproved full-target signature is:
+an explicit scaled-Gaussian frame law, proves the last algebraic implication
+from the source's eventual comparison inequality to the full target, and
+proves the exact second-moment-to-L² algebra used at the end of Proposition
+3.2. It does not define the source likelihoods or prove their analytic
+comparison estimates. The unproved full-target signature is:
 
 ```lean
 theorem phaseRetrieval_injective_probability_le_inv
@@ -62,16 +65,18 @@ FR-05 limit. `Challenge.lean` exposes the exact target and remains outside the
 | `PlantedSuccess.lean` | norm event, derivative perturbation, contraction, and `P_g(E_d) ≤ C d⁻²` | Proposition 3.1 |
 | `ConeKernel.lean` | cone parametrisation and the Gaussian correlation estimate | Lemma 3.3 |
 | `Overlap.lean` | Haar two-frame overlap density and kernel identities/local expansion | Lemmas 3.4–3.5, (3.14)–(3.17) |
-| `LikelihoodComparison.lean` | local/tail integrals and `E₀[(L_g-L_r)^2] ≤ C/d` | Proposition 3.2 |
+| `LikelihoodAlgebra.lean` | exact expansion from the two pairwise second-moment estimates to an eventual L² bound | final algebra in Proposition 3.2 |
+| `LikelihoodComparison.lean` | source-specific likelihoods, (3.17), local/tail integrals, and the pairwise second-moment estimates | Proposition 3.2 |
 | `Assembly.lean` | the final real-algebra inequality and finite-prefix absorption | (3.3)–(3.6) |
 | `MainReduction.lean` | discharge of the final theorem from one explicit eventual comparison hypothesis | Theorem 1.4 |
 | `Main.lean` | covariance-matched reference law, invariance, and derivation of the eventual comparison from the planted and likelihood estimates | (3.3)–(3.6), Theorem 1.4 |
 
 The currently implemented `Definitions`, `Obstruction`, `RankTwoSeed`,
-`Probability`, `Assembly`, and `MainReduction` files form a useful
-kernel-checked milestone: they formalise the exact ambiguity mechanism, the
-Gaussian-law boundary, and the final numerical implication. They must still be
-labelled as an incomplete component, not as a verification of FR-05.
+`Probability`, `Assembly`, `MainReduction`, and `LikelihoodAlgebra`
+files form a useful kernel-checked milestone: they formalise the exact
+ambiguity mechanism, the Gaussian-law boundary, the final numerical
+implication, and the last algebraic transition in Proposition 3.2. They must
+still be labelled as an incomplete component, not as a verification of FR-05.
 
 ## Proof dependencies
 
@@ -82,7 +87,7 @@ original injectivity predicate
           │                                             │
 rank-two chart + quantitative contraction ─ small ball ├─ planted failure: P_g(E_d) = O(d⁻²)
                                                         │
-cone correlation ─ Haar-overlap integral ─ L² bound ───┤
+cone correlation ─ Haar-overlap integral ─ pairwise second moments ─ checked L² algebra ───┤
                                                         │
 Gaussian reference invariance + Cauchy–Schwarz ────────┴─ p_d ≤ C/d ─ limit 0
 ```
@@ -93,7 +98,7 @@ Gaussian reference invariance + Cauchy–Schwarz ────────┴─ 
 2. **Quantitative inverse theorem.** Package the contraction argument as a reusable finite-dimensional lemma: if `DF 0` is invertible, its inverse norm, the Lipschitz constant of `DF`, and `‖F 0‖` meet the displayed inequalities, then `F` has a zero in the prescribed ball. This is preferable to importing a qualitative implicit-function theorem, because Li's later probability bounds need its radii.
 3. **Planted-law probability.** Formalise the elementary phase and one-dimensional Gaussian small-ball bounds first, then the row-distance union bound. The claimed exponents (`κ=d⁻¹²`, failure `O(d⁻¹⁷⁄⁶)`, and `ε=d⁻⁵⁰`) leave a large safety margin for the contraction inequalities.
 4. **Measure construction.** Build the product complex Gaussian as two real Gaussians of variance `1/2`; prove the polar/radial density identities once. Define the planted and reference measures by Radon–Nikodym densities and prove normalization, centering, circularity, covariance and the invertible right-multiplication representation.
-5. **Correlation comparison.** Prove the cone estimate with the fixed rational parameter `η = 1/100`; use exact rational arithmetic for the numerical margin `η(1-η)/10 - 4η² > 1/2000`. Then formalise the `2 × 2` overlap density and split the eight-real-dimensional integral into the fixed local ball and exponentially small tail. The common quadratic term in the three kernels is essential for the `O(d⁻¹)` result.
+5. **Correlation comparison.** Prove the cone estimate with the fixed rational parameter `η = 1/100`; use exact rational arithmetic for the numerical margin `η(1-η)/10 - 4η² > 1/2000`. Then formalise the `2 × 2` overlap density and split the eight-real-dimensional integral into the fixed local ball and exponentially small tail. This must establish the two pairwise second-moment bounds consumed by `LikelihoodAlgebra.lean`; the common quadratic term in the three kernels is essential for the `O(d⁻¹)` result.
 6. **Assembly and finite cases.** Cauchy–Schwarz gives `p_d ≤ C d⁻² + sqrt(C p_d/d)`. Complete the square (or use Young's inequality) to obtain `p_d ≤ C'/d` beyond a threshold, then enlarge `C'` over the finite prefix using `0 ≤ p_d ≤ 1`.
 
 ## Main risks to settle before coding the analytic half
