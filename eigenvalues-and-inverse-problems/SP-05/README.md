@@ -3,10 +3,18 @@
 **Topic:** Structured eigenvalue problems and semidefinite optimization.  
 **Difficulty:** challenging  
 **Importance:** interesting to the community  
-**Status:** Solved  
-**Last checked:** 2026-09-11  
+**Status:** Lean verified  
+**Last checked:** 2026-09-15  
 
 **Rating rationale:** Challenging reflects a structured minimum-eigenvalue comparison for arbitrary positive definite pairs; community impact connects Kronecker eigenproblems and semidefinite optimization.
+
+<!-- lean-verification -->
+## Lean verification — 2026-09-15
+
+The complete original inequality is **Lean verified** for every dimension $`n\ge2`$ and every real symmetric positive definite pair $`A,B`$. Both Rayleigh minima are attained over their full nonzero symmetric and skew sectors. The stronger source theorem supplies a real nonzero positive-semidefinite eigenmatrix at the global minimum of $`A\otimes B+B\otimes A`$ for every $`n\ge1`$. All six independently reviewed targets passed [fresh Linux Comparator and default-kernel verification](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35030259545).
+
+**Formalization:** George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology, with substantial OpenAI Codex assistance. **Original mathematical proof:** Matthew J. Colbrook, as credited below. The original conjecture remains credited to N. Kalantarova and L. Tunçel. [Lean project and reproduction](lean/README.md) · [formalization metadata](lean/formalization.yaml) · [two source and two operational reviews](lean/reviews/).
+<!-- /lean-verification -->
 
 ## Resolution — 2026-09-11
 

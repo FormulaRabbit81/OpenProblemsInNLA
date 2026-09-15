@@ -34,7 +34,7 @@ product},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}SP-05}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-11}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Verification check: 2026-09-15}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -51,7 +51,7 @@ minimizer for a positive definite Jordan--Kronecker product\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to the community\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
@@ -62,6 +62,31 @@ optimization.
 minimum-eigenvalue comparison for arbitrary positive definite pairs;
 community impact connects Kronecker eigenproblems and semidefinite
 optimization.
+
+\subsection{Lean verification ---
+2026-09-15}\label{lean-verification-2026-09-15}
+
+The complete original inequality is \textbf{Lean verified} for every
+dimension \(n\ge2\) and every real symmetric positive definite pair
+\(A,B\). Both Rayleigh minima are attained over their full nonzero
+symmetric and skew sectors. The stronger source theorem supplies a real
+nonzero positive-semidefinite eigenmatrix at the global minimum of
+\(A\otimes B+B\otimes A\) for every \(n\ge1\). All six independently
+reviewed targets passed
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35030259545}{fresh
+Linux Comparator and default-kernel verification}.
+
+\textbf{Formalization:} George Stepaniants, Department of Computing and
+Mathematical Sciences, California Institute of Technology, with
+substantial OpenAI Codex assistance. \textbf{Original mathematical
+proof:} Matthew J. Colbrook, as credited below. The original conjecture
+remains credited to N. Kalantarova and L. Tunçel.
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/eigenvalues-and-inverse-problems/SP-05/lean/README.md}{Lean
+project and reproduction} ·
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/eigenvalues-and-inverse-problems/SP-05/lean/formalization.yaml}{formalization
+metadata} ·
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/eigenvalues-and-inverse-problems/SP-05/lean/reviews}{two
+source and two operational reviews}.
 
 \subsection{Resolution --- 2026-09-11}\label{resolution-2026-09-11}
 
@@ -94,24 +119,26 @@ submission history and diagnostic record} preserve the initial solution
 claim. The ratings above are historical, and the earlier literature
 checks below are retained.
 
+\newpage
+
 \subsection{Problem statement}\label{problem-statement}
 
 Let \(n\ge 2\) and let \(A,B\in\mathbb R^{n\times n}\) be symmetric
 positive definite. Let \(T\in\mathbb R^{n^2\times n^2}\) be the
 commutation matrix defined by
-\(T\operatorname{vec}(X)=\operatorname{vec}(X^T)\), where
-\(\operatorname{vec}\) stacks columns. Is it always true that
+\(T\mathop{\mathrm{vec}}\nolimits(X)=\mathop{\mathrm{vec}}\nolimits(X^T)\),
+where \(\mathop{\mathrm{vec}}\nolimits\) stacks columns. Is it always
+true that
 
-\[
-\min_{\substack{u\in\mathbb R^{n^2}\setminus\{0\}\\Tu=u}}
+\[\min_{\substack{u\in\mathbb R^{n^2}\setminus\{0\}\\Tu=u}}
 \frac{u^T(A\otimes B)u}{u^Tu}
 \;\le\;
 \min_{\substack{w\in\mathbb R^{n^2}\setminus\{0\}\\Tw=-w}}
-\frac{w^T(A\otimes B)w}{w^Tw}?
-\]
+\frac{w^T(A\otimes B)w}{w^Tw}?\]
 
 Equivalently, must the smallest eigenvalue of \(A\otimes B+B\otimes A\)
-have an eigenvector \(\operatorname{vec}(X)\) with \(X=X^T\ne0\)?
+have an eigenvector \(\mathop{\mathrm{vec}}\nolimits(X)\) with
+\(X=X^T\ne0\)?
 
 \subsection{Why it matters}\label{why-it-matters}
 

@@ -1,19 +1,18 @@
 # SP-05: a PSD minimizer for the positive definite Jordan–Kronecker product
 
-**Stage: complete proof candidate; final verification pending.** The full local
-`Solution` build passes for all six exports, with explicit kernel-trust assertions
-and only `propext`, `Classical.choice`, and `Quot.sound` in their transitive axiom
-closures. Both independent exact-byte statement reviews approved before proof
-implementation, at boundary commit `04d1de395494800390405f3df1645316fe7943c2`.
-Final independent source reviews, isolated Linux Comparator/default-kernel checks,
-and operational reviews are pending. The canonical problem remains **Solved**.
+**Verification status: Lean verified.** All six complete-target declarations
+passed fresh isolated Linux Comparator, default-kernel replay and permitted-axiom
+checks. Both independent complete-source reviews and both operational audits passed.
+The ten pre-proof inputs remain unchanged from the independent statement approvals
+at boundary commit `04d1de395494800390405f3df1645316fe7943c2`.
 
 **Formalization:** George Stepaniants, Department of Computing and Mathematical
 Sciences, California Institute of Technology, with substantial OpenAI Codex
 assistance. **Original mathematical proof:** Matthew J. Colbrook, Department of
 Applied Mathematics and Theoretical Physics, University of Cambridge.
 The complete [canonical statement](../README.md) and [original proof](../solution.md)
-remain unchanged. The original conjecture remains credited to N. Kalantarova
+are preserved in full. The canonical page adds verification information and updates
+status/date. The original conjecture remains credited to N. Kalantarova
 and L. Tunçel. No external human review or author endorsement is claimed.
 
 ## Complete mathematical scope
@@ -43,7 +42,7 @@ The [reviewed dossier](NUMERICAL_TARGETS.md) records the complete statement,
 source hashes and mathematical obligations. The frozen
 [Comparator configuration](comparator.json) lists all six results and allows
 no replaceable definition holes. [formalization.yaml](formalization.yaml)
-records the current proof scope and pending verification gates.
+records complete verification, attribution, all six exports and reviewed evidence.
 
 ## Proof structure and computation
 
@@ -117,26 +116,58 @@ The optional exact Python diagnostics check conventions on a noncommuting 2×2
 example and verify preserved source hashes. They are not a finite-example proof
 of this universal result.
 
-## Independent review and remaining gates
+## Independent review
 
 The [statement freeze](reviews/statement-freeze.json) retains all ten approved
 input hashes and both sealed statement reports:
 [referee 1](reviews/statement-referee-1.md) and
-[referee 2](reviews/statement-referee-2.md).
-Those inputs remain unchanged after implementation. The two referees contributed
-no proof code. Their statement approvals are distinct from the pending final
-source and operational reviews.
+[referee 2](reviews/statement-referee-2.md). Those inputs remain unchanged.
+The two referees contributed no proof code. Both complete-source reviews also
+approved: [referee 1](reviews/final-referee-1.md) and
+[referee 2](reviews/final-referee-2.md). A separately reviewed
+[packaging supplement](reviews/packaging-referee-2.md) records the byte-identical
+inclusion of four contributor logs under filenames tracked by Git.
 
 The repository [review protocol](../../../docs/lean/REVIEW.md) applies Tau Ceti
-referee standards through independent AI-agent reviews. Actual pinned Lean4
-Comparator, default-kernel replay, real sandbox probes and rejection controls
-must still run through the [Linux harness](../../../tools/lean/HARNESS.md) for
-this candidate. A local macOS build does not complete those gates. Status
-promotion and publication must wait for complete-target correspondence,
-reproducible isolated verification and all required approvals.
+referee standards through independent AI-agent reviews. The pinned
+[Linux harness](../../../tools/lean/HARNESS.md) ran actual Lean4 Comparator,
+default-kernel replay, real sandbox probes and all required rejection controls.
 
 The pinned [Forsythe](https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof)
 and [Schiffer](https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1)
 projects supply structure/API references. No mathematical implementation was
 copied from them. No official Tau Ceti endorsement, external human review,
 novelty certification or unmeasured cost claim is made.
+
+
+## Authoritative Linux verification
+
+[Run 35030259545, attempt 1](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35030259545/attempts/1) verified immutable proof revision
+[`9c8369dc`](https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/9c8369dcea69f9f243a0502fb7e89beaa8f49fad/eigenvalues-and-inverse-problems/SP-05/lean)
+on Ubuntu 24.04. All six Challenge/Solution targets passed actual Comparator
+correspondence, transitive permitted-axiom checks and default-kernel replay.
+The target verification also passed real sandbox probes, three raw-kernel controls,
+five Comparator regressions and separate sorry/native rejection controls.
+
+The [permanent archive](verification/linux-2026-09-15/) retains the original ZIP,
+all thirteen extracted members, GitHub provenance and the complete source receipt.
+Artifact `10421646579` has SHA-256
+`bc5c29c91db0be6249c80dbfd3ca0ce2177b58c805b03935d33064bcdb25cdb1`.
+
+```bash
+cd verification/linux-2026-09-15
+shasum -a 256 -c SHA256SUMS
+```
+
+Both independent operational audits approved: [referee 1](reviews/linux-referee-1.md)
+and [referee 2](reviews/linux-referee-2.md). They checked all
+92 candidate input hashes against the immutable verified Git revision
+and approved source. The standalone checker-controls job was skipped because
+shared tools were unchanged; all required controls ran within the actual SP-05
+verify job.
+
+Publication changes update status, documentation, evidence and rendered artifacts.
+Mathematical statements, proofs and dependency inputs remain those verified at
+the immutable proof revision. Historical pending-stage reports are closed by
+the later approvals. No second independent Linux execution, external human review
+or official Tau Ceti endorsement is claimed.
