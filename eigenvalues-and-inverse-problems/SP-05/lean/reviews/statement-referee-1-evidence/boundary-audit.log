@@ -1,0 +1,116 @@
+@[reducible] def NLA.SP05.columnVec : {n : ℕ} → Mat n → Vec n :=
+fun {n} X => Matrix.vec X
+def NLA.SP05.commutationMatrix : (n : ℕ) → Operator n :=
+fun n i j => if i = j.swap then 1 else 0
+def NLA.SP05.frobeniusSq : {n : ℕ} → Mat n → ℝ :=
+fun {n} X => ∑ i, ∑ j, X i j ^ 2
+def NLA.SP05.rayleigh : {n : ℕ} → Operator n → Vec n → ℝ :=
+fun {n} K v => v ⬝ᵥ K *ᵥ v / v ⬝ᵥ v
+def NLA.SP05.jordanMatrix : {n : ℕ} → Mat n → Mat n → Operator n :=
+fun {n} A B => Matrix.kronecker A B + Matrix.kronecker B A
+def NLA.SP05.sectorValues : {n : ℕ} → Mat n → Mat n → ℝ → Set ℝ :=
+fun {n} A B ε => {r | ∃ v, v ≠ 0 ∧ commutationMatrix n *ᵥ v = ε • v ∧ r = rayleigh (Matrix.kronecker A B) v}
+def NLA.SP05.skewExample : (n : ℕ) → Mat n :=
+fun n i j => if ↑i = 0 ∧ ↑j = 1 then 1 else if ↑i = 1 ∧ ↑j = 0 then -1 else 0
+def Matrix.PosDef.{u_2, u_3} : {n : Type u_2} →
+  {R : Type u_3} → [inst : Ring R] → [PartialOrder R] → [StarRing R] → Matrix n n R → Prop :=
+fun {n} {R} [Ring R] [PartialOrder R] [StarRing R] M =>
+  M.IsHermitian ∧ ∀ ⦃x : n →₀ R⦄, x ≠ 0 → 0 < x.sum fun i xi => x.sum fun j xj => star xi * M i j * xj
+def Matrix.PosSemidef.{u_2, u_3} : {n : Type u_2} →
+  {R : Type u_3} → [inst : Ring R] → [PartialOrder R] → [StarRing R] → Matrix n n R → Prop :=
+fun {n} {R} [Ring R] [PartialOrder R] [StarRing R] M =>
+  M.IsHermitian ∧ ∀ (x : n →₀ R), 0 ≤ x.sum fun i xi => x.sum fun j xj => star xi * M i j * xj
+def IsLeast.{u_1} : {α : Type u_1} → [LE α] → Set α → α → Prop :=
+fun {α} [LE α] s a => a ∈ s ∧ a ∈ lowerBounds s
+NLA.SP05.numerical_bound : 0 < 2
+NLA.SP05.column_vectorization {n : ℕ} (A B X : Mat n) :
+  Matrix.kronecker A B *ᵥ columnVec X = columnVec (B * X * Aᵀ) ∧
+    commutationMatrix n *ᵥ columnVec X = columnVec Xᵀ ∧ columnVec X ⬝ᵥ columnVec X = frobeniusSq X
+NLA.SP05.skew_witness (n : ℕ) (hn : 2 ≤ n) :
+  (skewExample n)ᵀ = -skewExample n ∧ frobeniusSq (skewExample n) = 2 ∧ skewExample n ≠ 0
+NLA.SP05.positive_minimizer (n : ℕ) (hn : 1 ≤ n) (A B : Mat n) (hA : Matrix.PosDef A) (hB : Matrix.PosDef B) :
+  ∃ μ X,
+    0 < μ ∧
+      Matrix.PosSemidef X ∧
+        X ≠ 0 ∧
+          jordanMatrix A B *ᵥ columnVec X = μ • columnVec X ∧ ∀ (v : Vec n), v ≠ 0 → μ ≤ rayleigh (jordanMatrix A B) v
+NLA.SP05.sector_minima (n : ℕ) (hn : 2 ≤ n) (A B : Mat n) (hA : Matrix.PosDef A) (hB : Matrix.PosDef B) :
+  ∃ a b, IsLeast (sectorValues A B 1) a ∧ IsLeast (sectorValues A B (-1)) b
+NLA.SP05.canonical_result (n : ℕ) (hn : 2 ≤ n) (A B : Mat n) (hA : Matrix.PosDef A) (hB : Matrix.PosDef B) :
+  ∃ a b, IsLeast (sectorValues A B 1) a ∧ IsLeast (sectorValues A B (-1)) b ∧ a ≤ b
+Matrix.vec_bijective.{u_1, u_2, u_3} {m : Type u_3} {n : Type u_2} {R : Type u_1} : Function.Bijective Matrix.vec
+Matrix.vec_eq_zero_iff.{u_1, u_2, u_3} {m : Type u_2} {n : Type u_3} {R : Type u_1} [Zero R] {A : Matrix m n R} :
+  A.vec = 0 ↔ A = 0
+Matrix.kronecker_mulVec_vec.{u_1, u_2, u_3, u_4, u_5} {l : Type u_1} {m : Type u_2} {n : Type u_4} {p : Type u_5}
+  {R : Type u_3} [NonUnitalCommSemiring R] [Fintype m] [Fintype n] (A : Matrix l m R) (X : Matrix m n R)
+  (B : Matrix p n R) : Matrix.kroneckerMap (fun x1 x2 => x1 * x2) B A *ᵥ X.vec = (A * X * Bᵀ).vec
+Matrix.star_vec_dotProduct_vec.{u_1, u_2, u_3} {m : Type u_2} {n : Type u_3} {R : Type u_1} [AddCommMonoid R] [Mul R]
+  [Star R] [Fintype m] [Fintype n] (A B : Matrix m n R) : star A.vec ⬝ᵥ B.vec = (Aᴴ * B).trace
+Matrix.PosDef.kronecker.{u_1, u_2, u_3} {𝕜 : Type u_1} {n : Type u_2} [RCLike 𝕜] [Finite n] {m : Type u_3} [Finite m]
+  {x : Matrix n n 𝕜} {y : Matrix m m 𝕜} (hx : x.PosDef) (hy : y.PosDef) :
+  (Matrix.kroneckerMap (fun x1 x2 => x1 * x2) x y).PosDef
+Matrix.PosDef.inv.{u_2, u_5} {n : Type u_2} [Fintype n] {K : Type u_5} [Field K] [PartialOrder K] [StarRing K]
+  [DecidableEq n] {M : Matrix n n K} (hM : M.PosDef) : M⁻¹.PosDef
+Matrix.PosDef.isUnit.{u_2, u_5} {n : Type u_2} [Fintype n] {K : Type u_5} [Field K] [PartialOrder K] [StarRing K]
+  [DecidableEq n] {M : Matrix n n K} (hM : M.PosDef) : IsUnit M
+Matrix.PosDef.re_dotProduct_pos.{u_2, u_3} {n : Type u_2} {𝕜 : Type u_3} [Fintype n] [RCLike 𝕜] {A : Matrix n n 𝕜}
+  (hA : A.PosDef) {x : n → 𝕜} (hx : x ≠ 0) : 0 < RCLike.re (star x ⬝ᵥ A *ᵥ x)
+Matrix.PosSemidef.re_dotProduct_nonneg.{u_2, u_3} {n : Type u_2} {𝕜 : Type u_3} [Fintype n] [RCLike 𝕜]
+  {A : Matrix n n 𝕜} (hA : A.PosSemidef) (x : n → 𝕜) : 0 ≤ RCLike.re (star x ⬝ᵥ A *ᵥ x)
+Matrix.IsHermitian.posSemidef_iff_eigenvalues_nonneg.{u_2, u_3} {n : Type u_2} {𝕜 : Type u_3} [Fintype n] [RCLike 𝕜]
+  {A : Matrix n n 𝕜} [DecidableEq n] (hA : A.IsHermitian) : A.PosSemidef ↔ 0 ≤ hA.eigenvalues
+Matrix.IsHermitian.mulVec_eigenvectorBasis.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {n : Type u_2} [Fintype n]
+  {A : Matrix n n 𝕜} [DecidableEq n] (hA : A.IsHermitian) (j : n) :
+  A *ᵥ (hA.eigenvectorBasis j).ofLp = hA.eigenvalues j • (hA.eigenvectorBasis j).ofLp
+Matrix.IsHermitian.spectral_theorem.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {n : Type u_2} [Fintype n] {A : Matrix n n 𝕜}
+  [DecidableEq n] (hA : A.IsHermitian) :
+  A =
+    ((Unitary.conjStarAlgAut 𝕜 (Matrix n n 𝕜)) hA.eigenvectorUnitary) (Matrix.diagonal (RCLike.ofReal ∘ hA.eigenvalues))
+Matrix.PosSemidef.conjTranspose_mul_mul_same.{u_1, u_2, u_3} {m : Type u_1} {n : Type u_2} {R : Type u_3} [Ring R]
+  [PartialOrder R] [StarRing R] [Fintype n] [Finite m] {A : Matrix n n R} (hA : A.PosSemidef) (B : Matrix n m R) :
+  (Bᴴ * A * B).PosSemidef
+Matrix.PosSemidef.trace_nonneg.{u_2, u_3} {n : Type u_2} {R : Type u_3} [Ring R] [PartialOrder R] [StarRing R]
+  [Fintype n] [AddLeftMono R] {A : Matrix n n R} (hA : A.PosSemidef) : 0 ≤ A.trace
+CFC.sqrt_unique.{u_1} {A : Type u_1} [PartialOrder A] [NonUnitalRing A] [TopologicalSpace A] [StarRing A] [Module ℝ A]
+  [SMulCommClass ℝ A A] [IsScalarTower ℝ A A] [StarOrderedRing A]
+  [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] [NonnegSpectrumClass ℝ A] [IsSemitopologicalRing A]
+  [T2Space A] {a b : A} (h : b * b = a) (hb : 0 ≤ b := by cfc_tac) : CFC.sqrt a = b
+CFC.sqrt_mul_sqrt_self.{u_1} {A : Type u_1} [PartialOrder A] [NonUnitalRing A] [TopologicalSpace A] [StarRing A]
+  [Module ℝ A] [SMulCommClass ℝ A A] [IsScalarTower ℝ A A] [StarOrderedRing A]
+  [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] [NonnegSpectrumClass ℝ A] [IsSemitopologicalRing A]
+  [T2Space A] (a : A) (ha : 0 ≤ a := by cfc_tac) : CFC.sqrt a * CFC.sqrt a = a
+CFC.abs_sq.{u_2} {A : Type u_2} [Ring A] [TopologicalSpace A] [StarRing A] [PartialOrder A] [StarOrderedRing A]
+  [Algebra ℝ A] [NonnegSpectrumClass ℝ A] [IsTopologicalRing A] [T2Space A]
+  [ContinuousFunctionalCalculus ℝ A IsSelfAdjoint] (a : A) : CFC.abs a ^ 2 = star a * a
+CFC.posPart_sub_negPart.{u_1} {A : Type u_1} [NonUnitalRing A] [Module ℝ A] [SMulCommClass ℝ A A] [IsScalarTower ℝ A A]
+  [StarRing A] [TopologicalSpace A] [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] (a : A)
+  (ha : IsSelfAdjoint a := by cfc_tac) : a⁺ - a⁻ = a
+CFC.posPart_mul_negPart.{u_1} {A : Type u_1} [NonUnitalRing A] [Module ℝ A] [SMulCommClass ℝ A A] [IsScalarTower ℝ A A]
+  [StarRing A] [TopologicalSpace A] [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] (a : A) : a⁺ * a⁻ = 0
+CFC.posPart_add_negPart.{u_2} {A : Type u_2} [NonUnitalRing A] [StarRing A] [TopologicalSpace A] [Module ℝ A]
+  [SMulCommClass ℝ A A] [IsScalarTower ℝ A A] [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] [PartialOrder A]
+  [StarOrderedRing A] [NonnegSpectrumClass ℝ A] [IsTopologicalRing A] [T2Space A] (a : A)
+  (ha : IsSelfAdjoint a := by cfc_tac) : a⁺ + a⁻ = CFC.abs a
+IsSelfAdjoint.hasEigenvector_of_isMaxOn.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {E : Type u_2} [NormedAddCommGroup E]
+  [InnerProductSpace 𝕜 E] [CompleteSpace E] {T : E →L[𝕜] E} (hT : IsSelfAdjoint T) {x₀ : E} (hx₀ : x₀ ≠ 0)
+  (hextr : IsMaxOn T.reApplyInnerSelf (Metric.sphere 0 ‖x₀‖) x₀) :
+  Module.End.HasEigenvector (↑T) (↑(⨆ x, T.rayleighQuotient ↑x)) x₀
+LinearMap.IsSymmetric.hasEigenvalue_iSup_of_finiteDimensional.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {E : Type u_2}
+  [NormedAddCommGroup E] [InnerProductSpace 𝕜 E] [FiniteDimensional 𝕜 E] {T : E →ₗ[𝕜] E} [Nontrivial E]
+  (hT : T.IsSymmetric) : Module.End.HasEigenvalue T ↑(⨆ x, RCLike.re (inner 𝕜 (T ↑x) ↑x) / ‖↑x‖ ^ 2)
+LinearMap.IsSymmetric.hasEigenvalue_iInf_of_finiteDimensional.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {E : Type u_2}
+  [NormedAddCommGroup E] [InnerProductSpace 𝕜 E] [FiniteDimensional 𝕜 E] {T : E →ₗ[𝕜] E} [Nontrivial E]
+  (hT : T.IsSymmetric) : Module.End.HasEigenvalue T ↑(⨅ x, RCLike.re (inner 𝕜 (T ↑x) ↑x) / ‖↑x‖ ^ 2)
+IsCompact.exists_isMinOn.{u_2, u_3} {α : Type u_2} {β : Type u_3} [LinearOrder α] [TopologicalSpace α]
+  [TopologicalSpace β] [ClosedIicTopology α] {s : Set β} (hs : IsCompact s) (ne_s : s.Nonempty) {f : β → α}
+  (hf : ContinuousOn f s) : ∃ x ∈ s, IsMinOn f s x
+isCompact_sphere.{u_3} {α : Type u_3} [PseudoMetricSpace α] [ProperSpace α] (x : α) (r : ℝ) :
+  IsCompact (Metric.sphere x r)
+PiLp.innerProductSpace fun x => ℝ
+PiLp.innerProductSpace fun x => ℂ
+9
+fun a b h hb => CFC.sqrt_unique h hb : ∀ (a b : Matrix (Fin 2) (Fin 2) ℂ), b * b = a → 0 ≤ b → CFC.sqrt a = b
+fun a b h hb => CFC.sqrt_unique h hb : ∀ (a b : Matrix (Fin 2) (Fin 2) ℝ), b * b = a → 0 ≤ b → CFC.sqrt a = b
+CFC.abs_sq : ∀ (a : Matrix (Fin 2) (Fin 2) ℂ), CFC.abs a ^ 2 = star a * a
+fun a ha => CFC.posPart_add_negPart a ha : ∀ (a : Matrix (Fin 2) (Fin 2) ℂ), IsSelfAdjoint a → a⁺ + a⁻ = CFC.abs a
+Matrix.nonneg_iff_posSemidef : 0 ≤ ?m.4 ↔ Matrix.PosSemidef ?m.4
