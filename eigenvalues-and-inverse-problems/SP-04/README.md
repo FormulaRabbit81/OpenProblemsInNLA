@@ -2,10 +2,18 @@
 
 **Difficulty:** challenging  
 **Importance:** interesting to specialist  
-**Status:** Solved  
-**Last checked:** 2026-09-11  
+**Status:** Lean verified  
+**Last checked:** 2026-09-15  
 
 **Rating rationale:** Challenging reflects a global root-selection rule across all dimensions and singular-value data; specialist impact is the exact projection onto a specific determinant constraint.
+
+<!-- lean-verification -->
+## Lean verification — 2026-09-15
+
+The complete original generic selection rule is **Lean verified false**. In dimension three, the proof defeats every nonzero polynomial exception with an invertible data matrix having distinct squared singular values, a finite full stationary set, a unique least-absolute-multiplier pair, and a strictly closer feasible matrix in the actual Frobenius norm. Both determinant signs and every real stationary matrix and multiplier are included. [All eleven independently reviewed targets](https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/fcd722e923a339dfeee89051886e82c7384a04d7/eigenvalues-and-inverse-problems/SP-04/lean) passed [fresh Linux Comparator and default-kernel verification](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35025876241).
+
+**Formalization:** George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology, with substantial OpenAI Codex assistance. **Original mathematical resolution:** Matthew J. Colbrook, as credited in the preserved resolution below. [Lean project and reproduction](lean/README.md) · [formalization metadata](lean/formalization.yaml) · [two source and two operational reviews](lean/reviews/).
+<!-- /lean-verification -->
 
 ## Resolution — 2026-09-11
 

@@ -1,0 +1,627 @@
+{
+  "reviewer": "OpenAI Codex GPT-6 AI agent /root/existing_verification_audit; independent non-implementer",
+  "phase": "final complete-target source review; Linux/Comparator pending",
+  "verdict": "APPROVE",
+  "candidate_commit": "6c351ae4a147efb82a2ede9ebc604de0683105c4",
+  "published_base": "d8c38a795876b132c90df8d1be8682d3dcde394c",
+  "historical_source_base": "8f04b905eb2e0827b6b84f37d9d080ae1f05b202",
+  "boundary_commit": "623e14e6aa93a01fca90591f96590ce79728c8f4",
+  "candidate_seal_sha256": "76499435f93c35aa89fba98fa74a2c005fa3092ee769d84e9575f69f83c0ea30",
+  "candidate_inputs": {
+    "Challenge.lean": "79aa3fe4ce1d75157f153b259660a8abd08cd8f0cecc7d0fad3ebcca0cf98381",
+    "NLA/SP04/Certificates.lean": "7df4b0076bea8477303b443fba38b63bc56f9ceb9b686d86aceb3ee98e9253ae",
+    "NLA/SP04/Definitions.lean": "6ec0afd466bfb054b9a46353f37a01e39333259e2579f21ae5fd52b5e9d57161",
+    "NLA/SP04/Diagonal.lean": "b7ab981903496315ef1e5044b37ac95a74812d406b0dffe1a96869375dcff012",
+    "NLA/SP04/Finiteness.lean": "278f3af2aff968c413e692e6316e0daf93db45f723b6e85b3cc9c8c2c7464204",
+    "NLA/SP04/Generic.lean": "180c239a74baa45f6cf1cdf6bf94fafde7e2d6571ac8e301128060dbc996b057",
+    "NLA/SP04/MatrixStationary.lean": "efb3f4f1f87cc462bcd082f8670423b29fb88f7e218a1266880dacd47752b5c0",
+    "NLA/SP04/Orthogonal.lean": "fa731e33236da52f6d81f8b0a474b5d1d7b8ec4b0da3f71527ad724c30d2bbfb",
+    "NLA/SP04/Proof.lean": "6f60b9c599b287a05178b30a79f5bc599633093edf31189785ac565784eb3e67",
+    "NLA/SP04/SVD.lean": "496614c29dcbd9158b691377ec9906bfb01fc95dd249b05e6cfbb481620d019b",
+    "NLA/SP04/Scalar.lean": "ac3e9f16df037341ef5456bb678b639d5558516453045b3da1c181f57972001e",
+    "NLA/SP04/ScalarPositive.lean": "2553f53b3afb9b10684a4bc832d381a64ae7d623d087c0004135869771818819",
+    "NLA/SP04/ScalarRoots.lean": "10a164b132fe80f8ca4f41991d5d1a62b5a211af2b8da67fbd27e11e33396ffd",
+    "NLA/SP04/SpectralIntervals.lean": "53e11ecdf676d187d8d8fbde221c6fb23e53ee69666af453a515b4328e4afbd2",
+    "NLA/SP04/Spectrum.lean": "3fbbf404e4d3ef4467958b2f1b062b74d2326db3d3425b2bccd4de4495307bde",
+    "NLA/SP04/Witness.lean": "39ac7159c06d9d54eb2a2a2145bf5880434a410a4cc590640209ad7195f9963b",
+    "NUMERICAL_TARGETS.md": "e14351bfa611bf6f1d1c7302b0584866bb54074c9db3c1e8f43c1f5dee571290",
+    "README.md": "20a0f8b1b45f5473828640e673d00290003dd5d5aceaed0980c0f6195ad87974",
+    "Solution.lean": "f02cf91d8fc859d991363d00cfabe555cc958ddf72850422964fd42286d5aa10",
+    "comparator.json": "d0783ec075a831cee2a501a46e02e42258b995f9fbf377dab1c749bba95457ff",
+    "formalization.yaml": "30f2b9f545acbe1a2bbb683ff7f074bff7c007af4286fb5485352ef5bef47555",
+    "lake-manifest.json": "0b777416633b6ab6cecb4b739da1148251ec285a20225da94da6f72b56bddcab",
+    "lakefile.toml": "1f4038f5e6c2f3ed9409d51f444f1ca2256b03a828d69b0dca855f61f2b082fd",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+    "verification/local-challenge-build.log": "0181b90fc5305c279f076bd279fcab8622eb3a5d82e19a8a89f14c218a11b9a3",
+    "verification/local-solution-build.log": "27ee5190d06e69c079eec222d1c7719942da03c11e488b98b782c348e07edc2a"
+  },
+  "preproof_inputs": {
+    "NLA/SP04/Definitions.lean": "6ec0afd466bfb054b9a46353f37a01e39333259e2579f21ae5fd52b5e9d57161",
+    "Challenge.lean": "79aa3fe4ce1d75157f153b259660a8abd08cd8f0cecc7d0fad3ebcca0cf98381",
+    "NUMERICAL_TARGETS.md": "e14351bfa611bf6f1d1c7302b0584866bb54074c9db3c1e8f43c1f5dee571290",
+    "comparator.json": "d0783ec075a831cee2a501a46e02e42258b995f9fbf377dab1c749bba95457ff",
+    "lakefile.toml": "1f4038f5e6c2f3ed9409d51f444f1ca2256b03a828d69b0dca855f61f2b082fd",
+    "lake-manifest.json": "0b777416633b6ab6cecb4b739da1148251ec285a20225da94da6f72b56bddcab",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+    "reviews/initial/independent-exact-check.py": "41729e1a69cb0b5e3aa314f6dfb4a427e16467edec5022de0ff29229b06123dc",
+    "reviews/initial/independent-exact-check.json": "8333c86c264642f175a0134ccc085dbfd6b8051ee0ab1fdb08836e1d15e33873",
+    "reviews/initial/source-hashes.json": "a5aa8f0e6f552ebd9045a18b623792a1af8155e5ba312685028776370dc210ea"
+  },
+  "all_26_candidate_and_10_preproof_inputs_unchanged": true,
+  "original_sources": {
+    "eigenvalues-and-inverse-problems/SP-04/README.md": "2dfa12b2eee5e312bbd45d023d8fa33e1c40e2d598f6538e651d6df519ae38ca",
+    "eigenvalues-and-inverse-problems/SP-04/solution.md": "d7a9e5a9d0fa0bb43e45a3d5c37b6e52d86373cbf4391980d0c1c54ff2ebc45c",
+    "eigenvalues-and-inverse-problems/SP-04/solution.tex": "4709776d1b91f8eefc4521495057cbc0451f897c7232ee7c838214f7627da481",
+    "references/colbrook-2026-09-11/verification/reviews/SP-04-review.md": "1fd8f31078c42a84572ab0714b4e776f99d5ae09c149edcccf388af0d4ec159e"
+  },
+  "original_sources_match_historical_and_current_git": true,
+  "fresh_project": "/private/tmp/nla-campaign-existing-review/SP04-final-source-build",
+  "dependency_reuse": "pinned dependency package cache only; no proof-project objects reused",
+  "lean_toolchain": "leanprover/lean4:v4.33.1",
+  "commands": [
+    {
+      "argv": [
+        "lake",
+        "build",
+        "Solution",
+        "Challenge"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "FinalAudit.lean"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "referee-independent-arithmetic.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/private/tmp/nla-pr153-venv/bin/python",
+        "tools/lean/validate_manifest.py",
+        "eigenvalues-and-inverse-problems/SP-04/lean"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "kernel_trust_assertions": 100,
+  "axiom_closures": {
+    "NLA.SP04.scalar_numerical_bounds": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.diagonal_difference_frobeniusSq": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selected_unique_least": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.diagonal_counterexample_full": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.companionTensorPolynomial_eval": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.polynomial_eval_det": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.polynomial_pair_det_eval": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationaryEliminant_eval": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.companionTensor_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationaryEliminant_at_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationaryEliminant_ne_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.scalarCompanion_eigenvector": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.companionTensor_eigenvector": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.companionTensorVector_ne_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.scalar_stationary_eliminant": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.scalar_quadratic_finite": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.diagonal_stationary_finite": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.polynomial_avoids_open": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.feasible_det_ne_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_cross": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_other_cross": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_gram_commutes": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.admissible_pos": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.admissible_injective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.admissible_sq_injective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_diagonal_gram": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_diagonal_matrix": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.all_diagonal_stationary_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.orthogonal_transpose": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.orthogonal_abs_det": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.orthogonal_inverse_transport": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.orthogonal_cancel_left": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.feasible_orthogonal_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.frobeniusSq_eq_trace": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.frobeniusSq_orthogonal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.frobeniusNorm_orthogonal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.orthogonal_stationary_expression": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_orthogonal_forward": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_orthogonal_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.full_orthogonal_transport": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.numerical_bounds": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.diagonal_stationary_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.diagonal_counterexample": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.diagonal_finite": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.orthogonal_transport": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.spectral_family": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.regular_svd": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.open_family_counterexamples": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.algebraic_avoidance": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.generic_counterexamples": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.canonical_counterexample": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.gram_isHermitian": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.reordered_gram_basis": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.root_is_gram_eigenvalue": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.interval_sqrt_bounds": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.interval_roots_admissible": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.svd_of_gram_diagonal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.family_has_admissible_svd": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.nonnegative_scalar_impossible": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negative_scalar_comparison": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.scalar_least_unique": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selected_scalar_stationary": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.improved_scalar_feasible": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.scalar_distance_improves": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.positive_discriminant": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.nonnegative_roots": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.nonnegative_quadratic_roots": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.nonnegative_roots_order": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.largeRoot_difference": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.nonnegative_product_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.scalar_admissible_bounds": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.scalar_admissible_pos": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negative_roots": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negativeMagnitude_pos": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negative_quadratic_roots": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.positiveRoot_continuous": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negativeMagnitude_continuous": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negative_roots_parameter_strict": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negative_roots_order": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selectedProduct_continuous": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selectedProduct_strict": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selectedProduct_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selectedProduct_endpoint": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selected_parameter_exists": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.gram_charpoly_eval": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.continuous_gram_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.family_isOpen": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.gram_diagonal_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.sample_in_family": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.endpoint_sq_lt": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.gram_root_in_interval": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.svd_gram": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.admissible_svd_regular": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.orthogonal_forward_inverse": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.uniqueLeastStationary_orthogonal_forward": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.uniqueLeastStationary_orthogonal_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationaryPairs_orthogonal_eq": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationaryPairs_finite_orthogonal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationaryPairs_finite_orthogonal_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selectionFails_of_admissible_svd": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "all_11_source_signatures_match": true,
+  "independent_arithmetic_reproduces_preproof_result": true,
+  "api_source_sha256": {
+    "Mathlib/Analysis/Matrix/Spectrum.lean": "1ad47effa0a5fbc373ebb6cf52a6b85a66b25d3c5a86394f3dd5932ffbfc3afe",
+    "Mathlib/LinearAlgebra/Matrix/SchurComplement.lean": "a064102c025395540240d0ca8df41b42fba25f4a874e0817ff9e3c58c1b9e43d",
+    "Mathlib/Algebra/Polynomial/Roots.lean": "162d86710afc10cc3ed158236994ed020e589f7fa15d5b39a30bd3e1f153080c",
+    "Mathlib/Data/Set/Finite/Lattice.lean": "8072b9abacf20349039bb4a0d3bd97cc7b3127308408ed4eb47245d97277d3fc",
+    "Mathlib/Data/Fintype/Pi.lean": "3621d016ef00906a9538347e3565bc44f5fe22210006ba64009b183c8ff6338f",
+    "Mathlib/Algebra/MvPolynomial/Funext.lean": "cb1821884a139917b692103a0b267115179cd4e7084da5487857ec49abb0cc7e"
+  },
+  "evidence_sha256": {
+    "snapshot-inputs.json": "cd12b2bf63dba863c6de20f5db6e068990aa4d7c7b9ad03ada865d70d7f39ca6",
+    "audited-declarations.json": "1249f02a91677e6c3e9d1805ff2c0a4a8c91aa0225dbae0b6b6e0cef9ca2b511",
+    "FinalAudit.lean": "f5efeeed46d95bf1164067e38746f7613e59de7677623007c99f1df13cfbc138",
+    "fresh-build.log": "eb467e372ba322608be73594bb6d6299791c73d17ea77ef283bc7d9b41b95828",
+    "final-audit.log": "5a080e4c605cc72c11e0ede6534b1618b8d1904ea8abc8b40e8c91269180eaa0",
+    "signature-check.json": "fa1972c1b6f1d94474f26709d207657f63c81c9ff811984a95c717d31fbcb4d4",
+    "manifest-validation.log": "27fd84e0b0d3cd267a3e6ce7aaea24d8d4aa2a6717b86952e52f32c6d1713a93",
+    "referee-independent-arithmetic.py": "e21a47afcc449ae3a562474f7258012ce1ffc91ed8bf5e229d58626f8cb6b981",
+    "referee-independent-arithmetic.json": "61240868bdb49fbe5edda4e0b0f018879d946442a4b7d16c10d5ae9ba389f685",
+    "referee-independent-arithmetic.log": "cd72a8e337a8baea5c0891f413769c1c447da15d62844a347ff965f80d6b66cb"
+  },
+  "limitations": [
+    "No actual Lean4 Comparator run performed or claimed.",
+    "No authoritative Linux proof verification or operational approval claimed.",
+    "No external human peer review or official Tau Ceti endorsement.",
+    "Source review plus local project builds; pinned dependency caches reused."
+  ]
+}
