@@ -27,7 +27,7 @@ I independently counted canonical statuses: **35 Lean verified, 69 Solved, 42 Op
 
 The [audit record](integration-referee-1-evidence/audit.json) retains the SHA256 of every one of the 121 PF-02 files, all incoming changed-path Git identifiers, all regenerated index hashes, and executed check results. The [evidence checksum list](integration-referee-1-evidence/SHA256SUMS) seals that record, the independent script, validation logs and exact index diff.
 
-Audit JSON SHA256: `95037ced43c1db06c3c72c4f166fc509d3b97158b1b97fdd3d7859f61cd3fb11`.  
-Evidence checksum-list SHA256: `e65efc1c09d8f0bf0d6097c66a031a34cab4ef8015dfebf484fe5cc1cc3e3792`.
+Audit JSON SHA256: `417f560c6961ef7705b68b3e5842d756d1cc43eb3d87abab6e7c1e39216377d9`.  
+Evidence checksum-list SHA256: `609429b316894f17e1e9939e1d17b098046c56ac00d78533310a911ef71be299`.
 
 **Disposition:** approve this exact integration for publication. No mathematical or operational gate needs reopening because the reviewed PF-02 files and verification inputs are unchanged. This report does not claim a new Linux/Comparator run, a push, or a merge of the PR.
