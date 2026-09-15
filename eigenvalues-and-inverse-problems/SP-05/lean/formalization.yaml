@@ -1,0 +1,154 @@
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'SP-05: a PSD minimizer for the positive definite Jordan–Kronecker product'
+  description: The complete original symmetric/skew Rayleigh-minimum inequality for every real symmetric positive-definite
+    pair and every n≥2, with actual attained sector minima. The stronger source result gives a real nonzero PSD
+    eigenmatrix at the global Jordan minimum for every n≥1.
+  authors:
+  - George Stepaniants
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California Institute of Technology
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+repository:
+  role: substantive-development
+  note: Complete locally checked proof candidate. Final independent source reviews, actual isolated Linux Comparator/default-kernel
+    execution and operational approvals are pending. Canonical status remains Solved.
+sources:
+- title: SP-05 — Symmetric minimizer for a positive definite Jordan–Kronecker product
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/d8c38a795876b132c90df8d1be8682d3dcde394c/eigenvalues-and-inverse-problems/SP-05/README.md
+  type: web-post
+  relationship: formalizes
+  location: 'Complete original problem statement: all n≥2, all real symmetric positive-definite A,B, column vectorization,
+    the actual commutation permutation matrix and both attained full-sector Rayleigh minima.'
+  author_endorsement: not-contacted
+  note: Permanent ID, canonical path and complete original target are unchanged. The original conjecture remains
+    credited to N. Kalantarova and L. Tunçel.
+- title: 'SP-05: A positive-semidefinite minimizing eigenmatrix'
+  authors:
+  - Matthew J. Colbrook
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/d8c38a795876b132c90df8d1be8682d3dcde394c/eigenvalues-and-inverse-problems/SP-05/solution.md
+  type: manuscript
+  relationship: formalizes
+  location: 'Theorem SP-05 and sections 1–3: complex inverse-cone positivity, a real PSD minimizing eigenmatrix,
+    and the exact symmetric/skew quotient inequality.'
+  author_endorsement: not-contacted
+  note: Original mathematical authorship remains Matthew J. Colbrook, Department of Applied Mathematics and Theoretical
+    Physics, University of Cambridge. The full source and historical attribution are preserved. The formal proof
+    replaces the exponential-integral argument by a Hermitian negative-eigenvector Sylvester contradiction, and
+    proves both modulus cross terms nonnegative separately. Neither simplification changes the target or adds assumptions.
+    Formalization credit is supplied as requested by the campaign user; no separate author endorsement or external
+    human review is asserted.
+- title: On the spectral structure of Jordan–Kronecker products of symmetric and skew-symmetric matrices
+  authors:
+  - N. Kalantarova
+  - L. Tunçel
+  id: https://arxiv.org/abs/1805.09737v3
+  type: paper
+  relationship: background
+  location: Conjecture 1, equation (7), page 12 of arXiv v3; original positive-definite symmetric-minimizer question.
+  author_endorsement: not-contacted
+related_formalizations:
+- id: https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof
+  relationship: other
+  note: Structure/API and explicit LeanCert kernel-trust reference; shared verification infrastructure pins actual
+    Comparator/exporter sources.
+- id: https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1
+  relationship: other
+  note: Statement/proof structure reference. No mathematical implementation copied.
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    tool_setup: Pinned Lean 4.33.1, LeanCert 621a43d7cf21f87872392a01e874f2f1dbddc926, Mathlib 0df444a360eaa60ab8c11dca51a86af692955474.
+      Both independent exact-byte statement approvals preceded implementation at commit 04d1de395494800390405f3df1645316fe7943c2.
+    prompting_notes: Preserve all dimensions, all real positive-definite inputs, actual column vectorization/Kronecker
+      coefficients, the full complex Hermitian PSD cone, realness of the modulus, exact Frobenius squared norms
+      and attained minima over both full sectors. Minimize computation using symbolic Sylvester congruences, spectral
+      PSD slack, reciprocal eigenvalue bounds and coordinate-box compactness. The kernel certificate 0<2 is consumed
+      through the arbitrary-dimension skew witness norm.
+  notes: 'Substantial AI assistance. Proof contributors: coordinator /root and /root/target_inventory. Independent
+    statement referees /root/reference_api_review and /root/existing_verification_audit contributed no proof code.
+    Their final source and operational reviews are pending. Repository Tau Ceti adaptation; no official endorsement,
+    external human review, novelty certification or unmeasured cost claims.'
+status:
+  scope: 'Complete original target implemented and locally built: six exact reviewed exports include actual attained
+    symmetric/skew minima for every n≥2 and a real nonzero PSD global Jordan minimizing eigenmatrix for every n≥1.
+    All six public proof closures pass local explicit kernel-trust and permitted-axiom checks. Actual isolated Linux
+    Comparator/default-kernel checks, final independent source reviews and operational approvals are pending; canonical
+    status remains Solved. Challenge contains six deliberate specification-only placeholders, excluded from proof-development
+    sorry counts.'
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+  main_results:
+  - declaration: NLA.SP05.numerical_bound
+    file: NLA/SP05/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP05.column_vectorization
+    file: NLA/SP05/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP05.skew_witness
+    file: NLA/SP05/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP05.positive_minimizer
+    file: NLA/SP05/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP05.sector_minima
+    file: NLA/SP05/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP05.canonical_result
+    file: NLA/SP05/Proof.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+review:
+  status: independent exact-byte statements approved; complete local proof candidate awaiting final source and operational
+    reviews
+  reviewers:
+  - /root/reference_api_review (independent Codex AI agent)
+  - /root/existing_verification_audit (independent Codex AI agent)
+  notes: Both sealed statement approvals and all ten input hashes are retained under reviews/. The pre-proof boundary
+    was committed at 04d1de395494800390405f3df1645316fe7943c2 and remains unchanged. verification/local-solution-build.log
+    records the complete successful local Solution build and all six transitive axiom reports. verification/contributor-support
+    contains contributor compiler traces and source hashes, not independent referee approvals. No SP-05 Linux run
+    or final review approval is claimed.
