@@ -7,16 +7,19 @@ super-identical pseudospectra. The original mathematical counterexample is by
 **George Stepaniants, Department of Computing and Mathematical Sciences,
 California Institute of Technology**, with substantial OpenAI Codex assistance.
 
-**Canonical verification is pending.** All 22 declarations and their complete
-proof graph passed Linux development compilation, LeanCert kernel-trust checks
-and transitive standard-axiom reports in
-[run 35031607095](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35031607095)
-at commit `4bd2d76ec6e37696ff0c2d5feacf21e342371f27`. That combined development
-workflow failed in a separate MF-12 component. Its MF-24 command succeeded;
-the original status and logs are retained. This standalone package still needs
-its own actual Comparator, default-kernel replay and rejection controls, final
-operational referee approval and published-commit check. The canonical problem
-remains **Solved** until those gates pass.
+**The complete 22-target proof passed canonical Linux verification.**
+[Run 35033148310](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35033148310/job/104596164346)
+checked immutable proof commit `208e30d80f73ef661b1f019c7de93c70254f7e48`
+on 15 September 2026. LeanCert kernel assertions, actual non-root Comparator,
+default-kernel replay, standard transitive axioms and all required rejection
+and sandbox controls passed. The [original logs and hashes](verification/linux-2026-09-15)
+and both [independent final referee reports](reviews/final) are retained.
+Later documentation commits are distinct from that exact checked revision and
+require their own published-commit execution for the campaign record.
+
+The earlier combined development run 35031607095 passed the complete MF-24
+component but failed in MF-12. Its original status and evidence are preserved;
+it is not relabeled as a successful aggregate run.
 
 The definitions use actual complex polynomial evaluation, the induced norm on
 complex Euclidean space and every ordered singular value after every complex
@@ -50,14 +53,14 @@ without importing Challenge; [Unbounded](NLA/MF24/Unbounded.lean) proves
 [SourceCorrespondence.md](SourceCorrespondence.md) contains the full 22-result
 map. Its introductory draft-stage wording is retained as part of the immutable
 pre-proof record; this README and [formalization.yaml](formalization.yaml)
-describe the current stage. Every result is selected by
+describe the completed canonical verification. Every result is selected by
 [comparator.json](comparator.json), with no replaceable definitions and only
 `propext`, `Classical.choice` and `Quot.sound` allowed.
 
 From this directory, a routine Lean check is:
 
 ```bash
-lake build
+lake exe cache get && lake build
 ```
 
 The default target is the complete Solution. The recorded
