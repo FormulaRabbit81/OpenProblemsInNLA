@@ -34,7 +34,7 @@ acceleration},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}IE-18}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-12}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-15}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -55,16 +55,46 @@ to the community\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
-\subsection{Independently reviewed resolution -
-2026-09-11}\label{independently-reviewed-resolution---2026-09-11}
+\subsection{Prior negative resolution - Yunhui He
+(2025)}\label{prior-negative-resolution---yunhui-he-2025}
 
-\textbf{Negative resolution.} Section 2 refutes the exact four-step
-identity using \(M=\mathop{\mathrm{diag}}\nolimits(1/10,1/2,3/5)\) and
-\(v=(1,1,1)^T\): the squared norm ratio is
-\(1920682/21289638243>1/14641\), the square of the proposed factor. Both
-\(M\) and \(I-M\) are positive definite. Section 3 proves unbounded
-underestimation over a parameter family. The separate asymptotic
-convergence question is not resolved.
+\textbf{This conjecture was already disproved before this repository's
+September 2026 submission.} Yunhui He, \emph{The worst-case
+root-convergence factor of GMRES(1)}, arXiv:2501.10248v1, submitted 17
+January 2025, treats restarted Anderson acceleration in \textbf{Section
+2.3}. Equation (2.36), p.~14, is the identity below; \textbf{Example
+2.1, p.~15}, gives three diagonal counterexamples.
+\href{https://arxiv.org/pdf/2501.10248v1\#page=15}{Prior paper}.
+
+He uses \(A=I-M\) and \(\Psi=R\), so \(\Upsilon(v)v=R(R(v))\) and his
+\(\Lambda^*\) is exactly the proposed right-hand side. His first example
+is \(A=\mathop{\mathrm{diag}}\nolimits(1,2,3)\), hence
+\(M=\mathop{\mathrm{diag}}\nolimits(0,-1,-2)\), with \(v=(15,5,1)^T\).
+Exact recomputation gives a norm ratio approximately \(0.0807016>1/16\).
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/colbrook-recovered-2026-09-11/verification/IE-18-prior-work-2026-09-15.md}{Source
+comparison and exact check}.
+
+\textbf{Attribution correction, 15 September 2026.} The earlier
+literature searches below missed He's paper. The prior negative
+resolution is credited to He; Colbrook's later
+positive-definite-contraction examples and parameter-family analysis are
+retained as supplementary results, with Stepaniants's Lean formalization
+of the later example. No first-discovery claim is made for those
+results. He explicitly distinguishes the finite-step counterexamples
+from the asymptotic root-convergence question, which these results do
+not settle. IE-18 retains its original target and \textbf{Lean verified}
+status.
+
+\subsection{Later independently reviewed examples -
+2026-09-11}\label{later-independently-reviewed-examples---2026-09-11}
+
+\textbf{Supplementary counterexamples to the already-disproved
+identity.} Section 2 refutes the exact four-step identity using
+\(M=\mathop{\mathrm{diag}}\nolimits(1/10,1/2,3/5)\) and \(v=(1,1,1)^T\):
+the squared norm ratio is \(1920682/21289638243>1/14641\), the square of
+the proposed factor. Both \(M\) and \(I-M\) are positive definite.
+Section 3 proves unbounded underestimation over a parameter family. The
+separate asymptotic convergence question is not resolved.
 
 \textbf{Author:} Matthew J. Colbrook, Department of Applied Mathematics
 and Theoretical Physics, University of Cambridge.
@@ -86,6 +116,8 @@ The complete negative answer to the original identity now has
 \href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/linear-systems-and-elimination/IE-18\#lean-proof-and-verification-evidence--2026-09-12}{Lean
 proof and verification evidence}. The stronger parameter-family result
 and separate asymptotic question are outside that formalization.
+
+\newpage
 
 \textbf{Rating rationale:} Challenging reflects a global maximization of
 a nonlinear homogeneous residual map in arbitrary dimension; community
@@ -115,8 +147,13 @@ attained using only two orthogonal eigenvectors, irrespective of the
 dimension. It supplies an exact worst-case factor for this restart
 scheme, relevant to accelerated stationary solvers and multigrid.
 
-\newpage
 \subsection{References}\label{references}
+
+Y. He, \emph{The worst-case root-convergence factor of GMRES(1)},
+arXiv:2501.10248v1 (17 January 2025), Section 2.3, equation (2.36) and
+Example 2.1, pp.~14-15.
+\href{https://arxiv.org/pdf/2501.10248v1\#page=15}{Prior negative
+resolution}.
 
 O. A. Krzysik, H. De Sterck, and A. Smith, \emph{Asymptotic convergence
 of restarted Anderson acceleration for certain normal linear systems},
@@ -127,7 +164,8 @@ states the maximum through two-eigenvector nonlinear eigenvalues;
 equation(24) evaluates their scalar maximum. The map formulation above
 also covers exact termination without an undefined \(\alpha(0)\).
 
-\subsection{Status check --- 2026-09-08}\label{status-check-2026-09-08}
+\subsection{Historical status check --- 2026-09-08 (corrected
+2026-09-15)}\label{historical-status-check-2026-09-08-corrected-2026-09-15}
 
 The arXiv history lists v4,12 May 2025, as latest. Its Conjecture 10 and
 journal abstract retain the conditional result. Searches for the paper
@@ -137,24 +175,28 @@ and restarted CG use different residual maps. The September 2026
 Forsythe paper resolves the CG restart question and is not a solution
 claim for the map above.
 
-\subsection{Audit update --- 2026-09-10}\label{audit-update-2026-09-10}
+\subsection{Historical audit --- 2026-09-10 (corrected
+2026-09-15)}\label{historical-audit-2026-09-10-corrected-2026-09-15}
 
 Rechecked \href{https://arxiv.org/html/2312.04776v4}{version 4},
 Conjecture 10 and its surrounding discussion, against the
-\href{https://doi.org/10.1137/24M1672262}{2025 journal record}. The
-general-dimensional identity is still conjectural; the order-two case
-alone does not justify a substantive partial-status label. Targeted
-searches for this four-step amplification conjecture found no later
-resolution.
+\href{https://doi.org/10.1137/24M1672262}{2025 journal record}. This
+search incorrectly recorded the general-dimensional identity as still
+conjectural; the order-two case alone does not justify a substantive
+partial-status label. Targeted searches for this four-step amplification
+conjecture found no later resolution.
+
+\newpage
 
 \subsection{Lean proof and verification evidence ---
 2026-09-12}\label{lean-proof-and-verification-evidence-2026-09-12}
 
-\textbf{Mathematical counterexample:} Matthew J. Colbrook, Department of
-Applied Mathematics and Theoretical Physics, University of Cambridge.
-\textbf{Lean formalization:} George Stepaniants, Department of Computing
-and Mathematical Sciences, California Institute of Technology, Pasadena,
-California, USA, with AI-agent assistance.
+\textbf{Prior negative resolution:} Yunhui He (2025), cited above.
+\textbf{Specific counterexample formalized here:} Matthew J. Colbrook,
+Department of Applied Mathematics and Theoretical Physics, University of
+Cambridge. \textbf{Lean formalization:} George Stepaniants, Department
+of Computing and Mathematical Sciences, California Institute of
+Technology, Pasadena, California, USA, with AI-agent assistance.
 
 The
 \href{https://github.com/sgstepaniants/OpenProblemsInNLA/tree/7b8512e21c50adc8597dcdbed32f2aec13c3b43e/linear-systems-and-elimination/IE-18/lean}{immutable

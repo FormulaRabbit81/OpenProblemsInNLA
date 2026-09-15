@@ -3,12 +3,20 @@
 **Difficulty:** challenging  
 **Importance:** interesting to the community  
 **Status:** Lean verified
-**Last checked:** 2026-09-12
+**Last checked:** 2026-09-15
+
+## Prior negative resolution - Yunhui He (2025)
+
+**This conjecture was already disproved before this repository's September 2026 submission.** Yunhui He, *The worst-case root-convergence factor of GMRES(1)*, arXiv:2501.10248v1, submitted 17 January 2025, treats restarted Anderson acceleration in **Section 2.3**. Equation (2.36), p. 14, is the identity below; **Example 2.1, p. 15**, gives three diagonal counterexamples. [Prior paper](https://arxiv.org/pdf/2501.10248v1#page=15).
+
+He uses $`A=I-M`$ and $`\Psi=R`$, so $`\Upsilon(v)v=R(R(v))`$ and his $`\Lambda^*`$ is exactly the proposed right-hand side. His first example is $`A=\mathop{\mathrm{diag}}\nolimits(1,2,3)`$, hence $`M=\mathop{\mathrm{diag}}\nolimits(0,-1,-2)`$, with $`v=(15,5,1)^T`$. Exact recomputation gives a norm ratio approximately $`0.0807016>1/16`$. [Source comparison and exact check](../../references/colbrook-recovered-2026-09-11/verification/IE-18-prior-work-2026-09-15.md).
+
+**Attribution correction, 15 September 2026.** The earlier literature searches below missed He's paper. The prior negative resolution is credited to He; Colbrook's later positive-definite-contraction examples and parameter-family analysis are retained as supplementary results, with Stepaniants's Lean formalization of the later example. No first-discovery claim is made for those results. He explicitly distinguishes the finite-step counterexamples from the asymptotic root-convergence question, which these results do not settle. IE-18 retains its original target and **Lean verified** status.
 
 <!-- colbrook-recovered -->
-## Independently reviewed resolution - 2026-09-11
+## Later independently reviewed examples - 2026-09-11
 
-**Negative resolution.** Section 2 refutes the exact four-step identity using $`M=\mathop{\mathrm{diag}}\nolimits(1/10,1/2,3/5)`$ and $`v=(1,1,1)^T`$: the squared norm ratio is $`1920682/21289638243>1/14641`$, the square of the proposed factor. Both $`M`$ and $`I-M`$ are positive definite. Section 3 proves unbounded underestimation over a parameter family. The separate asymptotic convergence question is not resolved.
+**Supplementary counterexamples to the already-disproved identity.** Section 2 refutes the exact four-step identity using $`M=\mathop{\mathrm{diag}}\nolimits(1/10,1/2,3/5)`$ and $`v=(1,1,1)^T`$: the squared norm ratio is $`1920682/21289638243>1/14641`$, the square of the proposed factor. Both $`M`$ and $`I-M`$ are positive definite. Section 3 proves unbounded underestimation over a parameter family. The separate asymptotic convergence question is not resolved.
 
 **Author:** Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics, University of Cambridge. [Complete manuscript](../../references/colbrook-recovered-2026-09-11/manuscripts/IE-18.pdf), [independent proof review](../../references/colbrook-recovered-2026-09-11/verification/reviews/IE-18-review.md), and [submission record](../../references/colbrook-recovered-2026-09-11/README.md). The supplied notes were reconstructed with substantial AI assistance. This is independent agent verification, not external human peer review or formal proof-assistant certification; no novelty or priority claim is made.
 
@@ -40,9 +48,11 @@ The conjecture says that a largest four-step residual amplification is attained 
 
 ## References
 
+Y. He, *The worst-case root-convergence factor of GMRES(1)*, arXiv:2501.10248v1 (17 January 2025), Section 2.3, equation (2.36) and Example 2.1, pp. 14-15. [Prior negative resolution](https://arxiv.org/pdf/2501.10248v1#page=15).
+
  O. A. Krzysik, H. De Sterck, and A. Smith, *Asymptotic convergence of restarted Anderson acceleration for certain normal linear systems*, SISC 47(2025), Conjecture 10, (9),(16),(24),(27) ([journal](https://doi.org/10.1137/24M1672262); [arXiv v4](https://arxiv.org/html/2312.04776v4)). Conjecture 10 states the maximum through two-eigenvector nonlinear eigenvalues; equation(24) evaluates their scalar maximum. The map formulation above also covers exact termination without an undefined $`\alpha(0)`$.
 
-## Status check — 2026-09-08
+## Historical status check — 2026-09-08 (corrected 2026-09-15)
 
  The arXiv history lists v4,12 May 2025, as latest. Its Conjecture 10 and journal abstract retain the conditional result. Searches for the paper title, “restarted Anderson Conjecture 10”, and later proof/counterexample results found no resolution. Windowed AA, GMRES(1), and restarted CG use different residual maps. The September 2026 Forsythe paper resolves the CG restart question and is not a solution claim for the map above.
 
@@ -50,13 +60,13 @@ The conjecture says that a largest four-step residual amplification is attained 
 [All categories](../../README.md) · [Category index](../README.md) · [Read PDF](problem.pdf) · [LaTeX source](problem.tex)
 <!-- /navigation -->
 
-## Audit update — 2026-09-10
+## Historical audit — 2026-09-10 (corrected 2026-09-15)
 
-Rechecked [version 4](https://arxiv.org/html/2312.04776v4), Conjecture 10 and its surrounding discussion, against the [2025 journal record](https://doi.org/10.1137/24M1672262). The general-dimensional identity is still conjectural; the order-two case alone does not justify a substantive partial-status label. Targeted searches for this four-step amplification conjecture found no later resolution.
+Rechecked [version 4](https://arxiv.org/html/2312.04776v4), Conjecture 10 and its surrounding discussion, against the [2025 journal record](https://doi.org/10.1137/24M1672262). This search incorrectly recorded the general-dimensional identity as still conjectural; the order-two case alone does not justify a substantive partial-status label. Targeted searches for this four-step amplification conjecture found no later resolution.
 
 ## Lean proof and verification evidence — 2026-09-12
 
-**Mathematical counterexample:** Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics, University of Cambridge. **Lean formalization:** George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology, Pasadena, California, USA, with AI-agent assistance.
+**Prior negative resolution:** Yunhui He (2025), cited above. **Specific counterexample formalized here:** Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics, University of Cambridge. **Lean formalization:** George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology, Pasadena, California, USA, with AI-agent assistance.
 
 The [immutable proof revision](https://github.com/sgstepaniants/OpenProblemsInNLA/tree/7b8512e21c50adc8597dcdbed32f2aec13c3b43e/linear-systems-and-elimination/IE-18/lean) contains the actual residual, Euclidean norm, spectrum and eigenvalue-maximum definitions. [Solution.lean](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/7b8512e21c50adc8597dcdbed32f2aec13c3b43e/linear-systems-and-elimination/IE-18/lean/Solution.lean) exports:
 
