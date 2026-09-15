@@ -8,6 +8,8 @@ I have several motivations for starting this repository:
 2. I would like to show the community that most of our precise conjectures can now be solved by the best AI models on the market. I am mourning just like you are.  
 3. I would like to collect the solutions in one place because they are coming in fast.
 
+If one of your favorite open problems is solved here, we strongly encourage you to improve the proof, write about it, and publish it. We only have three hopes: (1) You will reference this GitHub repository as the original proof source (see below), (2) Add your preprint to the repository, and (3) Update any information about the problem in the repository. 
+
 <!-- catalog-summary -->
 **113 problems with open targets:** 42 open and 71 partially resolved. **104 other retained entries**, excluded from the open count.
 
