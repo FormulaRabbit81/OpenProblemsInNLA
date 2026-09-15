@@ -1,0 +1,59 @@
+instDiscreteTopologyBool
+instTopologicalSpaceProd
+instTopologicalSpaceSubtype
+instTopologicalSpaceQuot
+def Matrix.PosSemidef.{u_2, u_3} : {n : Type u_2} →
+  {R : Type u_3} → [inst : Ring R] → [PartialOrder R] → [StarRing R] → Matrix n n R → Prop :=
+fun {n} {R} [Ring R] [PartialOrder R] [StarRing R] M =>
+  M.IsHermitian ∧ ∀ (x : n →₀ R), 0 ≤ x.sum fun i xi => x.sum fun j xj => star xi * M i j * xj
+def Matrix.rank.{um, un, uR} : {m : Type um} →
+  {n : Type un} → {R : Type uR} → [Fintype n] → [CommSemiring R] → Matrix m n R → ℕ :=
+fun {m} {n} {R} [Fintype n] [CommSemiring R] A => Module.finrank R ↥A.mulVecLin.range
+def NLA.PF02.Congruent : {p q k : ℕ} → {M : Mat p q} → Factorization M k → Factorization M k → Prop :=
+fun {p q k} {M} F G =>
+  ∃ S,
+    (∀ (i : Fin p), (↑G).1 i = Matrix.transpose ↑S * (↑F).1 i * ↑S) ∧
+      ∀ (j : Fin q), (↑G).2 j = ↑S⁻¹ * (↑F).2 j * Matrix.transpose ↑S⁻¹
+def NLA.PF02.IsPSDRank : {p q : ℕ} → Mat p q → ℕ → Prop :=
+fun {p q} M k => IsLeast {ℓ | 1 ≤ ℓ ∧ Nonempty (Factorization M ℓ)} k
+def NLA.PF02.AllMinimalOrbitsConnected : Prop :=
+∀ (k p q : ℕ),
+  3 ≤ k →
+    1 ≤ p →
+      1 ≤ q →
+        ∀ (M : Mat p q),
+          (∀ (i : Fin p) (j : Fin q), 0 ≤ M i j) →
+            Matrix.rank M = k * (k + 1) / 2 → IsPSDRank M k → IsConnected Set.univ
+isQuotientMap_quot_mk.{u} {X : Type u} [TopologicalSpace X] {r : X → X → Prop} : Topology.IsQuotientMap (Quot.mk r)
+continuous_quot_lift.{u, v} {X : Type u} {Y : Type v} [TopologicalSpace X] [TopologicalSpace Y] {r : X → X → Prop}
+  {f : X → Y} (hr : ∀ (a b : X), r a b → f a = f b) (h : Continuous f) : Continuous (Quot.lift f hr)
+Matrix.posSemidef_iff_dotProduct_mulVec.{u_2, u_3} {n : Type u_2} {R : Type u_3} [Ring R] [PartialOrder R] [StarRing R]
+  [Fintype n] {M : Matrix n n R} : M.PosSemidef ↔ M.IsHermitian ∧ ∀ (x : n → R), 0 ≤ star x ⬝ᵥ M.mulVec x
+NLA.PF02.witness_data :
+  (∀ (i j : Fin 6), 0 < witnessM i j) ∧
+    Matrix.det witnessM = 8192 ∧
+      Matrix.rank witnessM = 6 ∧
+        Matrix.det (rowCoordinates (witnessFactors 1)) = 32 ∧ Matrix.det (rowCoordinates (witnessFactors (-1))) = -32
+'NLA.PF02.witness_data' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA.PF02.witness_factorizations :
+  IsFactorization witnessM (witnessTuple 1) ∧
+    IsFactorization witnessM (witnessTuple (-1)) ∧
+      (∀ (i : Fin 6), Matrix.PosDef (witnessFactors 1 i)) ∧ ∀ (i : Fin 6), Matrix.PosDef (witnessFactors (-1) i)
+'NLA.PF02.witness_factorizations' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA.PF02.witness_minimal_rank : IsPSDRank witnessM 3
+'NLA.PF02.witness_minimal_rank' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA.PF02.orbit_semantics {p q k : ℕ} (M : Mat p q) :
+  Topology.IsQuotientMap (Quot.mk Congruent) ∧
+    ∀ (F G : Factorization M k), Quot.mk Congruent F = Quot.mk Congruent G ↔ Congruent F G
+'NLA.PF02.orbit_semantics' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA.PF02.orientation_nonvanishing (F : Factorization witnessM 3) : orientationDet F ≠ 0
+'NLA.PF02.orientation_nonvanishing' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA.PF02.orientation_preserved (F G : Factorization witnessM 3) :
+  Congruent F G → (0 < orientationDet F ↔ 0 < orientationDet G)
+'NLA.PF02.orientation_preserved' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA.PF02.quotient_separation : ∃ f, Continuous f ∧ Function.Surjective f
+'NLA.PF02.quotient_separation' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA.PF02.witness_disconnected : ¬IsConnected Set.univ
+'NLA.PF02.witness_disconnected' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA.PF02.canonical_counterexample : ¬AllMinimalOrbitsConnected
+'NLA.PF02.canonical_counterexample' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
