@@ -3,8 +3,9 @@
 Original solution and formalization author: George Stepaniants, Department of
 Computing and Mathematical Sciences, California Institute of Technology,
 Pasadena, California, USA. Historical conjecture attribution remains with
-Spielman and Teng. Substantial AI assistance is disclosed; no external human
-peer review or completed formal verification is asserted by this candidate.
+Spielman and Teng. Substantial AI assistance is disclosed. The complete
+formalization has passed the canonical Linux protocol; no external human
+peer review or official Tau Ceti endorsement is asserted.
 
 The complete [canonical IE-04 problem](https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/8f04b905eb2e0827b6b84f37d9d080ae1f05b202/linear-systems-and-elimination/IE-04/README.md)
 and [solution](https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/8f04b905eb2e0827b6b84f37d9d080ae1f05b202/linear-systems-and-elimination/IE-04/solution.md)
@@ -94,16 +95,23 @@ after two independent statement approvals; STATEMENT-FREEZE.json is unchanged.
 
 Two complete mathematical source reports and both current-source/development
 acceptance addenda are retained under reviews/. Their exact accepted-byte
-reconciliations supplement the preserved earlier reports. Both referees must
-still inspect the actual standalone canonical evidence. The historical
-candidate documentation is preserved under
-verification/packaging/before/. Preparing metadata and the standalone Lake
-target is a packaging contribution distinct from independent proof review.
+reconciliations supplement the preserved earlier reports. Both referees also
+accepted the actual standalone canonical execution in run 35034399633 at
+immutable proof revision 026b3e5534a4d6e15ebffb85318c2ff031df32bf. They independently
+matched all 184 project inputs, all 21 checked exports, the actual Comparator and
+default-kernel output, and the required negative and sandbox controls. The
+original runtime evidence and final reports are retained separately.
 
-Complete development compilation is not final canonical verification. Actual
-canonical Comparator and independent default-kernel replay with rejection
-controls, plus two final source/evidence addenda, remain necessary before
-publication acceptance or a verified count. Adapted Tau Ceti review angles are
-mathematical scope, correctness, useful source reuse and clarity; this is not
-an official Tau Ceti certification-service claim. Optional source corollaries
-remain outside the claimed scope and do not replace the canonical negation.
+The historical candidate documentation remains under
+verification/packaging/before/ and verification/publication-2026-09-15/before/.
+Preparing metadata and the standalone Lake target is a packaging contribution
+distinct from independent mathematical proof review. The exact canonical proof
+and configuration bytes remain unchanged during publication. Later publication
+commits require their own workflow execution; the present acceptance refers to
+the immutable proof revision above.
+
+Adapted Tau Ceti review angles are mathematical scope, correctness, useful source
+reuse and clarity. These independent AI-agent reviews are not an official
+Tau Ceti certification-service claim or external human peer review. Optional
+source corollaries remain outside the claimed scope and do not replace the
+canonical negation.
