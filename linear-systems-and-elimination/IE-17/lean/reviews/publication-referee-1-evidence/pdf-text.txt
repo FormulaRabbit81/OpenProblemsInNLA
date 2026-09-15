@@ -1,0 +1,95 @@
+OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA                                                           IE-17
+
+
+
+
+Linear systems and elimination
+
+
+Monotonic optimal backward error along LSMR
+Diﬀiculty: challenging       Importance: interesting to the community
+Status: Lean verified
+
+
+Lean verification — 2026-09-15
+The complete original negative resolution is Lean verified: both canonical errors strictly increase be-
+tween the same successive nonzero exact LSMR iterates. The proof establishes the attained minimum
+over all real matrix-only spectral perturbations, the literal Moore–Penrose approximation and its unique
+value, and the complete minimizing LSMR run through first termination. All eight independently re-
+viewed targets passed fresh Linux Comparator and default-kernel verification.
+Formalization: George Stepaniants, Department of Computing and Mathematical Sciences, California
+Institute of Technology, with substantial OpenAI Codex assistance. Original mathematical counterex-
+ample: Matthew J. Colbrook, as credited in the preserved resolution below. Lean project and reproduc-
+tion · formalization metadata · two source and two operational reviews.
+
+Independently reviewed resolution - 2026-09-11
+Negative resolution. Sections 1-4 give one exact full-column-rank 4 × 3 LSMR example for which both
+displayed errors increase from the first to the second nonzero iterate. The matrix-only spectral backward
+error satisfies 𝜇(𝑥1 )2 ≤ 1979/2000 < 99/100 < 𝜇(𝑥2 )2 , and the specified approximation also strictly
+increases. The right-hand side stays fixed. This settles the canonical spectral-norm formulation; the
+cited SISC paper uses a different default norm convention, so no Frobenius-error conclusion is inferred.
+Author: Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics, University
+of Cambridge. Complete manuscript, independent proof review, and submission record. The supplied
+notes were reconstructed with substantial AI assistance. This is independent agent verification, not
+external human peer review or formal proof-assistant certification; no novelty or priority claim is made.
+The diﬀiculty, importance and rating rationale below are historical assessments of the original open
+target. Original statements, references and dated audits are preserved.
+Rating rationale: Challenging reflects monotonicity of an optimization-defined error along coupled
+Krylov iterates; community impact is a stopping and reliability guarantee for a widely used least-
+squares method.
+Let 𝐴 ∈ ℝ𝑚×𝑛 and 𝑏 ∈ ℝ𝑚 . In exact arithmetic, start LSMR at 𝑥0 = 0: equivalently, 𝑥𝑘 minimizes
+‖𝐴𝑇 (𝑏 − 𝐴𝑥)‖2 over 𝒦𝑘 (𝐴𝑇 𝐴, 𝐴𝑇 𝑏). Work up to its exact termination and use its minimum-length iterate
+if necessary. Let 𝑟 = 𝑏 − 𝐴𝑥 and define the matrix-only normwise backward error
+
+                                   𝜇(𝑥) = min{‖𝐸‖2 ∶ (𝐴 + 𝐸)𝑇 ((𝐴 + 𝐸)𝑥 − 𝑏) = 0}.
+
+For 𝑥 ≠ 0, put 𝐾𝑥 = [𝐴𝑇 , (‖𝑟‖2 /‖𝑥‖2 )𝐼]𝑇 , 𝑣𝑥 = [𝑟𝑇 , 0𝑇 ]𝑇 , and
+
+                                                                ‖𝐾𝑥 𝐾𝑥† 𝑣𝑥 ‖2
+                                                      𝜇(𝑥) =
+                                                       ̃                      .
+                                                                   ‖𝑥‖2
+Here † is the Moore–Penrose inverse; at an exact least-squares solution set both errors to zero.
+Are both sequences 𝜇(𝑥𝑘 ) and ̃𝜇(𝑥𝑘 ) nonincreasing, for successive nonzero LSMR iterates? These two
+closely related claims are counted together, as in the source. The right-hand side 𝑏 is kept fixed in the
+backward-error model.
+A positive answer would justify backward-error stopping decisions without a later iteration making the
+current iterate less backward accurate. The known monotonicity of ‖𝑟𝑘 ‖2 and ‖𝐴𝑇 𝑟𝑘 ‖2 does not establish
+this statement.
+
+Editorial ratings; a bounded search cannot certify that a problem remains unsolved.
+Literature check: 2026-09-15                                                                           1
+OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA                                                          IE-17
+
+
+
+
+References
+
+D. C.-L. Fong, Minimum-Residual Methods for Sparse Least-Squares Using Golub–Kahan Bidiagonalization,
+Stanford dissertation 2011, §7.2.1 and definitions (4.1),(4.5), printed pp. 56–57,118 (primary PDF). Fong
+and M. Saunders, LSMR: An iterative algorithm for sparse least-squares problems, SISC 33(2011),2950–2971,
+§§6.1–6.2, Fig7.5 (author PDF). E. Hallman and M. Gu, LSMB: Minimizing the backward error for least-
+squares problems, SIMAX 39(2018),1295–1317 (author PDF).
+
+Status check — 2026-09-08
+
+Exact-title and “LSMR optimal backward error monotonicity conjecture/proof/counterexample”
+searches found no resolution. The LSMB2018 discussion of nonmonotonicity concerns LSQR, and its
+proposed method differs from LSMR. Hallman’s May 2026 arXiv:2605.09211 develops backward-error
+formulas and estimates, without resolving this iterate-monotonicity conjecture. No recent explicit
+reaﬀirmation was located.
+
+Audit update — 2026-09-10
+
+Rechecked Fong’s dissertation, §7.2.1, printed p. 118, which separately conjectures monotonicity of both
+displayed errors. Hallman (2026) studies a variational equation and lower bound for the backward er-
+ror; it does not assert this iterate monotonicity. Searches for LSMR optimal-backward-error monotonic-
+ity located no proof or counterexample.
+
+
+
+
+Editorial ratings; a bounded search cannot certify that a problem remains unsolved.
+Literature check: 2026-09-15                                                                           2
+

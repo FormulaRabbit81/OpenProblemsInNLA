@@ -1,0 +1,111 @@
+def NLA.IE17.spectralNorm : {m n : ℕ} → NLA.IE17.Mat m n → ℝ :=
+fun {m n} A => norm.{0} (LinearMap.toContinuousLinearMap.{0, 0, 0} (Matrix.toEuclideanLin.{0, 0, 0} A))
+def NLA.IE17.IsOptimalError : {m n : ℕ} → NLA.IE17.Mat m n → NLA.IE17.Vec m → NLA.IE17.Vec n → ℝ → Prop :=
+fun {m n} A b x δ => IsLeast.{0} (NLA.IE17.errorSet A b x) δ
+def NLA.IE17.IsLSMRIterate : {m n : ℕ} → NLA.IE17.Mat m n → NLA.IE17.Vec m → ℕ → NLA.IE17.Vec n → Prop :=
+fun {m n} A b k x =>
+  Membership.mem.{0, 0} (NLA.IE17.krylov A b k) x ∧
+    (∀ (y : NLA.IE17.Vec n),
+        Membership.mem.{0, 0} (NLA.IE17.krylov A b k) y →
+          LE.le.{0} (norm.{0} (NLA.IE17.normalResidual A b x)) (norm.{0} (NLA.IE17.normalResidual A b y))) ∧
+      ∀ (y : NLA.IE17.Vec n),
+        Membership.mem.{0, 0} (NLA.IE17.krylov A b k) y →
+          Eq.{1} (norm.{0} (NLA.IE17.normalResidual A b y)) (norm.{0} (NLA.IE17.normalResidual A b x)) →
+            LE.le.{0} (norm.{0} x) (norm.{0} y)
+def NLA.IE17.IsTerminatingLSMRRun : {m n N : ℕ} →
+  NLA.IE17.Mat m n → NLA.IE17.Vec m → (Fin (HAdd.hAdd.{0, 0, 0} N 1) → NLA.IE17.Vec n) → Prop :=
+fun {m n N} A b xs =>
+  Eq.{1} (xs 0) 0 ∧
+    (∀ (k : Fin (HAdd.hAdd.{0, 0, 0} N 1)), NLA.IE17.IsLSMRIterate A b (↑k) (xs k)) ∧
+      (∀ (k : Fin (HAdd.hAdd.{0, 0, 0} N 1)), LT.lt.{0} (↑k) N → Ne.{1} (NLA.IE17.normalResidual A b (xs k)) 0) ∧
+        Eq.{1} (NLA.IE17.normalResidual A b (xs (Fin.last N))) 0
+def NLA.IE17.IsMoorePenrose.{u_1, u_2} : {ι : Type u_1} →
+  {κ : Type u_2} →
+    [Fintype.{u_1} ι] →
+      [Fintype.{u_2} κ] →
+        [DecidableEq.{u_1 + 1} ι] →
+          [DecidableEq.{u_2 + 1} κ] → Matrix.{u_1, u_2, 0} ι κ ℝ → Matrix.{u_2, u_1, 0} κ ι ℝ → Prop :=
+fun {ι} {κ} [Fintype.{u_1} ι] [Fintype.{u_2} κ] [DecidableEq.{u_1 + 1} ι] [DecidableEq.{u_2 + 1} κ] K P =>
+  Eq.{max (u_1 + 1) (u_2 + 1)}
+      (HMul.hMul.{u_1, max u_1 u_2, max u_1 u_2} (HMul.hMul.{max u_1 u_2, max u_1 u_2, u_1} K P) K) K ∧
+    Eq.{max (u_1 + 1) (u_2 + 1)}
+        (HMul.hMul.{u_2, max u_1 u_2, max u_1 u_2} (HMul.hMul.{max u_1 u_2, max u_1 u_2, u_2} P K) P) P ∧
+      Eq.{u_1 + 1} (Matrix.transpose.{0, u_1, u_1} (HMul.hMul.{max u_1 u_2, max u_1 u_2, u_1} K P))
+          (HMul.hMul.{max u_1 u_2, max u_1 u_2, u_1} K P) ∧
+        Eq.{u_2 + 1} (Matrix.transpose.{0, u_2, u_2} (HMul.hMul.{max u_1 u_2, max u_1 u_2, u_2} P K))
+          (HMul.hMul.{max u_1 u_2, max u_1 u_2, u_2} P K)
+def NLA.IE17.IsApproximation : {m n : ℕ} → NLA.IE17.Mat m n → NLA.IE17.Vec m → NLA.IE17.Vec n → ℝ → Prop :=
+fun {m n} A b x q =>
+  Ne.{1} x 0 ∧
+    ite.{1} (Eq.{1} (NLA.IE17.normalResidual A b x) 0) (Eq.{1} q 0)
+      (∃ P,
+        NLA.IE17.IsMoorePenrose.{0, 0} (NLA.IE17.stacked A b x) P ∧
+          Eq.{1} q
+            (HDiv.hDiv.{0, 0, 0}
+              (norm.{0}
+                ((Matrix.toEuclideanLin.{0, 0, 0} (HMul.hMul.{0, 0, 0} (NLA.IE17.stacked A b x) P))
+                  (NLA.IE17.stackedResidual A b x)))
+              (norm.{0} x)))
+def NLA.IE17.OptimalErrorsNonincreasing : Prop :=
+∀ (m n N : ℕ) (A : NLA.IE17.Mat m n) (b : NLA.IE17.Vec m) (xs : Fin (HAdd.hAdd.{0, 0, 0} N 1) → NLA.IE17.Vec n),
+  NLA.IE17.IsTerminatingLSMRRun A b xs →
+    ∀ (i j : Fin (HAdd.hAdd.{0, 0, 0} N 1)),
+      Eq.{1} (↑j) (HAdd.hAdd.{0, 0, 0} (↑i) 1) →
+        Ne.{1} (xs i) 0 →
+          Ne.{1} (xs j) 0 →
+            ∀ (μ ν : ℝ), NLA.IE17.IsOptimalError A b (xs i) μ → NLA.IE17.IsOptimalError A b (xs j) ν → LE.le.{0} ν μ
+def NLA.IE17.ApproximationErrorsNonincreasing : Prop :=
+∀ (m n N : ℕ) (A : NLA.IE17.Mat m n) (b : NLA.IE17.Vec m) (xs : Fin (HAdd.hAdd.{0, 0, 0} N 1) → NLA.IE17.Vec n),
+  NLA.IE17.IsTerminatingLSMRRun A b xs →
+    ∀ (i j : Fin (HAdd.hAdd.{0, 0, 0} N 1)),
+      Eq.{1} (↑j) (HAdd.hAdd.{0, 0, 0} (↑i) 1) →
+        Ne.{1} (xs i) 0 →
+          Ne.{1} (xs j) 0 →
+            ∀ (μ ν : ℝ), NLA.IE17.IsApproximation A b (xs i) μ → NLA.IE17.IsApproximation A b (xs j) ν → LE.le.{0} ν μ
+'NLA.IE17.spectralNorm' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]
+'NLA.IE17.IsOptimalError' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]
+'NLA.IE17.IsApproximation' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]
+NLA.IE17.spectralNorm_semantics {m n : ℕ} (E : NLA.IE17.Mat m n) (c : ℝ) (hc : LE.le.{0} 0 c) :
+  LE.le.{0} 0 (NLA.IE17.spectralNorm E) ∧
+    (LE.le.{0} (NLA.IE17.spectralNorm E) c ↔
+      ∀ (y : NLA.IE17.Vec n),
+        LE.le.{0} (norm.{0} ((Matrix.toEuclideanLin.{0, 0, 0} E) y)) (HMul.hMul.{0, 0, 0} c (norm.{0} y)))
+NLA.IE17.witness_full_column_rank : Function.Injective.{1, 1} ⇑(Matrix.toEuclideanLin.{0, 0, 0} NLA.IE17.witnessA)
+NLA.IE17.exact_lsmr_run :
+  NLA.IE17.IsTerminatingLSMRRun NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessRun ∧
+    Ne.{1} NLA.IE17.witnessX₁ 0 ∧ Ne.{1} NLA.IE17.witnessX₂ 0 ∧ Ne.{1} NLA.IE17.witnessX₃ 0
+NLA.IE17.optimal_errors :
+  ∃ μ₁ μ₂,
+    NLA.IE17.IsOptimalError NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₁ μ₁ ∧
+      NLA.IE17.IsOptimalError NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₂ μ₂ ∧
+        LE.le.{0} 0 μ₁ ∧
+          LE.le.{0} 0 μ₂ ∧
+            LE.le.{0} (HPow.hPow.{0, 0, 0} μ₁ 2) (1979 / 2000) ∧ LT.lt.{0} (99 / 100) (HPow.hPow.{0, 0, 0} μ₂ 2)
+NLA.IE17.approximation_values :
+  ∃ q₁ q₂,
+    NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₁ q₁ ∧
+      NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₂ q₂ ∧
+        (∀ (q : ℝ), NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₁ q → Eq.{1} q q₁) ∧
+          (∀ (q : ℝ), NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₂ q → Eq.{1} q q₂) ∧
+            LE.le.{0} 0 q₁ ∧
+              LE.le.{0} 0 q₂ ∧
+                Eq.{1} (HPow.hPow.{0, 0, 0} q₁ 2) (69694107852573439503892031925 / 69323394392991282508138323472) ∧
+                  Eq.{1} (HPow.hPow.{0, 0, 0} q₂ 2)
+                    (5430772101137459612205263871781350 / 5387955615790281743396033884265233)
+NLA.IE17.terminal_errors_zero :
+  NLA.IE17.IsOptimalError NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₃ 0 ∧
+    NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₃ 0
+NLA.IE17.both_errors_increase :
+  ∃ μ₁ μ₂ q₁ q₂,
+    NLA.IE17.IsOptimalError NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₁ μ₁ ∧
+      NLA.IE17.IsOptimalError NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₂ μ₂ ∧
+        NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₁ q₁ ∧
+          NLA.IE17.IsApproximation NLA.IE17.witnessA NLA.IE17.witnessB NLA.IE17.witnessX₂ q₂ ∧
+            LT.lt.{0} μ₁ μ₂ ∧
+              LT.lt.{0} q₁ q₂ ∧
+                LE.le.{0} (HPow.hPow.{0, 0, 0} μ₁ 2) (1979 / 2000) ∧
+                  LT.lt.{0} (1979 / 2000) (99 / 100) ∧
+                    LT.lt.{0} (99 / 100) (HPow.hPow.{0, 0, 0} μ₂ 2) ∧
+                      LT.lt.{0} (HPow.hPow.{0, 0, 0} q₁ 2) (503 / 500) ∧
+                        LT.lt.{0} (503 / 500) (1007 / 1000) ∧ LT.lt.{0} (1007 / 1000) (HPow.hPow.{0, 0, 0} q₂ 2)
+NLA.IE17.canonical_counterexamples : ¬NLA.IE17.OptimalErrorsNonincreasing ∧ ¬NLA.IE17.ApproximationErrorsNonincreasing
