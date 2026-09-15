@@ -2,7 +2,7 @@
 
 **113 problems with open targets:** 42 open and 71 partially resolved. **104 other retained entries**, excluded from the open count.
 
-**Resolution evidence:** 73 solved (published or independently audited); 31 solved with Lean verification.
+**Resolution evidence:** 72 solved (published or independently audited); 32 solved with Lean verification.
 
 Each entry records its own literature-check date. Literature checks are bounded; ratings are editorial. “Impact” uses the canonical `Importance` field.
 
@@ -104,7 +104,7 @@ Retained entries outside the open count:
 
 | ID | Problem | Status | Difficulty | Impact | Read / source |
 | --- | --- | --- | --- | --- | --- |
-| [MF-02](matrix-functions-and-stability/MF-02/README.md) | Multiplication overhead of cubic sign compositions | **✅ SOLVED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-02/problem.pdf) · [TeX](matrix-functions-and-stability/MF-02/problem.tex) |
+| [MF-02](matrix-functions-and-stability/MF-02/README.md) | Multiplication overhead of cubic sign compositions | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-02/problem.pdf) · [TeX](matrix-functions-and-stability/MF-02/problem.tex) |
 | [MF-03](matrix-functions-and-stability/MF-03/README.md) | A uniform disk bound for wave-kernel Padé approximants | **✅ SOLVED** | hard | interesting to specialist | [PDF](matrix-functions-and-stability/MF-03/problem.pdf) · [TeX](matrix-functions-and-stability/MF-03/problem.tex) |
 | [MF-05](matrix-functions-and-stability/MF-05/README.md) | Local Hölder continuity of the joint spectral radius | **✅ SOLVED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-05/problem.pdf) · [TeX](matrix-functions-and-stability/MF-05/problem.tex) |
 | [MF-06](matrix-functions-and-stability/MF-06/README.md) | A pointwise Lipschitz lower bound for the joint spectral radius | **✅ SOLVED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-06/problem.pdf) · [TeX](matrix-functions-and-stability/MF-06/problem.tex) |
