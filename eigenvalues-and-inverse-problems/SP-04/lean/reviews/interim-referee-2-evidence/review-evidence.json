@@ -1,0 +1,340 @@
+{
+  "phase": "interim source review only; not complete-target or operational approval",
+  "reviewer": "OpenAI Codex GPT-6 AI agent /root/existing_verification_audit; independent, no proof edits",
+  "finding": "No substantive defects found in the eight scoped modules",
+  "boundary_commit": "623e14e6aa93a01fca90591f96590ce79728c8f4",
+  "scoped_module_sha256": {
+    "NLA/SP04/Certificates.lean": "7df4b0076bea8477303b443fba38b63bc56f9ceb9b686d86aceb3ee98e9253ae",
+    "NLA/SP04/ScalarRoots.lean": "10a164b132fe80f8ca4f41991d5d1a62b5a211af2b8da67fbd27e11e33396ffd",
+    "NLA/SP04/ScalarPositive.lean": "2553f53b3afb9b10684a4bc832d381a64ae7d623d087c0004135869771818819",
+    "NLA/SP04/Scalar.lean": "ac3e9f16df037341ef5456bb678b639d5558516453045b3da1c181f57972001e",
+    "NLA/SP04/Diagonal.lean": "b7ab981903496315ef1e5044b37ac95a74812d406b0dffe1a96869375dcff012",
+    "NLA/SP04/MatrixStationary.lean": "efb3f4f1f87cc462bcd082f8670423b29fb88f7e218a1266880dacd47752b5c0",
+    "NLA/SP04/Generic.lean": "180c239a74baa45f6cf1cdf6bf94fafde7e2d6571ac8e301128060dbc996b057",
+    "NLA/SP04/Orthogonal.lean": "fa731e33236da52f6d81f8b0a474b5d1d7b8ec4b0da3f71527ad724c30d2bbfb"
+  },
+  "all_scoped_and_frozen_inputs_unchanged_after_review": true,
+  "frozen_input_sha256": {
+    "NLA/SP04/Definitions.lean": "6ec0afd466bfb054b9a46353f37a01e39333259e2579f21ae5fd52b5e9d57161",
+    "Challenge.lean": "79aa3fe4ce1d75157f153b259660a8abd08cd8f0cecc7d0fad3ebcca0cf98381",
+    "NUMERICAL_TARGETS.md": "e14351bfa611bf6f1d1c7302b0584866bb54074c9db3c1e8f43c1f5dee571290",
+    "comparator.json": "d0783ec075a831cee2a501a46e02e42258b995f9fbf377dab1c749bba95457ff",
+    "lakefile.toml": "1f4038f5e6c2f3ed9409d51f444f1ca2256b03a828d69b0dca855f61f2b082fd",
+    "lake-manifest.json": "0b777416633b6ab6cecb4b739da1148251ec285a20225da94da6f72b56bddcab",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+    "reviews/initial/independent-exact-check.py": "41729e1a69cb0b5e3aa314f6dfb4a427e16467edec5022de0ff29229b06123dc",
+    "reviews/initial/independent-exact-check.json": "8333c86c264642f175a0134ccc085dbfd6b8051ee0ab1fdb08836e1d15e33873",
+    "reviews/initial/source-hashes.json": "a5aa8f0e6f552ebd9045a18b623792a1af8155e5ba312685028776370dc210ea"
+  },
+  "excluded_modules": [
+    "Finiteness.lean",
+    "SpectralIntervals.lean",
+    "any later final proof/assembly modules"
+  ],
+  "fresh_project": "/private/tmp/nla-campaign-existing-review/SP04-interim-source-build",
+  "reuse": "pinned dependency package cache only; no existing project artifacts",
+  "commands": [
+    {
+      "argv": [
+        "lake",
+        "build",
+        "NLA.SP04.Diagonal",
+        "NLA.SP04.Generic",
+        "NLA.SP04.Orthogonal"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "InterimAudit.lean"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "lean_toolchain": "leanprover/lean4:v4.33.1",
+  "kernel_trust_assertion_count": 53,
+  "actual_axiom_closures": {
+    "NLA.SP04.scalar_numerical_bounds": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.scalar_admissible_bounds": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.scalar_admissible_pos": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negative_roots": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negativeMagnitude_pos": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negative_quadratic_roots": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.positiveRoot_continuous": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negativeMagnitude_continuous": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negative_roots_parameter_strict": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negative_roots_order": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selectedProduct_continuous": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selectedProduct_strict": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selectedProduct_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selectedProduct_endpoint": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selected_parameter_exists": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.positive_discriminant": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.nonnegative_roots": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.nonnegative_quadratic_roots": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.nonnegative_roots_order": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.largeRoot_difference": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.nonnegative_product_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.nonnegative_scalar_impossible": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.negative_scalar_comparison": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.scalar_least_unique": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selected_scalar_stationary": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.improved_scalar_feasible": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.scalar_distance_improves": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.diagonal_difference_frobeniusSq": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.selected_unique_least": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.diagonal_counterexample_full": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.feasible_det_ne_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_cross": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_other_cross": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_gram_commutes": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.admissible_pos": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.admissible_injective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.admissible_sq_injective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_diagonal_gram": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_diagonal_matrix": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.all_diagonal_stationary_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.polynomial_avoids_open": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.orthogonal_transpose": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.orthogonal_abs_det": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.orthogonal_inverse_transport": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.orthogonal_cancel_left": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.feasible_orthogonal_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.frobeniusSq_eq_trace": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.frobeniusSq_orthogonal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.frobeniusNorm_orthogonal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.orthogonal_stationary_expression": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_orthogonal_forward": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.stationary_orthogonal_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "NLA.SP04.full_orthogonal_transport": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "evidence_sha256": {
+    "scope-inputs.json": "a9d50dc0155b79089e39486d942c8c0b2ab20ac90440c51d059557198f407e8f",
+    "audited-declarations.json": "461153d3f82070198354af21bb1e79a05b0b02c77c67f6374f6481af235e0f1d",
+    "InterimAudit.lean": "06cad2aa57401c51d8a2c4b552437713c84ac4e100d2b9daa7e63981f09a5fd8",
+    "fresh-interim-build.log": "534457a77dc81b2023a9edf2d6eaa26e16739183497b28a73000db176a0e3ede",
+    "interim-audit.log": "b11fff6b519f632485aa744b277f89a80805e6fd7f0a1f3a0eb8ed69c8d98d68"
+  },
+  "remaining_gates": [
+    "Full stationary-set finiteness",
+    "Spectral intervals, actual SVD and regularity",
+    "Final assembly and all eleven exact exports",
+    "Independent complete final source reviews",
+    "Actual Linux Comparator/default-kernel verification and operational reviews"
+  ]
+}

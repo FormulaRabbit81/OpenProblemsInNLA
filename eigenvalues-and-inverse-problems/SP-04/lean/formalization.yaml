@@ -1,0 +1,154 @@
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'SP-04: generic failure of the smallest-absolute-multiplier rule'
+  description: 'Complete original generic selection rule refuted: a nonempty open family of real 3×3 data matrices
+    has invertibility, distinct squared singular values, a finite full stationary set, a unique least-absolute-multiplier
+    pair and a strictly closer feasible matrix in the actual Frobenius norm.'
+  authors:
+  - George Stepaniants
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California Institute of Technology
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+repository:
+  role: substantive-development
+  note: Complete locally compiled candidate. Independent final source reviews, actual Comparator and authoritative
+    isolated Linux verification are pending; canonical status remains Solved.
+sources:
+- title: SP-04 — The smallest-multiplier rule for nearest unit-absolute-determinant matrices
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/8f04b905eb2e0827b6b84f37d9d080ae1f05b202/eigenvalues-and-inverse-problems/SP-04/README.md
+  type: web-post
+  relationship: formalizes
+  location: 'Complete original universal question: all n≥2, both determinant signs, every real stationary matrix
+    and multiplier, actual Frobenius distance and every proper real algebraic exception.'
+  author_endorsement: not-contacted
+  note: Permanent ID, canonical path and complete original statement remain unchanged. The original question and
+    stationary framework remain credited to Jasmijn A. Baaijens and Jan Draisma.
+- title: 'SP-04: A generic counterexample to the smallest-absolute-multiplier rule'
+  authors:
+  - Matthew J. Colbrook
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/8f04b905eb2e0827b6b84f37d9d080ae1f05b202/eigenvalues-and-inverse-problems/SP-04/solution.md
+  type: manuscript
+  relationship: formalizes
+  location: 'Theorem SP-04, sections1–4: every ordered real singular-value triple in (7/4,44/25), complete stationary
+    reduction, unique least multiplier, strict sign-flip improvement and algebraic-generic failure.'
+  author_endorsement: not-contacted
+  note: Original mathematical authorship remains Matthew J. Colbrook, Department of Applied Mathematics and Theoretical
+    Physics, University of Cambridge. The complete source is preserved. The formal proof adds explicit full stationary-set
+    finiteness and constructs a polynomial-sign open subset through actual Gram eigenvalues/SVD. Illustrative
+    decimal values and unnecessary asymptotic observations are not claimed as additional results. Formalization
+    credit is supplied as requested by the campaign user; no separate author endorsement or external human review
+    is asserted.
+related_formalizations:
+- id: https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof
+  relationship: other
+  note: Structure/API and explicit LeanCert kernel-trust reference; shared checker uses hash-locked Comparator/exporter
+    sources.
+- id: https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1
+  relationship: other
+  note: Statement/proof structure reference. No mathematical implementation copied.
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    tool_setup: Pinned Lean4.33.1, LeanCert621a43d7cf21f87872392a01e874f2f1dbddc926, Mathlib0df444a360eaa60ab8c11dca51a86af692955474.
+      Two independent exact-byte statement approvals preceded implementation at commit623e14e6.
+    prompting_notes: Preserve all real stationary matrices and multipliers, both determinant signs, the literal
+      Frobenius norm, full finiteness, unique selection and every possible proper real algebraic exception. Minimize
+      computation using exact square-root identities, an unexpanded companion-tensor eliminant, three Gram-root
+      intervals and polynomial uniqueness on infinite real boxes.
+  notes: 'Substantial AI assistance. Proof contributors: coordinator /root and /root/target_inventory. Independent
+    statement/final referees /root/reference_api_review and /root/existing_verification_audit contributed no proof
+    code. Repository Tau Ceti adaptation; no official endorsement, external human review, novelty certification
+    or unmeasured cost claims.'
+status:
+  scope: All eleven frozen declarations are implemented and compile locally with kernel-trust assertions and the
+    permitted three axioms. The proof covers every ordered scalar triple in the original box, all actual admissible
+    SVDs, and a nonempty full-nine-dimensional polynomial-sign open family; it defeats every nonzero polynomial
+    exception and negates the full original universal rule. Complete-source reviews, real Comparator, reproducible
+    isolated Linux verification and operational audits remain pending. Canonical status remains Solved. Challenge
+    has eleven deliberate specification-only placeholders, excluded from proof-development sorry counts.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: &id001
+  - propext
+  - Classical.choice
+  - Quot.sound
+  main_results:
+  - declaration: NLA.SP04.numerical_bounds
+    file: NLA/SP04/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP04.diagonal_stationary_iff
+    file: NLA/SP04/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP04.diagonal_counterexample
+    file: NLA/SP04/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP04.diagonal_finite
+    file: NLA/SP04/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP04.orthogonal_transport
+    file: NLA/SP04/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP04.spectral_family
+    file: NLA/SP04/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP04.regular_svd
+    file: NLA/SP04/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP04.open_family_counterexamples
+    file: NLA/SP04/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP04.algebraic_avoidance
+    file: NLA/SP04/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP04.generic_counterexamples
+    file: NLA/SP04/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.SP04.canonical_counterexample
+    file: NLA/SP04/Proof.lean
+    sorry_count: 0
+    axioms: *id001
+    comparator_config: comparator.json
+    literature_dependencies: []
+review:
+  status: independent statements approved; complete local candidate awaiting final source and operational review
+  reviewers:
+  - /root/reference_api_review (independent Codex AI agent)
+  - /root/existing_verification_audit (independent Codex AI agent)
+  notes: Both exact pre-proof statement approvals and all ten frozen inputs are retained under reviews/. The interim
+    review of eight modules is explicitly not final approval. Current local logs show complete proof compilation
+    and transitive permitted axioms. No completed Comparator, isolated Linux run, final source approval or Lean
+    verified promotion is claimed.
