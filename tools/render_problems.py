@@ -29,6 +29,8 @@ def plain_pdf_title(title):
 
 def restore_pdf_layout(identifier, body):
     """Keep document commands out of the public mathematical statements."""
+    if identifier == "MF-02":
+        body = body.replace("## Lean proof and verification evidence", "\\newpage\n\n## Lean proof and verification evidence", 1)
     if identifier == "MF-22":
         heading = "## Resolution: affirmative, 11 September 2026\n"
         body = body.replace(heading, "\\pagestyle{plain}\n\n" + heading, 1)

@@ -34,7 +34,7 @@ LSMR},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}IE-17}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-11}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-15}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -51,10 +51,36 @@ optimal backward error along LSMR\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to the community\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
+\subsection{Lean verification ---
+2026-09-15}\label{lean-verification-2026-09-15}
+
+The complete original negative resolution is \textbf{Lean verified}:
+both canonical errors strictly increase between the same successive
+nonzero exact LSMR iterates. The proof establishes the attained minimum
+over all real matrix-only spectral perturbations, the literal
+Moore--Penrose approximation and its unique value, and the complete
+minimizing LSMR run through first termination.
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/6e53192977d87097666c039f6d8134a800ff7501/linear-systems-and-elimination/IE-17/lean}{All
+eight independently reviewed targets} passed
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35016724809}{fresh
+Linux Comparator and default-kernel verification}.
+
+\textbf{Formalization:} George Stepaniants, Department of Computing and
+Mathematical Sciences, California Institute of Technology, with
+substantial OpenAI Codex assistance. \textbf{Original mathematical
+counterexample:} Matthew J. Colbrook, as credited in the preserved
+resolution below.
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/linear-systems-and-elimination/IE-17/lean/README.md}{Lean
+project and reproduction} ·
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/linear-systems-and-elimination/IE-17/lean/formalization.yaml}{formalization
+metadata} ·
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/linear-systems-and-elimination/IE-17/lean/reviews}{two
+source and two operational reviews}.
+
 \subsection{Independently reviewed resolution -
 2026-09-11}\label{independently-reviewed-resolution---2026-09-11}
 
@@ -93,12 +119,16 @@ Let \(A\in\mathbb R^{m\times n}\) and \(b\in\mathbb R^m\). In exact
 arithmetic, start LSMR at \(x_0=0\): equivalently, \(x_k\) minimizes
 \(\|A^T(b-Ax)\|_2\) over \(\mathcal K_k(A^TA,A^Tb)\). Work up to its
 exact termination and use its minimum-length iterate if necessary. Let
-\(r=b-Ax\) and define the matrix-only normwise backward error \[
-\mu(x)=\min\{\|E\|_2:(A+E)^T((A+E)x-b)=0\}.
-\] For \(x\ne0\), put \(K_x=[A^T,\,(\|r\|_2/\|x\|_2)I]^T\),
-\(v_x=[r^T,0^T]^T\), and \[
-\widetilde\mu(x)=\frac{\|K_xK_x^{\dagger}v_x\|_2}{\|x\|_2}.
-\] Here \(\dagger\) is the Moore--Penrose inverse; at an exact
+\(r=b-Ax\) and define the matrix-only normwise backward error
+
+\[\mu(x)=\min\{\|E\|_2:(A+E)^T((A+E)x-b)=0\}.\]
+
+For \(x\ne0\), put \(K_x=[A^T,\,(\|r\|_2/\|x\|_2)I]^T\),
+\(v_x=[r^T,0^T]^T\), and
+
+\[\widetilde\mu(x)=\frac{\|K_xK_x^{\dagger}v_x\|_2}{\|x\|_2}.\]
+
+Here \(\dagger\) is the Moore--Penrose inverse; at an exact
 least-squares solution set both errors to zero.
 
 Are both sequences \(\mu(x_k)\) and \(\widetilde\mu(x_k)\)

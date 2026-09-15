@@ -1,0 +1,64 @@
+{
+  "verdict": "PASS publication review checks",
+  "reviewer": "OpenAI GPT-6 Codex /root/reference_api_review, independent AI",
+  "proof_commit": "6e53192977d87097666c039f6d8134a800ff7501",
+  "original_canonical_recovered_byte_exactly": true,
+  "registry_size": 217,
+  "registry_unchanged": true,
+  "other_canonical_pages_unchanged": 216,
+  "catalog_status_counts": {
+    "Solved": 72,
+    "Open": 42,
+    "Partially resolved": 71,
+    "Lean verified": 32
+  },
+  "changed_receipt_inputs": [
+    "README.md",
+    "formalization.yaml"
+  ],
+  "unchanged_receipt_inputs": 67,
+  "unchanged_final_source_inputs": 19,
+  "frozen_boundary_inputs_unchanged": 10,
+  "archive_hashes_match": true,
+  "publication_contains_no_contact_email": true,
+  "pdf_pages": 2,
+  "pdf_visual_review": "Both independently rendered pages inspected; readable equations, no clipped text, overlap, missing glyphs or broken section flow.",
+  "input_sha256": {
+    "CATALOG.md": "48cc7b31acf2de04cb01964218523ce66d5515b96f20733da4af7715cad9c7ba",
+    "README.md": "975b2148f8fc6e099e0083fb0031ec8e15025672f3a3b987fee656a9c36a79c0",
+    "linear-systems-and-elimination/IE-17/README.md": "bcb4d2642e6bb4a817845aee7d500319af7f3a99dd12dddab49ab79d7e9ba7ab",
+    "linear-systems-and-elimination/IE-17/lean/README.md": "65fd9257c8b451b79c1afcb1d179bc080ea85e457546e9ae8151f744e243cbaa",
+    "linear-systems-and-elimination/IE-17/lean/formalization.yaml": "4e6d8a7f2533de07f601162cc5ac41532a0d9793f1edc1629a485de68874df15",
+    "linear-systems-and-elimination/IE-17/problem.pdf": "c16e362bfdb9ac6ee7279e2a638ee9cd1475404a08a53b2b446becf80d23e42f",
+    "linear-systems-and-elimination/IE-17/problem.tex": "a5c3d9a412a1edf517403ab8e11bd403d22f3bb0164ea7421069db6608ee7fbd",
+    "linear-systems-and-elimination/README.md": "073d21d68572a11f97df9346ae963e47e0d54e4c0b9cd340a4964ccd581337f3",
+    "linear-systems-and-elimination/IE-17/lean/reviews/final-referee-1.md": "fbc127712f361748a6ac724228c2cd3fc3ae54d940737f6c964545fe49b8aa49",
+    "linear-systems-and-elimination/IE-17/lean/reviews/final-referee-2.md": "cf7d61b26b375704b39be59290af47183700081cff16858ef0cadd05a0284e14",
+    "linear-systems-and-elimination/IE-17/lean/reviews/linux-referee-1.md": "fdad927bc16da65616c214a00141628d2d084305c6c7c5886a5a1fbb7b02eee4",
+    "linear-systems-and-elimination/IE-17/lean/reviews/linux-referee-2.md": "e0b83a67c552cb132479c27675fc61dca00a99ddaadd0a8fa652601c2daa029d",
+    "problem_ids.json": "d7f9925a483d40030ef266917bc8e413dac6d45530ad5515da506ffe9583e763",
+    "linear-systems-and-elimination/IE-17/lean/verification/linux-2026-09-15/SHA256SUMS": "e88c2594f3c2bacd7477b643be49ff20ece31c532e5296e806398437e2611dff"
+  },
+  "validation_commands": [
+    {
+      "command": "python3 tools/validate_problem_ids.py --base-ref origin/main",
+      "exit_code": 0,
+      "ids": 217
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p 'test_problem_ids.py' -v",
+      "exit_code": 0,
+      "tests": 17
+    },
+    {
+      "command": "/private/tmp/nla-lean-audit-python/bin/python tools/lean/validate_manifest.py linear-systems-and-elimination/IE-17/lean",
+      "exit_code": 0,
+      "declarations": 8
+    }
+  ],
+  "pdf_tools": [
+    "pdfinfo",
+    "pdftoppm -scale-to 1500 -png",
+    "pdftotext -layout"
+  ]
+}
