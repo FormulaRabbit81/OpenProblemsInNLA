@@ -1,0 +1,109 @@
+OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA                                                                               PF-02
+
+
+
+
+Nonnegative and positive factorizations
+
+
+Connectedness of minimal positive
+semidefinite factorization orbits
+Diﬀiculty: challenging       Importance: interesting to the community
+Status: Lean verified
+
+Rating rationale: Challenging because topology of optimal PSD factorizations must be controlled be-
+yond size two; community importance concerns nonuniqueness and separated solution families in con-
+strained factorization algorithms.
+Area: geometry of constrained matrix factorizations
+
+Lean verification — 2026-09-15
+
+The complete original negative answer is Lean verified. An explicit positive integer matrix has ordinary
+rank six, attained real PSD rank three, and a disconnected quotient of its entire size-three PSD factor-
+ization space under all real invertible congruences. The proof establishes the actual quotient topology
+and a continuous two-valued separator on all factorizations. All nine independently reviewed targets
+passed fresh Linux Comparator and default-kernel verification. The additional all-size constructions in
+the preserved manuscript are not claimed as formal results here.
+Formalization: George Stepaniants, Department of Computing and Mathematical Sciences, California
+Institute of Technology, with substantial OpenAI Codex assistance. Original mathematical counterex-
+ample: Matthew J. Colbrook, as credited in the preserved resolution below. Lean project and reproduc-
+tion · formalization metadata · two source and two operational reviews.
+
+Resolution — 2026-09-11
+
+Author: Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics, University
+of Cambridge. Independent Codex-agent review: PASS for the exact target.
+A strictly positive integer 6 × 6 matrix has ordinary rank six and real positive semidefinite rank three,
+while its minimal-factor congruence quotient is disconnected. A continuous congruence-invariant ori-
+entation takes opposite signs on two explicit factorizations, proving actual disconnectedness in the re-
+quired quotient topology. Further constructions cover every factor size 𝑘 ≥ 3, including strictly positive
+rational examples by a nonquantitative perturbation argument.
+The complete target is resolved. Its former diﬀiculty rating is historical; the original statement, refer-
+ences and dated audits remain below.
+Primary reference: complete authored PDF, standalone TeX, Theorem 1; Theorem 4 extends the coun-
+terexamples to every factor size. Independent proof review · Authorship and submission record. Ver-
+ification is independent agent review, not external human peer review or formal certification.
+
+Context and notation
+
+Write 𝕊𝑘+ for the cone of real symmetric positive semidefinite 𝑘 × 𝑘 matrices. For an entrywise nonneg-
+                     𝑝×𝑞
+ative matrix 𝑀 ∈ ℝ+ , its real positive semidefinite rank is
+
+            rankpsd (𝑀) = min{𝑘 ≥ 1 ∶ ∃𝐴1 , … , 𝐴𝑝 , 𝐵1 , … , 𝐵𝑞 ∈ 𝕊𝑘+ ,              𝑀𝑖𝑗 = tr(𝐴𝑖 𝐵𝑗 ) for all 𝑖, 𝑗}.
+
+This definition concerns a family of matrix factors indexed by the rows and columns of 𝑀.
+
+
+
+
+Editorial ratings; a bounded search cannot certify that a problem remains unsolved.
+Literature check: 2026-09-15                                                                                               1
+OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA                                                                    PF-02
+
+
+
+
+Problem statement
+                                                                 𝑝×𝑞
+Let 𝑘 ≥ 3 and 𝑝, 𝑞 ≥ 1 be integers. Suppose 𝑀 ∈ ℝ+                     satisfies
+
+                                                       𝑘(𝑘 + 1)
+                                       rank(𝑀) =                ,        rankpsd (𝑀) = 𝑘.
+                                                           2
+
+Let ℱ𝑘 (𝑀) be the set of all tuples (𝐴1 , … , 𝐴𝑝 , 𝐵1 , … , 𝐵𝑞 ) in (𝕊𝑘+ )𝑝+𝑞 satisfying tr(𝐴𝑖 𝐵𝑗 ) = 𝑀𝑖𝑗 for every
+𝑖, 𝑗. Give it the Euclidean subspace topology. Identify tuples under the changes of basis
+
+                                𝐴𝑖 ⟼ 𝑆T 𝐴𝑖 𝑆,          𝐵𝑗 ⟼ 𝑆−1 𝐵𝑗 𝑆−T ,              𝑆 ∈ 𝐺𝐿(𝑘, ℝ).
+
+Give the resulting orbit space the quotient topology.
+
+
+Question
+
+Is ℱ𝑘 (𝑀)/𝐺𝐿(𝑘, ℝ) connected for every 𝑀 satisfying these hypotheses?
+The ordinary-rank hypothesis is part of the problem. The case 𝑘 = 2 is known to be connected. The
+question asks whether optimal factors can belong to separated families after changes of basis are iden-
+tified.
+
+References
+
+Fawzi, Gouveia, Parrilo, Robinson, and Thomas, Positive semidefinite rank, §9.2, Problem 9.4. Richard Z.
+Robinson, The Positive Semidefinite Rank of Matrices and Polytopes, University of Washington dissertation
+(2015), Chapter 7, especially Proposition 7.0.8.
+
+Status check — 2026-09-10
+
+Rechecked Fawzi et al., §9.2, Problem 9.4, including the ordinary-rank hypothesis, and searched for
+connectedness of PSD factorization orbits. No resolution for k at least three was located. The proved
+k=2 case is excluded here; disconnected nonnegative factorizations do not automatically remain discon-
+nected in the PSD orbit space. No recent primary reaﬀirmation of the exact higher-size question was
+found.
+
+
+
+
+Editorial ratings; a bounded search cannot certify that a problem remains unsolved.
+Literature check: 2026-09-15                                                                                     2
+
