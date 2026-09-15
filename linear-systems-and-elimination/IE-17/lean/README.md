@@ -1,9 +1,8 @@
 # IE-17: both LSMR backward errors can increase
 
-**Verification stage: complete local proof candidate.** All eight exported
-statements compile and pass local kernel-trust and permitted-axiom checks.
-Independent final source review and fresh isolated Linux Comparator verification
-remain pending. The canonical problem remains **Solved**.
+**Verification status: Lean verified.** All eight complete-target declarations
+passed fresh isolated Linux Comparator, default-kernel replay and permitted-axiom
+checks. Both independent final source reviews and both operational audits passed.
 
 **Formalization:** George Stepaniants, Department of Computing and Mathematical
 Sciences, California Institute of Technology, with substantial OpenAI Codex
@@ -80,17 +79,54 @@ tools/lean/verify.sh linear-systems-and-elimination/IE-17/lean /absolute/path/to
 
 The shared [harness instructions](../../../tools/lean/HARNESS.md) specify the real
 Landrun/Bubblewrap isolation, fresh committed-input snapshot, default-kernel
-replay, axiom gates and rejection controls. No isolated Linux run is claimed yet.
+replay, axiom gates and rejection controls. The successful authoritative run is
+recorded below.
 
 ## Independent review and metadata
 
 Two non-implementing AI agents approved the exact boundary before proofs, frozen
 at commit `5d9ae3c9`. The [freeze record](reviews/statement-freeze.json) and
 both statement reports retain all ten input hashes. Those inputs remain unchanged.
-Final review follows the repository [Tau Ceti adaptation](../../../docs/lean/REVIEW.md).
+Both independent complete-source reviews approved: [referee 1](reviews/final-referee-1.md)
+and [referee 2](reviews/final-referee-2.md). They follow the repository
+[Tau Ceti adaptation](../../../docs/lean/REVIEW.md).
 All reviews are AI-agent reviews; no external human peer review or official Tau
 Ceti endorsement is asserted.
 
 [formalization.yaml](formalization.yaml) records authorship, source attribution,
-automation, all eight exports and the actual verification stage. Status promotion
-requires both full-source approvals and reproducible Linux verification.
+automation, all eight exports and the completed verification stage. The optional
+source variants and generic completion theorem are preserved in the manuscript;
+this project proves the complete canonical negative resolution using its exact witness.
+
+
+## Authoritative Linux verification
+
+[Run 35016724809, attempt 1](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35016724809/attempts/1)
+verified immutable proof revision
+[`6e531929`](https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/6e53192977d87097666c039f6d8134a800ff7501/linear-systems-and-elimination/IE-17/lean)
+on Ubuntu 24.04. The [target job](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35016724809/job/104542092686)
+completed all eight Challenge/Solution comparisons, transitive permitted-axiom
+checks, default-kernel replay, real sandbox probes, three raw-kernel controls,
+five Comparator regressions, and separate sorry/native rejection controls.
+
+The [permanent archive](verification/linux-2026-09-15/) retains the original ZIP,
+all thirteen extracted members, GitHub provenance and the full source receipt.
+Artifact `10416087458` has SHA-256
+`b2b2a164604c4922ebd9e614e39aa9c8dcb1d184be07e845e71adf93272c03c3`.
+
+```bash
+cd verification/linux-2026-09-15
+shasum -a 256 -c SHA256SUMS
+```
+
+Both independent operational audits approved: [referee 1](reviews/linux-referee-1.md)
+and [referee 2](reviews/linux-referee-2.md). Each checked all 69 candidate input
+hashes against the verified Git revision and previously approved source. The
+standalone checker-controls workflow job was skipped because shared tools were
+unchanged; all required controls ran within the actual IE-17 verify job.
+
+Publication changes update status, documentation, evidence and rendered artifacts.
+The mathematical statements, proofs and dependency inputs remain those verified
+at the immutable proof revision. Pending-stage wording inside historical reports
+is closed by these later approvals. No second independent Linux execution or
+external human review is claimed.

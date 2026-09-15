@@ -1,0 +1,169 @@
+{
+  "reviewer": "Codex AI agent /root/existing_verification_audit",
+  "date": "2026-09-15",
+  "verdict": "PASS actual Linux operational gate",
+  "repository_commit": "6e53192977d87097666c039f6d8134a800ff7501",
+  "run_id": 35016724809,
+  "attempt": 1,
+  "verify_job_id": 104542092686,
+  "artifact_id": 10416087458,
+  "artifact_digest_independently_confirmed": "sha256:b2b2a164604c4922ebd9e614e39aa9c8dcb1d184be07e845e71adf93272c03c3",
+  "zip_members_exactly_matched": [
+    "bootstrap/elan.log",
+    "bootstrap/landrun-build.log",
+    "bootstrap/comparator-build.log",
+    "verify-20260915T195942Z-4000/comparator-controls.log",
+    "verify-20260915T195942Z-4000/comparator.log",
+    "verify-20260915T195942Z-4000/dependencies.log",
+    "verify-20260915T195942Z-4000/kernel-controls.log",
+    "verify-20260915T195942Z-4000/mathlib-cache.log",
+    "verify-20260915T195942Z-4000/negative-native.log",
+    "verify-20260915T195942Z-4000/negative-sorry.log",
+    "verify-20260915T195942Z-4000/result.json",
+    "verify-20260915T195942Z-4000/sandbox.log",
+    "verify-20260915T195942Z-4000/user-service.log"
+  ],
+  "all_receipt_files_matched_to_git_and_current": 69,
+  "all_reviewed_final_inputs_matched": 21,
+  "all_frozen_inputs_matched": 10,
+  "actual_export_names": [
+    "NLA.IE17.spectralNorm_semantics",
+    "NLA.IE17.witness_full_column_rank",
+    "NLA.IE17.exact_lsmr_run",
+    "NLA.IE17.optimal_errors",
+    "NLA.IE17.approximation_values",
+    "NLA.IE17.terminal_errors_zero",
+    "NLA.IE17.both_errors_increase",
+    "NLA.IE17.canonical_counterexamples"
+  ],
+  "axiom_reports": {
+    "NLA.IE17.optimal_error_bounds": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.penrose_projection_unique": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.penroseAt_correct": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.approximation_error_values": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.spectralNorm_semantics": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.witness_full_column_rank": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.exact_lsmr_run": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.optimal_errors": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.approximation_values": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.terminal_errors_zero": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.both_errors_increase": "propext, Classical.choice, Quot.sound",
+    "NLA.IE17.canonical_counterexamples": "propext, Classical.choice, Quot.sound"
+  },
+  "checks_present": {
+    "comparator-controls.log": [
+      "PASS: all five Comparator regressions",
+      0
+    ],
+    "kernel-controls.log": [
+      "PASS: all three actual Comparator.runBuiltinKernel cases behaved as required",
+      0
+    ],
+    "negative-sorry.log": [
+      "Illegal axiom detected: 'sorryAx'",
+      1
+    ],
+    "negative-native.log": [
+      "Illegal axiom detected: 'checked._native.native_decide.ax_1_1'",
+      1
+    ],
+    "sandbox.log": [
+      "Outer and export fixture contents unchanged; only designated build fixture written.",
+      0
+    ],
+    "user-service.log": [
+      "RestrictAddressFamilies=~AF_UNIX",
+      0
+    ],
+    "dependencies.log": [
+      "checking out revision '0df444a360eaa60ab8c11dca51a86af692955474'",
+      0
+    ],
+    "mathlib-cache.log": [
+      "Already decompressed 8690 file(s)",
+      0
+    ]
+  },
+  "jobs": [
+    {
+      "id": 104541919123,
+      "name": "select",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "6e53192977d87097666c039f6d8134a800ff7501",
+      "run_attempt": 1
+    },
+    {
+      "id": 104542092686,
+      "name": "verify (IE-17, linear-systems-and-elimination/IE-17/lean)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "6e53192977d87097666c039f6d8134a800ff7501",
+      "run_attempt": 1
+    },
+    {
+      "id": 104542095391,
+      "name": "checker-controls",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "6e53192977d87097666c039f6d8134a800ff7501",
+      "run_attempt": 1
+    }
+  ],
+  "infrastructure_only_job_skipped_reason": "Conditioned on shared-tool changes; no such changes. All actual verify-job controls ran unconditionally and passed.",
+  "source_lock_sha256": "b3833b07916e5db77579b9cc53ca582282f6a841f36d6a60d693e5b02d342b6b",
+  "reviewed_harness_sha256": "f81767a17973956fbe9e5765c664d4639cce15ddf8c106f70cdcb32151808c2f",
+  "reviewed_workflow_sha256": "2c3963089483ec5e7e35e6355fa60988778e0b439ce099d7cd7050a8c3b6467c",
+  "unchanged_infrastructure_from_published_base": true,
+  "pinned_comparator_sources_previously_independently_retrieved_and_revalidated_against_unchanged_lock": [
+    {
+      "source": "lean-proof/reproduction/tool-sources/comparator/Main.lean",
+      "sha256": "e6d9b43bbd8bbdd66ae6f87d7a3e69d6a2e0ba7fdc666b2559f2026f8c83b361",
+      "bytes": 13137
+    },
+    {
+      "source": "lean-proof/reproduction/tool-sources/comparator/Comparator/Compare.lean",
+      "sha256": "9bc34cb7de5a069a6fef7f3b13b20fea22f1d52603f74320a93d519b735ad3dd",
+      "bytes": 4089
+    },
+    {
+      "source": "lean-proof/reproduction/tool-sources/comparator/Comparator/Axioms.lean",
+      "sha256": "863c5e1329811be0427880e08c171de733343491c5a3619b5dbf2e12b34c6125",
+      "bytes": 2389
+    },
+    {
+      "source": "lean-proof/reproduction/tool-sources/comparator/Comparator/Util.lean",
+      "sha256": "693d845330dd7122565aeb19314a3e3de4b49f9a8a7ac6e1fadbc9ab374b9f88",
+      "bytes": 788
+    }
+  ],
+  "strict_sandbox_source_sha256": "4d6172274dd6109b1171dc01548512aa1af31f1e8fed88aa40b3c8b831345e1c",
+  "archived_evidence_sha256": {
+    "SHA256SUMS": "e88c2594f3c2bacd7477b643be49ff20ece31c532e5296e806398437e2611dff",
+    "artifact-provenance.json": "fa6a9ec942901e837bd963dccacc8103e0b82869c8d8db443316314923942db9",
+    "bootstrap/comparator-build.log": "a74af021904ae8db9652f3ae34b319cd0a4c72c30dad81d11fa051db0de4e59f",
+    "bootstrap/elan.log": "b9711b498167d8e7f8fd98d6ec303edfe75693784469d39bb7ec47d487c1420f",
+    "bootstrap/landrun-build.log": "fddaebb73345274c62a6676a68d959f9ebc573ac991e0240ee276c887e44415b",
+    "job-provenance.json": "bf3e655c4d7570a61334387e1d091ab5096a06ff13ab10655a8ab62b6f78e656",
+    "lean-IE-17.zip": "b2b2a164604c4922ebd9e614e39aa9c8dcb1d184be07e845e71adf93272c03c3",
+    "run-provenance.json": "e920d7afd90a151088dee8d2d2d5bdb3a1cb12dd175a5e1be228014e56b3b3ad",
+    "verify-20260915T195942Z-4000/comparator-controls.log": "c2f5bad08ff6839c4f7317abee53402908e0a0ba2e6740b7dbca1455b52a10fc",
+    "verify-20260915T195942Z-4000/comparator.log": "0ff063d9656279e7d44fd6cc520252f89d19371d61f561724a73362223f889a9",
+    "verify-20260915T195942Z-4000/dependencies.log": "740fcb700c777ae28e11ddf7c40e50a87ba79bbe97b1a1e1d21a314fea802b4d",
+    "verify-20260915T195942Z-4000/kernel-controls.log": "ac5884a6a9aab533b23369a1a9a4e453f745264bbaeb2e13d60d94569c45a361",
+    "verify-20260915T195942Z-4000/mathlib-cache.log": "b285188daff503f15658ef7b3d40ab9d02eeeeaadf596956909d21a8c366c43a",
+    "verify-20260915T195942Z-4000/negative-native.log": "4c41db460697e73c376b083805006281e9e470cecdbed9835a8e98bc32a4f031",
+    "verify-20260915T195942Z-4000/negative-sorry.log": "a46e6cc08bf3b1281d328a30d99c091a5328ffe1c6028d68034d270f3fa4e791",
+    "verify-20260915T195942Z-4000/result.json": "4224f96bf51e6ddc27ad33e2e02055526243615989580ae6adaeb18dfce67b89",
+    "verify-20260915T195942Z-4000/sandbox.log": "0b511635f13e3e6771091fa34eb25bb8ed0e25bd1f9f7be6b5682330c752e41d",
+    "verify-20260915T195942Z-4000/user-service.log": "4700d2ea9f713793f38154d753a4e1aa1ff05342dc9d3ac4cfd5ffde7d53851a"
+  },
+  "independent_github_jobs_sha256": "bf3e655c4d7570a61334387e1d091ab5096a06ff13ab10655a8ab62b6f78e656",
+  "independent_github_artifact_sha256": "4365c99531330fe8435b81a0b430aaff5903407f288827936a735c975be67cea",
+  "limits": [
+    "Audited actual remote run, not a second Linux execution.",
+    "No independent retrieval of runner executables; their hashes are recorded in authenticated receipt.",
+    "Fresh project compilation uses dependency cache, followed by exported closure default-kernel replay.",
+    "Source/semantic approval is separately established by independent reports."
+  ]
+}
