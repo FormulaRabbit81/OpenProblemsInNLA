@@ -1,0 +1,96 @@
+Matrix.vec.{u_1, u_2, u_3} {m : Type u_1} {n : Type u_2} {R : Type u_3} (A : Matrix m n R) : n × m → R
+Matrix.vec_transpose.{u_1, u_2, u_3} {m : Type u_1} {n : Type u_2} {R : Type u_3} (A : Matrix m n R) :
+  A.transpose.vec = A.vec ∘ Prod.swap
+Matrix.vec_bijective.{u_1, u_2, u_3} {m : Type u_3} {n : Type u_2} {R : Type u_1} : Function.Bijective Matrix.vec
+Matrix.vec_eq_zero_iff.{u_1, u_2, u_3} {m : Type u_2} {n : Type u_3} {R : Type u_1} [Zero R] {A : Matrix m n R} :
+  A.vec = 0 ↔ A = 0
+Matrix.kronecker_mulVec_vec.{u_1, u_2, u_3, u_4, u_5} {l : Type u_1} {m : Type u_2} {n : Type u_4} {p : Type u_5}
+  {R : Type u_3} [NonUnitalCommSemiring R] [Fintype m] [Fintype n] (A : Matrix l m R) (X : Matrix m n R)
+  (B : Matrix p n R) : (Matrix.kroneckerMap (fun x1 x2 => x1 * x2) B A).mulVec X.vec = (A * X * B.transpose).vec
+Matrix.vec_dotProduct_vec.{u_1, u_2, u_3} {m : Type u_2} {n : Type u_3} {R : Type u_1} [AddCommMonoid R] [Mul R]
+  [Fintype m] [Fintype n] (A B : Matrix m n R) : A.vec ⬝ᵥ B.vec = (A.transpose * B).trace
+Matrix.star_vec_dotProduct_vec.{u_1, u_2, u_3} {m : Type u_2} {n : Type u_3} {R : Type u_1} [AddCommMonoid R] [Mul R]
+  [Star R] [Fintype m] [Fintype n] (A B : Matrix m n R) : star A.vec ⬝ᵥ B.vec = (A.conjTranspose * B).trace
+Matrix.PosDef.kronecker.{u_1, u_2, u_3} {𝕜 : Type u_1} {n : Type u_2} [RCLike 𝕜] [Finite n] {m : Type u_3} [Finite m]
+  {x : Matrix n n 𝕜} {y : Matrix m m 𝕜} (hx : x.PosDef) (hy : y.PosDef) :
+  (Matrix.kroneckerMap (fun x1 x2 => x1 * x2) x y).PosDef
+Matrix.PosDef.inv.{u_2, u_5} {n : Type u_2} [Fintype n] {K : Type u_5} [Field K] [PartialOrder K] [StarRing K]
+  [DecidableEq n] {M : Matrix n n K} (hM : M.PosDef) : M⁻¹.PosDef
+Matrix.PosDef.isUnit.{u_2, u_5} {n : Type u_2} [Fintype n] {K : Type u_5} [Field K] [PartialOrder K] [StarRing K]
+  [DecidableEq n] {M : Matrix n n K} (hM : M.PosDef) : IsUnit M
+Matrix.PosDef.conjTranspose_mul_mul_same.{u_1, u_2, u_3} {m : Type u_1} {n : Type u_2} {R : Type u_3} [Ring R]
+  [PartialOrder R] [StarRing R] [Fintype n] [Fintype m] {A : Matrix n n R} {B : Matrix n m R} (hA : A.PosDef)
+  (hB : Function.Injective B.mulVec) : (B.conjTranspose * A * B).PosDef
+Matrix.PosSemidef.conjTranspose_mul_mul_same.{u_1, u_2, u_3} {m : Type u_1} {n : Type u_2} {R : Type u_3} [Ring R]
+  [PartialOrder R] [StarRing R] [Fintype n] [Finite m] {A : Matrix n n R} (hA : A.PosSemidef) (B : Matrix n m R) :
+  (B.conjTranspose * A * B).PosSemidef
+Matrix.PosSemidef.trace_nonneg.{u_2, u_3} {n : Type u_2} {R : Type u_3} [Ring R] [PartialOrder R] [StarRing R]
+  [Fintype n] [AddLeftMono R] {A : Matrix n n R} (hA : A.PosSemidef) : 0 ≤ A.trace
+Matrix.PosSemidef.re_dotProduct_nonneg.{u_2, u_3} {n : Type u_2} {𝕜 : Type u_3} [Fintype n] [RCLike 𝕜]
+  {A : Matrix n n 𝕜} (hA : A.PosSemidef) (x : n → 𝕜) : 0 ≤ RCLike.re (star x ⬝ᵥ A.mulVec x)
+Matrix.PosDef.re_dotProduct_pos.{u_2, u_3} {n : Type u_2} {𝕜 : Type u_3} [Fintype n] [RCLike 𝕜] {A : Matrix n n 𝕜}
+  (hA : A.PosDef) {x : n → 𝕜} (hx : x ≠ 0) : 0 < RCLike.re (star x ⬝ᵥ A.mulVec x)
+Matrix.IsHermitian.posSemidef_iff_eigenvalues_nonneg.{u_2, u_3} {n : Type u_2} {𝕜 : Type u_3} [Fintype n] [RCLike 𝕜]
+  {A : Matrix n n 𝕜} [DecidableEq n] (hA : A.IsHermitian) : A.PosSemidef ↔ 0 ≤ hA.eigenvalues
+Matrix.IsHermitian.mulVec_eigenvectorBasis.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {n : Type u_2} [Fintype n]
+  {A : Matrix n n 𝕜} [DecidableEq n] (hA : A.IsHermitian) (j : n) :
+  A.mulVec (hA.eigenvectorBasis j).ofLp = hA.eigenvalues j • (hA.eigenvectorBasis j).ofLp
+Matrix.IsHermitian.spectral_theorem.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {n : Type u_2} [Fintype n] {A : Matrix n n 𝕜}
+  [DecidableEq n] (hA : A.IsHermitian) :
+  A =
+    ((Unitary.conjStarAlgAut 𝕜 (Matrix n n 𝕜)) hA.eigenvectorUnitary) (Matrix.diagonal (RCLike.ofReal ∘ hA.eigenvalues))
+Matrix.IsHermitian.cfc_eq.{u_1, u_2} {n : Type u_1} {𝕜 : Type u_2} [RCLike 𝕜] [Fintype n] [DecidableEq n]
+  {A : Matrix n n 𝕜} (hA : A.IsHermitian) (f : ℝ → ℝ) : cfc f A = hA.cfc f
+CFC.sqrt_nonneg.{u_1} {A : Type u_1} [PartialOrder A] [NonUnitalRing A] [TopologicalSpace A] [StarRing A] [Module ℝ A]
+  [SMulCommClass ℝ A A] [IsScalarTower ℝ A A] [StarOrderedRing A]
+  [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] [NonnegSpectrumClass ℝ A] (a : A) : 0 ≤ CFC.sqrt a
+CFC.sqrt_mul_sqrt_self.{u_1} {A : Type u_1} [PartialOrder A] [NonUnitalRing A] [TopologicalSpace A] [StarRing A]
+  [Module ℝ A] [SMulCommClass ℝ A A] [IsScalarTower ℝ A A] [StarOrderedRing A]
+  [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] [NonnegSpectrumClass ℝ A] [IsSemitopologicalRing A]
+  [T2Space A] (a : A) (ha : 0 ≤ a := by cfc_tac) : CFC.sqrt a * CFC.sqrt a = a
+CFC.sqrt_unique.{u_1} {A : Type u_1} [PartialOrder A] [NonUnitalRing A] [TopologicalSpace A] [StarRing A] [Module ℝ A]
+  [SMulCommClass ℝ A A] [IsScalarTower ℝ A A] [StarOrderedRing A]
+  [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] [NonnegSpectrumClass ℝ A] [IsSemitopologicalRing A]
+  [T2Space A] {a b : A} (h : b * b = a) (hb : 0 ≤ b := by cfc_tac) : CFC.sqrt a = b
+CFC.isUnit_sqrt_iff.{u_1} {A : Type u_1} [PartialOrder A] [Ring A] [StarRing A] [TopologicalSpace A] [StarOrderedRing A]
+  [Algebra ℝ A] [ContinuousFunctionalCalculus ℝ A IsSelfAdjoint] [NonnegSpectrumClass ℝ A] [IsSemitopologicalRing A]
+  [T2Space A] (a : A) (ha : 0 ≤ a := by cfc_tac) : IsUnit (CFC.sqrt a) ↔ IsUnit a
+CFC.posPart_nonneg.{u_1} {A : Type u_1} [NonUnitalRing A] [Module ℝ A] [SMulCommClass ℝ A A] [IsScalarTower ℝ A A]
+  [StarRing A] [TopologicalSpace A] [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] [PartialOrder A]
+  [StarOrderedRing A] (a : A) : 0 ≤ a⁺
+CFC.negPart_nonneg.{u_1} {A : Type u_1} [NonUnitalRing A] [Module ℝ A] [SMulCommClass ℝ A A] [IsScalarTower ℝ A A]
+  [StarRing A] [TopologicalSpace A] [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] [PartialOrder A]
+  [StarOrderedRing A] (a : A) : 0 ≤ a⁻
+CFC.posPart_sub_negPart.{u_1} {A : Type u_1} [NonUnitalRing A] [Module ℝ A] [SMulCommClass ℝ A A] [IsScalarTower ℝ A A]
+  [StarRing A] [TopologicalSpace A] [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] (a : A)
+  (ha : IsSelfAdjoint a := by cfc_tac) : a⁺ - a⁻ = a
+CFC.posPart_mul_negPart.{u_1} {A : Type u_1} [NonUnitalRing A] [Module ℝ A] [SMulCommClass ℝ A A] [IsScalarTower ℝ A A]
+  [StarRing A] [TopologicalSpace A] [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] (a : A) : a⁺ * a⁻ = 0
+CFC.posPart_add_negPart.{u_2} {A : Type u_2} [NonUnitalRing A] [StarRing A] [TopologicalSpace A] [Module ℝ A]
+  [SMulCommClass ℝ A A] [IsScalarTower ℝ A A] [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] [PartialOrder A]
+  [StarOrderedRing A] [NonnegSpectrumClass ℝ A] [IsTopologicalRing A] [T2Space A] (a : A)
+  (ha : IsSelfAdjoint a := by cfc_tac) : a⁺ + a⁻ = CFC.abs a
+CFC.abs_smul.{u_1, u_2} {𝕜 : Type u_1} {A : Type u_2} [RCLike 𝕜] [NonUnitalRing A] [TopologicalSpace A] [Module 𝕜 A]
+  [StarRing A] [PartialOrder A] [StarOrderedRing A] [IsScalarTower 𝕜 A A] [SMulCommClass 𝕜 A A] [Module ℝ A]
+  [SMulCommClass ℝ A A] [IsScalarTower ℝ A A] [NonnegSpectrumClass ℝ A] [IsTopologicalRing A] [T2Space A]
+  [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] [StarModule 𝕜 A] [StarModule ℝ A] [IsScalarTower ℝ 𝕜 A]
+  (r : 𝕜) (a : A) : CFC.abs (r • a) = ‖r‖ • CFC.abs a
+CFC.abs_sq.{u_2} {A : Type u_2} [Ring A] [TopologicalSpace A] [StarRing A] [PartialOrder A] [StarOrderedRing A]
+  [Algebra ℝ A] [NonnegSpectrumClass ℝ A] [IsTopologicalRing A] [T2Space A]
+  [ContinuousFunctionalCalculus ℝ A IsSelfAdjoint] (a : A) : CFC.abs a ^ 2 = star a * a
+CFC.abs_eq_zero_iff.{u_2} {A : Type u_2} [NonUnitalNormedRing A] [StarRing A] [CStarRing A] [NormedSpace ℝ A]
+  [SMulCommClass ℝ A A] [IsScalarTower ℝ A A] [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint] [PartialOrder A]
+  [StarOrderedRing A] [NonnegSpectrumClass ℝ A] {a : A} : CFC.abs a = 0 ↔ a = 0
+Matrix.trace_mul_cycle.{u_2, u_3, u_4, u_6} {m : Type u_2} {n : Type u_3} {p : Type u_4} {R : Type u_6} [Fintype m]
+  [Fintype n] [Fintype p] [NonUnitalCommSemiring R] (A : Matrix m n R) (B : Matrix n p R) (C : Matrix p m R) :
+  (A * B * C).trace = (C * A * B).trace
+IsSelfAdjoint.hasEigenvector_of_isMaxOn.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {E : Type u_2} [NormedAddCommGroup E]
+  [InnerProductSpace 𝕜 E] [CompleteSpace E] {T : E →L[𝕜] E} (hT : IsSelfAdjoint T) {x₀ : E} (hx₀ : x₀ ≠ 0)
+  (hextr : IsMaxOn T.reApplyInnerSelf (Metric.sphere 0 ‖x₀‖) x₀) :
+  Module.End.HasEigenvector (↑T) (↑(⨆ x, T.rayleighQuotient ↑x)) x₀
+LinearMap.IsSymmetric.hasEigenvalue_iSup_of_finiteDimensional.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {E : Type u_2}
+  [NormedAddCommGroup E] [InnerProductSpace 𝕜 E] [FiniteDimensional 𝕜 E] {T : E →ₗ[𝕜] E} [Nontrivial E]
+  (hT : T.IsSymmetric) : Module.End.HasEigenvalue T ↑(⨆ x, RCLike.re (inner 𝕜 (T ↑x) ↑x) / ‖↑x‖ ^ 2)
+LinearMap.IsSymmetric.hasEigenvalue_iInf_of_finiteDimensional.{u_1, u_2} {𝕜 : Type u_1} [RCLike 𝕜] {E : Type u_2}
+  [NormedAddCommGroup E] [InnerProductSpace 𝕜 E] [FiniteDimensional 𝕜 E] {T : E →ₗ[𝕜] E} [Nontrivial E]
+  (hT : T.IsSymmetric) : Module.End.HasEigenvalue T ↑(⨅ x, RCLike.re (inner 𝕜 (T ↑x) ↑x) / ‖↑x‖ ^ 2)

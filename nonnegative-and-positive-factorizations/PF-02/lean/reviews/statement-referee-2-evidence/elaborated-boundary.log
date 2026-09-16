@@ -1,0 +1,43 @@
+instDiscreteTopologyBool
+instTopologicalSpaceSubtype
+instTopologicalSpaceQuot
+def NLA.PF02.IsFactorization : {p q k : ℕ} → Mat p q → FactorTuple p q k → Prop :=
+fun {p q k} M F =>
+  (∀ (i : Fin p), Matrix.PosSemidef (F.1 i)) ∧
+    (∀ (j : Fin q), Matrix.PosSemidef (F.2 j)) ∧ ∀ (i : Fin p) (j : Fin q), (F.1 i * F.2 j).trace = M i j
+def NLA.PF02.IsPSDRank : {p q : ℕ} → Mat p q → ℕ → Prop :=
+fun {p q} M k => IsLeast {ℓ | 1 ≤ ℓ ∧ Nonempty (Factorization M ℓ)} k
+def NLA.PF02.Congruent : {p q k : ℕ} → {M : Mat p q} → Factorization M k → Factorization M k → Prop :=
+fun {p q k} {M} F G =>
+  ∃ S,
+    (∀ (i : Fin p), (↑G).1 i = Matrix.transpose ↑S * (↑F).1 i * ↑S) ∧
+      ∀ (j : Fin q), (↑G).2 j = ↑S⁻¹ * (↑F).2 j * Matrix.transpose ↑S⁻¹
+@[reducible] def NLA.PF02.OrbitSpace : {p q : ℕ} → Mat p q → ℕ → Type :=
+fun {p q} M k => Quot Congruent
+def NLA.PF02.AllMinimalOrbitsConnected : Prop :=
+∀ (k p q : ℕ),
+  3 ≤ k →
+    1 ≤ p →
+      1 ≤ q →
+        ∀ (M : Mat p q),
+          (∀ (i : Fin p) (j : Fin q), 0 ≤ M i j) →
+            Matrix.rank M = k * (k + 1) / 2 → IsPSDRank M k → IsConnected Set.univ
+NLA.PF02.witness_data :
+  (∀ (i j : Fin 6), 0 < witnessM i j) ∧
+    Matrix.det witnessM = 8192 ∧
+      Matrix.rank witnessM = 6 ∧
+        Matrix.det (rowCoordinates (witnessFactors 1)) = 32 ∧ Matrix.det (rowCoordinates (witnessFactors (-1))) = -32
+NLA.PF02.witness_factorizations :
+  IsFactorization witnessM (witnessTuple 1) ∧
+    IsFactorization witnessM (witnessTuple (-1)) ∧
+      (∀ (i : Fin 6), Matrix.PosDef (witnessFactors 1 i)) ∧ ∀ (i : Fin 6), Matrix.PosDef (witnessFactors (-1) i)
+NLA.PF02.witness_minimal_rank : IsPSDRank witnessM 3
+NLA.PF02.orbit_semantics {p q k : ℕ} (M : Mat p q) :
+  Topology.IsQuotientMap (Quot.mk Congruent) ∧
+    ∀ (F G : Factorization M k), Quot.mk Congruent F = Quot.mk Congruent G ↔ Congruent F G
+NLA.PF02.orientation_nonvanishing (F : Factorization witnessM 3) : orientationDet F ≠ 0
+NLA.PF02.orientation_preserved (F G : Factorization witnessM 3) :
+  Congruent F G → (0 < orientationDet F ↔ 0 < orientationDet G)
+NLA.PF02.quotient_separation : ∃ f, Continuous f ∧ Function.Surjective f
+NLA.PF02.witness_disconnected : ¬IsConnected Set.univ
+NLA.PF02.canonical_counterexample : ¬AllMinimalOrbitsConnected
