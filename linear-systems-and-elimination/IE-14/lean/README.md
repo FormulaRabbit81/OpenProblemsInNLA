@@ -1,12 +1,14 @@
 # IE-14: sharp growth for complex cyclic tridiagonal partial pivoting
 
-**Stage: complete local proof candidate.** All seven reviewed declarations build
-in `Solution` with explicit kernel-trust assertions and only the three permitted
-axioms. Both exact-byte pre-proof statement reviews approved the ten boundary
-inputs, committed at `58b516b6dbb7fa4e885b679d261bf779c263aad4` before proof
-implementation. Independent complete-source reviews and authoritative Linux
-Comparator/default-kernel verification are pending. Canonical status remains
-**Solved**.
+**Stage: complete proof accepted by actual canonical Linux verification.**
+[Run 35035525244](https://github.com/ajt60gaibb/OpenProblemsInNLA/actions/runs/35035525244/job/104603738111)
+checked proof commit `6e48f25fffdae2cf93e4985dc515abbd15e0481b` on
+15 September 2026. All seven targets passed kernel-trust assertions, actual
+non-root Comparator, default-kernel replay and required rejection/sandbox controls;
+each uses only propext, Classical.choice and Quot.sound. The complete mathematical
+source was accepted by two original independent referees and a subsequent full
+source/runtime referee; a separate operational audit reconciled the actual run.
+[Evidence and reports](reviews/operational) retain their precise scopes.
 
 **Formalization:** George Stepaniants, Department of Computing and Mathematical
 Sciences, California Institute of Technology, with substantial OpenAI Codex
@@ -47,7 +49,7 @@ without a cyclic-pattern or positive-dimension restriction.
 The [reviewed dossier](NUMERICAL_TARGETS.md) records all seven statements, exact
 source hashes and proof obligations. The frozen [Comparator configuration](comparator.json)
 allows no replaceable definition holes. [formalization.yaml](formalization.yaml)
-records this local candidate's scope, attribution, exports and pending gates.
+records the accepted scope, attribution, exports and actual proof-commit evidence.
 
 ## Proof structure and computation
 
@@ -102,20 +104,24 @@ Run Python commands in an environment with the dependencies from
 
 ```bash
 lake exe cache get
-lake build Challenge
-lake build Solution
+lake build
 python3 ../../../tools/lean/validate_manifest.py .
-python3 reviews/initial/exact-check.py > /tmp/ie14-exact-results.json
-cmp reviews/initial/exact-results.json /tmp/ie14-exact-results.json
 ```
+
+Solution is now the default target. For exact historical Fraction-diagnostic and
+source-hash reproduction, use immutable proof commit
+`6e48f25fffdae2cf93e4985dc515abbd15e0481b`: those records intentionally bind the
+then-current canonical README and pre-publication configuration.
 
 Pins: Lean **4.33.1**, Mathlib
 `0df444a360eaa60ab8c11dca51a86af692955474`, LeanCert
 `621a43d7cf21f87872392a01e874f2f1dbddc926`.
-The default Lake target remains the frozen Challenge. Its seven intentional
-specification placeholders establish no theorem and are excluded from the zero
-proof-development sorry counts. `Solution` imports the implemented proofs and
-does not import Challenge.
+The sole build-configuration update changes the default target from Challenge to
+Solution; the original frozen configuration is preserved under
+[publication before/](verification/publication-2026-09-15/before/lean/lakefile.toml).
+All mathematical and Challenge bytes, dependency pins and Comparator configuration
+remain unchanged. Challenge's seven intentional specification placeholders
+establish no theorem; Solution imports implemented proofs and never Challenge.
 
 The [local Solution build log](verification/local-solution-build.log) records
 successful kernel-trust assertions and axiom checks for all seven target closures.
@@ -128,20 +134,25 @@ nonzero/maximal pivots, exact tail-product identities and recorded growth. They
 also check the preserved source hashes. These finite diagnostics are not a proof
 of the universal result or the all-size witness.
 
-## Independent review and remaining gates
+## Independent review and actual evidence
 
 The [statement freeze](reviews/statement-freeze.json) retains all ten approved
 input hashes and both sealed statement reports:
 [referee 1](reviews/statement-referee-1.md) and
-[referee 2](reviews/statement-referee-2.md). Those inputs remain unchanged. The two
-referees contributed no proof code.
+[referee 2](reviews/statement-referee-2.md). All mathematical boundary inputs remain unchanged. The disclosed default-target
+change is bound in the publication transition, with its frozen original retained.
+The two referees contributed no proof code.
 
-The repository [review protocol](../../../docs/lean/REVIEW.md) applies Tau Ceti
-referee standards through independent AI-agent reviews. Complete-source reviews
-and the [Linux harness](../../../tools/lean/HARNESS.md) remain pending. Promotion
-requires actual pinned Lean4 Comparator, default-kernel replay, transitive
-permitted-axiom checks, real sandbox probes, rejection controls and independent
-operational review. No **Lean verified** status is asserted at this stage.
+The repository [review protocol](../../../docs/lean/REVIEW.md) applies scoped Tau
+Ceti standards through independent AI-agent reviews. The unchanged complete-source
+reports are [referee 1](reviews/final-source-referee-1.md) and
+[referee 2](reviews/final-source-referee-2.md). The subsequent
+[independent full source/runtime audit](reviews/operational/matrix-functions/REVIEW.md)
+and [separate runtime audit](verification/linux-2026-09-15/ROOT-AUDIT.json)
+accept the actual seven-target Linux execution, all 143 candidate inputs and
+required controls. Original local builds are historical evidence, not attributed
+to this publication agent. No local Lean/Lake execution was performed during
+publication. Later publication/merge commits require their own exact-commit runs.
 
 The pinned [Forsythe](https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof)
 and [Schiffer](https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1)
