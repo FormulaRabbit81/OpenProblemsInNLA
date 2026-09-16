@@ -1,0 +1,21 @@
+# MF-22 publication evidence checklist
+
+This is a preparation document. All runtime and PR values not actually observed are null in `EVIDENCE-SLOTS.json`. Do not promote the problem or fill acceptance fields from a source approval or successful prefix. Publish one pull request for permanent **MF-22** at its existing canonical path, preserving the full original target.
+
+1. **Complete actual proof run.** Obtain one successful Linux build of the entire held 29-file graph through Solution, including all 22 LeanCert trust assertions and actual transitive axiom prints. Bind every input to the run's Git revision, pre/post hashes and raw command logs. Preserve failed runs and the ProjectorRank before/after record; the latest observed failed run is not a complete pass.
+2. **Canonical package and configuration.** Put the standalone project at `matrix-functions-and-stability/MF-22/lean/` with the pinned toolchain, manifest, definitions, Challenge, all proof modules, metadata and original history. Copy mathematical bytes exactly from the accepted snapshot. Record the separate publication-only `defaultTargets = ["Solution"]` amendment for independent review, retaining the frozen historical Lakefile. Do not silently replace a frozen file. Preserve original authorship, George's full Caltech CMS affiliation, no email and the exponent-2/exponent-1 distinction.
+3. **Final independent source receipts.** Have both nonimplementing referees (root and inequalities) bind their complete reports and all repair addenda to the exact canonical source manifest and actual build logs. The root/projector implementing peer does not serve as its own independent final referee. Any later mathematical edit requires the appropriate renewed review; a changed statement requires a new statement freeze.
+4. **Fresh canonical Linux gates.** At an immutable canonical proof commit, run the unchanged pinned shared harness on non-root Linux in its real sandbox. Retain the session/uid/platform and toolchain/dependency pins; actual sandbox and rejection controls; default-kernel replay; every selected Comparator identity and transitive allowed-axiom report; the command logs and successful `result.json`. Verify all 22 configured declarations, an empty definition-hole list and source stability. A shared infrastructure self-test does not count as this problem's own verification.
+5. **Runtime reconciliation.** Both final referees inspect the real canonical logs and source hashes, resolve all earlier findings and record explicit final acceptance. Add only the actually observed axiom sets to metadata. Fill the canonical manifest, immutable proof URL, run/job/artifact IDs, receipt/log digests and both final reports in the evidence slots. Only then may `whole_problem_verified` become true.
+6. **Repository publication.** Recheck the original repository's open PRs/branches and relevant fork overlap before opening a duplicate. In a dedicated branch, update the existing problem page and RESOLVED entry to `Lean verified`, link the immutable proof revision and credit George by name/department/university. Retain the original mathematical source and stronger informal bound with correct scope. Include any affected Markdown, TeX, PDF and catalog outputs required by the repository's current contribution rules. Preserve every permanent ID and path.
+7. **Normal checks and one upstream PR.** Run the actual permanent-ID validator, catalog generator and ID tests against the branch's published base, plus applicable normal CI. Record commands and results. Verify the exact final publication commit's checks and source identity, push to George's branch and open one PR to `ajt60gaibb/OpenProblemsInNLA:main`, using the repository's current template. Fill the PR URL/head/base/check evidence. Do not imply merge or maintainer acceptance before it occurs.
+
+Required permanent-ID commands, to be run by the publication owner in the actual branch:
+
+```sh
+python3 tools/validate_problem_ids.py --base-ref origin/main
+python3 tools/update_catalog.py --base-ref origin/main
+python3 -m unittest discover -s tests -p 'test_problem_ids.py' -v
+```
+
+This draft performed no Lean/Lake execution, Git mutation, push, PR creation, status promotion or verified-count change. The authoring machine's operating system is not substituted for the required Linux Comparator environment.

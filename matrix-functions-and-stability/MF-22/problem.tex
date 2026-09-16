@@ -34,7 +34,7 @@ family},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}MF-22}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-11}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Verification check: 2026-09-16}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -51,7 +51,7 @@ conditioning of the cubic C1 spline Schrödinger Toeplitz family\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} hard\quad\textbf{Importance:} interesting
 to specialist\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
@@ -72,15 +72,17 @@ stability.
 Sciences, California Institute of Technology}, proves that for every
 fixed \(\rho>0\) there are \(K_\rho>0\) and \(n_\rho\) such that
 
-\[
-\kappa_2(H_n(\rho))\le K_\rho n\qquad(n\ge n_\rho).
-\]
+\[\kappa_2(H_n(\rho))\le K_\rho n\qquad(n\ge n_\rho).\]
 
 Thus the original question is answered affirmatively with exponent
 \(\alpha_\rho=1\). The result includes eventual invertibility, the
 parameter \(\rho=\sqrt{10}\), and the exact uncorrected Toeplitz
 boundary entries. The original ID, full statement, and historical
 ratings are retained below.
+
+\textbf{Formal scope:} The Lean proof below certifies the original
+polynomial target with exponent two; it does not certify this stronger
+linear estimate.
 
 The precise locator is the \textbf{Theorem in Section 1, proved in
 Sections 2--4} of the
@@ -99,17 +101,110 @@ Codex-agent mathematical review} returned \textbf{PASS} for the complete
 target. The
 \href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/stepaniants-mf22-2026-09-11/README.md}{submission
 record} documents substantial ChatGPT/Codex assistance, exact symbolic
-checks, the public branch/fork audit, and verification limits. This is
-independent automated-agent review, not external human peer review or
-formal proof certification. The source authors retain credit for the
-family, the root classification and the question.
+checks, the public branch/fork audit, and verification limits. That
+original review was informal automated-agent review. The separate Lean
+proof of the complete original target is documented below; external
+human peer review is not claimed. The source authors retain credit for
+the family, the root classification and the question.
+
+\newpage
+
+\subsection{Lean proof and verification
+evidence}\label{lean-proof-and-verification-evidence}
+
+\textbf{Formalization: George Stepaniants, Department of Computing and
+Mathematical Sciences, California Institute of Technology.} The
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/c701bfeea660473fc31ad9d0c74b76309be3b49f/matrix-functions-and-stability/MF-22/lean/Solution.lean}{complete
+Lean proof at immutable revision c701bfee} proves the full original
+target with exponent \textbf{two}:
+
+\[\forall\rho>0\ \exists K_\rho>0,\ n_0\ge1:\quad
+\det H_n(\rho)\ne0,\quad\kappa_2(H_n(\rho))\le K_\rho n^2
+\quad(n\ge n_0).\]
+
+The formal result uses the literal complex \(2n\times2n\) pure Toeplitz
+matrix, all eight original coefficient blocks, the exact boundary
+entries and the genuine Euclidean operator norm, with infinite condition
+number for singular matrices. It includes \(\rho=\sqrt{10}\). The
+original question permits any nonnegative polynomial exponent, so this
+settles it completely. \textbf{The stronger linear bound in the retained
+informal manuscript is outside the formalized claim.}
+
+All \textbf{22 declarations} are listed in
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-22/lean/formalization.yaml}{formalization.yaml}.
+The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-22/lean/NLA/MF22/Conditioning.lean}{quadratic
+estimate and final theorem} conclude with
+\textit{polynomial\_conditioning} in namespace \textit{NLA.MF22}. The
+independently reviewed
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-22/lean/Challenge.lean}{Challenge},
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-22/lean/NLA/MF22/Definitions.lean}{definitions}
+and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-22/lean/SourceCorrespondence-current.md}{source
+correspondence} preserve the complete target. Exact fixed-size transfer
+algebra, root classification, noncancellation and Green reconstruction
+prove an actual inverse. Cancelling growing terms before estimates and
+using dimension-times-entry norm bounds gives exponent two. A completed
+square and a consumed LeanCert integer-positivity certificate avoid
+interval searches.
+
+The project pins Lean \textbf{4.33.1}, Mathlib
+\textit{0df444a360eaa60ab8c11dca51a86af692955474} and LeanCert
+\textit{621a43d7cf21f87872392a01e874f2f1dbddc926}. On \textbf{16
+September 2026 UTC},
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35053254275/job/104658059786}{the
+actual GitHub Linux job} checked the exact proof revision above. All 22
+targets passed LeanCert kernel-trust assertions, non-root sandboxed
+Comparator statement matching and Lean default-kernel replay. Their
+transitive axioms are only \textit{propext}, \textit{Classical.choice}
+and \textit{Quot.sound}. Required kernel, statement-mismatch,
+forbidden-axiom and sandbox controls passed inside that job. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-22/lean/verification/linux-2026-09-16}{retained
+actual logs, ZIP and input hashes} bind its execution to all
+\textbf{634} candidate project files.
+
+Two independent AI-agent referees accepted the complete mathematical
+source and actual canonical evidence: the
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-22/lean/reviews/final/referee-continuation/runtime-35053254275/REVIEW.md}{continuation
+referee}, with a separate full 29-file review, and the
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-22/lean/reviews/final/referee-root/REVIEW.md}{root
+referee}. They applied the repository's scoped Tau Ceti protocol. Their
+reviews are distinct from external human peer review or proof of
+checker-software infallibility. No local macOS Lean execution is
+claimed. Bogoya, Böttcher, Ferrari, Grudsky and Serra-Capizzano retain
+credit for the family, source root classification and original question.
+
+For an ordinary proof build, enter
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-22/lean/README.md}{the
+Lean project} with its pinned toolchain and run:
+
+\begin{verbatim}
+lake exe cache get && lake build
+\end{verbatim}
+
+The default target builds the complete Solution without importing
+Challenge's specification placeholders. For the additional Comparator
+and rejection checks, follow the
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/docs/lean/README.md}{shared
+Linux instructions}. The evidence above names the checked proof commit;
+later publication and merge commits require separate exact-commit
+checks.
+
+The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-22/lean/verification/publication-2026-09-16/public-duplicate-audit}{bounded
+public duplicate audit} checked 249 public branch heads across 14
+repositories and 149 upstream PR records. Its only MF-22 Lean hits were
+this campaign's development and standalone proof commits. This is not a
+claim about private, deleted or otherwise undiscoverable work, nor a new
+literature search.
+
+\newpage
 
 \subsection{Statement}\label{statement}
 
 Define real \(2\times2\) matrices by
 
-\[
-\begin{aligned}
+\[\begin{aligned}
 B_{-1}&=\frac3{40}\begin{pmatrix}-1&0\\-5&0\end{pmatrix},&
 B_0&=\frac3{40}\begin{pmatrix}0&-5\\16&-5\end{pmatrix},\\
 B_1&=\frac3{40}\begin{pmatrix}-5&16\\-5&0\end{pmatrix},&
@@ -118,17 +213,14 @@ C_{-1}&=\frac1{80}\begin{pmatrix}1&0\\7&0\end{pmatrix},&
 C_0&=\frac1{80}\begin{pmatrix}24&7\\0&25\end{pmatrix},\\
 C_1&=\frac1{80}\begin{pmatrix}-25&0\\-7&-24\end{pmatrix},&
 C_2&=\frac1{80}\begin{pmatrix}0&-7\\0&-1\end{pmatrix}.
-\end{aligned}
-\]
+\end{aligned}\]
 
 Set \(B_k=C_k=0\) for all other integer indices. For a real parameter
 \(\rho>0\) and \(n\ge1\), form the \(2n\times2n\) complex block Toeplitz
 matrix
 
-\[
-H_n(\rho)=\bigl(iB_{j-k}-\rho C_{j-k}\bigr)_{j,k=0}^{n-1},
-\qquad i^2=-1.
-\]
+\[H_n(\rho)=\bigl(iB_{j-k}-\rho C_{j-k}\bigr)_{j,k=0}^{n-1},
+\qquad i^2=-1.\]
 
 Use the spectral condition number \(\kappa_2(H)=\|H\|_2\|H^{-1}\|_2\)
 for nonsingular \(H\) and \(\kappa_2(H)=+\infty\) for singular \(H\).
@@ -138,10 +230,8 @@ polynomial-growth question).} For every fixed \(\rho>0\), do there exist
 constants \(K_\rho>0\), \(\alpha_\rho\ge0\), and \(n_\rho\in\mathbb N\),
 independent of \(n\), such that
 
-\[
-\kappa_2(H_n(\rho))\le K_\rho n^{\alpha_\rho}
-\qquad\text{for every }n\ge n_\rho?
-\]
+\[\kappa_2(H_n(\rho))\le K_\rho n^{\alpha_\rho}
+\qquad\text{for every }n\ge n_\rho?\]
 
 The parameter remains fixed as \(n\to\infty\); no uniform-in-\(\rho\)
 bound or particular exponent is asserted. Eventual invertibility is part
