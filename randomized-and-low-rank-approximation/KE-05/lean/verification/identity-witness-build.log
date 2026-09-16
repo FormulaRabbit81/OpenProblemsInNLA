@@ -1,0 +1,42 @@
+⚠ [8707/8708] Replayed NLA.KE05.Recurrence
+warning: NLA/KE05/Recurrence.lean:26:55: `Fin.coe_cast` has been deprecated: Use `Fin.val_cast` instead
+warning: NLA/KE05/Recurrence.lean:26:69: This simp argument is unused:
+  Fin.val_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.getElem_drop, List.getElem_finRange, Fin.coe_cast] at hv
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✖ [8708/8708] Building NLA.KE05.IdentityWitness (79s)
+trace: .> LEAN_PATH=/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Cli/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/batteries/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Qq/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/aesop/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/importGraph/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/plausible/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/mathlib/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/leancert/.lake/build/lib/lean:/private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean /private/tmp/nla-lean-runtime/lean-4.33.1-darwin_aarch64/bin/lean /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/NLA/KE05/IdentityWitness.lean -o /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/IdentityWitness.olean -i /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/IdentityWitness.ilean -c /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/IdentityWitness.c --setup /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/IdentityWitness.setup.json --json
+error: NLA/KE05/IdentityWitness.lean:24:89: unsolved goals
+b : ℕ
+v l : Fin b → ℝ
+hv : ∀ (r : Fin b), v r ≠ 0
+r : Fin b
+⊢ Ring.inverse v r * l r * v r = l r
+info: NLA/KE05/IdentityWitness.lean:44:2: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+error: NLA/KE05/IdentityWitness.lean:39:54: unsolved goals
+b : ℕ
+l m v : Fin b → ℝ
+r : Fin b
+⊢ ((Matrix.diagonal fun i => l i * v i) - Matrix.diagonal fun i => v i * m i) r =
+    Matrix.diagonal (fun r => v r * l r - v r * m r) r
+warning: NLA/KE05/IdentityWitness.lean:40:43: This simp argument is unused:
+  ← Matrix.diagonal_sub
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.diagonal_mul_diagonal]
+
+Note: Simp arguments with `←` have the additional effect of removing the other direction from the simp set, even if the simp argument itself is unused. If the hint above does not work, try replacing `←` with `-` to only get that effect and silence this warning.
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Lean exited with code 1
+Some required targets logged failures:
+- NLA.KE05.IdentityWitness
+error: build failed

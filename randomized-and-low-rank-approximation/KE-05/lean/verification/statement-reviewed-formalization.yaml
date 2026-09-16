@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/99c678e569c7c4c0772db297c5ddd5e4c9b6322e/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'KE-05: failure of uniform probabilistic interpolation bounds'
+  description: >-
+    Statements-only draft preserving the literal recurrence, all root orderings,
+    spectral norms, the product standard-Gaussian law, and the complete negative
+    answer. No completed formal proof or verification is claimed.
+  authors: [Sidney Holden]
+  responsible_maintainers: [Sidney Holden]
+  license: Apache-2.0
+sources:
+- title: 'KE-05 — Spectral-gap-independent constants for randomized block polynomial interpolation'
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/deb549fa9ddd6b119e6c59016f268237e645dfa2/randomized-and-low-rank-approximation/KE-05/README.md
+  type: web-post
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: Original interpolation framework and conjecture by Nian Shao.
+- title: 'KE-05: failure of spectrum-uniform probabilistic interpolation bounds'
+  authors: [George Stepaniants]
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/deb549fa9ddd6b119e6c59016f268237e645dfa2/randomized-and-low-rank-approximation/KE-05/solution.md
+  type: manuscript
+  location: Exact target and complete proof in Sections 1–5.
+  relationship: formalizes
+  author_endorsement: not-contacted
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    prompting_notes: Statements before proofs; two independent referees; exact 2-by-2 reduction; LeanCert trust audit and actual Linux Comparator required before completion.
+  notes: AI-assisted draft prepared at Sidney Holden's request. No source-author endorsement or human peer review asserted.
+status:
+  scope: Statements only. Proof development, independent approvals, schema validation and final verification remain pending.
+review:
+  status: pending
+fidelity:
+  divergences: The fixed b=2,d=3 counterexample is sufficient to negate the complete universally quantified conjecture; no probability law or recurrence is narrowed.
+acknowledgements: Mathematical proof by George Stepaniants; original framework by Nian Shao. Mathlib, LeanCert, Lean Comparator and formalization.yaml retain implementation credit and licenses.

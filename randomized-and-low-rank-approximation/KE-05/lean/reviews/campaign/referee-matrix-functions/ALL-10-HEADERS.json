@@ -1,0 +1,12 @@
+{
+  "literal_recurrence_contract": "{b d : \u2115} (L : Data b d) (w : Sample b d) (k i : Fin d) : (List.finRange d).map (rootOrder k) = k :: (List.finRange d).erase k \u2227 (recurrence L w k).lastS i = prefixS L w k i (recurrence L w k).hat (d - 1) \u2227 (recurrence L w k).hat i = (omega w (rootOrder k i) * (recurrence L w k).lastS i)\u207b\u00b9 * Matrix.diagonal (L (rootOrder k i)) * (omega w (rootOrder k i) * (recurrence L w k).lastS i)",
+  "admissibility_and_endpoints": "(e : \u211d) (he : 0 < e \u2227 e < (1 : \u211d) / 4) : Admissible (witnessData e) \u2227 lowerEndpoint (witnessData e) = 0 \u2227 upperEndpoint (witnessData e) = 2 \u2227 crossGap (witnessData e) 0 = 1",
+  "exact_rational_witness": ": X rationalSample = !![1, 0; 0, 2] \u2227 P rationalSample = !![6, 10; -3, -5] \u2227 kappa rationalSample = 7 \u2227 Q rationalSample = !![30, 50; -18, -30] \u2227 spectralNorm (limitMatrix rationalSample) = (68 : \u211d) / 7",
+  "probability_one_validity": "{b d : \u2115} (hb : 1 \u2264 b) (hd : 2 \u2264 d) (L : Data b d) (hL : Admissible L) : (\u2200\u1d50 w \u2202gaussianLaw b d, Valid L w) \u2227 Measurable (totalConstant L)",
+  "probability_one_nonzero_limit": ": \u2200\u1d50 w \u2202gaussianLaw 2 3, kappa w \u2260 0 \u2227 Q w 0 0 \u2260 0 \u2227 (\u2200 m : \u2115, Valid (witnessData (epsilon m)) w) \u2227 Tendsto (fun m : \u2115 => (recurrence (witnessData (epsilon m)) w 0).hat 1) atTop (nhds (limitMatrix w)) \u2227 0 < spectralNorm (limitMatrix w)",
+  "literal_lower_bound": "(e : \u211d) (he : 0 < e \u2227 e < (1 : \u211d) / 4) (w : Sample 2 3) (hw : Valid (witnessData e) w) : Real.rpow 8 (-(1 : \u211d) / 4) * (spectralNorm ((recurrence (witnessData e) w 0).hat 1) / (2 * e)) \u2264 totalConstant (witnessData e) w",
+  "almost_sure_divergence": ": \u2200\u1d50 w \u2202gaussianLaw 2 3, Tendsto (fun m : \u2115 => totalConstant (witnessData (epsilon m)) w) atTop atTop",
+  "marginal_probability_limit": "(C : \u211d) : Tendsto (fun m : \u2115 => boundedProbability (witnessData (epsilon m)) C) atTop (nhds 0)",
+  "no_finite_uniform_constant": ": \u2200 C : \u211d, \u2203 L : Data 2 3, Admissible L \u2227 boundedProbability L C < (1 : \u211d) / 2",
+  "not_uniform_probability_conjecture": ": \u00ac UniformProbabilityConjecture"
+}

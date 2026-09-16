@@ -38,6 +38,10 @@ def restore_pdf_layout(identifier, body):
         body = body.replace("## Problem statement\n", "\\newpage\n\n## Problem statement\n", 1)
     if identifier in {"IE-14", "MF-02", "MF-12", "MF-24"}:
         body = body.replace("## Lean proof and verification evidence", "\\newpage\n\n## Lean proof and verification evidence", 1)
+    if identifier == "KE-05":
+        # Separate verification evidence and keep the retained original target together.
+        body = body.replace("## Lean proof and verification evidence\n", "\\newpage\n\n## Lean proof and verification evidence\n", 1)
+        body = body.replace("## Original statement (retained)\n", "\\newpage\n\n## Original statement (retained)\n", 1)
     if identifier == "IE-14":
         body = body.replace("## Problem statement\n", "\\newpage\n\n## Problem statement\n", 1)
     if identifier == "MF-22":
@@ -96,7 +100,7 @@ def render(source):
             input=body.strip(), text=True, capture_output=True, check=True,
         )
         tex = result.stdout
-        if identifier in {"IE-04", "IE-14", "MF-12", "MF-22", "SP-04", "SP-05"}:
+        if identifier in {"IE-04", "IE-14", "KE-05", "MF-12", "MF-22", "SP-04", "SP-05"}:
             # These publication dates record formal verification, not a literature search.
             tex = tex.replace("Literature check:", "Verification check:")
         # The code spans in this catalog are literal search phrases. Set them

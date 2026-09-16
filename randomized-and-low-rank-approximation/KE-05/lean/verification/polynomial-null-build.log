@@ -1,0 +1,20 @@
+✖ [8707/8707] Building NLA.KE05.PolynomialNull (48s)
+trace: .> LEAN_PATH=/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Cli/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/batteries/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Qq/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/aesop/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/importGraph/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/plausible/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/mathlib/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/leancert/.lake/build/lib/lean:/private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean /private/tmp/nla-lean-runtime/lean-4.33.1-darwin_aarch64/bin/lean /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/NLA/KE05/PolynomialNull.lean -o /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/PolynomialNull.olean -i /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/PolynomialNull.ilean -c /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/PolynomialNull.c --setup /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/PolynomialNull.setup.json --json
+warning: NLA/KE05/PolynomialNull.lean:37:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+error: NLA/KE05/PolynomialNull.lean:40:6: Type mismatch: After simplification, term
+  h k
+ has type
+  q.coeff k = 0
+but is expected to have type
+  MvPolynomial.coeff m✝ (q.coeff k) = 0
+error: NLA/KE05/PolynomialNull.lean:58:7: Unknown identifier `ae_prod_iff_ae_ae`
+error: Lean exited with code 1
+Some required targets logged failures:
+- NLA.KE05.PolynomialNull
+error: build failed
