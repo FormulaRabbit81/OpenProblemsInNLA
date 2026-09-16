@@ -2,7 +2,7 @@
 
 **113 problems with open targets:** 42 open and 71 partially resolved. **104 other retained entries**, excluded from the open count.
 
-**Resolution evidence:** 60 solved (published or independently audited); 44 solved with Lean verification.
+**Resolution evidence:** 59 solved (published or independently audited); 45 solved with Lean verification.
 
 Each entry records its own literature-check date. Literature checks are bounded; ratings are editorial. “Impact” uses the canonical `Importance` field.
 
@@ -341,7 +341,7 @@ Retained entries outside the open count:
 | [AV-01](intervals-and-absolute-value-equations/AV-01/README.md) | Recognizing the maximum finite number of solutions | **✅ SOLVED** | challenging | interesting to specialist | [PDF](intervals-and-absolute-value-equations/AV-01/problem.pdf) · [TeX](intervals-and-absolute-value-equations/AV-01/problem.tex) |
 | [AV-02](intervals-and-absolute-value-equations/AV-02/README.md) | Hardness of the spectral-norm condition number | **✅ SOLVED** | challenging | interesting to specialist | [PDF](intervals-and-absolute-value-equations/AV-02/problem.pdf) · [TeX](intervals-and-absolute-value-equations/AV-02/problem.tex) |
 | [IV-02](intervals-and-absolute-value-equations/IV-02/README.md) | Exact determinant ranges of general tridiagonal interval matrices | **✅ SOLVED** | challenging | interesting to specialist | [PDF](intervals-and-absolute-value-equations/IV-02/problem.pdf) · [TeX](intervals-and-absolute-value-equations/IV-02/problem.tex) |
-| [IV-03](intervals-and-absolute-value-equations/IV-03/README.md) | Polynomial-size vertex test for inverse M-matrix intervals | **✅ SOLVED** | challenging | interesting to specialist | [PDF](intervals-and-absolute-value-equations/IV-03/problem.pdf) · [TeX](intervals-and-absolute-value-equations/IV-03/problem.tex) |
+| [IV-03](intervals-and-absolute-value-equations/IV-03/README.md) | Polynomial-size vertex test for inverse M-matrix intervals | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](intervals-and-absolute-value-equations/IV-03/problem.pdf) · [TeX](intervals-and-absolute-value-equations/IV-03/problem.tex) |
 | [IV-04](intervals-and-absolute-value-equations/IV-04/README.md) | Exact solution hulls for tridiagonal interval systems | **✅ SOLVED** | challenging | interesting to the community | [PDF](intervals-and-absolute-value-equations/IV-04/problem.pdf) · [TeX](intervals-and-absolute-value-equations/IV-04/problem.tex) |
 | [IV-05](intervals-and-absolute-value-equations/IV-05/README.md) | Exact solution hulls for inverse M-matrix intervals | **✅ SOLVED** | challenging | interesting to specialist | [PDF](intervals-and-absolute-value-equations/IV-05/problem.pdf) · [TeX](intervals-and-absolute-value-equations/IV-05/problem.tex) |
 | [IV-06](intervals-and-absolute-value-equations/IV-06/README.md) | Number of components of a real interval eigenvalue set | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](intervals-and-absolute-value-equations/IV-06/problem.pdf) · [TeX](intervals-and-absolute-value-equations/IV-06/problem.tex) |

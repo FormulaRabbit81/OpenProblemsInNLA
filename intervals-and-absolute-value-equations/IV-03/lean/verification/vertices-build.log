@@ -1,0 +1,99 @@
+✖ [8708/8708] Building NLA.IV03.Vertices (441s)
+trace: .> LEAN_PATH=/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Cli/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/batteries/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Qq/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/aesop/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/importGraph/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/plausible/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/mathlib/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/leancert/.lake/build/lib/lean:/private/tmp/nla-lean-iv03/intervals-and-absolute-value-equations/IV-03/lean/.lake/build/lib/lean /private/tmp/nla-lean-runtime/lean-4.33.1-darwin_aarch64/bin/lean /private/tmp/nla-lean-iv03/intervals-and-absolute-value-equations/IV-03/lean/NLA/IV03/Vertices.lean -o /private/tmp/nla-lean-iv03/intervals-and-absolute-value-equations/IV-03/lean/.lake/build/lib/lean/NLA/IV03/Vertices.olean -i /private/tmp/nla-lean-iv03/intervals-and-absolute-value-equations/IV-03/lean/.lake/build/lib/lean/NLA/IV03/Vertices.ilean -c /private/tmp/nla-lean-iv03/intervals-and-absolute-value-equations/IV-03/lean/.lake/build/ir/NLA/IV03/Vertices.c --setup /private/tmp/nla-lean-iv03/intervals-and-absolute-value-equations/IV-03/lean/.lake/build/ir/NLA/IV03/Vertices.setup.json --json
+error: NLA/IV03/Vertices.lean:27:69: linarith failed to find a contradiction
+case pos.right
+n : ℕ
+L U : Mat n
+h : OrderedEndpoints L U
+i j k l : Fin n
+hkl : L k l ≤ U k l
+hk : k = i
+hl : l = j
+a✝ : U i j + (U i j - L i j) / 2 < (L i j + U i j) / 2
+⊢ False
+failed
+error: NLA/IV03/Vertices.lean:27:69: linarith failed to find a contradiction
+case neg.left
+n : ℕ
+L U : Mat n
+h : OrderedEndpoints L U
+i j k l : Fin n
+hkl : L k l ≤ U k l
+hk : k = i
+hl : ¬l = j
+a✝ : (L i l + U i l) / 2 + (U i l - L i l) / 2 < L i l
+⊢ False
+failed
+error: NLA/IV03/Vertices.lean:27:69: linarith failed to find a contradiction
+case pos.left
+n : ℕ
+L U : Mat n
+h : OrderedEndpoints L U
+i j k l : Fin n
+hkl : L k l ≤ U k l
+hk : ¬k = i
+hl : l = j
+a✝ : (L k j + U k j) / 2 + (U k j - L k j) / 2 < L k j
+⊢ False
+failed
+error: NLA/IV03/Vertices.lean:27:69: linarith failed to find a contradiction
+case pos.left
+n : ℕ
+L U : Mat n
+h : OrderedEndpoints L U
+i j k l : Fin n
+hkl : L k l ≤ U k l
+hk : k = i
+hl : l = j
+a✝ : (L i j + U i j) / 2 + (U i j - L i j) / 2 < L i j
+⊢ False
+failed
+error: NLA/IV03/Vertices.lean:27:69: linarith failed to find a contradiction
+case neg.right
+n : ℕ
+L U : Mat n
+h : OrderedEndpoints L U
+i j k l : Fin n
+hkl : L k l ≤ U k l
+hk : k = i
+hl : ¬l = j
+a✝ : U i l + (U i l - L i l) / 2 < (L i l + U i l) / 2
+⊢ False
+failed
+error: NLA/IV03/Vertices.lean:27:69: linarith failed to find a contradiction
+case pos.right
+n : ℕ
+L U : Mat n
+h : OrderedEndpoints L U
+i j k l : Fin n
+hkl : L k l ≤ U k l
+hk : ¬k = i
+hl : l = j
+a✝ : U k j + (U k j - L k j) / 2 < (L k j + U k j) / 2
+⊢ False
+failed
+error: NLA/IV03/Vertices.lean:37:2: Type mismatch: After simplification, term
+  inverseM_diagonal_pos (h k k) k
+ has type
+  0 < L k k ∧ 0 < (vertex L U (-1) k k)⁻¹ k k
+but is expected to have type
+  0 < L k k
+error: NLA/IV03/Vertices.lean:43:10: Unknown constant `Matrix.isUnit_iff_isUnit_det.mpr`
+error: NLA/IV03/Vertices.lean:44:4: Type mismatch: After simplification, term
+  isUnit_iff_ne_zero.mpr (LT.lt.ne' hp)
+ has type
+  ¬A 0 0 = 0
+but is expected to have type
+  0 ≤ A 0 0
+error: NLA/IV03/Vertices.lean:47:4: Type mismatch
+  LT.lt.le hp
+has type
+  0 ≤ A 0 0
+but is expected to have type
+  (fun i => i) ⟨0, ⋯⟩ ≠ (fun i => i) ⟨0, ⋯⟩ → A⁻¹ ((fun i => i) ⟨0, ⋯⟩) ((fun i => i) ⟨0, ⋯⟩) ≤ 0
+error: NLA/IV03/Vertices.lean:48:2: No goals to be solved
+error: NLA/IV03/Vertices.lean:53:10: Unknown constant `Matrix.isUnit_iff_isUnit_det.mpr`
+error: Lean exited with code 1
+Some required targets logged failures:
+- NLA.IV03.Vertices
+error: build failed

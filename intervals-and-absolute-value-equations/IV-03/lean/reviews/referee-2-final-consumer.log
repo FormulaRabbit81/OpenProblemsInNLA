@@ -1,0 +1,18 @@
+NLA.IV03.vertex_formula {n : ℕ} (L U : NLA.IV03.Mat n) (s : ℝ) (i j : Fin n) :
+  Eq.{1} (NLA.IV03.vertex L U s i j)
+    (HAdd.hAdd.{0, 0, 0} (NLA.IV03.center L U)
+      (HSMul.hSMul.{0, 0, 0} s
+        (HMul.hMul.{0, 0, 0}
+          (HMul.hMul.{0, 0, 0} (Matrix.diagonal.{0, 0} (NLA.IV03.signVector i)) (NLA.IV03.radius L U))
+          (Matrix.diagonal.{0, 0} (NLA.IV03.signVector j)))))
+'NLA.IV03.vertex_formula' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]
+NLA.IV03.vertices_admissible {n : ℕ} (L U : NLA.IV03.Mat n) (h : NLA.IV03.OrderedEndpoints L U) (i j : Fin n) (s : ℝ)
+  (hs : Membership.mem.{0, 0} (insert.{0, 0} (-1) (singleton.{0, 0} 1)) s) :
+  Membership.mem.{0, 0} (NLA.IV03.intervalFamily L U) (NLA.IV03.vertex L U s i j)
+'NLA.IV03.vertices_admissible' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]
+NLA.IV03.nSquaredCriterion {n : ℕ} (hn : LE.le.{0} 1 n) (L U : NLA.IV03.Mat n) (h : NLA.IV03.OrderedEndpoints L U) :
+  (∀ (A : NLA.IV03.Mat n), Membership.mem.{0, 0} (NLA.IV03.intervalFamily L U) A → NLA.IV03.IsInverseM A) ↔
+    ∀ (i j : Fin n), NLA.IV03.IsInverseM (NLA.IV03.vertex L U (-1) i j)
+'NLA.IV03.nSquaredCriterion' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]
+NLA.IV03.twoSignCriterion : NLA.IV03.TwoSignCriterion
+'NLA.IV03.twoSignCriterion' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]

@@ -1,0 +1,94 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/99c678e569c7c4c0772db297c5ddd5e4c9b6322e/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'IV-03: full inverse-M interval vertex criterion'
+  description: Complete all-dimensional inverse-M interval characterization by n-squared negative-sign
+    vertices, implying the full original two-sign criterion without a regularity premise.
+  authors:
+  - Sidney Holden
+  responsible_maintainers:
+  - Sidney Holden
+  license: Apache-2.0
+sources:
+- title: IV-03 canonical question
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/deb549fa9ddd6b119e6c59016f268237e645dfa2/intervals-and-absolute-value-equations/IV-03/README.md
+  type: web-post
+  relationship: formalizes
+  author_endorsement: not-contacted
+- title: An n-squared-vertex characterization of inverse-M interval matrices
+  authors:
+  - Matthew J. Colbrook
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/deb549fa9ddd6b119e6c59016f268237e645dfa2/references/colbrook-intervals-2026-09-11/manuscripts/IV-03.tex
+  type: manuscript
+  location: Theorem 1 and complete proof
+  relationship: formalizes
+  author_endorsement: not-contacted
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+  notes: AI-assisted formalization for Sidney Holden. Two independent nonauthor agents approved the frozen
+    statements before proofs. No human peer review, official Tau Ceti endorsement or source-author endorsement
+    claimed.
+status:
+  scope: 'Complete original affirmative answer in every positive dimension and for all closed entrywise
+    intervals, including zero widths and reducible matrices; no interval regularity premise. All four
+    exports pass LeanCert kernel trust and isolated Linux Comparator/default-kernel replay at 516ad4a0e85c21c7ef34507db9ab3b68b393bb90;
+    actual rejection and sandbox controls pass. Two independent statement and two independent nonauthor
+    final code reviews passed. Linux run: https://github.com/sidneyholden1/OpenProblemsInNLA/actions/runs/34926260380.
+    Complexity bounds are not claimed formally.'
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+  main_results:
+  - declaration: NLA.IV03.vertex_formula
+    file: Solution.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.IV03.vertices_admissible
+    file: Solution.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.IV03.nSquaredCriterion
+    file: Solution.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.IV03.twoSignCriterion
+    file: Solution.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+review:
+  status: independent-agent-code-reviewed; isolated-Linux-verified
+  notes: Two independent statement approvals and frozen byte hashes are retained. Four deliberate Challenge
+    placeholders establish no mathematics and are excluded from proof-development counts. Solution never
+    imports Challenge.
+fidelity:
+  divergences: The pointwise vertex is proved equal to its matrix formula. All dimensions, weak entrywise
+    inequalities, reducible cases and zero interval widths are retained. Proper principal minors and adjugate
+    signs imply determinant positivity without regularity. Exact resolvent algebra replaces the derivative
+    argument, and a row-replacement determinant establishes the cofactor identity without inverting A.
+acknowledgements: Original mathematical argument by Matthew J. Colbrook. Mathlib, LeanCert, Lean Comparator
+  and formalization.yaml retain their implementation credit and licenses.

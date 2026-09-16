@@ -1,0 +1,134 @@
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'IV-03: full inverse-M interval vertex criterion'
+  description: Complete all-dimensional inverse-M interval characterization by n-squared negative-sign
+    vertices, implying the full original two-sign criterion without a regularity premise.
+  authors:
+  - Sidney Holden
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California Institute of Technology
+sources:
+- title: IV-03 canonical question
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/deb549fa9ddd6b119e6c59016f268237e645dfa2/intervals-and-absolute-value-equations/IV-03/README.md
+  type: web-post
+  relationship: formalizes
+  author_endorsement: not-contacted
+- title: An n-squared-vertex characterization of inverse-M interval matrices
+  authors:
+  - Matthew J. Colbrook
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/deb549fa9ddd6b119e6c59016f268237e645dfa2/references/colbrook-intervals-2026-09-11/manuscripts/IV-03.tex
+  type: manuscript
+  location: Theorem 1 and complete proof
+  relationship: formalizes
+  author_endorsement: not-contacted
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    prompting_notes: Reviewed numerical statements before proofs; two independent statement and final
+      source referees; exact symbolic algebra to avoid interval computations; LeanCert trust and actual
+      Linux Comparator required.
+  notes: AI-assisted formalization prepared for Sidney Holden. George Stepaniants requested this subsequent
+    integration and verification submission. Two additional independent nonimplementing agents reviewed
+    all source bytes and historical runtime evidence. No human peer review, official Tau Ceti endorsement
+    or source-author endorsement is claimed.
+status:
+  scope: Complete original affirmative answer for every positive dimension and every closed real entrywise
+    interval, including zero widths, zero entries and reducible matrices, without a regularity premise.
+    All four unchanged exports passed historical LeanCert kernel trust, Linux Comparator/default-kernel
+    replay and actual rejection/sandbox controls at 516ad4a0e85c21c7ef34507db9ab3b68b393bb90 in run 34926260380.
+    Two new complete independent source/history reviews approved the imported bytes. A fresh controlled
+    execution on the eventual integration commit remains pending; this candidate does not promote a canonical
+    status or completed count. Complexity bounds are not claimed formally.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+  main_results:
+  - declaration: NLA.IV03.vertex_formula
+    file: Solution.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+    verification_status: Authenticated historical Linux acceptance; fresh exact integration-commit run
+      pending.
+  - declaration: NLA.IV03.vertices_admissible
+    file: Solution.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+    verification_status: Authenticated historical Linux acceptance; fresh exact integration-commit run
+      pending.
+  - declaration: NLA.IV03.nSquaredCriterion
+    file: Solution.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+    verification_status: Authenticated historical Linux acceptance; fresh exact integration-commit run
+      pending.
+  - declaration: NLA.IV03.twoSignCriterion
+    file: Solution.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    literature_dependencies: []
+    verification_status: Authenticated historical Linux acceptance; fresh exact integration-commit run
+      pending.
+  whole_problem_verified: false
+review:
+  status: two complete independent campaign source/history approvals; fresh campaign canonical run pending
+  reviewers:
+  - OpenAI Codex agent /root/ie13_continuation
+  - OpenAI Codex agent /root/mi04_independent_referee
+  notes: Original independent statement approvals, seven frozen inputs and final code reviews are preserved.
+    All fourteen active Lean inputs and all four frozen headers are unchanged. The thirteen-file Solution
+    closure excludes Challenge and historical consumer checks. Four deliberate Challenge placeholders
+    establish no mathematics and are excluded from proof-development counts. The campaign reviewers separately
+    authenticated the historical run; they did not launch a new proof execution.
+fidelity:
+  divergences: The pointwise vertex is proved equal to its matrix formula. All dimensions, weak entrywise
+    inequalities, reducible cases and zero interval widths are retained. Proper principal minors and adjugate
+    signs imply determinant positivity without regularity. Exact resolvent algebra replaces the derivative
+    argument, and a row-replacement determinant establishes the cofactor identity without inverting A.
+acknowledgements: 'Original mathematical argument: Matthew J. Colbrook, Department of Applied Mathematics
+  and Theoretical Physics, University of Cambridge. Existing Lean formalization: Sidney Holden, Apache-2.0.
+  Integration and verification submission: George Stepaniants, Department of Computing and Mathematical
+  Sciences, California Institute of Technology, with OpenAI Codex assistance. Mathlib, LeanCert, Lean
+  Comparator and formalization.yaml retain their implementation credit and licenses.'
+repository:
+  role: substantive-development
+  note: Integration of Sidney Holden's unchanged existing formalization. No new mathematical source or
+    build configuration is introduced; fresh campaign Linux verification is pending.
+  imported_revision: https://github.com/sidneyholden1/OpenProblemsInNLA/tree/281f440650d174602120ca9b2b930d38f9fef205/intervals-and-absolute-value-equations/IV-03/lean
+submission:
+  author: George Stepaniants
+  role: integration and verification submission
+  department: Department of Computing and Mathematical Sciences
+  university: California Institute of Technology
+alignment:
+  numerical_boundary: NUMERICAL_TARGETS.md
+  proposed_statements: Challenge.lean
+  implementation_entry: Solution.lean
+  source_correspondence: PROOF_NOTES.md
+  campaign_import: verification/campaign-import-2026-09-16/TRANSITION.json
