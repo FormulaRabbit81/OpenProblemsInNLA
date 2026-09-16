@@ -1,0 +1,108 @@
+"""Independent static source and review-chain continuation; never executes Lean."""
+from pathlib import Path
+import hashlib, json, os, re, shutil, subprocess
+
+B = Path('/tmp/nla-lean-next-20260915')
+R = B / 'canonical-runs/35081003513'
+O = R / 'mi04-independent'
+P = B / 'IE13-canonical-package-v2'
+G = Path('/Users/georgestepaniants/Research/OpenProblemsInNLA')
+HEAD = '032d4c86c52ffde0c4d440f28527ba43555a0a24'
+DEV = 'ce33d037e9960d7bbb096eb2bf90266cb07213c7'
+os.environ['GIT_OPTIONAL_LOCKS'] = '0'
+def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def read(p): return json.loads(p.read_text())
+def git(*args): return subprocess.check_output(['git','-c','gc.auto=0','-C',str(G),*args])
+def put(n, obj):
+    p = O/n
+    assert not p.exists(), 'Do not overwrite earlier evidence'
+    p.write_text(json.dumps(obj, indent=2, sort_keys=True)+'\n')
+
+active = read(P/'ACTIVE-SOURCE-MANIFEST.json')['source_sha256']
+cp = B/'elimination/IE-13/proof-handoffs/repair-35071348416/SOURCE-CLOSURE.json'
+assert sha(cp) == 'baf8151de076df0626a703376a982e4c85d3a250de2c9a8992c585f9e166eebb'
+closure = read(cp)
+assert active == closure['sources'] and len(active) == 27
+devp = B/'development-runs/35076646177/artifacts/lean-development-statements/receipt.json'
+assert sha(devp) == 'dd4bdd07932180d2a6076fc0af63474aee7e16208cd3db1ed486639be11a9ab1'
+dev = read(devp)
+assert dev['repository_commit'] == DEV
+for name, h in active.items():
+    assert dev['source_sha256'][name] == h == sha(P/name)
+    assert hashlib.sha256(git('show', DEV+':.lean-development/'+name)).hexdigest() == h
+assert closure['frozen10'] == read(P/'STATEMENT-FREEZE.json')['frozen_files_sha256']
+
+chainp = B/'reviews/IE13-import-mi04-independent/PRIOR-SOURCE-REVIEW-CHAIN.json'
+chain = read(chainp)
+verified = []
+for v in chain:
+    q = B/'reviews'/v['review']
+    assert sha(q/'MANIFEST.json') == v['manifest_sha256']
+    assert sha(q/'REVIEW.md') == v['review_sha256']
+    verified.append(v)
+assert len(verified) == 7
+package_checks = {
+    'IE13-import-mi04-independent': 'c9ccdb98f5d0bab5c5659aebc6fa2ace01c780e554bff3d3ffdbd8c27257d1b9',
+    'IE13-import-mi04-v2': 'cca29af3a9212a0110904a3b355d54bd4e0bd38855a0b434982f6ed906ee17f7',
+    'IE13-staged-integration-mi04': 'edd4a0db8b006bfee2eb70bb1094c48370ab832fc80d101df1de087c2bbddf8c',
+}
+for name, h in package_checks.items(): assert sha(B/'reviews'/name/'MANIFEST.json') == h
+
+e = next((R/'artifacts/lean-IE-13').glob('verify-*'))
+raw = (R/'job-104744813757.log').read_text(encoding='utf-8-sig')
+lines = [re.sub(r'^\d{4}-\d\d-\d\dT\S+Z ?', '', v) for v in raw.splitlines()]
+bootstrap = []
+for p in sorted((R/'artifacts/lean-IE-13/bootstrap').glob('*.log')):
+    t = p.read_text()
+    assert t.rstrip().endswith('EXIT_STATUS=0')
+    payload = [v for v in t.splitlines() if v and not v.startswith(('$ ', 'EXIT_STATUS='))]
+    pos = 0
+    for v in payload:
+        while pos < len(lines) and lines[pos] != v: pos += 1
+        assert pos < len(lines), (p.name, v)
+        pos += 1
+    bootstrap.append({'path': str(p.relative_to(R)), 'sha256': sha(p),
+                      'lines': len(t.splitlines()), 'payload_matches_raw_job_in_order': True})
+assert len(bootstrap) == 3
+assert 'SHA256 digest of uploaded artifact zip is '+sha(R/'lean-IE-13.zip') in raw
+assert 'Artifact ID 10440806325' in raw
+assert 'PASS: fresh Comparator run and all controls.' in raw
+sel = (R/'job-104744724356.log').read_text()
+assert 'Ran 30 tests' in sel and 'Ran 12 tests' in sel
+assert 'BASE_REF: 6b626a5b4ad567cd0d6edaaf53b36870ed5b6cdc' in sel
+assert '{"include":[{"id":"IE-13","project":"linear-systems-and-elimination/IE-13/lean"}]}' in sel
+
+scale = (P/'NLA/IE13/WitnessScale.lean').read_text()
+assert 'interval_decide (trust := kernel)' in scale
+assert 'pow_pos half_bounds_certificate.1 p' in scale
+assert '#assert_trust kernel witness_scale' in scale
+manifest = read(P/'PACKAGE-MANIFEST.json')['files']
+email = re.compile(rb'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}')
+assert not any(email.search((P/name).read_bytes()) for name in [*manifest, 'PACKAGE-MANIFEST.json'])
+assert b'George Stepaniants' in (P/'NLA/IE13/Sharp.lean').read_bytes()
+assert b'Original mathematical proof: Matthew J. Colbrook, Cambridge DAMTP.' in (P/'NLA/IE13/Sharp.lean').read_bytes()
+
+for name in ['audit_terminal_evidence.py', 'COMMITTED-SOURCE-CHECKS.json', 'check_committed_inputs.py']:
+    target = O/name
+    assert not target.exists()
+    shutil.copyfile(B/'reviews/IE13-canonical-runtime-preparation'/name, target)
+put('SOURCE-REVIEW-CONTINUATION.json', {
+    'reviewer': '/root/mi04_independent_referee',
+    'status': 'PASS exact source and prior mathematical-review continuation',
+    'literal_canonical_candidate': HEAD, 'accepted_development_commit': DEV,
+    'all27_active_sources_equal_final_reviewed_closure_development_Git_receipt_and_canonical_package': True,
+    'frozen10_equal': True,
+    'publication_build_default_transition_only': 'The old frozen lakefile is retained; active lakefile chooses Solution. All mathematical inputs and other frozen inputs are unchanged.',
+    'prior_full_math_review_and_six_continuations_rehashed': verified,
+    'prior_import_v2_and_integration_seals_rehashed': package_checks,
+    'all3_bootstrap_payloads_match_raw_job_in_order': bootstrap,
+    'all_artifact_log_lines': sum(len(p.read_text().splitlines()) for p in (R/'artifacts/lean-IE-13').rglob('*.log')),
+    'actual_selection_tests': {'metadata_selection': 30, 'harness': 12, 'selected_project': 'IE-13'},
+    'LeanCert_certificate_consumed_by_witness_scale': True,
+    'all95_package_inputs_email_scan': 'No email address found',
+    'actual_executor_of_shared_ROOT_AUDIT': '/root (parent separately executed shared auditor)',
+    'actual_executor_of_distinct_terminal_and_continuation_scripts': '/root/mi04_independent_referee',
+    'scope': 'Independent audit of one actual GitHub canonical candidate run, not a second Lean execution, not final-publication or upstream-PR acceptance, and not a guarantee that the trusted checker stack cannot contain defects.',
+    'local_Lean_Lake_Comparator_network_source_Git_mutations_or_count_changes': False,
+})
+print('PASS: all 27 source continuations, seven mathematical-review seals, three package/integration seals, three bootstrap logs, raw upload digest and exact selection outcomes.')
