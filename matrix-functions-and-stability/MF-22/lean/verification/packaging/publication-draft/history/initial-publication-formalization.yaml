@@ -1,0 +1,289 @@
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'MF-22: eventual polynomial conditioning of the cubic C1 Toeplitz family'
+  description: Complete candidate implementation of the original MF-22 existential polynomial-conditioning
+    target for every fixed positive real parameter, including eventual nonsingularity and a sufficient
+    quadratic bound on the genuine complex Euclidean condition number. Full proof and canonical
+    verification remain pending.
+  authors:
+  - George Stepaniants
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California Institute
+      of Technology, Pasadena, California, USA
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+repository:
+  role: substantive-development
+sources:
+- title: MF-22 — Polynomial conditioning of the cubic C1 spline Schrodinger Toeplitz family
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/8f04b905eb2e0827b6b84f37d9d080ae1f05b202/matrix-functions-and-stability/MF-22/README.md
+  type: web-post
+  location: Complete original problem, exact coefficient blocks and retained resolution
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: Permanent ID, original parameter domain, original Toeplitz boundary and complete existential
+    polynomial target preserved.
+- title: 'MF-22: An eventual linear condition-number bound'
+  authors:
+  - George Stepaniants
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/8f04b905eb2e0827b6b84f37d9d080ae1f05b202/matrix-functions-and-stability/MF-22/solution.md
+  type: manuscript
+  location: Theorem in Section 1 and complete proof in Sections 2–4
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: The retained manuscript proves a linear bound. This implementation follows its transfer,
+    root, noncancellation and finite Green mechanisms but uses a quadratic estimate, which proves
+    the full original existential polynomial target. It makes no claim to formalize the manuscript’s
+    exponent-one bound.
+- title: Condition numbers of block Toeplitz matrices and stability of space-time IgA approximations
+    for the wave and Schrodinger equations
+  authors:
+  - M. Bogoya
+  - A. Bottcher
+  - M. Ferrari
+  - S. M. Grudsky
+  - S. Serra-Capizzano
+  id: https://arxiv.org/abs/2608.24151v1
+  type: preprint
+  location: Equation (5.22), Section 5.3, equation (5.32), Proposition 5.14 and paragraph after
+    Figure 9
+  relationship: background
+  author_endorsement: not-contacted
+  note: The original family, source root classification and question retain their original authors'
+    credit; no unproved source result is an intended axiom.
+related_formalizations:
+- id: https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof
+  relationship: other
+  note: Numerical-target separation, kernel-only LeanCert and Comparator reproduction patterns studied;
+    no theorem imported.
+- id: https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1
+  relationship: other
+  note: Independent Challenge/Solution organization studied; no mathematical theorem imported.
+- id: https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474
+  relationship: builds-on
+  note: Actual Euclidean matrix operators and inverses, exact cubic discriminants, Lagrange interpolation,
+    Cayley–Hamilton and eigenspace dimension provide proved mathematical foundations.
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    tool_setup: Multiple implementing agents and two independent nonimplementing mathematical referees.
+      Authoring occurs on macOS; actual Lean and Comparator gates run on non-root Linux. No local
+      Lean/Lake/cache execution is used.
+    prompting_notes: Full numerical statements, two independent statement approvals, actual Linux
+      elaboration and an immutable freeze preceded proofs. Preserve every positive parameter including
+      rho squared equals 10, the exact eight coefficient blocks and boundaries, singular condition
+      numbers and actual eventual inverses. Use exact fixed-size algebra, cancellation before norm
+      estimates and the permitted exponent 2. Select LeanCert kernel trust and independent Comparator
+      with no definition holes.
+  notes: Complete AI-assisted candidate source was prepared by /root/next_matrix_functions with
+    separately assigned root/projector algebra contributions from /root/next_elimination. Independent
+    final mathematical source referees are /root and /root/next_inequalities. Prior failed development
+    runs remain failed; source approval and successful prefixes do not constitute complete Lean
+    verification.
+status:
+  scope: 'Full original MF-22 target: for every fixed rho>0, all sufficiently large n give the original
+    nonsingular complex 2n-by-2n Toeplitz matrix and kappa_2(H_n(rho)) <= K_rho*n^2. All 22 frozen
+    declarations have candidate proof source. The sufficient exponent 2 answers the original existential
+    question; exponent 1 is not a claimed formal result. Entire-graph and canonical acceptance remain
+    pending.'
+  whole_problem_verified: false
+  sorry_count: 0
+  sorry_in_definitions: 0
+  source_scan_note: The candidate proof-development files contain no deliberate proof placeholders;
+    the 22 deliberate Challenge placeholders are excluded. This textual count is not an accepted
+    transitive axiom report.
+  main_results:
+  - declaration: NLA.MF22.complex_entry_norm_bound
+    file: NLA/MF22/Norms.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.source_entry_bound
+    file: NLA/MF22/SourceBounds.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.leading_block_invertible
+    file: NLA/MF22/LeadingBlock.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.source_boundaries
+    file: NLA/MF22/Coordinates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.source_recurrence
+    file: NLA/MF22/SourceRecurrence.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.transfer_polynomial_certificates
+    file: NLA/MF22/TransferCertificates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.numerator_denominator_coprime
+    file: NLA/MF22/Coprime.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.quartic_factorization
+    file: NLA/MF22/ScalarCertificates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.cayley_identity
+    file: NLA/MF22/ScalarCertificates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.positive_discriminant_factor
+    file: NLA/MF22/ScalarCertificates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.real_cubic_discriminant
+    file: NLA/MF22/ScalarCertificates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.exceptional_parameter
+    file: NLA/MF22/ScalarCertificates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.four_roots
+    file: NLA/MF22/Roots.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.spectral_projector_algebra
+    file: NLA/MF22/SpectralAlgebra.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.dominant_projector
+    file: NLA/MF22/Dominant.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.spectral_tail_bounds
+    file: NLA/MF22/SpectralTailBounds.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.green_source_state
+    file: NLA/MF22/GreenInverse.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.green_inverse
+    file: NLA/MF22/GreenInverse.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.uniform_green_entries
+    file: NLA/MF22/GreenEntryBounds.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.eventual_inverse_entries
+    file: NLA/MF22/Conditioning.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.eventual_quadratic_conditioning
+    file: NLA/MF22/Conditioning.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+  - declaration: NLA.MF22.polynomial_conditioning
+    file: NLA/MF22/Conditioning.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; final actual whole-project build, transitive-axiom
+      audit, default-kernel replay and Comparator acceptance pending.
+fidelity:
+  divergences: The original question requires some nonnegative polynomial exponent. The implemented
+    final theorem selects exponent 2, using uniform eventual inverse-entry bounds and dimension-times-entry
+    bounds for both genuine operator norms. This retains the full original target while avoiding
+    the sharper exponent-one estimate in the informal manuscript. Exact fixed-size transfer determinants/cofactors
+    and Lagrange projector algebra replace generating-function inferences; the actual finite Toeplitz
+    boundaries, all positive parameters, exceptional rho squared equal to 10 and eventual nonsingularity
+    remain unchanged.
+review:
+  status: agent-reviewed mathematical source; actual full proof and canonical verification pending
+  reviewers:
+  - OpenAI Codex agent /root (independent nonimplementing mathematical source referee)
+  - OpenAI Codex agent /root/next_inequalities (independent nonimplementing mathematical source
+    referee)
+  notes: Both reviewers read the complete 29-file candidate, original target/manuscript and all
+    22 frozen contracts. Both separately approved the exact two proof-only repairs after failed
+    development run 35044592511. Report hashes are retained in PUBLICATION-EVIDENCE.json. Later
+    proof repairs require specific reconciliation. Their source approvals are not human peer review,
+    official Tau Ceti endorsement, Lean acceptance or Comparator acceptance.
+alignment:
+  source_correspondence: SourceCorrespondence.md
+  numerical_boundary: NUMERICAL_TARGETS.md
+  proposed_statements: Challenge.lean
+  source_provenance: SOURCE-PROVENANCE.json
+  implementation_entry: Solution.lean
+  statement_freeze: STATEMENT-FREEZE.json
+  proof_architecture: PROOF-ARCHITECTURE.md
+  export_locations: IMPLEMENTATION-MAP.json
+acknowledgements: Bogoya, Böttcher, Ferrari, Grudsky and Serra-Capizzano retain credit for the original
+  family, question and source root classification. George Stepaniants is credited separately for
+  the retained manuscript and formalization, with Department of Computing and Mathematical Sciences,
+  California Institute of Technology affiliation. Mathlib, LeanCert, Lean Comparator and formalization.yaml
+  contributors, and the Schiffer/Forsythe workflow examples, are acknowledged. No contact email
+  is supplied.
+toolchain:
+  lean: leanprover/lean4:v4.33.1
+  dependency_manifest: lake-manifest.json
+  dependencies:
+    leancert: 621a43d7cf21f87872392a01e874f2f1dbddc926
+    mathlib: 0df444a360eaa60ab8c11dca51a86af692955474
+verification:
+  statement_elaboration:
+    status: passed actual Linux statement elaboration only
+    run_id: 35038020942
+    commit: 8adab1b22dfd8e69433815eaea14842a80e60340
+    receipt_sha256: 5bdbd66fa21b88345676c8a2dc342b2b587b4e19333ecdd3125c7fe5d1bbd54c
+    frozen_statement_count: 22
+  whole_proof_build: pending
+  transitive_axioms: pending actual accepted report; no complete observed axiom set asserted
+  default_kernel: pending
+  comparator: pending
+  sandbox_and_rejection_controls: pending canonical project run
+  canonical_source_manifest: pending accepted immutable proof commit
+  permitted_axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+  permitted_axioms_note: Acceptance policy only, not a claimed complete observed closure.
+  publication: No status change, verified-count change, commit, push or PR by this draft.
