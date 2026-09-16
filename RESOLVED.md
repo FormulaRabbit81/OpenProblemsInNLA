@@ -424,7 +424,9 @@ The full clarified argument passed a separate [independent Codex-agent mathemati
 
 **Solved negatively, 2026-09-11.** The [complete proof's theorem, equation (2), and robustness lemma](linear-systems-and-elimination/IE-04/solution.md) give an explicit full entrywise box of strict-pivot matrices with growth greater than $(3/2)^{n-1}/2$, and Gaussian probability at least $2^{-n^2(n^2+n+5)}$. With the admissible center $I_n$ and noise level one, this contradicts the displayed IE-04 tail for every proposed universal pair of constants at sufficiently large $x$. The proof covers all dimensions needed for the contradiction and does not claim a replacement optimal tail or a sharp high-probability exponent. [Proof PDF](linear-systems-and-elimination/IE-04/solution.pdf) · [Original target](linear-systems-and-elimination/IE-04/README.md).
 
-The complete analytic proof passed a separate [independent Codex-agent review](references/stepaniants-ie04-2026-09-11/verification/IE-04-independent-review.md). Finite exact interval and rational checks are supplementary. AI assistance and automated-review limits are disclosed; no external human peer review or formal certification is asserted. [Submission record and public eligibility audit](references/stepaniants-ie04-2026-09-11/README.md). All original target quantifiers, the permanent ID and historical ratings are retained.
+The complete analytic proof passed a separate [independent Codex-agent review](references/stepaniants-ie04-2026-09-11/verification/IE-04-independent-review.md). Finite exact interval and rational checks are supplementary. AI assistance and automated-review limits are disclosed; no external human peer review is asserted. [Submission record and public eligibility audit](references/stepaniants-ie04-2026-09-11/README.md). All original target quantifiers, the permanent ID and historical ratings are retained.
+
+**Lean verified, 2026-09-15. Formalization: George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. The [immutable complete formalization](https://github.com/sgstepaniants/OpenProblemsInNLA/tree/026b3e5534a4d6e15ebffb85318c2ff031df32bf/linear-systems-and-elimination/IE-04/lean) proves all 21 frozen targets, including `NLA.IE04.not_uniformExponentialTail`, for the actual Gaussian model and every positive real proposed constant pair. [Canonical Linux run 35034399633](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35034399633/job/104600154206) accepted Comparator, independent default-kernel replay, all LeanCert kernel assertions and the mandatory rejection controls with only the three standard Lean axioms. The full nonsingular perturbation-box estimate consumes the LeanCert certificate $`e^{-2}>1/8`$. [Project and original runtime evidence](linear-systems-and-elimination/IE-04/lean/README.md) · [Both independent final AI-agent reviews](linear-systems-and-elimination/IE-04/lean/reviews/final). The publication documentation preserves the accepted proof bytes and requires its own workflow rerun.
 
 ### ✅ IE-05 - the orthogonal partial-pivoting extremizer equality is false - George Stepaniants
 
@@ -944,11 +946,27 @@ Seven exact targets are classified below. Independent agent review is not extern
 
 Eight exact targets passed independent agent review. Author: **Matthew J. Colbrook**, University of Cambridge. [Submission record](references/colbrook-recovered-2026-09-11/README.md) documents the substantial AI assistance, reconstructed sources, full proof hashes and checks. Agent review is not external human peer review or formal certification; no priority claim is made. All original targets and historical ratings are retained.
 
-### IE-13 - Sharp growth classification
+### 🏆 IE-13 - Sharp growth classification
 
 [Original statement](linear-systems-and-elimination/IE-13/README.md). **Solved.** Theorem 1 and Sections 2-4 prove $G(0,q)=1$ and $G(p,q)=h_{p+q}$ for $p\ge1$, where $h_t=0$ for $t\le0$ and $h_t=1+\sum_{r=1}^p h_{t-r}$ otherwise. The upper bound covers every complex input and admissible tie path, with growth over all active entries in the fixed original ordering. A real nonsingular matrix of order $2p+q+1$ attains it, including zero upper bandwidth.
 
 [Complete manuscript](references/colbrook-recovered-2026-09-11/manuscripts/IE-13.pdf); [independent review](references/colbrook-recovered-2026-09-11/verification/reviews/IE-13-review.md).
+
+**Lean verified, 16 September 2026 UTC. Formalization and verification submission:
+George Stepaniants**, Department of Computing and Mathematical Sciences,
+California Institute of Technology. **Original mathematical proof: Matthew J.
+Colbrook**, Department of Applied Mathematics and Theoretical Physics,
+University of Cambridge. The [complete 28-target formalization](linear-systems-and-elimination/IE-13/lean/README.md)
+retains all complex inputs, dimensions, legal ties and both zero-bandwidth
+boundaries, and proves exact attainment and the real supremum.
+[Canonical Linux run 35081003513](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35081003513/job/104744813757)
+passed LeanCert kernel trust, Comparator, default-kernel replay, standard
+transitive axioms and required controls at immutable proof commit
+`032d4c86c52ffde0c4d440f28527ba43555a0a24` ([immutable proof revision](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/032d4c86c52ffde0c4d440f28527ba43555a0a24/linear-systems-and-elimination/IE-13/lean/Solution.lean)). Two independent AI-agent
+complete-source/runtime reviews are retained. This adds formal verification
+to the existing mathematical resolution. See the
+[canonical evidence section](linear-systems-and-elimination/IE-13/README.md#lean-proof-and-verification-evidence).
+
 
 ### IE-14 - Sharp growth classification
 

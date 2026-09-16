@@ -6,20 +6,60 @@
 
 **Difficulty:** challenging  
 **Importance:** interesting to specialist  
-**Status:** Solved
-**Last checked:** 2026-09-11
+**Status:** Lean verified
+**Last checked:** 2026-09-16
 
 <!-- colbrook-recovered -->
 ## Independently reviewed resolution - 2026-09-11
 
 **Sharp growth classification.** Theorem 1 and Sections 2-4 prove $`G(0,q)=1`$ and $`G(p,q)=h_{p+q}`$ for $`p\ge1`$, where $`h_t=0`$ for $`t\le0`$ and $`h_t=1+\sum_{r=1}^p h_{t-r}`$ otherwise. The upper bound covers every complex input and admissible tie path, with growth over all active entries in the fixed original ordering. A real nonsingular matrix of order $`2p+q+1`$ attains it, including zero upper bandwidth.
 
-**Author:** Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics, University of Cambridge. [Complete manuscript](../../references/colbrook-recovered-2026-09-11/manuscripts/IE-13.pdf), [independent proof review](../../references/colbrook-recovered-2026-09-11/verification/reviews/IE-13-review.md), and [submission record](../../references/colbrook-recovered-2026-09-11/README.md). The supplied notes were reconstructed with substantial AI assistance. This is independent agent verification, not external human peer review or formal proof-assistant certification; no novelty or priority claim is made.
+**Author:** Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics, University of Cambridge. [Complete manuscript](../../references/colbrook-recovered-2026-09-11/manuscripts/IE-13.pdf), [independent proof review](../../references/colbrook-recovered-2026-09-11/verification/reviews/IE-13-review.md), and [submission record](../../references/colbrook-recovered-2026-09-11/README.md). The supplied notes were reconstructed with substantial AI assistance. That September 2026 informal audit was independent agent verification; it did not supply external human peer review or formal proof-assistant certification. The later Lean verification is recorded separately below. No novelty or priority claim is made.
 
 The difficulty, importance and rating rationale below are historical assessments of the original open target. Original statements, references and dated audits are preserved.
 <!-- /colbrook-recovered -->
 
 **Rating rationale:** Challenging reflects interacting fill-in and pivot choices across arbitrary unequal bandwidths; specialist impact is a sharp stability classification for banded elimination.
+
+## Lean proof and verification evidence
+
+**Formalization and verification submission: George Stepaniants**, Department
+of Computing and Mathematical Sciences, California Institute of Technology.
+**Original mathematical proof: Matthew J. Colbrook**, Department of Applied
+Mathematics and Theoretical Physics, University of Cambridge. The
+[complete Lean proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/032d4c86c52ffde0c4d440f28527ba43555a0a24/linear-systems-and-elimination/IE-13/lean/Solution.lean) formalizes the full retained target.
+
+The proof covers every original unequal natural bandwidth pair, every allowed
+positive dimension, all nonsingular complex banded inputs in their given
+ordering, and every legal maximal-modulus pivot tie. Its bound includes every
+active entry and stage. A nonsingular rational family attains the bound,
+including zero upper bandwidth; the identity case handles zero lower bandwidth.
+The final [sharp theorem](lean/NLA/IE13/Sharp.lean) proves both the greatest
+attained value and the actual real supremum. The
+[28 declarations](lean/formalization.yaml), [independent Challenge](lean/Challenge.lean),
+[definitions](lean/NLA/IE13/Definitions.lean) and
+[source correspondence](lean/SourceCorrespondence.md) record their exact meaning.
+
+On **16 September 2026 UTC**, [non-root Linux run 35081003513](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35081003513/job/104744813757)
+checked literal proof commit `032d4c86c52ffde0c4d440f28527ba43555a0a24`.
+All 28 Comparator statement matches, Lean default-kernel replay, LeanCert
+kernel-trust assertions and required rejection/sandbox controls passed.
+Transitive axioms are restricted to `propext`, `Classical.choice` and
+`Quot.sound`. The [actual evidence](lean/verification/linux-2026-09-16/README.md)
+authenticates all 95 inputs and the complete 27-file proof. Lean 4.33.1,
+Mathlib and LeanCert are pinned. Only an exact half-bound uses a numerical
+certificate; dimensions, recurrences and powers remain symbolic, with no
+interval subdivision.
+
+Two independent AI-agent [source/runtime reviews](lean/reviews/final/README.md)
+support this record. Substantial OpenAI Codex assistance is disclosed. External
+human peer review and checker/platform infallibility are not claimed. The
+[project README](lean/README.md) supplies reproduction commands. The named
+proof run is distinct from later publication and upstream merge runs, which
+require separate checks. A [bounded public audit](lean/verification/publication-2026-09-16/public-duplicate-audit/SCOPE.json)
+found no competing target-named formalization in its recorded snapshot; this
+adds verification of the existing resolution and makes no new mathematics or
+priority claim.
 
 ## Problem statement
 
