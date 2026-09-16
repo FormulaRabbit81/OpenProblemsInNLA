@@ -7,8 +7,8 @@
 **Topic:** Block Toeplitz systems and discretization stability  
 **Difficulty:** hard  
 **Importance:** interesting to specialist  
-**Status:** Solved  
-**Last checked:** 2026-09-11
+**Status:** Lean verified
+**Last checked:** 2026-09-16
 
 **Rating rationale:** Historical ratings retained. The fixed explicit band structure makes this a hard asymptotic question, but available symbol criteria leave the relevant regime undecided; its immediate importance is to specialists in structured discretization stability.
 
@@ -23,9 +23,39 @@
 
 Thus the original question is answered affirmatively with exponent $`\alpha_\rho=1`$. The result includes eventual invertibility, the parameter $`\rho=\sqrt{10}`$, and the exact uncorrected Toeplitz boundary entries. The original ID, full statement, and historical ratings are retained below.
 
+**Formal scope:** The Lean proof below certifies the original polynomial target with exponent two; it does not certify this stronger linear estimate.
+
 The precise locator is the **Theorem in Section 1, proved in Sections 2–4** of the [complete manuscript](solution.md). [Proof PDF](solution.pdf) · [Standalone TeX](solution.tex). The proof derives a four-state recurrence, excludes all numerator cancellation, and bounds its finite Green matrix to obtain a linear inverse bound.
 
-A separate [independent Codex-agent mathematical review](../../references/stepaniants-mf22-2026-09-11/verification/MF-22-independent-review.md) returned **PASS** for the complete target. The [submission record](../../references/stepaniants-mf22-2026-09-11/README.md) documents substantial ChatGPT/Codex assistance, exact symbolic checks, the public branch/fork audit, and verification limits. This is independent automated-agent review, not external human peer review or formal proof certification. The source authors retain credit for the family, the root classification and the question.
+A separate [independent Codex-agent mathematical review](../../references/stepaniants-mf22-2026-09-11/verification/MF-22-independent-review.md) returned **PASS** for the complete target. The [submission record](../../references/stepaniants-mf22-2026-09-11/README.md) documents substantial ChatGPT/Codex assistance, exact symbolic checks, the public branch/fork audit, and verification limits. That original review was informal automated-agent review. The separate Lean proof of the complete original target is documented below; external human peer review is not claimed. The source authors retain credit for the family, the root classification and the question.
+
+## Lean proof and verification evidence
+
+**Formalization: George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology.** The [complete Lean proof at immutable revision c701bfee](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/c701bfeea660473fc31ad9d0c74b76309be3b49f/matrix-functions-and-stability/MF-22/lean/Solution.lean) proves the full original target with exponent **two**:
+
+```math
+\forall\rho>0\ \exists K_\rho>0,\ n_0\ge1:\quad
+\det H_n(\rho)\ne0,\quad\kappa_2(H_n(\rho))\le K_\rho n^2
+\quad(n\ge n_0).
+```
+
+The formal result uses the literal complex $`2n\times2n`$ pure Toeplitz matrix, all eight original coefficient blocks, the exact boundary entries and the genuine Euclidean operator norm, with infinite condition number for singular matrices. It includes $`\rho=\sqrt{10}`$. The original question permits any nonnegative polynomial exponent, so this settles it completely. **The stronger linear bound in the retained informal manuscript is outside the formalized claim.**
+
+All **22 declarations** are listed in [formalization.yaml](lean/formalization.yaml). The [quadratic estimate and final theorem](lean/NLA/MF22/Conditioning.lean) conclude with `polynomial_conditioning` in namespace `NLA.MF22`. The independently reviewed [Challenge](lean/Challenge.lean), [definitions](lean/NLA/MF22/Definitions.lean) and [source correspondence](lean/SourceCorrespondence-current.md) preserve the complete target. Exact fixed-size transfer algebra, root classification, noncancellation and Green reconstruction prove an actual inverse. Cancelling growing terms before estimates and using dimension-times-entry norm bounds gives exponent two. A completed square and a consumed LeanCert integer-positivity certificate avoid interval searches.
+
+The project pins Lean **4.33.1**, Mathlib `0df444a360eaa60ab8c11dca51a86af692955474` and LeanCert `621a43d7cf21f87872392a01e874f2f1dbddc926`. On **16 September 2026 UTC**, [the actual GitHub Linux job](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35053254275/job/104658059786) checked the exact proof revision above. All 22 targets passed LeanCert kernel-trust assertions, non-root sandboxed Comparator statement matching and Lean default-kernel replay. Their transitive axioms are only `propext`, `Classical.choice` and `Quot.sound`. Required kernel, statement-mismatch, forbidden-axiom and sandbox controls passed inside that job. The [retained actual logs, ZIP and input hashes](lean/verification/linux-2026-09-16) bind its execution to all **634** candidate project files.
+
+Two independent AI-agent referees accepted the complete mathematical source and actual canonical evidence: the [continuation referee](lean/reviews/final/referee-continuation/runtime-35053254275/REVIEW.md), with a separate full 29-file review, and the [root referee](lean/reviews/final/referee-root/REVIEW.md). They applied the repository's scoped Tau Ceti protocol. Their reviews are distinct from external human peer review or proof of checker-software infallibility. No local macOS Lean execution is claimed. Bogoya, Böttcher, Ferrari, Grudsky and Serra-Capizzano retain credit for the family, source root classification and original question.
+
+For an ordinary proof build, enter [the Lean project](lean/README.md) with its pinned toolchain and run:
+
+```
+lake exe cache get && lake build
+```
+
+The default target builds the complete Solution without importing Challenge's specification placeholders. For the additional Comparator and rejection checks, follow the [shared Linux instructions](../../docs/lean/README.md). The evidence above names the checked proof commit; later publication and merge commits require separate exact-commit checks.
+
+The [bounded public duplicate audit](lean/verification/publication-2026-09-16/public-duplicate-audit) checked 249 public branch heads across 14 repositories and 149 upstream PR records. Its only MF-22 Lean hits were this campaign's development and standalone proof commits. This is not a claim about private, deleted or otherwise undiscoverable work, nor a new literature search.
 
 ## Statement
 

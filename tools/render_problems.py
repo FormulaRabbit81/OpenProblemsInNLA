@@ -41,6 +41,9 @@ def restore_pdf_layout(identifier, body):
     if identifier == "MF-22":
         heading = "## Resolution: affirmative, 11 September 2026\n"
         body = body.replace(heading, "\\pagestyle{plain}\n\n" + heading, 1)
+        # Separate formal evidence and keep the unchanged original target together.
+        body = body.replace("## Lean proof and verification evidence\n", "\\newpage\n\n## Lean proof and verification evidence\n", 1)
+        body = body.replace("## Statement\n", "\\newpage\n\n## Statement\n", 1)
     if identifier in {"RA-12", "RA-13"}:
         heading = "## Problem statement\n"
         body = body.replace(heading, "\\newpage\n\n" + heading, 1)
@@ -91,7 +94,7 @@ def render(source):
             input=body.strip(), text=True, capture_output=True, check=True,
         )
         tex = result.stdout
-        if identifier in {"SP-04", "SP-05"}:
+        if identifier in {"SP-04", "SP-05", "MF-22"}:
             # These publication dates record formal verification, not a literature search.
             tex = tex.replace("Literature check:", "Verification check:")
         # The code spans in this catalog are literal search phrases. Set them
