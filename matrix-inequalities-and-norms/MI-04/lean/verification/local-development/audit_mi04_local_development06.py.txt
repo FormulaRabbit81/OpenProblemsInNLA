@@ -1,0 +1,115 @@
+from pathlib import Path
+import datetime, hashlib, json, re, subprocess
+
+B = Path('/tmp/nla-lean-next-20260915')
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+S = B / 'inequalities/MI-04'
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+read = lambda p: json.loads(Path(p).read_text())
+rp = L / 'runs/development-06/RECEIPT.json'
+r = read(rp)
+a = read(L / 'ASSEMBLY-06.json')
+assert r['end'] and not r['failed_modules'] and not r['blocked_modules']
+assert r['assembly_sha256'] == sha(L / 'ASSEMBLY-06.json')
+assert r['runner_sha256'] == sha(L / 'serial_compile_v3.py')
+environment = read(L / 'LOCAL-ENVIRONMENT.json')
+assert sha(environment['compiler']) == r['compiler_sha256']
+sources = {p: v['sha256'] for p, v in a['sources'].items() if p.startswith('NLA/MI04/')}
+assert len(sources) == 21
+for p, h in sources.items():
+    assert sha(L / p) == r['source_inputs'][p] == h
+modules = {p[:-5].replace('/', '.'): p for p in sources}
+imports = {m: [d for line in (L / p).read_text().splitlines() if line.startswith('import ')
+               for d in line[7:].split() if d.startswith('NLA.')]
+           for m, p in modules.items()}
+def closure(m):
+    return {m} | {x for d in imports[m] for x in closure(d)}
+origins, bindings, limitations = {}, {}, []
+def origin(c, path, m):
+    bindings[str(path)] = sha(path)
+    assert c['source_sha256'] == sources[modules[m]]
+    assert c['output_sha256'] == sha(L / '.lake/build/lib/lean' / (modules[m][:-5] + '.olean'))
+    if c.get('status') == 'reused_exact_successful_local_output':
+        if 'prior_command' in c:
+            # v2 retained the exact command rather than a receipt-path reference.
+            if m == 'NLA.MI04.Definitions':
+                prior = L / 'runs/development-01/RECEIPT.json'
+                matches = [v for v in read(prior)['commands'] if v == c['prior_command']]
+                assert len(matches) == 1
+                return origin(matches[0], prior, m)
+            assert m == 'NLA.MI04.Quadratic'
+            prior = L / 'MI04-QUADRATIC-4096.json'
+            assert read(prior) == c['prior_command']
+            return origin(read(prior), prior, m)
+        prior = Path(c['prior_receipt'])
+        assert sha(prior) == c['prior_receipt_sha256']
+        for p, h in c['transitive_source_hashes'].items():
+            assert h == sources[p]
+        j = read(prior)
+        if 'commands' in j:
+            assert j['end']
+            matches = [v for v in j['commands'] if v.get('module') == m
+                       and v.get('source_sha256') == c['source_sha256']
+                       and v.get('output_sha256') == c['output_sha256']]
+            assert len(matches) == 1
+            return origin(matches[0], prior, m)
+        assert m == 'NLA.MI04.Quadratic'
+        return origin(j, prior, m)
+    assert c['exit_code'] == 0 and c['end']
+    assert c['argv'][0] == environment['compiler'] and '--threads=1' in c['argv']
+    assert '--memory=3072' in c['argv'] or '--memory=4096' in c['argv']
+    log = path.parent / (m + '.log')
+    if m == 'NLA.MI04.Quadratic' and path.name == 'MI04-QUADRATIC-4096.json':
+        log = L / 'MI04-QUADRATIC-4096.log'
+        limitations.append('The contemporaneous direct Quadratic receipt recorded actual exit0, source and output hashes but omitted its log hash. This audit binds the existing log now, not retrospectively as an original recorded field.')
+    else:
+        assert sha(log) == c['log_sha256']
+    text = log.read_text()
+    assert not re.search(r'(^|\n).*error(?:\(|:)', text)
+    bindings[str(log)] = sha(log)
+    for dep, h in c.get('dependency_olean_sha256', {}).items():
+        assert h == sha(L / '.lake/build/lib/lean' / (modules[dep][:-5] + '.olean'))
+    return {'receipt': str(path), 'receipt_sha256': sha(path), 'log': str(log),
+            'log_sha256': sha(log), 'exit_code': 0, 'source_sha256': c['source_sha256'],
+            'output_sha256': c['output_sha256'], 'argv': c['argv']}
+for m in modules:
+    commands = [c for c in r['commands'] if c['module'] == m]
+    assert len(commands) == 1
+    origins[m] = origin(commands[0], rp, m)
+freeze = read(S / 'STATEMENT-FREEZE.json')
+for p, h in freeze['frozen_files_sha256'].items():
+    assert sha(S / p) == h
+names = read(S / 'comparator.json')['theorem_names']
+assert len(names) == 21 and read(S / 'comparator.json')['definition_names'] == []
+log = (L / 'runs/development-06/NLA.MI04.Complete.log').read_text()
+observed = {name: [x.strip() for x in raw.split(',') if x.strip()]
+            for name, raw in re.findall(r"'([^']+)' depends on axioms: \[([^\]]*)\]", log)}
+assert len(observed) == len(names) and set(observed) == set(names)
+assert all(set(v) <= {'propext', 'Classical.choice', 'Quot.sound'} for v in observed.values())
+deps = {}
+for d in environment['dependencies']:
+    package = L / '.lake/packages' / d['package']
+    rev = subprocess.check_output(['git', '-C', str(package), 'rev-parse', 'HEAD'], text=True).strip()
+    assert rev == d['commit']
+    status = subprocess.check_output(['git', '-C', str(package), 'status', '--porcelain', '--untracked-files=no'], text=True)
+    assert not status, (d['package'], status)
+    deps[d['package']] = rev
+accepted = {('Solution.lean' if p == 'NLA/MI04/Complete.lean' else p): h for p, h in sources.items()}
+out = B / 'MI04-LOCAL-DEVELOPMENT-ACCEPTANCE.json'
+assert not out.exists()
+result = {'reviewer': '/root', 'time': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'scope': 'Source-bound complete local macOS development build; canonical verification remains pending.',
+    'complete_development_graph_passed': True, 'frozen_export_count': 21,
+    'canonical_verification_completed': False, 'comparator_run': False,
+    'platform': r['platform'], 'receipt': str(rp), 'receipt_sha256': sha(rp),
+    'assembly_sha256': sha(L / 'ASSEMBLY-06.json'), 'audit_script_sha256': sha(__file__),
+    'compiler_sha256': r['compiler_sha256'], 'max_compiler_processes': 1,
+    'accepted_source_sha256': accepted, 'selected_source_locations':
+      {('Solution.lean' if p == 'NLA/MI04/Complete.lean' else p): a['sources'][p]['source'] for p in sources},
+    'observed_axioms': observed, 'actual_commands': origins, 'bindings': bindings,
+    'dependency_commits': deps, 'frozen_files_sha256': freeze['frozen_files_sha256'],
+    'limitations': limitations + ['Dependencies use pinned shared compiled caches; this is not a fresh Linux sandbox or default-kernel replay/Comparator/control run. No publication commit or PR is accepted here.'],
+    'count_change': 0}
+out.write_text(json.dumps(result, indent=2) + '\n')
+print(json.dumps({'acceptance': str(out), 'sha256': sha(out), 'actual_successful_modules': len(origins),
+                  'measured_exports': len(observed), 'dependency_pins': len(deps)}))
