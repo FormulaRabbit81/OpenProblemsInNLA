@@ -939,11 +939,27 @@ Seven exact targets are classified below. Independent agent review is not extern
 
 Eight exact targets passed independent agent review. Author: **Matthew J. Colbrook**, University of Cambridge. [Submission record](references/colbrook-recovered-2026-09-11/README.md) documents the substantial AI assistance, reconstructed sources, full proof hashes and checks. Agent review is not external human peer review or formal certification; no priority claim is made. All original targets and historical ratings are retained.
 
-### IE-13 - Sharp growth classification
+### 🏆 IE-13 - Sharp growth classification
 
 [Original statement](linear-systems-and-elimination/IE-13/README.md). **Solved.** Theorem 1 and Sections 2-4 prove $G(0,q)=1$ and $G(p,q)=h_{p+q}$ for $p\ge1$, where $h_t=0$ for $t\le0$ and $h_t=1+\sum_{r=1}^p h_{t-r}$ otherwise. The upper bound covers every complex input and admissible tie path, with growth over all active entries in the fixed original ordering. A real nonsingular matrix of order $2p+q+1$ attains it, including zero upper bandwidth.
 
 [Complete manuscript](references/colbrook-recovered-2026-09-11/manuscripts/IE-13.pdf); [independent review](references/colbrook-recovered-2026-09-11/verification/reviews/IE-13-review.md).
+
+**Lean verified, 16 September 2026 UTC. Formalization and verification submission:
+George Stepaniants**, Department of Computing and Mathematical Sciences,
+California Institute of Technology. **Original mathematical proof: Matthew J.
+Colbrook**, Department of Applied Mathematics and Theoretical Physics,
+University of Cambridge. The [complete 28-target formalization](linear-systems-and-elimination/IE-13/lean/README.md)
+retains all complex inputs, dimensions, legal ties and both zero-bandwidth
+boundaries, and proves exact attainment and the real supremum.
+[Canonical Linux run 35081003513](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35081003513/job/104744813757)
+passed LeanCert kernel trust, Comparator, default-kernel replay, standard
+transitive axioms and required controls at immutable proof commit
+`032d4c86c52ffde0c4d440f28527ba43555a0a24` ([immutable proof revision](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/032d4c86c52ffde0c4d440f28527ba43555a0a24/linear-systems-and-elimination/IE-13/lean/Solution.lean)). Two independent AI-agent
+complete-source/runtime reviews are retained. This adds formal verification
+to the existing mathematical resolution. See the
+[canonical evidence section](linear-systems-and-elimination/IE-13/README.md#lean-proof-and-verification-evidence).
+
 
 ### IE-14 - Sharp growth classification
 
