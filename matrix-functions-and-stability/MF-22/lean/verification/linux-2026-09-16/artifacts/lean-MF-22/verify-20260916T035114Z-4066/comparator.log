@@ -1,0 +1,559 @@
+$ systemd-run --user --quiet --wait --pipe --collect -p 'RestrictAddressFamilies=~AF_UNIX' --working-directory /home/runner/work/_temp/nla-lean-tools/.verification-tmp/nla-fresh-proof-e2hqja89/project /usr/bin/env -i PATH=/home/runner/.elan/toolchains/leanprover--lean4---v4.33.1/bin:/home/runner/.elan/bin:/home/runner/go/bin:/opt/hostedtoolcache/go/1.27.1/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin HOME=/home/runner LANG=C.UTF-8 XDG_RUNTIME_DIR=/run/user/1001 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus GIT_TERMINAL_PROMPT=0 GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null COMPARATOR_BIN=/home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator COMPARATOR_LEAN4EXPORT=/home/runner/work/_temp/nla-lean-tools/.tools/lean4export/.lake/build/bin/lean4export COMPARATOR_LANDRUN=/home/runner/work/_temp/nla-lean-tools/scripts/strict_landrun.py XDG_CACHE_HOME=/home/runner/work/_temp/nla-lean-tools/.tools/cache TMPDIR=/home/runner/work/_temp/nla-lean-tools/.verification-tmp lake env /home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator comparator.json
+Building Challenge
+✔ [2425/2427] Built NLA.MF22.Definitions (2.2s)
+⚠ [2426/2427] Built Challenge (1.8s)
+warning: Challenge.lean:27:8: declaration uses `sorry`
+warning: Challenge.lean:35:8: declaration uses `sorry`
+warning: Challenge.lean:40:8: declaration uses `sorry`
+warning: Challenge.lean:48:8: declaration uses `sorry`
+warning: Challenge.lean:57:8: declaration uses `sorry`
+warning: Challenge.lean:67:8: declaration uses `sorry`
+warning: Challenge.lean:76:8: declaration uses `sorry`
+warning: Challenge.lean:80:8: declaration uses `sorry`
+warning: Challenge.lean:87:8: declaration uses `sorry`
+warning: Challenge.lean:93:8: declaration uses `sorry`
+warning: Challenge.lean:97:8: declaration uses `sorry`
+warning: Challenge.lean:108:8: declaration uses `sorry`
+warning: Challenge.lean:117:8: declaration uses `sorry`
+warning: Challenge.lean:123:8: declaration uses `sorry`
+warning: Challenge.lean:135:8: declaration uses `sorry`
+warning: Challenge.lean:144:8: declaration uses `sorry`
+warning: Challenge.lean:156:8: declaration uses `sorry`
+warning: Challenge.lean:165:8: declaration uses `sorry`
+warning: Challenge.lean:176:8: declaration uses `sorry`
+warning: Challenge.lean:184:8: declaration uses `sorry`
+warning: Challenge.lean:192:8: declaration uses `sorry`
+warning: Challenge.lean:201:8: declaration uses `sorry`
+Build completed successfully (2427 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.MF22.complex_entry_norm_bound, NLA.MF22.source_entry_bound, NLA.MF22.leading_block_invertible, NLA.MF22.source_boundaries, NLA.MF22.source_recurrence, NLA.MF22.transfer_polynomial_certificates, NLA.MF22.numerator_denominator_coprime, NLA.MF22.quartic_factorization, NLA.MF22.cayley_identity, NLA.MF22.positive_discriminant_factor, NLA.MF22.real_cubic_discriminant, NLA.MF22.exceptional_parameter, NLA.MF22.four_roots, NLA.MF22.spectral_projector_algebra, NLA.MF22.dominant_projector, NLA.MF22.spectral_tail_bounds, NLA.MF22.green_source_state, NLA.MF22.green_inverse, NLA.MF22.uniform_green_entries, NLA.MF22.eventual_inverse_entries, NLA.MF22.eventual_quadratic_conditioning, NLA.MF22.polynomial_conditioning, propext, Classical.choice, Quot.sound, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+Building Solution
+✔ [3449/3478] Built LeanCert.Core.Interval (3.3s)
+✔ [3455/3478] Built LeanCert.Core.DerivativeIntervals (3.5s)
+✔ [3456/3481] Built LeanCert.Tactic.Verification (4.0s)
+✔ [3457/3481] Built LeanCert.Core.Expr (5.9s)
+ℹ [3458/3483] Built NLA.MF22.Norms (7.2s)
+info: NLA/MF22/Norms.lean:113:0: 'NLA.MF22.complex_entry_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3459/3483] Built LeanCert.Core.Taylor (9.0s)
+✔ [3460/3483] Built LeanCert.Core.IntervalRat.Basic (9.4s)
+⚠ [3461/3483] Built NLA.MF22.GreenKernel (6.8s)
+warning: NLA/MF22/GreenKernel.lean:91:8: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF22/GreenKernel.lean:100:18: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✔ [3462/3485] Built LeanCert.Core.IntervalRat.LogReduction (5.1s)
+✔ [3463/3485] Built LeanCert.Core.Support (3.8s)
+✔ [3464/3485] Built LeanCert.Meta.Numeral (3.0s)
+⚠ [3465/3485] Built NLA.MF22.ScalarTail (4.5s)
+warning: NLA/MF22/ScalarTail.lean:59:21: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+info: NLA/MF22/ScalarTail.lean:83:0: 'NLA.MF22.scalar_dominant_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3466/3485] Built LeanCert.Engine.Eval.Result (2.7s)
+✔ [3467/3485] Built LeanCert.Core.TrigReduction (3.3s)
+✔ [3468/3487] Built LeanCert.Tactic.IntervalAuto.Types (3.7s)
+✔ [3469/3487] Built LeanCert.Core.IntervalRat.Transcendental (4.7s)
+⚠ [3470/3487] Built NLA.MF22.GreenEntryAlgebra (4.5s)
+warning: NLA/MF22/GreenEntryAlgebra.lean:55:61: This simp argument is unused:
+  smul_sub
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [greenKernel, greenLeadingCoefficient, h, if_true, if_false, transfer_power_decomposition ρ roots,
+    Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.mul_smul, hsandwich, smul_add, smul_smul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF22/GreenEntryAlgebra.lean:71:30: This simp argument is unused:
+  Fin.sum_univ_four
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF22/GreenEntryAlgebra.lean:71:49: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✔ [3471/3487] Built LeanCert.Tactic.IntervalAuto.Extract (3.3s)
+✔ [3472/3489] Built LeanCert.Meta.ToExpr (6.4s)
+⚠ [3473/3493] Built NLA.MF22.GreenCoefficients (6.4s)
+warning: NLA/MF22/GreenCoefficients.lean:37:30: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF22/GreenCoefficients.lean:37:30: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/MF22/GreenCoefficients.lean:42:30: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF22/GreenCoefficients.lean:42:30: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/MF22/GreenCoefficients.lean:82:60: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF22/GreenCoefficients.lean:82:60: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+info: NLA/MF22/GreenCoefficients.lean:124:0: 'NLA.MF22.green_leading_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3475/3500] Built LeanCert.Tactic.IntervalAuto.Norm (5.5s)
+✔ [3476/3504] Built LeanCert.Core.Dyadic (5.6s)
+✔ [3477/3505] Built LeanCert.Tactic.IntervalAuto.Parse (8.5s)
+✔ [3478/3505] Built LeanCert.Contrib.Sinc (6.8s)
+✔ [3479/3605] Built LeanCert.Tactic.NumericalRefinement (575ms)
+✔ [3529/3606] Built LeanCert.Tactic.LeanCert.Bridge.Environment (2.4s)
+✔ [3530/3607] Built LeanCert.Tactic.IntervalAuto.Diagnostic (2.9s)
+✔ [3531/3611] Built LeanCert.Tactic.VecUtil (2.5s)
+✔ [3532/3611] Built LeanCert.Tactic.LeanCert.Normalize (3.2s)
+✔ [3533/3613] Built LeanCert.Core.IntervalRat.Taylor (21s)
+✔ [3534/3613] Built LeanCert.Tactic.FinSumExpand (2.2s)
+✔ [3535/3613] Built LeanCert.Tactic.FinsetParse (3.1s)
+✔ [3536/3615] Built LeanCert.Tactic.BridgeNative (1.5s)
+✔ [3537/3619] Built LeanCert.Core.IntervalReal (2.3s)
+✔ [3538/3619] Built LeanCert.Tactic.LeanCert.Semantic.Domain (1.5s)
+✔ [3539/3619] Built LeanCert.Core.IntervalRat.TrigReduced (2.8s)
+✔ [3540/3622] Built LeanCert.Validity.Eventual (2.8s)
+✔ [3541/3622] Built LeanCert.Tactic.LeanCert.Semantic.Goal (2.3s)
+✔ [3542/3622] Built LeanCert.Core.IntervalRealEndpoints (5.3s)
+✔ [3543/3622] Built LeanCert.Engine.Affine.Basic (8.1s)
+✔ [3544/3622] Built LeanCert.Tactic.VecSimp (2.3s)
+✔ [3545/3622] Built LeanCert.Core.IntervalDyadic (8.9s)
+✔ [3546/3624] Built LeanCert.Tactic.LeanCert.Semantic.Parse.Comparison (1.8s)
+✔ [3547/3626] Built LeanCert.Tactic.EventualBound (6.5s)
+✔ [3548/3627] Built LeanCert.Core.DyadicCell (5.6s)
+✔ [3549/3627] Built LeanCert.Tactic.LeanCert.Semantic.Parse.Bound (4.9s)
+✔ [3550/3627] Built LeanCert.Engine.Affine.Nonlinear (6.1s)
+✔ [3551/3630] Built LeanCert.Engine.Eval.Core (8.5s)
+✔ [3552/3630] Built LeanCert.Tactic.Extension.Protocol (2.8s)
+✔ [3553/3630] Built LeanCert.Core.DyadicFrontier (3.0s)
+✔ [3554/3634] Built LeanCert.Tactic.LeanCert.Diagnostic.Evidence (3.2s)
+✔ [3556/3635] Built LeanCert.Tactic.LeanCert.Config (1.8s)
+✔ [3557/3649] Built LeanCert.Engine.Eval.Extended (4.0s)
+✔ [3558/3649] Built LeanCert.Tactic.Extension.Registry (3.4s)
+✔ [3559/3653] Built LeanCert.Engine.Algebra.QPoly (4.2s)
+✔ [3560/3655] Built LeanCert.Engine.FloatEval (3.1s)
+✔ [3561/3657] Built LeanCert.Engine.Bounds.Lemmas (3.0s)
+✔ [3562/3657] Built LeanCert.Tactic.Extension.Command (2.6s)
+✔ [3563/3677] Built LeanCert.Engine.Algebra.QPolyIntegral (3.2s)
+✔ [3578/3684] Built LeanCert.Tactic.Extension (2.2s)
+✔ [3579/3684] Built NLA.MF22.EigenEvaluation (3.4s)
+✔ [3580/3684] Built LeanCert.Engine.IntervalEval (2.3s)
+⚠ [3581/3684] Built NLA.MF22.Coordinates (3.6s)
+warning: NLA/MF22/Coordinates.lean:57:35: Variable name `hn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF22/Coordinates.lean:72:0: 'NLA.MF22.source_boundaries' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3582/3684] Built LeanCert.Engine.Affine.Transcendental (4.7s)
+⚠ [3583/3684] Built NLA.MF22.SourceBounds (4.9s)
+warning: NLA/MF22/SourceBounds.lean:37:12: This simp argument is unused:
+  norm_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Complex.norm_real, Real.norm_eq_abs, abs_of_pos hρ]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: NLA/MF22/SourceBounds.lean:43:0: 'NLA.MF22.source_entry_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3584/3684] Built LeanCert.Validity.Bounds.Checked (3.4s)
+✔ [3585/3684] Built LeanCert.Engine.IntervalEvalDyadic (6.9s)
+✔ [3586/3684] Built LeanCert.Validity.Bounds.Core (3.1s)
+✔ [3587/3684] Built LeanCert.Engine.Optimization.Box (3.3s)
+✔ [3588/3684] Built LeanCert.Engine.RootFinding.Basic (5.6s)
+✔ [3589/3684] Built LeanCert.Engine.AD.Basic (3.6s)
+✔ [3590/3684] Built LeanCert.Engine.Integrate (7.2s)
+⚠ [3591/3684] Built NLA.MF22.StateReconstruction (4.3s)
+warning: NLA/MF22/StateReconstruction.lean:33:33: Variable name `hn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [3592/3684] Built LeanCert.Engine.TaylorModel.Core (10s)
+⚠ [3593/3684] Built NLA.MF22.SourceRows (8.1s)
+warning: NLA/MF22/SourceRows.lean:54:10: This simp argument is unused:
+  h
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [he.mp h]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [3594/3684] Built LeanCert.Engine.IntervalEvalAffine (6.4s)
+✔ [3595/3684] Built LeanCert.Validity.DyadicBounds (3.7s)
+✔ [3596/3684] Built LeanCert.Engine.Search.Heuristic (3.4s)
+✔ [3597/3684] Built LeanCert.Engine.FinSumDyadic (4.5s)
+✔ [3598/3684] Built LeanCert.Engine.TaylorModel.Special (2.8s)
+✔ [3599/3684] Built LeanCert.Engine.TaylorModel.Integral (3.6s)
+✔ [3600/3684] Built LeanCert.Engine.RootFinding.Bisection (5.2s)
+✔ [3601/3684] Built LeanCert.Engine.AD.Transcendental (4.3s)
+✔ [3602/3684] Built LeanCert.Engine.Affine.Environment (6.2s)
+✔ [3603/3684] Built LeanCert.Engine.TaylorModel.ExpLog (9.5s)
+✔ [3604/3684] Built LeanCert.Engine.WitnessSum (4.6s)
+✔ [3605/3684] Built LeanCert.Engine.TaylorModel.Trig (12s)
+✔ [3606/3684] Built LeanCert.Engine.AD.Eval (2.9s)
+✔ [3607/3684] Built LeanCert.Engine.TaylorModel.Hyperbolic (13s)
+✔ [3608/3684] Built LeanCert.Engine.AD.Correctness (2.5s)
+✔ [3609/3684] Built LeanCert.Engine.TaylorModel.Functions (1.7s)
+✔ [3610/3684] Built LeanCert.Engine.AD.Computable (4.2s)
+✔ [3611/3684] Built LeanCert.Engine.TaylorModel.Expr (4.6s)
+✔ [3612/3684] Built LeanCert.Engine.AD.PartialCorrectness (5.7s)
+✔ [3613/3684] Built LeanCert.Engine.TaylorModel (1.0s)
+✔ [3614/3684] Built LeanCert.Engine.AD.DomainChecked (2.7s)
+✔ [3615/3684] Built LeanCert.Engine.AD.Dyadic (2.7s)
+✔ [3616/3684] Built LeanCert.Engine.AD (1.5s)
+✔ [3617/3684] Built LeanCert.Validity.Bounds.Smart (3.2s)
+✔ [3618/3684] Built LeanCert.Meta.ProveSupported (4.1s)
+✔ [3619/3684] Built LeanCert.Engine.IntervalEvalRefined (4.3s)
+✔ [3620/3684] Built LeanCert.Engine.Optimize (6.4s)
+✔ [3621/3684] Built LeanCert.Validity.Bounds.Bridge (3.4s)
+✔ [3622/3684] Built LeanCert.Meta.ProveContinuous (4.7s)
+✔ [3623/3684] Built LeanCert.Tactic.IntervalAuto.ProveCommon (5.8s)
+✔ [3624/3684] Built LeanCert.Engine.RootFinding.Newton (5.2s)
+✔ [3625/3684] Built LeanCert.Validity.Bounds.Basic (3.2s)
+✔ [3626/3684] Built LeanCert.Engine.Optimization.Gradient (6.3s)
+✔ [3627/3684] Built LeanCert.Tactic.LeanCert.Bridge.ReifiedFunction (3.2s)
+✔ [3628/3684] Built LeanCert.Tactic.IntervalAuto.Basic (3.0s)
+✔ [3629/3684] Built LeanCert.Validity.Integration (6.1s)
+✔ [3630/3684] Built LeanCert.Engine.RootFinding.MVTBounds (9.6s)
+✔ [3631/3684] Built LeanCert.Engine.RootFinding.Krawczyk (8.1s)
+✔ [3632/3684] Built LeanCert.Tactic.LeanCert.Semantic.Prepare (7.4s)
+✔ [3633/3684] Built LeanCert.Engine.RootFinding.KrawczykCandidate (5.3s)
+✔ [3634/3684] Built LeanCert.Engine.RootFinding.Contraction (8.0s)
+✔ [3635/3684] Built LeanCert.Tactic.LeanCert.Integral (9.5s)
+✔ [3636/3684] Built LeanCert.Validity.Krawczyk (3.8s)
+✔ [3637/3684] Built LeanCert.Engine.RootFinding.Main (2.8s)
+✔ [3638/3684] Built LeanCert.Tactic.LeanCert.Solver.Protocol (5.3s)
+✔ [3639/3684] Built LeanCert.Tactic.Extension.Execute (6.6s)
+✔ [3640/3684] Built LeanCert.Engine.Optimization.Global (24s)
+✔ [3641/3684] Built LeanCert.Tactic.LeanCert.Diagnostic.Render (3.1s)
+✔ [3642/3684] Built LeanCert.Tactic.Enclosure (2.0s)
+✔ [3643/3684] Built LeanCert.Validity.Types (3.0s)
+✔ [3644/3684] Built LeanCert.Engine.Optimization.Guided (3.1s)
+✔ [3645/3684] Built LeanCert.Engine.Search.CounterExample (3.2s)
+✔ [3646/3684] Built LeanCert.Validity.Bounds (6.1s)
+✔ [3647/3684] Built LeanCert.Engine.Optimization.BoundVerify (3.1s)
+✔ [3648/3684] Built LeanCert.Discovery.Find (3.1s)
+✔ [3649/3684] Built LeanCert.Tactic.IntervalAuto.RootBound (3.7s)
+✔ [3650/3684] Built LeanCert.Tactic.IntervalAuto.Multivariate (5.8s)
+✔ [3651/3684] Built LeanCert.Tactic.IntervalAuto.OptBound (3.4s)
+✔ [3652/3684] Built LeanCert.Tactic.IntervalAuto.Bound (13s)
+✔ [3653/3684] Built LeanCert.Tactic.IntervalAuto.Subdiv (3.9s)
+✔ [3654/3684] Built LeanCert.Tactic.IntervalAuto.Adaptive (5.8s)
+✔ [3655/3684] Built LeanCert.Tactic.IntervalAuto.PointIneq (7.8s)
+✔ [3656/3684] Built LeanCert.Tactic.IntervalAuto (1.9s)
+✔ [3657/3684] Built LeanCert.Tactic.Refute (3.4s)
+✔ [3658/3684] Built LeanCert.Tactic.FinSumWitness (4.9s)
+✔ [3659/3684] Built LeanCert.Tactic.FinSumBound (3.6s)
+✔ [3660/3684] Built LeanCert.Tactic.LeanCert.Semantic.Parse (2.6s)
+✔ [3661/3684] Built LeanCert.Tactic.Discovery (11s)
+✔ [3662/3684] Built LeanCert.Tactic.Krawczyk (2.7s)
+✔ [3663/3684] Built LeanCert.Tactic.LeanCert.Router (6.3s)
+✔ [3664/3684] Built LeanCert.Tactic.LeanCert (2.0s)
+✔ [3665/3684] Built LeanCert.Tactic (2.0s)
+ℹ [3666/3684] Built NLA.MF22.ProjectorPolynomial (3.5s)
+info: NLA/MF22/ProjectorPolynomial.lean:81:0: 'NLA.MF22.transfer_charpoly_eq_nodal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF22/ProjectorPolynomial.lean:83:0: 'NLA.MF22.matrix_aeval_eq_of_eval_nodes' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3667/3684] Built NLA.MF22.RootCubic (3.6s)
+warning: NLA/MF22/RootCubic.lean:104:41: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+info: NLA/MF22/RootCubic.lean:112:0: 'NLA.MF22.negative_cubic_configuration' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3668/3684] Built NLA.MF22.ScalarCertificates (5.1s)
+warning: NLA/MF22/ScalarCertificates.lean:71:27: This simp argument is unused:
+  Complex.I_sq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Complex.I_pow_three, Complex.I_pow_four]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF22/ScalarCertificates.lean:71:62: This simp argument is unused:
+  Complex.I_pow_four
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Complex.I_sq, Complex.I_pow_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF22/ScalarCertificates.lean:70:18: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/ScalarCertificates.lean:71:12: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/ScalarCertificates.lean:71:82: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/ScalarCertificates.lean:97:62: This simp argument is unused:
+  Complex.I_pow_four
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Complex.I_sq, Complex.I_pow_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF22/ScalarCertificates.lean:93:57: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/ScalarCertificates.lean:97:12: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/ScalarCertificates.lean:97:82: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/ScalarCertificates.lean:117:59: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF22/ScalarCertificates.lean:117:59: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/MF22/ScalarCertificates.lean:115:58: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+info: NLA/MF22/ScalarCertificates.lean:126:0: 'NLA.MF22.quartic_factorization' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF22/ScalarCertificates.lean:128:0: 'NLA.MF22.cayley_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF22/ScalarCertificates.lean:130:0: 'NLA.MF22.positive_discriminant_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF22/ScalarCertificates.lean:132:0: 'NLA.MF22.real_cubic_discriminant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF22/ScalarCertificates.lean:134:0: 'NLA.MF22.exceptional_parameter' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3669/3684] Built NLA.MF22.ProjectorAlgebra (3.2s)
+warning: NLA/MF22/ProjectorAlgebra.lean:103:56: Variable name `hρ` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hρ
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF22/ProjectorAlgebra.lean:120:0: 'NLA.MF22.aeval_eq_sum_smul_projector' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF22/ProjectorAlgebra.lean:122:0: 'NLA.MF22.transfer_mul_spectralProjector_of_charpoly' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF22/ProjectorAlgebra.lean:124:0: 'NLA.MF22.spectral_projector_algebra_of_charpoly' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3670/3684] Built NLA.MF22.LeadingBlock (4.3s)
+warning: NLA/MF22/LeadingBlock.lean:24:10: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/LeadingBlock.lean:24:38: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+info: NLA/MF22/LeadingBlock.lean:48:0: 'NLA.MF22.leading_block_invertible' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3671/3684] Built NLA.MF22.ProjectorRank (4.3s)
+info: NLA/MF22/ProjectorRank.lean:105:0: 'NLA.MF22.transfer_eigenspace_finrank_le_one_of_charpoly' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF22/ProjectorRank.lean:107:0: 'NLA.MF22.spectralProjector_entry_minor_zero_of_charpoly' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF22/ProjectorRank.lean:109:0: 'NLA.MF22.spectralProjector_boundary_sandwich_of_charpoly' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3672/3684] Built NLA.MF22.Coprime (6.3s)
+warning: NLA/MF22/Coprime.lean:45:21: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/Coprime.lean:46:12: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/Coprime.lean:46:81: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/Coprime.lean:76:12: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/Coprime.lean:76:81: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/Coprime.lean:99:83: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF22/Coprime.lean:99:83: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/MF22/Coprime.lean:99:10: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/Coprime.lean:104:22: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF22/Coprime.lean:104:22: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/MF22/Coprime.lean:117:10: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/Coprime.lean:117:79: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+info: NLA/MF22/Coprime.lean:173:0: 'NLA.MF22.numerator_denominator_coprime' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3673/3684] Built NLA.MF22.RootCayley (6.5s)
+warning: NLA/MF22/RootCayley.lean:35:62: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/RootCayley.lean:39:62: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/RootCayley.lean:120:41: Try `simp at hu` instead of `simpa using hu`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: NLA/MF22/RootCayley.lean:121:41: Try `simp at hv` instead of `simpa using hv`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+info: NLA/MF22/RootCayley.lean:154:0: 'NLA.MF22.rootData_of_quotient_configuration' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3674/3684] Built NLA.MF22.SourceRecurrence (5.5s)
+warning: NLA/MF22/SourceRecurrence.lean:42:50: This simp argument is unused:
+  Matrix.mulVec
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [leadingBlock, transferRhs, sourceState, dotProduct, Fin.sum_univ_succ, Matrix.cons_val_two,
+    Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF22/SourceRecurrence.lean:42:65: This simp argument is unused:
+  dotProduct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [leadingBlock, transferRhs, sourceState, Matrix.mulVec, Fin.sum_univ_succ, Matrix.cons_val_two,
+    Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF22/SourceRecurrence.lean:43:6: This simp argument is unused:
+  Fin.sum_univ_succ
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [leadingBlock, transferRhs, sourceState, Matrix.mulVec, dotProduct, Matrix.cons_val_two,
+    Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF22/SourceRecurrence.lean:47:50: This simp argument is unused:
+  Matrix.mulVec
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [leadingBlock, transferRhs, sourceState, dotProduct, Fin.sum_univ_succ, Matrix.cons_val_two,
+    Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF22/SourceRecurrence.lean:47:65: This simp argument is unused:
+  dotProduct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [leadingBlock, transferRhs, sourceState, Matrix.mulVec, Fin.sum_univ_succ, Matrix.cons_val_two,
+    Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF22/SourceRecurrence.lean:48:6: This simp argument is unused:
+  Fin.sum_univ_succ
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [leadingBlock, transferRhs, sourceState, Matrix.mulVec, dotProduct, Matrix.cons_val_two,
+    Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF22/SourceRecurrence.lean:44:38: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/SourceRecurrence.lean:49:38: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/SourceRecurrence.lean:88:8: This simp argument is unused:
+  Matrix.cons_val_three
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [sourceState, Nat.cast_add, Matrix.cons_val_two, Matrix.vecHead, Matrix.vecTail]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF22/SourceRecurrence.lean:90:63: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/SourceRecurrence.lean:91:16: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/SourceRecurrence.lean:98:56: Variable name `hn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF22/SourceRecurrence.lean:114:0: 'NLA.MF22.source_recurrence' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3675/3684] Built NLA.MF22.Roots (4.0s)
+info: NLA/MF22/Roots.lean:63:0: 'NLA.MF22.four_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3676/3684] Built NLA.MF22.TransferCertificates (6.5s)
+warning: NLA/MF22/TransferCertificates.lean:33:80: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/TransferCertificates.lean:95:65: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF22/TransferCertificates.lean:95:65: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/MF22/TransferCertificates.lean:106:10: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/TransferCertificates.lean:106:79: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/TransferCertificates.lean:144:80: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/TransferCertificates.lean:157:43: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/TransferCertificates.lean:158:77: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/TransferCertificates.lean:159:12: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/MF22/TransferCertificates.lean:159:81: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+info: NLA/MF22/TransferCertificates.lean:171:0: 'NLA.MF22.transfer_polynomial_certificates' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3677/3684] Built NLA.MF22.GreenInverse (3.3s)
+warning: NLA/MF22/GreenInverse.lean:65:36: Variable name `hρ` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hρ
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF22/GreenInverse.lean:132:0: 'NLA.MF22.green_source_state' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF22/GreenInverse.lean:134:0: 'NLA.MF22.green_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3678/3684] Built NLA.MF22.SpectralAlgebra (2.3s)
+info: NLA/MF22/SpectralAlgebra.lean:33:0: 'NLA.MF22.spectral_projector_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3679/3684] Built NLA.MF22.Dominant (2.3s)
+info: NLA/MF22/Dominant.lean:116:0: 'NLA.MF22.dominant_projector' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3680/3684] Built NLA.MF22.SpectralTailBounds (2.3s)
+info: NLA/MF22/SpectralTailBounds.lean:110:0: 'NLA.MF22.spectral_tail_bounds_of_gamma' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF22/SpectralTailBounds.lean:112:0: 'NLA.MF22.spectral_tail_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3681/3684] Built NLA.MF22.GreenEntryBounds (2.5s)
+warning: NLA/MF22/GreenEntryBounds.lean:120:29: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF22/GreenEntryBounds.lean:120:29: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+info: NLA/MF22/GreenEntryBounds.lean:138:0: 'NLA.MF22.uniform_green_entries' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3682/3684] Built NLA.MF22.Conditioning (2.4s)
+info: NLA/MF22/Conditioning.lean:80:0: 'NLA.MF22.eventual_inverse_entries' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF22/Conditioning.lean:82:0: 'NLA.MF22.eventual_quadratic_conditioning' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF22/Conditioning.lean:84:0: 'NLA.MF22.polynomial_conditioning' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3683/3684] Built Solution (2.1s)
+info: Solution.lean:21:0: 'NLA.MF22.complex_entry_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:23:0: 'NLA.MF22.source_entry_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:25:0: 'NLA.MF22.leading_block_invertible' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:27:0: 'NLA.MF22.source_boundaries' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:29:0: 'NLA.MF22.source_recurrence' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:31:0: 'NLA.MF22.transfer_polynomial_certificates' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:33:0: 'NLA.MF22.numerator_denominator_coprime' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:35:0: 'NLA.MF22.quartic_factorization' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:37:0: 'NLA.MF22.cayley_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:39:0: 'NLA.MF22.positive_discriminant_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:41:0: 'NLA.MF22.real_cubic_discriminant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:43:0: 'NLA.MF22.exceptional_parameter' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:45:0: 'NLA.MF22.four_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:47:0: 'NLA.MF22.spectral_projector_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:49:0: 'NLA.MF22.dominant_projector' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:51:0: 'NLA.MF22.spectral_tail_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:53:0: 'NLA.MF22.green_source_state' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:55:0: 'NLA.MF22.green_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:57:0: 'NLA.MF22.uniform_green_entries' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:59:0: 'NLA.MF22.eventual_inverse_entries' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:61:0: 'NLA.MF22.eventual_quadratic_conditioning' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:63:0: 'NLA.MF22.polynomial_conditioning' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (3684 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.MF22.complex_entry_norm_bound, NLA.MF22.source_entry_bound, NLA.MF22.leading_block_invertible, NLA.MF22.source_boundaries, NLA.MF22.source_recurrence, NLA.MF22.transfer_polynomial_certificates, NLA.MF22.numerator_denominator_coprime, NLA.MF22.quartic_factorization, NLA.MF22.cayley_identity, NLA.MF22.positive_discriminant_factor, NLA.MF22.real_cubic_discriminant, NLA.MF22.exceptional_parameter, NLA.MF22.four_roots, NLA.MF22.spectral_projector_algebra, NLA.MF22.dominant_projector, NLA.MF22.spectral_tail_bounds, NLA.MF22.green_source_state, NLA.MF22.green_inverse, NLA.MF22.uniform_green_entries, NLA.MF22.eventual_inverse_entries, NLA.MF22.eventual_quadratic_conditioning, NLA.MF22.polynomial_conditioning, propext, Classical.choice, Quot.sound, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+Running Lean default kernel on solution.
+Lean default kernel accepts the solution
+Your solution is okay!
+
+EXIT_STATUS=0

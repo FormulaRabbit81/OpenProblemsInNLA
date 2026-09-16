@@ -1,0 +1,440 @@
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'MF-22: eventual polynomial conditioning of the cubic C1 Toeplitz family'
+  description: Complete formally checked proof of the full original MF-22 eventual polynomial-conditioning
+    target, with sufficient exponent 2 and every fixed positive real parameter. All 22 targets passed canonical
+    non-root Linux run 35053254275 at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f.
+  authors:
+  - George Stepaniants
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California Institute of Technology,
+      Pasadena, California, USA
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+repository:
+  role: substantive-development
+  note: The immutable proof commit passed canonical verification and two independent final mathematical/runtime
+    reviews. Later publication and merge revisions require separate exact-commit execution.
+sources:
+- title: MF-22 — Polynomial conditioning of the cubic C1 spline Schrodinger Toeplitz family
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/8f04b905eb2e0827b6b84f37d9d080ae1f05b202/matrix-functions-and-stability/MF-22/README.md
+  type: web-post
+  location: Complete original problem, exact coefficient blocks and retained resolution
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: Permanent ID, original parameter domain, original Toeplitz boundary and complete existential polynomial
+    target preserved.
+- title: 'MF-22: An eventual linear condition-number bound'
+  authors:
+  - George Stepaniants
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/8f04b905eb2e0827b6b84f37d9d080ae1f05b202/matrix-functions-and-stability/MF-22/solution.md
+  type: manuscript
+  location: Theorem in Section 1 and complete proof in Sections 2–4
+  relationship: adapts
+  author_endorsement: not-contacted
+  note: The retained manuscript proves a linear bound. This implementation follows its transfer, root, noncancellation
+    and finite Green mechanisms but uses a quadratic estimate, which proves the full original existential polynomial
+    target. It makes no claim to formalize the manuscript’s exponent-one bound.
+- title: Condition numbers of block Toeplitz matrices and stability of space-time IgA approximations for the
+    wave and Schrodinger equations
+  authors:
+  - M. Bogoya
+  - A. Bottcher
+  - M. Ferrari
+  - S. M. Grudsky
+  - S. Serra-Capizzano
+  id: https://arxiv.org/abs/2608.24151v1
+  type: preprint
+  location: Equation (5.22), Section 5.3, equation (5.32), Proposition 5.14 and paragraph after Figure 9
+  relationship: background
+  author_endorsement: not-contacted
+  note: The original family, source root classification and question retain their original authors' credit;
+    no unproved source result is an intended axiom.
+related_formalizations:
+- id: https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof
+  relationship: other
+  note: Numerical-target separation, kernel-only LeanCert and Comparator reproduction patterns studied; no
+    theorem imported.
+- id: https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1
+  relationship: other
+  note: Independent Challenge/Solution organization studied; no mathematical theorem imported.
+- id: https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474
+  relationship: builds-on
+  note: Actual Euclidean matrix operators and inverses, exact cubic discriminants, Lagrange interpolation,
+    Cayley–Hamilton and eigenspace dimension provide proved mathematical foundations.
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    tool_setup: Multiple implementing agents and two independent nonimplementing mathematical referees. Authoring
+      occurs on macOS; actual Lean and Comparator gates run on non-root Linux. No local Lean/Lake/cache execution
+      is used. The actual canonical run checked all 22 targets with Comparator, default-kernel replay and the
+      required per-project controls.
+    prompting_notes: Full numerical statements, two independent statement approvals, actual Linux elaboration
+      and an immutable freeze preceded proofs. Preserve every positive parameter including rho squared equals
+      10, the exact eight coefficient blocks and boundaries, singular condition numbers and actual eventual
+      inverses. Use exact fixed-size algebra, cancellation before norm estimates and the permitted exponent
+      2. Select LeanCert kernel trust and independent Comparator with no definition holes.
+  notes: Complete AI-assisted candidate source was prepared by /root/next_matrix_functions with separately
+    assigned root/projector algebra contributions from /root/next_elimination. Independent final mathematical
+    source referees are /root and /root/next_inequalities. Prior failed development runs remain failed; source
+    approval and successful prefixes do not constitute complete Lean verification. A further independent complete-source
+    review was performed by /root/mf22_publication_referee. Final actual canonical-evidence audits by /root
+    and /root/mf22_publication_referee accepted run 35053254275. The latter then prepared publication metadata
+    and evidence without changing mathematical or checker sources.
+status:
+  scope: 'Complete original MF-22 target: every fixed rho>0 admits K_rho>0 and n0>=1 such that every n>=n0
+    has the original nonsingular complex 2n-by-2n pure Toeplitz matrix and genuine Euclidean condition number
+    at most K_rho*n^2. All 22 frozen exports and all 29 mathematical files passed canonical non-root Linux
+    run 35053254275 at c701bfeea660473fc31ad9d0c74b76309be3b49f. Exponent 2 fully answers the original existential
+    polynomial question. The informal manuscript stronger exponent 1 is outside the formalized claim.'
+  whole_problem_verified: true
+  sorry_count: 0
+  sorry_in_definitions: 0
+  source_scan_note: The complete Solution has no accepted proof placeholders. All 22 actual canonical transitive-axiom
+    reports contain only propext, Classical.choice and Quot.sound. The 22 independent Challenge specification
+    placeholders remain confined to its separate environment.
+  main_results:
+  - declaration: NLA.MF22.complex_entry_norm_bound
+    file: NLA/MF22/Norms.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.source_entry_bound
+    file: NLA/MF22/SourceBounds.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.leading_block_invertible
+    file: NLA/MF22/LeadingBlock.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.source_boundaries
+    file: NLA/MF22/Coordinates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.source_recurrence
+    file: NLA/MF22/SourceRecurrence.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.transfer_polynomial_certificates
+    file: NLA/MF22/TransferCertificates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.numerator_denominator_coprime
+    file: NLA/MF22/Coprime.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.quartic_factorization
+    file: NLA/MF22/ScalarCertificates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.cayley_identity
+    file: NLA/MF22/ScalarCertificates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.positive_discriminant_factor
+    file: NLA/MF22/ScalarCertificates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.real_cubic_discriminant
+    file: NLA/MF22/ScalarCertificates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.exceptional_parameter
+    file: NLA/MF22/ScalarCertificates.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.four_roots
+    file: NLA/MF22/Roots.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.spectral_projector_algebra
+    file: NLA/MF22/SpectralAlgebra.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.dominant_projector
+    file: NLA/MF22/Dominant.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.spectral_tail_bounds
+    file: NLA/MF22/SpectralTailBounds.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.green_source_state
+    file: NLA/MF22/GreenInverse.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.green_inverse
+    file: NLA/MF22/GreenInverse.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.uniform_green_entries
+    file: NLA/MF22/GreenEntryBounds.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.eventual_inverse_entries
+    file: NLA/MF22/Conditioning.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.eventual_quadratic_conditioning
+    file: NLA/MF22/Conditioning.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.MF22.polynomial_conditioning
+    file: NLA/MF22/Conditioning.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: 'Accepted at proof commit c701bfeea660473fc31ad9d0c74b76309be3b49f by actual Linux
+      run 35053254275: LeanCert kernel trust, Comparator statement matching, default-kernel replay and standard
+      transitive axiom checks.'
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  axioms:
+  - Classical.choice
+  - Quot.sound
+  - propext
+fidelity:
+  divergences: The original question requires some nonnegative polynomial exponent. The implemented final theorem
+    selects exponent 2, using uniform eventual inverse-entry bounds and dimension-times-entry bounds for both
+    genuine operator norms. This retains the full original target while avoiding the sharper exponent-one estimate
+    in the informal manuscript. Exact fixed-size transfer determinants/cofactors and Lagrange projector algebra
+    replace generating-function inferences; the actual finite Toeplitz boundaries, all positive parameters,
+    exceptional rho squared equal to 10 and eventual nonsingularity remain unchanged.
+review:
+  status: accepted by two independent nonimplementing AI-agent final mathematical and actual-runtime referees
+  reviewers:
+  - OpenAI Codex agent /root (independent nonimplementing mathematical source referee)
+  - OpenAI Codex agent /root/next_inequalities (independent nonimplementing mathematical source referee)
+  - OpenAI Codex agent /root/mf22_publication_referee (independent complete mathematical source and actual-runtime
+    referee; subsequent metadata/evidence preparation only)
+  notes: Both reviewers read the complete 29-file candidate, original target/manuscript and all 22 frozen contracts.
+    Both separately approved the exact proof repairs after failed development runs 35044592511 and 35046126916.
+    Report hashes are retained in PUBLICATION-EVIDENCE.json. Later changes require specific reconciliation.
+    Their source approvals are not human peer review, official Tau Ceti endorsement, Lean acceptance or Comparator
+    acceptance. Exact subsequent repairs after runs 35048156414 and 35050121652 are separately reconciled in
+    the retained source-review addenda; earlier reports and failed runs remain unchanged. Final reports under
+    reviews/final accepted all 29 implementation files and all 22 original frozen targets, and independently
+    reconciled actual run 35053254275 with all 634 exact candidate input blobs. Both referees read the entire
+    Comparator log and required control evidence. This is independent auditing of the authenticated run, not
+    an independently executed second Lean run or proof of platform/checker infallibility.
+alignment:
+  source_correspondence: SourceCorrespondence-current.md
+  numerical_boundary: NUMERICAL_TARGETS.md
+  proposed_statements: Challenge.lean
+  source_provenance: SOURCE-PROVENANCE.json
+  implementation_entry: Solution.lean
+  statement_freeze: STATEMENT-FREEZE.json
+  proof_architecture: PROOF-ARCHITECTURE.md
+  export_locations: IMPLEMENTATION-MAP.json
+  active_source_manifest: ACTIVE-SOURCE-MANIFEST.json
+  publication_evidence: PUBLICATION-ACCEPTANCE.json
+  frozen_statement_correspondence: SourceCorrespondence.md
+acknowledgements: Bogoya, Böttcher, Ferrari, Grudsky and Serra-Capizzano retain credit for the original family,
+  question and source root classification. George Stepaniants is credited separately for the retained manuscript
+  and formalization, with Department of Computing and Mathematical Sciences, California Institute of Technology
+  affiliation. Mathlib, LeanCert, Lean Comparator and formalization.yaml contributors, and the Schiffer/Forsythe
+  workflow examples, are acknowledged. No contact email is supplied.
+toolchain:
+  lean: leanprover/lean4:v4.33.1
+  dependency_manifest: lake-manifest.json
+  dependencies:
+    leancert: 621a43d7cf21f87872392a01e874f2f1dbddc926
+    mathlib: 0df444a360eaa60ab8c11dca51a86af692955474
+verification:
+  statement_elaboration:
+    status: passed actual Linux statement elaboration only
+    run_id: 35038020942
+    commit: 8adab1b22dfd8e69433815eaea14842a80e60340
+    receipt_sha256: 5bdbd66fa21b88345676c8a2dc342b2b587b4e19333ecdd3125c7fe5d1bbd54c
+    frozen_statement_count: 22
+  whole_proof_build: passed complete fresh non-root Linux canonical build of all 29 mathematical files
+  transitive_axioms: Every one of the 22 actual canonical exported declarations reports only propext, Classical.choice
+    and Quot.sound; full logs and exact hashes retained.
+  default_kernel: accepted complete exported Solution proof graph
+  comparator: accepted all 22 exact frozen targets without definition holes
+  sandbox_and_rejection_controls: All actual required per-project sandbox, kernel, Comparator, sorry and native
+    rejection controls passed inside successful verify job 104658059786. Separate shared checker-controls job
+    skipped because harness unchanged.
+  canonical_source_manifest: All 634 project inputs bound to immutable proof commit by verification/linux-2026-09-16/ROOT-AUDIT.json
+    and independent final referee audits.
+  permitted_axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+  permitted_axioms_note: Every frozen export has an actual canonical report containing exactly the permitted
+    three standard axioms.
+  publication: The canonical page and archive now record Lean verified based on the immutable proof execution.
+    Later publication and merge commits require their own exact-commit checks; their success is not claimed
+    in this record.
+  latest_development_run:
+    run_id: 35052024095
+    commit: 93abf01922d103993f2a92e819f207d63effbfae
+    module_exit_code: 0
+    challenge_exit_code: 0
+    scope: Historical complete development component accepted. Standalone canonical run 35053254275 subsequently
+      passed on identical mathematical source.
+  publication_configuration: Default target now selects Solution. The original frozen configuration is retained
+    unchanged in statement-audit and verification/packaging/before; the explicit nonmathematical amendment
+    is recorded in verification/packaging/TRANSITION.json.
+  development_run: 35052024095
+  development_commit: 93abf01922d103993f2a92e819f207d63effbfae
+  proof_commit: c701bfeea660473fc31ad9d0c74b76309be3b49f
+  canonical_run: https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35053254275
+  canonical_job: https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35053254275/job/104658059786
+  evidence: verification/linux-2026-09-16/ROOT-AUDIT.json
+  final_referees:
+  - reviews/final/referee-continuation/runtime-35053254275/REVIEW.md
+  - reviews/final/referee-root/REVIEW.md
+  whole_problem_verified: true
+  local_lean_execution: false
+  verification_date_utc: '2026-09-16'

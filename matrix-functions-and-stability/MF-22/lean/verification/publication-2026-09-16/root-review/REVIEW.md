@@ -1,0 +1,11 @@
+# MF-22 independent root publication review
+
+The prepared publication is approved for commit, push and exact-publication-commit Linux verification. A new upstream PR and its execution remain subsequent steps; this review does not count MF-22 as submitted yet.
+
+I independently reconciled all 634 accepted candidate inputs against literal Git commit c701bfeea660473fc31ad9d0c74b76309be3b49f and its authenticated receipt. All 631 protected nonmetadata inputs, all 29 mathematical files, the frozen contracts, dependency pins, Comparator configuration and shared checker are unchanged. The three original metadata inputs remain preserved before the documented update. The complete original canonical statement and all informal solution artifacts are unchanged.
+
+I read the publication prose, formalization metadata, current source correspondence and renderer changes. The complete original existential polynomial target is proved with exponent two. The informal stronger exponent-one estimate is explicitly outside the formal claim. All 22 metadata results match the frozen Comparator exports and refer to the actual accepted proof execution. Source and runtime reviews are preserved byte-for-byte, with one authenticated execution independently audited by multiple agents distinguished from multiple independent executions.
+
+I inspected all three rendered PDF pages; the mathematics, affiliation, original target and scope distinctions are readable without overlap or clipping. I checked the exact PDF and rendered-page hashes, sealed preparation logs, schema/target coverage, unchanged identity safeguards, generated catalog changes, contact-email absence and the two historical links omitted only by sparse checkout. The agent's actual schema, permanent-ID and 17-test results are preserved, not misrepresented as rerun by this review. I independently ran the source-reconciliation script and git diff --check. No local Lean/Lake/cache operation was performed.
+
+George Stepaniants is credited with the Department of Computing and Mathematical Sciences, California Institute of Technology. Original mathematical attribution is preserved. No contact email was added. Later revision and upstream execution remain separately auditable gates.

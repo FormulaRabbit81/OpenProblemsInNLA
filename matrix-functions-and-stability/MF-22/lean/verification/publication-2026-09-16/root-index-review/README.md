@@ -1,0 +1,3 @@
+# MF-22 staged publication audit
+
+The full staged whitespace check reports only trailing spaces in authenticated raw Linux logs and byte-preserved original document snapshots. Those evidence bytes are retained unchanged. A separate check excluding precisely those two archive directories passes for all active source and publication files. CHECKS.json preserves the original failure output and the exact successful scoped command result; the full unfiltered check is not reported as passing. All staged project blobs were independently compared to their current files. Publication and upstream execution remain pending.

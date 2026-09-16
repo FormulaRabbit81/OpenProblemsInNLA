@@ -1,0 +1,66 @@
+⚠ [8708/8718] Replayed NLA.KE05.Recurrence
+warning: NLA/KE05/Recurrence.lean:26:55: `Fin.coe_cast` has been deprecated: Use `Fin.val_cast` instead
+warning: NLA/KE05/Recurrence.lean:26:69: This simp argument is unused:
+  Fin.val_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.getElem_drop, List.getElem_finRange, Fin.coe_cast] at hv
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [8710/8718] Replayed NLA.KE05.PolynomialNull
+warning: NLA/KE05/PolynomialNull.lean:85:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [8711/8718] Replayed NLA.KE05.Regular
+warning: NLA/KE05/Regular.lean:50:32: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/KE05/Regular.lean:73:32: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/KE05/Regular.lean:50:32: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/KE05/Regular.lean:73:32: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+✖ [8718/8718] Building NLA.KE05.TotalMeasurability (98s)
+trace: .> LEAN_PATH=/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Cli/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/batteries/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Qq/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/aesop/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/importGraph/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/plausible/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/mathlib/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/leancert/.lake/build/lib/lean:/private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean /private/tmp/nla-lean-runtime/lean-4.33.1-darwin_aarch64/bin/lean /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/NLA/KE05/TotalMeasurability.lean -o /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/TotalMeasurability.olean -i /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/TotalMeasurability.ilean -c /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/TotalMeasurability.c --setup /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/TotalMeasurability.setup.json --json
+error: NLA/KE05/TotalMeasurability.lean:10:15: `NLA.KE05.matrixMeasurableSpace` has already been declared
+error: NLA/KE05/TotalMeasurability.lean:20:49: unsolved goals
+case pos
+α : Type u_1
+inst✝ : MeasurableSpace α
+b : ℕ
+t : ℝ
+H : α → Mat b
+D : Mat b
+hH : ∀ (i j : Fin b), Measurable fun x => H x i j
+hn : Measurable fun x => spectralNorm (t • 1 - H x)
+h : spectralNorm (t • 1 - D) = 0
+⊢ MeasurableSet fun x => True
+
+case neg
+α : Type u_1
+inst✝ : MeasurableSpace α
+b : ℕ
+t : ℝ
+H : α → Mat b
+D : Mat b
+hH : ∀ (i j : Fin b), Measurable fun x => H x i j
+hn : Measurable fun x => spectralNorm (t • 1 - H x)
+h : ¬spectralNorm (t • 1 - D) = 0
+⊢ MeasurableSet fun x => False
+error: NLA/KE05/TotalMeasurability.lean:64:10: Unknown identifier `measurableSet_all`
+error: NLA/KE05/TotalMeasurability.lean:65:10: No goals to be solved
+error: NLA/KE05/TotalMeasurability.lean:68:10: Unknown identifier `measurableSet_all`
+error: NLA/KE05/TotalMeasurability.lean:69:10: No goals to be solved
+error: Lean exited with code 1
+Some required targets logged failures:
+- NLA.KE05.TotalMeasurability
+error: build failed

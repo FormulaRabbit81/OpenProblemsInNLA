@@ -1,0 +1,74 @@
+⚠ [8709/8722] Replayed NLA.KE05.PolynomialNull
+warning: NLA/KE05/PolynomialNull.lean:85:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [8710/8722] Replayed NLA.KE05.Regular
+warning: NLA/KE05/Regular.lean:50:32: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/KE05/Regular.lean:73:32: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/KE05/Regular.lean:50:32: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/KE05/Regular.lean:73:32: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [8714/8722] Replayed NLA.KE05.Recurrence
+warning: NLA/KE05/Recurrence.lean:26:55: `Fin.coe_cast` has been deprecated: Use `Fin.val_cast` instead
+warning: NLA/KE05/Recurrence.lean:26:69: This simp argument is unused:
+  Fin.val_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.getElem_drop, List.getElem_finRange, Fin.coe_cast] at hv
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✖ [8719/8722] Building NLA.KE05.TotalMeasurability (23s)
+trace: .> LEAN_PATH=/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Cli/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/batteries/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Qq/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/aesop/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/importGraph/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/plausible/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/mathlib/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/leancert/.lake/build/lib/lean:/private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean /private/tmp/nla-lean-runtime/lean-4.33.1-darwin_aarch64/bin/lean /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/NLA/KE05/TotalMeasurability.lean -o /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/TotalMeasurability.olean -i /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/TotalMeasurability.ilean -c /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/TotalMeasurability.c --setup /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/TotalMeasurability.setup.json --json
+error: NLA/KE05/TotalMeasurability.lean:64:11: typeclass instance problem is stuck
+  MeasurableSpace ?m.18
+
+Note: Lean will not try to resolve this typeclass instance problem because the type argument to `MeasurableSpace` is a metavariable. This argument must be fully determined before Lean will try to resolve the typeclass.
+
+Hint: Adding type annotations and supplying implicit arguments to functions can give Lean more information for typeclass resolution. For example, if you have a variable `x` that you intend to be a `Nat`, but Lean reports it as having an unresolved type like `?m`, replacing `x` with `(x : Nat)` can get typeclass resolution un-stuck.
+error: NLA/KE05/TotalMeasurability.lean:69:4: 'change' tactic failed, pattern
+  MeasurableSet (⋂ x, ?m.29 x)
+is not definitionally equal to target
+  MeasurableSet fun w => ∀ (k i : Fin d), (omega w (rootOrder k i) * (recurrence L w k).lastS i).det ≠ 0
+error: Lean exited with code 1
+✖ [8720/8722] Building NLA.KE05.FirstOrdering (24s)
+trace: .> LEAN_PATH=/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Cli/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/batteries/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Qq/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/aesop/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/importGraph/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/plausible/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/mathlib/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/leancert/.lake/build/lib/lean:/private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean /private/tmp/nla-lean-runtime/lean-4.33.1-darwin_aarch64/bin/lean /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/NLA/KE05/FirstOrdering.lean -o /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/FirstOrdering.olean -i /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/FirstOrdering.ilean -c /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/FirstOrdering.c --setup /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/FirstOrdering.setup.json --json
+error: NLA/KE05/FirstOrdering.lean:62:39: unsolved goals
+e : ℝ
+w : Sample 2 3
+hw : Matrix.det (omega w 0) ≠ 0
+⊢ 2 • 2 • 1 - 2 • (recurrence (witnessData e) w 0).hat 1 - (2 • 1 - (recurrence (witnessData e) w 0).hat 1) * P w =
+    2 • (2 • 1 - (recurrence (witnessData e) w 0).hat 1) - (2 • 1 - (recurrence (witnessData e) w 0).hat 1) * P w
+error: Lean exited with code 1
+✖ [8721/8722] Building NLA.KE05.MatrixBounds (24s)
+trace: .> LEAN_PATH=/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Cli/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/batteries/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Qq/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/aesop/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/importGraph/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/plausible/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/mathlib/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/leancert/.lake/build/lib/lean:/private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean /private/tmp/nla-lean-runtime/lean-4.33.1-darwin_aarch64/bin/lean /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/NLA/KE05/MatrixBounds.lean -o /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/MatrixBounds.olean -i /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/MatrixBounds.ilean -c /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/MatrixBounds.c --setup /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/MatrixBounds.setup.json --json
+warning: NLA/KE05/MatrixBounds.lean:23:29: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [T, u, Fin.sum_univ_two, Matrix.ofLp_toEuclideanCLM, Matrix.mulVec, dotProduct, EuclideanSpace.single]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: NLA/KE05/MatrixBounds.lean:64:4: Type mismatch
+  Eq.symm h
+has type
+  (8 ^ (-(1 / 4))) ^ 4 = 1 / 8
+but is expected to have type
+  Real.rpow 8 (-1 / 4) ^ 4 = 1 / 8
+error: Lean exited with code 1
+Some required targets logged failures:
+- NLA.KE05.TotalMeasurability
+- NLA.KE05.FirstOrdering
+- NLA.KE05.MatrixBounds
+error: build failed
