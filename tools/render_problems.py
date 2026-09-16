@@ -36,7 +36,7 @@ def restore_pdf_layout(identifier, body):
     if identifier == "SP-05":
         # Keep the complete original target together after its verification notice.
         body = body.replace("## Problem statement\n", "\\newpage\n\n## Problem statement\n", 1)
-    if identifier == "MF-02":
+    if identifier in {"MF-02", "MF-24"}:
         body = body.replace("## Lean proof and verification evidence", "\\newpage\n\n## Lean proof and verification evidence", 1)
     if identifier == "IV-03":
         # Separate verification evidence and keep the full original target together.
