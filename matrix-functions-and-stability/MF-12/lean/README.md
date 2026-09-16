@@ -6,13 +6,16 @@ AI-assisted formalization. Original mathematical proof: Matthew J. Colbrook,
 Department of Applied Mathematics and Theoretical Physics, University of Cambridge.
 No contact email is included.
 
-**The complete proof graph has compiled; standalone canonical verification is
-pending.** All 28 frozen targets passed actual non-root Linux development
-[run 35034380090](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35034380090/job/104599995558)
-at revision `a1efcbfc59263b9e5bb00914ee709112348c1e54`. This package preserves
-all 19 mathematical source files in that accepted Solution closure. Every final
-export passed its LeanCert kernel-trust assertion and reported only standard
-axioms; the exact per-declaration sets are retained in `formalization.yaml`.
+**The complete 28-target proof passed canonical Linux verification.**
+[Run 35037011332](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35037011332/job/104608341268)
+checked immutable proof commit `3d06c49635bbdde109c491510641204285eaf05c`
+on 15 September 2026. All targets passed LeanCert kernel-trust assertions,
+actual non-root sandboxed Comparator, default-kernel replay, standard transitive
+axiom checks and required rejection/sandbox controls. The [authentic evidence](verification/linux-2026-09-15)
+and both [independent final referee reports](reviews/final) are retained.
+`gap_decomposition` uses only propext and Quot.sound; the other 27 use those plus
+Classical.choice. All nineteen mathematical source files and the independent
+Challenge remain unchanged from the accepted complete development run 35034380090.
 
 The full conclusion covers every nonnegative real exponent gamma. A fixed
 positive dimension and exactly two distinct fixed real matrices have maximal
@@ -57,9 +60,9 @@ and [actual development acceptance addendum](reviews/proof-source/MF12-eliminati
 retain their exact original bytes alongside earlier reviews and repairs.
 The reviewer also prepared this metadata package without modifying proof code.
 The [second independent complete mathematical source report](reviews/proof-source/MF12-inequalities-full-source-referee/REVIEW.md)
-also approves these exact proof bytes. Both referees must still inspect the actual
-standalone canonical checks. The reviews
-are AI-agent reviews under scoped Tau Ceti criteria, not external human review
+also approves these exact proof bytes. Their [final addenda](reviews/final)
+independently reconcile the source and actual standalone canonical checks. The
+reviews are AI-agent reviews under scoped Tau Ceti criteria, not external human review
 or official certification.
 
 [SourceCorrespondence.md](SourceCorrespondence.md) maps every declaration to the
@@ -67,8 +70,10 @@ full original target and proof. [formalization.yaml](formalization.yaml) records
 all 28 exports and current status. [ACTIVE-SOURCE-MANIFEST.json](ACTIVE-SOURCE-MANIFEST.json)
 binds the compiled mathematical bytes; [development evidence](verification/development-35034380090)
 and the [packaging transition](verification/packaging) distinguish the tested
-shared development revision from this standalone candidate.
+shared development revision from the standalone proof revision.
 
 Actual standalone Comparator, independent default-kernel replay, required
-negative controls and two final source/evidence referee verdicts remain pending.
-This package does not change the canonical problem status or any index.
+negative controls and both final source/evidence referee verdicts passed at the
+immutable proof revision above. The publication updates retain all mathematical
+and configuration bytes. Later publication/merge commits require their own
+exact-commit runs; they are not represented as the proof revision's execution.

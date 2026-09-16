@@ -1,9 +1,10 @@
 # MF-12 source correspondence
 
-Status: the complete reviewed proof graph passed actual Linux development run
-35034380090 at a1efcbfc59263b9e5bb00914ee709112348c1e54. Standalone canonical
-verification remains pending. Every entry below is implemented at the unchanged
-frozen Challenge signature; the original draft is preserved in statement-audit.
+Status: all 28 targets and the complete proof graph passed actual canonical
+Linux run 35037011332 at immutable proof commit
+3d06c49635bbdde109c491510641204285eaf05c. Both independent final mathematical and
+runtime referees accepted. Every entry below is implemented at the unchanged
+frozen Challenge signature; original drafts and development evidence are retained.
 The canonical target and complete authored manuscript are pinned at
 8f04b905eb2e0827b6b84f37d9d080ae1f05b202; SOURCE-PROVENANCE.json binds their bytes.
 Original proof: Matthew J. Colbrook, University of Cambridge DAMTP.
@@ -12,7 +13,7 @@ Formalization: George Stepaniants, California Institute of Technology CMS.
 | Implemented declarations | Source and exact purpose |
 |---|---|
 | `family_growth_is_maximum`, `pair_word_norms` | Canonical Context and notation; manuscript section1. Prove actual finite, nonempty attained maxima and every admissible product, with no binary-word restriction hidden in the family definition. |
-| `entry_maximum_norm_comparison`, `tensor_norm_comparison` | Explicit formal proof simplification for sections3 and5. Actual finite entry maxima mediate genuine Euclidean operator norms; fixed dimension factors replace unproved spectral-norm Kronecker multiplicativity. |
+| `entry_maximum_norm_comparison`, `tensor_norm_comparison` | Explicit formal proof simplification for sections 3 and5. Actual finite entry maxima mediate genuine Euclidean operator norms; fixed dimension factors replace unproved spectral-norm Kronecker multiplicativity. |
 | `tensor_word_identity` | Section5 exact Kronecker product of every switching word, with a specified Fin(d*e) coordinate equivalence. |
 | `fractional_parameters`, `fractional_projection`, `jordan_two_power`, `compressed_powers`, `loss_gain_bounds` | Section2 and lemma `lem:compressed`. The exact original arrays, unrestricted q=0 power identity, fixed lambda=1/4 and arbitrary real alpha in (0,1) are retained. |
 | `telescoping_budget`, `compressed_product_formula`, `compressed_product_bound` | Lemma `lem:budget`; exact later-gap weights, complete ordered product and finite Holder bound, including empty and zero gaps. |
@@ -47,9 +48,10 @@ before versions are retained under verification/packaging/before/. It does not
 change any mathematical definition, signature, proof byte or dependency pin.
 The packaging reviewer contributed no mathematical implementation.
 
-Standalone Comparator must still compare all 28 exports without replaceable
-definition holes; independent default-kernel replay and negative controls are
-also pending. Both independent complete mathematical source reviews approve
-these exact proof bytes. Two final source/evidence referee verdicts remain
-necessary after the actual standalone canonical checks. Complete development
-compilation is not a claim that these canonical gates have already run.
+Actual standalone Comparator compared all 28 exports without replaceable
+definition holes; independent default-kernel replay and required negative/sandbox
+controls passed. Both independent final referees accepted the complete source and
+actual evidence, retained under reviews/final and verification/linux-2026-09-15.
+The immutable proof commit is distinct from later publication metadata commits;
+those require their own exact-commit execution. No mathematical or configuration
+source changes accompany this publication update.
