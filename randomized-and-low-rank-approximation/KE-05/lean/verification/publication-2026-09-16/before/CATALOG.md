@@ -2,7 +2,7 @@
 
 **113 problems with open targets:** 42 open and 71 partially resolved. **104 other retained entries**, excluded from the open count.
 
-**Resolution evidence:** 66 solved (published or independently audited); 38 solved with Lean verification.
+**Resolution evidence:** 67 solved (published or independently audited); 37 solved with Lean verification.
 
 Each entry records its own literature-check date. Literature checks are bounded; ratings are editorial. “Impact” uses the canonical `Importance` field.
 
@@ -139,7 +139,7 @@ Retained entries outside the open count:
 
 | ID | Problem | Status | Difficulty | Impact | Read / source |
 | --- | --- | --- | --- | --- | --- |
-| [KE-05](randomized-and-low-rank-approximation/KE-05/README.md) | Spectral-gap-independent constants for randomized block polynomial interpolation | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](randomized-and-low-rank-approximation/KE-05/problem.pdf) · [TeX](randomized-and-low-rank-approximation/KE-05/problem.tex) |
+| [KE-05](randomized-and-low-rank-approximation/KE-05/README.md) | Spectral-gap-independent constants for randomized block polynomial interpolation | **✅ SOLVED** | challenging | interesting to the community | [PDF](randomized-and-low-rank-approximation/KE-05/problem.pdf) · [TeX](randomized-and-low-rank-approximation/KE-05/problem.tex) |
 | [RA-02](randomized-and-low-rank-approximation/RA-02/README.md) | Polynomial trace-error factor after exactly the target rank of pivots | **✅ SOLVED** | challenging | interesting to the community | [PDF](randomized-and-low-rank-approximation/RA-02/problem.pdf) · [TeX](randomized-and-low-rank-approximation/RA-02/problem.tex) |
 | [RA-03](randomized-and-low-rank-approximation/RA-03/README.md) | Improve the randomized LU squared-error factor to $`2^k`$ | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](randomized-and-low-rank-approximation/RA-03/problem.pdf) · [TeX](randomized-and-low-rank-approximation/RA-03/problem.tex) |
 | [RA-04](randomized-and-low-rank-approximation/RA-04/README.md) | Clustered singular-value gaps in randomized block Krylov approximation | **✅ SOLVED** | hard | interesting to specialist | [PDF](randomized-and-low-rank-approximation/RA-04/problem.pdf) · [TeX](randomized-and-low-rank-approximation/RA-04/problem.tex) |

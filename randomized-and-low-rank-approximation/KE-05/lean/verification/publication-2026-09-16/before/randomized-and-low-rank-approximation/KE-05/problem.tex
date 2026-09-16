@@ -34,7 +34,7 @@ interpolation},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}KE-05}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Verification check: 2026-09-16}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-12}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -51,7 +51,7 @@ constants for randomized block polynomial interpolation\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to the community\par}
-{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
+{\sffamily\small\bfseries\color{accent}Status: Solved\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
@@ -70,12 +70,10 @@ The answer to the displayed uniform-probability question is \textbf{no}.
 The
 \href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/KE-05/solution.md}{exact
 target and Sections 1-5 of the complete proof} give deterministic
-admissible blocks with \(b=2\), \(d=3\),
-
-\[\Lambda_1=2I_2,\qquad \Lambda_2=\mathop{\mathrm{diag}}\nolimits(\varepsilon,2\varepsilon),
-\qquad \Lambda_3=\mathop{\mathrm{diag}}\nolimits(0,1).\]
-
-Along \(\varepsilon_m=1/(m+5)\), the probability that
+admissible blocks with \(b=2\), \(d=3\), \[
+\Lambda_1=2I_2,\qquad \Lambda_2=\operatorname{diag}(\varepsilon,2\varepsilon),
+\qquad \Lambda_3=\operatorname{diag}(0,1).
+\] Along \(\varepsilon_m=1/(m+5)\), the probability that
 \(\chi_{\rm mono}\chi_{\rm coef}\) is below any fixed finite constant
 tends to zero. This contradicts the requested bound already at
 \(\delta=1/2\). The proof uses the literal recurrence and all prescribed
@@ -90,105 +88,16 @@ mathematical review} ·
 \href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/stepaniants-ke05-2026-09-12/README.md}{Submission
 and public-source audit}.
 
-The complete proof passed a separate Codex-agent informal audit in
-September 2026. Substantial AI assistance is disclosed. That informal
-audit did not provide formal verification; the later Lean evidence is
-recorded separately below. External human peer review is not claimed.
-Shao retains credit for the original conjecture and interpolation
-framework. The counterexample uses interlaced block spectra and a
-repeated eigenvalue within one block, both permitted by the original
-hypotheses. It does not address a different question imposing ordered
-spectral intervals or refute cluster-robust block Lanczos convergence
-itself. The original statement, permanent ID, references and dated
-history remain below; the ratings are historical.
-
-\newpage
-
-\subsection{Lean proof and verification
-evidence}\label{lean-proof-and-verification-evidence}
-
-\textbf{Formalization: Sidney Holden}, with OpenAI Codex assistance,
-under Apache-2.0. \textbf{Mathematical proof and
-integration/verification submission: George Stepaniants}, Department of
-Computing and Mathematical Sciences, California Institute of Technology.
-\textbf{Nian Shao} retains credit for the original framework and
-conjecture. The
-\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/414371c9a76aafd7477d9705f9644f7efeb5e329/randomized-and-low-rank-approximation/KE-05/lean/Solution.lean}{complete
-proof at immutable revision 414371c9} reuses Holden's implementation
-without changing its 23 mathematical Lean files.
-
-The formal theorem negates the full original uniformly
-bounded-in-probability statement. For every finite real constant \(C\),
-it constructs deterministic admissible data with \(b=2,d=3\) such that
-
-\[\Pr\{\chi_{\rm mono}\chi_{\rm coef}\le C\}<\tfrac12.\]
-
-The literal descending recurrence, every prescribed root ordering,
-independent standard real Gaussian entries, actual Euclidean operator
-norms, endpoint \(0/0\) convention and spectrum-independent quantifiers
-are retained. Almost-sure validity is proved for all admissible data;
-totalizing invalid samples does not alter any probability. The formal
-sequence \(\varepsilon_m=1/(m+6)\) for \(m\ge0\) is the manuscript
-sequence with its index shifted by one. Exact two-by-two algebra, a
-polynomial null-set argument and measure convergence avoid interval
-searches; the rational witness alone is not used as a
-positive-probability event.
-
-All \textbf{ten declarations} are listed in
-\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/KE-05/lean/formalization.yaml}{formalization.yaml}.
-The final results are:
-
-\begin{itemize}
-\tightlist
-\item
-  \textit{NLA.KE05.no\_finite\_uniform\_constant}: each finite bound
-  fails for some deterministic admissible input.
-\item
-  \textit{NLA.KE05.not\_uniform\_probability\_conjecture}: the complete
-  original conjecture is false.
-\end{itemize}
-
-The literal recurrence, validity, exact witness, lower bound,
-almost-sure divergence and marginal probability theorems establish these
-conclusions. The
-\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/KE-05/lean/Challenge.lean}{independent
-Challenge},
-\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/KE-05/lean/NLA/KE05/Definitions.lean}{definitions},
-\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/KE-05/lean/NUMERICAL_TARGETS.md}{frozen
-numerical targets} and
-\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/KE-05/lean/PROOF_NOTES.md}{proof
-correspondence} record their meaning. The historical statements-only
-wording in the frozen targets is retained as evidence; current status is
-stated here.
-
-The project pins \textbf{Lean 4.33.1}, Mathlib
-\textit{0df444a360eaa60ab8c11dca51a86af692955474} and LeanCert
-\textit{621a43d7cf21f87872392a01e874f2f1dbddc926}. On \textbf{16
-September 2026 UTC},
-\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35058392398/job/104673346252}{Linux
-run 35058392398, verification job 104673346252} checked literal proof
-commit \textit{414371c9a76aafd7477d9705f9644f7efeb5e329}. All ten
-LeanCert kernel-trust assertions, Comparator statement checks and Lean
-default-kernel replay passed. Every exported theorem's transitive axiom
-report contains only \textit{propext}, \textit{Classical.choice} and
-\textit{Quot.sound}. Required sandbox, rejection and checker controls
-ran within the successful project job.
-\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/KE-05/lean/verification/linux-2026-09-16/README.md}{Actual
-logs and source hashes} bind all \textbf{151} candidate inputs.
-
-Two independent AI-agent
-\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/KE-05/lean/reviews/final/README.md}{complete-source
-reviews} and an
-\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/KE-05/lean/reviews/campaign/canonical-run-35058392398/REVIEW.md}{audit
-of the fresh actual execution} support this record. The checks ran on
-GitHub's non-root Linux runner; no local macOS rerun or external human
-peer review is claimed. See the
-\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/KE-05/lean/README.md}{project
-README} for \textit{lake build Solution} and the shared Linux
-reproduction commands. Later publication and merge revisions require
-their own checks; the named proof run does not certify a later commit.
-
-\newpage
+The complete proof passed a separate Codex-agent informal audit.
+Substantial AI assistance is disclosed; this is neither external human
+peer review nor formal verification. Shao retains credit for the
+original conjecture and interpolation framework. The counterexample uses
+interlaced block spectra and a repeated eigenvalue within one block,
+both permitted by the original hypotheses. It does not address a
+different question imposing ordered spectral intervals or refute
+cluster-robust block Lanczos convergence itself. The original statement,
+permanent ID, references and dated history remain below; the ratings are
+historical.
 
 \subsection{Original statement
 (retained)}\label{original-statement-retained}
@@ -203,46 +112,40 @@ pairwise disjoint spectra. Draw all entries of
 For each \(k\in\{1,\ldots,d\}\), reorder the triples
 \((B_i,\Lambda_i,\Omega_i)\) into the order
 \((k,1,\ldots,k-1,k+1,\ldots,d)\) and use superscript \((k)\) for that
-ordering. In descending order \(i=d,d-1,\ldots,1\), compute
-
-\[S_{i,i}^{(k)}=I_b,\qquad
+ordering. In descending order \(i=d,d-1,\ldots,1\), compute \[
+S_{i,i}^{(k)}=I_b,\qquad
 S_{i,j}^{(k)}=B_i^{(k)}S_{i,j-1}^{(k)}-S_{i,j-1}^{(k)}\widehat B_j^{(k)}
-\quad(j=i+1,\ldots,d),\]
-
-\[\widehat\Omega_i^{(k)}=\Omega_i^{(k)}S_{i,d}^{(k)},\qquad
-\widehat B_i^{(k)}=(\widehat\Omega_i^{(k)})^{-1}\Lambda_i^{(k)}\widehat\Omega_i^{(k)}.\]
-
-All norms below are spectral norms. Define
-
-\[\chi_{\rm mono}^{(k)}=
+\quad(j=i+1,\ldots,d),
+\] \[
+\widehat\Omega_i^{(k)}=\Omega_i^{(k)}S_{i,d}^{(k)},\qquad
+\widehat B_i^{(k)}=(\widehat\Omega_i^{(k)})^{-1}\Lambda_i^{(k)}\widehat\Omega_i^{(k)}.
+\] All norms below are spectral norms. Define \[
+\chi_{\rm mono}^{(k)}=
 \max_{2\le i\le d}\left\{
 1,\frac{\|aI-\widehat B_i^{(k)}\|_2}{\|aI-\Lambda_i^{(k)}\|_2},
-\frac{\|cI-\widehat B_i^{(k)}\|_2}{\|cI-\Lambda_i^{(k)}\|_2}\right\},\]
-
-\[\chi_{\rm coef}^{(k)}=
+\frac{\|cI-\widehat B_i^{(k)}\|_2}{\|cI-\Lambda_i^{(k)}\|_2}\right\},
+\] \[
+\chi_{\rm coef}^{(k)}=
 \|(S_{1,d}^{(k)})^{-1}\|_2^{1/(d-1)}
 \min_{\substack{2\le i\le d\ ,\ \lambda\in\sigma(\Lambda_1^{(k)})\\
 \eta\in\sigma(\Lambda_i^{(k)})}}|\lambda-\eta|,
 \qquad
 \chi_{\rm mono}=\max_k\chi_{\rm mono}^{(k)},\quad
-\chi_{\rm coef}=\max_k\chi_{\rm coef}^{(k)}.\]
-
-The inverses exist almost surely, as shown in the source. If an endpoint
-ratio is \(0/0\), set it to 1; its matrix is necessarily a scalar matrix
-and the surrounding maximum already includes 1.
+\chi_{\rm coef}=\max_k\chi_{\rm coef}^{(k)}.
+\] The inverses exist almost surely, as shown in the source. If an
+endpoint ratio is \(0/0\), set it to 1; its matrix is necessarily a
+scalar matrix and the surrounding maximum already includes 1.
 
 Is the family of random variables \(\chi_{\rm mono}\chi_{\rm coef}\)
 uniformly bounded in probability over all admissible diagonal data?
 Precisely, for each \(0<\delta<1\), does there exist a finite
 \(C(b,d,\delta)\) such that, for every fixed admissible
-\((\Lambda_1,\ldots,\Lambda_d)\),
-
-\[\Pr\{\chi_{\rm mono}\chi_{\rm coef}\le C(b,d,\delta)\}\ge1-\delta?\]
-
-The constant must be independent of the eigenvalues and all gaps within
-and between their blocks. Probability is taken separately for each fixed
-input, not for one draw required to work simultaneously for every
-spectrum. This quantifies the source's ``with high probability''
+\((\Lambda_1,\ldots,\Lambda_d)\), \[
+\Pr\{\chi_{\rm mono}\chi_{\rm coef}\le C(b,d,\delta)\}\ge1-\delta?
+\] The constant must be independent of the eigenvalues and all gaps
+within and between their blocks. Probability is taken separately for
+each fixed input, not for one draw required to work simultaneously for
+every spectrum. This quantifies the source's ``with high probability''
 statement with its explicitly allowed failure-probability dependence.
 
 These constants control matrix-polynomial interpolation in the

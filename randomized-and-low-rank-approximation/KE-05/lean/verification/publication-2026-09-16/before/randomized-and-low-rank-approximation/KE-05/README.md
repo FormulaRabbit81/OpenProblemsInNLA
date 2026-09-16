@@ -3,8 +3,8 @@
 **Difficulty:** challenging  
 **Importance:** interesting to the community  
 **Rating rationale:** Challenging because almost-sure invertibility does not yield spectrum-uniform probabilistic constants; community impact is explaining cluster robustness of block Lanczos.  
-**Status:** Lean verified
-**Last checked:** 2026-09-16
+**Status:** Solved  
+**Last checked:** 2026-09-12  
 
 ## Negative resolution - 12 September 2026 (UTC)
 
@@ -21,30 +21,7 @@ Along $`\varepsilon_m=1/(m+5)`$, the probability that $`\chi_{\rm mono}\chi_{\rm
 
 [Proof PDF](solution.pdf) · [Standalone proof TeX](solution.tex) · [Independent mathematical review](../../references/stepaniants-ke05-2026-09-12/independent-review.md) · [Submission and public-source audit](../../references/stepaniants-ke05-2026-09-12/README.md).
 
-The complete proof passed a separate Codex-agent informal audit in September 2026. Substantial AI assistance is disclosed. That informal audit did not provide formal verification; the later Lean evidence is recorded separately below. External human peer review is not claimed. Shao retains credit for the original conjecture and interpolation framework. The counterexample uses interlaced block spectra and a repeated eigenvalue within one block, both permitted by the original hypotheses. It does not address a different question imposing ordered spectral intervals or refute cluster-robust block Lanczos convergence itself. The original statement, permanent ID, references and dated history remain below; the ratings are historical.
-
-## Lean proof and verification evidence
-
-**Formalization: Sidney Holden**, with OpenAI Codex assistance, under Apache-2.0. **Mathematical proof and integration/verification submission: George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. **Nian Shao** retains credit for the original framework and conjecture. The [complete proof at immutable revision 414371c9](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/414371c9a76aafd7477d9705f9644f7efeb5e329/randomized-and-low-rank-approximation/KE-05/lean/Solution.lean) reuses Holden's implementation without changing its 23 mathematical Lean files.
-
-The formal theorem negates the full original uniformly bounded-in-probability statement. For every finite real constant $`C`$, it constructs deterministic admissible data with $`b=2,d=3`$ such that
-
-```math
-\Pr\{\chi_{\rm mono}\chi_{\rm coef}\le C\}<\tfrac12.
-```
-
-The literal descending recurrence, every prescribed root ordering, independent standard real Gaussian entries, actual Euclidean operator norms, endpoint $`0/0`$ convention and spectrum-independent quantifiers are retained. Almost-sure validity is proved for all admissible data; totalizing invalid samples does not alter any probability. The formal sequence $`\varepsilon_m=1/(m+6)`$ for $`m\ge0`$ is the manuscript sequence with its index shifted by one. Exact two-by-two algebra, a polynomial null-set argument and measure convergence avoid interval searches; the rational witness alone is not used as a positive-probability event.
-
-All **ten declarations** are listed in [formalization.yaml](lean/formalization.yaml). The final results are:
-
-- `NLA.KE05.no_finite_uniform_constant`: each finite bound fails for some deterministic admissible input.
-- `NLA.KE05.not_uniform_probability_conjecture`: the complete original conjecture is false.
-
-The literal recurrence, validity, exact witness, lower bound, almost-sure divergence and marginal probability theorems establish these conclusions. The [independent Challenge](lean/Challenge.lean), [definitions](lean/NLA/KE05/Definitions.lean), [frozen numerical targets](lean/NUMERICAL_TARGETS.md) and [proof correspondence](lean/PROOF_NOTES.md) record their meaning. The historical statements-only wording in the frozen targets is retained as evidence; current status is stated here.
-
-The project pins **Lean 4.33.1**, Mathlib `0df444a360eaa60ab8c11dca51a86af692955474` and LeanCert `621a43d7cf21f87872392a01e874f2f1dbddc926`. On **16 September 2026 UTC**, [Linux run 35058392398, verification job 104673346252](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35058392398/job/104673346252) checked literal proof commit `414371c9a76aafd7477d9705f9644f7efeb5e329`. All ten LeanCert kernel-trust assertions, Comparator statement checks and Lean default-kernel replay passed. Every exported theorem's transitive axiom report contains only `propext`, `Classical.choice` and `Quot.sound`. Required sandbox, rejection and checker controls ran within the successful project job. [Actual logs and source hashes](lean/verification/linux-2026-09-16/README.md) bind all **151** candidate inputs.
-
-Two independent AI-agent [complete-source reviews](lean/reviews/final/README.md) and an [audit of the fresh actual execution](lean/reviews/campaign/canonical-run-35058392398/REVIEW.md) support this record. The checks ran on GitHub's non-root Linux runner; no local macOS rerun or external human peer review is claimed. See the [project README](lean/README.md) for `lake build Solution` and the shared Linux reproduction commands. Later publication and merge revisions require their own checks; the named proof run does not certify a later commit.
+The complete proof passed a separate Codex-agent informal audit. Substantial AI assistance is disclosed; this is neither external human peer review nor formal verification. Shao retains credit for the original conjecture and interpolation framework. The counterexample uses interlaced block spectra and a repeated eigenvalue within one block, both permitted by the original hypotheses. It does not address a different question imposing ordered spectral intervals or refute cluster-robust block Lanczos convergence itself. The original statement, permanent ID, references and dated history remain below; the ratings are historical.
 
 ## Original statement (retained)
 

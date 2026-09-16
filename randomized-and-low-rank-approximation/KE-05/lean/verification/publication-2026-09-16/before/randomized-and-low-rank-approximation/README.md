@@ -23,7 +23,7 @@
 
 | ID | Problem | Status | Difficulty | Impact | Read / source |
 | --- | --- | --- | --- | --- | --- |
-| [KE-05](KE-05/README.md) | Spectral-gap-independent constants for randomized block polynomial interpolation | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](KE-05/problem.pdf) · [TeX](KE-05/problem.tex) |
+| [KE-05](KE-05/README.md) | Spectral-gap-independent constants for randomized block polynomial interpolation | **✅ SOLVED** | challenging | interesting to the community | [PDF](KE-05/problem.pdf) · [TeX](KE-05/problem.tex) |
 | [RA-02](RA-02/README.md) | Polynomial trace-error factor after exactly the target rank of pivots | **✅ SOLVED** | challenging | interesting to the community | [PDF](RA-02/problem.pdf) · [TeX](RA-02/problem.tex) |
 | [RA-03](RA-03/README.md) | Improve the randomized LU squared-error factor to $`2^k`$ | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](RA-03/problem.pdf) · [TeX](RA-03/problem.tex) |
 | [RA-04](RA-04/README.md) | Clustered singular-value gaps in randomized block Krylov approximation | **✅ SOLVED** | hard | interesting to specialist | [PDF](RA-04/problem.pdf) · [TeX](RA-04/problem.tex) |

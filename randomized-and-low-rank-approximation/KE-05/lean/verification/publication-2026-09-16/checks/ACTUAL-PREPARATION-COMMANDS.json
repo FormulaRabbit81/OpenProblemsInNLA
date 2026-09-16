@@ -1,0 +1,52 @@
+{
+  "scope": "Observed tool executions during this publication preparation; these are not new Lean executions.",
+  "commands": [
+    {
+      "command": "python tools/lean/validate_manifest.py randomized-and-low-rank-approximation/KE-05/lean",
+      "tool_chunk": "8158a1",
+      "exit_code": 0,
+      "result": "Manifest schema and comparator coverage: PASS (10 declarations)"
+    },
+    {
+      "command": "python3 tools/validate_problem_ids.py --base-ref origin/main",
+      "tool_chunk": "38844e",
+      "exit_code": 0,
+      "result": "Validated 217 permanent problem IDs against origin/main"
+    },
+    {
+      "command": "python3 tools/update_catalog.py --base-ref origin/main",
+      "tool_chunk": "2dee43",
+      "exit_code": 0,
+      "result": "Indexed 217 entries; branch-local generated counts, not a campaign completion count"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p test_problem_ids.py -v",
+      "tool_chunk": "d1367a",
+      "exit_code": 0,
+      "result": "All 17 permanent-ID tests passed"
+    },
+    {
+      "command": "python3 tools/format_math.py --check KE-05",
+      "tool_chunk": "3fd4c1",
+      "exit_code": 0,
+      "result": "Need formatting: 0 pages"
+    },
+    {
+      "command": "PANDOC=/tmp/nla-submission-tools/pandoc-3.11-arm64/bin/pandoc python3 tools/render_problems.py KE-05",
+      "tool_chunk": "7b8c1b",
+      "exit_code": 0,
+      "result": "KE-05: OK; Rendered 1 problem documents."
+    },
+    {
+      "command": "git diff --check",
+      "execution": "executed within this sealing script after whitespace repair",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "resolved_initial_issues": [
+    "First PDF render had an overfull theorem-name line; two explicit theorem bullets removed it before the successful final render.",
+    "Initial diff check found two inherited metadata trailing-space lines; they were removed and renderer values/body proved identical. The inspected PDF remains current."
+  ]
+}
