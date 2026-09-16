@@ -23,18 +23,25 @@ for integration; their original bytes are retained in the [import record](verifi
 All 14 active Lean files, seven frozen inputs, dependency pins, license, original
 review records, numerical plan, and statement freeze remain unchanged.
 
-**The fresh campaign verification run is pending.** The authenticated historical
-[Linux run 34926260380](https://github.com/sidneyholden1/OpenProblemsInNLA/actions/runs/34926260380)
-accepted all four exports using LeanCert kernel-trust checks, Comparator and
-Lean's default-kernel replay at `516ad4a0e85c21c7ef34507db9ab3b68b393bb90`.
-Actual sandbox, kernel replay, statement-mismatch, and illegal-axiom rejection
-controls also passed. All mathematical bytes at that tested revision equal the
-imported revision. Two additional independent nonimplementing AI agents have
-reviewed the entire proof and original target and independently reconciled the
-historical execution. Their [reports](reviews/campaign/README.md) and the
-[historical evidence](verification/historical-linux-34926260380/README.md) are
-retained. These historical checks do not assert that the new integration commit
-has already run, and this package does not change a canonical status or count.
+**Fresh canonical Linux verification passed for all four exports.**
+[Run 35059255598, verify job 104675949451](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35059255598/job/104675949451)
+checked literal proof/integration commit `cef3e2f486285d0f6885231cda3ac2ff04c975cb`
+on 16 September 2026 UTC. LeanCert kernel-trust assertions, actual Comparator,
+Lean's default-kernel replay, standard transitive axioms and all required
+per-project rejection/isolation controls passed. The [actual evidence](verification/linux-2026-09-16/README.md)
+and [independent runtime audit](verification/linux-2026-09-16/mi04-independent/REVIEW.md)
+bind all 140 accepted inputs: 139 inventoried files plus their original manifest.
+
+Two independent nonimplementing AI agents read the entire proof and original
+target. Their [complete-source reports and later runtime record](reviews/final/README.md),
+the [independent import review](reviews/campaign/import-review/REVIEW.md), and
+the [historical run 34926260380](verification/historical-linux-34926260380/README.md)
+remain available. The fresh execution is separate from that historical test.
+The earlier import-stage pending prose, original package manifest and active
+source inventory are preserved as historical evidence; they are not current
+status declarations. The [publication transition](verification/publication-2026-09-16/TRANSITION.json)
+updates only this README and formalization.yaml among the accepted inputs.
+Later publication and merge revisions need separate exact-commit checks.
 
 Start with the [numerical targets](NUMERICAL_TARGETS.md), [definitions](NLA/IV03/Definitions.lean),
 [Challenge](Challenge.lean), [proof notes](PROOF_NOTES.md), and four
@@ -68,3 +75,10 @@ repository's scoped Tau Ceti protocol; no official endorsement or human peer
 review is claimed. The Schiffer and Forsythe examples inform the shared proof
 organization and checking protocol. No local Lean or Lake run is claimed by
 the integration campaign.
+
+The shared runtime helper hard-codes a /root reviewer field; the actual executor
+was /root/mi04_independent_referee, as its retained execution provenance discloses.
+The separate checker-controls workflow job was skipped for the unchanged harness;
+every required per-project control ran inside the successful proof job. Reviewing
+that real run does not establish a second independent execution by each referee,
+and no claim of GitHub, runner or checker infallibility is made.

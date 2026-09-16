@@ -900,11 +900,13 @@ Seven exact targets are classified below. Independent agent review is not extern
 
 [Complete manuscript](references/colbrook-intervals-2026-09-11/manuscripts/IV-02_IV-04.pdf); [full independent agent review](references/colbrook-intervals-2026-09-11/verification/reviews/IV-02_IV-04-review.md).
 
-### IV-03 - Affirmative resolution
+### 🏆 IV-03 - Affirmative resolution with Lean verification
 
 [Original statement](intervals-and-absolute-value-equations/IV-03/README.md). **Solved, recorded 2026-09-11.** Matthew J. Colbrook (University of Cambridge). Theorem 1 proves that every interval member is inverse-M if and only if the $n^2$ vertices $C-D_iRD_j$ are inverse-M. These are contained in the displayed two-sign family, so the original $2n^2$ equivalence follows. The proof covers all real endpoints, every dimension, zero widths, zero entries and reducible matrices without assuming regularity.
 
 [Complete manuscript](references/colbrook-intervals-2026-09-11/manuscripts/IV-03.pdf); [full independent agent review](references/colbrook-intervals-2026-09-11/verification/reviews/IV-03-review.md).
+**Lean verified, 16 September 2026 UTC. Mathematical argument: Matthew J. Colbrook**, Department of Applied Mathematics and Theoretical Physics, University of Cambridge. **Formalization: Sidney Holden**, under Apache-2.0. **Integration and verification submission: George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. The [complete four-target formalization](intervals-and-absolute-value-equations/IV-03/lean/README.md) proves both vertex equivalences in every positive dimension without assuming regularity, retaining zero widths, zero entries and reducible cases. [Canonical Linux run 35059255598](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35059255598/job/104675949451) passed all four LeanCert kernel-trust assertions, Comparator statement checks, Lean default-kernel replay, standard transitive axioms and required controls at literal proof/integration commit `cef3e2f486285d0f6885231cda3ac2ff04c975cb`. Two independent AI-agent complete-source reviews and an authenticated fresh-run audit are retained. The fourteen active mathematical Lean inputs, frozen boundary and original manuscript are unchanged. See the [canonical evidence section](intervals-and-absolute-value-equations/IV-03/README.md#lean-proof-and-verification-evidence). This is not an external human peer-review claim; later publication and merge commits need their own checks.
+
 
 ### IV-04 - Complexity classification
 
