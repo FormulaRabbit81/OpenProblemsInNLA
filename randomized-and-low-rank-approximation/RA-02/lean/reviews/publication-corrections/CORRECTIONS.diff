@@ -1,0 +1,38 @@
+--- sealed/PR-BODY.md
++++ applied/PR-BODY.md
+@@ -6,7 +6,7 @@
+ 
+ `NLA.RA02.no_polynomial_trace_factor` negates the original assertion for real constants `C > 0`, `p >= 0`, all positive dimensions, all complex Hermitian PSD matrices, and every integer `1 <= r <= n`. `NLA.RA02.universal_counterexamples` supplies a positive-definite witness of order `r + 1`, with positive actual ordered eigenvalue tail and strict violation after exactly `r` pivots. The normalized law includes every ordered history. The sufficient finite factor `2^r/3` resolves this entire target; sharp limiting, entrywise-positive, correlation-matrix, LU and oversampling extensions are not additional formal claims.
+ 
+-Primary mathematical source: Matthew J. Colbrook, [*Sharp worst-case factors for randomly pivoted Cholesky and LU*](https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ce47b5630bf3680d9211131c3a43825b022c139a/references/colbrook-random-pivoting-2026-09-11/manuscripts/sharp_random_pivoting.tex), Theorem 1 and Corollary 3. The unchanged shared manuscript retains mathematical authorship; the formal proof uses its disclosed finite arrowhead route. Full statement correspondence and all 27 declarations are retained in the Lean project.
++Primary mathematical source: Matthew J. Colbrook, [*Sharp worst-case factors for randomly pivoted Cholesky and LU*](https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ce47b5630bf3680d9211131c3a43825b022c139a/references/colbrook-random-pivoting-2026-09-11/manuscripts/sharp_random_pivoting.tex), Theorem 1 and Corollary 3. The unchanged shared manuscript retains mathematical authorship; the formal proof uses the separately documented finite arrowhead route, an alternative proof of the same negative answer. Full statement correspondence and all 27 declarations are retained in the Lean project.
+ 
+ The [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb/randomized-and-low-rank-approximation/RA-02/lean/Solution.lean) at `26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb` passed [actual non-root Linux run 35175272827](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175272827/job/105055587640): all 220 submitted inputs, all 27 Comparator contracts, default-kernel replay, the three standard transitive axioms and the required rejection and sandbox controls. The sole kernel-mode LeanCert certificate `Real.exp 1 <= 3` is consumed by the denominator bound, actual-tail estimate and final counterexample. Two complete nonauthor source reviews and an independent runtime audit are retained with exact scopes. Local macOS development and GitHub Linux verification are distinct executions; evidence audits are not additional runs.
+ 
+--- sealed/solution.tex
++++ applied/solution.tex
+@@ -44,7 +44,7 @@
+ for every $n\ge1$, every complex Hermitian positive-semidefinite $A$, and
+ every integer $1\le r\le n$, after exactly $r$ pivots.
+ The stronger constructive export
+-\texttt{NLA.RA02.universal\_counterexamples} supplies, for every such
++\nolinkurl{NLA.RA02.universal_counterexamples} supplies, for every such
+ real $C,p$, a rank parameter $r\ge1$ and an actual positive-definite witness
+ $A\in\mathbb C^{(r+1)\times(r+1)}$ with
+ \[
+--- sealed/lean/reviews/INDEX.json
++++ applied/lean/reviews/INDEX.json
+@@ -64,5 +64,12 @@
+     }
+   ],
+   "publication_preparer_role": "Current overlay author /root/mi13_statement_freeze; not an independent publication reviewer.",
+-  "publication_review": "Pending coordinator assignment and independent review of this private document overlay."
++  "publication_review": "Pending coordinator assignment and independent review of this private document overlay.",
++  "publication_overlay_reviews": [
++    {
++      "path": "reviews/publication-overlay/REVIEW.md",
++      "manifest_sha256": "242826d3c16b49a19e868a5231043629c8d322241199c9c27d60940efa7b7ef1",
++      "scope": "Independent conditional document review; one PR attribution correction applied by coordinator, bounded follow-through pending"
++    }
++  ]
+ }

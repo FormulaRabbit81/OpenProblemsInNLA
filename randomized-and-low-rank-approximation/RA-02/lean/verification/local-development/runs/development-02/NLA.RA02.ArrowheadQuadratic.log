@@ -1,0 +1,20 @@
+NLA/RA02/ArrowheadQuadratic.lean:33:65: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+NLA/RA02/ArrowheadQuadratic.lean:151:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+NLA/RA02/ArrowheadQuadratic.lean:182:45: warning: Variable name `hr` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hr
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+'NLA.RA02.state_true_complex_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.RA02.state_true_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.RA02.arrowhead_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.RA02.arrowhead_positive_definite' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,9 @@
+{
+  "headers": {
+    "positive_eigenvector_pair": "theorem positive_eigenvector_pair {r : \u2115} (X Y : Square r) (lam : \u211d)\n    (hlam : 0 < lam) (hY : Y \u2260 0) (heig : commutatorT X Y = (lam : \u2102) \u2022 Y) :\n    commutatorJ X Y \u2260 0 \u2227\n    commutatorT X (commutatorJ X Y) = (lam : \u2102) \u2022 commutatorJ X Y \u2227\n    hsInner Y (commutatorJ X Y) = 0 \u2227\n    frobeniusNorm (commutatorJ X Y) ^ 2 = lam * frobeniusNorm Y ^ 2 := by",
+    "eigenspace_functional_kernel": "theorem eigenspace_functional_kernel {r : \u2115} (X Y : Square r) (lam : \u211d)\n    (hlam : 0 < lam) (hY : Y \u2260 0) (heig : commutatorT X Y = (lam : \u2102) \u2022 Y)\n    (f : Square r \u2192\u2097[\u2102] \u2102) :\n    \u2203 Z : Square r, Z \u2260 0 \u2227 commutatorT X Z = (lam : \u2102) \u2022 Z \u2227 f Z = 0 := by"
+  },
+  "source_sha256": "613d4cfb2e4f686411179e9bbf33630bb08e25fd964942a33361a88b11c991c1",
+  "route": "The exact adjoint energy identity gives the positive eigenvalue norm equality. J preserves this eigenspace and supplies a nonzero orthogonal partner. A linear combination of that pair cancels any functional, with nonzero proved from the orthogonality identity. No new numeric computation.",
+  "compile_status": "not yet run"
+}

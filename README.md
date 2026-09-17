@@ -11,14 +11,20 @@ I have several motivations for starting this repository:
 If one of your favorite open problems is solved here, we strongly encourage you to improve the proof, write about it, and publish it. We only have three hopes: (1) You will reference this GitHub repository as the original proof source (see below), (2) Add your preprint to the repository, and (3) Update any information about the problem in the repository. 
 
 <!-- catalog-summary -->
-**113 problems with open targets:** 42 open and 71 partially resolved. **104 other retained entries**, excluded from the open count.
+**112 problems with open targets:** 42 open and 70 partially resolved. **105 other retained entries**, excluded from the open count.
 
-**Resolution evidence:** 58 solved (published or independently audited); 46 solved with Lean verification.
+**Resolution evidence:** 55 solved (published or independently audited); 50 solved with Lean verification.
 
 Each entry records its own literature-check date. Literature checks are bounded; ratings are editorial. “Impact” uses the canonical `Importance` field.
 
-**[Browse all 113 open targets →](CATALOG.md)** · **[Solved and claimed solutions →](RESOLVED.md)**
+**[Browse all 112 open targets →](CATALOG.md)** · **[Solved and claimed solutions →](RESOLVED.md)**
 <!-- /catalog-summary -->
+
+## Special thanks
+
+Special thanks to **George Stepaniants**, **Matthew J. Colbrook**, and **Sidney Holden** for their substantial contributions to this repository so far.
+
+If you would like to get involved but don't know how, please email [townsend@cornell.edu](mailto:townsend@cornell.edu).
 
 ## Browse by category
 
@@ -26,7 +32,7 @@ Each entry records its own literature-check date. Literature checks are bounded;
 | --- | ---: |
 | [Linear systems and elimination](linear-systems-and-elimination/README.md) | 9 |
 | [Eigenvalues and inverse problems](eigenvalues-and-inverse-problems/README.md) | 13 |
-| [Matrix functions and stability](matrix-functions-and-stability/README.md) | 13 |
+| [Matrix functions and stability](matrix-functions-and-stability/README.md) | 12 |
 | [Randomized and low-rank approximation](randomized-and-low-rank-approximation/README.md) | 12 |
 | [Tensor computations](tensor-computations/README.md) | 17 |
 | [Nonnegative and positive factorizations](nonnegative-and-positive-factorizations/README.md) | 4 |

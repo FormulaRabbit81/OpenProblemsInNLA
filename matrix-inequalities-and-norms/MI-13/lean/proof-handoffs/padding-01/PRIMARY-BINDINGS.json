@@ -1,0 +1,481 @@
+{
+  "inspection": "local read-only pinned sources only",
+  "primary_sources": [
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Matrix/Block.lean",
+      "relative_path": "Mathlib/Data/Matrix/Block.lean",
+      "sha256": "c15b7cd49955438bd2334788946fe742b9a827dd1fc485e2e70ef42885d5ea9e",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Block entries, conjugate transpose, multiplication.",
+      "excerpts": [
+        {
+          "first_line": 45,
+          "last_line": 67,
+          "sha256": "12398da1df3d82eb5ebc15ff33ebac1cf5196940e62c81d513220f3af66bee9f",
+          "text": "@[pp_nodot]\ndef fromBlocks (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α) (D : Matrix o m α) :\n    Matrix (n ⊕ o) (l ⊕ m) α :=\n  of <| Sum.elim (fun i => Sum.elim (A i) (B i)) (fun j => Sum.elim (C j) (D j))\n\n@[simp]\ntheorem fromBlocks_apply₁₁ (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)\n    (D : Matrix o m α) (i : n) (j : l) : fromBlocks A B C D (Sum.inl i) (Sum.inl j) = A i j :=\n  rfl\n\n@[simp]\ntheorem fromBlocks_apply₁₂ (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)\n    (D : Matrix o m α) (i : n) (j : m) : fromBlocks A B C D (Sum.inl i) (Sum.inr j) = B i j :=\n  rfl\n\n@[simp]\ntheorem fromBlocks_apply₂₁ (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)\n    (D : Matrix o m α) (i : o) (j : l) : fromBlocks A B C D (Sum.inr i) (Sum.inl j) = C i j :=\n  rfl\n\n@[simp]\ntheorem fromBlocks_apply₂₂ (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)\n    (D : Matrix o m α) (i : o) (j : m) : fromBlocks A B C D (Sum.inr i) (Sum.inr j) = D i j :=\n"
+        },
+        {
+          "first_line": 138,
+          "last_line": 141,
+          "sha256": "db19f5a2517664de051f5093aba65c031679eae44647d00be097376d37b76df0",
+          "text": "\ntheorem fromBlocks_conjTranspose [Star α] (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)\n    (D : Matrix o m α) : (fromBlocks A B C D)ᴴ = fromBlocks Aᴴ Cᴴ Bᴴ Dᴴ := by\n  simp only [conjTranspose, fromBlocks_transpose, fromBlocks_map]\n"
+        },
+        {
+          "first_line": 213,
+          "last_line": 228,
+          "sha256": "27f8e07166517b26001e7bd413802e15a7066acca0f27173b28b7a5141485f7b",
+          "text": "\ntheorem fromBlocks_multiply [Fintype l] [Fintype m] [NonUnitalNonAssocSemiring α] (A : Matrix n l α)\n    (B : Matrix n m α) (C : Matrix o l α) (D : Matrix o m α) (A' : Matrix l p α) (B' : Matrix l q α)\n    (C' : Matrix m p α) (D' : Matrix m q α) :\n    fromBlocks A B C D * fromBlocks A' B' C' D' =\n      fromBlocks (A * A' + B * C') (A * B' + B * D') (C * A' + D * C') (C * B' + D * D') := by\n  ext i j\n  rcases i with ⟨⟩ <;> rcases j with ⟨⟩ <;> simp only [fromBlocks, mul_apply, of_apply,\n      Sum.elim_inr, Fintype.sum_sum_type, Sum.elim_inl, add_apply]\n\ntheorem fromBlocks_diagonal_pow [Semiring α] [Fintype n] [Fintype m] [DecidableEq n] [DecidableEq m]\n    (A : Matrix n n α) (D : Matrix m m α) (k : ℕ) :\n    (fromBlocks A 0 0 D) ^ k = fromBlocks (A ^ k) 0 0 (D ^ k) := by\n  induction k with\n  | zero => ext (i | i) (j | j) <;> simp [one_apply]\n  | succ n ih =>\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean",
+      "relative_path": "Mathlib/LinearAlgebra/Matrix/Reindex.lean",
+      "sha256": "8178dff6183ced5f5892ef4194adb9bffddb87a36dc2b7db9526d15d2371394c",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "The same index equivalence preserves multiplication and addition.",
+      "excerpts": [
+        {
+          "first_line": 78,
+          "last_line": 91,
+          "sha256": "d62be96f8a66fa9351f5c21e61c855644ed5e0ea4f12869a4958974be0124b1d",
+          "text": "\nvariable [Fintype m] [Fintype n] [Fintype o] [Mul R] [AddCommMonoid R]\n\n/-- `Matrix.reindex` as a `RingEquiv` between `R`-matrices. -/\ndef reindexRingEquiv (e : m ≃ n) : Matrix m m R ≃+* Matrix n n R where\n  __ := reindexAddEquiv R e e\n  map_mul' A B := submatrix_mul_equiv A B .. |>.symm\n\n@[simp]\ntheorem coe_reindexRingEquiv (e : m ≃ n) : ⇑(reindexRingEquiv R e) = reindex e e :=\n  rfl\n\n@[simp]\ntheorem toEquiv_reindexRingEquiv (e : m ≃ n) :\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Defs.lean",
+      "relative_path": "Mathlib/Algebra/BigOperators/Group/Finset/Defs.lean",
+      "sha256": "2f39541f66288cb9ae9f77d97fd3656825a1dd1a4b5ca6a156f938d8fa1678a8",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Fintype.sum_equiv is generated from the displayed prod_equiv by to_additive.",
+      "excerpts": [
+        {
+          "first_line": 728,
+          "last_line": 746,
+          "sha256": "c90d94c4b13537122a2c0d1de26dd0e6dced89b4fb5f7676d5eb58c34e4ed9a0",
+          "text": "alias _root_.Function.Bijective.finset_sum := _root_.Function.Bijective.finsetSum\n\n@[to_additive existing, deprecated (since := \"2026-04-08\")]\nalias _root_.Function.Bijective.finset_prod := _root_.Function.Bijective.finsetProd\n\n/-- `Fintype.prod_equiv` is a specialization of `Finset.prod_bij` that\nautomatically fills in most arguments.\n\nSee `Equiv.prod_comp` for a version without `h`.\n-/\n@[to_additive /-- `Fintype.sum_equiv` is a specialization of `Finset.sum_bij` that\nautomatically fills in most arguments.\n\nSee `Equiv.sum_comp` for a version without `h`. -/]\nlemma prod_equiv (e : ι ≃ κ) (f : ι → M) (g : κ → M) (h : ∀ x, f x = g (e x)) :\n    ∏ x, f x = ∏ x, g x := prod_bijective _ e.bijective _ _ h\n\n@[to_additive]\nlemma _root_.Function.Bijective.prod_comp {e : ι → κ} (he : e.Bijective) (g : κ → M) :\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Fintype/BigOperators.lean",
+      "relative_path": "Mathlib/Data/Fintype/BigOperators.lean",
+      "sha256": "bfa35992c02f47d7c78a5425ea3c4eecba0ad54de1b5752db565b37de11148c0",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Fintype.sum_sum_type is generated from prod_sum_type by to_additive.",
+      "excerpts": [
+        {
+          "first_line": 257,
+          "last_line": 270,
+          "sha256": "e19e2e3b856244dd8d195784bc57785fca7e3c7e6914fdeb2c957db11ac30066",
+          "text": "variable {α₁ : Type*} {α₂ : Type*} {M : Type*} [Fintype α₁] [Fintype α₂] [CommMonoid M]\n\n@[to_additive]\ntheorem Fintype.prod_sumElim (f : α₁ → M) (g : α₂ → M) :\n    ∏ x, Sum.elim f g x = (∏ a₁, f a₁) * ∏ a₂, g a₂ :=\n  prod_disjSum _ _ _\n\n@[to_additive (attr := simp)]\ntheorem Fintype.prod_sum_type (f : α₁ ⊕ α₂ → M) :\n    ∏ x, f x = (∏ a₁, f (Sum.inl a₁)) * ∏ a₂, f (Sum.inr a₂) :=\n  prod_disjSum _ _ _\n\n/-- The product over a product type equals the product of the fiberwise products. For rewriting\nin the reverse direction, use `Fintype.prod_prod_type'`. -/\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/ConjTranspose.lean",
+      "relative_path": "Mathlib/LinearAlgebra/Matrix/ConjTranspose.lean",
+      "sha256": "10ace10899567db7c2ccd38c0e89e3bdca2261494975a42d3b1a5535c9e3b1b6",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Zero and reindexing commute with conjugate transpose.",
+      "excerpts": [
+        {
+          "first_line": 173,
+          "last_line": 178,
+          "sha256": "38779f35e11c15f4026959d5fec556f2397bb610a93f60341b287472c366bab7",
+          "text": "  map_involutive star_involutive |>.eq_iff.trans <| by rw [map_diagonal_star]\n\n@[simp]\ntheorem conjTranspose_zero [AddMonoid α] [StarAddMonoid α] : (0 : Matrix m n α)ᴴ = 0 :=\n  Matrix.ext <| by simp\n\n"
+        },
+        {
+          "first_line": 439,
+          "last_line": 448,
+          "sha256": "5b1992995ea7e797a80ea4c45e0ef031f4a67fda03c57a4344fb8d7e0e942bec",
+          "text": "@[simp]\ntheorem conjTranspose_submatrix [Star α] (A : Matrix m n α) (r : l → m)\n    (c : o → n) : (A.submatrix r c)ᴴ = Aᴴ.submatrix c r :=\n  ext fun _ _ => rfl\n\ntheorem conjTranspose_reindex [Star α] (eₘ : m ≃ l) (eₙ : n ≃ o) (M : Matrix m n α) :\n    (reindex eₘ eₙ M)ᴴ = reindex eₙ eₘ Mᴴ :=\n  rfl\n\nvariable (m α) in\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Lp/Matrix.lean",
+      "relative_path": "Mathlib/Analysis/Normed/Lp/Matrix.lean",
+      "sha256": "976400e4430cbe64214a24e37f3f98c807c30f1c9926c8cbd367ae2fd111e2f9",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "The actual toLpLin map preserves matrix multiplication as composition.",
+      "excerpts": [
+        {
+          "first_line": 53,
+          "last_line": 65,
+          "sha256": "d0a5ff9ad28ed15a2cf94188d814df8debf813ad9113b7c9ad89eea2b77e0c7e",
+          "text": "\n/-- Note that applying this theorem needs an explicit choice of `q`. -/\ntheorem toLpLin_mul [Fintype o] [DecidableEq o] (A : Matrix m n R) (B : Matrix n o R) :\n    toLpLin p r (A * B) = toLpLin q r A ∘ₗ toLpLin p q B := by\n  ext; simp\n\n/-- A copy of `toLpLin_mul` that works for `simp`, for the common case where the domain and codomain\nhave the same norm. -/\n@[simp]\ntheorem toLpLin_mul_same [Fintype o] [DecidableEq o] (A : Matrix m n R) (B : Matrix n o R) :\n    toLpLin p p (A * B) = toLpLin p p A ∘ₗ toLpLin p p B :=\n  toLpLin_mul _ _ _ _ _\n\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/PiL2.lean",
+      "relative_path": "Mathlib/Analysis/InnerProductSpace/PiL2.lean",
+      "sha256": "1f9827b2db67213c725a2dcc3fec52a87772966d1fbd3fc6857a019dbd7a6053",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "toEuclideanLin is toLpLin 2 2 and is the orthonormal-basis toLin.",
+      "excerpts": [
+        {
+          "first_line": 1238,
+          "last_line": 1245,
+          "sha256": "bbf1c3b82161b0a03c09bbdb7a8b7560aa19d5c2ddef1d137a5f21c4b79b2698",
+          "text": "namespace Matrix\n\nvariable [Fintype n] [DecidableEq n]\n\n/-- A shorthand for `Matrix.toLpLin 2 2`. -/\nabbrev toEuclideanLin : Matrix m n 𝕜 ≃ₗ[𝕜] EuclideanSpace 𝕜 n →ₗ[𝕜] EuclideanSpace 𝕜 m :=\n  toLpLin 2 2\n\n"
+        },
+        {
+          "first_line": 1276,
+          "last_line": 1282,
+          "sha256": "6dc47d1d61e2458e21082698596d882bd599e3b077eef3a008bed8df6989a627",
+          "text": "open EuclideanSpace in\nlemma toEuclideanLin_eq_toLin_orthonormal [Fintype m] :\n    toEuclideanLin = toLin (basisFun n 𝕜).toBasis (basisFun m 𝕜).toBasis :=\n  rfl\n\nend Matrix\n\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Adjoint.lean",
+      "relative_path": "Mathlib/Analysis/InnerProductSpace/Adjoint.lean",
+      "sha256": "f28b5896638f712605265a69ffe4469f1f42e1b78b10ade0844738aeecd2b2a2",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Conjugate transpose is the actual Euclidean adjoint.",
+      "excerpts": [
+        {
+          "first_line": 1052,
+          "last_line": 1057,
+          "sha256": "92319cb3f1052c4c2fbc71f783677b76c29da4cf9e4b2d81ceb723f88af3576b",
+          "text": "\n/-- The adjoint of the linear map associated to a matrix is the linear map associated to the\nconjugate transpose of that matrix. -/\ntheorem Matrix.toEuclideanLin_conjTranspose_eq_adjoint (A : Matrix m n 𝕜) :\n    A.conjTranspose.toEuclideanLin = A.toEuclideanLin.adjoint :=\n  A.toLin_conjTranspose (EuclideanSpace.basisFun n 𝕜) (EuclideanSpace.basisFun m 𝕜)\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Charpoly/ToMatrix.lean",
+      "relative_path": "Mathlib/LinearAlgebra/Charpoly/ToMatrix.lean",
+      "sha256": "167cae25a064b15f836022f0441997349a236bd699ca87bcd93cf532b794529a",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "The characteristic polynomial of toLin equals the matrix characteristic polynomial.",
+      "excerpts": [
+        {
+          "first_line": 84,
+          "last_line": 96,
+          "sha256": "1341e1c7d3b6cbe336b6f2888bd650a1fe49681f230a619e4317defff89e9eaa",
+          "text": "namespace Matrix\n\nvariable {n : Type*} [Fintype n] [DecidableEq n]\n\n@[simp]\ntheorem charpoly_toLin (A : Matrix n n R) (b : Basis n R M) :\n    (A.toLin b b).charpoly = A.charpoly := by\n  simp [← LinearMap.charpoly_toMatrix (A.toLin b b) b]\n\n@[simp]\ntheorem charpoly_toLin' (A : Matrix n n R) : A.toLin'.charpoly = A.charpoly := by\n  rw [← Matrix.toLin_eq_toLin', charpoly_toLin]\n\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Charpoly/Basic.lean",
+      "relative_path": "Mathlib/LinearAlgebra/Charpoly/Basic.lean",
+      "sha256": "46b0cf44b0ea659c6f881a87771da4400e0e807cff76365da1895d73338904ca",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Every finite endomorphism characteristic polynomial is monic, hence nonzero.",
+      "excerpts": [
+        {
+          "first_line": 70,
+          "last_line": 75,
+          "sha256": "77afe0b162fe66544a38ab200bd00abedab1138c6abe244626dc6da453001757",
+          "text": "section Coeff\n\ntheorem charpoly_monic : f.charpoly.Monic :=\n  Matrix.charpoly_monic _\n\nopen Module in\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean",
+      "relative_path": "Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean",
+      "sha256": "584eb12d39eacb591155c98cfa2089479d88cfdea8eb5f31ba5ed687de200a9a",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Zero blocks, reindexing, and block diagonal characteristic polynomials.",
+      "excerpts": [
+        {
+          "first_line": 152,
+          "last_line": 164,
+          "sha256": "19b5790861d48487895ed47c45b0e4c7123017cb7179a544858d205443249710",
+          "text": "theorem charpoly_diagonal (d : n → R) : charpoly (diagonal d) = ∏ i, (X - C (d i)) := by\n  simp [charpoly]\n\ntheorem charpoly_one : charpoly (1 : Matrix n n R) = (X - 1) ^ Fintype.card n := by\n  simp [charpoly]\n\ntheorem charpoly_natCast (k : ℕ) :\n    charpoly (k : Matrix n n R) = (X - (k : R[X])) ^ Fintype.card n := by\n  simp [charpoly]\n\ntheorem charpoly_ofNat (k : ℕ) [k.AtLeastTwo] :\n    charpoly (ofNat(k) : Matrix n n R) = (X - ofNat(k)) ^ Fintype.card n :=\n  charpoly_natCast _\n"
+        },
+        {
+          "first_line": 174,
+          "last_line": 190,
+          "sha256": "1a67caec344b2f3fd86823b651de7375e881838529768f7755cc4926b9d9da53",
+          "text": "\nlemma charpoly_map (M : Matrix n n R) (f : R →+* S) :\n    (M.map f).charpoly = M.charpoly.map f := by\n  rw [charpoly, charmatrix_map, ← Polynomial.coe_mapRingHom, charpoly, RingHom.map_det,\n    RingHom.mapMatrix_apply]\n\n@[simp]\nlemma charpoly_fromBlocks_zero₁₂ :\n    (fromBlocks M₁₁ 0 M₂₁ M₂₂).charpoly = (M₁₁.charpoly * M₂₂.charpoly) := by\n  simp only [charpoly, charmatrix_fromBlocks, Matrix.map_zero _ (Polynomial.C_0), neg_zero,\n    det_fromBlocks_zero₁₂]\n\n@[simp]\nlemma charpoly_fromBlocks_zero₂₁ :\n    (fromBlocks M₁₁ M₁₂ 0 M₂₂).charpoly = (M₁₁.charpoly * M₂₂.charpoly) := by\n  simp only [charpoly, charmatrix_fromBlocks, Matrix.map_zero _ (Polynomial.C_0), neg_zero,\n    det_fromBlocks_zero₂₁]\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean",
+      "relative_path": "Mathlib/Analysis/InnerProductSpace/Spectrum.lean",
+      "sha256": "f12ef613416053c759ef30179147744c64eeec90f7467644cb30e64d532d7aa6",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Exact ordered eigenvalue list equals the decreasing sorted real roots with multiplicity.",
+      "excerpts": [
+        {
+          "first_line": 367,
+          "last_line": 378,
+          "sha256": "3d12fc50e869378ed4eb2873867cebd33ac36b19237bec5044bcdc8cbf60ecea",
+          "text": "  simp\n\ntheorem sort_roots_charpoly_eq_eigenvalues (hT : T.IsSymmetric) (hn : Module.finrank 𝕜 E = n) :\n    (T.charpoly.roots.map RCLike.re).sort (· ≥ ·) = List.ofFn (hT.eigenvalues hn) := by\n  simp_rw [hT.roots_charpoly_eq_eigenvalues, Fin.univ_val_map, Multiset.map_coe, List.map_ofFn,\n    Function.comp_def, RCLike.ofReal_re, Multiset.coe_sort]\n  have := hn.symm\n  convert! List.mergeSort_of_pairwise ?_\n  simp_rw [decide_eq_true_eq, ← List.sortedGE_iff_pairwise]\n  convert! (hT.eigenvalues_antitone hn).sortedGE_ofFn\n\ntheorem eigenvalues_eq_eigenvalues_iff {E' : Type*} [NormedAddCommGroup E'] [InnerProductSpace 𝕜 E']\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean",
+      "relative_path": "Mathlib/Analysis/InnerProductSpace/SingularValues.lean",
+      "sha256": "ce8193fcd5d226845a71f66b8ca7ad385358916a6e0e688745410ac412ed5c81",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Nonnegativity, out-of-range zero, and equality of squared singular value with Gram eigenvalue.",
+      "excerpts": [
+        {
+          "first_line": 96,
+          "last_line": 102,
+          "sha256": "e5b2c5db808f30d4b5d66f4b8a6cb8a21f33e55c9c9a2d9dbc54d964b99edcde",
+          "text": "    Finsupp.ofSupportFinite\n      (fun i ↦ √(T.isSymmetric_adjoint_comp_self.eigenvalues rfl i))\n      (Set.toFinite _)\n\ntheorem singularValues_nonneg (i : ℕ) : 0 ≤ T.singularValues i := by\n  rw [singularValues, Finsupp.embDomain_apply, Finsupp.ofSupportFinite_coe]\n  split_ifs <;> positivity\n"
+        },
+        {
+          "first_line": 122,
+          "last_line": 129,
+          "sha256": "c425d22b7a3fa2680187dec4bfc6a28a0459fdcd0e24ade89793e7e654e2a169",
+          "text": "  T.singularValues_fin hn ⟨i, hi⟩\n\ntheorem singularValues_of_finrank_le {i : ℕ} (hi : finrank 𝕜 E ≤ i) : T.singularValues i = 0 := by\n  apply Finsupp.embDomain_of_notMem_range\n  simp [hi]\n\ntheorem sq_singularValues_fin {n : ℕ} (hn : finrank 𝕜 E = n) (i : Fin n) :\n    T.singularValues i ^ 2 = T.isSymmetric_adjoint_comp_self.eigenvalues hn i := by\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean",
+      "relative_path": "Mathlib/Algebra/Polynomial/Roots.lean",
+      "sha256": "162d86710afc10cc3ed158236994ed020e589f7fa15d5b39a30bd3e1f153080c",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Roots of a nonzero product are the multiset sum; X^d contributes d zero roots.",
+      "excerpts": [
+        {
+          "first_line": 169,
+          "last_line": 174,
+          "sha256": "885f2bcad67bb4be4dee318393fc5e93cffdb9c005186faa4586345870a7e37a",
+          "text": "  simp at hp\n\ntheorem roots_mul {p q : R[X]} (hpq : p * q ≠ 0) : (p * q).roots = p.roots + q.roots := by\n  classical\n  exact Multiset.ext.mpr fun r => by\n    rw [count_add, count_roots, count_roots, count_roots, rootMultiplicity_mul hpq]\n"
+        },
+        {
+          "first_line": 288,
+          "last_line": 293,
+          "sha256": "a789eafa5dc2008f3d4b8cd1ad03c0f9ba22855c5a1059c3b13b566fc15f2ea3",
+          "text": "    · rw [pow_succ, roots_mul (mul_ne_zero (pow_ne_zero _ hp) hp), ihn, add_smul, one_smul]\n\ntheorem roots_X_pow (n : ℕ) : (X ^ n : R[X]).roots = n • ({0} : Multiset R) := by\n  rw [roots_pow, roots_X]\n\ntheorem roots_C_mul_X_pow (ha : a ≠ 0) (n : ℕ) :\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Group/Multiset.lean",
+      "relative_path": "Mathlib/Algebra/Order/Group/Multiset.lean",
+      "sha256": "37a8af5a66e5c250f23232a92636556e3992ccd5dc7c4d103ddddb6861c3a554",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Natural multiples of singleton multisets are replicates.",
+      "excerpts": [
+        {
+          "first_line": 97,
+          "last_line": 101,
+          "sha256": "76749432c205f1bb7c3a8f602e11b5f9ad6693d4ef1a6b9c770f4913ad5ea6ec",
+          "text": "lemma nsmul_replicate {a : α} (n m : ℕ) : n • replicate m a = replicate (n * m) a :=\n  ((replicateAddMonoidHom a).map_nsmul _ _).symm\n\nlemma nsmul_singleton (a : α) (n) : n • ({a} : Multiset α) = replicate n a := by\n  rw [← replicate_one, nsmul_replicate, mul_one]\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Multiset/MapFold.lean",
+      "relative_path": "Mathlib/Data/Multiset/MapFold.lean",
+      "sha256": "838653964b2dc77afcf2303c4f4058af259cb2d7db36c290eac8e9c8cce57e00",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Map distributes over multiset addition and replicates.",
+      "excerpts": [
+        {
+          "first_line": 82,
+          "last_line": 90,
+          "sha256": "fec21f57b6bce4ba9eb04a8af8fd2ed5e4c31e3000283899d18a0d129cd9dc97",
+          "text": "  rfl\n\n@[simp]\ntheorem map_replicate (f : α → β) (k : ℕ) (a : α) : (replicate k a).map f = replicate k (f a) := by\n  simp only [← coe_replicate, map_coe, List.map_replicate]\n\n@[simp]\ntheorem map_add (f : α → β) (s t) : map f (s + t) = map f s + map f t :=\n  Quotient.inductionOn₂ s t fun _l₁ _l₂ => congr_arg _ map_append\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Multiset/AddSub.lean",
+      "relative_path": "Mathlib/Data/Multiset/AddSub.lean",
+      "sha256": "f271e3bbdb10db9312ba86547163961e8481a80c3e57d9f2e63c35ec0c8c1c4f",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Multiset addition of coerced lists is list append.",
+      "excerpts": [
+        {
+          "first_line": 54,
+          "last_line": 60,
+          "sha256": "b2f91aa7fb3afb95d2f1ab636d581f3b496fffe4b2ced504551e44eeae5fdf35",
+          "text": "instance : Add (Multiset α) :=\n  ⟨Multiset.add⟩\n\n@[simp]\ntheorem coe_add (s t : List α) : (s + t : Multiset α) = (s ++ t : List α) :=\n  rfl\n\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Multiset/Replicate.lean",
+      "relative_path": "Mathlib/Data/Multiset/Replicate.lean",
+      "sha256": "588a8574a7ce2c10afe9c3bb5d3c639086b164fa62cb4943aba1c63da1629679",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "List replicate coerces to multiset replicate.",
+      "excerpts": [
+        {
+          "first_line": 34,
+          "last_line": 39,
+          "sha256": "407fc63f1f01fc0a606511b4a2497a5359220a911a6abeec9373ca338c90e654",
+          "text": "/-- `replicate n a` is the multiset containing only `a` with multiplicity `n`. -/\ndef replicate (n : ℕ) (a : α) : Multiset α :=\n  List.replicate n a\n\ntheorem coe_replicate (n : ℕ) (a : α) : (List.replicate n a : Multiset α) = replicate n a := rfl\n\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Multiset/Sort.lean",
+      "relative_path": "Mathlib/Data/Multiset/Sort.lean",
+      "sha256": "da36e6ab5437d2691f19cd8721c37d3f263c01f38385d26f1db3ed61628d2329",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "Sorted multisets retain all elements and multiplicities; sorting a coerced list uses mergeSort.",
+      "excerpts": [
+        {
+          "first_line": 43,
+          "last_line": 56,
+          "sha256": "e1fddf0cf3a82a270b18462f78cb367351ce17351a81be6b73e593f3fc0194c3",
+          "text": "theorem coe_sort : sort l r = mergeSort l (r · ·) :=\n  rfl\n\n@[simp]\ntheorem pairwise_sort : (sort s r).Pairwise r :=\n  Quot.inductionOn s (pairwise_mergeSort' _)\n\n@[simp]\ntheorem sort_eq : ↑(sort s r) = s :=\n  Quot.inductionOn s fun _ => Quot.sound <| mergeSort_perm _ _\n\n@[simp]\ntheorem sort_zero : sort 0 r = [] :=\n  List.mergeSort_nil\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/Sort.lean",
+      "relative_path": "Mathlib/Data/List/Sort.lean",
+      "sha256": "672d712325b3e9fe3ca33c4c76cc6e850d750672ece00c2ad2805607569e0757",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "An already pairwise ordered list is fixed by mergeSort.",
+      "excerpts": [
+        {
+          "first_line": 338,
+          "last_line": 346,
+          "sha256": "119fb900fe72edef6d8a398b4b4a44304289452431428758b60b84ac8d28200e",
+          "text": "theorem pairwise_mergeSort' (l : List α) : Pairwise r (mergeSort l (r · ·)) := by\n  simpa using pairwise_mergeSort (le := (r · ·))\n    (fun _ _ _ => by simpa using trans_of r)\n    (by simpa using total_of r)\n    l\n\nvariable [Std.Antisymm r]\n\ntheorem mergeSort_eq_self {l : List α} : Pairwise r l → mergeSort l (r · ·) = l :=\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/Pairwise.lean",
+      "relative_path": "Mathlib/Data/List/Pairwise.lean",
+      "sha256": "0b110f80add05b7d54dd74f27d89a472ca7ea1b7eb4963788e07335d310f4312",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "A repeated zero list is pairwise ordered by reflexivity.",
+      "excerpts": [
+        {
+          "first_line": 110,
+          "last_line": 116,
+          "sha256": "9a38a14c8d24cf59f5736f78da435ed4aeb67a7d83c75cefa8906614d703df53",
+          "text": "    | head => exact refl_of ..\n    | tail => exact rel_of_pairwise_cons h (by assumption)\n\ntheorem pairwise_replicate_of_refl {n} [Std.Refl R] : (replicate n a).Pairwise R :=\n  pairwise_replicate.mpr (Or.inr <| refl_of ..)\n\n/-! ### Pairwise filtering -/\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/GetD.lean",
+      "relative_path": "Mathlib/Data/List/GetD.lean",
+      "sha256": "574a0a3994484d8d591a1f57604a0eefd6b8947b1b5c9b698b01dd8bf48e600a",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "getD relates finite lookup to default zero and treats appended zeros exactly.",
+      "excerpts": [
+        {
+          "first_line": 29,
+          "last_line": 48,
+          "sha256": "008a31eee02431abfd5b8070745125c9df5badaabaaae337c6052b33f6cd1d7b",
+          "text": "section getD\n\nvariable (d : α)\n\ntheorem getD_eq_getElem {n : ℕ} (hn : n < l.length) : l.getD n d = l[n] := by\n  grind\n\ntheorem getD_eq_getElem? (i : Fin l.length) : l.getD i d = l[i]?.get (by simp) := by\n  simp only [getD_eq_getElem?_getD, Fin.is_lt, getElem?_pos, Option.getD_some, Fin.getElem_fin,\n    Option.get_some]\n\ntheorem getD_eq_get (i : Fin l.length) : l.getD i d = l.get i :=\n  getD_eq_getElem ..\n\ntheorem getD_map {n : ℕ} (f : α → β) : (map f l).getD n (f d) = f (l.getD n d) := by\n  simp only [getD_eq_getElem?_getD, getElem?_map, Option.getD_map]\n\ntheorem getD_eq_default {n : ℕ} (hn : l.length ≤ n) : l.getD n d = d := by\n  grind\n\n"
+        },
+        {
+          "first_line": 62,
+          "last_line": 77,
+          "sha256": "02daa515e05aaef3b33d8b2e5826ae67bdc3db6e11490f36bfb8a07d6765842e",
+          "text": "\n@[simp]\ntheorem getElem?_getD_replicate_default_eq (r n : ℕ) : (replicate r d)[n]?.getD d = d := by\n  grind\n\ntheorem getD_replicate {y i n} (h : i < n) : getD (replicate n x) i y = x := by\n  grind\n\ntheorem getD_append (l l' : List α) (d : α) (n : ℕ) (h : n < l.length) :\n    (l ++ l').getD n d = l.getD n d := by\n  grind\n\ntheorem getD_append_right (l l' : List α) (d : α) (n : ℕ) (h : l.length ≤ n) :\n    (l ++ l').getD n d = l'.getD (n - l.length) d := by\n  grind\n\n"
+        }
+      ]
+    },
+    {
+      "kind": "mathlib",
+      "path": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/RCLike/Basic.lean",
+      "relative_path": "Mathlib/Analysis/RCLike/Basic.lean",
+      "sha256": "a84c795cd067befa1095540ddacd3f580d3d517f91c50965227c6f8e7e34474e",
+      "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "role": "The real part of complex zero is zero.",
+      "excerpts": [
+        {
+          "first_line": 144,
+          "last_line": 150,
+          "sha256": "89879a67e17e8653f1fbc2eb1adc6cbc443e17a97e4f2785ed85c50a2958a8e0",
+          "text": "  algebraMap.coe_zero\n\n@[rclike_simps]\ntheorem zero_re : re (0 : K) = (0 : ℝ) :=\n  map_zero re\n\n@[rclike_simps]\n"
+        }
+      ]
+    },
+    {
+      "kind": "lean-core",
+      "path": "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/src/lean/Init/Data/List/OfFn.lean",
+      "relative_path": "Init/Data/List/OfFn.lean",
+      "sha256": "e2054feea94eea72e5ddca3145b03e9e669db8bb89cf8d0286354fdd2dfb9de2",
+      "pin": "v4.33.1",
+      "role": "The length and indexed entries of ofFn; membership is an actual finite index.",
+      "excerpts": [
+        {
+          "first_line": 43,
+          "last_line": 64,
+          "sha256": "c88d380f93887c761777a6a4aae9b2c6c48afff5ce757883d99fe9de6d371db0",
+          "text": "@[simp, grind =]\ntheorem length_ofFn {f : Fin n → α} : (ofFn f).length = n := by\n  simp only [ofFn]\n  induction n with\n  | zero => simp\n  | succ n ih => simp [Fin.foldr_succ, ih]\n\n@[simp, grind =]\nprotected theorem getElem_ofFn {f : Fin n → α} (h : i < (ofFn f).length) :\n    (ofFn f)[i] = f ⟨i, by simp_all⟩ := by\n  simp only [ofFn]\n  induction n generalizing i with\n  | zero => simp at h\n  | succ n ih =>\n    match i with\n    | 0 => simp [Fin.foldr_succ]\n    | i+1 =>\n      simp only [Fin.foldr_succ]\n      apply ih\n      simp_all\n\n@[simp, grind =]\n"
+        },
+        {
+          "first_line": 113,
+          "last_line": 117,
+          "sha256": "8e554511039da7f0898ae068cea82d60eca5d4371967c07f6014f3ee5f8b26f4",
+          "text": "@[simp 500, grind =]\ntheorem mem_ofFn {n} {f : Fin n → α} {a : α} : a ∈ ofFn f ↔ ∃ i, f i = a := by\n  constructor\n  · intro w\n    obtain ⟨i, h, rfl⟩ := getElem_of_mem w\n"
+        }
+      ]
+    },
+    {
+      "kind": "lean-core",
+      "path": "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/src/lean/Init/Data/List/Pairwise.lean",
+      "relative_path": "Init/Data/List/Pairwise.lean",
+      "sha256": "0dbf6798e805477e651b1ff6fe472f5fb14beb37d6883167d36a81cba9c122ed",
+      "pin": "v4.33.1",
+      "role": "Pairwise order on append is two internal orders plus all cross comparisons.",
+      "excerpts": [
+        {
+          "first_line": 156,
+          "last_line": 159,
+          "sha256": "13dbcf7be5bb80a45e25576a218b17ed14de4d00b77f08f6ce1db3f70cafb797",
+          "text": "@[grind =] theorem pairwise_append {l₁ l₂ : List α} :\n    (l₁ ++ l₂).Pairwise R ↔ l₁.Pairwise R ∧ l₂.Pairwise R ∧ ∀ a ∈ l₁, ∀ b ∈ l₂, R a b := by\n  induction l₁ <;> simp [*, or_imp, forall_and, and_assoc, and_left_comm]\n\n"
+        }
+      ]
+    },
+    {
+      "kind": "lean-core",
+      "path": "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/src/lean/Init/Data/List/Lemmas.lean",
+      "relative_path": "Init/Data/List/Lemmas.lean",
+      "sha256": "0724ebc7c72c87ad6d480dba407c43cc60393e7a0facfbaa6670045f66f636ac",
+      "pin": "v4.33.1",
+      "role": "Every member of replicate is the repeated value.",
+      "excerpts": [
+        {
+          "first_line": 2204,
+          "last_line": 2208,
+          "sha256": "557fa16ac5caf8f61a03f638a45f1f0cfc145a9bab97b15c257fdc0e829fa8b5",
+          "text": "\n@[simp, grind =] theorem mem_replicate {a b : α} : ∀ {n}, b ∈ replicate n a ↔ n ≠ 0 ∧ b = a\n  | 0 => by simp\n  | n+1 => by simp [replicate_succ, mem_replicate, Nat.succ_ne_zero]\n\n"
+        },
+        {
+          "first_line": 2216,
+          "last_line": 2219,
+          "sha256": "e42a6dcb7cce3931864dba2ed914e52208af6afa63f094b148329409251609e1",
+          "text": "    split <;> simp_all\n\n@[grind →] theorem eq_of_mem_replicate {a b : α} {n} (h : b ∈ replicate n a) : b = a := (mem_replicate.1 h).2\n\n"
+        }
+      ]
+    }
+  ]
+}

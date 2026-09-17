@@ -1,0 +1,27 @@
+{
+  "reviewer": "/root/sf_ra_runtime_referee",
+  "actual_audits": [
+    {
+      "command": "PYTHONPATH=/tmp/nla-publication-python-20260917 /Users/georgestepaniants/miniforge3/bin/python -B /tmp/nla-lean-next-20260915/reviews/MI13-package-referee-20260917/audit.py",
+      "log": "audit-attempt-1.log",
+      "exit_code": 0,
+      "candidate_manifest_sha256": "6753121be2b93980f3bc527aa82dbe57493d1176e31fac98174d2915a0813e2d",
+      "scope": "Initial successful audit after both full source reviews were copied; before square-contraction wording clarification."
+    },
+    {
+      "command": "PYTHONPATH=/tmp/nla-publication-python-20260917 /Users/georgestepaniants/miniforge3/bin/python -B /tmp/nla-lean-next-20260915/reviews/MI13-package-referee-20260917/audit.py",
+      "log": "audit-attempt-2.log",
+      "exit_code": 0,
+      "candidate_manifest_sha256": "95ac5a2fe203bb712cc29679e867aefdcc5679fceb0d9cceefba39e07e890579",
+      "scope": "Final candidate; adds exact README correction and before-snapshot checks."
+    }
+  ],
+  "schema_validator": "Exact retained validate(project,schema) function executed using runpy with non-main name in each actual audit. No preparer or compiler invoked.",
+  "unrun_helper": "initial-audit-unrun.py.txt was prepared for the original package before it advanced; it was never executed.",
+  "exploratory_read_failure": {
+    "action": "cat attempted verification/packaging/prose-spacing-before/INDEX.json",
+    "exit_code": 1,
+    "reason": "Actual preserved path is verification/packaging/prose-spacing-before/reviews/INDEX.json; subsequent complete diff read succeeded. This was a file-read lookup, not an integrity, schema, Lean or Comparator failure."
+  },
+  "scope": "All mutations limited to this private review directory. No Lean, Lake, Comparator, Git, network or package-preparer execution."
+}

@@ -1,0 +1,164 @@
+{
+  "exp_one_bound": {
+    "path": "NLA/RA02/Numerical.lean",
+    "Challenge": ": Real.exp 1 ≤ 3",
+    "implementation": ": Real.exp 1 ≤ 3",
+    "normalization": "whitespace only"
+  },
+  "scalar_parameters": {
+    "path": "NLA/RA02/Parameters.lean",
+    "Challenge": "(r : ℕ) (hr : 1 ≤ r) :\n    0 < smallParameter r ∧ smallParameter r < 1 ∧\n    0 < scaleParameter r ∧ scaleParameter r ≤ smallParameter r ^ 2 ∧\n    smallParameter r ^ 2 < 1 ∧\n    ∀ i : ℕ, 0 < diagonalWeight r i ∧ 0 < couplingWeight r i",
+    "implementation": "(r : ℕ) (hr : 1 ≤ r) :\n    0 < smallParameter r ∧ smallParameter r < 1 ∧\n    0 < scaleParameter r ∧ scaleParameter r ≤ smallParameter r ^ 2 ∧\n    smallParameter r ^ 2 < 1 ∧\n    ∀ i : ℕ, 0 < diagonalWeight r i ∧ 0 < couplingWeight r i",
+    "normalization": "whitespace only"
+  },
+  "pivot_kernel": {
+    "path": "NLA/RA02/PivotKernel.lean",
+    "Challenge": "(n : ℕ) (hn : 1 ≤ n) (A : Square n) (hA : A.PosSemidef) :\n    0 ≤ realTrace A ∧ (realTrace A = 0 ↔ A = 0) ∧\n    (∀ j : Fin n, 0 ≤ pivotMass A j) ∧ (∑ j : Fin n, pivotMass A j) = 1 ∧\n    (A ≠ 0 → 0 < realTrace A ∧\n      ∀ j : Fin n, pivotMass A j = (A j j).re / realTrace A ∧\n        (A j j = 0 → pivotMass A j = 0)) ∧\n    ∀ j : Fin n, (choleskyStep A j).PosSemidef",
+    "implementation": "(n : ℕ) (hn : 1 ≤ n) (A : Square n) (hA : A.PosSemidef) :\n    0 ≤ realTrace A ∧ (realTrace A = 0 ↔ A = 0) ∧\n    (∀ j : Fin n, 0 ≤ pivotMass A j) ∧ (∑ j : Fin n, pivotMass A j) = 1 ∧\n    (A ≠ 0 → 0 < realTrace A ∧\n      ∀ j : Fin n, pivotMass A j = (A j j).re / realTrace A ∧\n        (A j j = 0 → pivotMass A j = 0)) ∧\n    ∀ j : Fin n, (choleskyStep A j).PosSemidef",
+    "normalization": "whitespace only"
+  },
+  "finite_path_law": {
+    "path": "NLA/RA02/FiniteExpectation.lean",
+    "Challenge": "(n : ℕ) (hn : 1 ≤ n) (A : Square n) (hA : A.PosSemidef) :\n    (∀ k : ℕ,\n      (∀ f : History n k, 0 ≤ pathWeight A (List.ofFn f) ∧\n        (pathResidual A (List.ofFn f)).PosSemidef) ∧\n      (∑ f : History n k, pathWeight A (List.ofFn f)) = 1) ∧\n    ∀ (w : List (Fin n)) (j : Fin n),\n      pathResidual A (w ++ [j]) = choleskyStep (pathResidual A w) j ∧\n      pathWeight A (w ++ [j]) = pathWeight A w * pivotMass (pathResidual A w) j",
+    "implementation": "(n : ℕ) (hn : 1 ≤ n) (A : Square n) (hA : A.PosSemidef) :\n    (∀ k : ℕ,\n      (∀ f : History n k, 0 ≤ pathWeight A (List.ofFn f) ∧\n        (pathResidual A (List.ofFn f)).PosSemidef) ∧\n      (∑ f : History n k, pathWeight A (List.ofFn f)) = 1) ∧\n    ∀ (w : List (Fin n)) (j : Fin n),\n      pathResidual A (w ++ [j]) = choleskyStep (pathResidual A w) j ∧\n      pathWeight A (w ++ [j]) = pathWeight A w * pivotMass (pathResidual A w) j",
+    "normalization": "whitespace only"
+  },
+  "zero_residual": {
+    "path": "NLA/RA02/FiniteExpectation.lean",
+    "Challenge": "(n k : ℕ) (w : List (Fin n)) :\n    pathResidual (0 : Square n) w = 0 ∧ expectedTrace (0 : Square n) k = 0",
+    "implementation": "(n k : ℕ) (w : List (Fin n)) :\n    pathResidual (0 : Square n) w = 0 ∧ expectedTrace (0 : Square n) k = 0",
+    "normalization": "whitespace only"
+  },
+  "expected_trace_recursion": {
+    "path": "NLA/RA02/FiniteExpectation.lean",
+    "Challenge": "(n : ℕ) (hn : 1 ≤ n) (A : Square n)\n    (hA : A.PosSemidef) (k : ℕ) :\n    expectedTrace A 0 = realTrace A ∧ 0 ≤ expectedTrace A k ∧\n    expectedTrace A (k + 1) =\n      ∑ j : Fin n, pivotMass A j * expectedTrace (choleskyStep A j) k",
+    "implementation": "(n : ℕ) (hn : 1 ≤ n) (A : Square n)\n    (hA : A.PosSemidef) (k : ℕ) :\n    expectedTrace A 0 = realTrace A ∧ 0 ≤ expectedTrace A k ∧\n    expectedTrace A (k + 1) =\n      ∑ j : Fin n, pivotMass A j * expectedTrace (choleskyStep A j) k",
+    "normalization": "whitespace only"
+  },
+  "ordered_spectrum": {
+    "path": "NLA/RA02/OrderedSpectrum.lean",
+    "Challenge": "(n : ℕ) (A : Square n) (hA : A.IsHermitian) :\n    Antitone (orderedEigenvalues A hA) ∧\n    (∀ i : Fin n, ∃ x : Fin n → ℂ, x ≠ 0 ∧\n      A *ᵥ x = (orderedEigenvalues A hA i : ℂ) • x) ∧\n    realTrace A = ∑ i : Fin n, orderedEigenvalues A hA i",
+    "implementation": "(n : ℕ) (A : Square n) (hA : A.IsHermitian) :\n    Antitone (orderedEigenvalues A hA) ∧\n    (∀ i : Fin n, ∃ x : Fin n → ℂ, x ≠ 0 ∧\n      A *ᵥ x = (orderedEigenvalues A hA i : ℂ) • x) ∧\n    realTrace A = ∑ i : Fin n, orderedEigenvalues A hA i",
+    "normalization": "whitespace only"
+  },
+  "least_eigenvalue_rayleigh": {
+    "path": "NLA/RA02/RayleighMinimum.lean",
+    "Challenge": "(m : ℕ) (A : Square (m + 1))\n    (hA : A.IsHermitian) (x : Fin (m + 1) → ℂ) (hx : x ≠ 0) :\n    orderedEigenvalues A hA (Fin.last m) ≤ quadraticValue A x / squaredNorm x",
+    "implementation": "(m : ℕ) (A : Square (m + 1))\n    (hA : A.IsHermitian) (x : Fin (m + 1) → ℂ) (hx : x ≠ 0) :\n    orderedEigenvalues A hA (Fin.last m) ≤ quadraticValue A x / squaredNorm x",
+    "normalization": "whitespace only"
+  },
+  "spectral_tail_semantics": {
+    "path": "NLA/RA02/SpectralTail.lean",
+    "Challenge": "(n : ℕ) (A : Square n) (hA : A.PosSemidef) :\n    (∀ r : ℕ, 0 ≤ rankTail A hA.isHermitian r) ∧\n    rankTail A hA.isHermitian n = 0 ∧\n    ∀ (m : ℕ) (B : Square (m + 1)) (hB : B.IsHermitian),\n      rankTail B hB m = orderedEigenvalues B hB (Fin.last m)",
+    "implementation": "(n : ℕ) (A : Square n) (hA : A.PosSemidef) :\n    (∀ r : ℕ, 0 ≤ rankTail A hA.isHermitian r) ∧\n    rankTail A hA.isHermitian n = 0 ∧\n    ∀ (m : ℕ) (B : Square (m + 1)) (hB : B.IsHermitian),\n      rankTail B hB m = orderedEigenvalues B hB (Fin.last m)",
+    "normalization": "whitespace only"
+  },
+  "arrowhead_quadratic": {
+    "path": "NLA/RA02/ArrowheadQuadratic.lean",
+    "Challenge": "(r : ℕ) (x : Fin (r + 1) → ℂ) :\n    quadraticValue (arrowhead r) x =\n      (∑ i : Fin r, diagonalWeight r i.val *\n        Complex.normSq (x i.castSucc + (couplingWeight r i.val : ℂ) * x (Fin.last r))) +\n      scaleParameter r ^ r * Complex.normSq (x (Fin.last r))",
+    "implementation": "(r : ℕ) (x : Fin (r + 1) → ℂ) :\n    quadraticValue (arrowhead r) x =\n      (∑ i : Fin r, diagonalWeight r i.val *\n        Complex.normSq (x i.castSucc + (couplingWeight r i.val : ℂ) * x (Fin.last r))) +\n      scaleParameter r ^ r * Complex.normSq (x (Fin.last r))",
+    "normalization": "whitespace only"
+  },
+  "arrowhead_positive_definite": {
+    "path": "NLA/RA02/ArrowheadQuadratic.lean",
+    "Challenge": "(r : ℕ) (hr : 1 ≤ r) :\n    (arrowhead r).PosDef",
+    "implementation": "(r : ℕ) (hr : 1 ≤ r) :\n    (arrowhead r).PosDef",
+    "normalization": "whitespace only"
+  },
+  "rayleigh_probe_values": {
+    "path": "NLA/RA02/ProbeValues.lean",
+    "Challenge": "(r : ℕ) :\n    rayleighProbe r ≠ 0 ∧\n    quadraticValue (arrowhead r) (rayleighProbe r) = scaleParameter r ^ r ∧\n    squaredNorm (rayleighProbe r) = 1 + (∑ i : Fin r, couplingWeight r i.val ^ 2) ∧\n    1 ≤ squaredNorm (rayleighProbe r)",
+    "implementation": "(r : ℕ) :\n    rayleighProbe r ≠ 0 ∧\n    quadraticValue (arrowhead r) (rayleighProbe r) = scaleParameter r ^ r ∧\n    squaredNorm (rayleighProbe r) = 1 + (∑ i : Fin r, couplingWeight r i.val ^ 2) ∧\n    1 ≤ squaredNorm (rayleighProbe r)",
+    "normalization": "whitespace only"
+  },
+  "arrowhead_tail": {
+    "path": "NLA/RA02/ArrowheadTail.lean",
+    "Challenge": "(r : ℕ) (hr : 1 ≤ r) (hA : (arrowhead r).IsHermitian) :\n    0 < rankTail (arrowhead r) hA r ∧\n    rankTail (arrowhead r) hA r ≤ scaleParameter r ^ r",
+    "implementation": "(r : ℕ) (hr : 1 ≤ r) (hA : (arrowhead r).IsHermitian) :\n    0 < rankTail (arrowhead r) hA r ∧\n    rankTail (arrowhead r) hA r ≤ scaleParameter r ^ r",
+    "normalization": "whitespace only"
+  },
+  "residual_state_positivity": {
+    "path": "NLA/RA02/StateConstruction.lean",
+    "Challenge": "(r : ℕ) (hr : 1 ≤ r) (U : Finset (Fin r)) :\n    0 < cornerValue r U ∧\n    (∀ b : Bool, (arrowheadState r U b).PosSemidef) ∧\n    ∀ i ∈ U,\n      ((arrowheadState r U true) i.castSucc i.castSucc).re = diagonalWeight r i.val ∧\n      ((arrowheadState r U false) i.castSucc i.castSucc).re =\n        diagonalWeight r i.val * cornerValue r (U.erase i) / cornerValue r U ∧\n      0 < ((arrowheadState r U true) i.castSucc i.castSucc).re ∧\n      0 < ((arrowheadState r U false) i.castSucc i.castSucc).re",
+    "implementation": "(r : ℕ) (hr : 1 ≤ r) (U : Finset (Fin r)) :\n    0 < cornerValue r U ∧\n    (∀ b : Bool, (arrowheadState r U b).PosSemidef) ∧\n    ∀ i ∈ U,\n      ((arrowheadState r U true) i.castSucc i.castSucc).re = diagonalWeight r i.val ∧\n      ((arrowheadState r U false) i.castSucc i.castSucc).re =\n        diagonalWeight r i.val * cornerValue r (U.erase i) / cornerValue r U ∧\n      0 < ((arrowheadState r U true) i.castSucc i.castSucc).re ∧\n      0 < ((arrowheadState r U false) i.castSucc i.castSucc).re",
+    "normalization": "whitespace only"
+  },
+  "residual_state_updates": {
+    "path": "NLA/RA02/StateUpdates.lean",
+    "Challenge": "(r : ℕ) (hr : 1 ≤ r) (U : Finset (Fin r)) :\n    choleskyStep (arrowheadState r U true) (Fin.last r) = arrowheadState r U false ∧\n    ∀ i ∈ U,\n      choleskyStep (arrowheadState r U true) i.castSucc = arrowheadState r (U.erase i) true ∧\n      choleskyStep (arrowheadState r U false) i.castSucc = arrowheadState r (U.erase i) false",
+    "implementation": "(r : ℕ) (hr : 1 ≤ r) (U : Finset (Fin r)) :\n    choleskyStep (arrowheadState r U true) (Fin.last r) = arrowheadState r U false ∧\n    ∀ i ∈ U,\n      choleskyStep (arrowheadState r U true) i.castSucc = arrowheadState r (U.erase i) true ∧\n      choleskyStep (arrowheadState r U false) i.castSucc = arrowheadState r (U.erase i) false",
+    "normalization": "whitespace only"
+  },
+  "distinct_history_state": {
+    "path": "NLA/RA02/DistinctHistory.lean",
+    "Challenge": "(r : ℕ) (hr : 1 ≤ r) (w : List (Fin (r + 1)))\n    (hw : w.Nodup) (hlen : w.length ≤ r + 1) :\n    pathResidual (arrowhead r) w =\n      arrowheadState r (remainingOrdinary r w) (lastRemaining r w)",
+    "implementation": "(r : ℕ) (hr : 1 ≤ r) (w : List (Fin (r + 1)))\n    (hw : w.Nodup) (hlen : w.length ≤ r + 1) :\n    pathResidual (arrowhead r) w =\n      arrowheadState r (remainingOrdinary r w) (lastRemaining r w)",
+    "normalization": "whitespace only"
+  },
+  "distinct_history_identity": {
+    "path": "NLA/RA02/HistoryIdentity.lean",
+    "Challenge": "(r : ℕ) (hr : 1 ≤ r) (w : List (Fin (r + 1)))\n    (hw : w.Nodup) (hlen : w.length = r) :\n    pivotProduct (arrowhead r) w * realTrace (pathResidual (arrowhead r) w) = commonNumerator r ∧\n    pathContribution (arrowhead r) w = commonNumerator r / prefixTraceProduct (arrowhead r) w",
+    "implementation": "(r : ℕ) (hr : 1 ≤ r) (w : List (Fin (r + 1)))\n    (hw : w.Nodup) (hlen : w.length = r) :\n    pivotProduct (arrowhead r) w * realTrace (pathResidual (arrowhead r) w) = commonNumerator r ∧\n    pathContribution (arrowhead r) w = commonNumerator r / prefixTraceProduct (arrowhead r) w",
+    "normalization": "whitespace only"
+  },
+  "retained_history_count": {
+    "path": "NLA/RA02/CarryEncoding.lean",
+    "Challenge": "(r : ℕ) :\n    Function.Injective (retainedHistory r) ∧ (retainedHistories r).card = 2 ^ r ∧\n    ∀ bits : Fin r → Bool, (List.ofFn (retainedHistory r bits)).Nodup",
+    "implementation": "(r : ℕ) :\n    Function.Injective (retainedHistory r) ∧ (retainedHistories r).card = 2 ^ r ∧\n    ∀ bits : Fin r → Bool, (List.ofFn (retainedHistory r bits)).Nodup",
+    "normalization": "whitespace only"
+  },
+  "retained_prefix_description": {
+    "path": "NLA/RA02/CarryEncoding.lean",
+    "Challenge": "(r : ℕ) (bits : Fin r → Bool) (s : ℕ) (hs : s ≤ r) :\n    (carryLabel r bits s = Fin.last r ∨ (carryLabel r bits s).val < s) ∧\n    (retainedPrefix r bits s).toFinset = (initialLabels r s).erase (carryLabel r bits s)",
+    "implementation": "(r : ℕ) (bits : Fin r → Bool) (s : ℕ) (hs : s ≤ r) :\n    (carryLabel r bits s = Fin.last r ∨ (carryLabel r bits s).val < s) ∧\n    (retainedPrefix r bits s).toFinset = (initialLabels r s).erase (carryLabel r bits s)",
+    "normalization": "whitespace only"
+  },
+  "retained_trace_bound": {
+    "path": "NLA/RA02/RetainedTrace.lean",
+    "Challenge": "(r : ℕ) (hr : 1 ≤ r) (bits : Fin r → Bool)\n    (s : ℕ) (hs : s < r) :\n    0 < realTrace (pathResidual (arrowhead r) (retainedPrefix r bits s)) ∧\n    realTrace (pathResidual (arrowhead r) (retainedPrefix r bits s)) ≤\n      scaleParameter r ^ s * (1 + 1 / (r : ℝ))",
+    "implementation": "(r : ℕ) (hr : 1 ≤ r) (bits : Fin r → Bool)\n    (s : ℕ) (hs : s < r) :\n    0 < realTrace (pathResidual (arrowhead r) (retainedPrefix r bits s)) ∧\n    realTrace (pathResidual (arrowhead r) (retainedPrefix r bits s)) ≤\n      scaleParameter r ^ s * (1 + 1 / (r : ℝ))",
+    "normalization": "whitespace only"
+  },
+  "retained_contribution_bound": {
+    "path": "NLA/RA02/RetainedContribution.lean",
+    "Challenge": "(r : ℕ) (hr : 1 ≤ r) (bits : Fin r → Bool) :\n    scaleParameter r ^ r / (1 + 1 / (r : ℝ)) ^ r ≤\n      pathContribution (arrowhead r) (List.ofFn (retainedHistory r bits))",
+    "implementation": "(r : ℕ) (hr : 1 ≤ r) (bits : Fin r → Bool) :\n    scaleParameter r ^ r / (1 + 1 / (r : ℝ)) ^ r ≤\n      pathContribution (arrowhead r) (List.ofFn (retainedHistory r bits))",
+    "normalization": "whitespace only"
+  },
+  "expectation_lower_bound": {
+    "path": "NLA/RA02/ExpectationLower.lean",
+    "Challenge": "(r : ℕ) (hr : 1 ≤ r) :\n    (2 : ℝ) ^ r * scaleParameter r ^ r / (1 + 1 / (r : ℝ)) ^ r ≤\n      expectedTrace (arrowhead r) r",
+    "implementation": "(r : ℕ) (hr : 1 ≤ r) :\n    (2 : ℝ) ^ r * scaleParameter r ^ r / (1 + 1 / (r : ℝ)) ^ r ≤\n      expectedTrace (arrowhead r) r",
+    "normalization": "whitespace only"
+  },
+  "binomial_exponential_bound": {
+    "path": "NLA/RA02/ExponentialComparison.lean",
+    "Challenge": "(r : ℕ) (hr : 1 ≤ r) :\n    (1 + 1 / (r : ℝ)) ^ r ≤ Real.exp 1",
+    "implementation": "(r : ℕ) (hr : 1 ≤ r) :\n    (1 + 1 / (r : ℝ)) ^ r ≤ Real.exp 1",
+    "normalization": "whitespace only"
+  },
+  "exponential_tail_factor": {
+    "path": "NLA/RA02/ExponentialComparison.lean",
+    "Challenge": "(r : ℕ) (hr : 1 ≤ r) (hA : (arrowhead r).IsHermitian) :\n    ((2 : ℝ) ^ r / 3) * rankTail (arrowhead r) hA r ≤ expectedTrace (arrowhead r) r",
+    "implementation": "(r : ℕ) (hr : 1 ≤ r) (hA : (arrowhead r).IsHermitian) :\n    ((2 : ℝ) ^ r / 3) * rankTail (arrowhead r) hA r ≤ expectedTrace (arrowhead r) r",
+    "normalization": "whitespace only"
+  },
+  "exponential_dominates_real_power": {
+    "path": "NLA/RA02/ExponentialComparison.lean",
+    "Challenge": "(C p : ℝ) (hC : 0 < C) (hp : 0 ≤ p) :\n    ∃ r : ℕ, 1 ≤ r ∧ 3 * C * Real.rpow (r : ℝ) p < (2 : ℝ) ^ r",
+    "implementation": "(C p : ℝ) (hC : 0 < C) (hp : 0 ≤ p) :\n    ∃ r : ℕ, 1 ≤ r ∧ 3 * C * Real.rpow (r : ℝ) p < (2 : ℝ) ^ r",
+    "normalization": "whitespace only"
+  },
+  "universal_counterexamples": {
+    "path": "NLA/RA02/FinalCounterexample.lean",
+    "Challenge": "(C p : ℝ) (hC : 0 < C) (hp : 0 ≤ p) :\n    ∃ n : ℕ, 1 ≤ n ∧ ∃ A : Square n, ∃ hA : A.PosDef, ∃ r : ℕ,\n      1 ≤ r ∧ r ≤ n ∧ 0 < rankTail A hA.isHermitian r ∧\n      C * Real.rpow (r : ℝ) p * rankTail A hA.isHermitian r < expectedTrace A r",
+    "implementation": "(C p : ℝ) (hC : 0 < C) (hp : 0 ≤ p) :\n    ∃ n : ℕ, 1 ≤ n ∧ ∃ A : Square n, ∃ hA : A.PosDef, ∃ r : ℕ,\n      1 ≤ r ∧ r ≤ n ∧ 0 < rankTail A hA.isHermitian r ∧\n      C * Real.rpow (r : ℝ) p * rankTail A hA.isHermitian r < expectedTrace A r",
+    "normalization": "whitespace only"
+  },
+  "no_polynomial_trace_factor": {
+    "path": "NLA/RA02/FinalCounterexample.lean",
+    "Challenge": ": ¬ PolynomialTraceFactor",
+    "implementation": ": ¬ PolynomialTraceFactor",
+    "normalization": "whitespace only"
+  }
+}

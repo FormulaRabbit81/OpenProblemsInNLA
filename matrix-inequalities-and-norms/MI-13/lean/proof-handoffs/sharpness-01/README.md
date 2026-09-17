@@ -1,0 +1,1 @@
+Exact frozen sharpness_example: identity Gram gives genuine unitary singular-value squares one; only four matrix entries used for Frobenius arithmetic. No floating numerical eigenvalues or wide intervals. Local compile unrun at preparation; independent review pending.

@@ -1,0 +1,22 @@
+{
+  "author": "/root",
+  "scope": "Four exact frozen contracts; source candidate before local compilation",
+  "contracts": [
+    "two_coordinate_bound",
+    "off_corner_coefficient_bound",
+    "unit_circle_lift",
+    "frobenius_average_bound"
+  ],
+  "headers": [
+    "theorem two_coordinate_bound (s t : \u211d) (hs : 0 \u2264 s) (ht : 0 \u2264 t) (p q : \u2102) :\n    \u2016(s : \u2102) * p - (t : \u2102) * q\u2016 ^ 2 \u2264\n      (s ^ 2 + t ^ 2) * (\u2016p\u2016 ^ 2 + \u2016q\u2016 ^ 2)",
+    "theorem off_corner_coefficient_bound (s : \u2115 \u2192 \u211d)\n    (hs : \u2200 k, 0 \u2264 s k) (hdesc : Antitone s) (i j : \u2115) (hij : (i, j) \u2260 (0, 0)) :\n    s i ^ 2 + s j ^ 2 \u2264 s 0 ^ 2 + s 1 ^ 2",
+    "theorem unit_circle_lift (d : \u211d) (hd : 0 \u2264 d) (hd1 : d \u2264 1) :\n    Complex.normSq (circlePlus d) = 1 \u2227 Complex.normSq (circleMinus d) = 1 \u2227\n    (1 / 2 : \u2102) * (circlePlus d + circleMinus d) = (d : \u2102)",
+    "theorem frobenius_average_bound {m n : \u2115} (X Y : Rect m n) :\n    frobeniusNorm ((1 / 2 : \u2102) \u2022 (X + Y)) ^ 2 \u2264\n      (1 / 2 : \u211d) * (frobeniusNorm X ^ 2 + frobeniusNorm Y ^ 2)"
+  ],
+  "source_sha256": "d72587c8f69b640063789027833f3233410cff28e27dc5b4d2c852f572e56992",
+  "freeze_sha256": "bddc9d048f92e28dd8912f9bfb8293e12f07f2458fe7fb5a77e5b3c57e16e732",
+  "actual_compile_yet": false,
+  "count_change": 0,
+  "numerical_certificate_consumer": "frobenius_average_bound uses half_certificate.1 in the monotone multiplication and square bound",
+  "method": "Symbolic finite scalar inequalities; no variable interval computations"
+}

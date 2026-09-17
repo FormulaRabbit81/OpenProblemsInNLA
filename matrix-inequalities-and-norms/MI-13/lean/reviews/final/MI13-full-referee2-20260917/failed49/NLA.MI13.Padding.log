@@ -1,0 +1,86 @@
+NLA/MI13/Padding.lean:90:8: error: typeclass instance problem is stuck
+  CommMagma ?m.152
+
+Note: Lean will not try to resolve this typeclass instance problem because the type argument to `CommMagma` is a metavariable. This argument must be fully determined before Lean will try to resolve the typeclass.
+
+Hint: Adding type annotations and supplying implicit arguments to functions can give Lean more information for typeclass resolution. For example, if you have a variable `x` that you intend to be a `Nat`, but Lean reports it as having an unresolved type like `?m`, replacing `x` with `(x : Nat)` can get typeclass resolution un-stuck.
+NLA/MI13/Padding.lean:88:32: warning: This simp argument is unused:
+  zero_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [D, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_zero, Matrix.fromBlocks_multiply,
+    mul_zero, zero_add, add_zero, Matrix.charpoly_fromBlocks_zero₁₂, Matrix.charpoly_zero, Fintype.card_fin]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/MI13/Padding.lean:89:4: warning: This simp argument is unused:
+  Matrix.charpoly_fromBlocks_zero₁₂
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [D, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_zero, Matrix.fromBlocks_multiply,
+    zero_mul, mul_zero, zero_add, add_zero, Matrix.charpoly_zero, Fintype.card_fin]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/MI13/Padding.lean:89:39: warning: This simp argument is unused:
+  Matrix.charpoly_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [D, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_zero, Matrix.fromBlocks_multiply,
+    zero_mul, mul_zero, zero_add, add_zero, Matrix.charpoly_fromBlocks_zero₁₂, Fintype.card_fin]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/MI13/Padding.lean:89:61: warning: This simp argument is unused:
+  Fintype.card_fin
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [D, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_zero, Matrix.fromBlocks_multiply,
+    zero_mul, mul_zero, zero_add, add_zero, Matrix.charpoly_fromBlocks_zero₁₂, Matrix.charpoly_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/MI13/Padding.lean:94:66: error: unsolved goals
+m n : ℕ
+B : Rect n m
+D : Matrix (Fin m ⊕ Fin n) (Fin m ⊕ Fin n) ℂ := Matrix.fromBlocks 0 0 B 0
+e : Fin m ⊕ Fin n ≃ Fin (m + n) := finSumFinEquiv
+E : Matrix (Fin m ⊕ Fin n) (Fin m ⊕ Fin n) ℂ ≃+* Matrix (Fin (m + n)) (Fin (m + n)) ℂ := Matrix.reindexRingEquiv ℂ e
+⊢ (Matrix.fromBlocks (Bᴴ * B) (0 * 0 + Bᴴ * 0) (0 * 0 + 0 * B) (0 * 0)).charpoly = (Bᴴ * B).charpoly * Polynomial.X ^ n
+NLA/MI13/Padding.lean:107:32: warning: This simp argument is unused:
+  zero_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [D, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_zero, Matrix.fromBlocks_multiply,
+    mul_zero, zero_add, add_zero, Matrix.charpoly_fromBlocks_zero₁₂, Matrix.charpoly_zero, Fintype.card_fin]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/MI13/Padding.lean:108:4: warning: This simp argument is unused:
+  Matrix.charpoly_fromBlocks_zero₁₂
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [D, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_zero, Matrix.fromBlocks_multiply,
+    zero_mul, mul_zero, zero_add, add_zero, Matrix.charpoly_zero, Fintype.card_fin]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/MI13/Padding.lean:108:39: warning: This simp argument is unused:
+  Matrix.charpoly_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [D, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_zero, Matrix.fromBlocks_multiply,
+    zero_mul, mul_zero, zero_add, add_zero, Matrix.charpoly_fromBlocks_zero₁₂, Fintype.card_fin]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/MI13/Padding.lean:108:61: warning: This simp argument is unused:
+  Fintype.card_fin
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [D, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_zero, Matrix.fromBlocks_multiply,
+    zero_mul, mul_zero, zero_add, add_zero, Matrix.charpoly_fromBlocks_zero₁₂, Matrix.charpoly_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'NLA.MI13.padding_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.MI13.padding_norms' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/MI13/Padding.lean:204:21: error: #assert_trust: 'NLA.MI13.padding_norms' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
+'NLA.MI13.padding_singular_values' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/MI13/Padding.lean:206:21: error: #assert_trust: 'NLA.MI13.padding_singular_values' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

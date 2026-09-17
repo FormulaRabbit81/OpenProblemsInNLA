@@ -1,0 +1,1 @@
+Exact frozen two_unitary_average candidate: actual SVD, operator norm=largest singular value, symbolic unit_circle_lift; unitary diagonal and product helpers. No new numerical approximation. Local compilation unrun at preparation, independent reviews pending.

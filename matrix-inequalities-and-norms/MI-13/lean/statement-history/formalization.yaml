@@ -1,0 +1,113 @@
+# yaml-language-server: $schema=sources/standards/v0.4.schema.json
+version: v0.4
+project:
+  name: 'MI-13: the complete spectral-middle-factor rectangular commutator inequality'
+  description: Statement-only draft for all complex m-by-n outer factors and n-by-m
+    middle factors, with m,n at least two, the exact coefficient two, actual Euclidean
+    operator and Frobenius norms, and the actual two largest singular values.
+  authors:
+  - George Stepaniants
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California
+      Institute of Technology, Pasadena, California, USA
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+repository:
+  role: substantive-development
+sources:
+- title: MI-13 — Nobori's spectral-middle-factor commutator conjecture
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ebdf2f34dc7690d8e323faaeb40d6dcc30c851ff/matrix-inequalities-and-norms/MI-13/README.md
+  type: web-post
+  location: Complete original problem and repository resolution
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: Proposed formalization of the exact target. The retained repository reduction
+    remains credited; no individual authorship of that reduction is inferred.
+- title: A generalization of the Böttcher–Wenzel inequality for three rectangular matrices
+  authors:
+  - M. Nobori
+  id: https://arxiv.org/abs/2506.17365v2
+  type: article
+  location: Conjecture 3.1, equation (8), as identified in the canonical page
+  relationship: background
+  author_endorsement: not-contacted
+  note: Original question and attribution retained. This draft reads the complete
+    canonical statement and reduction; it does not claim a new audit of the external paper.
+- title: Variance bounds, with an application to norm bounds for commutators
+  authors:
+  - K. M. R. Audenaert
+  id: https://arxiv.org/abs/0907.3913
+  type: article
+  location: Section 7.4, Corollary 5, as identified in the canonical page
+  relationship: independently-proves
+  author_endorsement: not-contacted
+  note: A planned internal finite proof of the needed refined commutator bound.
+    No proof is implemented yet, and the literature theorem may not be assumed.
+- title: A note on some upper bounds for the Frobenius norm of the q-deformed commutator
+  authors:
+  - M. Nobori
+  id: https://arxiv.org/abs/2608.03897v1
+  type: preprint
+  location: Theorem 1.1 and section 3, as identified in the canonical page
+  relationship: background
+  author_endorsement: not-contacted
+  note: The canonical page records an alternative established route; no theorem
+    from this paper is imported or assumed by this draft.
+related_formalizations:
+- id: https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474
+  relationship: builds-on
+  note: Actual Euclidean maps, ordered singular values, Gram eigenbases, partial-index
+    orthonormal extension, Rayleigh extrema and block algebra. Source APIs inspected;
+    substantial semantic transport remains an explicit proof obligation.
+- id: https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926
+  relationship: builds-on
+  note: Planned exact kernel-mode positive-half certificate consumed in averaging;
+    no certificate or compiler run has occurred for MI-13.
+- id: https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof
+  relationship: other
+  note: Challenge and numerical-boundary patterns read. No mathematical result imported.
+- id: https://github.com/jaumededios/Schiffer
+  relationship: other
+  note: Exact retained Challenge snapshot read and byte-bound. No fresh head query
+    or Schiffer theorem import is claimed.
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    tool_setup: Parallel problem and independent referee agents. This agent writes
+      only private statements and static audit files. The coordinator later runs
+      local Lean serially with one thread and a 4096 MiB limit; final Comparator,
+      default-kernel and sandbox checks require a real non-root Linux runner.
+    prompting_notes: Seal numerical statements and the concrete definition plan
+      before Lean statements; obtain two independent statement approvals and
+      actual elaboration before freezing or proof implementation. Avoid rank-counting,
+      full commutator eigenbasis construction and interval subdivision.
+  notes: The informal finite route was independently reviewed, but this exact
+    36-contract Lean draft has no independent statement approval or elaboration.
+status:
+  scope: Definitions and 36 deliberate Challenge holes only. No Solution module,
+    immutable statement freeze, proof implementation, LeanCert execution, Comparator
+    run or verified-target count increment.
+  main_results: []
+fidelity:
+  divergences: The original target is preserved. The refined commutator inequality
+    is a required internal theorem rather than an external assumed result. Sum-index
+    padding into m+n replaces max(m,n) padding with the same dimension-independent
+    constant; its actual norm and singular-value preservation remain explicit contracts.
+review:
+  status: unreviewed statement-only draft; exact statement and runtime gates pending
+  reviewers: []
+  notes: Apply the pinned Tau Ceti fidelity, generality, proof-quality, reuse and
+    attribution rubrics through two independent statement and final proof referees.
+    No official Tau Ceti review, external peer review or measured axiom result is claimed.
+alignment:
+  source_correspondence: SourceCorrespondence.md
+  numerical_boundary: NUMERICAL_TARGETS.md
+  proposed_statements: Challenge.lean
+  source_provenance: SOURCE-PROVENANCE.json
+  intended_implementation_entry: Solution.lean
+acknowledgements: Nobori for the original question and related results, Audenaert
+  for the established refined commutator theorem, the repository contributors for
+  the reduction, and Mathlib, LeanCert, Comparator, Schiffer and Forsythe contributors
+  for the retained mathematical foundations and workflow patterns.

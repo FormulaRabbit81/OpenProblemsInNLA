@@ -3,10 +3,10 @@
 **Difficulty:** challenging  
 **Importance:** interesting to specialist  
 **Provenance:** explicit conjecture  
-**Status:** Solved  
+**Status:** Lean verified  
 **Last checked:** 2026-09-10
 
-**Resolution — affirmative, 2026-09-10:** The exact statement follows from the established complex refined commutator inequality. The complete reduction is given below. This is a repository proof checked independently by two additional Codex agents; it has not received external peer review or Lean formalization. No claim of novelty is made.
+**Resolution — affirmative, 2026-09-10:** The exact statement follows from the established complex refined commutator inequality. The complete reduction is given below. This is a repository proof checked independently by two additional Codex agents; it has not received external peer review. The Lean verification added on 2026-09-17 is recorded below. No claim of novelty is made.
 
 **Rating rationale:** The difficulty label is retained as the historical pre-resolution assessment; it is no longer an estimate of open work. The impact is a specific rectangular commutator inequality, hence specialist.
 
@@ -109,6 +109,18 @@ This covers every displayed dimension and factor, without invertibility or
 reality assumptions. The constant two is attained for $`m=n=2`$,
 $`A=\mathop{\mathrm{diag}}\nolimits(1,-1)`$, $`B=I_2`$ and $`C=e_{12}`$: both sides equal four.
 
+## Lean proof and verification evidence — 2026-09-17
+
+**Formalization contributor:** George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology. Nobori retains credit for the original question, Audenaert for the refined commutator inequality, and the repository contributors for the informal reduction. Substantial OpenAI Codex assistance is disclosed.
+
+The [Lean development](lean/README.md), [independent statement contracts](lean/Challenge.lean), [complete theorem](lean/NLA/MI13/Complete.lean) and [metadata](lean/formalization.yaml) formalize the full original target. All complex rectangular dimensions $`m,n\ge2`$, zero matrices, deficient ranks and repeated singular values are included. The norms and sorted singular values have their actual Euclidean meanings. The refined commutator estimate is proved internally; it is not an assumed literature theorem. Block padding into $`m+n`$ replaces the informal $`\max(m,n)`$ without changing the coefficient. The sharp $`2\times2`$ example is also checked.
+
+Actual non-root Linux [run 35191730986](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35191730986/job/105105676064) checked immutable [proof revision `e37310121f15`](https://github.com/sgstepaniants/OpenProblemsInNLA/tree/e37310121f154b1a0d94efa4f98fdcd469177134/matrix-inequalities-and-norms/MI-13/lean), all 1,183 submitted inputs and all 36 Comparator contracts. Lean's default kernel, exact statement comparison, transitive axiom checks and the required rejection and sandbox controls passed. Every export uses only `propext`, `Classical.choice` and `Quot.sound`. The deliberate Challenge placeholders are specifications and are never imported by Solution. [Source-bound logs and audit](lean/verification/linux-35191730986/README.md) record the actual execution. Auditing those logs is not another execution.
+
+Local macOS development was compiled first with one Lean process, one thread and a 4096 MiB limit. Two complete nonauthor source reviews and an independent package review are retained with their precise scopes. The numerical work is a single exact positive-half LeanCert certificate in kernel mode, genuinely consumed by Frobenius averaging; all variable matrix and spectral arguments are symbolic. No interval grid is used. Run `lake build` in `matrix-inequalities-and-norms/MI-13/lean` with the pinned dependencies; the development README gives the full Linux verification commands. Later publication-commit and upstream PR checkouts are recorded separately.
+
+The literature-check date above remains 2026-09-10. The new date records formal verification, not a fresh literature or priority claim. The agent reviews do not claim official Tau Ceti endorsement or human peer review.
+
 ## Status evidence and verification scope
 
 Nobori's source still labels the target Conjecture 3.1. A bounded search found
@@ -116,9 +128,9 @@ no separate published resolution, but the explicit argument above changes this
 catalog's status. The audit checked the complex field in (1), the norm
 conventions, unitary invariance, the two-unitary decomposition, scaling at
 $`B=0`$, preservation of rectangular products and singular values, and sharpness.
-Two independent agent reviews accepted the reduction. The published commutator
-theorem is the external dependency; the new reduction is not a claim of an
-externally refereed theorem. The original target is retained and excluded from
+Two independent agent reviews accepted the reduction. For the informal reduction, the published commutator
+theorem is the external dependency; the Lean development proves that estimate
+internally. The reduction is not a claim of an externally refereed theorem. The original target is retained and excluded from
 the open count.
 
 <!-- navigation -->
