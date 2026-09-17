@@ -2,7 +2,9 @@
 
 The full Rowland-Wu coefficient identity holds for every positive real rectangular matrix with both dimensions at least one. The mathematical solution is Matthew J. Colbrook's. George Stepaniants contributes this formalization, with substantial OpenAI Codex assistance.
 
-**All 35 frozen statements pass actual local Lean204, and local205 finds all 35 elaborated types match the unchanged specifications. Two independent nonauthor final reviewers approved the exact repaired source; a new real Linux Comparator run is pending.** The first [Linux attempt](verification/FAILED-LINUX-35269165327.json) failed at one implicit continuity witness before candidate kernel replay. Its failure and the first unsuccessful local adjustment are retained in the [review index](reviews/INDEX.json). The current repair only selects the original existing continuity instance within C04's local section; theorem headers, bodies, frozen definitions and checker are unchanged. The [local record](verification/LOCAL-COMPLETE.json) binds all 38 proof modules, actual commands and logs, and source/dependency/output provenance. Every exported theorem uses only `propext`, `Classical.choice`, and `Quot.sound` and passes its kernel trust assertion. No canonical status promotion or completed-target increase is claimed.
+**Complete immutable proof verification passed.** All 35 frozen contracts passed actual local Lean204, two independent nonauthor final reviews with exact-source continuations, and [non-root Linux run 35276203784](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35276203784/job/105387449317) at proof commit `21ed3545a8b4784303e9cc0473879eb33ef4d813`. Comparator, default-kernel replay, standard transitive axioms, sandbox checks and rejection controls passed. [Execution evidence](verification/linux-2026-09-17/README.md) preserves the artifact and logs; the [local record](verification/LOCAL-COMPLETE.json) separately binds all 38 proof modules and their successful commands.
+
+The first [Linux attempt](verification/FAILED-LINUX-35269165327.json) failed before candidate kernel replay because one derivative statement selected a different implicit continuity witness. The implementation now selects the specification's existing witness in a local section. All theorem headers and proof bodies, frozen definitions, and checker remained unchanged. Failed and successful attempts retain distinct [review records](reviews/INDEX.json). Later publication and PR merge checkouts have separate checks.
 
 Start with [Canonical.lean](NLA/NM04/Canonical.lean), which derives the actual positive Sinkhorn null vector and the literal subset-sum coefficient identity. [Definitions](NLA/NM04/Definitions.lean), [Challenge](Challenge.lean), [Solution](Solution.lean), and the [implementation map](IMPLEMENTATION-MAP.json) identify every object and exported declaration. Challenge contains independent specification placeholders; Solution never imports it.
 
@@ -18,4 +20,15 @@ Formalization contributor: **George Stepaniants, Department of Computing and Mat
 
 The earlier local187 readability adjustment added only explanatory comments. Local187 recompiled its seven affected modules and reauthenticated the complete 38-module chain. [Review packets](reviews/README.md) and the original [pre-code plan](precode-01/CONTRACT-PLAN.json) preserve their original dates and scopes.
 
-The [independent publication preflight](reviews/publication-package.md) approved the previous local187 source and local evidence for final Linux verification; it does not approve the later local204 repair. Its [complete audit packet](reviews/publication-package-packet.tar.gz) binds the reviewed package and records its scope. The canonical status remains Solved pending accepted Linux checks.
+The [independent publication preflight](reviews/publication-package.md) approved the previous local187 source and local evidence for final Linux verification; it does not approve the later local204 repair. Its [complete audit packet](reviews/publication-package-packet.tar.gz) binds the reviewed package and records its scope. That preflight preceded the successful proof-commit Linux check recorded above.
+
+For the full checker, use a non-root Linux system meeting the [shared harness prerequisites](../../../tools/lean/HARNESS.md), then run from the repository root:
+
+```sh
+tools/lean/bootstrap.sh /tmp/nla-nm04-tools
+tools/lean/verify.sh nonnegative-and-positive-factorizations/NM-04/lean /tmp/nla-nm04-tools
+```
+
+This performs the actual isolated Comparator check and its controls. The simpler local `lake build` checks the proof but does not replace the Linux verification.
+
+The repaired local204 package subsequently passed its own [preflight](reviews/package-local204.md). The successful proof-commit Linux execution also passed an [independent evidence audit](reviews/runtime-35276203784.md); its retained verifier checks exact Git inputs, artifact identity, all 35 exports and actual controls without claiming another compiler run.
