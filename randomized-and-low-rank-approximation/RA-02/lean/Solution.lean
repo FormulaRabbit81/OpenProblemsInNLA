@@ -1,0 +1,61 @@
+/- George Stepaniants, Caltech Department of Computing and Mathematical Sciences.
+Substantial OpenAI Codex assistance. Original mathematics: Matthew J. Colbrook.
+Apache-2.0. Complete original RA-02 exports, no specification import. -/
+import NLA.RA02.FinalCounterexample
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+#print axioms NLA.RA02.exp_one_bound
+#assert_trust kernel NLA.RA02.exp_one_bound
+#print axioms NLA.RA02.scalar_parameters
+#assert_trust kernel NLA.RA02.scalar_parameters
+#print axioms NLA.RA02.pivot_kernel
+#assert_trust kernel NLA.RA02.pivot_kernel
+#print axioms NLA.RA02.finite_path_law
+#assert_trust kernel NLA.RA02.finite_path_law
+#print axioms NLA.RA02.zero_residual
+#assert_trust kernel NLA.RA02.zero_residual
+#print axioms NLA.RA02.expected_trace_recursion
+#assert_trust kernel NLA.RA02.expected_trace_recursion
+#print axioms NLA.RA02.ordered_spectrum
+#assert_trust kernel NLA.RA02.ordered_spectrum
+#print axioms NLA.RA02.least_eigenvalue_rayleigh
+#assert_trust kernel NLA.RA02.least_eigenvalue_rayleigh
+#print axioms NLA.RA02.spectral_tail_semantics
+#assert_trust kernel NLA.RA02.spectral_tail_semantics
+#print axioms NLA.RA02.arrowhead_quadratic
+#assert_trust kernel NLA.RA02.arrowhead_quadratic
+#print axioms NLA.RA02.arrowhead_positive_definite
+#assert_trust kernel NLA.RA02.arrowhead_positive_definite
+#print axioms NLA.RA02.rayleigh_probe_values
+#assert_trust kernel NLA.RA02.rayleigh_probe_values
+#print axioms NLA.RA02.arrowhead_tail
+#assert_trust kernel NLA.RA02.arrowhead_tail
+#print axioms NLA.RA02.residual_state_positivity
+#assert_trust kernel NLA.RA02.residual_state_positivity
+#print axioms NLA.RA02.residual_state_updates
+#assert_trust kernel NLA.RA02.residual_state_updates
+#print axioms NLA.RA02.distinct_history_state
+#assert_trust kernel NLA.RA02.distinct_history_state
+#print axioms NLA.RA02.distinct_history_identity
+#assert_trust kernel NLA.RA02.distinct_history_identity
+#print axioms NLA.RA02.retained_history_count
+#assert_trust kernel NLA.RA02.retained_history_count
+#print axioms NLA.RA02.retained_prefix_description
+#assert_trust kernel NLA.RA02.retained_prefix_description
+#print axioms NLA.RA02.retained_trace_bound
+#assert_trust kernel NLA.RA02.retained_trace_bound
+#print axioms NLA.RA02.retained_contribution_bound
+#assert_trust kernel NLA.RA02.retained_contribution_bound
+#print axioms NLA.RA02.expectation_lower_bound
+#assert_trust kernel NLA.RA02.expectation_lower_bound
+#print axioms NLA.RA02.binomial_exponential_bound
+#assert_trust kernel NLA.RA02.binomial_exponential_bound
+#print axioms NLA.RA02.exponential_tail_factor
+#assert_trust kernel NLA.RA02.exponential_tail_factor
+#print axioms NLA.RA02.exponential_dominates_real_power
+#assert_trust kernel NLA.RA02.exponential_dominates_real_power
+#print axioms NLA.RA02.universal_counterexamples
+#assert_trust kernel NLA.RA02.universal_counterexamples
+#print axioms NLA.RA02.no_polynomial_trace_factor
+#assert_trust kernel NLA.RA02.no_polynomial_trace_factor
