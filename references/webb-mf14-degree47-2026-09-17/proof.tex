@@ -1,0 +1,486 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=26mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,array,microtype}
+\usepackage{xurl}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\hypersetup{pdftitle={The exact seven-product closure degree is forty-seven},
+  pdfauthor={Marcus Webb}}
+\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newcommand{\C}{\mathbb C}
+\newcommand{\V}[1]{\C[x]_{\le #1}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\coeff}[1]{[x^{#1}]}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\title{The exact seven-product closure degree is forty-seven}
+\author{Marcus Webb\\\small The University of Manchester}
+\date{17 September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Starting from $1,x$ and allowing arbitrary complex linear combinations
+for free, we determine the largest degree whose entire coefficient space
+lies in the Zariski closure of outputs computable with seven products.
+The answer is $47$. A $49$-parameter polynomial family has an exactly
+certified contact of order $47$ with a nonsingular $48$-variable
+coefficient differential. An inverse-function and scaling argument gives
+coverage in the full degree-$128$ ambient space. A self-contained
+dimension bound, together with irreducibility, proves that degree $48$
+cannot be covered. The computational certificate uses rational arithmetic
+and has been independently reconstructed.
+\end{abstract}
+
+\noindent\textbf{Assistance and review.}
+This work was developed with substantial ChatGPT and Codex assistance.
+Separate AI agents reviewed the mathematical argument and independently
+implemented the certificate checks. Their reports and executable evidence
+accompany this manuscript. These are informal AI-agent reviews, not
+external human peer review or proof-kernel formalization.
+
+\section{Statement and computational model}\label{sec:model}
+
+Write $V_d=\V d$. Begin with the scalar polynomials $1,x\in\C[x]$.
+Arbitrary complex linear combinations of available polynomials are free;
+forming a product of two available polynomials costs one multiplication.
+Let $\mathcal P_7\subseteq V_{128}$ be the possible outputs using at most
+seven products, and define
+\begin{equation}\label{eq:target}
+ X_7=\overline{\mathcal P_7}^{\,Z}\subseteq V_{128},
+ \qquad
+ d_7=\max\{d\in\{0,\ldots,128\}:V_d\subseteq X_7\}.
+\end{equation}
+The closure is taken in all $129$ coefficients. In particular, an
+approximating output may have higher degree than its limit. Discarding
+high-degree coefficients is not a permitted computational operation.
+
+\begin{theorem}\label{thm:main}
+In the model \eqref{eq:target}, one has $d_7=47$.
+\end{theorem}
+
+MF-14 and Conjecture~13 of Jarlebring--Lorentzon~\cite{JL} asked whether
+this maximum equals $42$. Colbrook~\cite{Colbrook} proved the degree-$42$
+coverage statement with an exact coefficient-rank certificate. The
+author's earlier degree-$44$ construction~\cite{Webb44} refuted the
+equality to $42$ and left $44\le d_7\le47$. Theorem~\ref{thm:main}
+determines the exact maximum. Its proof below is independent of those
+lower-bound constructions and requires no auxiliary theorem for a
+smaller multiplication budget.
+
+The assertion concerns complex coefficient-space closure. It does not
+assert exact representation of every degree-$47$ polynomial, real
+coverage, or numerical stability of coefficient recovery. Substituting
+a matrix for $x$ gives the corresponding matrix-polynomial evaluation
+model, in which matrix products dominate the cost.
+
+\section{A polynomial family in the seven-product closure}\label{sec:family}
+
+Let $\alpha,b,c,\eta\in\C$ and set
+\begin{equation}\label{eq:first-three}
+ q_1=x^2,\qquad q_2=Q=x^4+\alpha x^3,\qquad
+ q_3=R=Q^2+b x^2Q+c xQ+\eta x^3.
+\end{equation}
+For $k=4,5,6,7$, introduce the ordered list
+\[
+ L_k=(r_0,\ldots,r_{k-2})=(x,q_1,\ldots,q_{k-2})
+\]
+and define
+\begin{equation}\label{eq:later-products}
+ q_k=
+ \left(q_{k-1}+\sum_{j=0}^{k-2}u_{k,j}r_j\right)
+ \left(q_{k-1}+\sum_{j=0}^{k-2}v_{k,j}r_j\right).
+\end{equation}
+Finally, put
+\begin{equation}\label{eq:output}
+ \Phi(\theta)=e_0+e_1x+\sum_{k=1}^{7}e_{k+1}q_k.
+\end{equation}
+There are $4+(6+8+10+12)+9=49$ parameters. Their order is
+\begin{equation}\label{eq:parameter-order}
+ \theta=(\alpha,b,c,\eta,
+          \mathbf u_4,\mathbf v_4,
+          \mathbf u_5,\mathbf v_5,
+          \mathbf u_6,\mathbf v_6,
+          \mathbf u_7,\mathbf v_7,e_0,\ldots,e_8),
+\end{equation}
+with each vector ordered by increasing $j$. Table~\ref{tab:parameters}
+specifies the zero-based indices used by the certificate. The map
+$\Phi:\C^{49}\to V_{128}$ is polynomial, and all its coefficients
+are integers as polynomials in $\theta$.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+Parameter block & Entries in order & Zero-based indices\\
+\midrule
+Initial parameters & $\alpha,b,c,\eta$ & $0,1,2,3$\\
+Fourth product & $\mathbf u_4;\ \mathbf v_4$ & $4$--$6;\ 7$--$9$\\
+Fifth product & $\mathbf u_5;\ \mathbf v_5$ & $10$--$13;\ 14$--$17$\\
+Sixth product & $\mathbf u_6;\ \mathbf v_6$ & $18$--$22;\ 23$--$27$\\
+Seventh product & $\mathbf u_7;\ \mathbf v_7$ & $28$--$33;\ 34$--$39$\\
+Output & $e_0,\ldots,e_8$ & $40$--$48$\\
+\bottomrule
+\end{tabular}
+\caption{The complete parameter ordering of \eqref{eq:parameter-order}.}
+\label{tab:parameters}
+\end{table}
+
+\begin{lemma}\label{lem:membership}
+For every $\theta\in\C^{49}$, one has $\Phi(\theta)\in X_7$.
+If $b\ne2$, then $\Phi(\theta)\in\mathcal P_7$.
+\end{lemma}
+
+\begin{proof}
+The first two products are $x\,x$ and $x^2(x^2+\alpha x)$.
+For $b\ne2$, set
+\begin{equation}\label{eq:third-scalars}
+ g=b-1,\qquad
+ \sigma=\frac{\eta-c+\alpha g}{b-2},\qquad
+ \rho=c-\sigma.
+\end{equation}
+The identity
+\begin{equation}\label{eq:third-identity}
+ R=(Q+\rho x+g x^2)(Q+\sigma x+x^2)-gQ-\rho\sigma x^2
+\end{equation}
+therefore computes $R$ with one additional product. Indeed, after the
+two displayed subtractions and the algebraic substitution
+$x^4=Q-\alpha x^3$, the right-hand side is
+\[
+ Q^2+(\rho+\sigma)xQ+(g+1)x^2Q
+       +(\rho+g\sigma-g\alpha)x^3.
+\]
+The three relevant coefficients equal $c,b,\eta$, respectively.
+Every factor and subtraction in \eqref{eq:third-identity} uses only
+previously available polynomials. In particular, the expansion does not
+charge the unavailable monomial $x^3$ as a free operation.
+
+Each of \eqref{eq:later-products} costs one product, for a total of seven;
+\eqref{eq:output} is free. Products and quotients of scalar parameters
+in \eqref{eq:third-scalars} are allowed scalar coefficients. The degrees
+of $q_1,\ldots,q_7$ are bounded by $2,4,8,16,32,64,128$.
+
+The set $\{b\ne2\}$ is dense in $\C^{49}$, and the coefficient map
+$\Phi$ is polynomial even at $b=2$. The inverse image $\Phi^{-1}(X_7)$
+is closed and contains that dense open set; hence it is all of
+$\C^{49}$. No assertion that $\Phi$ is dominant onto $X_7$ is needed.
+\end{proof}
+
+\section{An exact contact and rank certificate}\label{sec:certificate}
+
+The frozen certificate file
+\begin{center}
+\path{source/experiments/lower_full49_seed.json}
+\end{center}
+specifies a center $\theta_c\in\mathbb Q(i)^{49}$, an ordered list
+$I$ of $48$ distinct active indices, and a matrix
+$B\in\mathbb Q(i)^{48\times48}$. The center denominator is $10^{70}$,
+and the matrix denominator is $10^{60}$. The active list is reproduced
+in Appendix~\ref{app:indices}; the sole fixed coordinate is
+$\theta_{48}=e_8$.
+
+Let $z\in\C^{48}$ denote the active coordinates, in the order $I$.
+Keep the other coordinate fixed at its value in $\theta_c$, and write
+$\iota(z)\in\C^{49}$ for the resulting full parameter vector. Define
+\begin{equation}\label{eq:contact-equations}
+ F(z)=\bigl(\coeff0\Phi(\iota(z)),\ldots,
+             \coeff{47}\Phi(\iota(z))\bigr)^T
+            -(0,\ldots,0,1)^T,
+ \qquad J(z)=DF(z).
+\end{equation}
+Let $z_c$ be the active part of $\theta_c$.
+
+For a complex number use $|w|_1=|\operatorname{Re}w|+
+|\operatorname{Im}w|$. For vectors use the maximum of these norms,
+and for matrices use the maximum row sum of entry norms. The latter
+bounds the induced vector norm; also $|uv|_1\le |u|_1|v|_1$.
+
+\begin{lemma}[Certified contact]\label{lem:contact}
+There is a point $z_*$ with $\norm{z_*-z_c}\le10^{-45}$ such that
+\[
+ F(z_*)=0,\qquad \det J(z_*)\ne0.
+\]
+The associated parameter $b$ is different from $2$ throughout this ball.
+Thus the untruncated polynomial $\Phi(\iota(z_*))$ has coefficients
+$0,\ldots,0,1$ in degrees $0,\ldots,47$, and its selected coefficient
+differential has rank $48$.
+\end{lemma}
+
+\begin{proof}
+The accompanying exact verifier evaluates the specified Gaussian-rational
+data and proves the following rational inequalities, with
+$r=10^{-45}$:
+\begin{align}
+ \varepsilon:=\norm{BF(z_c)}&<10^{-69},&
+ \delta:=\norm{I-BJ(z_c)}&<10^{-57},\label{eq:certificate-residual}\\
+ \norm B&<4000,& H&<2\cdot10^{12},\label{eq:certificate-hessian}\\
+ q:=\delta+\norm B\,Hr&<10^{-29},&
+ \varepsilon+qr&<r.\label{eq:certificate-contraction}
+\end{align}
+It also checks
+\begin{equation}\label{eq:b-separation}
+ |\operatorname{Re}(b_c)-2|>r.
+\end{equation}
+Here $H$ is a uniform aggregate second-derivative bound on the closed
+radius-$r$ ball, as justified below. All these inequalities are evaluated
+using integers and rational numbers. Printed floating-point values are
+diagnostics, not certificate inputs.
+
+For clarity, define the coefficient norm of a polynomial
+$a(x)=\sum_j a_jx^j$ by $\norm a_{\mathrm{coef}}=\sum_j|a_j|_1$.
+At every node of the full polynomial circuit propagate a triple
+$(v,d,h)$ bounding its coefficient norm, the sum of the norms of its
+$48$ first parameter derivatives, and the sum of the norms of all its
+$48^2$ \emph{ordered} second parameter derivatives. Addition adds these
+triples. Multiplication uses
+\begin{equation}\label{eq:majorant-product}
+ (v,d,h)\cdot(w,e,k)
+       =(vw,\ dw+ve,\ hw+2de+vk).
+\end{equation}
+An active scalar parameter has initial triple
+$(|\theta_{c,j}|_1+r,1,0)$; a fixed scalar parameter has
+$(|\theta_{c,j}|_1,0,0)$; a fixed monomial has $(1,0,0)$.
+The product rule and submultiplicativity of
+$\norm{\cdot}_{\mathrm{coef}}$ prove these bounds inductively.
+The final value of $h$ is the bound $H$ in
+\eqref{eq:certificate-hessian}. In particular, it bounds the aggregate
+second derivatives of every output coefficient. Integration along a
+line segment in the convex ball gives
+\begin{equation}\label{eq:jacobian-lipschitz}
+ \norm{J(z)-J(z_c)}\le Hr.
+\end{equation}
+
+Consider $G(z)=z-BF(z)$. Equations
+\eqref{eq:certificate-contraction}--\eqref{eq:jacobian-lipschitz} give
+\[
+ \sup_{\norm{z-z_c}\le r}\norm{DG(z)}\le q<\tfrac12,
+ \qquad
+ \norm{G(z)-z_c}\le\varepsilon+qr<r.
+\]
+The closed ball is complete, so Banach's fixed point theorem supplies
+a fixed point $z_*$. Since $\delta<1$, the matrix $BJ(z_c)$, and hence
+$B$, is invertible; thus $BF(z_*)=0$ implies $F(z_*)=0$. Moreover,
+$\norm{I-BJ(z_*)}\le q<1$, so the Neumann series proves that
+$BJ(z_*)$, and therefore $J(z_*)$, is invertible. Finally,
+\eqref{eq:b-separation} keeps $b$ different from $2$ throughout the ball.
+\end{proof}
+
+\subsection{Exact arithmetic and independent reconstruction}
+
+The author-side check is implemented in
+\path{source/experiments/lower_full49_certify.py}, with Gaussian-integer
+helpers in \path{source/experiments/lower_contact_certify.py}.
+Value and Jacobian calculations may use $\C[x]/(x^{48})$, since this
+computes exactly the equations \eqref{eq:contact-equations} and their
+derivatives. The argument itself uses the untruncated $\Phi$ in
+$V_{128}$; no truncated polynomial is asserted to be a circuit output.
+
+The parameter-degree bounds at $q_1,Q,R,q_4,q_5,q_6,q_7,\Phi$ are
+$0,1,2,4,8,16,32,33$. Consequently the value and derivative numerators
+can share denominator $10^{2310}$. Derivative injection rescales
+numerators for differentiation with respect to the actual rational
+parameters, rather than their integer encodings. Matrix products, norms
+and asserted inequalities use Gaussian integers and exact rational
+arithmetic. The Hessian majorant traverses the full circuit and does not
+discard coefficients.
+
+The independent implementation
+\begin{center}
+\path{source/reviews/full49-degree47-fresh-check.py}
+\end{center}
+imports no author implementation. It evaluates all $129$ coefficients and constructs all
+$49$ derivative columns by a reverse pass through the product gates.
+It reproduces the exact preconditioned residual, inverse defect and
+inverse norm. Its separate positive-polynomial majorant, using the
+verified bound $4$ for every parameter norm, gives
+\begin{equation}\label{eq:independent-hessian}
+ H_{\mathrm{ind}}=14225297189516125194807607250462624.
+\end{equation}
+Although coarser, this bound still proves $q_{\mathrm{ind}}<6\cdot10^{-8}$
+and $\varepsilon+q_{\mathrm{ind}}r<r$ at the same radius. That checker
+also independently verifies $b\ne2$. Thus the existence and rank claims
+do not depend on the author's derivative or Hessian implementation.
+The numerical search and Decimal refinement are discovery records only;
+the frozen rational seed suffices for reproduction.
+
+\section{Full coefficient-space coverage}\label{sec:coverage}
+
+\begin{proposition}\label{prop:lower}
+Every polynomial in $V_{47}$ belongs to $X_7$.
+\end{proposition}
+
+\begin{proof}
+Fix any monic polynomial $p(x)=\sum_{j=0}^{47}p_jx^j$ of degree $47$.
+By Lemma~\ref{lem:contact}, the selected coefficient map is locally
+invertible at $z_*$. The complex inverse function theorem therefore
+gives a holomorphic curve $z(t)\to z_*$, with the remaining parameter
+fixed, such that
+\begin{equation}\label{eq:scaled-target}
+ \coeff j\Phi(\iota(z(t)))=p_jt^{47-j},\qquad j=0,\ldots,47.
+\end{equation}
+At $t=0$ the prescribed coefficient vector is exactly
+$(0,\ldots,0,1)$, so the local inverse applies for all sufficiently
+small $t$. In particular $z(t)$, and hence all coefficients of
+$\Phi(\iota(z(t)))$, remain bounded near zero.
+
+For $t\ne0$ set
+\begin{equation}\label{eq:full-limit}
+ f_t(x)=t^{-47}\Phi(\iota(z(t)))(tx).
+\end{equation}
+Input substitution $x\mapsto tx$ and scalar output multiplication
+preserve the computational model and its closure. Thus $f_t\in X_7$.
+In fact, after shrinking the parameter neighbourhood if necessary,
+Lemma~\ref{lem:membership} and $b\ne2$ give $f_t\in\mathcal P_7$.
+By \eqref{eq:scaled-target}, its coefficients through degree $47$
+are exactly those of $p$. For every $j=48,\ldots,128$, its coefficient
+is $t^{j-47}$ times a bounded holomorphic function, and therefore tends
+to zero. There are no coefficients above degree $128$.
+
+Consequently $f_t\to p$ in the full space $V_{128}$. An algebraic set
+over $\C$ is Euclidean closed, so $p\in X_7$. Scalar output multiplication
+gives every nonzero leading coefficient. Finally, any lower-degree
+polynomial is a limit of degree-$47$ polynomials, for example of
+$p+\epsilon x^{47}$, and closedness includes it as well.
+\end{proof}
+
+This proof uses contact and scaling in addition to coefficient rank.
+Dominance of a coefficient projection alone would not establish the
+full-space closure assertion.
+
+\section{A self-contained matching upper bound}\label{sec:upper}
+
+\begin{lemma}\label{lem:dimension}
+The variety $X_7$ is irreducible and has dimension at most $49$.
+\end{lemma}
+
+\begin{proof}
+At each gate of a universal circuit, multiply two arbitrary linear
+combinations of all previously available polynomials, and take a final
+arbitrary linear combination. These coefficients form one affine
+parameter space, and the output map into $V_{128}$ is polynomial.
+Circuits using fewer than seven products can be padded by zero products.
+Therefore its image closure is exactly $X_7$, which is irreducible.
+
+It suffices to bound the output dimension on the nonempty open subset
+where the successive product degrees are $2,4,\ldots,128$. This subset
+is dense in the universal affine parameter space, and its image has
+the same closure. Let $W_k$ be the space of available polynomials after
+$k$ products; generically $\dim W_k=k+2$.
+
+After the first product, a free change of basis gives $W_1=V_2$.
+After the second, subtract lower-degree terms and normalize the leading
+coefficient to obtain
+\[
+ W_2=\Span\{1,x,x^2,Q\},\qquad Q=x^4+\alpha x^3.
+\]
+This family has dimension at most one. Denote by $W_2W_2$ the linear
+span of its pairwise products. Then
+\begin{equation}\label{eq:product-span}
+ W_2W_2=V_6+\C Q^2,\qquad \dim(W_2W_2)=8.
+\end{equation}
+Indeed, products of $V_2$ span $V_4$; then $xQ$ and $x^2Q$ add
+degrees $5$ and $6$, while $Q^2$ adds degree $8$. These span every
+pairwise product. Since $1\in W_2$, the space $W_2$ is contained in
+$W_2W_2$. The third product determines a line in the four-dimensional
+quotient $(W_2W_2)/W_2$. Hence the family of possible $W_3$ spaces
+has dimension at most $1+3=4$.
+
+For a fixed $n$-dimensional available space $W$ containing $1$, the
+next factors $(u,v)\in W^2$ determine $\Span(W,uv)$. On the generic
+set where $uv\notin W$ and both factors are nonconstant, each fiber
+of this space-valued map has dimension at least four. Specifically,
+\begin{equation}\label{eq:factor-gauges}
+ (u,v)\longmapsto(au+b,cv+d),\qquad a,c\in\C\setminus\{0\},
+ \quad b,d\in\C,
+\end{equation}
+preserves the enlarged space, because the transformed product is
+$ac\,uv+ad\,u+bc\,v+bd$. Distinct quadruples in
+\eqref{eq:factor-gauges} give distinct pairs when $u,v$ are nonconstant.
+The fiber-dimension bound thus shows that one product increases the
+dimension of a family of available spaces by at most $2n-4$.
+
+For the four remaining products, $n=5,6,7,8$, so the increments are
+$6,8,10,12$. The family of $W_7$ spaces therefore has dimension at
+most $4+6+8+10+12=40$. An arbitrary output in the nine-dimensional
+space $W_7$ adds at most nine dimensions. This gives
+$\dim X_7\le40+9=49$.
+
+The argument bounds a dense generic image and then its closure. It
+does not identify limiting multiplication spaces with products of
+limiting spaces, or rule out boundary circuits using degree profiles.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Proposition~\ref{prop:lower} gives $d_7\ge47$. If $V_{48}\subseteq X_7$,
+then $\dim V_{48}=49$ and Lemma~\ref{lem:dimension} force
+$\dim X_7=49$. A proper closed subset of an irreducible variety has
+smaller dimension, so this containment would imply $X_7=V_{48}$.
+But seven successive squarings compute $x^{128}$, which belongs to
+$\mathcal P_7$ and is outside $V_{48}$. Thus $V_{48}\nsubseteq X_7$,
+and every $V_d$ with $d\ge48$ is excluded. Hence $d_7=47$.
+\end{proof}
+
+\section{Reproduction and evidence scope}\label{sec:reproduction}
+
+From the accompanying contribution directory
+\begin{center}
+\path{references/webb-mf14-degree47-2026-09-17}
+\end{center}
+run
+\begin{verbatim}
+python3 verification/verify.py
+\end{verbatim}
+The contribution README records the frozen files, hashes, exact outputs
+and separate review reports. The rational seed, rather than the numerical
+search trajectory, is the input needed to reproduce the existence and
+rank certificate. The two implementations check the finite arithmetic
+claims; the analytic and algebraic arguments in this manuscript have
+separate informal reviews. No Lean verification, proof-kernel checking,
+or external human peer review is claimed.
+
+\appendix
+\section{Active-coordinate order}\label{app:indices}
+
+Relative to the zero-based ordering in Table~\ref{tab:parameters}, the
+certificate's active coordinates are listed below in the order used for
+Jacobian columns and the rows of its preconditioner:
+\[
+\begin{array}{rrrrrrrrrrrr}
+4&3&14&18&19&5&34&36&35&10&25&0\\
+15&20&23&22&28&29&8&45&37&40&41&43\\
+42&44&7&46&30&11&1&24&21&2&31&16\\
+9&47&6&27&12&38&39&26&17&33&13&32.
+\end{array}
+\]
+All indices except $48$ occur exactly once. The omitted coordinate
+$e_8$ is held at the exact Gaussian-rational value in the seed file.
+The preconditioner's columns correspond to coefficient equations in
+increasing degree order $0,\ldots,47$.
+
+\begin{thebibliography}{9}
+\bibitem{JL}
+E. Jarlebring and G. Lorentzon,
+\emph{The polynomial set associated with a fixed number of matrix-matrix
+multiplications}, arXiv:2504.01500v3, Theorem~10 and Conjecture~13.
+\url{https://arxiv.org/html/2504.01500v3}.
+
+\bibitem{Colbrook}
+M. J. Colbrook,
+\emph{An exact degree-42 coverage certificate for seven polynomial
+multiplications}, 11 September 2026, Theorem~1.
+Archived in the OpenProblemsInNLA reference collection,
+\href{../colbrook-matrix-functions-2026-09-11/manuscripts/MF-14.pdf}
+{\texttt{colbrook-matrix-functions-2026-09-11}}.
+
+\bibitem{Webb44}
+M. Webb,
+\emph{Degree forty-four in the closure of seven-product polynomial
+evaluations: A negative resolution of MF-14}, 17 September 2026,
+Theorem~1 and Corollary~3.
+Archived in the OpenProblemsInNLA reference collection,
+\href{../webb-mf14-degree44-2026-09-17/proof.pdf}
+{\texttt{webb-mf14-degree44-2026-09-17}}.
+\end{thebibliography}
+\end{document}
