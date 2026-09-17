@@ -1,0 +1,18 @@
+NLA/MF07/MatrixBasics.lean:55:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+NLA/MF07/MatrixBasics.lean:122:51: warning: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [diagonalWeights, inverseDiagonalWeights, Matrix.one_apply, hij, hz]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'NLA.MF07.matrix_product_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.MF07.diagonal_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.MF07.word_spectralNorm_le_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
