@@ -1,0 +1,10 @@
+--- before/BlockGram.lean
++++ after/BlockGram.lean
+@@ -62,6 +62,7 @@
+     Matrix.reindex blockEquiv blockEquiv (regularizedGramBlocks x z t) =
+       (t : ℂ) • (1 : Square 9) + shiftedGram (constructedMatrix x) z := by
+   let e := Matrix.reindexAlgEquiv ℂ ℂ blockEquiv
++  -- The reindexing algebra equivalence has exactly the frozen reindex function.
+   change e (regularizedGramBlocks x z t) = _
+   rw [regularized_gram_before_reindex x hx z t, map_add, map_smul, map_one, map_mul]
+   have hstar : e ((blockMatrix x - z • 1).conjTranspose) =

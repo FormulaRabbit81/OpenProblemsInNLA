@@ -1,0 +1,11 @@
+59: namespace Nat
+60: 
+61: variable [AddMonoidWithOne R] [CharZero R]
+62: 
+63: theorem cast_injective : Function.Injective (Nat.cast : ℕ → R) :=
+64:   CharZero.cast_injective
+65: 
+66: @[simp, norm_cast]
+67: theorem cast_inj {m n : ℕ} : (m : R) = n ↔ m = n :=
+68:   cast_injective.eq_iff
+69: 

@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+"""Retain read-only rg searches supporting this scoped reuse review."""
+import datetime, hashlib, json, subprocess
+from pathlib import Path
+R = Path(__file__).resolve().parent
+M = Path('/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib')
+B = Path('/private/tmp/nla-lean-next-20260915')
+queries = [
+ ('box', r'isOpen_iInter_of_finite|norm_le_abs_re_add_abs_im|sum_erase_eq_sub', ['Topology','Analysis','Algebra/BigOperators']),
+ ('positivity', r'strict.*[Dd]iagon|[Dd]iagon.*strict|eigenvalue_mem_ball|posDef_iff_eigenvalues_pos', ['LinearAlgebra/Matrix','Analysis/Matrix']),
+ ('roots', r'sqrt_mul_sqrt_self|sqrt_nonneg|isUnit_mul_self_iff', ['Analysis/SpecialFunctions/ContinuousFunctionalCalculus','Algebra/Group/Commute']),
+ ('coefficients', r'det_fin_three|normSq_add_mul_I|mul_conj', ['LinearAlgebra/Matrix','Analysis/Complex','Data/Complex']),
+ ('derivatives', r'hasStrictFDerivAt_pi|hasStrictFDerivAt_apply|theorem HasStrictFDerivAt.*(mul|pow)|congr_fderiv', ['Analysis/Calculus']),
+ ('jacobian', r'det_of_isLowerTriangular|det_of_isUpperTriangular|det_succ_row|det_toLin|toContinuousLinearEquivOfDetNeZero', ['LinearAlgebra','Analysis/Normed']),
+ ('inverse_function', r'localInverse|eventually_right_inverse|eventually_nhds_iff', ['Analysis/Calculus/InverseFunctionTheorem','Topology/MetricSpace']),
+ ('block_products', r'fromBlocks_multiply|fromBlocks_mulVec|fromRows_mul_fromCols|fromCols_ext_iff|fromBlocks_inj', ['Data/Matrix','LinearAlgebra/Matrix']),
+ ('reindex', r'conjTranspose_reindex|det_reindex_self|reindexAlgEquiv', ['Data/Matrix','LinearAlgebra/Matrix']),
+ ('schur', r'det_fromBlocks|det_one_add_mul_comm|invOf_smul|inv_smul', ['LinearAlgebra/Matrix','Algebra/Algebra']),
+ ('commutation', r'theorem.*(smul_left|smul_right|add_left)|lemma.*(smul_left|smul_right|add_left)|self_pow|pow_self', ['Algebra/Group/Commute','Algebra/Algebra','Algebra/Ring/Commute']),
+ ('polynomials', r'eq_of_infinite_eval_eq|infinite_of_injective_forall_mem', ['Algebra/Polynomial','Data/Set']),
+ ('gram_singular', r'eigenvalues_eq_eigenvalues_iff|gram.*charpoly|charpoly.*singular|singularValues_of_finrank_le|sq_singularValues_fin', ['Analysis/InnerProductSpace','Analysis/Matrix','LinearAlgebra']),
+ ('unitary', r'mul_eq_one_comm|mulVec_injective_of_isUnit|unitary.*[Tt]riang|[Tt]riang.*unitary|unitary.*[Bb]lock|[Bb]lock.*unitary', ['LinearAlgebra','Analysis/Matrix']),
+ ('phase', r'norm_of_nonneg|mul_left_cancel₀|diagonal_conjTranspose|diagonal_mul_diagonal', ['Data/Complex','LinearAlgebra/Matrix','Algebra/GroupWithZero']),
+]
+rows=[]
+for label, pattern, subdirs in queries:
+    roots = [str(M / d) for d in subdirs if (M / d).exists()]
+    argv = ['rg', '-n', '-g', '*.lean', pattern, *roots]
+    p = subprocess.run(argv, capture_output=True, text=True)
+    assert p.returncode in (0,1), (label,p.stderr)
+    log = R / 'evidence/search' / (label + '.log');log.parent.mkdir(parents=True,exist_ok=True)
+    log.write_text(p.stdout)
+    rows.append({'label':label,'argv':argv,'exit_code':p.returncode,'log':str(log.relative_to(R)),
+                 'log_sha256':hashlib.sha256(log.read_bytes()).hexdigest(),'hits':len(p.stdout.splitlines())})
+# Exact identifiers are supplementary searches; semantic searches above are the substantive check.
+names = sorted({d['name'] for d in json.loads((R/'DECLARATIONS.json').read_text())})
+pattern = r'\b(' + '|'.join(names) + r')\b'
+p = subprocess.run(['rg','-n','-g','*.lean',pattern,str(M)],capture_output=True,text=True)
+assert p.returncode in (0,1)
+(R/'evidence/search/exact-identifiers.log').write_text(p.stdout)
+rows.append({'label':'all-declaration-identifiers','identifiers':names,'exit_code':p.returncode,
+             'log':'evidence/search/exact-identifiers.log','hits':len(p.stdout.splitlines())})
+tau = [str(p) for p in B.rglob('TauCeti') if p.is_dir()]
+(R/'REUSE-SEARCHES.json').write_text(json.dumps({'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+ 'mathlib_revision':'0df444a360eaa60ab8c11dca51a86af692955474','searches':rows,
+ 'TauCeti_library_checkouts_found_under_task_root':tau,
+ 'TauCeti_scope':'Pinned rubrics are present; no TauCeti mathematical library checkout was found. No network fetch or all-TauCeti duplication clearance is claimed.',
+ 'MI13_scope':'Full SingularSemantics and UnitaryInvariance read; accepted source-bound adaptation is acknowledged in GramSemantics.lean.'},indent=2,ensure_ascii=False)+'\n')
+print(json.dumps({'queries':len(rows),'exact_identifiers':len(names),'semantic_hits':sum(x['hits'] for x in rows),'TauCeti_library_checkouts':tau}))

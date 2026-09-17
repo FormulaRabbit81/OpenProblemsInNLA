@@ -1,0 +1,176 @@
+#!/usr/bin/env python3
+"""Independent SP-15 source/evidence audit. Never invokes Lean, Lake, Git, or network."""
+from pathlib import Path
+import datetime, hashlib, json, re, shutil, subprocess
+
+HERE = Path(__file__).resolve().parent
+P = Path('/private/tmp/nla-lean-next-20260915/next-proofs/SP-15')
+B = P.parent.parent
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+S = HERE / 'snapshot'
+checks = []
+def digest(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def check(label, condition, detail=None):
+    checks.append({'check': label, 'pass': bool(condition), 'detail': detail})
+    if not condition: raise AssertionError((label, detail))
+def dump(rel, value):
+    q = HERE / rel; q.parent.mkdir(parents=True, exist_ok=True)
+    q.write_text(json.dumps(value, indent=2, ensure_ascii=False) + '\n')
+def retain(q, rel):
+    dst = HERE / rel; dst.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(q, dst)
+    return {'original': str(q), 'retained': rel, 'sha256': digest(q)}
+
+binding = json.loads((HERE / 'SOURCE-BINDINGS.json').read_text())
+closure = {x['path']: x['sha256'] for x in binding['files'] if x['scope'] == 'solution-closure'}
+check('exact49moduleclosure', len(closure) == 49)
+for x in binding['files']:
+    check('snapshot:' + x['path'], digest(S / x['path']) == x['sha256'])
+    check('live-source:' + x['path'], digest(P / x['path']) == x['sha256'])
+extra = []
+for name in ['REVIEW-PLAN.md', 'LICENSE']:
+    extra.append(retain(P / name, 'snapshot/' + name))
+for q in sorted(B.glob('SP15-ROOT-*.json')):
+    extra.append(retain(q, 'evidence/coordinator/' + q.name))
+freeze = json.loads((S / 'STATEMENT-FREEZE.json').read_text())
+for rel, h in freeze['frozen_files'].items():
+    check('frozen:' + rel, digest(S / rel) == h)
+accept = json.loads((B / 'SP15-ROOT-FREEZE-ACCEPTANCE.json').read_text())
+check('coordinator-freeze-accepted', accept['proof_implementation_authorized'] is True)
+check('coordinator-freeze-hash', digest(S / 'STATEMENT-FREEZE.json') == accept['freeze_sha256'])
+for entry in json.loads((S / 'STANDARD-BINDINGS.json').read_text())['standards']:
+    check('standard:' + entry['path'], digest(S / entry['path']) == entry['sha256'])
+
+headers = json.loads((S / 'STATEMENT-HEADERS.json').read_text())['contracts']
+config = json.loads((S / 'comparator.json').read_text())
+check('comparator-exact29names', config['theorem_names'] == [h['name'] for h in headers])
+check('comparator-standard-axioms', set(config['permitted_axioms']) == {'propext', 'Quot.sound', 'Classical.choice'})
+declarations = []
+sources = {rel: (S / rel).read_text() for rel in closure}
+challenge = (S / 'Challenge.lean').read_text()
+contract_matches = []
+for h in headers:
+    name = h['name'].split('.')[-1]
+    pattern = r'^theorem ' + re.escape(name) + r'\b[\s\S]*?(?=\s*:= by)'
+    found = [(rel, re.search(pattern, txt, re.M)) for rel, txt in sources.items()]
+    found = [(rel, m) for rel, m in found if m]
+    check('unique-implementation:' + name, len(found) == 1)
+    rel, match = found[0]
+    actual = match.group(0).rstrip()
+    cm = re.search(pattern, challenge, re.M)
+    check('verbatim-header:' + name, actual == h['header'] == cm.group(0).rstrip())
+    check('header-hash:' + name, hashlib.sha256(actual.encode()).hexdigest() == h['header_sha256'])
+    contract_matches.append({'name': h['name'], 'implementation': rel,
+       'line': sources[rel][:match.start()].count('\n') + 1, 'header_sha256': h['header_sha256']})
+for rel, txt in sources.items():
+    # Nested comment erasure is unnecessary for these sources, which have no nested comments.
+    code = re.sub(r'/\-[\s\S]*?\-/', '', txt)
+    code = re.sub(r'--[^\n]*', '', code)
+    check('no-holes-or-unsafe:' + rel,
+          re.search(r'\b(sorry|admit|axiom|unsafe|native_decide|run_tac|implemented_by)\b', code) is None)
+    check('no-challenge-import:' + rel,
+          not any('Challenge' in line for line in code.splitlines() if line.startswith('import ')))
+    check('no-email:' + rel, not re.search(r'[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}', txt))
+    check('george-and-affiliation:' + rel,
+          'George Stepaniants' in txt and 'Department of Computing and Mathematical Sciences, California Institute of Technology.' in txt)
+    for m in re.finditer(r'^(?:private )?(?:theorem|def|abbrev)\s+(\S+)', code, re.M):
+        declarations.append({'file': rel, 'name': m.group(1)})
+check('challenge29intentionalholes', len(re.findall(r'^  sorry$', challenge, re.M)) == 29)
+check('four-kernel-interval-calls', sources['NLA/SP15/Numerical.lean'].count('interval_decide (trust := kernel)') == 4)
+check('consumed-by-box-bounds', 'box_scalar_certificate' in sources['NLA/SP15/BoxGeometry.lean'])
+check('bounds-consumed-by-positivity', 'parameter_box_bounds' in sources['NLA/SP15/ParameterPositivity.lean'])
+dump('CONTRACT-AUDIT.json', contract_matches)
+dump('DECLARATIONS.json', declarations)
+
+modules = {rel[:-5].replace('/', '.'): rel for rel in closure}
+def imports(mod):
+    return [m for line in sources[modules[mod]].splitlines() if line.startswith('import ')
+            for m in line[7:].split() if m in modules]
+def transitive(mod):
+    result = {mod}
+    for dep in imports(mod): result |= transitive(dep)
+    return result
+
+runtime_retained, runtime_rows, receipts = {}, [], {}
+def read_receipt(q):
+    q = Path(q)
+    if str(q) not in receipts:
+        receipts[str(q)] = json.loads(q.read_text())
+        runtime_retained[str(q)] = retain(q, 'evidence/runtime/' + q.parent.name + '/RECEIPT.json')
+    return receipts[str(q)]
+root_path = L / 'runs/development-116/RECEIPT.json'
+root = read_receipt(root_path)
+check('actual116-receipt-hash', digest(root_path) == 'c15b57f189a8ed2435230e545f6b4a703a2b33a4eba1a4eba1a4daf5d03aeef08e67b4')
+check('actual116-no-failures', root['failed_modules'] == [] and root['blocked_modules'] == [])
+check('actual116-resource-policy', (root['platform'], root['max_compiler_processes'], root['threads'], root['memory_cap_mib']) == ('darwin', 1, 1, 4096))
+check('actual116-selected-modules', root['module_order'][:49] == [c['module'] for c in root['commands'][:49]] and set(root['module_order'][:49]) == set(modules))
+check('actual116-runner-hash', digest(L / 'serial_compile_v3.py') == root['runner_sha256'])
+check('actual116-assembly-hash', digest(L / 'ASSEMBLY-116.json') == root['assembly_sha256'])
+for name in ['serial_compile_v3.py', 'ASSEMBLY-116.json', 'LOCAL-ENVIRONMENT.json', 'lake-manifest.json', 'lean-toolchain']:
+    runtime_retained[str(L/name)] = retain(L/name, 'evidence/runtime/environment/' + name)
+environment = json.loads((L / 'LOCAL-ENVIRONMENT.json').read_text())
+check('actual116-compiler-hash', digest(environment['compiler']) == root['compiler_sha256'])
+root_commands = {c['module']: c for c in root['commands']}
+def resolve(mod, path, seen=None):
+    seen = [] if seen is None else seen
+    check('receipt-chain-acyclic:' + mod + ':' + str(path), str(path) not in seen)
+    r = read_receipt(path)
+    c = next(c for c in r['commands'] if c['module'] == mod)
+    rel = modules[mod]
+    check('receipt-source:' + mod + ':' + Path(path).parent.name, c['source_sha256'] == closure[rel])
+    for dep in transitive(mod):
+        check('receipt-transitive:' + mod + ':' + dep + ':' + Path(path).parent.name,
+              r['source_inputs'][modules[dep]] == closure[modules[dep]])
+    check('receipt-output:' + mod + ':' + Path(path).parent.name, c['output_sha256'] == root_commands[mod]['output_sha256'])
+    if c.get('status') == 'reused_exact_successful_local_output':
+        q = Path(c['prior_receipt'])
+        check('prior-receipt-hash:' + mod + ':' + str(q), digest(q) == c['prior_receipt_sha256'])
+        return resolve(mod, q, seen + [str(path)])
+    check('fresh-local-success:' + mod, c['exit_code'] == 0)
+    check('fresh-resource-argv:' + mod, '--threads=1' in c['argv'] and '--memory=4096' in c['argv'])
+    check('fresh-real-compiler:' + mod, c['argv'][0] == environment['compiler'] and c['cwd'] == str(L))
+    check('fresh-source-argv:' + mod, c['argv'][-1] == rel)
+    check('fresh-compiler-hash:' + mod, r['compiler_sha256'] == root['compiler_sha256'])
+    log = Path(path).parent / (mod + '.log')
+    check('fresh-log-hash:' + mod, digest(log) == c['log_sha256'])
+    runtime_retained[str(log)] = retain(log, 'evidence/runtime/' + log.parent.name + '/' + log.name)
+    for dep, sha in c['dependency_olean_sha256'].items():
+        if dep in modules:
+            check('fresh-dependency-output:' + mod + ':' + dep, sha == root_commands[dep]['output_sha256'])
+    return {'module': mod, 'fresh_run': Path(path).parent.name, 'reuse_chain': seen,
+            'fresh_command': c, 'receipt_sha256': digest(path),
+            'retained_log': runtime_retained[str(log)]['retained']}
+for mod, rel in modules.items():
+    check('live-local-source:' + mod, digest(L / rel) == closure[rel])
+    output = L / '.lake/build/lib/lean' / (rel[:-5] + '.olean')
+    check('live-local-output:' + mod, digest(output) == root_commands[mod]['output_sha256'])
+    runtime_rows.append(resolve(mod, root_path))
+solution_log = (L / 'runs/development-116/Solution.log').read_text()
+axioms = re.findall(r"'([^']+)' depends on axioms: \[([^\]]*)\]", solution_log)
+check('all29-log-axiom-records', len(axioms) == 29 and [a[0] for a in axioms] == config['theorem_names'])
+for name, axioms_str in axioms:
+    check('only-standard-axioms:' + name, set(axioms_str.split(', ')) == set(config['permitted_axioms']))
+dump('RUNTIME-AUDIT.json', {'scope': 'Independent authentication of recorded actual macOS Lean executions; no new Lean run and no Linux Comparator result.',
+     'source_root': str(P), 'recorded_local_run': 'development-116', 'selected_SP15_modules': 49,
+     'selected_other_modules': len(root['module_order']) - 49, 'modules': runtime_rows,
+     'retained': list(runtime_retained.values()), 'aggregate_axioms': axioms})
+
+primary_root = L / '.lake/packages/mathlib/Mathlib'
+primary_paths = ['Analysis/InnerProductSpace/SingularValues.lean', 'Analysis/InnerProductSpace/Spectrum.lean',
+ 'Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean', 'Analysis/Matrix/Order.lean', 'Analysis/Matrix/PosDef.lean',
+ 'Analysis/SpecialFunctions/ContinuousFunctionalCalculus/Rpow/Basic.lean', 'LinearAlgebra/Matrix/Gershgorin.lean',
+ 'LinearAlgebra/Matrix/SchurComplement.lean', 'LinearAlgebra/Matrix/ToLin.lean',
+ 'LinearAlgebra/Matrix/Reindex.lean', 'Data/Matrix/Block.lean', 'Data/Matrix/ColumnRowPartitioned.lean',
+ 'LinearAlgebra/Matrix/Block.lean', 'LinearAlgebra/Charpoly/ToMatrix.lean', 'LinearAlgebra/Determinant.lean']
+primary = [retain(primary_root / rel, 'evidence/primary/Mathlib/' + rel + '.txt') for rel in primary_paths]
+for rel in ['SingularSemantics.lean', 'UnitaryInvariance.lean']:
+    primary.append(retain(B/'next-proofs/MI-13/NLA/MI13'/rel, 'evidence/primary/MI13/' + rel + '.txt'))
+for entry in json.loads((S/'PINNED-API-BINDINGS.json').read_text())['immediate_imports']:
+    check('pinned-primary-import:' + entry['module'], digest(entry['path']) == entry['sha256'])
+dump('PRIMARY-BINDINGS.json', primary)
+dump('ADDITIONAL-BINDINGS.json', extra)
+dump('AUDIT.json', {'executed_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'kind': 'Read-only source and retained-evidence audit, not Lean or Comparator',
+    'checks_count': len(checks), 'checks': checks, 'all_pass': all(c['pass'] for c in checks)})
+print(json.dumps({'checks': len(checks), 'all_pass': True, 'modules': len(closure), 'contracts': len(headers),
+                  'fresh_origin_runs': sorted(set(x['fresh_run'] for x in runtime_rows))}))

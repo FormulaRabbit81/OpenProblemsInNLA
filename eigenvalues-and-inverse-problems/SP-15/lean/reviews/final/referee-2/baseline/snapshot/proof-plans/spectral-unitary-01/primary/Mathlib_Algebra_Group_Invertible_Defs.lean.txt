@@ -1,0 +1,63 @@
+90:   /-- `invOf a` is a left inverse of `a` -/
+91:   invOf_mul_self : invOf * a = 1
+92:   /-- `invOf a` is a right inverse of `a` -/
+93:   mul_invOf_self : a * invOf = 1
+94: 
+95: /-- The inverse of an `Invertible` element -/
+96: -- This notation has the same precedence as `Inv.inv`.
+97: prefix:max "⅟" => Invertible.invOf
+98: 
+99: @[simp]
+100: theorem invOf_mul_self' [Mul α] [One α] (a : α) {_ : Invertible a} : ⅟a * a = 1 :=
+101:   Invertible.invOf_mul_self
+102: 
+103: theorem invOf_mul_self [Mul α] [One α] (a : α) [Invertible a] : ⅟a * a = 1 := invOf_mul_self' _
+104: 
+105: @[simp]
+106: theorem mul_invOf_self' [Mul α] [One α] (a : α) {_ : Invertible a} : a * ⅟a = 1 :=
+107:   Invertible.mul_invOf_self
+108: 
+109: theorem mul_invOf_self [Mul α] [One α] (a : α) [Invertible a] : a * ⅟a = 1 := mul_invOf_self' _
+110: 
+111: section Monoid
+112: 
+113: variable [Monoid α] (a b : α)
+114: 
+115: @[simp]
+116: theorem invOf_mul_cancel_left' {_ : Invertible a} : ⅟a * (a * b) = b := by
+117:   rw [← mul_assoc, invOf_mul_self, one_mul]
+118: example {G} [Group G] (a b : G) : a⁻¹ * (a * b) = b := inv_mul_cancel_left a b
+119: 
+120: theorem invOf_mul_cancel_left [Invertible a] : ⅟a * (a * b) = b :=
+121:   invOf_mul_cancel_left' _ _
+122: 
+123: @[simp]
+124: theorem mul_invOf_cancel_left' {_ : Invertible a} : a * (⅟a * b) = b := by
+125:   rw [← mul_assoc, mul_invOf_self, one_mul]
+
+145:   mul_invOf_cancel_right' _ _
+146: 
+147: variable {a b}
+148: 
+149: theorem invOf_eq_right_inv [Invertible a] (hac : a * b = 1) : ⅟a = b :=
+150:   left_inv_eq_right_inv (invOf_mul_self _) hac
+151: 
+152: theorem invOf_eq_left_inv [Invertible a] (hac : b * a = 1) : ⅟a = b :=
+153:   (left_inv_eq_right_inv hac (mul_invOf_self _)).symm
+154: 
+155: theorem invOf_eq_iff_right [Invertible a] : ⅟a = b ↔ a * b = 1 :=
+156:   ⟨fun h ↦ by rw [← h, mul_invOf_self], invOf_eq_right_inv⟩
+157: 
+158: theorem invOf_eq_iff_left [Invertible a] : ⅟a = b ↔ b * a = 1 :=
+159:   ⟨fun h ↦ by rw [← h, invOf_mul_self], invOf_eq_left_inv⟩
+160: 
+161: variable (a b)
+162: 
+163: theorem invertible_unique [Invertible a] [Invertible b]
+164:     (h : a = b) : ⅟a = ⅟b := by
+165:   apply invOf_eq_right_inv
+166:   rw [h, mul_invOf_self]
+167: 
+168: instance Invertible.subsingleton : Subsingleton (Invertible a) :=
+169:   ⟨fun ⟨b, hba, hab⟩ ⟨c, _, hac⟩ => by
+170:     congr

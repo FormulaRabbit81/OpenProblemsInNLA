@@ -1,0 +1,22 @@
+776: theorem nhds_basis_ball : (𝓝 x).HasBasis (0 < ·) (ball x) :=
+777:   nhds_basis_uniformity uniformity_basis_dist
+778: 
+779: theorem mem_nhds_iff : s ∈ 𝓝 x ↔ ∃ ε > 0, ball x ε ⊆ s :=
+780:   nhds_basis_ball.mem_iff
+781: 
+782: theorem eventually_nhds_iff {p : α → Prop} :
+783:     (∀ᶠ y in 𝓝 x, p y) ↔ ∃ ε > 0, ∀ ⦃y⦄, dist y x < ε → p y :=
+784:   mem_nhds_iff
+785: 
+786: theorem eventually_nhds_iff_ball {p : α → Prop} :
+787:     (∀ᶠ y in 𝓝 x, p y) ↔ ∃ ε > 0, ∀ y ∈ ball x ε, p y :=
+788:   mem_nhds_iff
+789: 
+
+1128:   dist_comm _ _ := abs_sub_comm _ _
+1129:   dist_triangle _ _ _ := abs_sub_le _ _ _
+1130: 
+1131: theorem Real.dist_eq (x y : ℝ) : dist x y = |x - y| := rfl
+1132: 
+1133: theorem Real.nndist_eq (x y : ℝ) : nndist x y = Real.nnabs (x - y) := rfl
+1134: 

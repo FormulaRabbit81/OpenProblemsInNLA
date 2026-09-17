@@ -1,0 +1,1 @@
+Actual105 failed on function-star wrapper and finite matrix notation reduction. Use Pi.star_apply explicitly, ordinary qMatrix simplification, remove an unused simp argument. No statement/header/resource changes. Full failed log and mixed105receipt retained; FiniteSchur passed separately.

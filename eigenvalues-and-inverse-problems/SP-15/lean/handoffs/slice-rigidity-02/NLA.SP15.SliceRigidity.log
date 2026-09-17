@@ -1,0 +1,61 @@
+NLA/SP15/SliceRigidity.lean:24:34: error: unsolved goals
+v : Fin 3 → ℂ
+A : Square 3
+i j : Fin 3
+⊢ star v i * A i j * v j = star (v i) * A i j * v j
+NLA/SP15/SliceRigidity.lean:26:4: warning: This simp argument is unused:
+  Function.comp_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.diagonal_conjTranspose, Matrix.mul_diagonal, Matrix.diagonal_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/SliceRigidity.lean:57:4: error: Type mismatch: After simplification, term
+  he
+ has type
+  @Eq ℂ (star v i * v i) 1
+but is expected to have type
+  @Eq ℂ (star (v i) * v i) 1
+NLA/SP15/SliceRigidity.lean:54:12: warning: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hij, hoff i j hij]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/SliceRigidity.lean:97:8: error: Type mismatch: After simplification, term
+  hentry 0 1
+ has type
+  @Eq ℂ
+    (!![↑(y 3), ↑(y 6), ↑(y 7);
+        ↑(y 6), ↑(y 4), ↑(y 8) + Complex.I * ↑(y 9);
+        ↑(y 7), ↑(y 8) - Complex.I * ↑(y 9), ↑(y 5)]
+      0 1)
+    (star (v 0) *
+        !![↑(x 3), ↑(x 6), ↑(x 7);
+            ↑(x 6), ↑(x 4), ↑(x 8) + Complex.I * ↑(x 9);
+            ↑(x 7), ↑(x 8) - Complex.I * ↑(x 9), ↑(x 5)]
+          0 1 *
+      v 1)
+but is expected to have type
+  @Eq ℂ (↑(y 6)) (star (v 0) * ↑(x 6) * v 1)
+NLA/SP15/SliceRigidity.lean:100:8: error: Type mismatch: After simplification, term
+  hentry 0 2
+ has type
+  @Eq ℂ
+    (!![↑(y 3), ↑(y 6), ↑(y 7);
+        ↑(y 6), ↑(y 4), ↑(y 8) + Complex.I * ↑(y 9);
+        ↑(y 7), ↑(y 8) - Complex.I * ↑(y 9), ↑(y 5)]
+      0 2)
+    (star (v 0) *
+        !![↑(x 3), ↑(x 6), ↑(x 7);
+            ↑(x 6), ↑(x 4), ↑(x 8) + Complex.I * ↑(x 9);
+            ↑(x 7), ↑(x 8) - Complex.I * ↑(x 9), ↑(x 5)]
+          0 2 *
+      v 2)
+but is expected to have type
+  @Eq ℂ (↑(y 7)) (star (v 0) * ↑(x 7) * v 2)
+'NLA.SP15.parameter_slice_rigidity' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/SP15/SliceRigidity.lean:136:21: error: #assert_trust: 'NLA.SP15.parameter_slice_rigidity' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

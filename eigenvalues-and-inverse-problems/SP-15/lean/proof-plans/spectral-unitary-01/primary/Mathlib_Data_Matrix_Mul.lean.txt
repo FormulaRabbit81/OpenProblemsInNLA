@@ -1,0 +1,177 @@
+313:     (A * B) 0 1 = A 0 0 * B 0 1 + A 0 1 * B 1 1 ∧
+314:     (A * B) 1 0 = A 1 0 * B 0 0 + A 1 1 * B 1 0 ∧
+315:     (A * B) 1 1 = A 1 0 * B 0 1 + A 1 1 * B 1 1 := by
+316:   refine ⟨?_, ?_, ?_, ?_⟩ <;>
+317:   · rw [Matrix.mul_apply, Finset.sum_fin_eq_sum_range, Finset.sum_range_succ, Finset.sum_range_succ]
+318:     simp
+319: 
+320: section AddCommMonoid
+321: 
+322: variable [AddCommMonoid α] [Mul α]
+323: 
+324: @[simp]
+325: theorem smul_mul [Fintype n] [Monoid R] [DistribMulAction R α] [IsScalarTower R α α] (a : R)
+326:     (M : Matrix m n α) (N : Matrix n l α) : (a • M) * N = a • (M * N) := by
+327:   ext
+328:   apply smul_dotProduct a
+329: 
+330: @[simp]
+331: protected theorem mul_smul [Fintype n] [Monoid R] [DistribMulAction R α] [SMulCommClass R α α]
+332:     (M : Matrix m n α) (a : R) (N : Matrix n l α) : M * (a • N) = a • (M * N) := by
+333:   ext
+334:   apply dotProduct_smul
+335: 
+336: end AddCommMonoid
+337: 
+338: section NonUnitalNonAssocSemiring
+339: 
+340: variable [NonUnitalNonAssocSemiring α]
+341: 
+342: @[simp]
+343: protected theorem mul_zero [Fintype n] (M : Matrix m n α) : M * (0 : Matrix n o α) = 0 := by
+344:   ext
+345:   apply dotProduct_zero
+346: 
+347: @[simp]
+348: protected theorem zero_mul [Fintype m] (M : Matrix m n α) : (0 : Matrix l m α) * M = 0 := by
+349:   ext
+350:   apply zero_dotProduct
+351: 
+352: protected theorem mul_add [Fintype n] (L : Matrix m n α) (M N : Matrix n o α) :
+353:     L * (M + N) = L * M + L * N := by
+354:   ext
+355:   apply dotProduct_add
+356: 
+357: protected theorem add_mul [Fintype m] (L M : Matrix l m α) (N : Matrix m n α) :
+358:     (L + M) * N = L * N + M * N := by
+359:   ext
+360:   apply add_dotProduct
+361: 
+362: instance nonUnitalNonAssocSemiring [Fintype n] : NonUnitalNonAssocSemiring (Matrix n n α) :=
+363:   { Matrix.addCommMonoid with
+364:     mul_zero := Matrix.mul_zero
+365:     zero_mul := Matrix.zero_mul
+366:     left_distrib := Matrix.mul_add
+367:     right_distrib := Matrix.add_mul }
+368: 
+369: @[simp]
+370: theorem diagonal_mul [Fintype m] [DecidableEq m] (d : m → α) (M : Matrix m n α) (i j) :
+371:     (diagonal d * M) i j = d i * M i j :=
+372:   diagonal_dotProduct _ _ _
+373: 
+374: @[simp]
+375: theorem mul_diagonal [Fintype n] [DecidableEq n] (d : n → α) (M : Matrix m n α) (i j) :
+376:     (M * diagonal d) i j = M i j * d j := by
+377:   rw [← diagonal_transpose]
+378:   apply dotProduct_diagonal
+379: 
+380: @[simp]
+381: theorem diagonal_mul_diagonal [Fintype n] [DecidableEq n] (d₁ d₂ : n → α) :
+382:     diagonal d₁ * diagonal d₂ = diagonal fun i => d₁ i * d₂ i := by
+383:   ext i j
+384:   by_cases h : i = j <;>
+385:   simp [h]
+386: 
+387: theorem diagonal_mul_diagonal' [Fintype n] [DecidableEq n] (d₁ d₂ : n → α) :
+388:     diagonal d₁ * diagonal d₂ = diagonal fun i => d₁ i * d₂ i :=
+389:   diagonal_mul_diagonal _ _
+390: 
+391: theorem commute_diagonal {α : Type*} [NonUnitalNonAssocCommSemiring α]
+392:     [Fintype n] [DecidableEq n] (d₁ d₂ : n → α) :
+393:     Commute (diagonal d₁) (diagonal d₂) := by
+394:   simp_rw [commute_iff_eq, diagonal_mul_diagonal, mul_comm]
+395: 
+396: theorem smul_eq_diagonal_mul [Fintype m] [DecidableEq m] (M : Matrix m n α) (a : α) :
+397:     a • M = (diagonal fun _ => a) * M := by
+398:   ext
+399:   simp
+400: 
+401: theorem op_smul_eq_mul_diagonal [Fintype n] [DecidableEq n] (M : Matrix m n α) (a : α) :
+402:     MulOpposite.op a • M = M * (diagonal fun _ : n => a) := by
+403:   ext
+404:   simp
+405: 
+
+1115: section Semiring
+1116: 
+1117: variable [Semiring R]
+1118: 
+1119: lemma mulVec_injective_of_isUnit [Fintype m] [DecidableEq m] {A : Matrix m m R}
+1120:     (ha : IsUnit A) : Function.Injective A.mulVec :=
+1121:   isLeftRegular_iff_mulVec_injective.1 ha.isRegular.left
+1122: 
+1123: lemma vecMul_injective_of_isUnit [Fintype m] [DecidableEq m] {A : Matrix m m R}
+1124:     (ha : IsUnit A) : Function.Injective A.vecMul :=
+1125:   isRightRegular_iff_vecMul_injective.1 ha.isRegular.right
+1126: 
+
+1178: for when the mappings are bundled. -/
+1179: 
+1180: @[simp]
+1181: theorem submatrix_mul_equiv [Fintype n] [Fintype o] [AddCommMonoid α] [Mul α] {p q : Type*}
+1182:     (M : Matrix m n α) (N : Matrix n p α) (e₁ : l → m) (e₂ : o ≃ n) (e₃ : q → p) :
+1183:     M.submatrix e₁ e₂ * N.submatrix e₂ e₃ = (M * N).submatrix e₁ e₃ :=
+1184:   (submatrix_mul M N e₁ e₂ e₃ e₂.bijective).symm
+1185: 
+1186: theorem submatrix_mulVec_equiv [Fintype n] [Fintype o] [NonUnitalNonAssocSemiring α]
+1187:     (M : Matrix m n α) (v : o → α) (e₁ : l → m) (e₂ : o ≃ n) :
+1188:     M.submatrix e₁ e₂ *ᵥ v = (M *ᵥ (v ∘ e₂.symm)) ∘ e₁ :=
+1189:   funext fun _ => Eq.symm (dotProduct_comp_equiv_symm _ _ _)
+1190: 
+1191: @[simp]
+1192: theorem submatrix_id_mul_left [Fintype n] [Fintype o] [Mul α] [AddCommMonoid α] {p : Type*}
+1193:     (M : Matrix m n α) (N : Matrix o p α) (e₁ : l → m) (e₂ : n ≃ o) :
+1194:     M.submatrix e₁ id * N.submatrix e₂ id = M.submatrix e₁ e₂.symm * N := by
+1195:   ext; simp [mul_apply, ← e₂.bijective.sum_comp]
+1196: 
+1197: @[simp]
+1198: theorem submatrix_id_mul_right [Fintype n] [Fintype o] [Mul α] [AddCommMonoid α] {p : Type*}
+1199:     (M : Matrix m n α) (N : Matrix o p α) (e₁ : l → p) (e₂ : o ≃ n) :
+1200:     M.submatrix id e₂ * N.submatrix id e₁ = M * N.submatrix e₂.symm e₁ := by
+1201:   ext; simp [mul_apply, ← e₂.bijective.sum_comp]
+1202: 
+1203: theorem submatrix_vecMul_equiv [Fintype l] [Fintype m] [NonUnitalNonAssocSemiring α]
+1204:     (M : Matrix m n α) (v : l → α) (e₁ : l ≃ m) (e₂ : o → n) :
+1205:     v ᵥ* M.submatrix e₁ e₂ = ((v ∘ e₁.symm) ᵥ* M) ∘ e₂ :=
+1206:   funext fun _ => Eq.symm (comp_equiv_symm_dotProduct _ _ _)
+1207: 
+1208: theorem mul_submatrix_one [Fintype n] [Finite o] [NonAssocSemiring α] [DecidableEq o] (e₁ : n ≃ o)
+1209:     (e₂ : l → o) (M : Matrix m n α) :
+1210:     M * (1 : Matrix o o α).submatrix e₁ e₂ = submatrix M id (e₁.symm ∘ e₂) := by
+1211:   cases nonempty_fintype o
+1212:   let A := M.submatrix id e₁.symm
+1213:   have : M = A.submatrix id e₁ := by
+1214:     simp only [A, submatrix_submatrix, Function.comp_id, submatrix_id_id, Equiv.symm_comp_self]
+1215:   rw [this, submatrix_mul_equiv]
+1216:   simp only [A, Matrix.mul_one, submatrix_submatrix, Function.comp_id, submatrix_id_id,
+1217:     Equiv.symm_comp_self]
+1218: 
+1219: theorem one_submatrix_mul [Fintype m] [Finite o] [NonAssocSemiring α] [DecidableEq o] (e₁ : l → o)
+1220:     (e₂ : m ≃ o) (M : Matrix m n α) :
+1221:     ((1 : Matrix o o α).submatrix e₁ e₂) * M = submatrix M (e₂.symm ∘ e₁) id := by
+1222:   cases nonempty_fintype o
+1223:   let A := M.submatrix e₂.symm id
+1224:   have : M = A.submatrix e₂ id := by
+
+1233: 
+1234: variable (m n R : Type*) [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n]
+1235: variable [MulOne R] [AddCommMonoid R]
+1236: 
+1237: instance [IsStablyFiniteRing R] : IsDedekindFiniteMonoid (Matrix n n R) :=
+1238:   let e := Fintype.equivFin n
+1239:   let f := MonoidHom.mk ⟨reindex (α := R) e e, submatrix_one_equiv _⟩
+1240:     fun _ _ ↦ (submatrix_mul_equiv ..).symm
+1241:   .of_injective f (reindex e e).injective
+1242: 
+1243: variable {m n R} in
+1244: /-- A version of `mul_eq_one_comm` that works for square matrices with rectangular types. -/
+1245: theorem mul_eq_one_comm_of_equiv [IsStablyFiniteRing R] {A : Matrix m n R} {B : Matrix n m R}
+1246:     (e : m ≃ n) : A * B = 1 ↔ B * A = 1 :=
+1247:   (reindex e e).injective.eq_iff.symm.trans <| by
+1248:     rw [reindex_apply, reindex_apply, submatrix_one_equiv, ← submatrix_mul_equiv _ _ _ (.refl _),
+1249:       mul_eq_one_comm, submatrix_mul_equiv, Equiv.coe_refl, submatrix_id_id]
+1250: 
+1251: theorem mul_eq_one_comm_of_card_eq [IsStablyFiniteRing R] {A : Matrix m n R} {B : Matrix n m R}
+1252:     (eq : Fintype.card m = Fintype.card n) : A * B = 1 ↔ B * A = 1 :=
+1253:   mul_eq_one_comm_of_equiv (Fintype.card_eq.mp eq).some
+1254: 

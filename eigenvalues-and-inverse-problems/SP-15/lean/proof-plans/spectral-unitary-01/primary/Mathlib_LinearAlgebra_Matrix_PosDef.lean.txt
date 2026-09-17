@@ -1,0 +1,80 @@
+188: 
+189: protected theorem diagonal [StarOrderedRing R] [DecidableEq n] [NoZeroDivisors R]
+190:     {d : n → R} (h : ∀ i, 0 < d i) :
+191:     PosDef (diagonal d) where
+192:   left := isHermitian_diagonal_of_self_adjoint _ <| funext fun i => IsSelfAdjoint.of_nonneg (h i).le
+193:   right x hx := by
+194:     refine Finsupp.sum_pos' (fun _ _ ↦ Finsupp.sum_nonneg ?_) ?_
+195:     · simp +contextual [diagonal, apply_ite, star_left_conjugate_nonneg (h _).le]
+196:     obtain ⟨i, hxi⟩ := by simpa [Finsupp.ext_iff] using hx
+197:     refine ⟨i, ?_, Finsupp.sum_pos' ?_ ⟨i, ?_, ?_⟩⟩ <;> simp +contextual [diagonal,
+198:       apply_ite, star_left_conjugate_nonneg (h _).le,
+199:       star_left_conjugate_pos (h i), IsRegular.of_ne_zero hxi, Finsupp.mem_support_iff.mpr hxi]
+200: 
+201: @[simp]
+202: theorem _root_.Matrix.posDef_diagonal_iff
+203:     [StarOrderedRing R] [DecidableEq n] [NoZeroDivisors R] [Nontrivial R] {d : n → R} :
+204:     PosDef (diagonal d) ↔ ∀ i, 0 < d i :=
+205:   ⟨fun h i => by simpa using h.2 (x := .single i 1), .diagonal⟩
+206: 
+207: @[simp, nontriviality]
+208: theorem of_subsingleton (h : Subsingleton R) (M : Matrix n n R) : M.PosDef :=
+209:   ⟨.of_subsingleton, fun _ hx ↦ (hx <| Subsingleton.elim ..).elim⟩
+210: 
+211: protected theorem one [StarOrderedRing R] [DecidableEq n] [NoZeroDivisors R] :
+212:     PosDef (1 : Matrix n n R) := by
+213:   nontriviality R
+214:   exact .diagonal fun i ↦ zero_lt_one' R
+
+243:   posDef_diagonal_iff.trans <| by simp
+244: 
+245: protected lemma add_posSemidef [AddLeftMono R]
+246:     {A : Matrix m m R} {B : Matrix m m R}
+247:     (hA : A.PosDef) (hB : B.PosSemidef) : (A + B).PosDef :=
+248:   ⟨hA.isHermitian.add hB.isHermitian, fun x hx => by
+249:     simpa [mul_add,add_mul] using add_pos_of_pos_of_nonneg (hA.2 (x := x) hx) (hB.2 x)⟩
+250: 
+251: protected lemma posSemidef_add [AddLeftMono R]
+252:     {A : Matrix m m R} {B : Matrix m m R}
+253:     (hA : A.PosSemidef) (hB : B.PosDef) : (A + B).PosDef :=
+254:   add_comm A B ▸ hB.add_posSemidef hA
+255: 
+256: protected lemma add [AddLeftMono R] {A : Matrix m m R} {B : Matrix m m R}
+257:     (hA : A.PosDef) (hB : B.PosDef) : (A + B).PosDef :=
+258:   hA.add_posSemidef hB.posSemidef
+259: 
+260: theorem _root_.Matrix.posDef_sum {ι : Type*} [AddLeftMono R] {A : ι → Matrix m m R}
+261:     {s : Finset ι} (hs : s.Nonempty) (hA : ∀ i ∈ s, (A i).PosDef) : (∑ i ∈ s, A i).PosDef := by
+262:   classical
+263:   induction s using Finset.induction_on with
+264:   | empty => simp at hs
+265:   | insert i hi hins H =>
+266:       rw [Finset.sum_insert hins]
+267:       by_cases h : ¬ hi.Nonempty
+268:       · simp_all
+269:       · exact PosDef.add (hA _ <| Finset.mem_insert_self i hi) <|
+270:           H (not_not.mp h) fun _ _hi => hA _ (Finset.mem_insert_of_mem _hi)
+271: 
+272: protected theorem smul {α : Type*} [CommSemiring α] [PartialOrder α] [StarRing α]
+273:     [StarOrderedRing α] [Algebra α R] [StarModule α R] [PosSMulStrictMono α R]
+274:     {x : Matrix n n R} (hx : x.PosDef) {a : α} (ha : 0 < a) : (a • x).PosDef := by
+275:   refine ⟨IsSelfAdjoint.smul (IsSelfAdjoint.of_nonneg ha.le) hx.1, fun y hy => ?_⟩
+276:   simpa [← Finsupp.smul_sum] using smul_pos ha (hx.2 hy)
+277: 
+278: theorem conjTranspose {M : Matrix n n R} (hM : M.PosDef) : Mᴴ.PosDef := hM.1.symm ▸ hM
+279: 
+280: @[simp]
+281: theorem _root_.Matrix.posDef_conjTranspose_iff {M : Matrix n n R} : Mᴴ.PosDef ↔ M.PosDef :=
+282:   ⟨(by simpa using ·.conjTranspose), .conjTranspose⟩
+
+502:   Finset.sum_pos (fun _ _ ↦ hA.diag_pos) Finset.univ_nonempty
+503: 
+504: section Field
+505: variable {K : Type*} [Field K] [PartialOrder K] [StarRing K]
+506: 
+507: theorem isUnit [DecidableEq n] {M : Matrix n n K} (hM : M.PosDef) : IsUnit M := by
+508:   by_contra h
+509:   obtain ⟨a, ha, ha2⟩ : ∃ a ≠ 0, M *ᵥ a = 0 := by
+510:     obtain ⟨a, b, ha⟩ := Function.not_injective_iff.mp <| mulVec_injective_iff_isUnit.not.mpr h
+511:     exact ⟨a - b, by simp [sub_eq_zero, ha, mulVec_sub]⟩
+512:   simpa [ha2] using hM.dotProduct_mulVec_pos ha

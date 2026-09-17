@@ -1,0 +1,77 @@
+Lines 486–513
+486:           saved.restore
+487:           return .failed failure
+488:     let result ←
+489:       match cfg.mode with
+490:       | .native =>
+491:           match ← closeNativeTypedCore certificate certGoal tacticName with
+492:           | .accepted =>
+493:               trace[leancert.verification] "{tacticName}: certificate verified by native_decide"
+494:               pure <| .accepted {
+495:                 requested := .native
+496:                 used := .native
+497:                 cause := .explicitNative
+498:               }
+499:           | .rejected => pure .rejected
+500:           | .failed detail => pure <| .failed (.nativeFailure detail)
+501:       | .kernel =>
+502:           match ← closeKernelTypedCore certificate certGoal with
+503:           | .accepted =>
+504:               trace[leancert.verification] "{tacticName}: certificate verified by kernel reduction"
+505:               pure <| .accepted {
+506:                 requested := .kernel
+507:                 used := .kernel
+508:                 cause := .explicitKernel
+509:               }
+510:           | .rejected => pure .rejected
+511:           | .failed detail => pure <| .failed (.kernelFailure detail)
+512:       | .auto =>
+513:           closeAutoTypedCore cfg certificate certGoal tacticName
+
+Lines 530–541
+530: 
+531: def VerificationFailure.message (tacticName : String) :
+532:     VerificationFailure → String
+533:   | .malformedCertificateGoal detail =>
+534:       s!"{tacticName}: malformed certificate goal:\n{detail}"
+535:   | .kernelFailure detail =>
+536:       s!"{tacticName}: kernel verification failed on the certificate check:\n\
+537:         {detail}\nKernel mode never falls back to native verification. Use \
+538:         `set_option leancert.trust \"native\"` (or \"auto\") to allow \
+539:         `native_decide`, which additionally trusts the compiler."
+540:   | .nativeFailure detail =>
+541:       s!"{tacticName}: native certificate verification failed:\n{detail}"
+
+Lines 629–660
+629: /-- `#assert_trust kernel thm`: `thm` depends on foundational axioms only.
+630: `#assert_trust native thm`: `thm` additionally depends on native-compiler
+631: trust (and nothing worse). Any `sorryAx` or unrecognized axiom fails both. -/
+632: elab "#assert_trust " cls:ident thm:ident : command => do
+633:   let declName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo thm
+634:   liftCoreM do
+635:     let axs ← collectAxioms declName
+636:     let part (c : TrustClass) : Array Name := axs.filter (classifyAxiom · == c)
+637:     let foundational := part .foundational
+638:     let native := part .nativeCompiler
+639:     let sorries := part .sorryAx
+640:     let custom := part .custom
+641:     let breakdown : MessageData := MessageData.joinSep
+642:       ([(`foundational, foundational), (`nativeCompiler, native),
+643:         (`sorryAx, sorries), (`custom, custom)].filterMap fun (label, group) =>
+644:         if group.isEmpty then none
+645:         else some m!"  {label}: {MessageData.joinSep (group.toList.map toMessageData) ", "}")
+646:       "\n"
+647:     unless sorries.isEmpty && custom.isEmpty do
+648:       throwErrorAt thm "#assert_trust: '{declName}' depends on sorry or \
+649:         unrecognized axioms\n{breakdown}"
+650:     match cls.getId with
+651:     | `kernel =>
+652:       unless native.isEmpty do
+653:         throwErrorAt thm "#assert_trust kernel: '{declName}' is not \
+654:           kernel-clean\n{breakdown}"
+655:     | `native =>
+656:       if native.isEmpty then
+657:         throwErrorAt thm "#assert_trust native: '{declName}' has no \
+658:           native-compiler dependency; tighten the manifest to `kernel`"
+659:     | other =>
+660:       throwErrorAt cls "#assert_trust: unknown trust class '{other}'; \

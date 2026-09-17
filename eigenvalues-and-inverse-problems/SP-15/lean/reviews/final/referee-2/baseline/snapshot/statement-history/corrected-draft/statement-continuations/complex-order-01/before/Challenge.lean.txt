@@ -1,0 +1,189 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. This is a statement draft: all 29 sorry
+bodies are deliberate Comparator specifications. No successful elaboration,
+independent acceptance, statement freeze, or proof execution is claimed.
+The solution implementation must never import this Challenge module.
+-/
+import NLA.SP15.Definitions
+
+set_option autoImplicit false
+
+namespace NLA.SP15
+noncomputable section
+open scoped BigOperators Matrix MatrixOrder Matrix.Norms.L2Operator Topology
+
+/-- Planned kernel-mode LeanCert certificate, genuinely consumed in box bounds. -/
+theorem box_scalar_certificate :
+    0 < boxRadius ∧ 0 < 1 - boxRadius ∧ 0 < 1 - 2 * boxRadius ∧
+    3 * (1 + boxRadius) < 4 - boxRadius ∧
+    (4 - boxRadius) - 3 * (1 + boxRadius) = (3 / 4 : ℝ) := by
+  sorry
+
+theorem parameter_box_geometry : IsOpen parameterBox ∧ basePoint ∈ parameterBox := by
+  sorry
+
+theorem parameter_box_bounds (x : Parameters) (hx : x ∈ parameterBox) :
+    (∀ i : Fin 3, 0 < pCoordinates x i) ∧ 0 < x 6 ∧ 0 < x 7 ∧
+    ∀ i : Fin 3,
+      (∑ j ∈ Finset.univ.erase i, ‖qMatrix x i j‖) + 3 / 4 < (qMatrix x i i).re := by
+  sorry
+
+theorem p_intervals_separate (x y : Parameters) (hx : x ∈ parameterBox)
+    (hy : y ∈ parameterBox) (i j : Fin 3) (hij : i ≠ j) :
+    pCoordinates x i ≠ pCoordinates y j := by
+  sorry
+
+theorem parameter_matrices_positive (x : Parameters) (hx : x ∈ parameterBox) :
+    (pMatrix x).PosDef ∧ (qMatrix x).PosDef := by
+  sorry
+
+theorem square_root_semantics (x : Parameters) (hx : x ∈ parameterBox) :
+    (pRoot x).IsHermitian ∧ (qRoot x).IsHermitian ∧
+    pRoot x * pRoot x = pMatrix x ∧ qRoot x * qRoot x = qMatrix x ∧
+    IsUnit (pRoot x) ∧ IsUnit (qRoot x) := by
+  sorry
+
+theorem coefficient_determinant_identity (x : Parameters) (u s : ℂ) :
+    coefficientDeterminant x u s =
+      u ^ 3 + ∑ i : Fin 9, (coefficients x i : ℂ) * coefficientMonomials u s i := by
+  sorry
+
+theorem coefficient_base_value : coefficients basePoint = coefficientBaseValue := by
+  sorry
+
+theorem coefficient_strict_derivative :
+    HasStrictFDerivAt coefficients coefficientDerivative basePoint := by
+  sorry
+
+theorem jacobian_lu_certificate :
+    jacobianMinor = lowerCertificate * upperCertificate ∧
+    (∀ i j : Fin 9, i < j → lowerCertificate i j = 0) ∧
+    (∀ i : Fin 9, lowerCertificate i i = 1) ∧
+    (∀ i j : Fin 9, j < i → upperCertificate i j = 0) ∧
+    (∀ i : Fin 9, upperCertificate i i ≠ 0) ∧
+    (∏ i : Fin 9, upperCertificate i i) = (-1088 : ℝ) := by
+  sorry
+
+theorem jacobian_minor_nonsingular : jacobianMinor.det = (-1088 : ℝ) := by
+  sorry
+
+theorem augmented_strict_derivative :
+    HasStrictFDerivAt augmented augmentedDerivative basePoint := by
+  sorry
+
+theorem augmented_derivative_equivalence :
+    ∃ e : Parameters ≃L[ℝ] Parameters,
+      (e : Parameters →L[ℝ] Parameters) = augmentedDerivative := by
+  sorry
+
+theorem local_augmented_inverse :
+    ∃ g : Parameters → Parameters,
+      ContinuousAt g (augmented basePoint) ∧ g (augmented basePoint) = basePoint ∧
+      ∀ᶠ y in 𝓝 (augmented basePoint),
+        g y ∈ parameterBox ∧ augmented (g y) = y := by
+  sorry
+
+theorem local_coefficient_fiber :
+    ∃ ε : ℝ, 0 < ε ∧ ∃ ψ : ℝ → Parameters,
+      ∀ t : ℝ, |t - 1| < ε →
+        ψ t ∈ parameterBox ∧ coefficients (ψ t) = coefficients basePoint ∧ ψ t 9 = t := by
+  sorry
+
+theorem regularized_gram_blocks (x : Parameters) (hx : x ∈ parameterBox)
+    (z : ℂ) (t : ℝ) :
+    Matrix.reindex blockEquiv blockEquiv (regularizedGramBlocks x z t) =
+      (t : ℂ) • (1 : Square 9) + shiftedGram (constructedMatrix x) z := by
+  sorry
+
+theorem schur_positive_blocks (x : Parameters) (hx : x ∈ parameterBox)
+    (z : ℂ) (t : ℝ) (ht : 0 < t) :
+    0 < shiftScalar z t ∧
+    (((shiftScalar z t : ℝ) : ℂ) • (1 : Square 3)).PosDef ∧
+    (schurPivot x z t).PosDef := by
+  sorry
+
+theorem shifted_gram_determinant (x : Parameters) (hx : x ∈ parameterBox)
+    (z : ℂ) (t : ℝ) (ht : 0 < t) :
+    Matrix.det ((t : ℂ) • (1 : Square 9) + shiftedGram (constructedMatrix x) z) =
+      (t : ℂ) ^ 3 * coefficientDeterminant x
+        ((shiftScalar z t ^ 3 / t : ℝ) : ℂ) ((shiftScalar z t : ℝ) : ℂ) := by
+  sorry
+
+theorem equal_coefficients_gram_charpoly (x y : Parameters)
+    (hx : x ∈ parameterBox) (hy : y ∈ parameterBox)
+    (hxy : coefficients x = coefficients y) (z : ℂ) :
+    (shiftedGram (constructedMatrix x) z).charpoly =
+      (shiftedGram (constructedMatrix y) z).charpoly := by
+  sorry
+
+theorem gram_charpoly_singular_values {n : ℕ} (A B : Square n)
+    (h : (A.conjTranspose * A).charpoly = (B.conjTranspose * B).charpoly) (k : ℕ) :
+    singularValue A k = singularValue B k := by
+  sorry
+
+theorem equal_coefficients_shifted_singular_values (x y : Parameters)
+    (hx : x ∈ parameterBox) (hy : y ∈ parameterBox)
+    (hxy : coefficients x = coefficients y) :
+    SuperIdentical (constructedMatrix x) (constructedMatrix y) := by
+  sorry
+
+theorem constructed_kernel_flag (x : Parameters) (hx : x ∈ parameterBox) :
+    (∀ v : BlockIndex → ℂ,
+      (blockMatrix x).mulVec v = 0 ↔
+        (∀ i : Fin 3, v (Sum.inr (Sum.inl i)) = 0) ∧
+        (∀ i : Fin 3, v (Sum.inr (Sum.inr i)) = 0)) ∧
+    (∀ v : BlockIndex → ℂ,
+      (blockMatrix x ^ 2).mulVec v = 0 ↔
+        ∀ i : Fin 3, v (Sum.inr (Sum.inr i)) = 0) := by
+  sorry
+
+theorem unitary_intertwiner_blocks (x y : Parameters)
+    (hx : x ∈ parameterBox) (hy : y ∈ parameterBox) (U : Square 9)
+    (hU : U.conjTranspose * U = 1)
+    (hA : constructedMatrix y = U.conjTranspose * constructedMatrix x * U) :
+    ∃ U₁ U₂ U₃ : Square 3,
+      U₁.conjTranspose * U₁ = 1 ∧ U₂.conjTranspose * U₂ = 1 ∧
+      U₃.conjTranspose * U₃ = 1 ∧ U = diagonalBlocks U₁ U₂ U₃ ∧
+      pRoot y = U₁.conjTranspose * pRoot x * U₂ ∧
+      qRoot y = U₂.conjTranspose * qRoot x * U₃ := by
+  sorry
+
+theorem middle_block_conjugacy (x y : Parameters)
+    (hx : x ∈ parameterBox) (hy : y ∈ parameterBox)
+    (h : UnitarySimilar (constructedMatrix x) (constructedMatrix y)) :
+    ∃ V : Square 3, V.conjTranspose * V = 1 ∧
+      pMatrix y = V.conjTranspose * pMatrix x * V ∧
+      qMatrix y = V.conjTranspose * qMatrix x * V := by
+  sorry
+
+theorem parameter_slice_rigidity (x y : Parameters)
+    (hx : x ∈ parameterBox) (hy : y ∈ parameterBox) (V : Square 3)
+    (hV : V.conjTranspose * V = 1)
+    (hP : pMatrix y = V.conjTranspose * pMatrix x * V)
+    (hQ : qMatrix y = V.conjTranspose * qMatrix x * V) : x = y := by
+  sorry
+
+theorem constructed_unitary_injectivity (x y : Parameters)
+    (hx : x ∈ parameterBox) (hy : y ∈ parameterBox)
+    (h : UnitarySimilar (constructedMatrix x) (constructedMatrix y)) : x = y := by
+  sorry
+
+theorem finite_fiber_selection (M : ℕ) :
+    ∃ x : Fin (M + 1) → Parameters, Function.Injective x ∧
+      (∀ i, x i ∈ parameterBox) ∧ (∀ i, coefficients (x i) = coefficientBaseValue) := by
+  sorry
+
+theorem arbitrary_finite_counterfamilies (M : ℕ) :
+    ∃ A : Fin (M + 1) → Square 9,
+      (∀ i j, SuperIdentical (A i) (A j)) ∧
+      ∀ i j : Fin (M + 1), i < j → ¬ UnitarySimilar (A i) (A j) := by
+  sorry
+
+/-- The literal canonical universal finite-bound statement is false. -/
+theorem canonical_finiteness_false : ¬ CanonicalFiniteness := by
+  sorry
+
+end
+end NLA.SP15

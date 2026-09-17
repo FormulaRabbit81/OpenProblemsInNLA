@@ -1,0 +1,40 @@
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:156:theorem eq_of_infinite_eval_eq (p q : R[X]) (h : Set.Infinite { x | eval x p = eval x q }) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:168:  obtain ⟨rfl⟩ : p = C x := p.eq_of_infinite_eval_eq (C x) (by simpa)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Hermitian.lean:177:        diagonal_conjTranspose v).trans <| congr_arg _ h
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/BaseChange.lean:45:  obtain ⟨B', hB⟩ := isUnit_iff_exists_inv.mp hA
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/BaseChange.lean:53:  simpa [← Matrix.mul_assoc, (mul_eq_one_comm_of_equiv e).mp hAB] using! congr_arg (B * ·) hB
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SpecialLinearGroup.lean:696:  `Matrix.Pivot.exists_list_transvec_mul_diagonal_mul_list_transvec`:
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SpecialLinearGroup.lean:699:theorem exists_list_transvec_mul_diagonal_mul_list_transvec (M : SpecialLinearGroup ι F) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SpecialLinearGroup.lean:703:  obtain ⟨L, L', D, hM⟩ := Pivot.exists_list_transvec_mul_diagonal_mul_list_transvec M.1
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SpecialLinearGroup.lean:726:  obtain ⟨L, L', D, hD, hM⟩ := exists_list_transvec_mul_diagonal_mul_list_transvec M
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Transvection.lean:37:* `exists_list_transvec_mul_diagonal_mul_list_transvec` states that any matrix `M` over a field can
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Transvection.lean:676:theorem exists_list_transvec_mul_diagonal_mul_list_transvec (M : Matrix n n 𝕜) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Transvection.lean:705:  rcases exists_list_transvec_mul_diagonal_mul_list_transvec M with ⟨L, L', D, h⟩
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean:274:    det (c • A) = det ((diagonal fun _ => c) * A) := by rw [smul_eq_diagonal_mul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/ToLin.lean:355:  exact Matrix.mulVec_injective_of_isUnit ha
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/ToLin.lean:485:  simp [Module.algebraMap_end_eq_smul_id, smul_eq_diagonal_mul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/ToLin.lean:669:  simp [Module.algebraMap_end_eq_smul_id, LinearMap.toMatrix_id, smul_eq_diagonal_mul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/ConjTranspose.lean:54:theorem diagonal_conjTranspose [AddMonoid α] [StarAddMonoid α] (v : n → α) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/ConjTranspose.lean:169:  (conjTranspose_involutive n α).eq_iff.trans <| by rw [diagonal_conjTranspose]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/ZMatrix.lean:19:* `Matrix.lt_two_mul_of_mul_diagonal_posDef_of_for_le_of_hasEigen`: a spectral bound result for
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/ZMatrix.lean:34:public lemma diag_pos_of_mul_diagonal_posDef (i : ι) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/ZMatrix.lean:44:public lemma lt_two_mul_of_mul_diagonal_posDef_of_for_le_of_hasEigen
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/ZMatrix.lean:66:    have h₀ : 0 ≤ ρ - μ := by grind [diag_pos_of_mul_diagonal_posDef A d hA hD hρ.nonempty.some]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:250:    simp [M, N, fromBlocks_multiply, smul_eq_mul_diagonal, -diagonal_neg]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/NonsingularInverse.lean:43:* `Matrix.mul_eq_one_comm`
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/NonsingularInverse.lean:347:  rw [vecMul_surjective_iff_exists_left_inverse, isUnit_iff_exists_inv']
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/NonsingularInverse.lean:351:  rw [mulVec_surjective_iff_exists_right_inverse, isUnit_iff_exists_inv]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/NonsingularInverse.lean:465:  inv_eq_left_inv (mul_eq_one_comm.2 h)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Rank.lean:428:  obtain ⟨L, L', D, hM0⟩ := Matrix.Pivot.exists_list_transvec_mul_diagonal_mul_list_transvec M
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Rank.lean:442:    simp only [E_def, mul_diagonal, diagonal_apply, ite_mul, one_mul, zero_mul, s_def,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/PosDef.lean:540:  refine ⟨fun h ↦ ?_, fun h ↦ h.conjTranspose_mul_mul_same <| mulVec_injective_of_isUnit hU⟩
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/PosDef.lean:542:  have := h.conjTranspose_mul_mul_same (mulVec_injective_of_isUnit (Units.isUnit U⁻¹))
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:211:  simpa [eval_det, ← smul_eq_mul_diagonal] using congr_arg (eval r) (Matrix.det_one_add_X_smul M)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:305:    simp [q, t, charpolyRev, AlgHom.map_det, map_sub, smul_eq_diagonal_mul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:313:  simp [t_inv, map_sub, map_one, map_mul, t, smul_eq_diagonal_mul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:327:  _ = _ := by simp [charpolyRev, smul_eq_diagonal_mul]; ac_rfl
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Diagonal.lean:43:  LinearMap.ext fun x => (diagonal_mulVec_single w _ _).trans (Pi.single_smul' i (w i) x)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/GeneralLinearGroup/Defs.lean:97:  <;> simp only [diagonal_mul_diagonal, mul_ite, ite_mul, Units.mul_inv, one_mul, mul_one,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/GeneralLinearGroup/FinTwo.lean:48:    Units.eq_mul_inv_iff_mul_eq, scalar_apply, ← smul_eq_diagonal_mul, smul_eq_mul_diagonal,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/GeneralLinearGroup/FinTwo.lean:268:      simp only [scalar_apply, ← smul_eq_mul_diagonal, ← mul_smul,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/GeneralLinearGroup/FinTwo.lean:269:        ← smul_eq_diagonal_mul, smul_mul, ← sq, hmsq, smul_zero, add_zero, ← add_smul,

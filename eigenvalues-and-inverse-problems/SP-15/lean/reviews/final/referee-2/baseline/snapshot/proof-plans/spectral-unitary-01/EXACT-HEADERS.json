@@ -1,0 +1,57 @@
+[
+  {
+    "name": "NLA.SP15.regularized_gram_blocks",
+    "header": "theorem regularized_gram_blocks (x : Parameters) (hx : x \u2208 parameterBox)\n    (z : \u2102) (t : \u211d) :\n    Matrix.reindex blockEquiv blockEquiv (regularizedGramBlocks x z t) =\n      (t : \u2102) \u2022 (1 : Square 9) + shiftedGram (constructedMatrix x) z",
+    "header_sha256": "1477ec0c43e23248e4f6cc97a8580eee43c99154d2f162672df78e1d13fe8d07"
+  },
+  {
+    "name": "NLA.SP15.schur_positive_blocks",
+    "header": "theorem schur_positive_blocks (x : Parameters) (hx : x \u2208 parameterBox)\n    (z : \u2102) (t : \u211d) (ht : 0 < t) :\n    0 < shiftScalar z t \u2227\n    (((shiftScalar z t : \u211d) : \u2102) \u2022 (1 : Square 3)).PosDef \u2227\n    (schurPivot x z t).PosDef",
+    "header_sha256": "49fde686dfae9c31a222c657d4dc448bfb1af8a01532c19dfa23826a2a526714"
+  },
+  {
+    "name": "NLA.SP15.shifted_gram_determinant",
+    "header": "theorem shifted_gram_determinant (x : Parameters) (hx : x \u2208 parameterBox)\n    (z : \u2102) (t : \u211d) (ht : 0 < t) :\n    Matrix.det ((t : \u2102) \u2022 (1 : Square 9) + shiftedGram (constructedMatrix x) z) =\n      (t : \u2102) ^ 3 * coefficientDeterminant x\n        ((shiftScalar z t ^ 3 / t : \u211d) : \u2102) ((shiftScalar z t : \u211d) : \u2102)",
+    "header_sha256": "855d183657132bb1f1a8747637447375e2f4bde16d16e481662679aebad17659"
+  },
+  {
+    "name": "NLA.SP15.equal_coefficients_gram_charpoly",
+    "header": "theorem equal_coefficients_gram_charpoly (x y : Parameters)\n    (hx : x \u2208 parameterBox) (hy : y \u2208 parameterBox)\n    (hxy : coefficients x = coefficients y) (z : \u2102) :\n    (shiftedGram (constructedMatrix x) z).charpoly =\n      (shiftedGram (constructedMatrix y) z).charpoly",
+    "header_sha256": "11743f7a8677572d2ba8512bf4e46a34bc9dff0a8c81f1ab37d92ababb1a1f3a"
+  },
+  {
+    "name": "NLA.SP15.gram_charpoly_singular_values",
+    "header": "theorem gram_charpoly_singular_values {n : \u2115} (A B : Square n)\n    (h : (A.conjTranspose * A).charpoly = (B.conjTranspose * B).charpoly) (k : \u2115) :\n    singularValue A k = singularValue B k",
+    "header_sha256": "23bea9fdd251d26888d276f274ca96a8e169bad7595885e792d07d0fa8abdd32"
+  },
+  {
+    "name": "NLA.SP15.equal_coefficients_shifted_singular_values",
+    "header": "theorem equal_coefficients_shifted_singular_values (x y : Parameters)\n    (hx : x \u2208 parameterBox) (hy : y \u2208 parameterBox)\n    (hxy : coefficients x = coefficients y) :\n    SuperIdentical (constructedMatrix x) (constructedMatrix y)",
+    "header_sha256": "aeb7e8a8a9f9704dfa8adc80728cba4d143fa9b08a892f3c83c0b9df70562ca3"
+  },
+  {
+    "name": "NLA.SP15.constructed_kernel_flag",
+    "header": "theorem constructed_kernel_flag (x : Parameters) (hx : x \u2208 parameterBox) :\n    (\u2200 v : BlockIndex \u2192 \u2102,\n      (blockMatrix x).mulVec v = 0 \u2194\n        (\u2200 i : Fin 3, v (Sum.inr (Sum.inl i)) = 0) \u2227\n        (\u2200 i : Fin 3, v (Sum.inr (Sum.inr i)) = 0)) \u2227\n    (\u2200 v : BlockIndex \u2192 \u2102,\n      (blockMatrix x ^ 2).mulVec v = 0 \u2194\n        \u2200 i : Fin 3, v (Sum.inr (Sum.inr i)) = 0)",
+    "header_sha256": "9b588c0cef8ec1a105cfb9213427daf7ece41828076f757674bc688e82edf183"
+  },
+  {
+    "name": "NLA.SP15.unitary_intertwiner_blocks",
+    "header": "theorem unitary_intertwiner_blocks (x y : Parameters)\n    (hx : x \u2208 parameterBox) (hy : y \u2208 parameterBox) (U : Square 9)\n    (hU : U.conjTranspose * U = 1)\n    (hA : constructedMatrix y = U.conjTranspose * constructedMatrix x * U) :\n    \u2203 U\u2081 U\u2082 U\u2083 : Square 3,\n      U\u2081.conjTranspose * U\u2081 = 1 \u2227 U\u2082.conjTranspose * U\u2082 = 1 \u2227\n      U\u2083.conjTranspose * U\u2083 = 1 \u2227 U = diagonalBlocks U\u2081 U\u2082 U\u2083 \u2227\n      pRoot y = U\u2081.conjTranspose * pRoot x * U\u2082 \u2227\n      qRoot y = U\u2082.conjTranspose * qRoot x * U\u2083",
+    "header_sha256": "d601d37506cfac869fbde681f6a8bc23a6525b38ddc5a3bbd8cf08a3f75a5542"
+  },
+  {
+    "name": "NLA.SP15.middle_block_conjugacy",
+    "header": "theorem middle_block_conjugacy (x y : Parameters)\n    (hx : x \u2208 parameterBox) (hy : y \u2208 parameterBox)\n    (h : UnitarySimilar (constructedMatrix x) (constructedMatrix y)) :\n    \u2203 V : Square 3, V.conjTranspose * V = 1 \u2227\n      pMatrix y = V.conjTranspose * pMatrix x * V \u2227\n      qMatrix y = V.conjTranspose * qMatrix x * V",
+    "header_sha256": "a5b51c36f93a8b93d20d6ce6ec0b17ce6c3f92498acd55c5e63f5b88faa0af9a"
+  },
+  {
+    "name": "NLA.SP15.parameter_slice_rigidity",
+    "header": "theorem parameter_slice_rigidity (x y : Parameters)\n    (hx : x \u2208 parameterBox) (hy : y \u2208 parameterBox) (V : Square 3)\n    (hV : V.conjTranspose * V = 1)\n    (hP : pMatrix y = V.conjTranspose * pMatrix x * V)\n    (hQ : qMatrix y = V.conjTranspose * qMatrix x * V) : x = y",
+    "header_sha256": "b6740c6b49734dca81c4e1be8c7bc29cecf7512469525f28422f12f281f945c4"
+  },
+  {
+    "name": "NLA.SP15.constructed_unitary_injectivity",
+    "header": "theorem constructed_unitary_injectivity (x y : Parameters)\n    (hx : x \u2208 parameterBox) (hy : y \u2208 parameterBox)\n    (h : UnitarySimilar (constructedMatrix x) (constructedMatrix y)) : x = y",
+    "header_sha256": "d10e1922eb5ae00bdb66d1b9532c41d1cb88c661fb9e004c82ba1d765bdf37ee"
+  }
+]

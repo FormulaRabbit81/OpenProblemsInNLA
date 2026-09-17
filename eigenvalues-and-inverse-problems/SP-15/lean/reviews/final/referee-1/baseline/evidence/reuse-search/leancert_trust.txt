@@ -1,0 +1,17 @@
+51:register_option leancert.trust : String := {
+59:register_option leancert.trust.kernelHeartbeats : Nat := {
+65:register_option leancert.trust.autoGate : Bool := {
+74:register_option leancert.trust.autoMaxSumTerms : Nat := {
+81:register_option leancert.trust.autoMaxPartitions : Nat := {
+87:register_option leancert.trust.autoMaxOptIterations : Nat := {
+593:/-! ## `#assert_trust`: CI trust manifests
+595:`#assert_trust kernel thm` / `#assert_trust native thm` pin a theorem's trust
+615:def classifyAxiom (n : Name) : TrustClass :=
+629:/-- `#assert_trust kernel thm`: `thm` depends on foundational axioms only.
+630:`#assert_trust native thm`: `thm` additionally depends on native-compiler
+632:elab "#assert_trust " cls:ident thm:ident : command => do
+636:    let part (c : TrustClass) : Array Name := axs.filter (classifyAxiom · == c)
+648:      throwErrorAt thm "#assert_trust: '{declName}' depends on sorry or \
+653:        throwErrorAt thm "#assert_trust kernel: '{declName}' is not \
+657:        throwErrorAt thm "#assert_trust native: '{declName}' has no \
+660:      throwErrorAt cls "#assert_trust: unknown trust class '{other}'; \

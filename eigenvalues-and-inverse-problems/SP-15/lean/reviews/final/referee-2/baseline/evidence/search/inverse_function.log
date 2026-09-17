@@ -1,0 +1,49 @@
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:24:Then we define `HasStrictFDerivAt.localInverse` to be the `invFun` of this `OpenPartialHomeomorph`,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:27:* `HasStrictFDerivAt.to_localInverse`: if `f` has an invertible derivative `f'` at `a` in the
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:28:  strict sense (`hf`), then `hf.localInverse f f' a` has derivative `f'.symm` at `f a` in the
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:113:The other part `HasStrictFDerivAt.to_localInverse` states that the inverse function
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:147:def localInverse (hf : HasStrictFDerivAt f (f' : E →L[𝕜] F) a) : F → E :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:152:theorem localInverse_def (hf : HasStrictFDerivAt f (f' : E →L[𝕜] F) a) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:153:    hf.localInverse f _ _ = (hf.toOpenPartialHomeomorph f).symm :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:157:    ∀ᶠ x in 𝓝 a, hf.localInverse f f' a (f x) = x :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:161:theorem localInverse_apply_image (hf : HasStrictFDerivAt f (f' : E →L[𝕜] F) a) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:162:    hf.localInverse f f' a (f a) = a :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:165:theorem eventually_right_inverse (hf : HasStrictFDerivAt f (f' : E →L[𝕜] F) a) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:166:    ∀ᶠ y in 𝓝 (f a), f (hf.localInverse f f' a y) = y :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:167:  (hf.toOpenPartialHomeomorph f).eventually_right_inverse' hf.mem_toOpenPartialHomeomorph_source
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:169:theorem localInverse_continuousAt (hf : HasStrictFDerivAt f (f' : E →L[𝕜] F) a) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:170:    ContinuousAt (hf.localInverse f f' a) (f a) :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:173:theorem localInverse_tendsto (hf : HasStrictFDerivAt f (f' : E →L[𝕜] F) a) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:174:    Tendsto (hf.localInverse f f' a) (𝓝 <| f a) (𝓝 a) :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:177:theorem localInverse_unique (hf : HasStrictFDerivAt f (f' : E →L[𝕜] F) a) {g : F → E}
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:178:    (hg : ∀ᶠ x in 𝓝 a, g (f x) = x) : ∀ᶠ y in 𝓝 (f a), g y = localInverse f f' a hf y :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:179:  eventuallyEq_of_left_inv_of_right_inv hg hf.eventually_right_inverse <|
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:183:then the inverse function `hf.localInverse f` has derivative `f'.symm` at `f a`. -/
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:184:theorem to_localInverse (hf : HasStrictFDerivAt f (f' : E →L[𝕜] F) a) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:185:    HasStrictFDerivAt (hf.localInverse f f' a) (f'.symm : F →L[𝕜] E) (f a) :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:188:    simpa [← localInverse_def] using hf
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:197:  hf.to_localInverse.congr_of_eventuallyEq <| (hf.localInverse_unique hg).mono fun _ => Eq.symm
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/ContDiff.lean:55:def localInverse (hf : ContDiffAt 𝕂 n f a) (hf' : HasFDerivAt f (f' : E →L[𝕂] F) a)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/ContDiff.lean:57:  (hf.hasStrictFDerivAt' hf' hn).localInverse f f' a
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/ContDiff.lean:59:theorem localInverse_apply_image (hf : ContDiffAt 𝕂 n f a)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/ContDiff.lean:60:    (hf' : HasFDerivAt f (f' : E →L[𝕂] F) a) (hn : n ≠ 0) : hf.localInverse hf' hn (f a) = a :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/ContDiff.lean:61:  (hf.hasStrictFDerivAt' hf' hn).localInverse_apply_image
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/ContDiff.lean:66:theorem to_localInverse (hf : ContDiffAt 𝕂 n f a)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/ContDiff.lean:68:    ContDiffAt 𝕂 n (hf.localInverse hf' hn) (f a) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/ContDiff.lean:69:  have := hf.localInverse_apply_image hf' hn
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Deriv.lean:33:abbrev localInverse : 𝕜 → 𝕜 :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Deriv.lean:34:  (hf.hasStrictFDerivAt_equiv hf').localInverse _ _ _
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Deriv.lean:38:lemma eventually_left_inverse : ∀ᶠ x in 𝓝 a, localInverse f f' a hf hf' (f x) = x :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Deriv.lean:41:lemma eventually_right_inverse : ∀ᶠ x in 𝓝 (f a), f (localInverse f f' a hf hf' x) = x :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Deriv.lean:42:  HasStrictFDerivAt.eventually_right_inverse ..
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Deriv.lean:47:theorem to_localInverse : HasStrictDerivAt (hf.localInverse f f' a hf') f'⁻¹ (f a) :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Deriv.lean:48:  (hf.hasStrictFDerivAt_equiv hf').to_localInverse
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Analytic.lean:26:lemma analyticAt_localInverse (hf : AnalyticAt 𝕜 f x) (hf' : deriv f x ≠ 0) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Analytic.lean:27:    AnalyticAt 𝕜 (hf.hasStrictDerivAt.localInverse _ _ _ hf') (f x) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Analytic.lean:43:  let r := hf.hasStrictDerivAt.localInverse _ _ _ hf'
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Analytic.lean:44:  have hra : AnalyticAt 𝕜 r (f x) := hf.analyticAt_localInverse hf'
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Analytic.lean:45:  have : r (f x) = x := HasStrictFDerivAt.localInverse_apply_image ..
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Analytic.lean:47:  exact (hg.comp hra).congr <| .fun_comp (HasStrictDerivAt.eventually_right_inverse ..) g
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/MetricSpace/CantorScheme.lean:142:  rw [_root_.eventually_nhds_iff]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/MetricSpace/Pseudo/Defs.lean:782:theorem eventually_nhds_iff {p : α → Prop} :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/MetricSpace/Pseudo/Defs.lean:786:theorem eventually_nhds_iff_ball {p : α → Prop} :

@@ -1,0 +1,22 @@
+64: /-- A product of a function `f : Fin (n + 1) → M` over all `Fin (n + 1)`
+65: is the product of `f x`, for some `x : Fin (n + 1)` times the remaining product -/
+66: @[to_additive /-- A sum of a function `f : Fin (n + 1) → M` over all `Fin (n + 1)` is the sum of
+67: `f x`, for some `x : Fin (n + 1)` plus the remaining sum -/]
+68: theorem prod_univ_succAbove (f : Fin (n + 1) → M) (x : Fin (n + 1)) :
+69:     ∏ i, f i = f x * ∏ i : Fin n, f (x.succAbove i) := by
+70:   rw [univ_succAbove n x, prod_cons, Finset.prod_map, coe_succAboveEmb]
+71: 
+72: /-- A product of a function `f : Fin (n + 1) → M` over all `Fin (n + 1)`
+73: is the product of `f 0` times the remaining product -/
+74: @[to_additive /-- A sum of a function `f : Fin (n + 1) → M` over all `Fin (n + 1)` is the sum of
+75: `f 0` plus the remaining sum -/]
+76: theorem prod_univ_succ (f : Fin (n + 1) → M) :
+77:     ∏ i, f i = f 0 * ∏ i : Fin n, f i.succ :=
+78:   prod_univ_succAbove f 0
+79: 
+80: /-- A product of a function `f : Fin (n + 1) → M` over all `Fin (n + 1)`
+81: is the product of `f (Fin.last n)` times the remaining product -/
+82: @[to_additive /-- A sum of a function `f : Fin (n + 1) → M` over all `Fin (n + 1)` is the sum of
+83: `f (Fin.last n)` plus the remaining sum -/]
+84: theorem prod_univ_castSucc (f : Fin (n + 1) → M) :
+85:     ∏ i, f i = (∏ i : Fin n, f (Fin.castSucc i)) * f (last n) := by

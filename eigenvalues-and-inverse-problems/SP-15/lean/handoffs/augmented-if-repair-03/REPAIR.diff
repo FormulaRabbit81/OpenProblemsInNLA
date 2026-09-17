@@ -1,0 +1,12 @@
+--- actual97-source
++++ if-repair03-source
+@@ -33,7 +33,8 @@
+   have hreduce : augmentedJacobian.det = jacobianMinor.det := by
+     rw [Matrix.det_succ_row augmentedJacobian (Fin.last 9)]
+     rw [Finset.sum_eq_single (Fin.last 9)]
+-    · rw [augmented_jacobian_last_minor, augmented_jacobian_last_row]
++    · rw [augmented_jacobian_last_minor, augmented_jacobian_last_row,
++        if_pos (show Fin.last 9 = (9 : Fin 10) from rfl)]
+       norm_num
+     · intro j _ hj
+       rw [augmented_jacobian_last_row]

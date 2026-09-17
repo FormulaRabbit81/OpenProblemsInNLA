@@ -1,0 +1,166 @@
+"""Read-only SP-15 review evidence collection; never invokes Lean, Lake, Git or network."""
+from pathlib import Path
+import hashlib
+import json
+import re
+import subprocess
+
+R = Path(__file__).resolve().parent
+B = Path('/private/tmp/nla-lean-next-20260915')
+P = B / 'next-proofs/SP-15'
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+M = L / '.lake/packages/mathlib'
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+def keep(src, dest):
+    data = src.read_bytes()
+    out = R / dest
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_bytes(data)
+    return {'original': str(src), 'snapshot': str(dest), 'sha256': sha(data), 'bytes': len(data)}
+
+index = json.loads((R / 'SOURCE-SNAPSHOT.json').read_text())
+sources = {f['path']: f for f in index['files']}
+freeze = json.loads((P / 'STATEMENT-FREEZE.json').read_text())
+for rel in freeze['frozen_files']:
+    if rel not in sources:
+        dest = Path('snapshot') / rel
+        if dest.suffix == '.lean':
+            dest = dest.with_suffix('.lean.txt')
+        rec = keep(P / rel, dest)
+        rec.update(path=rel, solution_closure=False)
+        sources[rel] = rec
+index['files'] = sorted(sources.values(), key=lambda f: f['path'])
+(R / 'SOURCE-SNAPSHOT.json').write_text(json.dumps(index, indent=2) + '\n')
+
+records = []
+records.append(keep(B / 'SP15-ROOT-FREEZE-ACCEPTANCE.json', 'evidence/SP15-ROOT-FREEZE-ACCEPTANCE.json'))
+for rel in ['ASSEMBLY-116.json', 'LOCAL-ENVIRONMENT.json', 'lake-manifest.json', 'lean-toolchain', 'serial_compile_v3.py']:
+    dest = Path('evidence/local-environment') / rel
+    if dest.suffix == '.py':
+        dest = dest.with_suffix('.py.txt')
+    records.append(keep(L / rel, dest))
+
+receipt_records = {}
+successes = {}
+chains = {}
+run116 = L / 'runs/development-116/RECEIPT.json'
+root_receipt = json.loads(run116.read_text())
+latest = {c['module']: c for c in root_receipt['commands']}
+
+def receipt(path):
+    if str(path) not in receipt_records:
+        receipt_records[str(path)] = keep(path, Path('evidence/local-runs') / path.parent.name / 'RECEIPT.json')
+    return json.loads(path.read_text())
+
+def follow(module, path):
+    chain = []
+    while True:
+        data = receipt(path)
+        c = next(c for c in data['commands'] if c['module'] == module)
+        chain.append({'receipt': str(path), 'source_sha256': c['source_sha256'],
+                      'output_sha256': c['output_sha256'], 'status': c.get('status', 'fresh')})
+        if c.get('status') != 'reused_exact_successful_local_output':
+            assert c['exit_code'] == 0, (module, path)
+            log = path.parent / (module + '.log')
+            assert sha(log.read_bytes()) == c['log_sha256']
+            records.append(keep(log, Path('evidence/local-runs') / path.parent.name / log.name))
+            successes[module] = {'run': path.parent.name, 'command': c,
+                                 'receipt_snapshot': receipt_records[str(path)]['snapshot'],
+                                 'log_snapshot': str(Path('evidence/local-runs') / path.parent.name / log.name)}
+            return chain
+        prior = Path(c['prior_receipt'])
+        assert sha(prior.read_bytes()) == c['prior_receipt_sha256']
+        pc = next(x for x in receipt(prior)['commands'] if x['module'] == module)
+        assert pc['source_sha256'] == c['source_sha256']
+        assert pc['output_sha256'] == c['output_sha256']
+        path = prior
+
+for rel, f in sources.items():
+    if not f['solution_closure']:
+        continue
+    module = rel.removesuffix('.lean').replace('/', '.')
+    assert latest[module]['source_sha256'] == f['sha256'], module
+    chains[module] = follow(module, run116)
+
+records.extend(receipt_records.values())
+(R / 'LOCAL-EVIDENCE.json').write_text(json.dumps({
+    'scope': 'Independent read-only audit of actual root macOS runs; this reviewer ran no compiler.',
+    'final_run': 'development-116', 'final_receipt_sha256': sha(run116.read_bytes()),
+    'solution_closure_count': len(chains), 'chains': chains, 'successful_origins': successes,
+    'bindings': records, 'github_comparator_executed_by_reviewer': False,
+}, indent=2) + '\n')
+
+# Actual source searches, retained with exact command, exit status and full output.
+queries = {
+ 'schur': ['rg','-n','det_fromBlocks|commut.*det|det.*commut',str(M/'Mathlib/LinearAlgebra/Matrix/SchurComplement.lean')],
+ 'spectral': ['rg','-n','eigenvalues_eq_eigenvalues_iff|singularValues.*charpoly|charpoly.*singularValues|sq_singularValues_fin|singularValues_of_finrank_le',str(M/'Mathlib/Analysis/InnerProductSpace')],
+ 'positive': ['rg','-n','diagonal.*domin|domin.*diagonal|strict.*row|eigenvalue_mem_ball|posDef_iff_eigenvalues_pos|sqrt_mul_sqrt_self|sqrt_nonneg|isUnit_mul_self_iff',*[str(M/'Mathlib'/p) for p in ['Analysis/Matrix','LinearAlgebra/Matrix','Analysis/SpecialFunctions/ContinuousFunctionalCalculus','Algebra/Group']]],
+ 'blocks': ['rg','-n','fromBlocks_inj|fromCols_ext_iff|fromRows_ext_iff|fromBlocks_multiply|fromBlocks.*unitary|unitary.*triangular|triangular.*unitary|fromBlocks_toBlocks',str(M/'Mathlib/Data/Matrix'),str(M/'Mathlib/LinearAlgebra/Matrix')],
+ 'IFT': ['rg','-n','localInverse_continuousAt|localInverse_apply_image|eventually_right_inverse|localInverse_tendsto|toContinuousLinearEquivOfDetNeZero|coe_toContinuousLinearEquivOfDetNeZero|hasStrictFDerivAt_pi',str(M/'Mathlib/Analysis/Calculus'),str(M/'Mathlib/Topology/Algebra/Module/FiniteDimension.lean')],
+ 'inverse': ['rg','-n','invOf_smul|smul_invOf|invOf_eq_right_inv|scalar.*inv|inv.*scalar',str(M/'Mathlib/Algebra'),str(M/'Mathlib/LinearAlgebra/Matrix')],
+ 'diagonal_and_polynomial': ['rg','-n','diagonal_conjTranspose|mul_diagonal|diagonal_mul|eq_of_infinite_eval_eq|mulVec_injective_of_isUnit|isUnit_iff_exists_inv|mul_eq_one_comm',str(M/'Mathlib/LinearAlgebra/Matrix'),str(M/'Mathlib/Algebra/Polynomial/Roots.lean')],
+ 'leancert_trust': ['rg','-n','assert_trust|register_option leancert.trust|classifyAxiom',str(L/'.lake/packages/leancert/LeanCert/Tactic/Verification.lean')],
+ 'distinctive_names_library': ['rg','-n','weighted_three_det|real_conjugate_pair|hermitian_posDef_of_strict_row_dominance|scalar_matrix_inv|scalar_square_commutes|determinant_lower_commuting|first_schur_diagonal|final_schur_matrix|triple_decomposition|phase_eq_of_positive_edge|separated_unitary_diagonal|gram_charpoly_singular_values',str(M/'Mathlib')],
+ 'prior_NLA_gram': ['rg','-n','gram.*charpoly|eigenvalues_eq_eigenvalues_iff|sq_singularValues_fin',str(P/'sources/reuse')],
+ 'commuting_square': ['rg','-n','self_pow|pow_self|smul.*commute|Commute.*smul',str(M/'Mathlib/Algebra/Group/Commute'),str(M/'Mathlib/Algebra/Algebra')],
+}
+declarations=[]
+for rel,f in sorted(sources.items()):
+    if not f['solution_closure']:
+        continue
+    for number,line in enumerate((R/f['snapshot']).read_text().splitlines(),1):
+        match=re.match(r'^(private )?(theorem|def|abbrev)\s+(\S+)',line)
+        if match:
+            declarations.append({'path':rel,'line':number,'private':bool(match[1]),
+                                 'kind':match[2],'name':match[3],'source_sha256':f['sha256']})
+queries['all_declaration_names']=['rg','-n','\\b(theorem|lemma|def|abbrev)\\s+('+'|'.join(re.escape(x['name']) for x in declarations)+')\\b',str(M/'Mathlib')]
+(R/'DECLARATION-INVENTORY.json').write_text(json.dumps({'scope':'Every top-level local declaration read in the complete 49-module closure; search semantic groups recorded in review.md and REUSE-EVIDENCE.json.',
+    'declarations':declarations},indent=2)+'\n')
+searches=[]
+matched=set()
+for label, argv in queries.items():
+    result=subprocess.run(argv,capture_output=True,text=True,check=False)
+    assert result.returncode in (0,1), (label,result.stderr)
+    out=R/'evidence/reuse-search'/f'{label}.txt'
+    out.parent.mkdir(parents=True,exist_ok=True)
+    out.write_text(result.stdout)
+    searches.append({'label':label,'argv':argv,'exit_code':result.returncode,
+                     'stdout_snapshot':str(out.relative_to(R)),'stdout_sha256':sha(out.read_bytes())})
+    for line in result.stdout.splitlines():
+        candidate=line.split(':',1)[0]
+        if candidate.startswith(str(M)) and candidate.endswith('.lean'):
+            matched.add(Path(candidate))
+
+# The main declarations were also read in context, not only searched by name.
+apis = [
+ 'Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean',
+ 'Analysis/Calculus/FDeriv/Prod.lean', 'Analysis/Calculus/FDeriv/Mul.lean',
+ 'Analysis/Calculus/FDeriv/Pow.lean',
+ 'Analysis/InnerProductSpace/Spectrum.lean', 'Analysis/InnerProductSpace/SingularValues.lean',
+ 'Analysis/SpecialFunctions/ContinuousFunctionalCalculus/Rpow/Basic.lean',
+ 'Analysis/Matrix/PosDef.lean', 'Analysis/Matrix/Order.lean',
+ 'LinearAlgebra/Matrix/Gershgorin.lean', 'LinearAlgebra/Matrix/SchurComplement.lean',
+ 'LinearAlgebra/Matrix/Block.lean', 'LinearAlgebra/Matrix/ConjTranspose.lean',
+ 'LinearAlgebra/Matrix/NonsingularInverse.lean', 'LinearAlgebra/Matrix/ToLin.lean',
+ 'LinearAlgebra/Matrix/Reindex.lean', 'LinearAlgebra/Matrix/Charpoly/Basic.lean',
+ 'LinearAlgebra/Charpoly/ToMatrix.lean', 'Data/Matrix/Block.lean',
+ 'Data/Matrix/ColumnRowPartitioned.lean', 'Topology/Algebra/Module/FiniteDimension.lean',
+ 'Algebra/Polynomial/Roots.lean', 'Algebra/Group/Commute/Units.lean',
+]
+api_records=[]
+for rel in apis:
+    api_records.append(keep(M/'Mathlib'/rel,Path('evidence/library/mathlib/Mathlib')/(rel+'.txt')))
+api_records.append(keep(L/'.lake/packages/leancert/LeanCert/Tactic/Verification.lean',
+    'evidence/library/leancert/LeanCert/Tactic/Verification.lean.txt'))
+(R/'REUSE-EVIDENCE.json').write_text(json.dumps({
+    'scope':'Pinned locally supplied Mathlib and retained MI13 sources; no TauCeti mathematical checkout or official service invocation was supplied or run.',
+    'mathlib_revision':'0df444a360eaa60ab8c11dca51a86af692955474',
+    'leancert_revision':'621a43d7cf21f87872392a01e874f2f1dbddc926',
+    'searches':searches,'library_snapshots':api_records,
+    'additional_matched_source_hashes':{str(p):sha(p.read_bytes()) for p in sorted(matched)},
+},indent=2)+'\n')
+print(json.dumps({'closure':len(chains),'raw_receipts':len(receipt_records),
+ 'successful_origin_logs':len(successes),'searches':len(searches),'library_snapshots':len(api_records)},indent=2))

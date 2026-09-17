@@ -1,0 +1,34 @@
+--- actual106/BlockGram.lean
++++ candidate/BlockGram.lean
+@@ -23,8 +23,7 @@
+     a • 1 + (A - z • 1).conjTranspose * (A - z • 1) =
+       (a + (Complex.normSq z : ℂ)) • 1 + A.conjTranspose * A -
+         z • A.conjTranspose - star z • A := by
+-  have hz : star z * z = (Complex.normSq z : ℂ) :=
+-    (Complex.normSq_eq_conj_mul_self (z := z)).symm
++  have hz : z * star z = (Complex.normSq z : ℂ) := Complex.mul_conj z
+   simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
+     Matrix.conjTranspose_one, sub_mul, mul_sub, Matrix.smul_mul,
+     Matrix.mul_smul, Matrix.one_mul, Matrix.mul_one, smul_smul, hz, add_smul]
+@@ -43,9 +42,9 @@
+   simp only [blockMatrix, Matrix.fromRows_zero, Matrix.fromBlocks_conjTranspose,
+     Matrix.conjTranspose_fromCols_eq_fromRows_conjTranspose,
+     Matrix.conjTranspose_zero, Matrix.fromBlocks_multiply,
+-    Matrix.fromRows_mul_fromCols, Matrix.fromCols_mul_fromRows,
++    Matrix.fromRows_mul_fromCols,
+     Matrix.zero_mul, Matrix.mul_zero, zero_add, add_zero,
+-    Matrix.fromBlocks_add, Matrix.fromBlocks_zero, hgram]
++    Matrix.fromBlocks_add, hgram]
+ 
+ private theorem regularized_gram_before_reindex (x : Parameters) (hx : x ∈ parameterBox)
+     (z : ℂ) (t : ℝ) :
+@@ -55,8 +54,7 @@
+   rw [shifted_gram_expansion, block_gram_diagonal x hx]
+   ext i j
+   rcases i with i | (i | i) <;> rcases j with j | (j | j) <;>
+-    simp [regularizedGramBlocks, blockMatrix, shiftScalar, Matrix.fromBlocks,
+-      Matrix.fromCols, Matrix.fromRows, Matrix.conjTranspose_apply,
++    simp [regularizedGramBlocks, blockMatrix, shiftScalar, Matrix.conjTranspose_apply,
+       Matrix.one_apply, sub_eq_add_neg]
+   all_goals ring
+ 

@@ -1,0 +1,16 @@
+92: protected theorem norm_prod {ι : Type*} (s : Finset ι) (f : ι → ℂ) :
+93:     ‖s.prod f‖ = s.prod fun i ↦ ‖f i‖ :=
+94:   map_prod isAbsoluteValueNorm.abvHom _ _
+95: 
+96: theorem norm_conj (z : ℂ) : ‖conj z‖ = ‖z‖ := by simp [norm_def]
+97: 
+98: @[simp] lemma norm_I : ‖I‖ = 1 := by simp [norm]
+99: 
+100: @[simp] lemma nnnorm_I : ‖I‖₊ = 1 := by simp [nnnorm]
+101: 
+102: @[simp 1100, norm_cast]
+103: lemma norm_real (r : ℝ) : ‖(r : ℂ)‖ = ‖r‖ := by
+104:   simp [norm_def, Real.sqrt_mul_self_eq_abs]
+105: 
+106: protected theorem norm_of_nonneg {r : ℝ} (h : 0 ≤ r) : ‖(r : ℂ)‖ = r :=
+107:   (norm_real _).trans (abs_of_nonneg h)

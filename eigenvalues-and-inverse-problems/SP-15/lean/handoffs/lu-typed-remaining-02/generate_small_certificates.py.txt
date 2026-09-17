@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+"""Generate actual typed scalar obligations, never assumptions or proof answers."""
+from pathlib import Path
+import ast, hashlib, json, re
+
+R=Path(__file__).resolve().parent
+P=R.parents[1]
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+source=P/'NLA/SP15/Definitions.lean'
+assert sha(source)=='fa57c71cd3e6d6551f081e479121f9f6a4695858732f3e6d1fa4cd79ad927498'
+s=source.read_text()
+prefix='''/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Fortier Bourque and Ransford retain
+credit for the original question and generic finiteness theorem.
+-/
+import NLA.SP15.Numerical
+import Mathlib.Tactic.FinCases
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.SP15
+noncomputable section
+open scoped BigOperators Matrix
+
+'''
+point=[v.strip() for v in re.search(r'def basePoint[^\n]*:= !\[(.*?)\]',s).group(1).split(',')]
+env={}
+translate=str.maketrans({'₁':'1','₂':'2','₃':'3'})
+def parse(e):
+    e=e.translate(translate).replace('^','**')
+    e=re.sub(r'\bx\s+(\d+)\b',r'x[\1]',e)
+    return ast.parse(' '.join(e.split()),mode='eval').body
+def render(e):
+    if isinstance(e,ast.Constant):
+        assert isinstance(e.value,int)
+        return str(e.value)
+    if isinstance(e,ast.Name):return env[e.id]
+    if isinstance(e,ast.Subscript):
+        assert isinstance(e.value,ast.Name) and e.value.id=='x'
+        return point[e.slice.value]
+    if isinstance(e,ast.BinOp):
+        op={ast.Add:'+',ast.Sub:'-',ast.Mult:'*',ast.Pow:'^'}[type(e.op)]
+        return '('+render(e.left)+' '+op+' '+render(e.right)+')'
+    raise AssertionError(ast.dump(e))
+body=s.split('def coefficients (x : Parameters) : Coefficients :=',1)[1].split('\ndef coefficientMonomials',1)[0]
+lets,vector=body.split('![',1)
+for name,e in re.findall(r'let\s+(\S+)\s*:=\s*(.*?)(?=\s*;\s*let|\s+let|\Z)',lets,re.S):
+    env[name.translate(translate)]=render(parse(e.rstrip('; \n')))
+entries=[render(parse(e.strip())) for e in vector.rsplit(']',1)[0].split(',')]
+values=[v.strip() for v in re.search(r'def coefficientBaseValue[^\n]*:= !\[(.*?)\]',s).group(1).split(',')]
+assert len(entries)==len(values)==9
+value_code=prefix+'theorem coefficient_base_value : coefficients basePoint = coefficientBaseValue := by\n  funext i\n  fin_cases i\n'
+for i,(e,v) in enumerate(zip(entries,values)):
+    value_code+=f'  · -- Coordinate {i}: expose the actual frozen polynomial and base-point entries.\n    change ({e} : ℝ) = ({v} : ℝ)\n    norm_num\n'
+value_code+='\n#print axioms coefficient_base_value\n#assert_trust kernel coefficient_base_value\n\nend\nend NLA.SP15\n'
+dest=P/'NLA/SP15/CoefficientValue.lean';assert not dest.exists();dest.write_text(value_code)
+
+raw=re.search(r'def upperCertificate :.*?:=\s*!!\[(.*?)\]\n',s,re.S).group(1)
+U=[[t.strip() for t in row.split(',')] for row in raw.split(';')]
+pivots=[U[i][i].replace('/',' / ') for i in range(9)]
+tri=prefix+'''theorem jacobian_lower_zero (i j : Fin 9) (hij : i < j) :
+    lowerCertificate i j = 0 := by
+  fin_cases i <;> fin_cases j <;> norm_num at hij <;> rfl
+
+theorem jacobian_lower_diag (i : Fin 9) : lowerCertificate i i = 1 := by
+  fin_cases i <;> rfl
+
+theorem jacobian_upper_zero (i j : Fin 9) (hij : j < i) :
+    upperCertificate i j = 0 := by
+  fin_cases i <;> fin_cases j <;> norm_num at hij <;> rfl
+
+theorem jacobian_upper_diag_ne (i : Fin 9) : upperCertificate i i ≠ 0 := by
+  fin_cases i
+'''
+for i,v in enumerate(pivots):
+    tri+=f'  · -- Pivot {i} is definitionally the frozen rational entry.\n    change ({v} : ℝ) ≠ 0\n    norm_num\n'
+prod='1'
+for v in pivots:prod=f'({prod} * ({v}))'
+tri+='''
+theorem jacobian_upper_diag_product :
+    (∏ i : Fin 9, upperCertificate i i) = (-1088 : ℝ) := by
+  -- Left-to-right products keep every intermediate pivot product an integer.
+  simp only [Fin.prod_univ_castSucc, Fin.prod_univ_zero]
+  -- Each pivot lookup is checked against the actual frozen matrix.
+'''+f'  change ({prod} : ℝ) = -1088\n  norm_num\n'
+for name in ['jacobian_lower_zero','jacobian_lower_diag','jacobian_upper_zero','jacobian_upper_diag_ne','jacobian_upper_diag_product']:
+    tri+=f'\n#print axioms {name}\n#assert_trust kernel {name}\n'
+tri+='\nend\nend NLA.SP15\n'
+dest2=P/'NLA/SP15/JacobianTriangular.lean';assert not dest2.exists();dest2.write_text(tri)
+receipt={'scope':'Generated typed candidates; each actual lookup/equality must be proved by Lean',
+ 'generator_sha256':sha(Path(__file__)),'definitions_sha256':sha(source),
+ 'files':{str(p.relative_to(P)):sha(p) for p in [dest,dest2]},
+ 'coefficient_coordinate_coverage':list(range(9)),'pivot_coverage':list(range(9)),
+ 'compiler_executed':False,'count_change':0}
+(R/'SMALL-CERTIFICATES-GENERATION.json').write_text(json.dumps(receipt,indent=2)+'\n')
+print(json.dumps(receipt,indent=2))

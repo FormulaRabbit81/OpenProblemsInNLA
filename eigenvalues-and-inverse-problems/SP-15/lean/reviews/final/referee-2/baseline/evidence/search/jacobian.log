@@ -1,0 +1,31 @@
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Vandermonde.lean:187:    (fun i j ↦ by simp [W, r, projVandermonde_apply]), det_succ_row_zero,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Determinant.lean:223:theorem det_toLin (b : Basis ι R M) (f : Matrix ι ι R) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Determinant.lean:228:theorem det_toLin' (f : Matrix ι ι R) : LinearMap.det (Matrix.toLin' f) = Matrix.det f := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Determinant.lean:229:  simp only [← toLin_eq_toLin', det_toLin]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/FreeModule/Norm.lean:35:  rw [← Matrix.det_diagonal, ← LinearMap.det_toLin b']
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Gershgorin.lean:70:  exact ne_of_lt (LinearMap.bot_lt_ker_of_det_eq_zero (by rwa [LinearMap.det_toLin']))
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Adjugate.lean:369:  simp_rw [adjugate_apply, det_succ_row _ j, updateRow_self, submatrix_updateRow_succAbove]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Adjugate.lean:417:  rw [det_succ_row A' (e i)]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean:28:* `Matrix.det_of_isUpperTriangular` and `Matrix.det_of_isLowerTriangular`: the determinant of
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean:337:theorem det_of_isUpperTriangular [LinearOrder m] (h : M.IsUpperTriangular) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean:342:@[deprecated (since := "2026-07-30")] alias det_of_upperTriangular := det_of_isUpperTriangular
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean:344:theorem det_of_isLowerTriangular [LinearOrder m] (M : Matrix m m R) (h : M.IsLowerTriangular) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean:347:  exact det_of_isUpperTriangular h.transpose
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean:349:@[deprecated (since := "2026-07-30")] alias det_of_lowerTriangular := det_of_isLowerTriangular
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean:362:  rw [Matrix.det_of_isUpperTriangular (Matrix.matrixOfPolynomials_blockTriangular p (fun i ↦
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/TotallyUnimodular.lean:140:    · have hAB := det_succ_row ((fromRows A B).submatrix f g) i
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Misc.lean:78:  rw [← one_smul R M.det, ← Matrix.det_updateRow_sum _ i₀ (fun _ ↦ 1), Matrix.det_succ_row _ i₀]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Rank.lean:278:  have hdet : A.det ≠ 0 := by simpa [det_of_isLowerTriangular A hA, Finset.prod_ne_zero_iff]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Rank.lean:284:  have hdet : A.det ≠ 0 := by simpa [det_of_isUpperTriangular hA, Finset.prod_ne_zero_iff]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean:673:`Matrix.det_of_isUpperTriangular`. -/
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean:724:`Matrix.det_of_isLowerTriangular`. -/
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean:763:theorem det_succ_row_zero {n : ℕ} (A : Matrix (Fin n.succ) (Fin n.succ) R) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean:771:theorem det_succ_row {n : ℕ} (A : Matrix (Fin n.succ) (Fin n.succ) R) (i : Fin n.succ) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean:781:  rw [← det_permute, det_succ_row_zero]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean:790:  rw [← det_transpose, det_succ_row _ j]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean:808:  simp only [det_succ_row_zero, det_unique, Fin.default_eq_zero, submatrix_apply,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean:823:  simp only [det_succ_row_zero, submatrix_apply, Fin.succ_zero_eq_one, submatrix_submatrix,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:161:    rw [det_succ_row_zero, map_sum, eval_finsetSum]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Echelon/Pivot.lean:155:    rw [det_of_isUpperTriangular htri]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:203:  simp [charpoly, det_of_isUpperTriangular h.charmatrix]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/RootSystem/CartanMatrix.lean:219:    rwa [ne_eq, ← det_toLin', det_eq_zero_iff_ker_ne_bot, aux, ker_neg, ← eigenspace_def,

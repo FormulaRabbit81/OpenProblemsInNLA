@@ -1,0 +1,18 @@
+--- before/ShiftedDeterminant.lean
++++ after/ShiftedDeterminant.lean
+@@ -86,6 +86,7 @@
+         (regularizedGramBlocks x z t).det := by
+       rw [← regularized_gram_blocks x hx z t, Matrix.det_reindex_self]
+     _ = (s • (1 : Square 3)).det * (Matrix.fromBlocks X B C D).det := by
++      -- Expose the frozen regularized matrix as a 3-by-6 split for its first Schur complement.
+       change (Matrix.fromBlocks (s • (1 : Square 3))
+         (Matrix.fromCols ((-star z) • pRoot x) (0 : Square 3))
+         (Matrix.fromRows ((-z) • (pRoot x).conjTranspose) (0 : Square 3))
+@@ -100,6 +101,7 @@
+     _ = (t : ℂ) ^ 3 * coefficientDeterminant x
+         ((shiftScalar z t ^ 3 / t : ℝ) : ℂ) ((shiftScalar z t : ℝ) : ℂ) := by
+       rw [hBC]
++      -- Expand only X and D in the remaining 3-by-3 determinant before the proved factorization.
+       change s ^ 3 * ((s • (1 : Square 3) + ((t : ℂ) / s) • pMatrix x) *
+         (s • (1 : Square 3) + qMatrix x) - (Complex.normSq z : ℂ) • qMatrix x).det = _
+       rw [final_schur_matrix (pMatrix x) (qMatrix x) s (t : ℂ)

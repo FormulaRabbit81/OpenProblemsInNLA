@@ -1,0 +1,10 @@
+50: 
+51: variable [NeZero (1 : α)]
+52: 
+53: /-- Specialisation of `Nat.cast_pos'`, which seems to be easier for Lean to use. -/
+54: @[simp]
+55: theorem cast_pos {α} [Semiring α] [PartialOrder α] [IsOrderedRing α] [Nontrivial α] {n : ℕ} :
+56:     (0 : α) < n ↔ 0 < n := cast_pos'
+57: 
+58: /-- See also `Nat.ofNat_pos`, specialised to `IsOrderedRing`. -/
+59: @[simp low]

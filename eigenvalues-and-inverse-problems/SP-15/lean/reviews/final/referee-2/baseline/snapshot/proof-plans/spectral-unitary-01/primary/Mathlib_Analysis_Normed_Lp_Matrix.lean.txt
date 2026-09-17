@@ -1,0 +1,34 @@
+32:     (WithLp.linearEquiv _ R (n → R)).symm.arrowCongr
+33:       (WithLp.linearEquiv _ R (m → R)).symm
+34: 
+35: @[simp]
+36: lemma toLpLin_toLp (A : Matrix m n R) (x : n → R) :
+37:     toLpLin p q A (toLp _ x) = toLp _ (Matrix.toLin' A x) := rfl
+38: 
+39: @[simp]
+40: theorem ofLp_toLpLin (A : Matrix m n R) (x : WithLp p (n → R)) :
+41:     ofLp (toLpLin p q A x) = Matrix.toLin' A (ofLp x) :=
+42:   rfl
+43: 
+44: theorem toLpLin_apply (M : Matrix m n R) (v : WithLp p (n → R)) :
+45:     toLpLin p q M v = toLp _ (M *ᵥ ofLp v) := rfl
+46: 
+47: theorem toLpLin_eq_toLin [Finite m] :
+48:     toLpLin p q = Matrix.toLin (PiLp.basisFun p R n) (PiLp.basisFun q R m) :=
+49:   rfl
+50: 
+51: @[simp]
+52: theorem toLpLin_one : toLpLin p p (1 : Matrix n n R) = LinearMap.id := by ext; simp
+53: 
+54: /-- Note that applying this theorem needs an explicit choice of `q`. -/
+55: theorem toLpLin_mul [Fintype o] [DecidableEq o] (A : Matrix m n R) (B : Matrix n o R) :
+56:     toLpLin p r (A * B) = toLpLin q r A ∘ₗ toLpLin p q B := by
+57:   ext; simp
+58: 
+59: /-- A copy of `toLpLin_mul` that works for `simp`, for the common case where the domain and codomain
+60: have the same norm. -/
+61: @[simp]
+62: theorem toLpLin_mul_same [Fintype o] [DecidableEq o] (A : Matrix m n R) (B : Matrix n o R) :
+63:     toLpLin p p (A * B) = toLpLin p p A ∘ₗ toLpLin p p B :=
+64:   toLpLin_mul _ _ _ _ _
+65: 

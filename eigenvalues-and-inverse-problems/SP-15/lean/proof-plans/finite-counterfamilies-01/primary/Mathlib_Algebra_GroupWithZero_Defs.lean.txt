@@ -1,0 +1,12 @@
+48:   /-- Multiplication by a nonzero element is left cancellative. -/
+49:   protected mul_left_cancel_of_ne_zero : ∀ {a : M₀}, a ≠ 0 → IsLeftRegular a
+50: 
+51: section IsLeftCancelMulZero
+52: section Mul
+53: variable [Mul M₀] [Zero M₀] [IsLeftCancelMulZero M₀] {a b c : M₀}
+54: 
+55: theorem mul_left_cancel₀ (ha : a ≠ 0) (h : a * b = a * c) : b = c :=
+56:   IsLeftCancelMulZero.mul_left_cancel_of_ne_zero ha h
+57: 
+58: theorem mul_right_injective₀ (ha : a ≠ 0) : Function.Injective (a * ·) :=
+59:   fun _ _ => mul_left_cancel₀ ha

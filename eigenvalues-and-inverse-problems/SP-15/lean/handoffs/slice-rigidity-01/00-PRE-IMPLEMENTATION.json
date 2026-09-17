@@ -1,0 +1,15 @@
+{
+  "time": "2026-09-17T09:52:26.017322+00:00",
+  "author": "/root",
+  "scope": "Exact25 only; first numerical and symbolic targets already accepted, before any source implementation",
+  "accepted_plan": "/private/tmp/nla-lean-next-20260915/SP15-ROOT-SPECTRAL-UNITARY-PLAN-ACCEPTANCE.json",
+  "acceptance_sha256": "2c3e7cdb46afe4eb384f83d1b4038f35d12b25c3131adf553a8e59290357926a",
+  "plan_manifest_sha256": "4c305ccf1aa3fd37d3a36e1b74e61461115ce4e737795fdc8d5afbe8097d5e05",
+  "exact_header": {
+    "name": "NLA.SP15.parameter_slice_rigidity",
+    "header": "theorem parameter_slice_rigidity (x y : Parameters)\n    (hx : x \u2208 parameterBox) (hy : y \u2208 parameterBox) (V : Square 3)\n    (hV : V.conjTranspose * V = 1)\n    (hP : pMatrix y = V.conjTranspose * pMatrix x * V)\n    (hQ : qMatrix y = V.conjTranspose * qMatrix x * V) : x = y",
+    "header_sha256": "b6740c6b49734dca81c4e1be8c7bc29cecf7512469525f28422f12f281f945c4"
+  },
+  "implementation_split": "Diagonal unitary reduction and positive-edge phase helper, then public complete ten-coordinate rigidity; only consumed algebra helpers. All source edits in SP15, no frozen changes.",
+  "numerical_computation": "No new intervals or determinant expansion; exact existing kernel LeanCert box/separation results consumed."
+}

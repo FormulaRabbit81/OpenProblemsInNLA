@@ -1,0 +1,197 @@
+NLA/SP15/BoxGeometry.lean:33:17: error: Application type mismatch: The argument
+  Continuous.sub (continuous_apply i) continuous_const
+has type
+  @Continuous ((i : Fin 10) → ?m.46 i) (?m.46 i) Pi.topologicalSpace (?m.47 i) ((fun p => p i) - fun x => ?m.60)
+but is expected to have type
+  @Continuous ?m.67 ?m.62 ?m.69 PseudoMetricSpace.toUniformSpace.toTopologicalSpace ?m.65
+in the application
+  Continuous.norm (Continuous.sub (continuous_apply i) continuous_const)
+NLA/SP15/BoxGeometry.lean:50:21: error: unsolved goals
+x : Parameters
+hx : x ∈ parameterBox
+hsmall : 0 < 1 - boxRadius
+hlarge : 0 < 1 + boxRadius
+hmargin : 4 - boxRadius - 3 * (1 + boxRadius) = 3 / 4
+hone : ∀ (i : Fin 10), basePoint i = 1 → 0 < x i ∧ |x i| < 1 + boxRadius
+⊢ ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 6 = 1
+NLA/SP15/BoxGeometry.lean:51:21: error: unsolved goals
+x : Parameters
+hx : x ∈ parameterBox
+hsmall : 0 < 1 - boxRadius
+hlarge : 0 < 1 + boxRadius
+hmargin : 4 - boxRadius - 3 * (1 + boxRadius) = 3 / 4
+hone : ∀ (i : Fin 10), basePoint i = 1 → 0 < x i ∧ |x i| < 1 + boxRadius
+h6 : 0 < x 6 ∧ |x 6| < 1 + boxRadius
+⊢ ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 7 = 1
+NLA/SP15/BoxGeometry.lean:52:21: error: unsolved goals
+x : Parameters
+hx : x ∈ parameterBox
+hsmall : 0 < 1 - boxRadius
+hlarge : 0 < 1 + boxRadius
+hmargin : 4 - boxRadius - 3 * (1 + boxRadius) = 3 / 4
+hone : ∀ (i : Fin 10), basePoint i = 1 → 0 < x i ∧ |x i| < 1 + boxRadius
+h6 : 0 < x 6 ∧ |x 6| < 1 + boxRadius
+h7 : 0 < x 7 ∧ |x 7| < 1 + boxRadius
+⊢ ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 8 = 1
+NLA/SP15/BoxGeometry.lean:53:21: error: unsolved goals
+x : Parameters
+hx : x ∈ parameterBox
+hsmall : 0 < 1 - boxRadius
+hlarge : 0 < 1 + boxRadius
+hmargin : 4 - boxRadius - 3 * (1 + boxRadius) = 3 / 4
+hone : ∀ (i : Fin 10), basePoint i = 1 → 0 < x i ∧ |x i| < 1 + boxRadius
+h6 : 0 < x 6 ∧ |x 6| < 1 + boxRadius
+h7 : 0 < x 7 ∧ |x 7| < 1 + boxRadius
+h8 : 0 < x 8 ∧ |x 8| < 1 + boxRadius
+⊢ ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 9 = 1
+NLA/SP15/BoxGeometry.lean:61:52: error: linarith failed to find a contradiction
+case «0»
+x : Parameters
+hx : x ∈ parameterBox
+hsmall : 0 < 1 - boxRadius
+hlarge : 0 < 1 + boxRadius
+hmargin : 4 - boxRadius - 3 * (1 + boxRadius) = 3 / 4
+hone : ∀ (i : Fin 10), basePoint i = 1 → 0 < x i ∧ |x i| < 1 + boxRadius
+h6 : 0 < x 6 ∧ |x 6| < 1 + boxRadius
+h7 : 0 < x 7 ∧ |x 7| < 1 + boxRadius
+h8 : 0 < x 8 ∧ |x 8| < 1 + boxRadius
+h9 : 0 < x 9 ∧ |x 9| < 1 + boxRadius
+hp0 : 1 - boxRadius < x 0 ∧ x 0 < 1 + boxRadius
+hp1 : 2 - boxRadius < x 1 ∧ x 1 < 2 + boxRadius
+hp2 : ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 - boxRadius < x 2 ∧ x 2 < ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 + boxRadius
+a✝ : ![x 0, x 1, x 2] ⟨0, ⋯⟩ ≤ 0
+⊢ False
+failed
+NLA/SP15/BoxGeometry.lean:61:52: error: linarith failed to find a contradiction
+case «1»
+x : Parameters
+hx : x ∈ parameterBox
+hsmall : 0 < 1 - boxRadius
+hlarge : 0 < 1 + boxRadius
+hmargin : 4 - boxRadius - 3 * (1 + boxRadius) = 3 / 4
+hone : ∀ (i : Fin 10), basePoint i = 1 → 0 < x i ∧ |x i| < 1 + boxRadius
+h6 : 0 < x 6 ∧ |x 6| < 1 + boxRadius
+h7 : 0 < x 7 ∧ |x 7| < 1 + boxRadius
+h8 : 0 < x 8 ∧ |x 8| < 1 + boxRadius
+h9 : 0 < x 9 ∧ |x 9| < 1 + boxRadius
+hp0 : 1 - boxRadius < x 0 ∧ x 0 < 1 + boxRadius
+hp1 : 2 - boxRadius < x 1 ∧ x 1 < 2 + boxRadius
+hp2 : ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 - boxRadius < x 2 ∧ x 2 < ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 + boxRadius
+a✝ : ![x 0, x 1, x 2] ⟨1, ⋯⟩ ≤ 0
+⊢ False
+failed
+NLA/SP15/BoxGeometry.lean:61:52: error: linarith failed to find a contradiction
+case «2»
+x : Parameters
+hx : x ∈ parameterBox
+hsmall : 0 < 1 - boxRadius
+hlarge : 0 < 1 + boxRadius
+hmargin : 4 - boxRadius - 3 * (1 + boxRadius) = 3 / 4
+hone : ∀ (i : Fin 10), basePoint i = 1 → 0 < x i ∧ |x i| < 1 + boxRadius
+h6 : 0 < x 6 ∧ |x 6| < 1 + boxRadius
+h7 : 0 < x 7 ∧ |x 7| < 1 + boxRadius
+h8 : 0 < x 8 ∧ |x 8| < 1 + boxRadius
+h9 : 0 < x 9 ∧ |x 9| < 1 + boxRadius
+hp0 : 1 - boxRadius < x 0 ∧ x 0 < 1 + boxRadius
+hp1 : 2 - boxRadius < x 1 ∧ x 1 < 2 + boxRadius
+hp2 : ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 - boxRadius < x 2 ∧ x 2 < ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 + boxRadius
+a✝ : ![x 0, x 1, x 2] ⟨2, ⋯⟩ ≤ 0
+⊢ False
+failed
+NLA/SP15/BoxGeometry.lean:60:45: warning: This simp argument is unused:
+  Matrix.cons_val_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [pCoordinates, Matrix.cons_val_one, Matrix.cons_val_two]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/BoxGeometry.lean:61:6: warning: This simp argument is unused:
+  Matrix.cons_val_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [pCoordinates, Matrix.cons_val_zero, Matrix.cons_val_two]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/BoxGeometry.lean:61:27: warning: This simp argument is unused:
+  Matrix.cons_val_two
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [pCoordinates, Matrix.cons_val_zero, Matrix.cons_val_one]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/BoxGeometry.lean:100:67: error: linarith failed to find a contradiction
+case «0».«2»
+x y : Parameters
+hx : x ∈ parameterBox
+hy : y ∈ parameterBox
+hgap : 0 < 1 - 2 * boxRadius
+hx0 : 1 - boxRadius < x 0 ∧ x 0 < 1 + boxRadius
+hx1 : 2 - boxRadius < x 1 ∧ x 1 < 2 + boxRadius
+hx2 : ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 - boxRadius < x 2 ∧ x 2 < ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 + boxRadius
+hy0 : 1 - boxRadius < y 0 ∧ y 0 < 1 + boxRadius
+hy1 : 2 - boxRadius < y 1 ∧ y 1 < 2 + boxRadius
+hy2 : ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 - boxRadius < y 2 ∧ y 2 < ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 + boxRadius
+h : x 0 = y 2
+hij : True
+⊢ False
+failed
+NLA/SP15/BoxGeometry.lean:100:67: error: linarith failed to find a contradiction
+case «1».«2»
+x y : Parameters
+hx : x ∈ parameterBox
+hy : y ∈ parameterBox
+hgap : 0 < 1 - 2 * boxRadius
+hx0 : 1 - boxRadius < x 0 ∧ x 0 < 1 + boxRadius
+hx1 : 2 - boxRadius < x 1 ∧ x 1 < 2 + boxRadius
+hx2 : ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 - boxRadius < x 2 ∧ x 2 < ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 + boxRadius
+hy0 : 1 - boxRadius < y 0 ∧ y 0 < 1 + boxRadius
+hy1 : 2 - boxRadius < y 1 ∧ y 1 < 2 + boxRadius
+hy2 : ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 - boxRadius < y 2 ∧ y 2 < ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 + boxRadius
+h : x 1 = y 2
+hij : True
+⊢ False
+failed
+NLA/SP15/BoxGeometry.lean:100:67: error: linarith failed to find a contradiction
+case «2».«0»
+x y : Parameters
+hx : x ∈ parameterBox
+hy : y ∈ parameterBox
+hgap : 0 < 1 - 2 * boxRadius
+hx0 : 1 - boxRadius < x 0 ∧ x 0 < 1 + boxRadius
+hx1 : 2 - boxRadius < x 1 ∧ x 1 < 2 + boxRadius
+hx2 : ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 - boxRadius < x 2 ∧ x 2 < ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 + boxRadius
+hy0 : 1 - boxRadius < y 0 ∧ y 0 < 1 + boxRadius
+hy1 : 2 - boxRadius < y 1 ∧ y 1 < 2 + boxRadius
+hy2 : ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 - boxRadius < y 2 ∧ y 2 < ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 + boxRadius
+h : x 2 = y 0
+hij : True
+⊢ False
+failed
+NLA/SP15/BoxGeometry.lean:100:67: error: linarith failed to find a contradiction
+case «2».«1»
+x y : Parameters
+hx : x ∈ parameterBox
+hy : y ∈ parameterBox
+hgap : 0 < 1 - 2 * boxRadius
+hx0 : 1 - boxRadius < x 0 ∧ x 0 < 1 + boxRadius
+hx1 : 2 - boxRadius < x 1 ∧ x 1 < 2 + boxRadius
+hx2 : ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 - boxRadius < x 2 ∧ x 2 < ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 + boxRadius
+hy0 : 1 - boxRadius < y 0 ∧ y 0 < 1 + boxRadius
+hy1 : 2 - boxRadius < y 1 ∧ y 1 < 2 + boxRadius
+hy2 : ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 - boxRadius < y 2 ∧ y 2 < ![1, 2, 3, 4, 4, 4, 1, 1, 1, 1] 2 + boxRadius
+h : x 2 = y 1
+hij : True
+⊢ False
+failed
+'NLA.SP15.parameter_box_geometry' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/SP15/BoxGeometry.lean:103:21: error: #assert_trust: 'NLA.SP15.parameter_box_geometry' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
+'NLA.SP15.parameter_box_bounds' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/SP15/BoxGeometry.lean:105:21: error: #assert_trust: 'NLA.SP15.parameter_box_bounds' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
+'NLA.SP15.p_intervals_separate' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/SP15/BoxGeometry.lean:107:21: error: #assert_trust: 'NLA.SP15.p_intervals_separate' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

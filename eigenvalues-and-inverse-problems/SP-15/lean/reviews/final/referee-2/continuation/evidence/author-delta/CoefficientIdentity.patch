@@ -1,0 +1,10 @@
+--- before/CoefficientIdentity.lean
++++ after/CoefficientIdentity.lean
+@@ -58,6 +58,7 @@
+     ext i j
+     simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, pMatrix,
+       Matrix.diagonal_mul]
++    -- The nine cases expose literal matrix-notation entries and the local D/S abbreviations.
+     fin_cases i <;> fin_cases j
+     · change u * 1 + s * ((x 0 : ℂ) + (x 3 : ℂ)) + (x 0 : ℂ) * (x 3 : ℂ) = D₁
+       dsimp only [D₁, D₂, D₃, S₁, S₂, S₃]

@@ -1,0 +1,264 @@
+#!/usr/bin/env python3
+"""SP-15 independent cleanup audit. Reads source/evidence; never runs Lean, Lake or Git."""
+from pathlib import Path
+import datetime, difflib, hashlib, json, re, shutil
+
+HERE = Path(__file__).resolve().parent
+B = Path('/private/tmp/nla-lean-next-20260915')
+P = B / 'next-proofs/SP-15'
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+OLD = B / 'reviews/SP15-full-referee2-20260917'
+D = B / 'SP15-proof-quality-comments-01'
+S = HERE / 'snapshot'
+checks, retained = [], {}
+
+def sha(p):
+    return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+
+def need(condition, label, detail=None):
+    checks.append({'check': label, 'pass': bool(condition), 'detail': detail})
+    if not condition:
+        raise AssertionError((label, detail))
+
+def dump(rel, obj):
+    p = HERE / rel
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(obj, indent=2, ensure_ascii=False) + '\n')
+
+def keep(p, rel):
+    p, q = Path(p), HERE / rel
+    q.parent.mkdir(parents=True, exist_ok=True)
+    if q.exists():
+        need(sha(q) == sha(p), 'retained-unchanged:' + rel)
+    else:
+        shutil.copy2(p, q)
+    retained[str(p)] = {'original': str(p), 'retained': rel, 'sha256': sha(p)}
+    return q
+
+def strip_comments(text):
+    """Preserve strings/newlines and token separation; support nested Lean comments."""
+    out, i, depth = [], 0, 0
+    while i < len(text):
+        if depth:
+            if text.startswith('/-', i):
+                depth += 1; i += 2
+            elif text.startswith('-/', i):
+                depth -= 1; i += 2; out.append(' ')
+            else:
+                if text[i] == '\n': out.append('\n')
+                i += 1
+        elif text.startswith('/-', i):
+            out.append(' '); depth = 1; i += 2
+        elif text.startswith('--', i):
+            j = text.find('\n', i)
+            i = len(text) if j < 0 else j
+            out.append(' ')
+        elif text[i] == '"':
+            j = i + 1
+            while j < len(text):
+                if text[j] == '\\': j += 2
+                elif text[j] == '"': j += 1; break
+                else: j += 1
+            out.append(text[i:j]); i = j
+        else:
+            out.append(text[i]); i += 1
+    assert depth == 0, 'unclosed comment'
+    return ''.join(out)
+
+def normalized_code(text):
+    return ' '.join(strip_comments(text).split())
+
+original_seal = json.loads((OLD / 'SEAL.json').read_text())
+need(sha(OLD/'MANIFEST.json') == 'f859daf5fec8fd20b84e38bbe9e2036b02caa8dc2619d8bf13833d18ee626193', 'original-manifest-fixed')
+for rel, expected in original_seal['bindings'].items():
+    need(sha(OLD/rel) == expected, 'original-seal-binding:' + rel)
+for x in json.loads((OLD/'MANIFEST.json').read_text())['files']:
+    need(sha(OLD/x['path']) == x['sha256'], 'original-payload-preserved:' + x['path'])
+for rel in ['MANIFEST.json', 'SEAL.json', 'REPORT.md', 'FINDINGS.json', 'VERDICT.json',
+            'SOURCE-BINDINGS.json', 'verify.py', 'READ-SCOPE.json']:
+    keep(OLD/rel, 'evidence/original-review/' + rel)
+old_binding = json.loads((OLD/'SOURCE-BINDINGS.json').read_text())
+old_closure = {x['path']: x['sha256'] for x in old_binding['files'] if x['scope']=='solution-closure'}
+need(len(old_closure) == 49, 'original-closure49')
+need(sha(D/'MANIFEST.json') == 'f8efa69e55a267dda57bdc4587a98436ea54d91010036963403426cf573d05e0', 'author-delta-manifest-fixed')
+delta_manifest = json.loads((D/'MANIFEST.json').read_text())
+keep(D/'MANIFEST.json', 'evidence/author-delta/MANIFEST.json')
+for rel, expected in delta_manifest['files'].items():
+    need(sha(D/rel) == expected, 'author-delta-payload:' + rel)
+    keep(D/rel, 'evidence/author-delta/' + rel)
+# Peer acceptance is archived and hashed as an opaque author-packet payload only.
+own_accept = B/'SP15-ROOT-FULL-REVIEW2-ORIGINAL-ACCEPTANCE.json'
+keep(own_accept, 'evidence/coordinator/' + own_accept.name)
+for rel, expected in json.loads(own_accept.read_text())['bindings'].items():
+    need(sha(OLD/rel) == expected, 'root-original-acceptance-binding:' + rel)
+
+f1 = next(x for x in json.loads((OLD/'FINDINGS.json').read_text()) if x['id']=='F1')
+comment_files = sorted(x['file'] for x in f1['locations'])
+need(len(comment_files) == 12, 'exact12-comment-files')
+removed = 'NLA/SP15/Proof.lean'
+need(not (P/removed).exists(), 'forwarding-Proof-removed-from-author-source')
+need(sha(D/'before'/removed) == old_closure[removed], 'removed-Proof-is-original')
+closure = {rel: sha(P/rel) for rel in old_closure if rel != removed}
+need(len(closure) == 48, 'new-closure48')
+changed = sorted(rel for rel in closure if closure[rel] != old_closure[rel])
+need(changed == sorted(comment_files + ['Solution.lean']), 'only-requested13-files-changed', changed)
+need({str(p.relative_to(P)) for p in (P/'NLA/SP15').rglob('*.lean')} == set(closure)-{'Solution.lean'}, 'no-hidden-project-proof-modules')
+delta_rows = []
+for rel in changed:
+    need(sha(D/'before'/rel) == old_closure[rel], 'delta-before-original:' + rel)
+    need(sha(D/'after'/rel) == closure[rel], 'delta-after-current:' + rel)
+    old = (OLD/'snapshot'/rel).read_text()
+    new = (P/rel).read_text()
+    if rel != 'Solution.lean':
+        need(normalized_code(old) == normalized_code(new), 'only-comments-whitespace:' + rel)
+    else:
+        need(old.replace('import NLA.SP15.Proof\n', 'import NLA.SP15.Counterfamilies\nimport NLA.SP15.KernelFlag\n') == new, 'exact-Solution-direct-import-replacement')
+    patch = list(difflib.unified_diff(old.splitlines(), new.splitlines(), fromfile='original/'+rel, tofile='current/'+rel, lineterm=''))
+    delta_rows.append({'path': rel, 'before_sha256': old_closure[rel], 'after_sha256': closure[rel],
+                       'scope': 'direct-import replacement only' if rel=='Solution.lean' else 'comments and whitespace only',
+                       'diff': patch})
+dump('DELTA-AUDIT.json', {'changed': delta_rows, 'removed': {'path': removed, 'sha256': old_closure[removed]},
+     'unchanged_closure_files': sorted(set(closure)-set(changed))})
+
+freeze = json.loads((OLD/'snapshot/STATEMENT-FREEZE.json').read_text())
+support = set(freeze['frozen_files']) | {'STATEMENT-FREEZE.json', 'STANDARD-BINDINGS.json'}
+for rel, expected in freeze['frozen_files'].items():
+    need(sha(P/rel) == expected == sha(OLD/'snapshot'/rel), 'frozen13-identical:' + rel)
+standards = json.loads((P/'STANDARD-BINDINGS.json').read_text())
+for x in standards['standards']:
+    need(sha(P/x['path']) == x['sha256'] == sha(OLD/'snapshot'/x['path']), 'pinned-standard-unchanged:' + x['path'])
+    support.add(x['path'])
+for rel in sorted(set(closure) | support):
+    keep(P/rel, 'snapshot/' + rel)
+dump('SOURCE-BINDINGS.json', {'source_root': str(P), 'local_source_root': str(L),
+     'recorded_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+     'closure_count': 48, 'source_files': closure,
+     'frozen_files': freeze['frozen_files'],
+     'snapshot_files': {rel: sha(S/rel) for rel in sorted(set(closure)|support)}})
+
+sources = {rel: (S/rel).read_text() for rel in closure}
+modules = {rel[:-5].replace('/', '.'): rel for rel in closure}
+def imports(mod):
+    return [word for line in strip_comments(sources[modules[mod]]).splitlines() if line.startswith('import ')
+            for word in line[7:].split() if word in modules]
+def transitive(mod, seen=None):
+    seen = set() if seen is None else seen
+    if mod in seen: return seen
+    seen.add(mod)
+    for dep in imports(mod): transitive(dep, seen)
+    return seen
+need(transitive('Solution') == set(modules), 'connected-Solution-closure48')
+headers = json.loads((S/'STATEMENT-HEADERS.json').read_text())['contracts']
+config = json.loads((S/'comparator.json').read_text())
+need(len(headers) == 29 and config['theorem_names'] == [h['name'] for h in headers], 'frozen29-Comparator-contracts')
+need(set(config['permitted_axioms']) == {'propext', 'Classical.choice', 'Quot.sound'}, 'permitted-axioms-standard3')
+contracts = []
+for h in headers:
+    name = h['name'].split('.')[-1]
+    pattern = r'^theorem ' + re.escape(name) + r'\b[\s\S]*?(?=\s*:= by)'
+    found = [(rel, m) for rel, txt in sources.items() if (m := re.search(pattern, txt, re.M))]
+    need(len(found) == 1, 'unique-frozen-implementation:' + name)
+    rel, m = found[0]
+    cm = re.search(pattern, (S/'Challenge.lean').read_text(), re.M)
+    need(m.group(0).rstrip() == h['header'] == cm.group(0).rstrip(), 'verbatim-header:' + name)
+    need(hashlib.sha256(h['header'].encode()).hexdigest() == h['header_sha256'], 'frozen-header-sha:' + name)
+    contracts.append({'name': h['name'], 'implementation': rel, 'line': sources[rel][:m.start()].count('\n')+1,
+                      'header_sha256': h['header_sha256']})
+for rel, text in sources.items():
+    code = strip_comments(text)
+    need(not re.search(r'\b(sorry|admit|axiom|unsafe|native_decide|run_tac|implemented_by)\b', code), 'no-holes-escape:' + rel)
+    need(not any('Challenge' in line or 'NLA.SP15.Proof' in line for line in code.splitlines() if line.startswith('import ')), 'no-Challenge-or-Proof-import:' + rel)
+    need(not re.search(r'[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}', text), 'no-email:' + rel)
+    need('George Stepaniants' in text and 'Department of Computing and Mathematical Sciences, California Institute of Technology.' in text, 'credit-preserved:' + rel)
+need(sources['NLA/SP15/Numerical.lean'].count('interval_decide (trust := kernel)') == 4, 'genuine-kernel-interval-calls-preserved')
+need('box_scalar_certificate' in sources['NLA/SP15/BoxGeometry.lean'] and 'parameter_box_bounds' in sources['NLA/SP15/ParameterPositivity.lean'], 'certificate-consumption-preserved')
+for directive in ['#assert_no_sorry', '#print axioms']:
+    old_lines = [line for line in (OLD/'snapshot/Solution.lean').read_text().splitlines() if line.startswith(directive)]
+    new_lines = [line for line in sources['Solution.lean'].splitlines() if line.startswith(directive)]
+    need(len(new_lines) == 29 and new_lines == old_lines, 'unchanged29-Solution-directives:' + directive)
+dump('CONTRACT-AUDIT.json', contracts)
+
+receipt_cache = {}
+def receipt(path):
+    path = Path(path)
+    if str(path) not in receipt_cache:
+        receipt_cache[str(path)] = json.loads(path.read_text())
+        keep(path, 'evidence/runtime/' + path.parent.name + '/RECEIPT.json')
+    return receipt_cache[str(path)]
+root_path = L/'runs/development-122/RECEIPT.json'
+root = receipt(root_path)
+need(sha(root_path) == 'aa40d956092a75f9ec570218d165814913de75b7a0674b27e51758d15be6f852', 'actual122-fixed-receipt')
+need(root['failed_modules'] == [] and root['blocked_modules'] == [] and root['completed_modules'] == 48, 'actual122-all48-success')
+need(root['module_order'] == [c['module'] for c in root['commands']] and set(root['module_order']) == set(modules), 'actual122-exact48-selected')
+need((root['platform'], root['max_compiler_processes'], root['threads'], root['memory_cap_mib']) == ('darwin', 1, 1, 4096), 'actual122-resource-policy')
+need(sha(L/'ASSEMBLY-122.json') == root['assembly_sha256'] == '5373bb1856de70971acd86212f75f183987667a38b40b757a086f2c10d157b74', 'actual122-assembly')
+need(sha(L/'serial_compile_v3.py') == root['runner_sha256'], 'actual122-runner')
+for name in ['ASSEMBLY-122.json', 'serial_compile_v3.py', 'LOCAL-ENVIRONMENT.json', 'lake-manifest.json', 'lean-toolchain']:
+    keep(L/name, 'evidence/runtime/environment/' + name)
+env = json.loads((L/'LOCAL-ENVIRONMENT.json').read_text())
+need(sha(env['compiler']) == root['compiler_sha256'], 'actual122-compiler')
+assembly = json.loads((L/'ASSEMBLY-122.json').read_text())
+summary_path = B/'SP15-LOCAL-COMPLETE-122.json'
+need(sha(summary_path) == 'ec993327fee96346466d11e4d775eea1c946c2d0cdf3d2543491ebf0e8b99c67', 'coordinator-summary-fixed')
+summary = json.loads(summary_path.read_text())
+need(summary['sources'] == closure, 'coordinator-summary-exact-source-closure')
+keep(summary_path, 'evidence/coordinator/' + summary_path.name)
+root_commands = {c['module']: c for c in root['commands']}
+fresh = [c for c in root['commands'] if c.get('status') != 'reused_exact_successful_local_output']
+need(len(fresh) == 22 and len(root['commands'])-len(fresh) == 26, 'actual122-22fresh-26reuse')
+need(all(a['end'] <= b['start'] for a,b in zip(fresh, fresh[1:])), 'actual122-serial-nonoverlapping-times')
+
+def resolve(mod, path, chain=None):
+    chain = [] if chain is None else chain
+    need(str(path) not in chain, 'acyclic-receipt-chain:' + mod + ':' + str(path))
+    r = receipt(path)
+    c = next(c for c in r['commands'] if c['module']==mod)
+    rel = modules[mod]
+    need(c['source_sha256'] == closure[rel], 'receipt-source:' + mod + ':' + Path(path).parent.name)
+    need(c['output_sha256'] == root_commands[mod]['output_sha256'], 'receipt-output:' + mod + ':' + Path(path).parent.name)
+    transitive_hashes = {modules[dep]: closure[modules[dep]] for dep in transitive(mod)}
+    for dep, expected in transitive_hashes.items():
+        need(r['source_inputs'][dep] == expected, 'receipt-transitive:' + mod + ':' + dep + ':' + Path(path).parent.name)
+    if c.get('status') == 'reused_exact_successful_local_output':
+        need(c['transitive_source_hashes'] == transitive_hashes, 'reuse-exact-transitive-map:' + mod)
+        prior = Path(c['prior_receipt'])
+        need(sha(prior) == c['prior_receipt_sha256'], 'prior-receipt-hash:' + mod + ':' + str(prior))
+        return resolve(mod, prior, chain + [str(path)])
+    need(c['exit_code'] == 0, 'fresh-success:' + mod)
+    need(c['argv'] == [env['compiler'], '--threads=1', '--memory=4096', '-o', str(L/'.lake/build/lib/lean'/(rel[:-5]+'.olean')), rel], 'fresh-exact-command:' + mod)
+    need(c['cwd'] == str(L) and r['compiler_sha256'] == root['compiler_sha256'], 'fresh-real-compiler:' + mod)
+    need((r['platform'], r['max_compiler_processes'], r['threads'], r['memory_cap_mib']) == ('darwin',1,1,4096), 'fresh-resource-receipt:' + mod)
+    log = Path(path).parent/(mod+'.log')
+    need(sha(log) == c['log_sha256'], 'fresh-raw-log:' + mod)
+    keep(log, 'evidence/runtime/' + log.parent.name + '/' + log.name)
+    need(set(c['dependency_olean_sha256']) >= set(imports(mod)), 'fresh-dependency-coverage:' + mod)
+    for dep, expected in c['dependency_olean_sha256'].items():
+        if dep in modules:
+            need(expected == root_commands[dep]['output_sha256'], 'fresh-dependency-output:' + mod + ':' + dep)
+    return {'module': mod, 'fresh_run': Path(path).parent.name, 'reuse_chain': chain,
+            'fresh_receipt': str(path), 'fresh_receipt_sha256': sha(path), 'fresh_command': c,
+            'retained_log': retained[str(log)]['retained']}
+
+runtime_rows = []
+for mod, rel in modules.items():
+    need(sha(L/rel) == closure[rel], 'actual122-live-local-source:' + mod)
+    need(sha(L/'.lake/build/lib/lean'/(rel[:-5]+'.olean')) == root_commands[mod]['output_sha256'], 'actual122-live-olean:' + mod)
+    need(assembly['sources'][rel]['sha256'] == closure[rel], 'actual122-assembly-source:' + mod)
+    runtime_rows.append(resolve(mod, root_path))
+solution_log = (L/'runs/development-122/Solution.log').read_text()
+axioms = re.findall(r"'([^']+)' depends on axioms: \[([^\]]*)\]", solution_log)
+need([name for name, _ in axioms] == config['theorem_names'], 'actual122-all29-aggregate-axiom-records')
+for name, ax in axioms:
+    need(set(ax.split(', ')) == set(config['permitted_axioms']), 'actual122-standard3:' + name)
+dump('RUNTIME-AUDIT.json', {'scope': 'Independent authentication of actual recorded macOS local122 and successful origins; no new Lean execution or Linux Comparator run.',
+     'recorded_local_run': 'development-122', 'selected_modules': 48, 'fresh_local122': 22, 'exact_reused_local122': 26,
+     'root_receipt': str(root_path), 'root_receipt_sha256': sha(root_path), 'modules': runtime_rows,
+     'aggregate_axioms': axioms,
+     'retained': [x for x in retained.values() if x['retained'].startswith('evidence/runtime/')]})
+dump('EXTERNAL-BINDINGS.json', list(retained.values()))
+dump('AUDIT.json', {'executed_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+     'kind': 'Source/evidence-only Python audit; no Lean, Lake, Git, cache mutation, or network.',
+     'checks_count': len(checks), 'all_pass': all(x['pass'] for x in checks), 'checks': checks})
+print(json.dumps({'all_pass': True, 'checks': len(checks), 'closure_modules': len(closure), 'contracts': len(headers),
+     'changed_comment_files': len(comment_files), 'fresh_local122': len(fresh), 'reused_local122': 48-len(fresh),
+     'fresh_origin_runs': sorted({x['fresh_run'] for x in runtime_rows}), 'new_Lean_execution': False, 'Linux_Comparator_executed': False}))

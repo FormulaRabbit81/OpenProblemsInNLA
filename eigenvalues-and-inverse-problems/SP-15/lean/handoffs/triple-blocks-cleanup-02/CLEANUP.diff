@@ -1,0 +1,13 @@
+--- actual112/TripleBlocks.lean
++++ candidate/TripleBlocks.lean
+@@ -74,8 +74,8 @@
+         (A₃₁ * B₁₂ + A₃₂ * B₂₂ + A₃₃ * B₃₂)
+         (A₃₁ * B₁₃ + A₃₂ * B₂₃ + A₃₃ * B₃₃) := by
+   simp only [tripleBlock, Matrix.fromBlocks_multiply, Matrix.fromCols_mul_fromRows,
+-    Matrix.fromRows_mul, Matrix.mul_fromCols, Matrix.fromRows_mul_fromCols,
+-    Matrix.fromCols_mul_fromBlocks, Matrix.fromBlocks_mul_fromRows, Matrix.fromBlocks_add]
++    Matrix.fromRows_mul, Matrix.mul_fromCols,
++    Matrix.fromCols_mul_fromBlocks, Matrix.fromBlocks_mul_fromRows]
+   ext i j
+   rcases i with i | (i | i) <;> rcases j with j | (j | j) <;>
+     simp only [Matrix.add_apply, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,

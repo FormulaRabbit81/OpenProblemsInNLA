@@ -1,0 +1,42 @@
+33: theorem isUnit_of_invertible [Monoid α] (a : α) [Invertible a] : IsUnit a :=
+34:   ⟨unitOfInvertible a, rfl⟩
+35: 
+36: /-- Units are invertible in their associated monoid. -/
+37: instance Units.invertible [Monoid α] (u : αˣ) :
+38:     Invertible (u : α) where
+39:   invOf := ↑u⁻¹
+40:   invOf_mul_self := u.inv_mul
+41:   mul_invOf_self := u.mul_inv
+42: 
+43: @[simp]
+44: theorem invOf_units [Monoid α] (u : αˣ) [Invertible (u : α)] : ⅟(u : α) = ↑u⁻¹ :=
+45:   invOf_eq_right_inv u.mul_inv
+46: 
+47: theorem IsUnit.nonempty_invertible [Monoid α] {a : α} (h : IsUnit a) : Nonempty (Invertible a) :=
+48:   let ⟨x, hx⟩ := h
+49:   ⟨x.invertible.copy _ hx.symm⟩
+50: 
+51: /-- Convert `IsUnit` to `Invertible` using `Classical.choice`.
+52: 
+53: Prefer `casesI h.nonempty_invertible` over `letI := h.invertible` if you want to avoid choice. -/
+54: @[instance_reducible]
+55: noncomputable def IsUnit.invertible [Monoid α] {a : α} (h : IsUnit a) : Invertible a :=
+56:   Classical.choice h.nonempty_invertible
+57: 
+58: @[simp]
+59: theorem nonempty_invertible_iff_isUnit [Monoid α] (a : α) : Nonempty (Invertible a) ↔ IsUnit a :=
+60:   ⟨Nonempty.rec <| @isUnit_of_invertible _ _ _, IsUnit.nonempty_invertible⟩
+61: 
+62: theorem Commute.invOf_right [Monoid α] {a b : α} [Invertible b] (h : Commute a b) :
+63:     Commute a (⅟b) :=
+64:   calc
+65:     a * ⅟b = ⅟b * (b * a * ⅟b) := by simp [mul_assoc]
+66:     _ = ⅟b * (a * b * ⅟b) := by rw [h.eq]
+67:     _ = ⅟b * a := by simp [mul_assoc]
+68: 
+69: theorem Commute.invOf_left [Monoid α] {a b : α} [Invertible b] (h : Commute b a) :
+70:     Commute (⅟b) a :=
+71:   calc
+72:     ⅟b * a = ⅟b * (a * b * ⅟b) := by simp [mul_assoc]
+73:     _ = ⅟b * (b * a * ⅟b) := by rw [h.eq]
+74:     _ = a * ⅟b := by simp [mul_assoc]

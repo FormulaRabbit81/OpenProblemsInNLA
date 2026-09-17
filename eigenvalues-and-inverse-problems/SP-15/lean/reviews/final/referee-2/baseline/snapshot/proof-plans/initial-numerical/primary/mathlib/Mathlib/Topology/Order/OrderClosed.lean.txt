@@ -1,0 +1,15 @@
+Lines 582–595
+582: 
+583: section LinearOrder
+584: 
+585: variable [TopologicalSpace α] [LinearOrder α] [OrderClosedTopology α]
+586: 
+587: @[to_dual self (reorder := f g, hf hg)]
+588: theorem isOpen_lt [TopologicalSpace β] {f g : β → α} (hf : Continuous f) (hg : Continuous g) :
+589:     IsOpen { b | f b < g b } := by
+590:   simpa only [lt_iff_not_ge] using! (isClosed_le hg hf).isOpen_compl
+591: 
+592: @[to_dual isOpen_lt_prod']
+593: theorem isOpen_lt_prod : IsOpen { p : α × α | p.1 < p.2 } :=
+594:   isOpen_lt continuous_fst continuous_snd
+595: 

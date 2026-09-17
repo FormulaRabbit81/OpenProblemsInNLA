@@ -1,0 +1,114 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Fortier Bourque and Ransford retain
+credit for the original question and generic finiteness theorem.
+
+Two Schur complements reduce the actual 9×9 Gram determinant to the original
+3×3 coefficient determinant. The second pivot is sI+Q. Only its commutation
+with the square root of Q is used; P and Q need not commute.
+-/
+import NLA.SP15.BlockGram
+import NLA.SP15.SchurAlgebra
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.SP15
+noncomputable section
+open scoped Matrix MatrixOrder ComplexOrder
+
+private theorem first_schur_complement (R S P Q : Square 3) (s t z : ℂ)
+    (hs : s ≠ 0) (hst : s = t + (Complex.normSq z : ℂ))
+    (hR : R.conjTranspose * R = P) (hS : S.conjTranspose * S = Q)
+    [Invertible (s • (1 : Square 3))] :
+    Matrix.fromBlocks (s • (1 : Square 3) + P) ((-star z) • S)
+        ((-z) • S.conjTranspose) (s • (1 : Square 3) + S.conjTranspose * S) -
+      Matrix.fromRows ((-z) • R.conjTranspose) (0 : Square 3) *
+        ⅟(s • (1 : Square 3)) *
+        Matrix.fromCols ((-star z) • R) (0 : Square 3) =
+      Matrix.fromBlocks (s • (1 : Square 3) + (t / s) • P) ((-star z) • S)
+        ((-z) • S.conjTranspose) (s • (1 : Square 3) + Q) := by
+  rw [scalar_matrix_inv s hs]
+  have hproduct :
+      Matrix.fromRows ((-z) • R.conjTranspose) (0 : Square 3) *
+        (s⁻¹ • (1 : Square 3)) * Matrix.fromCols ((-star z) • R) (0 : Square 3) =
+        Matrix.fromBlocks (((Complex.normSq z : ℂ) / s) • P)
+          (0 : Square 3) (0 : Square 3) (0 : Square 3) := by
+    rw [Matrix.fromRows_mul, Matrix.fromRows_mul_fromCols]
+    simp only [
+      Matrix.zero_mul, Matrix.mul_zero, first_schur_root_product, hR]
+  rw [hproduct, hS]
+  simp only [sub_eq_add_neg, Matrix.fromBlocks_neg, Matrix.fromBlocks_add,
+    neg_zero, add_zero]
+  congr 1
+  simpa only [sub_eq_add_neg] using first_schur_diagonal P s t
+    (Complex.normSq z : ℂ) hs hst
+
+theorem shifted_gram_determinant (x : Parameters) (hx : x ∈ parameterBox)
+    (z : ℂ) (t : ℝ) (ht : 0 < t) :
+    Matrix.det ((t : ℂ) • (1 : Square 9) + shiftedGram (constructedMatrix x) z) =
+      (t : ℂ) ^ 3 * coefficientDeterminant x
+        ((shiftScalar z t ^ 3 / t : ℝ) : ℂ) ((shiftScalar z t : ℝ) : ℂ) := by
+  have hpos := schur_positive_blocks x hx z t ht
+  have hroots := square_root_semantics x hx
+  have hR : (pRoot x).conjTranspose * pRoot x = pMatrix x := by
+    rw [hroots.1.eq, hroots.2.2.1]
+  have hS : (qRoot x).conjTranspose * qRoot x = qMatrix x := by
+    rw [hroots.2.1.eq, hroots.2.2.2.1]
+  let s : ℂ := (shiftScalar z t : ℝ)
+  have hs : s ≠ 0 := Complex.ofReal_ne_zero.mpr (ne_of_gt hpos.1)
+  have ht' : (t : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (ne_of_gt ht)
+  have hst : s = (t : ℂ) + (Complex.normSq z : ℂ) := by
+    simp only [s, shiftScalar, Complex.ofReal_add]
+  let X : Square 3 := s • 1 + ((t : ℂ) / s) • pMatrix x
+  let B : Square 3 := (-star z) • qRoot x
+  let C : Square 3 := (-z) • (qRoot x).conjTranspose
+  let D : Square 3 := s • 1 + qMatrix x
+  have hD : D.PosDef := hpos.2.1.add (parameter_matrices_positive x hx).2
+  let : Invertible (s • (1 : Square 3)) := hpos.2.1.isUnit.invertible
+  let : Invertible D := hD.isUnit.invertible
+  have hCD : C * D = D * C := by
+    dsimp only [C, D]
+    rw [hroots.2.1.eq, ← hroots.2.2.2.1]
+    exact (scalar_square_commutes s (-z) (qRoot x)).symm
+  have hBC : B * C = (Complex.normSq z : ℂ) • qMatrix x := by
+    dsimp only [B, C]
+    simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul,
+      hroots.2.1.eq, hroots.2.2.2.1]
+    congr 1
+    rw [Complex.normSq_eq_conj_mul_self, starRingEnd_apply]
+    ring
+  have hscalar : s ^ 3 * ((t : ℂ) / s) ^ 3 = (t : ℂ) ^ 3 := by
+    field_simp [hs]
+  calc
+    Matrix.det ((t : ℂ) • (1 : Square 9) + shiftedGram (constructedMatrix x) z) =
+        (regularizedGramBlocks x z t).det := by
+      rw [← regularized_gram_blocks x hx z t, Matrix.det_reindex_self]
+    _ = (s • (1 : Square 3)).det * (Matrix.fromBlocks X B C D).det := by
+      change (Matrix.fromBlocks (s • (1 : Square 3))
+        (Matrix.fromCols ((-star z) • pRoot x) (0 : Square 3))
+        (Matrix.fromRows ((-z) • (pRoot x).conjTranspose) (0 : Square 3))
+        (Matrix.fromBlocks (s • (1 : Square 3) + pMatrix x) B C
+          (s • (1 : Square 3) + (qRoot x).conjTranspose * qRoot x))).det = _
+      rw [Matrix.det_fromBlocks₁₁,
+        first_schur_complement (pRoot x) (qRoot x) (pMatrix x) (qMatrix x)
+          s (t : ℂ) z hs hst hR hS]
+    _ = s ^ 3 * (X * D - B * C).det := by
+      rw [Matrix.det_smul, Matrix.det_one, Fintype.card_fin, mul_one,
+        determinant_lower_commuting X B C D hCD]
+    _ = (t : ℂ) ^ 3 * coefficientDeterminant x
+        ((shiftScalar z t ^ 3 / t : ℝ) : ℂ) ((shiftScalar z t : ℝ) : ℂ) := by
+      rw [hBC]
+      change s ^ 3 * ((s • (1 : Square 3) + ((t : ℂ) / s) • pMatrix x) *
+        (s • (1 : Square 3) + qMatrix x) - (Complex.normSq z : ℂ) • qMatrix x).det = _
+      rw [final_schur_matrix (pMatrix x) (qMatrix x) s (t : ℂ)
+        (Complex.normSq z : ℂ) hs ht' hst, Matrix.det_smul, Fintype.card_fin,
+        ← mul_assoc, hscalar]
+      simp only [coefficientDeterminant, s, Complex.ofReal_div, Complex.ofReal_pow]
+
+#print axioms shifted_gram_determinant
+#assert_trust kernel shifted_gram_determinant
+
+end
+end NLA.SP15

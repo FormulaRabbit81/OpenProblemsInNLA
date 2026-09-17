@@ -1,0 +1,14 @@
+NLA/SP15/ParameterPositivity.lean:35:6: error: Type mismatch: After simplification, term
+  Matrix.IsHermitian.mulVec_eigenvectorBasis hA j
+ has type
+  @Eq (Fin n → ℂ) (A *ᵥ (hA.eigenvectorBasis j).ofLp) (↑(hA.eigenvalues j) • (hA.eigenvectorBasis j).ofLp)
+but is expected to have type
+  @Eq (Fin n → ℂ) (A *ᵥ (hA.eigenvectorBasis j).ofLp) (↑(hA.eigenvalues j) • (hA.eigenvectorBasis j).ofLp)
+NLA/SP15/ParameterPositivity.lean:50:49: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+NLA/SP15/ParameterPositivity.lean:56:43: error(lean.unknownIdentifier): Unknown constant `Complex.ofReal_pos`
+'NLA.SP15.parameter_matrices_positive' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/SP15/ParameterPositivity.lean:63:21: error: #assert_trust: 'NLA.SP15.parameter_matrices_positive' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

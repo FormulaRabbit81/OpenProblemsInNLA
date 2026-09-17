@@ -1,0 +1,48 @@
+11: # The partial order on the complex numbers
+12: 
+13: This order is defined by `z ≤ w ↔ z.re ≤ w.re ∧ z.im = w.im`.
+14: 
+15: This is a natural order on `ℂ` because, as is well-known, there does not exist an order on `ℂ`
+16: making it into a linearly ordered field. However, the order described above is the canonical order
+17: stemming from the structure of `ℂ` as a ⋆-ring (i.e., it becomes a `StarOrderedRing`). Moreover,
+18: with this order `ℂ` satisfies `IsStrictOrderedRing` and the coercion `(↑) : ℝ → ℂ` is an order
+19: embedding.
+20: 
+21: This file only provides `Complex.partialOrder` and lemmas about it. Further structural classes are
+22: provided in `Mathlib/Analysis/RCLike/Basic.lean` as
+23: 
+24: * `RCLike.toStrictOrderedCommRing`
+25: * `RCLike.toStarOrderedRing`
+26: * `RCLike.toOrderedSMul`
+27: 
+28: These are all only available with `open scoped ComplexOrder`.
+35: /-- We put a partial order on ℂ so that `z ≤ w` exactly if `w - z` is real and nonnegative.
+36: Complex numbers with different imaginary parts are incomparable.
+37: -/
+38: @[instance_reducible]
+39: protected def partialOrder : PartialOrder ℂ where
+40:   le z w := z.re ≤ w.re ∧ z.im = w.im
+41:   lt z w := z.re < w.re ∧ z.im = w.im
+42:   lt_iff_le_not_ge z w := by
+43:     rw [lt_iff_le_not_ge]
+44:     tauto
+45:   le_refl _ := ⟨le_rfl, rfl⟩
+46:   le_trans _ _ _ h₁ h₂ := ⟨h₁.1.trans h₂.1, h₁.2.trans h₂.2⟩
+47:   le_antisymm _ _ h₁ h₂ := ext (h₁.1.antisymm h₂.1) h₁.2
+48: 
+49: namespace _root_.ComplexOrder
+50: 
+51: scoped[ComplexOrder] attribute [instance] Complex.partialOrder
+52: 
+53: end _root_.ComplexOrder
+54: 
+55: open ComplexOrder
+56: 
+57: theorem le_def {z w : ℂ} : z ≤ w ↔ z.re ≤ w.re ∧ z.im = w.im :=
+58:   Iff.rfl
+59: 
+60: theorem lt_def {z w : ℂ} : z < w ↔ z.re < w.re ∧ z.im = w.im :=
+61:   Iff.rfl
+62: 
+63: theorem nonneg_iff {z : ℂ} : 0 ≤ z ↔ 0 ≤ z.re ∧ 0 = z.im :=
+64:   le_def

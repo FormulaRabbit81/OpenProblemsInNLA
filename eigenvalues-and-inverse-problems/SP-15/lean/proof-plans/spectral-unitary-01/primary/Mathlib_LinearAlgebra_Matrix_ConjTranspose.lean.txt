@@ -1,0 +1,23 @@
+275: * `Matrix.conjTranspose_ratCast_smul`
+276: -/
+277: @[simp]
+278: theorem conjTranspose_smul [Star R] [Star α] [SMul R α] [StarModule R α] (c : R)
+279:     (M : Matrix m n α) : (c • M)ᴴ = star c • Mᴴ :=
+280:   Matrix.ext fun _ _ => star_smul _ _
+281: 
+282: @[simp]
+
+434: 
+435: @[deprecated (since := "2026-04-20")] protected alias star_mul := StarMul.star_mul
+436: 
+437: end Star
+438: 
+439: @[simp]
+440: theorem conjTranspose_submatrix [Star α] (A : Matrix m n α) (r : l → m)
+441:     (c : o → n) : (A.submatrix r c)ᴴ = Aᴴ.submatrix c r :=
+442:   ext fun _ _ => rfl
+443: 
+444: theorem conjTranspose_reindex [Star α] (eₘ : m ≃ l) (eₙ : n ≃ o) (M : Matrix m n α) :
+445:     (reindex eₘ eₙ M)ᴴ = reindex eₙ eₘ Mᴴ :=
+446:   rfl
+447: 

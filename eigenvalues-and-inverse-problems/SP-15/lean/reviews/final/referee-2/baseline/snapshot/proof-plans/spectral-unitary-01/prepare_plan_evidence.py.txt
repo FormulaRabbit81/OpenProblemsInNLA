@@ -1,0 +1,154 @@
+#!/usr/bin/env python3
+"""Read-only source audit and private plan evidence; never invokes Lean or Lake."""
+from pathlib import Path
+import datetime
+import hashlib
+import json
+import shutil
+import subprocess
+
+R = Path(__file__).resolve().parent
+P = R.parents[1]
+B = P.parents[1]
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+M = L / '.lake/packages/mathlib'
+W = Path('/private/tmp/nla-lean-next-mi13-worktree')
+sha = lambda f: hashlib.sha256(Path(f).read_bytes()).hexdigest()
+freeze = B / 'SP15-ROOT-FREEZE-ACCEPTANCE.json'
+assert sha(freeze) == '46318471938f7d105a113af3e449856e3a8f52154714dc434f5cb905d76db4ca'
+protected = json.loads((P / 'STATEMENT-FREEZE.json').read_text())['frozen_files']
+assert len(protected) == 13
+for rel, digest in protected.items():
+    assert sha(P / rel) == digest, rel
+headers = json.loads((P / 'STATEMENT-HEADERS.json').read_text())['contracts'][15:26]
+assert len(headers) == 11
+for h in headers:
+    assert hashlib.sha256(h['header'].encode()).hexdigest() == h['header_sha256']
+    assert h['header'] + ' := by' in (P / 'Challenge.lean').read_text()
+(R / 'EXACT-HEADERS.json').write_text(json.dumps(headers, indent=2) + '\n')
+
+primary = {
+    'Mathlib/Data/Matrix/Block.lean': [(60, 144), (196, 239), (291, 305)],
+    'Mathlib/Data/Matrix/ColumnRowPartitioned.lean': [(40, 175), (180, 267), (295, 313)],
+    'Mathlib/Data/Matrix/Mul.lean': [(313, 405), (1115, 1126), (1178, 1224), (1233, 1254)],
+    'Mathlib/LinearAlgebra/Matrix/ConjTranspose.lean': [(275, 282), (434, 447)],
+    'Mathlib/LinearAlgebra/Matrix/PosDef.lean': [(188, 214), (243, 282), (502, 512)],
+    'Mathlib/LinearAlgebra/Matrix/SchurComplement.lean': [(364, 415)],
+    'Mathlib/Algebra/Group/Invertible/Defs.lean': [(90, 125), (145, 170)],
+    'Mathlib/Algebra/Group/Invertible/Basic.lean': [(33, 74)],
+    'Mathlib/Algebra/Group/Units/Basic.lean': [(284, 314)],
+    'Mathlib/Algebra/Group/Units/Defs.lean': [(404, 442)],
+    'Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean': [(132, 142), (245, 290)],
+    'Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean': [(130, 144)],
+    'Mathlib/Algebra/Polynomial/Roots.lean': [(147, 162)],
+    'Mathlib/Data/Set/Finite/Basic.lean': [(885, 913)],
+    'Mathlib/Analysis/InnerProductSpace/Spectrum.lean': [(352, 387)],
+    'Mathlib/Analysis/InnerProductSpace/SingularValues.lean': [(95, 138)],
+    'Mathlib/Analysis/InnerProductSpace/Adjoint.lean': [(1047, 1060)],
+    'Mathlib/Analysis/InnerProductSpace/PiL2.lean': [(1262, 1282)],
+    'Mathlib/Analysis/Normed/Lp/Matrix.lean': [(32, 65)],
+    'Mathlib/LinearAlgebra/Charpoly/ToMatrix.lean': [(75, 100)],
+    'Mathlib/Data/Complex/Basic.lean': [(90, 106), (539, 559), (580, 592)],
+    'Mathlib/Analysis/Complex/Norm.lean': [(92, 107)],
+}
+api = {}
+for rel, ranges in primary.items():
+    f = M / rel
+    lines = f.read_text().splitlines()
+    excerpt = '\n\n'.join('\n'.join(f'{i}: {lines[i-1]}' for i in range(a, b+1))
+                            for a, b in ranges) + '\n'
+    dest = R / 'primary' / (rel.replace('/', '_') + '.txt')
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(excerpt)
+    olean = M / '.lake/build/lib/lean' / Path(rel).with_suffix('.olean')
+    assert olean.is_file(), olean
+    api[rel] = {'source_sha256': sha(f), 'line_ranges': ranges,
+                'excerpt': str(dest.relative_to(R)), 'excerpt_sha256': sha(dest),
+                'pinned_cached_olean_present': True}
+(R / 'API-BINDINGS.json').write_text(json.dumps(api, indent=2) + '\n')
+
+canonical = {}
+commit = 'd348d7471e2ff881ae30fb8a9c40323a61cd383a'
+for name in ['README.md', 'solution.md', 'solution.tex']:
+    rel = 'eigenvalues-and-inverse-problems/SP-15/' + name
+    data = subprocess.check_output(['git', 'show', commit + ':' + rel], cwd=W)
+    retained = P / 'sources/canonical' / name
+    assert data == retained.read_bytes(), rel
+    canonical[rel] = {'commit': commit, 'sha256': sha(retained),
+                       'read_full_source': True, 'matches_exact_git_blob': True}
+
+runtime = []
+for run, modules in [(79, ['BoxGeometry']), (89, ['CoefficientIdentity']),
+                     (91, ['ParameterPositivity', 'SquareRoots']), (102, ['FiniteFiber'])]:
+    actual = L / f'runs/development-{run}'
+    receipt = json.loads((actual / 'RECEIPT.json').read_text())
+    assert receipt['end']
+    out = R / f'actual{run}'
+    out.mkdir(exist_ok=True)
+    shutil.copy2(actual / 'RECEIPT.json', out / 'RECEIPT.json')
+    checked = []
+    for name in modules:
+        module = 'NLA.SP15.' + name
+        c = next(c for c in receipt['commands'] if c['module'] == module)
+        assert c['exit_code'] == 0
+        rel = Path(module.replace('.', '/')).with_suffix('.lean')
+        assert sha(P / rel) == c['source_sha256']
+        log = actual / (module + '.log')
+        assert sha(log) == c['log_sha256']
+        text = log.read_text()
+        assert 'sorryAx' not in text and 'error:' not in text
+        shutil.copy2(log, out / log.name)
+        checked.append({'module': module, 'source_sha256': c['source_sha256'],
+                        'log_sha256': c['log_sha256'], 'exit_code': 0,
+                        'elapsed_seconds': c['elapsed_seconds']})
+    runtime.append({'run': run, 'receipt_sha256': sha(actual / 'RECEIPT.json'),
+                    'scope': 'Only named successful modules; actual79 also retains an unrelated historical failed Jacobian attempt',
+                    'checked': checked})
+
+active = {rel: sha(P / rel) for rel in [
+    'NLA/SP15/Definitions.lean', 'NLA/SP15/Numerical.lean',
+    'NLA/SP15/BoxGeometry.lean', 'NLA/SP15/ParameterPositivity.lean',
+    'NLA/SP15/SquareRoots.lean', 'NLA/SP15/CoefficientIdentity.lean',
+    'NLA/SP15/LocalFiber.lean', 'NLA/SP15/FiniteFiber.lean']}
+examples = {}
+for name in ['UnitaryInvariance.lean', 'SingularSemantics.lean']:
+    f = B / 'next-proofs/MI-13/NLA/MI13' / name
+    dest = R / 'accepted-example' / (name + '.txt')
+    dest.parent.mkdir(exist_ok=True)
+    shutil.copy2(f, dest)
+    examples[str(f)] = {'source_sha256': sha(f), 'retained_example': str(dest.relative_to(R)),
+                       'use': 'Read the actual previously accepted Gram/eigenvalue/singular-value transport; no fresh execution in this plan'}
+
+obligations = {
+    'frozen_contracts': list(range(16, 27)), 'full_matrix_dimension': 9,
+    'block_dimension': 3, 'block_array': [3, 3], 'first_schur_shape': [3, 6],
+    'second_schur_shape': [3, 3], 'determinant_scalar_exponent': 3,
+    'parameter_box_radius_unchanged': '1/16',
+    'shift_domain': 'all complex z, including 0',
+    'contract16_t_domain': 'all real t', 'contract18_t_domain': 'all positive real t',
+    'new_divisors': ['t', 's=t+normSq(z)'], 'no_division_by_shift': True,
+    'second_pivot': 'D=sI+Q; actual positive definiteness and inverse cancellation proved',
+    'matrix_commutation': 'Only D with S since Q=S*S; never P with Q',
+    'universal_polynomial_points': 'All -(k+1) in complex field, k in natural numbers; infinite exact argument, no finite test',
+    'singular_value_scope': 'arbitrary n, all natural indices, zero-extension, repeated and zero singular values',
+    'unitary_scope': 'arbitrary original U with U.conjTranspose*U=1; block diagonal form is derived',
+    'parameter_coordinates_recovered': list(range(10)),
+    'new_interval_evaluation_required': False, 'factorial_determinant_expansion_required': False,
+    'actual_LeanCert_dependency': 'Numerical -> BoxGeometry -> ParameterPositivity/SquareRoots and p_intervals_separate',
+    'new_Lean_execution': False,
+}
+(R / 'NUMERICAL-OBLIGATIONS.json').write_text(json.dumps(obligations, indent=2) + '\n')
+(R / 'PLAN-CHECKS.json').write_text(json.dumps({
+    'time': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'scope': 'Source-bound pre-code plans for exact frozen16–26 only',
+    'freeze_acceptance_sha256': sha(freeze), 'protected_files_checked': protected,
+    'exact_headers_checked': len(headers), 'primary_source_files': len(api),
+    'current_dependency_sources': active, 'canonical_full_sources': canonical,
+    'accepted_examples': examples, 'actual_dependency_evidence_audited': runtime,
+    'implementation_written_for_16_26': False, 'coordinator_acceptance_required': True,
+    'compiler_executed_by_author': False, 'new_Comparator_run': False, 'count_change': 0,
+}, indent=2) + '\n')
+print(json.dumps({'protected_files_checked': len(protected), 'headers': len(headers),
+                  'primary_files': len(api), 'canonical_sources_matched': len(canonical),
+                  'actual_successful_dependency_modules_audited': sum(len(r['checked']) for r in runtime),
+                  'compiler_executed': False}, indent=2))

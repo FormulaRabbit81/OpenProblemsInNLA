@@ -1,0 +1,14 @@
+1047:       _ = (v₁.reindex e).repr (f (v₁.reindex e j)) i := f.toMatrix_apply ..
+1048:       _ = v₁.repr (f (v₁ (e.symm j))) (e.symm i) := by simp
+1049:       _ = toMatrixOrthonormal v₁ f (e.symm i) (e.symm j) := Eq.symm (f.toMatrix_apply ..)
+1050: 
+1051: open scoped ComplexConjugate
+1052: 
+1053: /-- The adjoint of the linear map associated to a matrix is the linear map associated to the
+1054: conjugate transpose of that matrix. -/
+1055: theorem Matrix.toEuclideanLin_conjTranspose_eq_adjoint (A : Matrix m n 𝕜) :
+1056:     A.conjTranspose.toEuclideanLin = A.toEuclideanLin.adjoint :=
+1057:   A.toLin_conjTranspose (EuclideanSpace.basisFun n 𝕜) (EuclideanSpace.basisFun m 𝕜)
+1058: 
+1059: end Matrix
+1060: 

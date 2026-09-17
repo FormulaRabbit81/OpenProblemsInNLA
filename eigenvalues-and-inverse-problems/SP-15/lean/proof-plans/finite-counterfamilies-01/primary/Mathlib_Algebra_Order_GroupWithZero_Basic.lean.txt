@@ -1,0 +1,10 @@
+876:     simpa [ha.ne'] using mul_le_mul_of_nonneg_right h (inv_nonneg.2 ha.le)
+877: 
+878: attribute [local instance] PosMulReflectLT.toPosMulStrictMono PosMulReflectLT.toPosMulReflectLE
+879: 
+880: lemma div_pos (ha : 0 < a) (hb : 0 < b) : 0 < a / b := by
+881:   rw [div_eq_mul_inv]; exact mul_pos ha (inv_pos.2 hb)
+882: 
+883: lemma div_nonneg (ha : 0 ≤ a) (hb : 0 ≤ b) : 0 ≤ a / b := by
+884:   rw [div_eq_mul_inv]; exact mul_nonneg ha (inv_nonneg.2 hb)
+885: 

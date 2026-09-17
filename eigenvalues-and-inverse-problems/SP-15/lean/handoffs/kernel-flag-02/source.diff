@@ -1,0 +1,17 @@
+--- before
++++ after
+@@ -26,7 +26,13 @@
+     (blockMatrix x ^ 2).mulVec v =
+       Sum.elim ((pRoot x * qRoot x).mulVec (fun i => v (Sum.inr (Sum.inr i)))) 0 := by
+   rw [pow_two, ← Matrix.mulVec_mulVec, block_action, block_action]
+-  simp
++  -- Expose the zero third component as the actual zero vector before cancellation.
++  change Sum.elim ((pRoot x).mulVec ((qRoot x).mulVec
++      (fun i => v (Sum.inr (Sum.inr i)))))
++    (Sum.elim ((qRoot x).mulVec (0 : Fin 3 → ℂ)) 0) = _
++  rw [Matrix.mulVec_zero, Matrix.mulVec_mulVec]
++  ext i
++  rcases i with i | (i | i) <;> rfl
+ 
+ theorem constructed_kernel_flag (x : Parameters) (hx : x ∈ parameterBox) :
+     (∀ v : BlockIndex → ℂ,

@@ -1,0 +1,15 @@
+61: theorem strictMono_cast : StrictMono (Nat.cast : ℕ → α) :=
+62:   mono_cast.strictMono_of_injective cast_injective
+63: 
+64: /-- `Nat.cast : ℕ → α` as an `OrderEmbedding` -/
+65: @[simps! -fullyApplied]
+66: def castOrderEmbedding : ℕ ↪o α :=
+67:   OrderEmbedding.ofStrictMono Nat.cast Nat.strictMono_cast
+68: 
+69: @[simp, norm_cast]
+70: theorem cast_le : (m : α) ≤ n ↔ m ≤ n :=
+71:   strictMono_cast.le_iff_le
+72: 
+73: @[simp, norm_cast, mono]
+74: theorem cast_lt : (m : α) < n ↔ m < n :=
+75:   strictMono_cast.lt_iff_lt

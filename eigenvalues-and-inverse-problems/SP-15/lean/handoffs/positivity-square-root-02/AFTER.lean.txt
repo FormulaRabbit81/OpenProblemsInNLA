@@ -1,0 +1,69 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Fortier Bourque and Ransford retain
+credit for the original question and generic finiteness theorem.
+
+The whole-box positivity proof consumes the certified BoxGeometry bounds.
+It reuses Xavier Roblot's Gershgorin theorem and Mathlib's Hermitian spectral
+and positive-definite matrix APIs. No eigenvalue computation is performed.
+-/
+import NLA.SP15.BoxGeometry
+import Mathlib.LinearAlgebra.Matrix.Gershgorin
+import Mathlib.Analysis.Matrix.PosDef
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.SP15
+noncomputable section
+open scoped BigOperators Matrix MatrixOrder Matrix.Norms.L2Operator ComplexOrder
+
+private theorem hermitian_posDef_of_strict_row_dominance {n : ℕ} (A : Square n)
+    (hA : A.IsHermitian)
+    (hrow : ∀ i : Fin n, (∑ j ∈ Finset.univ.erase i, ‖A i j‖) < (A i i).re) :
+    A.PosDef := by
+  apply hA.posDef_iff_eigenvalues_pos.mpr
+  intro j
+  have hvec : Module.End.HasEigenvector (Matrix.toLin' A)
+      (hA.eigenvalues j : ℂ) (⇑(hA.eigenvectorBasis j)) := by
+    refine Module.End.hasEigenvector_iff.mpr ⟨?_, ?_⟩
+    · apply Module.End.mem_eigenspace_iff.mpr
+      rw [Matrix.toLin'_apply]
+      -- Gershgorin uses a complex eigenvalue on coordinate functions; the
+      -- Hermitian basis uses a real scalar. Compare their actions pointwise
+      -- to avoid transporting unequal inferred scalar-action instances.
+      funext k
+      have hk := congrFun (hA.mulVec_eigenvectorBasis j) k
+      simpa only [Pi.smul_apply, Complex.real_smul, smul_eq_mul] using hk
+    · -- Forgetting the Euclidean norm wrapper preserves nonzero basis vectors.
+      exact (WithLp.ofLp_eq_zero 2).ne.2 (hA.eigenvectorBasis.orthonormal.ne_zero j)
+  obtain ⟨i, hi⟩ := eigenvalue_mem_ball (Module.End.hasEigenvalue_of_hasEigenvector hvec)
+  have hdist : ‖A i i - (hA.eigenvalues j : ℂ)‖ ≤
+      ∑ k ∈ Finset.univ.erase i, ‖A i k‖ := by
+    simpa only [mem_closedBall_iff_norm'] using hi
+  have hre := (Complex.re_le_norm (A i i - (hA.eigenvalues j : ℂ))).trans hdist
+  simp only [Complex.sub_re, Complex.ofReal_re] at hre
+  linarith [hrow i]
+
+private theorem qMatrix_isHermitian (x : Parameters) : (qMatrix x).IsHermitian := by
+  apply Matrix.IsHermitian.ext
+  intro i j
+  fin_cases i <;> fin_cases j <;> simp [qMatrix]
+  all_goals ring
+
+theorem parameter_matrices_positive (x : Parameters) (hx : x ∈ parameterBox) :
+    (pMatrix x).PosDef ∧ (qMatrix x).PosDef := by
+  have hb := parameter_box_bounds x hx
+  constructor
+  · exact Matrix.PosDef.diagonal (fun i => Complex.zero_lt_real.mpr (hb.1 i))
+  · apply hermitian_posDef_of_strict_row_dominance (qMatrix x) (qMatrix_isHermitian x)
+    intro i
+    have hmargin := hb.2.2.2 i
+    linarith
+
+#print axioms parameter_matrices_positive
+#assert_trust kernel parameter_matrices_positive
+
+end
+end NLA.SP15
