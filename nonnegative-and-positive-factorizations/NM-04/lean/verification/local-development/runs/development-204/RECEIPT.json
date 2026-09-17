@@ -1,0 +1,723 @@
+{
+  "scope": "macOS serial development only; no Comparator, isolation controls, publication or whole-problem acceptance",
+  "start": "2026-09-17T20:36:22.789948+00:00",
+  "assembly_sha256": "07c5279ac65cfa7325d373e6b0523099deed5f46fa630cd1a24d3782d44a1e86",
+  "runner_sha256": "d6c00e953688e155c0a313a8f49c7c395ad0fb1166faf3655c0b47f3ea2b2266",
+  "compiler_sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+  "platform": "darwin",
+  "max_compiler_processes": 1,
+  "threads": 1,
+  "memory_cap_mib": 4096,
+  "source_inputs": {
+    "Solution.lean": "904fb52379ffc1c949e78234e7e24d971a82ad352243eb70f4f31c14c532e279",
+    "NLA/NM04/Canonical.lean": "74af1358ba86fd3c16d0088139f79459f7c3bdf7269dd2a017b9e4e314a87572",
+    "NLA/NM04/BalancedMinor.lean": "123258547a3e59933881e978f0773e4d2359e3ad30d5357d1b4b0d3eb5f6c612",
+    "NLA/NM04/SchurReconstruction.lean": "4647b347f2f666c6a81ee549345974957a09f43dd2158a32d26ff60dd3103312",
+    "NLA/NM04/SchurMargins.lean": "312a07c84a4f2ed829672d7731c18e8571297110a333aa7bc0808e7aacd1a817",
+    "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+    "NLA/NM04/SchurBordered.lean": "b7d14fd9fe28d256c99ff4880e1f4912c2ed30a4e39d5ded64655040cc629117",
+    "NLA/NM04/RankOneBordered.lean": "46954a3cbd771676897b254fba33758ec0c2874104f54ed950fd4ee9209acec7",
+    "NLA/NM04/CofactorDirections.lean": "9a491afb63b188d1c4d303bfc450a854c0bd96dfbf2e64b8519fb117440f1bf0",
+    "NLA/NM04/MinorLinearity.lean": "7428cdad75c475323c7e7bc5ddf989f3db648164859c90b54dacb529e6d35db1",
+    "NLA/NM04/MinorLowering.lean": "effb39f2dad36379d41de388a4ab278024ae9267bee2afedb7fd96aefa344b13",
+    "NLA/NM04/CofactorSigned.lean": "a3c93ca75a02e0536e0800982423332eb7b5447dc6982dfae2d6d56d712e6095",
+    "NLA/NM04/MinorBasics.lean": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4",
+    "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb",
+    "NLA/NM04/MinorColumnExchange.lean": "93332bae55973883bbd732893da68259169214f601508052307d4cb68bd2549d",
+    "NLA/NM04/MinorColumnForms.lean": "1cb9fd0cd2bff3977ef5ab18104de952b26a2467b8abbedfa0e0119c9893defe",
+    "NLA/NM04/ColumnExchangeIndices.lean": "50ef40bb5011a6496d83081be622908a5c8c4f361ecdffdb7020a4d8019cbc8e",
+    "NLA/NM04/DecisionTransport.lean": "123a4eb6d4023610d00703deb17a2e030d51125a88cdd25a916efd5f05e7aa38",
+    "NLA/NM04/MinorRowExchange.lean": "84f60d4dca081d371419d5161807652292e720974f68114b21a067a01af06b3c",
+    "NLA/NM04/MinorTranspose.lean": "258d1c5ba6335eceec60a670451f07eecaed89a090199f15dee644de3c31a172",
+    "NLA/NM04/MinorRaising.lean": "a5b5f514a12e36dd739cac78eb4c5f8c5c98265c60944b01cab30fb3bf30492c",
+    "NLA/NM04/BorderedMinors.lean": "0c2f0750ef82f2c4acf173edb720b27e694d408b2e3630f3c04dd1603a139a42",
+    "NLA/NM04/BorderOrder.lean": "633bd65c8b3482402b2db4c3cf69f6486c49b6893b06792f9487d4c5157aaedb",
+    "NLA/NM04/RaisingIndices.lean": "9a6dbc13267fc2253d346b175a51995785fb17bcb929f2ad9b1ca06930160b68",
+    "NLA/NM04/PencilConsequences.lean": "788857a19b1993dd8223f8c85a4714fb6580b55f6bb0a568cd84289e50b4609b",
+    "NLA/NM04/WeightedTransition.lean": "8f1f6d966144fb5dadeb1851d1313d1ff269d8a528268bcf11c943b83ed77090",
+    "NLA/NM04/TransitionCardinality.lean": "e12815d3f548b3241bbfcfdc1d3908ca3d6de31ff7dbf6fb78e296373e0f09ae",
+    "NLA/NM04/DiagonalCovariance.lean": "7f4fa4755b09a1a1538829dc5dc66b549394d611cbabedac311943cff00db39e",
+    "NLA/NM04/WeightedExpansion.lean": "f23e55f8c856f2dcf797bebca4091a20c59678ca987fceb7ab3988e9eae1288e",
+    "NLA/NM04/SinkhornSemantics.lean": "2fe0975d3800c189008168c219cfcf441e5d00450ebc9c3b6ea518764913cfc7",
+    "NLA/NM04/ScalingExistence.lean": "c6275a414aa97a55cb06e5bb20d1991acd61c9a5a88e60332830d3aaceca7b84",
+    "NLA/NM04/Minimum.lean": "5063604d685052d0887eb1bef87ba3f973b73ddee612ea8b1eef2aad349bc433",
+    "NLA/NM04/Coercivity.lean": "a677a2bc6ca322de7688464072a2fd3059da6f15e4f65c9a81905374b1118ed7",
+    "NLA/NM04/AnalyticBasics.lean": "7105ee575ec4c24f1617485bf841426fe5042e282f4c49e49b8d9340712bea28",
+    "NLA/NM04/Numerical.lean": "5fe5f4b22ed58b5c8e2e2bac02920c57d46bda84183db24fff9465cfc337d8f6",
+    "NLA/NM04/Stationary.lean": "def490de33f62503abd5eaa9421a5bcd5362a11adef25d5c2a86f0e705dde9c2",
+    "NLA/NM04/ScalingUniqueness.lean": "a174669abe9268ac851f1e9d3ba14eca4d00ea59bea37c75f1aa47ce241dc083",
+    "NLA/NM04/TransitionEntries.lean": "32bfef81fe5d67460b983873043355164338ef9baa3954294527d885183eebcc"
+  },
+  "module_order": [
+    "NLA.NM04.Definitions",
+    "NLA.NM04.SchurMargins",
+    "NLA.NM04.SchurReconstruction",
+    "NLA.NM04.SchurBordered",
+    "NLA.NM04.RankOneBordered",
+    "NLA.NM04.MinorLinearity",
+    "NLA.NM04.CofactorDirections",
+    "NLA.NM04.MinorBasics",
+    "NLA.NM04.CofactorSigned",
+    "NLA.NM04.TransitionSupport",
+    "NLA.NM04.MinorLowering",
+    "NLA.NM04.MinorColumnForms",
+    "NLA.NM04.DecisionTransport",
+    "NLA.NM04.ColumnExchangeIndices",
+    "NLA.NM04.MinorColumnExchange",
+    "NLA.NM04.MinorTranspose",
+    "NLA.NM04.MinorRowExchange",
+    "NLA.NM04.BorderOrder",
+    "NLA.NM04.RaisingIndices",
+    "NLA.NM04.BorderedMinors",
+    "NLA.NM04.MinorRaising",
+    "NLA.NM04.BalancedMinor",
+    "NLA.NM04.TransitionCardinality",
+    "NLA.NM04.WeightedTransition",
+    "NLA.NM04.DiagonalCovariance",
+    "NLA.NM04.WeightedExpansion",
+    "NLA.NM04.PencilConsequences",
+    "NLA.NM04.AnalyticBasics",
+    "NLA.NM04.Numerical",
+    "NLA.NM04.Coercivity",
+    "NLA.NM04.Minimum",
+    "NLA.NM04.Stationary",
+    "NLA.NM04.ScalingExistence",
+    "NLA.NM04.ScalingUniqueness",
+    "NLA.NM04.SinkhornSemantics",
+    "NLA.NM04.Canonical",
+    "NLA.NM04.TransitionEntries",
+    "Solution"
+  ],
+  "commands": [
+    {
+      "module": "NLA.NM04.Definitions",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+      "output_sha256": "03d65aeb592b7b0ce073686b3f34013d0a68ee2e95f28f82d953ea933bc95ba6",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a"
+      }
+    },
+    {
+      "module": "NLA.NM04.SchurMargins",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "312a07c84a4f2ed829672d7731c18e8571297110a333aa7bc0808e7aacd1a817",
+      "output_sha256": "899e5fe2747c06e14eee30636e51499aeb98866c27f2b68835d1f587ac24f3b1",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/SchurMargins.lean": "312a07c84a4f2ed829672d7731c18e8571297110a333aa7bc0808e7aacd1a817"
+      }
+    },
+    {
+      "module": "NLA.NM04.SchurReconstruction",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "4647b347f2f666c6a81ee549345974957a09f43dd2158a32d26ff60dd3103312",
+      "output_sha256": "484b84da7e3b47a97934bd428b1ccf7e95c04dc69a33f1f6d0b37d17aef8f57d",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/SchurMargins.lean": "312a07c84a4f2ed829672d7731c18e8571297110a333aa7bc0808e7aacd1a817",
+        "NLA/NM04/SchurReconstruction.lean": "4647b347f2f666c6a81ee549345974957a09f43dd2158a32d26ff60dd3103312"
+      }
+    },
+    {
+      "module": "NLA.NM04.SchurBordered",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "b7d14fd9fe28d256c99ff4880e1f4912c2ed30a4e39d5ded64655040cc629117",
+      "output_sha256": "710d1cb7ba3ff2b05b559af66429c6213a7c16fa5a81adbeb09fc14f927ec5e9",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/SchurBordered.lean": "b7d14fd9fe28d256c99ff4880e1f4912c2ed30a4e39d5ded64655040cc629117"
+      }
+    },
+    {
+      "module": "NLA.NM04.RankOneBordered",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "46954a3cbd771676897b254fba33758ec0c2874104f54ed950fd4ee9209acec7",
+      "output_sha256": "1a4730975b62c3ac1fdd9aa6e3475fb59116d0d08a5d27e8f2f7b92c0fdf9654",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/RankOneBordered.lean": "46954a3cbd771676897b254fba33758ec0c2874104f54ed950fd4ee9209acec7"
+      }
+    },
+    {
+      "module": "NLA.NM04.MinorLinearity",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "7428cdad75c475323c7e7bc5ddf989f3db648164859c90b54dacb529e6d35db1",
+      "output_sha256": "c953b287e5c1d35769509bc718571b3b1ec7301c891b5ac65385cea77b16464c",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/MinorLinearity.lean": "7428cdad75c475323c7e7bc5ddf989f3db648164859c90b54dacb529e6d35db1"
+      }
+    },
+    {
+      "module": "NLA.NM04.CofactorDirections",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "9a491afb63b188d1c4d303bfc450a854c0bd96dfbf2e64b8519fb117440f1bf0",
+      "output_sha256": "d9a5d606a719840a686220774522a6a5a335aac9ab858a4f7dd0efc22d3015f6",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/CofactorDirections.lean": "9a491afb63b188d1c4d303bfc450a854c0bd96dfbf2e64b8519fb117440f1bf0",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/MinorLinearity.lean": "7428cdad75c475323c7e7bc5ddf989f3db648164859c90b54dacb529e6d35db1"
+      }
+    },
+    {
+      "module": "NLA.NM04.MinorBasics",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4",
+      "output_sha256": "c5e93a9d06390d5d3dcb317158160f15960214075e64c2309a9b5217531ce8f4",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/MinorBasics.lean": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4"
+      }
+    },
+    {
+      "module": "NLA.NM04.CofactorSigned",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "a3c93ca75a02e0536e0800982423332eb7b5447dc6982dfae2d6d56d712e6095",
+      "output_sha256": "0fcbd5098824839d7be5fa33614b33aa1e3016056a950badcf78c6889d0ffb78",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/CofactorSigned.lean": "a3c93ca75a02e0536e0800982423332eb7b5447dc6982dfae2d6d56d712e6095",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/MinorBasics.lean": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4"
+      }
+    },
+    {
+      "module": "NLA.NM04.TransitionSupport",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb",
+      "output_sha256": "5e32085466df4c56a824f9f1f17f52727238cec308122a06f22b4794d718df7a",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb"
+      }
+    },
+    {
+      "module": "NLA.NM04.MinorLowering",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "effb39f2dad36379d41de388a4ab278024ae9267bee2afedb7fd96aefa344b13",
+      "output_sha256": "4b27a2391652322639b3b0ec872811cc67e915f10a7d1e96c985ccb7829e9595",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/CofactorSigned.lean": "a3c93ca75a02e0536e0800982423332eb7b5447dc6982dfae2d6d56d712e6095",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/MinorBasics.lean": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4",
+        "NLA/NM04/MinorLowering.lean": "effb39f2dad36379d41de388a4ab278024ae9267bee2afedb7fd96aefa344b13",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb"
+      }
+    },
+    {
+      "module": "NLA.NM04.MinorColumnForms",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "1cb9fd0cd2bff3977ef5ab18104de952b26a2467b8abbedfa0e0119c9893defe",
+      "output_sha256": "aea459ba409e0531bd6d02c2fc6bc7edce7b1eec07874ff5ea0b83a6de99bb79",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/CofactorSigned.lean": "a3c93ca75a02e0536e0800982423332eb7b5447dc6982dfae2d6d56d712e6095",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/MinorBasics.lean": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4",
+        "NLA/NM04/MinorColumnForms.lean": "1cb9fd0cd2bff3977ef5ab18104de952b26a2467b8abbedfa0e0119c9893defe"
+      }
+    },
+    {
+      "module": "NLA.NM04.DecisionTransport",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "123a4eb6d4023610d00703deb17a2e030d51125a88cdd25a916efd5f05e7aa38",
+      "output_sha256": "bf291178873121aa69fd97f67f9a4c1ccd0566993f3b98f1d2b9338eddefec7a",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/DecisionTransport.lean": "123a4eb6d4023610d00703deb17a2e030d51125a88cdd25a916efd5f05e7aa38",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb"
+      }
+    },
+    {
+      "module": "NLA.NM04.ColumnExchangeIndices",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "50ef40bb5011a6496d83081be622908a5c8c4f361ecdffdb7020a4d8019cbc8e",
+      "output_sha256": "976815eb2026472426be6b0e9934426794ced27f662dc9d895abc30b3c244ad0",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/ColumnExchangeIndices.lean": "50ef40bb5011a6496d83081be622908a5c8c4f361ecdffdb7020a4d8019cbc8e",
+        "NLA/NM04/DecisionTransport.lean": "123a4eb6d4023610d00703deb17a2e030d51125a88cdd25a916efd5f05e7aa38",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb"
+      }
+    },
+    {
+      "module": "NLA.NM04.MinorColumnExchange",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "93332bae55973883bbd732893da68259169214f601508052307d4cb68bd2549d",
+      "output_sha256": "61ce4e75ad724213738a6ec1bc0c645d1cd5df062f47e8ce7c8c96a75577271e",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/CofactorSigned.lean": "a3c93ca75a02e0536e0800982423332eb7b5447dc6982dfae2d6d56d712e6095",
+        "NLA/NM04/ColumnExchangeIndices.lean": "50ef40bb5011a6496d83081be622908a5c8c4f361ecdffdb7020a4d8019cbc8e",
+        "NLA/NM04/DecisionTransport.lean": "123a4eb6d4023610d00703deb17a2e030d51125a88cdd25a916efd5f05e7aa38",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/MinorBasics.lean": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4",
+        "NLA/NM04/MinorColumnExchange.lean": "93332bae55973883bbd732893da68259169214f601508052307d4cb68bd2549d",
+        "NLA/NM04/MinorColumnForms.lean": "1cb9fd0cd2bff3977ef5ab18104de952b26a2467b8abbedfa0e0119c9893defe",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb"
+      }
+    },
+    {
+      "module": "NLA.NM04.MinorTranspose",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "258d1c5ba6335eceec60a670451f07eecaed89a090199f15dee644de3c31a172",
+      "output_sha256": "8f213fb7998201bc666180e4685824b0eb5345c2dfc5ff48130220e3a602a2c7",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/CofactorSigned.lean": "a3c93ca75a02e0536e0800982423332eb7b5447dc6982dfae2d6d56d712e6095",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/MinorBasics.lean": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4",
+        "NLA/NM04/MinorTranspose.lean": "258d1c5ba6335eceec60a670451f07eecaed89a090199f15dee644de3c31a172"
+      }
+    },
+    {
+      "module": "NLA.NM04.MinorRowExchange",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "84f60d4dca081d371419d5161807652292e720974f68114b21a067a01af06b3c",
+      "output_sha256": "8326b262733c02fc80c31ca6894323e45782ac22c9fc6d17f1f4a304c0a520df",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/CofactorSigned.lean": "a3c93ca75a02e0536e0800982423332eb7b5447dc6982dfae2d6d56d712e6095",
+        "NLA/NM04/ColumnExchangeIndices.lean": "50ef40bb5011a6496d83081be622908a5c8c4f361ecdffdb7020a4d8019cbc8e",
+        "NLA/NM04/DecisionTransport.lean": "123a4eb6d4023610d00703deb17a2e030d51125a88cdd25a916efd5f05e7aa38",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/MinorBasics.lean": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4",
+        "NLA/NM04/MinorColumnExchange.lean": "93332bae55973883bbd732893da68259169214f601508052307d4cb68bd2549d",
+        "NLA/NM04/MinorColumnForms.lean": "1cb9fd0cd2bff3977ef5ab18104de952b26a2467b8abbedfa0e0119c9893defe",
+        "NLA/NM04/MinorRowExchange.lean": "84f60d4dca081d371419d5161807652292e720974f68114b21a067a01af06b3c",
+        "NLA/NM04/MinorTranspose.lean": "258d1c5ba6335eceec60a670451f07eecaed89a090199f15dee644de3c31a172",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb"
+      }
+    },
+    {
+      "module": "NLA.NM04.BorderOrder",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "633bd65c8b3482402b2db4c3cf69f6486c49b6893b06792f9487d4c5157aaedb",
+      "output_sha256": "230bcd791e14dd6fe7a060f7350673c55547f81f45bea0fe47386992af03efe9",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/BorderOrder.lean": "633bd65c8b3482402b2db4c3cf69f6486c49b6893b06792f9487d4c5157aaedb",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/MinorBasics.lean": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4"
+      }
+    },
+    {
+      "module": "NLA.NM04.RaisingIndices",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "9a6dbc13267fc2253d346b175a51995785fb17bcb929f2ad9b1ca06930160b68",
+      "output_sha256": "b60eaf632326e81ea5170c1cfd5b92c0b2520f7cec14e46f1a6f7ac681710797",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/RaisingIndices.lean": "9a6dbc13267fc2253d346b175a51995785fb17bcb929f2ad9b1ca06930160b68",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb"
+      }
+    },
+    {
+      "module": "NLA.NM04.BorderedMinors",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "0c2f0750ef82f2c4acf173edb720b27e694d408b2e3630f3c04dd1603a139a42",
+      "output_sha256": "f29411afaaf2cce32d48d81ebeaffff1977ae2c750ebded2185125e6d179c916",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/BorderOrder.lean": "633bd65c8b3482402b2db4c3cf69f6486c49b6893b06792f9487d4c5157aaedb",
+        "NLA/NM04/BorderedMinors.lean": "0c2f0750ef82f2c4acf173edb720b27e694d408b2e3630f3c04dd1603a139a42",
+        "NLA/NM04/CofactorSigned.lean": "a3c93ca75a02e0536e0800982423332eb7b5447dc6982dfae2d6d56d712e6095",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/MinorBasics.lean": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4",
+        "NLA/NM04/MinorTranspose.lean": "258d1c5ba6335eceec60a670451f07eecaed89a090199f15dee644de3c31a172",
+        "NLA/NM04/RaisingIndices.lean": "9a6dbc13267fc2253d346b175a51995785fb17bcb929f2ad9b1ca06930160b68",
+        "NLA/NM04/RankOneBordered.lean": "46954a3cbd771676897b254fba33758ec0c2874104f54ed950fd4ee9209acec7",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb"
+      }
+    },
+    {
+      "module": "NLA.NM04.MinorRaising",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "a5b5f514a12e36dd739cac78eb4c5f8c5c98265c60944b01cab30fb3bf30492c",
+      "output_sha256": "b3b060ed7f6527ed6fca57e37aff23fe5a84c1e2796b1b257a0fdb6c5197a8ce",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/BorderOrder.lean": "633bd65c8b3482402b2db4c3cf69f6486c49b6893b06792f9487d4c5157aaedb",
+        "NLA/NM04/BorderedMinors.lean": "0c2f0750ef82f2c4acf173edb720b27e694d408b2e3630f3c04dd1603a139a42",
+        "NLA/NM04/CofactorSigned.lean": "a3c93ca75a02e0536e0800982423332eb7b5447dc6982dfae2d6d56d712e6095",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/MinorBasics.lean": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4",
+        "NLA/NM04/MinorLinearity.lean": "7428cdad75c475323c7e7bc5ddf989f3db648164859c90b54dacb529e6d35db1",
+        "NLA/NM04/MinorRaising.lean": "a5b5f514a12e36dd739cac78eb4c5f8c5c98265c60944b01cab30fb3bf30492c",
+        "NLA/NM04/MinorTranspose.lean": "258d1c5ba6335eceec60a670451f07eecaed89a090199f15dee644de3c31a172",
+        "NLA/NM04/RaisingIndices.lean": "9a6dbc13267fc2253d346b175a51995785fb17bcb929f2ad9b1ca06930160b68",
+        "NLA/NM04/RankOneBordered.lean": "46954a3cbd771676897b254fba33758ec0c2874104f54ed950fd4ee9209acec7",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb"
+      }
+    },
+    {
+      "module": "NLA.NM04.BalancedMinor",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "123258547a3e59933881e978f0773e4d2359e3ad30d5357d1b4b0d3eb5f6c612",
+      "output_sha256": "5443b28947ddc712990e619146f45710bbb9b5894b61c2848acd17160a47d9fb",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/BalancedMinor.lean": "123258547a3e59933881e978f0773e4d2359e3ad30d5357d1b4b0d3eb5f6c612",
+        "NLA/NM04/BorderOrder.lean": "633bd65c8b3482402b2db4c3cf69f6486c49b6893b06792f9487d4c5157aaedb",
+        "NLA/NM04/BorderedMinors.lean": "0c2f0750ef82f2c4acf173edb720b27e694d408b2e3630f3c04dd1603a139a42",
+        "NLA/NM04/CofactorDirections.lean": "9a491afb63b188d1c4d303bfc450a854c0bd96dfbf2e64b8519fb117440f1bf0",
+        "NLA/NM04/CofactorSigned.lean": "a3c93ca75a02e0536e0800982423332eb7b5447dc6982dfae2d6d56d712e6095",
+        "NLA/NM04/ColumnExchangeIndices.lean": "50ef40bb5011a6496d83081be622908a5c8c4f361ecdffdb7020a4d8019cbc8e",
+        "NLA/NM04/DecisionTransport.lean": "123a4eb6d4023610d00703deb17a2e030d51125a88cdd25a916efd5f05e7aa38",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/MinorBasics.lean": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4",
+        "NLA/NM04/MinorColumnExchange.lean": "93332bae55973883bbd732893da68259169214f601508052307d4cb68bd2549d",
+        "NLA/NM04/MinorColumnForms.lean": "1cb9fd0cd2bff3977ef5ab18104de952b26a2467b8abbedfa0e0119c9893defe",
+        "NLA/NM04/MinorLinearity.lean": "7428cdad75c475323c7e7bc5ddf989f3db648164859c90b54dacb529e6d35db1",
+        "NLA/NM04/MinorLowering.lean": "effb39f2dad36379d41de388a4ab278024ae9267bee2afedb7fd96aefa344b13",
+        "NLA/NM04/MinorRaising.lean": "a5b5f514a12e36dd739cac78eb4c5f8c5c98265c60944b01cab30fb3bf30492c",
+        "NLA/NM04/MinorRowExchange.lean": "84f60d4dca081d371419d5161807652292e720974f68114b21a067a01af06b3c",
+        "NLA/NM04/MinorTranspose.lean": "258d1c5ba6335eceec60a670451f07eecaed89a090199f15dee644de3c31a172",
+        "NLA/NM04/RaisingIndices.lean": "9a6dbc13267fc2253d346b175a51995785fb17bcb929f2ad9b1ca06930160b68",
+        "NLA/NM04/RankOneBordered.lean": "46954a3cbd771676897b254fba33758ec0c2874104f54ed950fd4ee9209acec7",
+        "NLA/NM04/SchurBordered.lean": "b7d14fd9fe28d256c99ff4880e1f4912c2ed30a4e39d5ded64655040cc629117",
+        "NLA/NM04/SchurMargins.lean": "312a07c84a4f2ed829672d7731c18e8571297110a333aa7bc0808e7aacd1a817",
+        "NLA/NM04/SchurReconstruction.lean": "4647b347f2f666c6a81ee549345974957a09f43dd2158a32d26ff60dd3103312",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb"
+      }
+    },
+    {
+      "module": "NLA.NM04.TransitionCardinality",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "e12815d3f548b3241bbfcfdc1d3908ca3d6de31ff7dbf6fb78e296373e0f09ae",
+      "output_sha256": "7ffba5e56c069a18a8d1c9529e4a3a5a40879196f4d3bd83f7b2640cc913ec9d",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/TransitionCardinality.lean": "e12815d3f548b3241bbfcfdc1d3908ca3d6de31ff7dbf6fb78e296373e0f09ae"
+      }
+    },
+    {
+      "module": "NLA.NM04.WeightedTransition",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "8f1f6d966144fb5dadeb1851d1313d1ff269d8a528268bcf11c943b83ed77090",
+      "output_sha256": "bb2d7fdf3141f3cd33a1eebee8c956bb21e338a915e0209c021f23a6f00a453f",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/DecisionTransport.lean": "123a4eb6d4023610d00703deb17a2e030d51125a88cdd25a916efd5f05e7aa38",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/TransitionCardinality.lean": "e12815d3f548b3241bbfcfdc1d3908ca3d6de31ff7dbf6fb78e296373e0f09ae",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb",
+        "NLA/NM04/WeightedTransition.lean": "8f1f6d966144fb5dadeb1851d1313d1ff269d8a528268bcf11c943b83ed77090"
+      }
+    },
+    {
+      "module": "NLA.NM04.DiagonalCovariance",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "7f4fa4755b09a1a1538829dc5dc66b549394d611cbabedac311943cff00db39e",
+      "output_sha256": "e83c88edddb4fe96fbd27606daaaa3242f0c4c5c991d81290012d033f1f11aae",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/DiagonalCovariance.lean": "7f4fa4755b09a1a1538829dc5dc66b549394d611cbabedac311943cff00db39e"
+      }
+    },
+    {
+      "module": "NLA.NM04.WeightedExpansion",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "f23e55f8c856f2dcf797bebca4091a20c59678ca987fceb7ab3988e9eae1288e",
+      "output_sha256": "f98a94749010f8e9bb185228c927138b79fe9439c292387451399264ce9ff34e",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/WeightedExpansion.lean": "f23e55f8c856f2dcf797bebca4091a20c59678ca987fceb7ab3988e9eae1288e"
+      }
+    },
+    {
+      "module": "NLA.NM04.PencilConsequences",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "788857a19b1993dd8223f8c85a4714fb6580b55f6bb0a568cd84289e50b4609b",
+      "output_sha256": "45c76a291d5e239d1a4af52a9def5db4fd519587344423d537691f097ab39d45",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/DecisionTransport.lean": "123a4eb6d4023610d00703deb17a2e030d51125a88cdd25a916efd5f05e7aa38",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/DiagonalCovariance.lean": "7f4fa4755b09a1a1538829dc5dc66b549394d611cbabedac311943cff00db39e",
+        "NLA/NM04/PencilConsequences.lean": "788857a19b1993dd8223f8c85a4714fb6580b55f6bb0a568cd84289e50b4609b",
+        "NLA/NM04/TransitionCardinality.lean": "e12815d3f548b3241bbfcfdc1d3908ca3d6de31ff7dbf6fb78e296373e0f09ae",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb",
+        "NLA/NM04/WeightedExpansion.lean": "f23e55f8c856f2dcf797bebca4091a20c59678ca987fceb7ab3988e9eae1288e",
+        "NLA/NM04/WeightedTransition.lean": "8f1f6d966144fb5dadeb1851d1313d1ff269d8a528268bcf11c943b83ed77090"
+      }
+    },
+    {
+      "module": "NLA.NM04.AnalyticBasics",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/NM04/AnalyticBasics.olean",
+        "NLA/NM04/AnalyticBasics.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-17T20:36:22.911092+00:00",
+      "source_sha256": "7105ee575ec4c24f1617485bf841426fe5042e282f4c49e49b8d9340712bea28",
+      "dependency_olean_sha256": {
+        "NLA.NM04.Definitions": "03d65aeb592b7b0ce073686b3f34013d0a68ee2e95f28f82d953ea933bc95ba6"
+      },
+      "exit_code": 0,
+      "end": "2026-09-17T20:36:45.001490+00:00",
+      "elapsed_seconds": 22.090392291080207,
+      "log_sha256": "2654add8dace9b9e9408e715e7dfadd2622090554dd776f5c8d1410cad5d4fcf",
+      "maxrss_bytes_macos_cumulative": 3363487744,
+      "output_sha256": "6e17da7a0ec34a5c5d0c197299190964298a94d7a58726f594e6c388d7845b57"
+    },
+    {
+      "module": "NLA.NM04.Numerical",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "5fe5f4b22ed58b5c8e2e2bac02920c57d46bda84183db24fff9465cfc337d8f6",
+      "output_sha256": "131ba5c23b5e7746afec449ce74f623c4d2c2b190bfa7fd25732ee5f1186ccc2",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/Numerical.lean": "5fe5f4b22ed58b5c8e2e2bac02920c57d46bda84183db24fff9465cfc337d8f6"
+      }
+    },
+    {
+      "module": "NLA.NM04.Coercivity",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/NM04/Coercivity.olean",
+        "NLA/NM04/Coercivity.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-17T20:36:45.014787+00:00",
+      "source_sha256": "a677a2bc6ca322de7688464072a2fd3059da6f15e4f65c9a81905374b1118ed7",
+      "dependency_olean_sha256": {
+        "NLA.NM04.AnalyticBasics": "6e17da7a0ec34a5c5d0c197299190964298a94d7a58726f594e6c388d7845b57",
+        "NLA.NM04.Numerical": "131ba5c23b5e7746afec449ce74f623c4d2c2b190bfa7fd25732ee5f1186ccc2"
+      },
+      "exit_code": 0,
+      "end": "2026-09-17T20:37:11.961283+00:00",
+      "elapsed_seconds": 26.946646208991297,
+      "log_sha256": "320512b8dc8bc4e80f147ea00486ac7df85caa1221898576a37198ade23588e7",
+      "maxrss_bytes_macos_cumulative": 3363487744,
+      "output_sha256": "81dc241627efa7be2ac39fb28d77788272ecd339d7b05bd127a3929a19669d9f"
+    },
+    {
+      "module": "NLA.NM04.Minimum",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/NM04/Minimum.olean",
+        "NLA/NM04/Minimum.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-17T20:37:11.967916+00:00",
+      "source_sha256": "5063604d685052d0887eb1bef87ba3f973b73ddee612ea8b1eef2aad349bc433",
+      "dependency_olean_sha256": {
+        "NLA.NM04.Coercivity": "81dc241627efa7be2ac39fb28d77788272ecd339d7b05bd127a3929a19669d9f"
+      },
+      "exit_code": 0,
+      "end": "2026-09-17T20:37:45.158247+00:00",
+      "elapsed_seconds": 33.190541958087124,
+      "log_sha256": "4b57fc1e30f6dd887f17043a8ee7916316c44ac274b2af211a1f4f786b365c2a",
+      "maxrss_bytes_macos_cumulative": 3363487744,
+      "output_sha256": "0b6e35d1122cd151418771f755db730127ad03c477e43fb3a413bd21f8dd9fbf"
+    },
+    {
+      "module": "NLA.NM04.Stationary",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/NM04/Stationary.olean",
+        "NLA/NM04/Stationary.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-17T20:37:45.168895+00:00",
+      "source_sha256": "def490de33f62503abd5eaa9421a5bcd5362a11adef25d5c2a86f0e705dde9c2",
+      "dependency_olean_sha256": {
+        "NLA.NM04.AnalyticBasics": "6e17da7a0ec34a5c5d0c197299190964298a94d7a58726f594e6c388d7845b57"
+      },
+      "exit_code": 0,
+      "end": "2026-09-17T20:37:58.786519+00:00",
+      "elapsed_seconds": 13.61748854094185,
+      "log_sha256": "ece21da0acaac3c4d17fe0175f211edf723b3f975638ac7fec54fd4a6552da55",
+      "maxrss_bytes_macos_cumulative": 3447308288,
+      "output_sha256": "01c966e597d8268c6cb7ad050f2d39b9d833faf3583b16972de5768c7e591719"
+    },
+    {
+      "module": "NLA.NM04.ScalingExistence",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/NM04/ScalingExistence.olean",
+        "NLA/NM04/ScalingExistence.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-17T20:37:58.794260+00:00",
+      "source_sha256": "c6275a414aa97a55cb06e5bb20d1991acd61c9a5a88e60332830d3aaceca7b84",
+      "dependency_olean_sha256": {
+        "NLA.NM04.Minimum": "0b6e35d1122cd151418771f755db730127ad03c477e43fb3a413bd21f8dd9fbf",
+        "NLA.NM04.Stationary": "01c966e597d8268c6cb7ad050f2d39b9d833faf3583b16972de5768c7e591719"
+      },
+      "exit_code": 0,
+      "end": "2026-09-17T20:38:13.003302+00:00",
+      "elapsed_seconds": 14.20849966595415,
+      "log_sha256": "d86959d965f5b8daf016b35dbe35244ba2885cb20333bb4bbb049c99bb93a40c",
+      "maxrss_bytes_macos_cumulative": 3447308288,
+      "output_sha256": "301f756e4433850967bb011bfd883bd5544591f5058f594e969fd509b5d965d7"
+    },
+    {
+      "module": "NLA.NM04.ScalingUniqueness",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "a174669abe9268ac851f1e9d3ba14eca4d00ea59bea37c75f1aa47ce241dc083",
+      "output_sha256": "8a0c30c6d54814fb9653409d8d8353c798c4d9ad430c35307385272e936e2c9f",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/ScalingUniqueness.lean": "a174669abe9268ac851f1e9d3ba14eca4d00ea59bea37c75f1aa47ce241dc083"
+      }
+    },
+    {
+      "module": "NLA.NM04.SinkhornSemantics",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/NM04/SinkhornSemantics.olean",
+        "NLA/NM04/SinkhornSemantics.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-17T20:38:13.016008+00:00",
+      "source_sha256": "2fe0975d3800c189008168c219cfcf441e5d00450ebc9c3b6ea518764913cfc7",
+      "dependency_olean_sha256": {
+        "NLA.NM04.ScalingExistence": "301f756e4433850967bb011bfd883bd5544591f5058f594e969fd509b5d965d7",
+        "NLA.NM04.ScalingUniqueness": "8a0c30c6d54814fb9653409d8d8353c798c4d9ad430c35307385272e936e2c9f"
+      },
+      "exit_code": 0,
+      "end": "2026-09-17T20:38:26.632944+00:00",
+      "elapsed_seconds": 13.616861999966204,
+      "log_sha256": "ffe6b22ddfa93cf6d8769e5f037c2f784ac78612818ee5bbedb3bc8c38be08ab",
+      "maxrss_bytes_macos_cumulative": 3447308288,
+      "output_sha256": "762b916184fb0d539ba7431cac591d9488a5963fa4552319eab65aae3b9f0128"
+    },
+    {
+      "module": "NLA.NM04.Canonical",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/NM04/Canonical.olean",
+        "NLA/NM04/Canonical.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-17T20:38:26.639805+00:00",
+      "source_sha256": "74af1358ba86fd3c16d0088139f79459f7c3bdf7269dd2a017b9e4e314a87572",
+      "dependency_olean_sha256": {
+        "NLA.NM04.BalancedMinor": "5443b28947ddc712990e619146f45710bbb9b5894b61c2848acd17160a47d9fb",
+        "NLA.NM04.PencilConsequences": "45c76a291d5e239d1a4af52a9def5db4fd519587344423d537691f097ab39d45",
+        "NLA.NM04.SinkhornSemantics": "762b916184fb0d539ba7431cac591d9488a5963fa4552319eab65aae3b9f0128"
+      },
+      "exit_code": 0,
+      "end": "2026-09-17T20:38:38.655097+00:00",
+      "elapsed_seconds": 12.007867792039178,
+      "log_sha256": "d89e9cd77d9de1827219225dbaeecc80d089d201547ca56e89dfdb35e1b8070b",
+      "maxrss_bytes_macos_cumulative": 3447308288,
+      "output_sha256": "4d0466cf6c968be272faf3782e7ac34888991aceab98e8a84fc86018ef4eaa0a"
+    },
+    {
+      "module": "NLA.NM04.TransitionEntries",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "32bfef81fe5d67460b983873043355164338ef9baa3954294527d885183eebcc",
+      "output_sha256": "e8439aee967366bf8d3b53514b695279bfaacf59bf47bcb1b20f862bba538afb",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-202/RECEIPT.json",
+      "prior_receipt_sha256": "c8ddd9e03de2ea816321673a1fdabe2b66b607c1ae545069981d53f5bffefb72",
+      "transitive_source_hashes": {
+        "NLA/NM04/DecisionTransport.lean": "123a4eb6d4023610d00703deb17a2e030d51125a88cdd25a916efd5f05e7aa38",
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/TransitionEntries.lean": "32bfef81fe5d67460b983873043355164338ef9baa3954294527d885183eebcc",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb"
+      }
+    },
+    {
+      "module": "Solution",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/Solution.olean",
+        "Solution.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-17T20:38:38.670062+00:00",
+      "source_sha256": "904fb52379ffc1c949e78234e7e24d971a82ad352243eb70f4f31c14c532e279",
+      "dependency_olean_sha256": {
+        "NLA.NM04.Canonical": "4d0466cf6c968be272faf3782e7ac34888991aceab98e8a84fc86018ef4eaa0a",
+        "NLA.NM04.TransitionEntries": "e8439aee967366bf8d3b53514b695279bfaacf59bf47bcb1b20f862bba538afb"
+      },
+      "exit_code": 0,
+      "end": "2026-09-17T20:38:49.331868+00:00",
+      "elapsed_seconds": 10.661705499980599,
+      "log_sha256": "be3becf384c54ea45b2ffa8ad7a8336f5cc53932f0c6ee541ac7124f56128ad6",
+      "maxrss_bytes_macos_cumulative": 3447308288,
+      "output_sha256": "2136202946efaceb62b09a1b83e482c6aaf50b233b9406e50029af9831a98fda"
+    }
+  ],
+  "count_change": 0,
+  "end": "2026-09-17T20:38:49.339317+00:00",
+  "completed_modules": 38,
+  "failed_modules": [],
+  "blocked_modules": []
+}
