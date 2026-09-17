@@ -8,7 +8,7 @@
 **Importance:** interesting to specialist  
 **Rating rationale:** Challenging because convergence does not control comparison-matrix structure at each iterate; specialist impact concerns square-root algorithms for H-matrices.  
 **Status:** Lean verified  
-**Last checked:** 2026-09-11  
+**Last checked:** 2026-09-17  
 
 ## Lean proof and verification evidence
 
