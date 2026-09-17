@@ -34,7 +34,7 @@ values},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}SP-15}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-12}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Verification check: 2026-09-17}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -51,7 +51,7 @@ many unitary classes with prescribed shifted singular values\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to the community\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
@@ -89,18 +89,56 @@ mathematical review} ·
 and eligibility record}.
 
 The full proof passed a separate independent Codex-agent audit.
-Substantial AI assistance is disclosed; this is informal automated
-review, not external human peer review or Lean verification. The proof
-uses an exact block determinant identity and a polynomial dimension
-argument, with the standard constant-rank theorem. Its finite diagnostic
-checks are not the proof. Fortier Bourque and Ransford retain credit for
-the question and generic finiteness theorem, which is compatible with
-this exceptional fiber.
+Substantial AI assistance is disclosed; that earlier audit was informal
+automated review; the later Lean verification is recorded below. The
+proof uses an exact block determinant identity and a polynomial
+dimension argument, with the standard constant-rank theorem. Its finite
+diagnostic checks are not the proof. Fortier Bourque and Ransford retain
+credit for the question and generic finiteness theorem, which is
+compatible with this exceptional fiber.
 
 \textbf{Retained historical material.} The original ratings, context,
 exact target, references and dated pre-resolution status-search text are
 preserved below. The earlier generic result is unchanged; the older
 references to an unresolved question describe the pre-resolution record.
+
+\subsection{Lean proof and verification evidence -
+2026-09-17}\label{lean-proof-and-verification-evidence---2026-09-17}
+
+\textbf{The complete original target is Lean verified.}
+\textit{NLA.SP15.canonical\_finiteness\_false} in the
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/69938fe5ac20768f7c23c0bead00b6add2516200/eigenvalues-and-inverse-problems/SP-15/lean/Solution.lean}{immutable
+proof} negates the finiteness assertion: for every M, there are M+1
+complex 9-by-9 matrices with equal ordered singular values for every
+complex shift and no unitarily similar pair. The manuscript's
+smooth-curve and Jordan-type enhancements are outside this formal claim.
+
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35229660506/job/105230253664}{Linux
+run 35229660506} passed all 29 exact Comparator contracts,
+default-kernel replay and rejection/isolation controls, with only
+\textit{propext}, \textit{Classical.choice} and \textit{Quot.sound}.
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/eigenvalues-and-inverse-problems/SP-15/lean/verification/linux-35229660506/README.md}{Evidence
+and independent audits} distinguish local macOS Lean compilation from
+the final GitHub execution. Two full nonauthor mathematical reviews are
+retained.
+
+Kernel-mode LeanCert certifies the consumed radius-1/16 box; an exact LU
+certificate proves determinant -1088 without subdivision. Pins: Lean
+4.33.1,
+\href{https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474}{Mathlib
+\textit{0df444a3}}, and
+\href{https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926}{LeanCert
+\textit{621a43d7}}.
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/eigenvalues-and-inverse-problems/SP-15/lean/README.md}{Project
+instructions} give the \textit{lake build} reproduction command and
+source correspondence.
+
+\textbf{Formalization: George Stepaniants}, Department of Computing and
+Mathematical Sciences, California Institute of Technology. Prior
+attribution is retained. Substantial AI assistance and scoped agent
+reviews are disclosed; external human review is not claimed. Later
+publication and upstream checks remain pending and will be recorded
+separately.
 
 \newpage
 
@@ -110,10 +148,8 @@ For a complex \(N\times N\) matrix \(M\), write
 \(s_1(M)\geq\cdots\geq s_N(M)\) for its singular values. Say
 \(A\sim_{\rm sip} B\) if
 
-\[
-s_j(A-zI)=s_j(B-zI)
-\qquad(z\in\mathbb C,\ 1\leq j\leq N).
-\]
+\[s_j(A-zI)=s_j(B-zI)
+\qquad(z\in\mathbb C,\ 1\leq j\leq N).\]
 
 This is equality of \emph{super-identical pseudospectral} data: it
 includes every singular value of every scalar shift.
@@ -124,9 +160,7 @@ Is it true that for every \(N\geq1\) there is an integer \(M_N\geq1\)
 such that every family \(A_1,\ldots,A_{M_N+1}\in\mathbb C^{N\times N}\)
 with \(A_i\sim_{\rm sip}A_j\) for all \(i,j\) contains a pair satisfying
 
-\[
-A_j=U^*A_iU\quad\text{for some }i<j\text{ and }U^*U=I?
-\]
+\[A_j=U^*A_iU\quad\text{for some }i< j\text{ and }U^*U=I?\]
 
 Equivalently, is every such data fiber a union of at most \(M_N\)
 unitary similarity classes, with a bound depending only on \(N\)?

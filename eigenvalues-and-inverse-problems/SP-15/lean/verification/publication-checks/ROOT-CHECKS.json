@@ -1,0 +1,113 @@
+{
+  "time": "2026-09-17T15:02:06.883830+00:00",
+  "scope": "Actual local publication/document checks, not a new Lean or Comparator execution",
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "tools/validate_problem_ids.py",
+        "--base-ref",
+        "origin/main"
+      ],
+      "cwd": "/private/tmp/nla-lean-next-sp15-worktree",
+      "time": "2026-09-17T15:01:55.727509+00:00",
+      "exit_code": 0,
+      "log": "01.log",
+      "log_sha256": "44cc74bfe8f011df4389835465a6043310e12828a092e8c74d318f50d26da3a0"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/validate_problem_ids.py",
+        "--base-ref",
+        "upstream/main"
+      ],
+      "cwd": "/private/tmp/nla-lean-next-sp15-worktree",
+      "time": "2026-09-17T15:01:58.780190+00:00",
+      "exit_code": 0,
+      "log": "02.log",
+      "log_sha256": "2281c6061df20ea77bce4a8a36ba410ecb359e23d89c0cf49ce56c72c9e25d0d"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/update_catalog.py",
+        "--base-ref",
+        "origin/main"
+      ],
+      "cwd": "/private/tmp/nla-lean-next-sp15-worktree",
+      "time": "2026-09-17T15:02:02.351974+00:00",
+      "exit_code": 0,
+      "log": "03.log",
+      "log_sha256": "a1daf3b80b11773def6f9f6bb2fd401da606815858fcf8b0a85a5d14d7c2fc0b"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_problem_ids.py",
+        "-v"
+      ],
+      "cwd": "/private/tmp/nla-lean-next-sp15-worktree",
+      "time": "2026-09-17T15:02:05.314943+00:00",
+      "exit_code": 0,
+      "log": "04.log",
+      "log_sha256": "e73dd1b653a85d80c58f29b24630afaa92f4061894210607b03862e185147112"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/format_math.py",
+        "--check",
+        "SP-15"
+      ],
+      "cwd": "/private/tmp/nla-lean-next-sp15-worktree",
+      "time": "2026-09-17T15:02:06.558161+00:00",
+      "exit_code": 0,
+      "log": "05.log",
+      "log_sha256": "a79bf13b65bde7baa6900939f581282565799e78e47c9e2426f83b5b4ccb5a9c"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/private/tmp/nla-lean-next-sp15-worktree",
+      "time": "2026-09-17T15:02:06.599704+00:00",
+      "exit_code": 0,
+      "log": "06.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "final_metadata": {
+    "command": [
+      "/Users/georgestepaniants/miniforge3/bin/python",
+      "tools/lean/validate_manifest.py",
+      "eigenvalues-and-inverse-problems/SP-15/lean"
+    ],
+    "exit_code": 0,
+    "log_sha256": "3ee8aadf9ce45b5b9d0a2a2eb7a461ebdfd953fb442ed253f072f470632a81dc"
+  },
+  "document_sha256": {
+    "README.md": "9217b54d3d47efb17a05dacb437a09e64d10215dfbffc98697eced2224dd59bf",
+    "problem.tex": "8bd43c26f55c660dd12252149b9cb9197377dd911e30bca636a146aa6ea46909",
+    "problem.pdf": "9088d0591dd08ef45364161fda815cc329f169870389b1ffb47592ef939e640f"
+  },
+  "catalog_sha256": {
+    "README.md": "5d385b1e0569646ae5e47c23f82aa31e03e3b7dc31a3207d1a6ef668a62feea6",
+    "CATALOG.md": "382d9afbea08f79c60021821d920c16b0c26b992346ff28b32f2a2c37ae6fc40",
+    "RESOLVED.md": "f55fe8fac77077766b0a215c375a222d3032624cfd61aef644b2f0a7cad09af8",
+    "eigenvalues-and-inverse-problems/README.md": "f7eb74b359abd0fb9ae9c1621fb54c77918dbc503e2503c582bddcb5ae61329c"
+  },
+  "protected_inputs_unchanged": 53,
+  "metadata_sha256": "dea51573e4287c8a34912ff82594361e260315b18aae7145143f5b895711bcc4",
+  "PR_body_sha256": "d3c8661ef56673700b8fb2fd0293811e74782e68ec48c4142074043f92a9c946",
+  "publication_and_PR_runs_pending": true,
+  "count_change": 0
+}
