@@ -2,7 +2,7 @@
 
 **113 problems with open targets:** 42 open and 71 partially resolved. **104 other retained entries**, excluded from the open count.
 
-**Resolution evidence:** 59 solved (published or independently audited); 45 solved with Lean verification.
+**Resolution evidence:** 58 solved (published or independently audited); 46 solved with Lean verification.
 
 Each entry records its own literature-check date. Literature checks are bounded; ratings are editorial. “Impact” uses the canonical `Importance` field.
 
@@ -248,7 +248,7 @@ Retained entries outside the open count:
 | [MI-04](matrix-inequalities-and-norms/MI-04/README.md) | A universal block-norm characterization of essentially Hermitian matrices | **✅ SOLVED** | challenging | interesting to specialist | [PDF](matrix-inequalities-and-norms/MI-04/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-04/problem.tex) |
 | [MI-06](matrix-inequalities-and-norms/MI-06/README.md) | Thompson-type domination for the arithmetic symmetric modulus | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](matrix-inequalities-and-norms/MI-06/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-06/problem.tex) |
 | [MI-07](matrix-inequalities-and-norms/MI-07/README.md) | The triangle conjecture for the maximal symmetric modulus | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](matrix-inequalities-and-norms/MI-07/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-07/problem.tex) |
-| [MI-13](matrix-inequalities-and-norms/MI-13/README.md) | Nobori's spectral-middle-factor commutator conjecture | **✅ SOLVED** | challenging | interesting to specialist | [PDF](matrix-inequalities-and-norms/MI-13/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-13/problem.tex) |
+| [MI-13](matrix-inequalities-and-norms/MI-13/README.md) | Nobori's spectral-middle-factor commutator conjecture | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](matrix-inequalities-and-norms/MI-13/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-13/problem.tex) |
 | [MI-16](matrix-inequalities-and-norms/MI-16/README.md) | The maximum permanent on a positive-semidefinite unitary orbit | **✅ SOLVED** | extreme | interesting to the community | [PDF](matrix-inequalities-and-norms/MI-16/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-16/problem.tex) |
 | [MI-19](matrix-inequalities-and-norms/MI-19/README.md) | A q-permanent inequality for subset-preserving permutations | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](matrix-inequalities-and-norms/MI-19/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-19/problem.tex) |
 | [MI-21](matrix-inequalities-and-norms/MI-21/README.md) | Freewan–Hayajneh inequality for sums of weighted geometric means | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](matrix-inequalities-and-norms/MI-21/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-21/problem.tex) |

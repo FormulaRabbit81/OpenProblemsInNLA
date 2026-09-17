@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/private/tmp/nla-lean-next-20260915/reviews/MI13-runtime-referee-35191730986/audit.py", line 174, in <module>
+    authenticate_private_packet(Path(directory).name, item['original_manifest_sha256'])
+  File "/private/tmp/nla-lean-next-20260915/reviews/MI13-runtime-referee-35191730986/audit.py", line 161, in authenticate_private_packet
+    check(set(inventory) == {p.relative_to(directory).as_posix() for p in directory.rglob('*') if p.is_file() and p != directory/'MANIFEST.json'}, 'original review complete inventory ' + name)
+  File "/private/tmp/nla-lean-next-20260915/reviews/MI13-runtime-referee-35191730986/audit.py", line 36, in check
+    raise AssertionError(label)
+AssertionError: original review complete inventory MI13-full-referee2-20260917
