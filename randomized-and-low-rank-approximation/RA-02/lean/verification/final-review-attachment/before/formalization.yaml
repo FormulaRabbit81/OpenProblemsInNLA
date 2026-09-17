@@ -1,0 +1,471 @@
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'RA-02: no polynomial trace-error factor after exactly the target rank of pivots'
+  description: Complete negative answer to the original RPCholesky polynomial trace-factor question. For
+    every real C>0 and p>=0, a complex positive-definite matrix of order r+1 strictly violates the proposed
+    bound after exactly r pivots. All normalized process and genuine ordered eigenvalue-tail semantics
+    are proved.
+  authors:
+  - George Stepaniants
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California Institute of Technology,
+      Pasadena, California, USA
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+sources:
+- title: RA-02 — Polynomial trace-error factor after exactly the target rank of pivots
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ce47b5630bf3680d9211131c3a43825b022c139a/randomized-and-low-rank-approximation/RA-02/README.md
+  type: web-post
+  relationship: formalizes
+  location: Complete original problem, context and sampling convention
+  author_endorsement: not-contacted
+  note: Permanent ID, original canonical path, full mathematical target and original mathematical authorship
+    are retained.
+- title: Sharp worst-case factors for randomly pivoted Cholesky and LU
+  authors:
+  - Matthew J. Colbrook
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ce47b5630bf3680d9211131c3a43825b022c139a/references/colbrook-random-pivoting-2026-09-11/manuscripts/sharp_random_pivoting.tex
+  type: manuscript
+  relationship: formalizes
+  location: Theorem 1 and Corollary 3, negative RA-02 target
+  author_endorsement: not-contacted
+  note: Original resolution credited to Matthew J. Colbrook, Department of Applied Mathematics and Theoretical
+    Physics, University of Cambridge. This finite arrowhead proof establishes the sufficient factor 2^r/3,
+    not the manuscript sharp limiting ratio, entrywise-positive, correlation-matrix or LU extensions.
+related_formalizations:
+- id: https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1
+  relationship: other
+  note: Complete retained independent Challenge read as a structure example; no theorem imported. Exact
+    inspected bytes bound in REUSE-AUDIT.json.
+- id: https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof
+  relationship: other
+  note: Numerical-first and independent Challenge structure inspected; no theorem imported.
+- id: https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474
+  relationship: builds-on
+  note: Actual complex PSD congruence, decreasing Hermitian spectrum, Euclidean Rayleigh infimum, finite
+    sums/products and arbitrary-real-power asymptotics.
+- id: https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926
+  relationship: builds-on
+  note: One kernel-mode point certificate exp(1)<=3, consumed by the full tail-factor and final counterexample
+    chain.
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    tool_setup: Parallel proof and independent-referee agents. Actual local development used one coordinator-run
+      macOS compiler, one thread and at most4096MiB per process, with pinned source-matched reuse. Fresh
+      final non-root Linux kernel/Comparator/sandbox execution is a separate gate.
+    prompting_notes: Numerical and semantic statements written and hashed before Lean definitions/contracts.
+      Preserve actual normalized PSD pivot law, full finite path expectation, true decreasing Hermitian
+      eigenvalue tail and arbitrary real exponent. Minimize computation to one consumed kernel-mode LeanCert
+      exp(1)<=3 certificate; all rank and path arguments symbolic.
+  notes: Substantial OpenAI Codex assistance. The package preparer /root/mf22_publication_referee authored
+    RA02 statements and most proof modules and is not an independent final referee. Other proof contributors
+    are /root/mi04_independent_referee and /root; the two complete nonauthor final reviewers and exact
+    scopes are retained separately. No official Tau Ceti endorsement or human peer review is claimed.
+status:
+  scope: Negates the original outer real C>0,p>=0 assertion for all positive dimensions, complex PSD matrices
+    and integer1<=r<=n, with exactly r true RPCholesky steps and actual decreasing eigenvalue tail.
+  whole_problem_verified: false
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+  - Classical.choice
+  - Quot.sound
+  - propext
+  main_results:
+  - declaration: NLA.RA02.exp_one_bound
+    file: NLA/RA02/Numerical.lean
+    line: 22
+    file_sha256: 055d55303f717f3765956412d9c852381bb73c43f71bb63bba56f07d4183d8fa
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.scalar_parameters
+    file: NLA/RA02/Parameters.lean
+    line: 39
+    file_sha256: 5998ac9d64e920681c48acd2d95fc1e396debc6d566156cf6b5d74e2b192103b
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.pivot_kernel
+    file: NLA/RA02/PivotKernel.lean
+    line: 72
+    file_sha256: faf91ce03e8a1ee941e155802a5aa617f7b5edb5237acddcbc93675cf979fe29
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.finite_path_law
+    file: NLA/RA02/FiniteExpectation.lean
+    line: 54
+    file_sha256: 4481e779f0c8a54648f1fb34952dbbfbb7623e230002c925297b2346586d6e47
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.zero_residual
+    file: NLA/RA02/FiniteExpectation.lean
+    line: 80
+    file_sha256: 4481e779f0c8a54648f1fb34952dbbfbb7623e230002c925297b2346586d6e47
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.expected_trace_recursion
+    file: NLA/RA02/FiniteExpectation.lean
+    line: 94
+    file_sha256: 4481e779f0c8a54648f1fb34952dbbfbb7623e230002c925297b2346586d6e47
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.ordered_spectrum
+    file: NLA/RA02/OrderedSpectrum.lean
+    line: 63
+    file_sha256: c5e97f50d7f1f43e70a56d534e66b45e3471cbfaa2d25f16139b4f8881abe8be
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.least_eigenvalue_rayleigh
+    file: NLA/RA02/RayleighMinimum.lean
+    line: 65
+    file_sha256: 7a0033618e29435dada0b4620e9114a63355e3516bc38b7e9d0bee73650d5b88
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.spectral_tail_semantics
+    file: NLA/RA02/SpectralTail.lean
+    line: 61
+    file_sha256: 1e5d7731ebe7452233c0449f3a8c917b331a012641caf1c4bc600040a1b05c4c
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.arrowhead_quadratic
+    file: NLA/RA02/ArrowheadQuadratic.lean
+    line: 172
+    file_sha256: f9e086e10f95e6b5512317438215c9d50b68d8b9478fe55a1b5e396c4c0c31a9
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.arrowhead_positive_definite
+    file: NLA/RA02/ArrowheadQuadratic.lean
+    line: 182
+    file_sha256: f9e086e10f95e6b5512317438215c9d50b68d8b9478fe55a1b5e396c4c0c31a9
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.rayleigh_probe_values
+    file: NLA/RA02/ProbeValues.lean
+    line: 43
+    file_sha256: 7b1131d9c5586df3d6c6b672908c4dba4f8c2f818a697401f24803f69a5bd703
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.arrowhead_tail
+    file: NLA/RA02/ArrowheadTail.lean
+    line: 23
+    file_sha256: 3d16c63fdf2f0845ce851790ee0ec5f8c7e05bbce0a43ef16bc3e82c5f3632f5
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.residual_state_positivity
+    file: NLA/RA02/StateConstruction.lean
+    line: 46
+    file_sha256: 8ee4d12fc5717df95b2de8ed2e0f4685a669cd22b9393d7c5a1cce01be06e856
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.residual_state_updates
+    file: NLA/RA02/StateUpdates.lean
+    line: 110
+    file_sha256: 503a51254ef48c84cdfc1281898e8bcaf382901d18a89f98fe893fec715f87ec
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.distinct_history_state
+    file: NLA/RA02/DistinctHistory.lean
+    line: 53
+    file_sha256: 4cadb59cb32f15a552f2ecc11b84f138c735c2bea9a2026e9d3c926a6fc93bfe
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.distinct_history_identity
+    file: NLA/RA02/HistoryIdentity.lean
+    line: 22
+    file_sha256: 8acfd8426a7a2232e33311a59a557bfd127649da156a33f8a664e860f7a45016
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.retained_history_count
+    file: NLA/RA02/CarryEncoding.lean
+    line: 166
+    file_sha256: 41e531d40ed0b5209cd15fa99040fa794bae0ff4ffaf2158febfe42811a9f006
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.retained_prefix_description
+    file: NLA/RA02/CarryEncoding.lean
+    line: 175
+    file_sha256: 41e531d40ed0b5209cd15fa99040fa794bae0ff4ffaf2158febfe42811a9f006
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.retained_trace_bound
+    file: NLA/RA02/RetainedTrace.lean
+    line: 85
+    file_sha256: abb3091e275b948605dbc855c5aca5e602e0109e24f91f5e68ca0a8aa360ec92
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.retained_contribution_bound
+    file: NLA/RA02/RetainedContribution.lean
+    line: 39
+    file_sha256: fca75b48e3d55f183f742e42dbda808a286a44859d09e73fd9f82d5dc75b2409
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.expectation_lower_bound
+    file: NLA/RA02/ExpectationLower.lean
+    line: 19
+    file_sha256: 158c5a71dcaddd98b79517e8b14cb8ae159415dbbbd8c1e8de24d541497b0ba1
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.binomial_exponential_bound
+    file: NLA/RA02/ExponentialComparison.lean
+    line: 22
+    file_sha256: 3190e52188c20952582b0860f466566b4366e862231e7187740c15a6dabf8738
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.exponential_tail_factor
+    file: NLA/RA02/ExponentialComparison.lean
+    line: 26
+    file_sha256: 3190e52188c20952582b0860f466566b4366e862231e7187740c15a6dabf8738
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.exponential_dominates_real_power
+    file: NLA/RA02/ExponentialComparison.lean
+    line: 41
+    file_sha256: 3190e52188c20952582b0860f466566b4366e862231e7187740c15a6dabf8738
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.universal_counterexamples
+    file: NLA/RA02/FinalCounterexample.lean
+    line: 18
+    file_sha256: fc718c257e6af7e1c653383ef06de3b83fc4e20e1b0be242c60f44d2215b65d8
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  - declaration: NLA.RA02.no_polynomial_trace_factor
+    file: NLA/RA02/FinalCounterexample.lean
+    line: 30
+    file_sha256: fc718c257e6af7e1c653383ef06de3b83fc4e20e1b0be242c60f44d2215b65d8
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
+      Linux replay, Comparator and controls pending.
+  source_scan_note: All35 implementation files are hole-free. The27 deliberate Challenge placeholders
+    belong only to the separate specification environment.
+fidelity:
+  divergences: The proof uses an explicit real-entry positive-definite arrowhead family of order r+1 with
+    factor 2^r/3, sufficient to negate the full universal complex-PSD assertion. It does not formalize
+    the manuscript sharp limiting ratio 2^r or entrywise-positive/LU/correlation extensions. Full finite
+    path weights replace optional measure-theoretic packaging, with mandatory normalization/PSD/conditional-law
+    proofs. A uniform dummy label at a zero residual preserves exact zero absorption. The tail uses actual
+    ordered eigenvalues₀ with only cardinality-index transport.
+review:
+  status: agent-reviewed complete source and actual local evidence; canonical Linux acceptance pending
+  reviewers:
+  - /root/ra02_full_final_referee
+  - /root/ie13_continuation
+  notes: Both reviewers read all35 sources and the full original target and independently authenticated
+    the local result. Their exact reports and scopes are in reviews/final. The package author is not an
+    independent referee of the proof or this packaging. No official Tau Ceti or human endorsement is asserted.
+alignment:
+  source_correspondence: SourceCorrespondence.md
+  numerical_boundary: NUMERICAL_TARGETS.md
+  numerical_first_record: NUMERICAL-FIRST.json
+  proposed_statements: Challenge.lean
+  source_provenance: SOURCE-PROVENANCE.json
+  reuse_audit: REUSE-AUDIT.json
+  duplicate_audit: DUPLICATE-AUDIT.json
+  active_source_manifest: ACTIVE-SOURCE-MANIFEST.json
+  implementation_map: IMPLEMENTATION-MAP.json
+  publication_evidence: PUBLICATION-EVIDENCE.json
+  current_reading_note: README.md
+toolchain:
+  lean: leanprover/lean4:v4.33.1
+  dependency_manifest: lake-manifest.json
+  dependencies:
+    leancert: 621a43d7cf21f87872392a01e874f2f1dbddc926
+    mathlib: 0df444a360eaa60ab8c11dca51a86af692955474
+verification:
+  phase: Actual complete serial macOS source build accepted; canonical Linux verification pending
+  statement_elaboration: Actual original run35083895041 Definitions/Challenge commands passed; full shared
+    run failed elsewhere. Exact record retained.
+  proof_implementation: All35 source inputs compiled successfully through actual development19, with3fresh
+    commands and32source-matched reused successes.
+  canonical_verification_completed: false
+  default_kernel: pending fresh canonical Linux export/replay
+  comparator: pending all27 actual comparisons
+  sandbox_and_rejection_controls: pending actual non-root Linux controls
+  local_acceptance: verification/LOCAL-DEVELOPMENT-ACCEPTANCE.json
+  local_acceptance_sha256: 20065f375d68844883266d7ec86176b07ddcb652710c693dd67e3d2b1ff005f3
+  local_receipt_sha256: 597f85f212eedd6d17193baa5e7a41342fa23a1a21342d357f5a6bed46791c97
+  permitted_axioms:
+  - Classical.choice
+  - Quot.sound
+  - propext
+  observed_axioms: All27 local output lists match propext, Classical.choice and Quot.sound.
+  numerical_certificate:
+    declaration: NLA.RA02.exp_one_bound
+    statement: Real.exp1<=3
+    method: interval_decide (trust := kernel)
+    consumed_by:
+    - rank_denominator_le_three
+    - exponential_tail_factor
+    - universal_counterexamples
+    - no_polynomial_trace_factor
+    interval_subdivision: none; all rank, matrix, history and real-exponent arguments symbolic
+  publication: Private source preparation only; no status/count/Git/CI/PR change.
+acknowledgements: Matthew J. Colbrook for the original mathematical resolution; Chen, Epperly, Tropp and
+  Webber for RPCholesky and its comparison problem; Mathlib, LeanCert, Lean Comparator and formalization.yaml
+  contributors; Schiffer and Forsythe structure examples.
+repository:
+  role: substantive-development
