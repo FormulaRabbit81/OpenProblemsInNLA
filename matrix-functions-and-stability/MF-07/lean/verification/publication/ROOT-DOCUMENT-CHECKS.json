@@ -1,0 +1,97 @@
+{
+  "reviewer": "/root",
+  "time_utc": "2026-09-17T03:48:33.480352+00:00",
+  "scope": "Publication document review and executed document checks; not a later Lean/Comparator rerun",
+  "proof_commit": "b2b9acc83ad7d6b7d3888de8390475a30c720af8",
+  "proof_source_count": 21,
+  "all_proof_source_bytes_unchanged": true,
+  "independent_overlay_manifest_sha256": "099f68eb6ea921dc6f8f4d241c30b6305ecf0d5e8b8bcd3e808ced9fdef7a021",
+  "independent_overlay_external_bindings_rehashed": 154,
+  "full_independent_report_read": true,
+  "root_changes_after_private_overlay": [
+    "Canonical README displays a short revision label while preserving the full immutable target URL.",
+    "Canonical README links the actual formalization PDF and TeX.",
+    "TeX uses a separate paragraph and nolinkurl for the reproduction path; removed measured overfull line without changing mathematics.",
+    "Current evidence phase, document check records and independent publication review index updated.",
+    "Catalog regenerated from unchanged IDs and canonical targets."
+  ],
+  "rendered_files_sha256": {
+    "problem.tex": "5c63dfd724d418df90cf559c5b2913276aa62eef7722aa58c8092b49fd42e135",
+    "problem.pdf": "e5bac27af4b8d071e7827246807daa4a5b5dc024aaf5b8285ba686d3226c7ca8",
+    "solution.tex": "f52f54ee11c710c3679086a3ab804665db6c1c19e2873d22e84aa6d37735c30b",
+    "solution.pdf": "6389c6576e131c2cde09e44fab44c28690f567a7c845e5e26ccefc2afeb6c2ec"
+  },
+  "visual_review": {
+    "all_four_final_pages_inspected_by": "/root",
+    "source": "Actual rendered page images via view_image; no clipping, missing text or overlap found",
+    "images_sha256": {
+      "problem-1.png": "b638298296f648d89b75d1a50976c0508bb0d4c94a410920e464daa64b1514e4",
+      "problem-2.png": "ea3bb33ce98ae0982372f2cf79edeccbc1fb5d61b612d1eee516b455dbdb11dc",
+      "solution-1.png": "b5b4de5baaba8224f7923450e999417c7fe3701031c25a6a2260603a1688dd7c",
+      "solution-2.png": "4d037a26f9f26699ad5f62188d3e6c7753cdbe888af3426d96cd3f1b007aca98"
+    }
+  },
+  "commands": [
+    {
+      "name": "ids",
+      "argv": [
+        "/opt/homebrew/bin/python3",
+        "tools/validate_problem_ids.py",
+        "--base-ref",
+        "origin/main"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "catalog",
+      "argv": [
+        "/opt/homebrew/bin/python3",
+        "tools/update_catalog.py",
+        "--base-ref",
+        "origin/main"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "tests",
+      "argv": [
+        "/opt/homebrew/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_problem_ids.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "manifest",
+      "argv": [
+        "/tmp/nla-lean-formalization/venv/bin/python",
+        "tools/lean/validate_manifest.py",
+        "matrix-functions-and-stability/MF-07/lean"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "tools/format_math.py",
+        "--check",
+        "MF-07"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "permanent_id_count": 217,
+  "permanent_id_tests_passed": 17,
+  "completed_manifest_exports": 18,
+  "remaining": [
+    "Exact publication-commit verification",
+    "Individual upstream main PR and source-matched upstream run"
+  ],
+  "count_delta": 0
+}

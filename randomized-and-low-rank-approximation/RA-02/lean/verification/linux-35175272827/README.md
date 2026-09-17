@@ -1,0 +1,9 @@
+# RA-02 canonical Linux verification - 17 September 2026 (UTC)
+
+Actual [run 35175272827, job 105055587640](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175272827/job/105055587640) checked literal proof revision `26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb`. All 220 submitted project inputs and all 27 contracts were authenticated. The default kernel, Comparator, standard transitive axioms, consumed kernel-mode LeanCert and required rejection and sandbox controls passed. The build and export sandbox probes ran as UID 1001.
+
+The complete [result](result.json), [Comparator log](comparator.log), other per-proof control and dependency logs, bootstrap logs, [raw verify-job log](job-105055587640.log), [source-lock](source-lock.json), [coordinator audit](ROOT-AUDIT.json), and [independent runtime review](../../reviews/canonical-runtime/REVIEW.md) are retained. [Runtime identity](RUNTIME-IDENTITY.json) records the omitted raw API responses and archive hashes. It copies only safe public API identity fields and publishes no contact address.
+
+The standalone global checker-controls job was skipped on this unchanged-harness push. The required per-proof controls actually ran inside the successful verify job: sorry and native rejection, three builtin-kernel controls, five Comparator regressions, and build/export sandbox and user-service controls. The selector selected RA-02 only.
+
+Both evidence audits inspect this one actual GitHub execution; they are not additional Lean runs or claims of checker infallibility. Two separately retained complete nonauthor proof-source reviews establish their stated mathematical scope. Local serial macOS development is a distinct recorded execution. Publication-commit and upstream PR checkouts require their own applicable checks and are not accepted by this earlier receipt.

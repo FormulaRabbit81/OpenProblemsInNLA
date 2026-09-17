@@ -1,0 +1,66 @@
+{
+  "time_utc": "2026-09-17T04:40:11.044482+00:00",
+  "scope": "Restore original literature-check metadata; separate actual Lean verification date17September unchanged",
+  "before_README_sha256": "b19fa947b2a52b26a557e2d0548efd0ba43e38835d322f9ef3370ad1b7a52b37",
+  "after_README_sha256": "f5eca2233eb4b88b60682c265baa00c85e4e3b33cb4481a58e87ac82d62c7ccb",
+  "image_before_sha256": {
+    "problem-2.png": "e4e1da6179044e4699832ef90dc5e57583ac7e94e5634e8dd0780db2dd949073",
+    "problem-3.png": "4210a9a36fc739b8c2cc199ae3daef8c0770e2ec875b59f9ea93533d26b64b38",
+    "problem-1.png": "bb291ccb549d767df86408765928806c6f7d7f260679854323dec474d029c229"
+  },
+  "runs": [
+    {
+      "name": "format",
+      "argv": [
+        "python3",
+        "tools/format_math.py",
+        "--check",
+        "SF-01"
+      ],
+      "exit_code": 0,
+      "log_sha256": "a79bf13b65bde7baa6900939f581282565799e78e47c9e2426f83b5b4ccb5a9c"
+    },
+    {
+      "name": "render",
+      "argv": [
+        "python3",
+        "tools/render_problems.py",
+        "SF-01"
+      ],
+      "exit_code": 0,
+      "log_sha256": "e1fa9964ecd55356dab700c72179bf68a29e56233ccaa04859929d62f6f1e726"
+    },
+    {
+      "name": "ids",
+      "argv": [
+        "python3",
+        "tools/validate_problem_ids.py",
+        "--base-ref",
+        "origin/main"
+      ],
+      "exit_code": 0,
+      "log_sha256": "44cc74bfe8f011df4389835465a6043310e12828a092e8c74d318f50d26da3a0"
+    },
+    {
+      "name": "catalog",
+      "argv": [
+        "python3",
+        "tools/update_catalog.py",
+        "--base-ref",
+        "origin/main"
+      ],
+      "exit_code": 0,
+      "log_sha256": "3ef17c8e2d51a2ea897f61636cce6687b9c51107a0b085b30d29762a8137ed0c"
+    }
+  ],
+  "proofs_changed": false,
+  "image_after_sha256": {
+    "problem-2.png": "9f172ed2601120c48b2d53584f262d586d1d8869e1416c830d624bb20780be08",
+    "problem-3.png": "7b811e6d14f802523c6a69ed1b204c1806b8c69cd0064a5ceb2a238dd88b50b4",
+    "problem-1.png": "3d97e5324c2444c3ef785d798de3244b93780822347a55945212064d28492a04"
+  },
+  "unchanged_rendered_pages": [],
+  "final_TeX_sha256": "b56c6cda84cb308e198a1e997e9f661f89056b7ac869f963ef4b96ec1f5533c7",
+  "final_PDF_sha256": "edd6e1e413652445dbcf903dc0234c27b2fa0c4340b36f38429dd3fce2ea9044",
+  "visual_review": "Changed pages require coordinator inspection; unchanged images retain previous actual review."
+}

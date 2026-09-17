@@ -1,0 +1,89 @@
+--- sealed-draft/RESOLVED.md
++++ corrected/RESOLVED.md
+@@ -890,7 +890,7 @@
+ 
+ **SF-01 (Lean verified); formalization by George Stepaniants.** Every exact Newton square-root iterate initialized at $X_0=A$ remains a real nonsingular H-matrix with positive diagonal. The theorem includes arbitrary positive scalar scaling and nonnegative affine initializations, with one diagonal-dominance weight for all iterates; it also proves the corresponding Halley preservation result.  [Complete proof](references/colbrook-matrix-functions-2026-09-11/manuscripts/SF-01.pdf), Theorem 1; Corollary 5 gives the Halley extension; [review](references/colbrook-matrix-functions-2026-09-11/verification/reviews/SF-01-review.md).
+ 
+-**Lean verified, 2026-09-17 (UTC).** **George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology, supplied the [complete24-target formalization](matrix-functions-and-stability/SF-01/lean/README.md). The original all-dimension, all-iteration positive-diagonal real H-matrix Newton target, its full complex spectral-radius definition and actual inverse availability are proved. The [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/3312b0795873cfecade03fa421a5433651d47674/matrix-functions-and-stability/SF-01/lean/Solution.lean) and [actual non-root Linux run 35175258802](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175258802/job/105055517720) passed default-kernel replay, Comparator, standard transitive axioms and rejection/isolation controls. Two complete nonauthor proof reviews and an independent runtime audit are retained in the [canonical evidence](matrix-functions-and-stability/SF-01/README.md#lean-proof-and-verification-evidence). Matthew J. Colbrook retains mathematical credit; Sidney Holden retains authorship and license credit for the two unchanged imported IV03 files. Scaled/affine initializations and Halley extensions are not additional formal claims. AI assistance and reviewer scopes are disclosed.
++**Lean verified, 2026-09-17 (UTC).** **George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology, supplied the [complete 24-target formalization](matrix-functions-and-stability/SF-01/lean/README.md). The original all-dimension, all-iteration positive-diagonal real H-matrix Newton target, its full complex spectral-radius definition and actual inverse availability are proved. The [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/3312b0795873cfecade03fa421a5433651d47674/matrix-functions-and-stability/SF-01/lean/Solution.lean) and [actual non-root Linux run 35175258802](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175258802/job/105055517720) passed default-kernel replay, Comparator, standard transitive axioms and rejection/isolation controls. Two complete nonauthor proof reviews and an independent runtime audit are retained in the [canonical evidence](matrix-functions-and-stability/SF-01/README.md#lean-proof-and-verification-evidence). Matthew J. Colbrook retains mathematical credit; Sidney Holden retains authorship and license credit for the two unchanged imported IV03 files. Scaled/affine initializations and Halley extensions are not additional formal claims. AI assistance and reviewer scopes are disclosed.
+ 
+ ## Reviewed interval and absolute-value submissions - 2026-09-11
+ 
+--- sealed-draft/matrix-functions-and-stability/SF-01/lean/formalization.yaml
++++ corrected/matrix-functions-and-stability/SF-01/lean/formalization.yaml
+@@ -382,7 +382,7 @@
+     comparator_config: comparator.json
+     verification_status: 'PASS: actual non-root Linux run 35175258802 at 3312b0795873cfecade03fa421a5433651d47674;
+       source-matched default-kernel, Comparator, axioms and required rejection/isolation controls.'
+-  source_scan_note: All active implementations are hole-free. Challenge contains24 deliberate specification
++  source_scan_note: All active implementations are hole-free. Challenge contains 24 deliberate specification
+     placeholders and is never imported.
+ fidelity:
+   divergences: The full original Newton target is retained. The source's broader initialization and Halley
+@@ -449,7 +449,7 @@
+   local_acceptance_support: verification/local-acceptance-review/MANIFEST.json
+   whole_proof_build: 'PASS: actual non-root Linux run 35175258802 at 3312b0795873cfecade03fa421a5433651d47674;
+     source-matched default-kernel, Comparator, axioms and required rejection/isolation controls.'
+-  transitive_axioms: All24 actual Solution lists contain only propext, Classical.choice and Quot.sound;
++  transitive_axioms: All 24 actual Solution lists contain only propext, Classical.choice and Quot.sound;
+     full output retained.
+   canonical_run:
+     id: 35175258802
+--- sealed-draft/matrix-functions-and-stability/SF-01/lean/verification/linux-35175258802/README.md
++++ corrected/matrix-functions-and-stability/SF-01/lean/verification/linux-35175258802/README.md
+@@ -1,5 +1,5 @@
+ # SF-01 actual canonical runtime
+ 
+-[Run 35175258802](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175258802/job/105055517720) verified literal `3312b0795873cfecade03fa421a5433651d47674` with all271 committed project input hashes and all24 targets. The default kernel, Comparator, standard-three axioms and every required per-project rejection/regression/sandbox control passed. Both sandbox modes used non-root UID1001. The separately skipped global checker-control job does not replace or invalidate the actual controls inside the successful verify job.
++[Run 35175258802](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175258802/job/105055517720) verified literal `3312b0795873cfecade03fa421a5433651d47674` with all 271 committed project input hashes and all 24 targets. The default kernel, Comparator, standard-three axioms and every required per-project rejection/regression/sandbox control passed. Both sandbox modes used non-root UID 1001. The separately skipped global checker-control job does not replace or invalidate the actual controls inside the successful verify job.
+ 
+ The exact receipt and logs, source-lock, raw verify-job log and [coordinator audit](ROOT-AUDIT.json) are retained. [Runtime identity](RUNTIME-IDENTITY.json) binds omitted raw API responses and archive by hashes without copying contact fields. The [independent referee](../../reviews/canonical-runtime/REVIEW.md) reviewed actual evidence. Neither audit is another Lean execution or a claim of checker infallibility. Local macOS development is a distinct recorded execution. Later publication and upstream PR checks remain separate.
+--- sealed-draft/matrix-functions-and-stability/SF-01/lean/reviews/INDEX.json
++++ corrected/matrix-functions-and-stability/SF-01/lean/reviews/INDEX.json
+@@ -143,7 +143,7 @@
+   ],
+   "scope": "Bounded exact historical reports/checks; original private inventories retain their original scope. Final complete-source and runtime acceptance remains a coordinator gate.",
+   "preparer_role": "SF01 metadata preparer and nonauthor mathematical source referee; not an independent referee of its own packaging.",
+-  "canonical_runtime": "pending",
++  "canonical_runtime": "Accepted actual non-root Linux run 35175258802 at 3312b0795873cfecade03fa421a5433651d47674; later publication and upstream executions remain separate gates.",
+   "official_Tau_Ceti_or_human_endorsement": false,
+   "current_attached_reviews": [
+     {
+@@ -159,12 +159,19 @@
+       "manifest_sha256": "f323b84378fc60c4a7d3abf5516367951666207d0219bf29931f770369a55c2d"
+     }
+   ],
+-  "current_complete_source_approval": "Two nonauthor reviews accepted; exact disclosures retained in full reports. Current canonical runtime still pending.",
++  "current_complete_source_approval": "Two nonauthor reviews accepted; exact disclosures retained in full reports. The actual canonical run 35175258802 and independent runtime audit are accepted. Later publication and upstream executions remain separate gates.",
+   "canonical_runtime_reviews": [
+     {
+       "path": "reviews/canonical-runtime/REVIEW.md",
+       "manifest_sha256": "a2015c419716da0de1b13a0390d6fd5d0e1cb0d0ea2e5ee393bf393ab5551ffa",
+       "role": "Independent source-bound actual runtime audit, not a fresh execution or full mathematical source review."
+     }
++  ],
++  "publication_overlay_reviews": [
++    {
++      "path": "reviews/publication-overlay/REVIEW.md",
++      "manifest_sha256": "db308d422a6a5884dd080dc953f8d64e740e4ff299506052c7439b550ed661c8",
++      "scope": "Independent conditional publication review; bounded requested corrections separately recorded and awaiting follow-through"
++    }
+   ]
+ }
+--- sealed-draft/PR-BODY.md
++++ corrected/PR-BODY.md
+@@ -4,11 +4,11 @@
+ 
+ ## Mathematical evidence
+ 
+-`NLA.SF01.canonical_newton_preservation` covers every real positive-diagonal nonsingular H-matrix, every positive dimension and every exact Newton step from X0=A, and proves invertibility at each step. The original full complex spectral-radius definition is retained through proved spectral/weight bridges. No symmetry, normality, positive entries, finite iteration cap or supplied rational representation is assumed. Scaled/affine and Halley extensions are not additional formal claims. Primary source: Colbrook's retained SF-01 manuscript, Theorem1, specialized to the complete original target.
++`NLA.SF01.canonical_newton_preservation` covers every real positive-diagonal nonsingular H-matrix, every positive dimension and every exact Newton step from X0=A, and proves invertibility at each step. The original full complex spectral-radius definition is retained through proved spectral/weight bridges. No symmetry, normality, positive entries, finite iteration cap or supplied rational representation is assumed. Scaled/affine and Halley extensions are not additional formal claims. Primary source: Colbrook's retained SF-01 manuscript, Theorem 1, specialized to the complete original target.
+ 
+-The [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/3312b0795873cfecade03fa421a5433651d47674/matrix-functions-and-stability/SF-01/lean/Solution.lean) passed [actual non-root Linux run 35175258802](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175258802/job/105055517720): all271 inputs, all24 Comparator contracts, default-kernel replay, standard transitive axioms and per-project rejection/isolation controls. The kernel-mode LeanCert half-positivity certificate is actually consumed. Two complete nonauthor source reviews and the independent runtime audit are retained with explicit scopes. Local Lean development and GitHub verification are distinct; an evidence audit is not another execution.
++The [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/3312b0795873cfecade03fa421a5433651d47674/matrix-functions-and-stability/SF-01/lean/Solution.lean) passed [actual non-root Linux run 35175258802](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175258802/job/105055517720): all 271 inputs, all 24 Comparator contracts, default-kernel replay, standard transitive axioms and per-project rejection/isolation controls. The kernel-mode LeanCert half-positivity certificate is actually consumed. Two complete nonauthor source reviews and the independent runtime audit are retained with explicit scopes. Local Lean development and GitHub verification are distinct; an evidence audit is not another execution.
+ 
+-Lean4.33.1, Mathlib0df444a360eaa60ab8c11dca51a86af692955474 and LeanCert621a43d7cf21f87872392a01e874f2f1dbddc926 are pinned. Run `lake build` in `matrix-functions-and-stability/SF-01/lean`; the README includes full shared Linux checker commands, source correspondence, raw logs and axiom reports.
++Lean 4.33.1, Mathlib 0df444a360eaa60ab8c11dca51a86af692955474 and LeanCert 621a43d7cf21f87872392a01e874f2f1dbddc926 are pinned. Run `lake build` in `matrix-functions-and-stability/SF-01/lean`; the README includes full shared Linux checker commands, source correspondence, raw logs and axiom reports.
+ 
+ ## Documents checked
+ 

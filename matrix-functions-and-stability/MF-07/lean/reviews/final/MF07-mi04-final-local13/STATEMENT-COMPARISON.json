@@ -1,0 +1,164 @@
+[
+  {
+    "frozen_header": "theorem matrix_product_semantics {d : ℕ} : matrixProduct ([] : List (Square d)) = 1 ∧ ∀ w : List (Square d), ∀ A : Square d, matrixProduct (w ++ [A]) = A * matrixProduct w :=",
+    "implementation_header": "theorem matrix_product_semantics {d : ℕ} : matrixProduct ([] : List (Square d)) = 1 ∧ ∀ w : List (Square d), ∀ A : Square d, matrixProduct (w ++ [A]) = A * matrixProduct w :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.matrix_product_semantics",
+    "source": "NLA/MF07/MatrixBasics.lean",
+    "current_source_sha256": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem diagonal_inverse {d : ℕ} (σ : Fin d → ℝ) (hσ : ∀ i, σ i ≠ 0) : diagonalWeights σ * inverseDiagonalWeights σ = 1 ∧ inverseDiagonalWeights σ * diagonalWeights σ = 1 :=",
+    "implementation_header": "theorem diagonal_inverse {d : ℕ} (σ : Fin d → ℝ) (hσ : ∀ i, σ i ≠ 0) : diagonalWeights σ * inverseDiagonalWeights σ = 1 ∧ inverseDiagonalWeights σ * diagonalWeights σ = 1 :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.diagonal_inverse",
+    "source": "NLA/MF07/MatrixBasics.lean",
+    "current_source_sha256": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem family_norm_maximum {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) : 0 ≤ familyNorm M ∧ (∃ A ∈ M, spectralNorm A = familyNorm M) ∧ ∀ A ∈ M, spectralNorm A ≤ familyNorm M :=",
+    "implementation_header": "theorem family_norm_maximum {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) : 0 ≤ familyNorm M ∧ (∃ A ∈ M, spectralNorm A = familyNorm M) ∧ ∀ A ∈ M, spectralNorm A ≤ familyNorm M :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.family_norm_maximum",
+    "source": "NLA/MF07/CompactGrowth.lean",
+    "current_source_sha256": "d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem family_growth_maximum {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (n : ℕ) : 0 ≤ familyGrowth M n ∧ familyGrowth M n ≤ familyNorm M ^ n ∧ (∃ w : List (Square d), w.length = n ∧ WordIn M w ∧ spectralNorm (matrixProduct w) = familyGrowth M n) ∧ ∀ w : List (Square d), w.length = n → WordIn M w → spectralNorm (matrixProduct w) ≤ familyGrowth M n :=",
+    "implementation_header": "theorem family_growth_maximum {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (n : ℕ) : 0 ≤ familyGrowth M n ∧ familyGrowth M n ≤ familyNorm M ^ n ∧ (∃ w : List (Square d), w.length = n ∧ WordIn M w ∧ spectralNorm (matrixProduct w) = familyGrowth M n) ∧ ∀ w : List (Square d), w.length = n → WordIn M w → spectralNorm (matrixProduct w) ≤ familyGrowth M n :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.family_growth_maximum",
+    "source": "NLA/MF07/CompactGrowth.lean",
+    "current_source_sha256": "d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem family_growth_submultiplicative {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (m n : ℕ) : familyGrowth M (m + n) ≤ familyGrowth M m * familyGrowth M n :=",
+    "implementation_header": "theorem family_growth_submultiplicative {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (m n : ℕ) : familyGrowth M (m + n) ≤ familyGrowth M m * familyGrowth M n :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.family_growth_submultiplicative",
+    "source": "NLA/MF07/CompactGrowth.lean",
+    "current_source_sha256": "d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem radius_one_semantics {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) : (jointSpectralRadius M = 1 ↔ Filter.Tendsto (rootGrowth M) Filter.atTop (𝓝 1)) ∧ (jointSpectralRadius M = 1 → 1 ≤ familyNorm M) :=",
+    "implementation_header": "theorem radius_one_semantics {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) : (jointSpectralRadius M = 1 ↔ Tendsto (rootGrowth M) atTop (𝓝 1)) ∧ (jointSpectralRadius M = 1 → 1 ≤ familyNorm M) :=",
+    "literal_whitespace_normalized_match": false,
+    "name": "NLA.MF07.radius_one_semantics",
+    "source": "NLA/MF07/RootSemantics.lean",
+    "current_source_sha256": "bee70f65ab8e7e517ebec8f579ea3ee8fb276d52a8f5cd293c9c0e085ab304ee",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem identity_family_semantics {d : ℕ} (hd : 1 ≤ d) : familyNorm ({1} : Set (Square d)) = 1 ∧ (∀ n : ℕ, familyGrowth ({1} : Set (Square d)) n = 1) ∧ jointSpectralRadius ({1} : Set (Square d)) = 1 :=",
+    "implementation_header": "theorem identity_family_semantics {d : ℕ} (hd : 1 ≤ d) : familyNorm ({1} : Set (Square d)) = 1 ∧ (∀ n : ℕ, familyGrowth ({1} : Set (Square d)) n = 1) ∧ jointSpectralRadius ({1} : Set (Square d)) = 1 :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.identity_family_semantics",
+    "source": "NLA/MF07/RootSemantics.lean",
+    "current_source_sha256": "bee70f65ab8e7e517ebec8f579ea3ee8fb276d52a8f5cd293c9c0e085ab304ee",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem approximate_extremal_norm {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (hr : jointSpectralRadius M = 1) (a : ℝ) (ha : 1 < a) : ∃ v : EuclideanVector d → ℝ, ∃ c : ℝ, 1 ≤ c ∧ IsComplexNorm v ∧ (∀ x, ‖x‖ ≤ v x ∧ v x ≤ c * ‖x‖) ∧ ∀ A ∈ M, ∀ x, v (applyMatrix A x) ≤ a * v x :=",
+    "implementation_header": "theorem approximate_extremal_norm {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (hr : jointSpectralRadius M = 1) (a : ℝ) (ha : 1 < a) : ∃ v : EuclideanVector d → ℝ, ∃ c : ℝ, 1 ≤ c ∧ IsComplexNorm v ∧ (∀ x, ‖x‖ ≤ v x ∧ v x ≤ c * ‖x‖) ∧ ∀ A ∈ M, ∀ x, v (applyMatrix A x) ≤ a * v x :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.approximate_extremal_norm",
+    "source": "NLA/MF07/ApproximateNorm.lean",
+    "current_source_sha256": "883e7e7c0455c5e3b257f5b3946d8ad4fcbef2a3d61e87061f1d92f9099a40a9",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem rounded_extremal_norm {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (hr : jointSpectralRadius M = 1) (a : ℝ) (ha : 1 < a) : ∃ Q : Square d, ∃ σ : Fin d → ℝ, ∃ w : EuclideanVector d → ℝ, IsUnitary Q ∧ Antitone σ ∧ (∀ i, 0 < σ i) ∧ IsComplexNorm w ∧ (∀ x, ‖x‖ ≤ w x ∧ w x ≤ (d : ℝ) * ‖x‖) ∧ (∀ A ∈ M, ∀ x, w (applyMatrix (rotatedGenerator Q σ A) x) ≤ a * w x) ∧ ∀ A ∈ M, ∀ i j : Fin d, ‖rotatedGenerator Q σ A i j‖ ≤ familyNorm M * σ j / σ i :=",
+    "implementation_header": "theorem rounded_extremal_norm {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (hr : jointSpectralRadius M = 1) (a : ℝ) (ha : 1 < a) : ∃ (Q : Square d) (σ : Fin d → ℝ) (w : EuclideanVector d → ℝ), IsUnitary Q ∧ Antitone σ ∧ (∀ i, 0 < σ i) ∧ IsComplexNorm w ∧ (∀ x, ‖x‖ ≤ w x ∧ w x ≤ (d : ℝ) * ‖x‖) ∧ (∀ A ∈ M, ∀ x, w (applyMatrix (rotatedGenerator Q σ A) x) ≤ a * w x) ∧ ∀ A ∈ M, ∀ i j : Fin d, ‖rotatedGenerator Q σ A i j‖ ≤ familyNorm M * σ j / σ i :=",
+    "literal_whitespace_normalized_match": false,
+    "name": "NLA.MF07.rounded_extremal_norm",
+    "source": "NLA/MF07/RoundedNorm.lean",
+    "current_source_sha256": "9ef9b6f2a7784054bdf3f1dedf22f4e81f8672176b7a7ec271e5d9a9e26d4ec5",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem triangular_damping {d : ℕ} (h : Fin d → ℝ) (hh : Antitone h) (hpos : ∀ i, 0 < h i) (X : Square d) (hX : LowerForWeights h X) : spectralNorm (diagonalDamping h X) ≤ spectralNorm X :=",
+    "implementation_header": "theorem triangular_damping {d : ℕ} (h : Fin d → ℝ) (hh : Antitone h) (hpos : ∀ i, 0 < h i) (X : Square d) (hX : LowerForWeights h X) : spectralNorm (diagonalDamping h X) ≤ spectralNorm X :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.triangular_damping",
+    "source": "NLA/MF07/TriangularDamping.lean",
+    "current_source_sha256": "ea35c872a9c579f4d6e9a259140cbe64afdf12491fa34729272b34e7150aab2a",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem interspersed_product_bound {d : ℕ} (M : Set (Square d)) (C E : Square d → Square d) (K u v : ℝ) (hK : 1 ≤ K) (hu : 0 ≤ u) (hv : 0 ≤ v) (hC : ∀ z : List (Square d), WordIn M z → spectralNorm (matrixProduct (z.map C)) ≤ K * u ^ z.length) (hE : ∀ A ∈ M, spectralNorm (E A) ≤ v) (z : List (Square d)) (hz : WordIn M z) : spectralNorm (matrixProduct (z.map (fun A => C A + E A))) ≤ K * (u + K * v) ^ z.length :=",
+    "implementation_header": "theorem interspersed_product_bound {d : ℕ} (M : Set (Square d)) (C E : Square d → Square d) (K u v : ℝ) (hK : 1 ≤ K) (hu : 0 ≤ u) (hv : 0 ≤ v) (hC : ∀ z : List (Square d), WordIn M z → spectralNorm (matrixProduct (z.map C)) ≤ K * u ^ z.length) (hE : ∀ A ∈ M, spectralNorm (E A) ≤ v) (z : List (Square d)) (hz : WordIn M z) : spectralNorm (matrixProduct (z.map (fun A => C A + E A))) ≤ K * (u + K * v) ^ z.length :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.interspersed_product_bound",
+    "source": "NLA/MF07/Interspersed.lean",
+    "current_source_sha256": "8f65ea5980bb23640c5185abc3d793964f84b1e1a45550e580ee184bcafdc898",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem quantitative_comparison {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (hr : jointSpectralRadius M = 1) (s : ℝ) (hs : 1 ≤ s) (n : ℕ) : familyGrowth M n ≤ (d : ℝ) * s ^ (d - 1) * (1 + 2 * (d : ℝ) ^ 2 * familyNorm M / s) ^ n :=",
+    "implementation_header": "theorem quantitative_comparison {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (hr : jointSpectralRadius M = 1) (s : ℝ) (hs : 1 ≤ s) (n : ℕ) : familyGrowth M n ≤ (d : ℝ) * s ^ (d - 1) * (1 + 2 * (d : ℝ) ^ 2 * familyNorm M / s) ^ n :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.quantitative_comparison",
+    "source": "NLA/MF07/QuantitativeComparison.lean",
+    "current_source_sha256": "ad20c7a071d84ea13b6c95f2a915d5ae9fcb362aa7f35d3730e7d910054e6248",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem scalar_family_growth (M : Set (Square 1)) (hM : IsCompact M) (hne : M.Nonempty) : (∀ n : ℕ, familyGrowth M n = familyNorm M ^ n) ∧ jointSpectralRadius M = familyNorm M :=",
+    "implementation_header": "theorem scalar_family_growth (M : Set (Square 1)) (hM : IsCompact M) (hne : M.Nonempty) : (∀ n : ℕ, familyGrowth M n = familyNorm M ^ n) ∧ jointSpectralRadius M = familyNorm M :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.scalar_family_growth",
+    "source": "NLA/MF07/ScalarFamily.lean",
+    "current_source_sha256": "a7e0a6b1dabdb866649f0381934b9bea0c5da7698bf0c93e4bedc38876a4227c",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem exp_one_bound : Real.exp 1 ≤ 3 :=",
+    "implementation_header": "theorem exp_one_bound : Real.exp 1 ≤ 3 :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.exp_one_bound",
+    "source": "NLA/MF07/Numerical.lean",
+    "current_source_sha256": "90407ab2d374d652549c8b57858f9c5123602a1edf72bde8ce2ea2243b786c03",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem comparison_threshold_bound (d n : ℕ) (hd : 2 ≤ d) (hn : 1 ≤ n) (L : ℝ) (hL : 1 ≤ L) : 1 ≤ comparisonThreshold d n L ∧ (d : ℝ) * comparisonThreshold d n L ^ (d - 1) * (1 + 2 * (d : ℝ) ^ 2 * L / comparisonThreshold d n L) ^ n ≤ growthConstant d * (L * (n : ℝ)) ^ (d - 1) :=",
+    "implementation_header": "theorem comparison_threshold_bound (d n : ℕ) (hd : 2 ≤ d) (hn : 1 ≤ n) (L : ℝ) (hL : 1 ≤ L) : 1 ≤ comparisonThreshold d n L ∧ (d : ℝ) * comparisonThreshold d n L ^ (d - 1) * (1 + 2 * (d : ℝ) ^ 2 * L / comparisonThreshold d n L) ^ n ≤ growthConstant d * (L * (n : ℝ)) ^ (d - 1) :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.comparison_threshold_bound",
+    "source": "NLA/MF07/Numerical.lean",
+    "current_source_sha256": "90407ab2d374d652549c8b57858f9c5123602a1edf72bde8ce2ea2243b786c03",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem growth_constant_positive (d : ℕ) (hd : 1 ≤ d) : 0 < growthConstant d :=",
+    "implementation_header": "theorem growth_constant_positive (d : ℕ) (hd : 1 ≤ d) : 0 < growthConstant d :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.growth_constant_positive",
+    "source": "NLA/MF07/Numerical.lean",
+    "current_source_sha256": "90407ab2d374d652549c8b57858f9c5123602a1edf72bde8ce2ea2243b786c03",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem radius_one_growth {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (hr : jointSpectralRadius M = 1) (n : ℕ) (hn : 1 ≤ n) : familyGrowth M n ≤ growthConstant d * (familyNorm M * (n : ℝ)) ^ (d - 1) :=",
+    "implementation_header": "theorem radius_one_growth {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (hr : jointSpectralRadius M = 1) (n : ℕ) (hn : 1 ≤ n) : familyGrowth M n ≤ growthConstant d * (familyNorm M * (n : ℝ)) ^ (d - 1) :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.radius_one_growth",
+    "source": "NLA/MF07/Final.lean",
+    "current_source_sha256": "b9daa70a5881d142537010a3739ee348b113f111e558bf5fd87463b419a63468",
+    "same_as_previous_independent_full_review": true
+  },
+  {
+    "frozen_header": "theorem canonical_uniform_bound (d : ℕ) (hd : 1 ≤ d) : ∃ Θ : ℝ, 0 < Θ ∧ ∀ M : Set (Square d), IsCompact M → M.Nonempty → jointSpectralRadius M = 1 → ∀ n : ℕ, 1 ≤ n → ∀ A : Fin n → Square d, (∀ i, A i ∈ M) → spectralNorm (finiteProduct A) ≤ Θ * (familyNorm M * (n : ℝ)) ^ (d - 1) :=",
+    "implementation_header": "theorem canonical_uniform_bound (d : ℕ) (hd : 1 ≤ d) : ∃ Θ : ℝ, 0 < Θ ∧ ∀ M : Set (Square d), IsCompact M → M.Nonempty → jointSpectralRadius M = 1 → ∀ n : ℕ, 1 ≤ n → ∀ A : Fin n → Square d, (∀ i, A i ∈ M) → spectralNorm (finiteProduct A) ≤ Θ * (familyNorm M * (n : ℝ)) ^ (d - 1) :=",
+    "literal_whitespace_normalized_match": true,
+    "name": "NLA.MF07.canonical_uniform_bound",
+    "source": "NLA/MF07/Final.lean",
+    "current_source_sha256": "b9daa70a5881d142537010a3739ee348b113f111e558bf5fd87463b419a63468",
+    "same_as_previous_independent_full_review": true
+  }
+]

@@ -1,0 +1,506 @@
+$ systemd-run --user --quiet --wait --pipe --collect -p 'RestrictAddressFamilies=~AF_UNIX' --working-directory /home/runner/work/_temp/nla-lean-tools/.verification-tmp/nla-fresh-proof-x0_x0bv5/project /usr/bin/env -i PATH=/home/runner/.elan/toolchains/leanprover--lean4---v4.33.1/bin:/home/runner/.elan/bin:/home/runner/go/bin:/opt/hostedtoolcache/go/1.27.1/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin HOME=/home/runner LANG=C.UTF-8 XDG_RUNTIME_DIR=/run/user/1001 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus GIT_TERMINAL_PROMPT=0 GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null COMPARATOR_BIN=/home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator COMPARATOR_LEAN4EXPORT=/home/runner/work/_temp/nla-lean-tools/.tools/lean4export/.lake/build/bin/lean4export COMPARATOR_LANDRUN=/home/runner/work/_temp/nla-lean-tools/scripts/strict_landrun.py XDG_CACHE_HOME=/home/runner/work/_temp/nla-lean-tools/.tools/cache TMPDIR=/home/runner/work/_temp/nla-lean-tools/.verification-tmp lake env /home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator comparator.json
+Building Challenge
+✔ [2399/2401] Built NLA.MF07.Definitions (1.9s)
+⚠ [2400/2401] Built Challenge (1.0s)
+warning: Challenge.lean:19:8: declaration uses `sorry`
+warning: Challenge.lean:25:8: declaration uses `sorry`
+warning: Challenge.lean:30:8: declaration uses `sorry`
+warning: Challenge.lean:36:8: declaration uses `sorry`
+warning: Challenge.lean:45:8: declaration uses `sorry`
+warning: Challenge.lean:50:8: declaration uses `sorry`
+warning: Challenge.lean:57:8: declaration uses `sorry`
+warning: Challenge.lean:63:8: declaration uses `sorry`
+warning: Challenge.lean:71:8: declaration uses `sorry`
+warning: Challenge.lean:82:8: declaration uses `sorry`
+warning: Challenge.lean:87:8: declaration uses `sorry`
+warning: Challenge.lean:98:8: declaration uses `sorry`
+warning: Challenge.lean:105:8: declaration uses `sorry`
+warning: Challenge.lean:111:8: declaration uses `sorry`
+warning: Challenge.lean:114:8: declaration uses `sorry`
+warning: Challenge.lean:122:8: declaration uses `sorry`
+warning: Challenge.lean:126:8: declaration uses `sorry`
+warning: Challenge.lean:134:8: declaration uses `sorry`
+Build completed successfully (2401 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.MF07.matrix_product_semantics, NLA.MF07.diagonal_inverse, NLA.MF07.family_norm_maximum, NLA.MF07.family_growth_maximum, NLA.MF07.family_growth_submultiplicative, NLA.MF07.radius_one_semantics, NLA.MF07.identity_family_semantics, NLA.MF07.approximate_extremal_norm, NLA.MF07.rounded_extremal_norm, NLA.MF07.triangular_damping, NLA.MF07.interspersed_product_bound, NLA.MF07.quantitative_comparison, NLA.MF07.scalar_family_growth, NLA.MF07.exp_one_bound, NLA.MF07.comparison_threshold_bound, NLA.MF07.growth_constant_positive, NLA.MF07.radius_one_growth, NLA.MF07.canonical_uniform_bound, propext, Classical.choice, Quot.sound, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+Building Solution
+✔ [3495/3534] Built LeanCert.Tactic.Verification (4.1s)
+✔ [3496/3534] Built LeanCert.Core.Interval (3.9s)
+✔ [3500/3537] Built LeanCert.Core.DerivativeIntervals (4.1s)
+✔ [3501/3541] Built LeanCert.Core.Expr (7.3s)
+⚠ [3502/3541] Built NLA.MF07.MatrixBasics (10s)
+warning: NLA/MF07/MatrixBasics.lean:55:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/MF07/MatrixBasics.lean:122:51: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [diagonalWeights, inverseDiagonalWeights, Matrix.one_apply, hij, hz]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: NLA/MF07/MatrixBasics.lean:125:0: 'NLA.MF07.matrix_product_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/MatrixBasics.lean:127:0: 'NLA.MF07.diagonal_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/MatrixBasics.lean:129:0: 'NLA.MF07.word_spectralNorm_le_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3503/3541] Built LeanCert.Core.Taylor (11s)
+✔ [3504/3542] Built LeanCert.Core.IntervalRat.Basic (12s)
+✔ [3505/3542] Built LeanCert.Core.IntervalRat.LogReduction (9.4s)
+✔ [3506/3542] Built LeanCert.Core.Support (4.2s)
+✔ [3507/3542] Built LeanCert.Meta.Numeral (4.4s)
+⚠ [3508/3542] Built NLA.MF07.CompactGrowth (4.7s)
+warning: NLA/MF07/CompactGrowth.lean:31:28: This simp argument is unused:
+  List.ofFn_get
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [finiteProduct, A]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/CompactGrowth.lean:44:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/MF07/CompactGrowth.lean:51:37: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: NLA/MF07/CompactGrowth.lean:114:49: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF07/CompactGrowth.lean:133:0: 'NLA.MF07.family_norm_maximum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/CompactGrowth.lean:135:0: 'NLA.MF07.family_growth_maximum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/CompactGrowth.lean:137:0: 'NLA.MF07.family_growth_submultiplicative' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3509/3542] Built LeanCert.Engine.Eval.Result (3.9s)
+ℹ [3510/3544] Built NLA.MF07.ProductEnvelope (5.8s)
+info: NLA/MF07/ProductEnvelope.lean:175:0: 'NLA.MF07.productEnvelope_isComplexNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/ProductEnvelope.lean:177:0: 'NLA.MF07.productEnvelope_generator' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3511/3544] Built LeanCert.Core.TrigReduction (4.3s)
+✔ [3512/3544] Built LeanCert.Tactic.IntervalAuto.Types (4.7s)
+✔ [3513/3544] Built LeanCert.Core.IntervalRat.Transcendental (6.6s)
+✔ [3514/3544] Built LeanCert.Tactic.IntervalAuto.Extract (5.6s)
+ℹ [3515/3544] Built NLA.MF07.RootSemantics (7.6s)
+info: NLA/MF07/RootSemantics.lean:193:0: 'NLA.MF07.radius_one_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/RootSemantics.lean:195:0: 'NLA.MF07.identity_family_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3516/3544] Built LeanCert.Meta.ToExpr (9.1s)
+ℹ [3517/3545] Built NLA.MF07.Interspersed (8.4s)
+info: NLA/MF07/Interspersed.lean:132:0: 'NLA.MF07.interspersed_product_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3518/3545] Built NLA.MF07.UnitaryGeometry (6.8s)
+warning: NLA/MF07/UnitaryGeometry.lean:69:40: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.one_apply, hi]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/UnitaryGeometry.lean:69:63: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.diagonal_apply, hi]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/UnitaryGeometry.lean:70:12: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.one_apply, hij]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/UnitaryGeometry.lean:70:35: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.diagonal_apply, hij]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/UnitaryGeometry.lean:101:4: Unused tactic linter: `push_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+info: NLA/MF07/UnitaryGeometry.lean:103:0: 'NLA.MF07.spectralNorm_unitary_conj' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/UnitaryGeometry.lean:105:0: 'NLA.MF07.cutDamping_spectralNorm_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3519/3545] Built NLA.MF07.NormGeometry (6.7s)
+info: NLA/MF07/NormGeometry.lean:134:0: 'NLA.MF07.complexNorm_unitBall_compact' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/NormGeometry.lean:136:0: 'NLA.MF07.sum_coordinate_norms_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3520/3545] Built LeanCert.Tactic.IntervalAuto.Norm (5.2s)
+⚠ [3521/3545] Built NLA.MF07.ScalarFamily (4.1s)
+warning: NLA/MF07/ScalarFamily.lean:30:47: This simp argument is unused:
+  norm_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [scalar_spectralNorm, Matrix.mul_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: NLA/MF07/ScalarFamily.lean:69:0: 'NLA.MF07.scalar_family_growth' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3522/3548] Built LeanCert.Core.IntervalRat.Taylor (25s)
+ℹ [3523/3549] Built NLA.MF07.ApproximateNorm (5.5s)
+info: NLA/MF07/ApproximateNorm.lean:72:0: 'NLA.MF07.approximate_extremal_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3524/3549] Built LeanCert.Tactic.IntervalAuto.Parse (6.6s)
+⚠ [3525/3550] Built NLA.MF07.TriangularDamping (5.1s)
+warning: NLA/MF07/TriangularDamping.lean:50:2: Unused tactic linter: `push_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF07/TriangularDamping.lean:90:31: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF07/TriangularDamping.lean:94:6: Unused tactic linter: `push_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF07/TriangularDamping.lean:95:31: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF07/TriangularDamping.lean:90:31: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/MF07/TriangularDamping.lean:95:31: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+info: NLA/MF07/TriangularDamping.lean:130:0: 'NLA.MF07.triangular_damping' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3526/3550] Built LeanCert.Core.IntervalReal (3.0s)
+⚠ [3528/3550] Built NLA.MF07.Auerbach (5.2s)
+warning: NLA/MF07/Auerbach.lean:46:67: This simp argument is unused:
+  PiLp.smul_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [applyMatrix_coordinate, WithLp.ofLp_sum, Finset.sum_apply, mul_comm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/Auerbach.lean:56:10: This simp argument is unused:
+  Matrix.updateCol_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [h]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/Auerbach.lean:71:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/MF07/Auerbach.lean:73:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/MF07/Auerbach.lean:100:13: This simp argument is unused:
+  Matrix.det_smul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [W, hcpos.ne']
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: NLA/MF07/Auerbach.lean:186:0: 'NLA.MF07.maximal_determinant_basis' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/Auerbach.lean:188:0: 'NLA.MF07.exists_auerbach_coordinates' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3529/3550] Built LeanCert.Core.IntervalRat.TrigReduced (3.7s)
+✔ [3530/3556] Built LeanCert.Tactic.IntervalAuto.Diagnostic (4.4s)
+✔ [3531/3560] Built LeanCert.Core.IntervalRealEndpoints (5.2s)
+✔ [3532/3560] Built LeanCert.Contrib.Sinc (5.0s)
+⚠ [3533/3561] Built NLA.MF07.SingularCoordinates (7.2s)
+warning: NLA/MF07/SingularCoordinates.lean:43:55: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [diagonalWeights, Matrix.conjTranspose_apply, hij, Ne.symm hij]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/SingularCoordinates.lean:109:29: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [diagonalWeights, hij]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: NLA/MF07/SingularCoordinates.lean:143:0: 'NLA.MF07.ordered_positive_gram_coordinates' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/SingularCoordinates.lean:145:0: 'NLA.MF07.exists_singular_coordinates' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3534/3561] Built LeanCert.Core.Dyadic (5.8s)
+✔ [3535/3561] Built LeanCert.Tactic.NumericalRefinement (1.1s)
+✔ [3536/3561] Built LeanCert.Tactic.LeanCert.Bridge.Environment (3.9s)
+✔ [3537/3561] Built LeanCert.Engine.Eval.Core (10s)
+⚠ [3538/3563] Built NLA.MF07.RoundedNorm (6.4s)
+warning: NLA/MF07/RoundedNorm.lean:43:44: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF07/RoundedNorm.lean:143:0: 'NLA.MF07.rounded_extremal_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3539/3619] Built LeanCert.Tactic.LeanCert.Normalize (5.2s)
+✔ [3587/3625] Built LeanCert.Engine.Eval.Extended (6.1s)
+✔ [3588/3657] Built LeanCert.Core.IntervalDyadic (10s)
+⚠ [3591/3659] Built NLA.MF07.BlockComparison (6.2s)
+warning: NLA/MF07/BlockComparison.lean:70:8: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hne]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: NLA/MF07/BlockComparison.lean:141:0: 'NLA.MF07.spectralNorm_le_card_mul_entry_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/BlockComparison.lean:143:0: 'NLA.MF07.damped_lower_product_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3592/3659] Built LeanCert.Engine.Bounds.Lemmas (4.3s)
+✔ [3593/3661] Built LeanCert.Engine.Affine.Basic (9.8s)
+✔ [3594/3661] Built LeanCert.Core.DyadicCell (6.6s)
+✔ [3595/3663] Built LeanCert.Engine.IntervalEval (3.6s)
+⚠ [3596/3663] Built NLA.MF07.CappedWeights (7.5s)
+warning: NLA/MF07/CappedWeights.lean:31:37: Try `simp at hij` instead of `simpa using hij`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: NLA/MF07/CappedWeights.lean:123:90: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF07/CappedWeights.lean:123:90: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+info: NLA/MF07/CappedWeights.lean:158:0: 'NLA.MF07.exists_capped_weights' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3597/3663] Built LeanCert.Tactic.VecUtil (3.5s)
+✔ [3598/3663] Built LeanCert.Engine.Affine.Nonlinear (6.2s)
+✔ [3599/3663] Built LeanCert.Validity.Bounds.Checked (3.6s)
+✔ [3600/3663] Built LeanCert.Core.DyadicFrontier (4.2s)
+✔ [3601/3663] Built LeanCert.Validity.Bounds.Core (3.5s)
+✔ [3602/3663] Built LeanCert.Engine.Optimization.Box (3.0s)
+✔ [3603/3663] Built LeanCert.Engine.RootFinding.Basic (6.4s)
+✔ [3604/3663] Built LeanCert.Engine.IntervalEvalDyadic (8.5s)
+✔ [3605/3663] Built LeanCert.Engine.Integrate (8.4s)
+✔ [3606/3664] Built LeanCert.Engine.AD.Basic (4.9s)
+✔ [3607/3664] Built LeanCert.Tactic.FinsetParse (5.3s)
+✔ [3608/3664] Built LeanCert.Tactic.FinSumExpand (3.2s)
+⚠ [3609/3664] Built NLA.MF07.Similarity (6.1s)
+warning: NLA/MF07/Similarity.lean:42:6: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF07/Similarity.lean:42:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+info: NLA/MF07/Similarity.lean:142:0: 'NLA.MF07.rotatedGenerator_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/Similarity.lean:144:0: 'NLA.MF07.spectralNorm_unrotate_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3610/3664] Built LeanCert.Engine.TaylorModel.Core (12s)
+✔ [3611/3667] Built LeanCert.Engine.Affine.Transcendental (5.9s)
+✔ [3612/3667] Built LeanCert.Engine.RootFinding.Bisection (7.3s)
+✔ [3613/3667] Built LeanCert.Validity.DyadicBounds (4.3s)
+✔ [3614/3667] Built LeanCert.Engine.FinSumDyadic (5.8s)
+✔ [3615/3667] Built LeanCert.Engine.AD.Transcendental (5.8s)
+✔ [3616/3667] Built LeanCert.Engine.TaylorModel.Special (3.4s)
+✔ [3617/3667] Built LeanCert.Engine.TaylorModel.Integral (4.6s)
+ℹ [3618/3667] Built NLA.MF07.QuantitativeComparison (5.1s)
+info: NLA/MF07/QuantitativeComparison.lean:160:0: 'NLA.MF07.quantitative_comparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3619/3667] Built LeanCert.Engine.IntervalEvalAffine (10s)
+✔ [3620/3669] Built LeanCert.Engine.TaylorModel.ExpLog (12s)
+✔ [3621/3669] Built LeanCert.Tactic.BridgeNative (2.6s)
+✔ [3622/3669] Built LeanCert.Engine.TaylorModel.Trig (15s)
+✔ [3623/3669] Built LeanCert.Engine.WitnessSum (4.4s)
+✔ [3624/3669] Built LeanCert.Engine.AD.Eval (3.7s)
+✔ [3625/3671] Built LeanCert.Engine.TaylorModel.Hyperbolic (17s)
+✔ [3626/3671] Built LeanCert.Validity.Eventual (3.6s)
+✔ [3627/3677] Built LeanCert.Engine.TaylorModel.Functions (3.2s)
+✔ [3628/3677] Built LeanCert.Engine.Affine.Environment (4.8s)
+✔ [3629/3678] Built LeanCert.Engine.AD.Correctness (4.7s)
+✔ [3630/3678] Built LeanCert.Tactic.LeanCert.Semantic.Domain (1.0s)
+✔ [3631/3678] Built LeanCert.Tactic.EventualBound (6.9s)
+✔ [3632/3678] Built LeanCert.Engine.TaylorModel.Expr (6.9s)
+✔ [3633/3678] Built LeanCert.Engine.AD.Computable (5.0s)
+✔ [3634/3680] Built LeanCert.Tactic.VecSimp (2.1s)
+✔ [3635/3682] Built LeanCert.Tactic.LeanCert.Semantic.Goal (2.5s)
+✔ [3636/3683] Built LeanCert.Engine.TaylorModel (2.9s)
+✔ [3637/3683] Built LeanCert.Engine.AD.PartialCorrectness (8.7s)
+✔ [3638/3685] Built LeanCert.Tactic.LeanCert.Semantic.Parse.Comparison (1.7s)
+✔ [3639/3686] Built LeanCert.Tactic.Extension.Protocol (3.5s)
+✔ [3640/3686] Built LeanCert.Engine.AD.DomainChecked (4.6s)
+✔ [3641/3686] Built LeanCert.Tactic.LeanCert.Diagnostic.Evidence (3.9s)
+✔ [3642/3690] Built LeanCert.Tactic.LeanCert.Config (2.1s)
+✔ [3644/3699] Built LeanCert.Tactic.LeanCert.Semantic.Parse.Bound (3.9s)
+✔ [3646/3707] Built LeanCert.Tactic.Extension.Registry (3.6s)
+✔ [3647/3707] Built LeanCert.Engine.FloatEval (3.7s)
+✔ [3648/3707] Built LeanCert.Engine.Algebra.QPoly (5.5s)
+✔ [3649/3707] Built LeanCert.Engine.AD.Dyadic (6.2s)
+✔ [3650/3707] Built LeanCert.Tactic.Extension.Command (3.8s)
+✔ [3651/3707] Built LeanCert.Engine.Search.Heuristic (3.6s)
+✔ [3652/3707] Built LeanCert.Engine.AD (2.8s)
+✔ [3653/3707] Built LeanCert.Tactic.Extension (2.8s)
+✔ [3654/3707] Built LeanCert.Engine.Algebra.QPolyIntegral (3.8s)
+✔ [3655/3707] Built LeanCert.Validity.Bounds.Smart (4.2s)
+✔ [3656/3707] Built LeanCert.Engine.IntervalEvalRefined (4.9s)
+✔ [3657/3707] Built LeanCert.Meta.ProveSupported (4.7s)
+✔ [3658/3707] Built LeanCert.Engine.Optimize (7.5s)
+✔ [3659/3707] Built LeanCert.Validity.Bounds.Bridge (4.4s)
+✔ [3660/3707] Built LeanCert.Meta.ProveContinuous (5.9s)
+✔ [3661/3707] Built LeanCert.Tactic.IntervalAuto.ProveCommon (6.8s)
+✔ [3662/3707] Built LeanCert.Validity.Bounds.Basic (3.7s)
+✔ [3663/3707] Built LeanCert.Engine.RootFinding.Newton (6.4s)
+✔ [3664/3707] Built LeanCert.Engine.Optimization.Gradient (8.1s)
+✔ [3665/3707] Built LeanCert.Tactic.LeanCert.Bridge.ReifiedFunction (4.8s)
+✔ [3666/3707] Built LeanCert.Tactic.IntervalAuto.Basic (3.6s)
+✔ [3667/3707] Built LeanCert.Validity.Integration (8.7s)
+✔ [3668/3707] Built LeanCert.Engine.RootFinding.MVTBounds (12s)
+✔ [3669/3707] Built LeanCert.Engine.RootFinding.Krawczyk (12s)
+✔ [3670/3707] Built LeanCert.Tactic.LeanCert.Semantic.Prepare (9.8s)
+✔ [3671/3707] Built LeanCert.Engine.RootFinding.Contraction (8.8s)
+✔ [3672/3707] Built LeanCert.Engine.RootFinding.KrawczykCandidate (6.4s)
+✔ [3673/3707] Built LeanCert.Tactic.LeanCert.Integral (11s)
+✔ [3674/3707] Built LeanCert.Validity.Krawczyk (3.3s)
+✔ [3675/3707] Built LeanCert.Engine.RootFinding.Main (4.3s)
+✔ [3676/3707] Built LeanCert.Tactic.LeanCert.Solver.Protocol (7.5s)
+✔ [3677/3707] Built LeanCert.Tactic.Extension.Execute (8.5s)
+✔ [3678/3707] Built LeanCert.Engine.Optimization.Global (31s)
+✔ [3679/3707] Built LeanCert.Tactic.LeanCert.Diagnostic.Render (4.3s)
+✔ [3680/3707] Built LeanCert.Engine.Optimization.Guided (3.7s)
+✔ [3681/3707] Built LeanCert.Tactic.Enclosure (4.1s)
+✔ [3682/3707] Built LeanCert.Validity.Types (4.5s)
+✔ [3683/3707] Built LeanCert.Engine.Search.CounterExample (4.2s)
+✔ [3684/3707] Built LeanCert.Validity.Bounds (8.4s)
+✔ [3685/3707] Built LeanCert.Engine.Optimization.BoundVerify (4.5s)
+✔ [3686/3707] Built LeanCert.Discovery.Find (3.0s)
+✔ [3687/3707] Built LeanCert.Tactic.IntervalAuto.RootBound (4.4s)
+✔ [3688/3707] Built LeanCert.Tactic.IntervalAuto.OptBound (4.5s)
+✔ [3689/3707] Built LeanCert.Tactic.IntervalAuto.Multivariate (6.3s)
+✔ [3690/3707] Built LeanCert.Tactic.IntervalAuto.Bound (13s)
+✔ [3691/3707] Built LeanCert.Tactic.IntervalAuto.Subdiv (5.9s)
+✔ [3692/3707] Built LeanCert.Tactic.IntervalAuto.Adaptive (7.8s)
+✔ [3693/3707] Built LeanCert.Tactic.IntervalAuto.PointIneq (8.8s)
+✔ [3694/3707] Built LeanCert.Tactic.IntervalAuto (2.3s)
+✔ [3695/3707] Built LeanCert.Tactic.Refute (4.2s)
+✔ [3696/3707] Built LeanCert.Tactic.FinSumWitness (5.8s)
+✔ [3697/3707] Built LeanCert.Tactic.FinSumBound (4.3s)
+✔ [3698/3707] Built LeanCert.Tactic.LeanCert.Semantic.Parse (3.1s)
+✔ [3699/3707] Built LeanCert.Tactic.Discovery (13s)
+✔ [3700/3707] Built LeanCert.Tactic.Krawczyk (3.3s)
+✔ [3701/3707] Built LeanCert.Tactic.LeanCert.Router (7.5s)
+✔ [3702/3707] Built LeanCert.Tactic.LeanCert (2.4s)
+✔ [3703/3707] Built LeanCert.Tactic (2.4s)
+⚠ [3704/3707] Built NLA.MF07.Numerical (3.6s)
+warning: NLA/MF07/Numerical.lean:38:31: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+info: NLA/MF07/Numerical.lean:103:0: 'NLA.MF07.exp_one_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/Numerical.lean:105:0: 'NLA.MF07.variable_binomial_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/Numerical.lean:107:0: 'NLA.MF07.comparison_threshold_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/Numerical.lean:109:0: 'NLA.MF07.growth_constant_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3705/3707] Built NLA.MF07.Final (2.6s)
+info: NLA/MF07/Final.lean:51:0: 'NLA.MF07.radius_one_growth' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/Final.lean:53:0: 'NLA.MF07.canonical_uniform_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3706/3707] Built Solution (2.6s)
+info: Solution.lean:16:0: NLA.MF07.matrix_product_semantics {d : ℕ} :
+  NLA.MF07.matrixProduct [] = 1 ∧
+    ∀ (w : List (NLA.MF07.Square d)) (A : NLA.MF07.Square d),
+      NLA.MF07.matrixProduct (w ++ [A]) = A * NLA.MF07.matrixProduct w
+info: Solution.lean:17:0: 'NLA.MF07.matrix_product_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:20:0: NLA.MF07.diagonal_inverse {d : ℕ} (σ : Fin d → ℝ) (hσ : ∀ (i : Fin d), σ i ≠ 0) :
+  NLA.MF07.diagonalWeights σ * NLA.MF07.inverseDiagonalWeights σ = 1 ∧
+    NLA.MF07.inverseDiagonalWeights σ * NLA.MF07.diagonalWeights σ = 1
+info: Solution.lean:21:0: 'NLA.MF07.diagonal_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:24:0: NLA.MF07.family_norm_maximum {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M) (hne : M.Nonempty) :
+  0 ≤ NLA.MF07.familyNorm M ∧
+    (∃ A ∈ M, NLA.MF07.spectralNorm A = NLA.MF07.familyNorm M) ∧
+      ∀ A ∈ M, NLA.MF07.spectralNorm A ≤ NLA.MF07.familyNorm M
+info: Solution.lean:25:0: 'NLA.MF07.family_norm_maximum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:28:0: NLA.MF07.family_growth_maximum {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M) (hne : M.Nonempty)
+  (n : ℕ) :
+  0 ≤ NLA.MF07.familyGrowth M n ∧
+    NLA.MF07.familyGrowth M n ≤ NLA.MF07.familyNorm M ^ n ∧
+      (∃ w,
+          w.length = n ∧
+            NLA.MF07.WordIn M w ∧ NLA.MF07.spectralNorm (NLA.MF07.matrixProduct w) = NLA.MF07.familyGrowth M n) ∧
+        ∀ (w : List (NLA.MF07.Square d)),
+          w.length = n →
+            NLA.MF07.WordIn M w → NLA.MF07.spectralNorm (NLA.MF07.matrixProduct w) ≤ NLA.MF07.familyGrowth M n
+info: Solution.lean:29:0: 'NLA.MF07.family_growth_maximum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:32:0: NLA.MF07.family_growth_submultiplicative {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M)
+  (hne : M.Nonempty) (m n : ℕ) : NLA.MF07.familyGrowth M (m + n) ≤ NLA.MF07.familyGrowth M m * NLA.MF07.familyGrowth M n
+info: Solution.lean:33:0: 'NLA.MF07.family_growth_submultiplicative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:36:0: NLA.MF07.radius_one_semantics {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M) (hne : M.Nonempty) :
+  (NLA.MF07.jointSpectralRadius M = 1 ↔ Filter.Tendsto (NLA.MF07.rootGrowth M) Filter.atTop (nhds 1)) ∧
+    (NLA.MF07.jointSpectralRadius M = 1 → 1 ≤ NLA.MF07.familyNorm M)
+info: Solution.lean:37:0: 'NLA.MF07.radius_one_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:40:0: NLA.MF07.identity_family_semantics {d : ℕ} (hd : 1 ≤ d) :
+  NLA.MF07.familyNorm {1} = 1 ∧ (∀ (n : ℕ), NLA.MF07.familyGrowth {1} n = 1) ∧ NLA.MF07.jointSpectralRadius {1} = 1
+info: Solution.lean:41:0: 'NLA.MF07.identity_family_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:44:0: NLA.MF07.approximate_extremal_norm {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M)
+  (hne : M.Nonempty) (hr : NLA.MF07.jointSpectralRadius M = 1) (a : ℝ) (ha : 1 < a) :
+  ∃ v c,
+    1 ≤ c ∧
+      NLA.MF07.IsComplexNorm v ∧
+        (∀ (x : NLA.MF07.EuclideanVector d), ‖x‖ ≤ v x ∧ v x ≤ c * ‖x‖) ∧
+          ∀ A ∈ M, ∀ (x : NLA.MF07.EuclideanVector d), v (NLA.MF07.applyMatrix A x) ≤ a * v x
+info: Solution.lean:45:0: 'NLA.MF07.approximate_extremal_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:48:0: NLA.MF07.rounded_extremal_norm {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M) (hne : M.Nonempty)
+  (hr : NLA.MF07.jointSpectralRadius M = 1) (a : ℝ) (ha : 1 < a) :
+  ∃ Q σ w,
+    NLA.MF07.IsUnitary Q ∧
+      Antitone σ ∧
+        (∀ (i : Fin d), 0 < σ i) ∧
+          NLA.MF07.IsComplexNorm w ∧
+            (∀ (x : NLA.MF07.EuclideanVector d), ‖x‖ ≤ w x ∧ w x ≤ ↑d * ‖x‖) ∧
+              (∀ A ∈ M,
+                  ∀ (x : NLA.MF07.EuclideanVector d),
+                    w (NLA.MF07.applyMatrix (NLA.MF07.rotatedGenerator Q σ A) x) ≤ a * w x) ∧
+                ∀ A ∈ M, ∀ (i j : Fin d), ‖NLA.MF07.rotatedGenerator Q σ A i j‖ ≤ NLA.MF07.familyNorm M * σ j / σ i
+info: Solution.lean:49:0: 'NLA.MF07.rounded_extremal_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:52:0: NLA.MF07.triangular_damping {d : ℕ} (h : Fin d → ℝ) (hh : Antitone h) (hpos : ∀ (i : Fin d), 0 < h i)
+  (X : NLA.MF07.Square d) (hX : NLA.MF07.LowerForWeights h X) :
+  NLA.MF07.spectralNorm (NLA.MF07.diagonalDamping h X) ≤ NLA.MF07.spectralNorm X
+info: Solution.lean:53:0: 'NLA.MF07.triangular_damping' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:56:0: NLA.MF07.interspersed_product_bound {d : ℕ} (M : Set (NLA.MF07.Square d)) (C E : NLA.MF07.Square d → NLA.MF07.Square d)
+  (K u v : ℝ) (hK : 1 ≤ K) (hu : 0 ≤ u) (hv : 0 ≤ v)
+  (hC :
+    ∀ (z : List (NLA.MF07.Square d)),
+      NLA.MF07.WordIn M z → NLA.MF07.spectralNorm (NLA.MF07.matrixProduct (List.map C z)) ≤ K * u ^ z.length)
+  (hE : ∀ A ∈ M, NLA.MF07.spectralNorm (E A) ≤ v) (z : List (NLA.MF07.Square d)) (hz : NLA.MF07.WordIn M z) :
+  NLA.MF07.spectralNorm (NLA.MF07.matrixProduct (List.map (fun A => C A + E A) z)) ≤ K * (u + K * v) ^ z.length
+info: Solution.lean:57:0: 'NLA.MF07.interspersed_product_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:60:0: NLA.MF07.quantitative_comparison {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M)
+  (hne : M.Nonempty) (hr : NLA.MF07.jointSpectralRadius M = 1) (s : ℝ) (hs : 1 ≤ s) (n : ℕ) :
+  NLA.MF07.familyGrowth M n ≤ ↑d * s ^ (d - 1) * (1 + 2 * ↑d ^ 2 * NLA.MF07.familyNorm M / s) ^ n
+info: Solution.lean:61:0: 'NLA.MF07.quantitative_comparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:64:0: NLA.MF07.scalar_family_growth (M : Set (NLA.MF07.Square 1)) (hM : IsCompact M) (hne : M.Nonempty) :
+  (∀ (n : ℕ), NLA.MF07.familyGrowth M n = NLA.MF07.familyNorm M ^ n) ∧
+    NLA.MF07.jointSpectralRadius M = NLA.MF07.familyNorm M
+info: Solution.lean:65:0: 'NLA.MF07.scalar_family_growth' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:68:0: NLA.MF07.exp_one_bound : Real.exp 1 ≤ 3
+info: Solution.lean:69:0: 'NLA.MF07.exp_one_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:72:0: NLA.MF07.comparison_threshold_bound (d n : ℕ) (hd : 2 ≤ d) (hn : 1 ≤ n) (L : ℝ) (hL : 1 ≤ L) :
+  1 ≤ NLA.MF07.comparisonThreshold d n L ∧
+    ↑d * NLA.MF07.comparisonThreshold d n L ^ (d - 1) * (1 + 2 * ↑d ^ 2 * L / NLA.MF07.comparisonThreshold d n L) ^ n ≤
+      NLA.MF07.growthConstant d * (L * ↑n) ^ (d - 1)
+info: Solution.lean:73:0: 'NLA.MF07.comparison_threshold_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:76:0: NLA.MF07.growth_constant_positive (d : ℕ) (hd : 1 ≤ d) : 0 < NLA.MF07.growthConstant d
+info: Solution.lean:77:0: 'NLA.MF07.growth_constant_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:80:0: NLA.MF07.radius_one_growth {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M) (hne : M.Nonempty)
+  (hr : NLA.MF07.jointSpectralRadius M = 1) (n : ℕ) (hn : 1 ≤ n) :
+  NLA.MF07.familyGrowth M n ≤ NLA.MF07.growthConstant d * (NLA.MF07.familyNorm M * ↑n) ^ (d - 1)
+info: Solution.lean:81:0: 'NLA.MF07.radius_one_growth' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:84:0: NLA.MF07.canonical_uniform_bound (d : ℕ) (hd : 1 ≤ d) :
+  ∃ Θ,
+    0 < Θ ∧
+      ∀ (M : Set (NLA.MF07.Square d)),
+        IsCompact M →
+          M.Nonempty →
+            NLA.MF07.jointSpectralRadius M = 1 →
+              ∀ (n : ℕ),
+                1 ≤ n →
+                  ∀ (A : Fin n → NLA.MF07.Square d),
+                    (∀ (i : Fin n), A i ∈ M) →
+                      NLA.MF07.spectralNorm (NLA.MF07.finiteProduct A) ≤ Θ * (NLA.MF07.familyNorm M * ↑n) ^ (d - 1)
+info: Solution.lean:85:0: 'NLA.MF07.canonical_uniform_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (3707 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.MF07.matrix_product_semantics, NLA.MF07.diagonal_inverse, NLA.MF07.family_norm_maximum, NLA.MF07.family_growth_maximum, NLA.MF07.family_growth_submultiplicative, NLA.MF07.radius_one_semantics, NLA.MF07.identity_family_semantics, NLA.MF07.approximate_extremal_norm, NLA.MF07.rounded_extremal_norm, NLA.MF07.triangular_damping, NLA.MF07.interspersed_product_bound, NLA.MF07.quantitative_comparison, NLA.MF07.scalar_family_growth, NLA.MF07.exp_one_bound, NLA.MF07.comparison_threshold_bound, NLA.MF07.growth_constant_positive, NLA.MF07.radius_one_growth, NLA.MF07.canonical_uniform_bound, propext, Classical.choice, Quot.sound, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+Running Lean default kernel on solution.
+Lean default kernel accepts the solution
+Your solution is okay!
+
+EXIT_STATUS=0

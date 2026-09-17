@@ -1,0 +1,360 @@
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'MF-07: uniform polynomial product bound at joint spectral radius one'
+  description: Complete original MF-07 result for arbitrary nonempty compact complex matrix families of
+    joint spectral radius one, all positive dimensions and every switching word. The exact 20-module implementation
+    plus entrypoint passed local Lean compilation; canonical Linux verification remains pending.
+  authors:
+  - George Stepaniants
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California Institute of Technology,
+      Pasadena, California, USA
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+sources:
+- title: MF-07 — Uniform polynomial bound for matrix products with joint spectral radius one
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ce47b5630bf3680d9211131c3a43825b022c139a/matrix-functions-and-stability/MF-07/README.md
+  type: web-post
+  relationship: formalizes
+  location: Complete canonical problem and context
+  author_endorsement: not-contacted
+  note: The permanent ID and original mathematical target are unchanged.
+- title: Uniform polynomial product bounds and sharp Hölder continuity of the joint spectral radius
+  authors:
+  - Matthew J. Colbrook
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ce47b5630bf3680d9211131c3a43825b022c139a/references/colbrook-jsr-growth-2026-09-11/manuscripts/uniform_growth_and_holder.tex
+  type: manuscript
+  location: Theorem 1 at radius one, Lemmas 3 and 4, and Proposition 5
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: Original mathematical proof credited to Matthew J. Colbrook, Department of Applied Mathematics
+    and Theoretical Physics, University of Cambridge. The distinct MF-05 result and supplementary sharpness
+    claims are not this project target.
+related_formalizations:
+- id: https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1
+  relationship: other
+  note: Complete retained independent Challenge read as a structure example; no theorem imported. Exact
+    inspected bytes bound in REUSE-AUDIT.json.
+- id: https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof
+  relationship: other
+  note: Numerical-first and independent Challenge structure inspected; no theorem imported.
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    tool_setup: Parallel source and referee agents with one coordinator-run serial macOS compiler and
+      pinned shared caches. Fresh non-root Linux default-kernel/Comparator/control checking is a separate
+      pending gate.
+    prompting_notes: Numerical statement boundary written before Lean code. Preserve full original quantifiers,
+      true Euclidean norm/root-limit semantics and arbitrary compact complex families. Minimize numerical
+      work to one consumed kernel-mode LeanCert exp(1) bound; all dimension and product arguments symbolic.
+  notes: Substantial OpenAI Codex assistance. The implementation author prepared this package and is not
+    a final independent referee. Historical scoped source/repair reviews and actual successful local command
+    origins are retained. Two current final nonauthor reviews approved the full source; canonical checks remain pending. No
+    human or official Tau Ceti approval is claimed.
+status:
+  scope: For each positive natural dimension d, a positive constant chosen before every nonempty compact
+    complex matrix family of joint spectral radius one bounds the actual Euclidean operator norm of every
+    length-n product, for every n>=1, by Theta_d*(L*n)^(d-1), where L is the actual maximum generator
+    operator norm. Arbitrary infinite compact families, reducibility, repetitions, scalar dimension one,
+    and all complex entries remain. Radius-one equivalence between the actual positive-length-root infimum
+    and the original nth-root limit is a mandatory separate contract.
+  whole_problem_verified: false
+  main_results:
+  - declaration: NLA.MF07.matrix_product_semantics
+    file: NLA/MF07/MatrixBasics.lean
+    line: 32
+    file_sha256: 93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.diagonal_inverse
+    file: NLA/MF07/MatrixBasics.lean
+    line: 117
+    file_sha256: 93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.family_norm_maximum
+    file: NLA/MF07/CompactGrowth.lean
+    line: 51
+    file_sha256: d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.family_growth_maximum
+    file: NLA/MF07/CompactGrowth.lean
+    line: 85
+    file_sha256: d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.family_growth_submultiplicative
+    file: NLA/MF07/CompactGrowth.lean
+    line: 114
+    file_sha256: d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.radius_one_semantics
+    file: NLA/MF07/RootSemantics.lean
+    line: 157
+    file_sha256: bee70f65ab8e7e517ebec8f579ea3ee8fb276d52a8f5cd293c9c0e085ab304ee
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.identity_family_semantics
+    file: NLA/MF07/RootSemantics.lean
+    line: 175
+    file_sha256: bee70f65ab8e7e517ebec8f579ea3ee8fb276d52a8f5cd293c9c0e085ab304ee
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.approximate_extremal_norm
+    file: NLA/MF07/ApproximateNorm.lean
+    line: 54
+    file_sha256: 883e7e7c0455c5e3b257f5b3946d8ad4fcbef2a3d61e87061f1d92f9099a40a9
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.rounded_extremal_norm
+    file: NLA/MF07/RoundedNorm.lean
+    line: 71
+    file_sha256: 9ef9b6f2a7784054bdf3f1dedf22f4e81f8672176b7a7ec271e5d9a9e26d4ec5
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.triangular_damping
+    file: NLA/MF07/TriangularDamping.lean
+    line: 117
+    file_sha256: ea35c872a9c579f4d6e9a259140cbe64afdf12491fa34729272b34e7150aab2a
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.interspersed_product_bound
+    file: NLA/MF07/Interspersed.lean
+    line: 117
+    file_sha256: 8f65ea5980bb23640c5185abc3d793964f84b1e1a45550e580ee184bcafdc898
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.quantitative_comparison
+    file: NLA/MF07/QuantitativeComparison.lean
+    line: 140
+    file_sha256: ad20c7a071d84ea13b6c95f2a915d5ae9fcb362aa7f35d3730e7d910054e6248
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.scalar_family_growth
+    file: NLA/MF07/ScalarFamily.lean
+    line: 57
+    file_sha256: a7e0a6b1dabdb866649f0381934b9bea0c5da7698bf0c93e4bedc38876a4227c
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.exp_one_bound
+    file: NLA/MF07/Numerical.lean
+    line: 22
+    file_sha256: 90407ab2d374d652549c8b57858f9c5123602a1edf72bde8ce2ea2243b786c03
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.comparison_threshold_bound
+    file: NLA/MF07/Numerical.lean
+    line: 69
+    file_sha256: 90407ab2d374d652549c8b57858f9c5123602a1edf72bde8ce2ea2243b786c03
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.growth_constant_positive
+    file: NLA/MF07/Numerical.lean
+    line: 93
+    file_sha256: 90407ab2d374d652549c8b57858f9c5123602a1edf72bde8ce2ea2243b786c03
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.radius_one_growth
+    file: NLA/MF07/Final.lean
+    line: 22
+    file_sha256: b9daa70a5881d142537010a3739ee348b113f111e558bf5fd87463b419a63468
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  - declaration: NLA.MF07.canonical_uniform_bound
+    file: NLA/MF07/Final.lean
+    line: 40
+    file_sha256: b9daa70a5881d142537010a3739ee348b113f111e558bf5fd87463b419a63468
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+  - Classical.choice
+  - Quot.sound
+  - propext
+  source_scan_note: All 18 exact local exports printed only permitted standard axioms and passed kernel-trust
+    assertions. The independent Challenge contains18 deliberate specification holes and is never imported
+    by the implementation.
+fidelity:
+  divergences: Chronological products use reversed lists and final Fin n sequences. JSR uses the actual
+    infimum of positive-length nth-root suprema, with mandatory equivalence to the original radius-one
+    limit. A larger rational dimension-only constant replaces the manuscript constant using the separately
+    required exp(1) ≤ 3 certificate; the original target only asks for some positive dimension-only constant.
+review:
+  status: Historical scoped source/repair approvals retained; two final nonauthor complete-source reviews
+    and canonical package/runtime reviews pending
+  reviewers: []
+  notes: See reviews/INDEX.json. The author of this package implemented MF07 and cannot independently
+    referee that implementation. Root authored later repairs. Existing statements-only and scoped repair
+    reviews retain their original role and temporal limits.
+alignment:
+  source_correspondence: SourceCorrespondence.md
+  numerical_boundary: NUMERICAL_TARGETS.md
+  numerical_first_record: NUMERICAL-FIRST.json
+  proposed_statements: Challenge.lean
+  source_provenance: SOURCE-PROVENANCE.json
+  reuse_audit: REUSE-AUDIT.json
+  duplicate_audit: DUPLICATE-AUDIT.json
+  active_source_manifest: ACTIVE-SOURCE-MANIFEST.json
+  implementation_map: IMPLEMENTATION-MAP.json
+  publication_evidence: PUBLICATION-EVIDENCE.json
+toolchain:
+  lean: leanprover/lean4:v4.33.1
+  dependency_manifest: lake-manifest.json
+  dependencies:
+    leancert: 621a43d7cf21f87872392a01e874f2f1dbddc926
+    mathlib: 0df444a360eaa60ab8c11dca51a86af692955474
+verification:
+  statement_elaboration:
+    status: passed exact18 frozen contracts on actual Linux run35064080581
+    commit: 39865897ba6e213cc89b666cb49a290d151233a3
+    run_url: https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35064080581
+    receipt: statement-audit/frozen-35064080581/runtime/receipt.json
+    receipt_sha256: 8eaa4bddee1c752cc2eeec12bd902c9872a4d0f5e42c69efa5bdec3001a3c372
+    scope: Statements only; unrelated shared proof failures preserved.
+  whole_proof_build: passed exact serial macOS development graph, completed development13
+  local_acceptance: verification/LOCAL-DEVELOPMENT-ACCEPTANCE.json
+  local_receipt: verification/local-development/runs/development-13/RECEIPT.json
+  local_receipt_sha256: 965aac16f4e8c3cba9d6cdb8559e1a7107db0d81ab9488b3eab4207769666521
+  canonical_verification_completed: false
+  default_kernel: pending fresh canonical Linux replay
+  comparator: pending all 18 actual canonical comparisons
+  sandbox_and_rejection_controls: pending fresh canonical Linux execution
+  permitted_axioms:
+  - Classical.choice
+  - Quot.sound
+  - propext
+  transitive_axioms: All 18 measured local lists appear in status.main_results; canonical rechecking pending.
+  numerical_certificate:
+    statement: Real.exp 1 ≤ 3
+    declaration: NLA.MF07.exp_one_bound
+    file: NLA/MF07/Numerical.lean
+    method: interval_decide (trust := kernel)
+    consumed_by: comparison_threshold_bound and the final dimension-only growth bound
+    runtime: Executed in the actual successful local Numerical module and complete graph; canonical replay
+      pending.
+    interval_subdivision: none; one exact scalar argument; all dimension/length/matrix estimates symbolic
+  publication_configuration: Only active Lake default/library registration changes; all original frozen
+    bytes and exact patch retained.
+  historical_metadata_note: Original frozen/source-correspondence and dated statement/review inventories
+    retain past pending wording. Current top-level metadata governs candidate status.
+  limitations:
+  - Dependencies use pinned shared compiled caches; this is not a fresh Linux sandbox or default-kernel
+    replay/Comparator/control run. No publication commit or PR is accepted here.
+  publication: Private canonical candidate only; no status, count, Git, CI or PR change.
+acknowledgements: Matthew J. Colbrook for the mathematical proof; Epperlein and Wirth for the original
+  question; Mathlib, LeanCert, Lean Comparator and formalization.yaml contributors; Schiffer and Forsythe
+  structure examples.

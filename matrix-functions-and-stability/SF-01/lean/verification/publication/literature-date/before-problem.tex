@@ -1,0 +1,198 @@
+% Standalone problem document, generated from the adjacent README.md.
+% Compile with XeLaTeX. Mathematical content is maintained in Markdown.
+\documentclass[11pt,a4paper]{article}
+\usepackage[fontsize=10.5pt]{scrextend}
+\usepackage[margin=22mm,headheight=15pt,headsep=9mm,footskip=11mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{texgyrepagella}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\setmonofont{texgyrecursor}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic,Scale=MatchLowercase]
+\usepackage{amsmath,amssymb}
+\usepackage{unicode-math}
+\setmathfont{texgyrepagella-math.otf}
+\usepackage{xcolor,microtype,enumitem,needspace,fancyhdr}
+\usepackage{bookmark}
+\definecolor{ink}{HTML}{17344B}
+\definecolor{accent}{HTML}{197D80}
+\definecolor{muted}{HTML}{596773}
+\hypersetup{colorlinks=true,linkcolor=accent,urlcolor=accent,pdftitle={SF-01 - Preservation
+of real H-matrix structure by Newton square-root
+iterates},pdfauthor={Open Problems in Numerical Linear Algebra}}
+\urlstyle{same}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\linespread{1.04}
+\setlength{\emergencystretch}{3em}
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+\allowdisplaybreaks[1]
+\setlist{nosep,leftmargin=1.5em}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
+\fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}SF-01}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-17}}
+\fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
+\makeatletter
+\renewcommand{\section}{\Needspace{5\baselineskip}\@startsection{section}{1}{0pt}{12pt plus 2pt minus 2pt}{4pt}{\sffamily\bfseries\large\color{ink}}}
+\renewcommand{\subsection}{\Needspace{4\baselineskip}\@startsection{subsection}{2}{0pt}{9pt plus 1pt minus 1pt}{3pt}{\sffamily\bfseries\normalsize\color{ink}}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\begin{document}
+{\sffamily\small\color{muted}Matrix functions and stability\par}
+\vspace{3pt}
+{\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000\sffamily\bfseries\fontsize{21}{24}\selectfont\color{ink}Preservation
+of real H-matrix structure by Newton square-root iterates\par}
+\vspace{7pt}
+{\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
+to specialist\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
+\vspace{4pt}
+{\color{accent}\hrule height 0.8pt}
+\vspace{6pt}
+\textbf{Rating rationale:} Challenging because convergence does not
+control comparison-matrix structure at each iterate; specialist impact
+concerns square-root algorithms for H-matrices.
+
+\subsection{Lean proof and verification
+evidence}\label{lean-proof-and-verification-evidence}
+
+\textbf{The complete original Newton target is Lean verified, 2026-09-17
+(UTC).} The
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/3312b0795873cfecade03fa421a5433651d47674/matrix-functions-and-stability/SF-01/lean/Solution.lean}{immutable
+proof} at \textit{3312b0795873} passed
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175258802/job/105055517720}{actual
+non-root Linux run 35175258802}. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/lean/verification/linux-35175258802/README.md}{retained
+logs and source hashes} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/lean/reviews/canonical-runtime/REVIEW.md}{independent
+runtime review} cover all 271 submitted inputs, all 24 Comparator
+targets, default-kernel replay, standard transitive axioms and the
+actual rejection/isolation controls.
+
+\textit{NLA.SF01.canonical\_newton\_preservation} proves that the
+original exact recurrence, initialized at \(X_0=A\), is defined and
+preserves the nonsingular real H-matrix property and strictly positive
+diagonal for every positive dimension and every iteration. The
+comparison matrix and full complex algebraic spectral radius match the
+original definitions. Spectral-to-weight and weight-to-spectral bridges
+are proved; no symmetry, normality, positive-entry, bounded-iteration or
+supplied-representation premise is added. See the
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/lean/Challenge.lean}{independent
+contracts} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/lean/SourceCorrespondence.md}{source
+correspondence}. The manuscript's scaled/affine initializations and
+Halley extensions are outside this formal claim.
+
+Formalization and verification: \textbf{George Stepaniants}, Department
+of Computing and Mathematical Sciences, California Institute of
+Technology. \textbf{Matthew J. Colbrook}, Department of Applied
+Mathematics and Theoretical Physics, University of Cambridge, retains
+original mathematical authorship. \textbf{Sidney Holden} retains
+authorship and Apache-2.0 credit for two unchanged, actually imported
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/lean/REUSE-IV03.md}{IV-03
+source files}. AI assistance and scoped independent agent reviews are
+disclosed; no official Tau Ceti or human endorsement is claimed.
+
+The project pins Lean 4.33.1,
+\href{https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474}{Mathlib}
+and
+\href{https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926}{LeanCert}.
+A consumed kernel-mode LeanCert certificate proves \(0< 1/2\); the
+dimension, matrix and iteration arguments are symbolic, with no interval
+subdivision. All 24 exported theorems use only \textit{propext},
+\textit{Classical.choice} and \textit{Quot.sound}. Run
+\textit{lake build} in
+\textit{matrix-functions-and-stability/SF-01/lean}; the
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/lean/README.md}{project
+README} gives the complete Linux checker commands and separates the
+actual local macOS development from the GitHub execution. Later
+publication-commit and upstream PR runs are separate checks.
+
+The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/solution.pdf}{formalization
+note} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/solution.tex}{TeX
+source} record the scope and authorship. The original mathematical
+resolution remains unchanged below.
+
+\subsection{Resolution --- 2026-09-11}\label{resolution-2026-09-11}
+
+\textbf{Author:} Matthew J. Colbrook, Department of Applied Mathematics
+and Theoretical Physics, University of Cambridge. \textbf{Independent
+Codex-agent review: PASS for the exact target.}
+
+Every exact Newton square-root iterate initialized at \(X_0=A\) remains
+a real nonsingular H-matrix with positive diagonal. The theorem includes
+arbitrary positive scalar scaling and nonnegative affine
+initializations, with one diagonal-dominance weight for all iterates; it
+also proves the corresponding Halley preservation result.
+
+The complete target is resolved. Its former difficulty rating is
+historical; the original statement, references and dated audits remain
+below.
+
+\textbf{Primary reference:}
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/colbrook-matrix-functions-2026-09-11/manuscripts/SF-01.pdf}{complete
+authored PDF},
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/colbrook-matrix-functions-2026-09-11/manuscripts/SF-01.tex}{standalone
+TeX}, \textbf{Theorem 1; Corollary 5 gives the Halley extension}.
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/colbrook-matrix-functions-2026-09-11/verification/reviews/SF-01-review.md}{Independent
+proof review} ·
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/colbrook-matrix-functions-2026-09-11/README.md}{Authorship
+and submission record}. Verification is independent agent review, not
+external human peer review or formal certification.
+
+\subsection{Problem statement}\label{problem-statement}
+
+For a real square matrix \(Y=(y_{ij})\), define its comparison matrix by
+\(\mathcal M(Y)_{ii}=|y_{ii}|\) and \(\mathcal M(Y)_{ij}=-|y_{ij}|\) for
+\(i\ne j\). Call \(Y\) a nonsingular H-matrix when
+\(\mathcal M(Y)=sI-B\) for some entrywise nonnegative \(B\) and real
+\(s>\rho(B)\).
+
+Let \(n\ge1\) and let \(A\in\mathbb R^{n\times n}\) be a nonsingular
+H-matrix with \(a_{ii}>0\) for every \(i\). Consider the
+exact-arithmetic recurrence
+
+\[X_0=A,\qquad X_{k+1}=\tfrac12(X_k+X_k^{-1}A),\qquad k\ge0.\]
+
+Is every \(X_k\) a nonsingular H-matrix with strictly positive diagonal?
+The known existence of these iterates and their convergence to the
+principal square root do not themselves establish the requested
+structure at every step.
+
+\newpage
+\subsection{References and status}\label{references-and-status}
+
+N. J. Higham,
+\href{https://epubs.siam.org/doi/10.1137/1.9780898717778.ch6}{\emph{Functions
+of Matrices: Theory and Computation}} (SIAM, 2008), §6.3, equation
+(6.12), §6.8.3, and Research Problem 6.25, p.~170. The author's
+\href{https://nhigham.com/errata-for-functions-of-matrices-theory-and-computation/}{errata}
+correct the surrounding p.~161 theorem to real H-matrices; that
+restriction is adopted here. L. Lin and Z.-Y. Liu,
+\href{https://doi.org/10.1023/A:1012931928589}{\emph{On the Square Root
+of an H-matrix with Positive Diagonal Elements}}, \emph{Annals of
+Operations Research} 103 (2001), 339--350, concern the square root
+itself. Searches on 2026-09-08 for the problem number and
+Newton/H-matrix structure preservation found no resolution. The recent
+\href{https://arxiv.org/html/2605.21679}{Bini--Iannazzo--Meini--Meng
+preprint} (20 May 2026), §§3--4, treats M-matrices, a narrower class.
+The latest explicit open-problem evidence found for this assertion
+remains the 2008 book.
+
+\subsection{Audit --- 2026-09-10}\label{audit-2026-09-10}
+
+Rechecked the \href{https://arxiv.org/html/2605.21679}{2026 M-matrix
+paper, §§4 and 4.2}: its normalized nonsingular M-matrix class has
+structure-preserving Newton iterates starting from \(A\). This is a
+substantive subfamily of the displayed target. Searches for Higham's
+Problem 6.25 and H-matrix iterate preservation found no general answer;
+the surviving H-matrix question still has historical evidence.
+\end{document}

@@ -1,0 +1,123 @@
+% RA-02 formalization note. The original shared mathematical manuscript is unchanged.
+% Compile twice with pdflatex. No external bibliography or figures are required.
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,microtype}
+\usepackage[margin=27mm]{geometry}
+\usepackage{xurl,hyperref}
+\hypersetup{hidelinks,pdftitle={RA-02: Lean verification of the negative polynomial-factor result},pdfauthor={George Stepaniants}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{2em}
+\title{\textbf{RA-02: Lean verification\\of the negative polynomial-factor result}}
+\author{George Stepaniants\\[3pt]\small Department of Computing and Mathematical Sciences\\\small California Institute of Technology}
+\date{17 September 2026 (UTC)}
+\begin{document}
+\maketitle
+
+\textbf{Scope and attribution.}
+Matthew J. Colbrook, Department of Applied Mathematics and Theoretical
+Physics, University of Cambridge, retains mathematical authorship of the
+original negative resolution. His manuscript \emph{Sharp worst-case factors
+for randomly pivoted Cholesky and LU}, Theorem~1 and Corollary~3, remains
+unchanged. This note records the Lean formalization and its verification.
+Chen, Epperly, Tropp and Webber retain credit for RPCholesky and the comparison
+problem. Substantial OpenAI Codex assistance is disclosed.
+
+\section*{Complete original target}
+For a complex Hermitian positive-semidefinite matrix
+$A\in\mathbb C^{n\times n}$, set $R_0=A$. At a nonzero residual, select
+$j$ with conditional probability $(R_t)_{jj}/\operatorname{tr}(R_t)$ and set
+\[
+ R_{t+1}=R_t-\frac{R_t(:,j)R_t(j,:)}{(R_t)_{jj}}.
+\]
+Zero residuals remain zero; a zero diagonal has zero probability at a
+nonzero residual. Let $\lambda_1(A)\ge\cdots\ge\lambda_n(A)\ge0$ be the
+actual ordered eigenvalues and $\tau_r(A)=\sum_{j>r}\lambda_j(A)$.
+
+The theorem \texttt{NLA.RA02.no\_polynomial\_trace\_factor} proves that
+there are no real constants $C>0$ and $p\ge0$, independent of $n,r,A$,
+such that
+\[
+ \mathbb E\operatorname{tr}(R_r)\le C r^p\tau_r(A)
+\]
+for every $n\ge1$, every complex Hermitian positive-semidefinite $A$, and
+every integer $1\le r\le n$, after exactly $r$ pivots.
+The stronger constructive export
+\nolinkurl{NLA.RA02.universal_counterexamples} supplies, for every such
+real $C,p$, a rank parameter $r\ge1$ and an actual positive-definite witness
+$A\in\mathbb C^{(r+1)\times(r+1)}$ with
+\[
+ 0<\tau_r(A),\qquad
+ C r^p\tau_r(A)<\mathbb E\operatorname{tr}(R_r).
+\]
+
+The formal process includes every ordered history, including repeated and
+zero-probability choices. Its finite path weights are proved nonnegative
+and normalized, with the actual conditional recursion. Uniform dummy labels
+after absorption do not change the zero residual. The tail uses Mathlib's
+genuinely decreasing Hermitian eigenvalues, with a proved Euclidean Rayleigh
+bound; it is not defined by the counterexample's desired estimate.
+
+\section*{Finite proof and computation}
+For $r\ge1$, the proof uses an explicit real-entry arrowhead matrix of order
+$r+1$. With
+\[
+ t=\frac1{2r+1},\quad \varepsilon=t^{2(r+1)},\quad
+ d_i=\varepsilon^i,\quad \alpha_i=t^{i+1}\quad(0\le i<r),
+\]
+and $D=\operatorname{diag}(d_0,\ldots,d_{r-1})$, it is
+\[
+ A=\begin{pmatrix}
+ D&D\alpha\\
+ \alpha^{T}D&\varepsilon^r+\alpha^{T}D\alpha
+ \end{pmatrix}.
+\]
+Its exact complex quadratic form proves positive definiteness. A nonzero
+Rayleigh probe gives $0<\tau_r(A)\le\varepsilon^r$. Exact residual-state
+identities, positive prefix traces and an injective binary history encoding
+give
+\[
+ \mathbb E\operatorname{tr}(R_r)
+ \ge \frac{2^r\varepsilon^r}{(1+1/r)^r}
+ \ge \frac{2^r}{3}\,\tau_r(A).
+\]
+The retained $2^r$ histories lower-bound the full normalized expectation;
+they are not renormalized into a different sampling law. Exponential
+domination of every real power then yields the strict violations above.
+
+The only numerical certificate is $\exp(1)\le3$, proved by LeanCert with
+explicit kernel trust. It is consumed by
+\texttt{rank\_denominator\_le\_three}, then
+\texttt{exponential\_tail\_factor} and the final counterexample chain.
+All rank, history, matrix and real-exponent calculations remain symbolic;
+there is no interval subdivision or numerical eigenvalue approximation.
+
+The sufficient factor $2^r/3$ resolves the complete original question.
+The manuscript's sharper limiting ratio $2^r$, entrywise-positive and
+correlation-matrix extensions, its separate LU results, and oversampling
+are not additional formal claims of this project.
+
+\section*{Exact verification evidence}
+The \href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb/randomized-and-low-rank-approximation/RA-02/lean/Solution.lean}{immutable proof revision}
+\texttt{26dc080e47b7} passed actual non-root Linux
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175272827/job/105055587640}{run 35175272827, job 105055587640}.
+All 220 submitted inputs were authenticated. The default kernel and
+Comparator accepted all 27 frozen contracts, with only
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
+The required rejection, regression and build/export sandbox controls passed.
+
+The project pins Lean 4.33.1, Mathlib revision
+\texttt{0df444a360ea} and LeanCert revision \texttt{621a43d7cf21}.
+Complete hashes, commands, logs, source correspondence and review scopes
+are retained with the canonical Lean project. With pinned dependencies,
+\texttt{lake build} is its local entry point; its README gives the complete
+Linux verification commands.
+
+Two complete nonauthor proof-source reviews and a separate independent
+runtime evidence audit are retained. They are AI-agent reviews, not external
+human peer review or official Tau Ceti endorsement. The earlier serial macOS
+development and the GitHub Linux run are distinct executions; evidence audits
+are not further compiler runs. Publication-commit and upstream PR checkouts
+require their own applicable checks, which are not claimed by this note.
+\end{document}

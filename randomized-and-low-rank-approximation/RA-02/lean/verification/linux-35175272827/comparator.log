@@ -1,0 +1,502 @@
+$ systemd-run --user --quiet --wait --pipe --collect -p 'RestrictAddressFamilies=~AF_UNIX' --working-directory /home/runner/work/_temp/nla-lean-tools/.verification-tmp/nla-fresh-proof-kx5rqgka/project /usr/bin/env -i PATH=/home/runner/.elan/toolchains/leanprover--lean4---v4.33.1/bin:/home/runner/.elan/bin:/home/runner/go/bin:/opt/hostedtoolcache/go/1.27.1/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin HOME=/home/runner LANG=C.UTF-8 XDG_RUNTIME_DIR=/run/user/1001 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus GIT_TERMINAL_PROMPT=0 GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null COMPARATOR_BIN=/home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator COMPARATOR_LEAN4EXPORT=/home/runner/work/_temp/nla-lean-tools/.tools/lean4export/.lake/build/bin/lean4export COMPARATOR_LANDRUN=/home/runner/work/_temp/nla-lean-tools/scripts/strict_landrun.py XDG_CACHE_HOME=/home/runner/work/_temp/nla-lean-tools/.tools/cache TMPDIR=/home/runner/work/_temp/nla-lean-tools/.verification-tmp lake env /home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator comparator.json
+Building Challenge
+✔ [2644/2646] Built NLA.RA02.Definitions (2.2s)
+⚠ [2645/2646] Built Challenge (2.1s)
+warning: Challenge.lean:18:8: declaration uses `sorry`
+warning: Challenge.lean:22:8: declaration uses `sorry`
+warning: Challenge.lean:30:8: declaration uses `sorry`
+warning: Challenge.lean:40:8: declaration uses `sorry`
+warning: Challenge.lean:51:8: declaration uses `sorry`
+warning: Challenge.lean:56:8: declaration uses `sorry`
+warning: Challenge.lean:64:8: declaration uses `sorry`
+warning: Challenge.lean:72:8: declaration uses `sorry`
+warning: Challenge.lean:78:8: declaration uses `sorry`
+warning: Challenge.lean:86:8: declaration uses `sorry`
+warning: Challenge.lean:94:8: declaration uses `sorry`
+warning: Challenge.lean:99:8: declaration uses `sorry`
+warning: Challenge.lean:107:8: declaration uses `sorry`
+warning: Challenge.lean:113:8: declaration uses `sorry`
+warning: Challenge.lean:125:8: declaration uses `sorry`
+warning: Challenge.lean:133:8: declaration uses `sorry`
+warning: Challenge.lean:140:8: declaration uses `sorry`
+warning: Challenge.lean:147:8: declaration uses `sorry`
+warning: Challenge.lean:153:8: declaration uses `sorry`
+warning: Challenge.lean:159:8: declaration uses `sorry`
+warning: Challenge.lean:167:8: declaration uses `sorry`
+warning: Challenge.lean:173:8: declaration uses `sorry`
+warning: Challenge.lean:179:8: declaration uses `sorry`
+warning: Challenge.lean:184:8: declaration uses `sorry`
+warning: Challenge.lean:189:8: declaration uses `sorry`
+warning: Challenge.lean:194:8: declaration uses `sorry`
+warning: Challenge.lean:201:8: declaration uses `sorry`
+Build completed successfully (2646 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.RA02.exp_one_bound, NLA.RA02.scalar_parameters, NLA.RA02.pivot_kernel, NLA.RA02.finite_path_law, NLA.RA02.zero_residual, NLA.RA02.expected_trace_recursion, NLA.RA02.ordered_spectrum, NLA.RA02.least_eigenvalue_rayleigh, NLA.RA02.spectral_tail_semantics, NLA.RA02.arrowhead_quadratic, NLA.RA02.arrowhead_positive_definite, NLA.RA02.rayleigh_probe_values, NLA.RA02.arrowhead_tail, NLA.RA02.residual_state_positivity, NLA.RA02.residual_state_updates, NLA.RA02.distinct_history_state, NLA.RA02.distinct_history_identity, NLA.RA02.retained_history_count, NLA.RA02.retained_prefix_description, NLA.RA02.retained_trace_bound, NLA.RA02.retained_contribution_bound, NLA.RA02.expectation_lower_bound, NLA.RA02.binomial_exponential_bound, NLA.RA02.exponential_tail_factor, NLA.RA02.exponential_dominates_real_power, NLA.RA02.universal_counterexamples, NLA.RA02.no_polynomial_trace_factor, propext, Classical.choice, Quot.sound, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+Building Solution
+✔ [3491/3524] Built LeanCert.Core.Interval (4.6s)
+✔ [3492/3524] Built LeanCert.Core.DerivativeIntervals (5.2s)
+✔ [3493/3531] Built LeanCert.Contrib.Sinc (7.7s)
+✔ [3494/3531] Built LeanCert.Core.Expr (8.5s)
+✔ [3495/3535] Built LeanCert.Core.Dyadic (6.2s)
+✔ [3496/3535] Built LeanCert.Tactic.Verification (6.8s)
+✔ [3497/3535] Built LeanCert.Core.Taylor (12s)
+✔ [3498/3536] Built LeanCert.Core.IntervalRat.Basic (13s)
+✔ [3499/3536] Built LeanCert.Core.Support (5.1s)
+✔ [3500/3536] Built LeanCert.Core.IntervalRat.LogReduction (6.9s)
+✔ [3501/3536] Built LeanCert.Tactic.LeanCert.Bridge.Environment (3.4s)
+✔ [3502/3536] Built LeanCert.Meta.Numeral (4.6s)
+✔ [3503/3536] Built LeanCert.Engine.Eval.Result (3.2s)
+✔ [3504/3536] Built LeanCert.Tactic.NumericalRefinement (710ms)
+✔ [3505/3536] Built LeanCert.Core.TrigReduction (4.1s)
+✔ [3506/3536] Built LeanCert.Tactic.IntervalAuto.Types (4.4s)
+✔ [3507/3536] Built LeanCert.Core.IntervalRat.Transcendental (6.1s)
+✔ [3508/3567] Built LeanCert.Tactic.IntervalAuto.Extract (4.1s)
+✔ [3559/3639] Built LeanCert.Tactic.IntervalAuto.Norm (6.3s)
+✔ [3560/3643] Built LeanCert.Meta.ToExpr (7.8s)
+✔ [3561/3643] Built LeanCert.Tactic.VecUtil (5.9s)
+✔ [3562/3643] Built LeanCert.Tactic.FinsetParse (6.7s)
+✔ [3563/3645] Built LeanCert.Tactic.LeanCert.Normalize (6.4s)
+✔ [3564/3645] Built LeanCert.Tactic.BridgeNative (2.7s)
+✔ [3565/3645] Built LeanCert.Tactic.IntervalAuto.Parse (9.6s)
+✔ [3566/3647] Built LeanCert.Tactic.FinSumExpand (3.1s)
+✔ [3567/3651] Built LeanCert.Tactic.LeanCert.Semantic.Domain (1.9s)
+✔ [3568/3654] Built LeanCert.Validity.Eventual (3.6s)
+✔ [3569/3654] Built LeanCert.Tactic.IntervalAuto.Diagnostic (3.8s)
+✔ [3570/3654] Built LeanCert.Tactic.LeanCert.Semantic.Goal (2.5s)
+✔ [3571/3658] Built LeanCert.Tactic.VecSimp (2.0s)
+✔ [3572/3659] Built LeanCert.Core.IntervalRat.Taylor (25s)
+✔ [3573/3659] Built LeanCert.Tactic.LeanCert.Semantic.Parse.Comparison (1.8s)
+✔ [3574/3662] Built LeanCert.Core.IntervalReal (2.9s)
+✔ [3575/3662] Built LeanCert.Tactic.EventualBound (5.0s)
+✔ [3576/3662] Built LeanCert.Tactic.Extension.Protocol (3.5s)
+✔ [3577/3662] Built LeanCert.Core.IntervalRat.TrigReduced (3.6s)
+✔ [3578/3662] Built LeanCert.Tactic.LeanCert.Diagnostic.Evidence (3.6s)
+✔ [3579/3662] Built LeanCert.Tactic.LeanCert.Semantic.Parse.Bound (3.8s)
+✔ [3580/3662] Built LeanCert.Tactic.LeanCert.Config (3.9s)
+✔ [3581/3666] Built LeanCert.Engine.Affine.Basic (9.0s)
+✔ [3582/3667] Built LeanCert.Core.IntervalRealEndpoints (7.7s)
+✔ [3584/3667] Built LeanCert.Tactic.Extension.Registry (5.0s)
+✔ [3585/3669] Built LeanCert.Core.IntervalDyadic (11s)
+✔ [3586/3675] Built LeanCert.Engine.Affine.Nonlinear (6.7s)
+✔ [3587/3683] Built LeanCert.Engine.Algebra.QPoly (7.0s)
+✔ [3588/3683] Built LeanCert.Core.DyadicCell (7.3s)
+✔ [3589/3683] Built LeanCert.Engine.FloatEval (4.9s)
+✔ [3590/3684] Built LeanCert.Engine.Eval.Core (11s)
+✔ [3591/3688] Built LeanCert.Tactic.Extension.Command (3.1s)
+✔ [3592/3707] Built LeanCert.Core.DyadicFrontier (3.4s)
+✔ [3594/3714] Built LeanCert.Engine.Algebra.QPolyIntegral (4.5s)
+✔ [3595/3714] Built LeanCert.Tactic.Extension (2.4s)
+✔ [3596/3714] Built LeanCert.Engine.Eval.Extended (4.4s)
+ℹ [3597/3714] Built NLA.RA02.EuclideanBridge (3.3s)
+info: NLA/RA02/EuclideanBridge.lean:44:0: 'NLA.RA02.euclidean_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/EuclideanBridge.lean:46:0: 'NLA.RA02.euclidean_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3598/3714] Built LeanCert.Engine.Bounds.Lemmas (2.1s)
+ℹ [3599/3714] Built NLA.RA02.OrderedSpectrum (2.7s)
+info: NLA/RA02/OrderedSpectrum.lean:71:0: 'NLA.RA02.ordered_spectrum' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3600/3714] Built LeanCert.Engine.IntervalEval (2.2s)
+ℹ [3601/3714] Built NLA.RA02.SpectralTail (3.8s)
+info: NLA/RA02/SpectralTail.lean:68:0: 'NLA.RA02.spectral_tail_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3602/3714] Built NLA.RA02.RayleighMinimum (4.8s)
+info: NLA/RA02/RayleighMinimum.lean:75:0: 'NLA.RA02.least_eigenvalue_rayleigh' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3603/3714] Built LeanCert.Engine.Affine.Transcendental (5.5s)
+✔ [3604/3714] Built LeanCert.Validity.Bounds.Checked (4.5s)
+✔ [3605/3714] Built LeanCert.Validity.Bounds.Core (4.3s)
+✔ [3606/3714] Built LeanCert.Engine.IntervalEvalDyadic (8.5s)
+✔ [3607/3714] Built LeanCert.Engine.Optimization.Box (3.9s)
+✔ [3608/3714] Built LeanCert.Engine.RootFinding.Basic (6.7s)
+✔ [3609/3714] Built LeanCert.Engine.AD.Basic (5.0s)
+✔ [3610/3714] Built LeanCert.Engine.Integrate (8.6s)
+✔ [3611/3714] Built LeanCert.Engine.TaylorModel.Core (12s)
+✔ [3612/3714] Built LeanCert.Engine.IntervalEvalAffine (9.2s)
+✔ [3613/3714] Built LeanCert.Validity.DyadicBounds (5.3s)
+✔ [3614/3714] Built LeanCert.Engine.FinSumDyadic (6.4s)
+✔ [3615/3714] Built LeanCert.Engine.Search.Heuristic (3.9s)
+✔ [3616/3714] Built LeanCert.Engine.TaylorModel.Integral (4.5s)
+✔ [3617/3714] Built LeanCert.Engine.AD.Transcendental (5.6s)
+✔ [3618/3714] Built LeanCert.Engine.RootFinding.Bisection (6.5s)
+✔ [3619/3714] Built LeanCert.Engine.TaylorModel.Special (3.6s)
+✔ [3620/3714] Built LeanCert.Engine.Affine.Environment (8.1s)
+✔ [3621/3714] Built LeanCert.Engine.TaylorModel.ExpLog (12s)
+✔ [3622/3714] Built LeanCert.Engine.WitnessSum (5.8s)
+✔ [3623/3714] Built LeanCert.Engine.TaylorModel.Trig (15s)
+✔ [3624/3714] Built LeanCert.Engine.AD.Eval (3.6s)
+✔ [3625/3714] Built LeanCert.Engine.TaylorModel.Hyperbolic (17s)
+✔ [3626/3714] Built LeanCert.Engine.AD.Correctness (2.9s)
+✔ [3627/3714] Built LeanCert.Engine.TaylorModel.Functions (2.1s)
+✔ [3628/3714] Built LeanCert.Engine.AD.Computable (4.0s)
+✔ [3629/3714] Built LeanCert.Engine.TaylorModel.Expr (5.6s)
+✔ [3630/3714] Built LeanCert.Engine.AD.PartialCorrectness (7.0s)
+✔ [3631/3714] Built LeanCert.Engine.TaylorModel (2.6s)
+✔ [3632/3714] Built LeanCert.Engine.AD.DomainChecked (3.4s)
+✔ [3633/3714] Built LeanCert.Engine.AD.Dyadic (3.3s)
+✔ [3634/3714] Built LeanCert.Engine.AD (1.8s)
+✔ [3635/3714] Built LeanCert.Validity.Bounds.Smart (4.0s)
+✔ [3636/3714] Built LeanCert.Meta.ProveSupported (5.0s)
+✔ [3637/3714] Built LeanCert.Engine.IntervalEvalRefined (5.2s)
+✔ [3638/3714] Built LeanCert.Engine.Optimize (8.3s)
+✔ [3639/3714] Built LeanCert.Validity.Bounds.Bridge (4.3s)
+✔ [3640/3714] Built LeanCert.Meta.ProveContinuous (5.6s)
+✔ [3641/3714] Built LeanCert.Tactic.IntervalAuto.ProveCommon (7.4s)
+✔ [3642/3714] Built LeanCert.Validity.Bounds.Basic (4.1s)
+✔ [3643/3714] Built LeanCert.Engine.RootFinding.Newton (6.8s)
+✔ [3644/3714] Built LeanCert.Engine.Optimization.Gradient (8.0s)
+✔ [3645/3714] Built LeanCert.Tactic.LeanCert.Bridge.ReifiedFunction (4.1s)
+✔ [3646/3714] Built LeanCert.Tactic.IntervalAuto.Basic (3.9s)
+✔ [3647/3714] Built LeanCert.Validity.Integration (8.4s)
+✔ [3648/3714] Built LeanCert.Engine.RootFinding.MVTBounds (11s)
+✔ [3649/3714] Built LeanCert.Tactic.LeanCert.Semantic.Prepare (9.1s)
+✔ [3650/3714] Built LeanCert.Engine.RootFinding.Krawczyk (11s)
+✔ [3651/3714] Built LeanCert.Tactic.LeanCert.Integral (13s)
+✔ [3652/3714] Built LeanCert.Engine.RootFinding.Contraction (10s)
+✔ [3653/3714] Built LeanCert.Tactic.Extension.Execute (12s)
+✔ [3654/3714] Built LeanCert.Engine.RootFinding.KrawczykCandidate (4.8s)
+✔ [3655/3714] Built LeanCert.Validity.Krawczyk (3.7s)
+✔ [3656/3714] Built LeanCert.Tactic.LeanCert.Solver.Protocol (6.9s)
+✔ [3657/3714] Built LeanCert.Engine.RootFinding.Main (3.1s)
+✔ [3658/3714] Built LeanCert.Engine.Optimization.Global (30s)
+✔ [3659/3714] Built LeanCert.Tactic.Enclosure (4.1s)
+✔ [3660/3714] Built LeanCert.Tactic.LeanCert.Diagnostic.Render (4.5s)
+✔ [3661/3714] Built LeanCert.Validity.Types (3.8s)
+✔ [3662/3714] Built LeanCert.Engine.Optimization.Guided (3.7s)
+✔ [3663/3714] Built LeanCert.Engine.Search.CounterExample (4.1s)
+✔ [3664/3714] Built LeanCert.Validity.Bounds (7.4s)
+✔ [3665/3714] Built LeanCert.Engine.Optimization.BoundVerify (3.8s)
+✔ [3666/3714] Built LeanCert.Discovery.Find (3.8s)
+✔ [3667/3714] Built LeanCert.Tactic.IntervalAuto.OptBound (4.7s)
+✔ [3668/3714] Built LeanCert.Tactic.IntervalAuto.Multivariate (7.3s)
+✔ [3669/3714] Built LeanCert.Tactic.IntervalAuto.RootBound (3.0s)
+✔ [3670/3714] Built LeanCert.Tactic.IntervalAuto.Bound (16s)
+✔ [3671/3714] Built LeanCert.Tactic.IntervalAuto.Subdiv (4.8s)
+✔ [3672/3714] Built LeanCert.Tactic.IntervalAuto.Adaptive (7.2s)
+✔ [3673/3714] Built LeanCert.Tactic.IntervalAuto.PointIneq (9.5s)
+✔ [3674/3714] Built LeanCert.Tactic.IntervalAuto (2.3s)
+✔ [3675/3714] Built LeanCert.Tactic.Refute (4.2s)
+✔ [3676/3714] Built LeanCert.Tactic.FinSumWitness (5.1s)
+✔ [3677/3714] Built LeanCert.Tactic.FinSumBound (4.3s)
+✔ [3678/3714] Built LeanCert.Tactic.LeanCert.Semantic.Parse (3.2s)
+✔ [3679/3714] Built LeanCert.Tactic.Discovery (14s)
+✔ [3680/3714] Built LeanCert.Tactic.Krawczyk (3.2s)
+✔ [3681/3714] Built LeanCert.Tactic.LeanCert.Router (7.5s)
+✔ [3682/3714] Built LeanCert.Tactic.LeanCert (2.4s)
+✔ [3683/3714] Built LeanCert.Tactic (2.4s)
+⚠ [3684/3714] Built NLA.RA02.PivotAlgebra (3.2s)
+warning: NLA/RA02/PivotAlgebra.lean:30:18: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/RA02/PivotAlgebra.lean:35:18: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+info: NLA/RA02/PivotAlgebra.lean:88:0: 'NLA.RA02.choleskyStep_eq_congruence' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/PivotAlgebra.lean:90:0: 'NLA.RA02.choleskyStep_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3685/3714] Built NLA.RA02.Parameters (4.1s)
+info: NLA/RA02/Parameters.lean:52:0: 'NLA.RA02.scalar_parameters' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3686/3714] Built NLA.RA02.Numerical (4.6s)
+info: NLA/RA02/Numerical.lean:32:0: 'NLA.RA02.exp_one_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/Numerical.lean:34:0: 'NLA.RA02.rank_denominator_le_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3687/3714] Built NLA.RA02.PivotCommutation (3.3s)
+warning: NLA/RA02/PivotCommutation.lean:26:24: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/RA02/PivotCommutation.lean:31:24: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/RA02/PivotCommutation.lean:33:24: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/RA02/PivotCommutation.lean:35:28: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/RA02/PivotCommutation.lean:26:24: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/RA02/PivotCommutation.lean:31:24: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/RA02/PivotCommutation.lean:33:24: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+info: NLA/RA02/PivotCommutation.lean:50:0: 'NLA.RA02.two_pivot_entry' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/PivotCommutation.lean:52:0: 'NLA.RA02.choleskyStep_commute' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3688/3714] Built NLA.RA02.PivotKernel (3.0s)
+info: NLA/RA02/PivotKernel.lean:89:0: 'NLA.RA02.pivot_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3689/3714] Built NLA.RA02.ArrowheadEntries (4.0s)
+warning: NLA/RA02/ArrowheadEntries.lean:123:58: This simp argument is unused:
+  if_pos rfl
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [state_false_ordinary, hi, and_self, if_true, Complex.ofReal_re]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: NLA/RA02/ArrowheadEntries.lean:129:0: 'NLA.RA02.state_true_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/ArrowheadEntries.lean:131:0: 'NLA.RA02.state_false_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3690/3714] Built NLA.RA02.PathSemantics (3.8s)
+info: NLA/RA02/PathSemantics.lean:69:0: 'NLA.RA02.pathResidual_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/PathSemantics.lean:71:0: 'NLA.RA02.pathWeight_append' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/PathSemantics.lean:73:0: 'NLA.RA02.pathContribution_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3691/3714] Built NLA.RA02.ArrowheadQuadratic (4.1s)
+warning: NLA/RA02/ArrowheadQuadratic.lean:33:65: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/RA02/ArrowheadQuadratic.lean:151:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: NLA/RA02/ArrowheadQuadratic.lean:182:45: Variable name `hr` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hr
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/RA02/ArrowheadQuadratic.lean:190:0: 'NLA.RA02.state_true_complex_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/ArrowheadQuadratic.lean:192:0: 'NLA.RA02.state_true_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/ArrowheadQuadratic.lean:194:0: 'NLA.RA02.arrowhead_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/ArrowheadQuadratic.lean:196:0: 'NLA.RA02.arrowhead_positive_definite' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3692/3714] Built NLA.RA02.HistoryLabels (4.4s)
+info: NLA/RA02/HistoryLabels.lean:56:0: 'NLA.RA02.remainingOrdinary_append_ordinary' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/HistoryLabels.lean:58:0: 'NLA.RA02.lastRemaining_append_ordinary' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3693/3714] Built NLA.RA02.HistoryProducts (4.6s)
+info: NLA/RA02/HistoryProducts.lean:69:0: 'NLA.RA02.pivotProduct_cons' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/HistoryProducts.lean:71:0: 'NLA.RA02.pathWeight_eq_pivotProduct_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3694/3714] Built NLA.RA02.FiniteExpectation (4.9s)
+warning: NLA/RA02/FiniteExpectation.lean:94:42: Variable name `hn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/RA02/FiniteExpectation.lean:101:0: 'NLA.RA02.finite_path_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/FiniteExpectation.lean:103:0: 'NLA.RA02.zero_residual' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/FiniteExpectation.lean:105:0: 'NLA.RA02.expected_trace_recursion' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3695/3714] Built NLA.RA02.ProbeValues (4.4s)
+warning: NLA/RA02/ProbeValues.lean:31:2: Try `simp at he` instead of `simpa using he`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+info: NLA/RA02/ProbeValues.lean:52:0: 'NLA.RA02.rayleigh_probe_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3696/3714] Built NLA.RA02.StateConstruction (4.7s)
+warning: NLA/RA02/StateConstruction.lean:34:31: This simp argument is unused:
+  hpivot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [choleskyStep, ↓reduceIte, state_true_ordinary, state_true_ordinary_last, state_true_last_ordinary,
+    state_true_last_last, state_false_ordinary]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/RA02/StateConstruction.lean:34:39: This simp argument is unused:
+  ↓reduceIte
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [choleskyStep, hpivot, state_true_ordinary, state_true_ordinary_last, state_true_last_ordinary,
+    state_true_last_last, state_false_ordinary]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/RA02/StateConstruction.lean:34:51: This simp argument is unused:
+  state_true_ordinary
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [choleskyStep, hpivot, ↓reduceIte, state_true_ordinary_last, state_true_last_ordinary,
+    state_true_last_last, state_false_ordinary]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/RA02/StateConstruction.lean:35:8: This simp argument is unused:
+  state_true_ordinary_last
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [choleskyStep, hpivot, ↓reduceIte, state_true_ordinary, state_true_last_ordinary,
+    state_true_last_last, state_false_ordinary]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/RA02/StateConstruction.lean:35:34: This simp argument is unused:
+  state_true_last_ordinary
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [choleskyStep, hpivot, ↓reduceIte, state_true_ordinary, state_true_ordinary_last,
+    state_true_last_last, state_false_ordinary]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/RA02/StateConstruction.lean:46:43: Variable name `hr` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hr
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/RA02/StateConstruction.lean:68:0: 'NLA.RA02.state_true_last_pivot' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/StateConstruction.lean:70:0: 'NLA.RA02.state_false_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/StateConstruction.lean:72:0: 'NLA.RA02.residual_state_positivity' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3697/3714] Built NLA.RA02.HistoryCardinality (4.2s)
+info: NLA/RA02/HistoryCardinality.lean:70:0: 'NLA.RA02.remaining_label_cardinality' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3698/3714] Built NLA.RA02.CarryEncoding (4.6s)
+warning: NLA/RA02/CarryEncoding.lean:34:24: `Nat.lt.step` has been deprecated: Use `Nat.lt_succ_of_lt` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.step` to `Nat.lt_succ_of_lt x`).
+info: NLA/RA02/CarryEncoding.lean:180:0: 'NLA.RA02.retained_history_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/CarryEncoding.lean:182:0: 'NLA.RA02.retained_prefix_description' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3699/3714] Built NLA.RA02.ArrowheadTail (3.0s)
+info: NLA/RA02/ArrowheadTail.lean:34:0: 'NLA.RA02.arrowhead_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3700/3714] Built NLA.RA02.StateUpdates (3.9s)
+warning: NLA/RA02/StateUpdates.lean:72:18: This simp argument is unused:
+  Ne.symm hx
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hx, Finset.mem_erase]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/RA02/StateUpdates.lean:82:20: This simp argument is unused:
+  Ne.symm hx
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hx, hy, Ne.symm hy, Finset.mem_erase]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/RA02/StateUpdates.lean:82:32: This simp argument is unused:
+  hy
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hx, Ne.symm hx, Ne.symm hy, Finset.mem_erase]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/RA02/StateUpdates.lean:51:50: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: NLA/RA02/StateUpdates.lean:110:40: Variable name `hr` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hr
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/RA02/StateUpdates.lean:119:0: 'NLA.RA02.state_true_ordinary_pivot' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/StateUpdates.lean:121:0: 'NLA.RA02.state_false_ordinary_pivot' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/StateUpdates.lean:123:0: 'NLA.RA02.residual_state_updates' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3701/3714] Built NLA.RA02.DistinctHistory (2.6s)
+warning: NLA/RA02/DistinctHistory.lean:53:40: Variable name `hr` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hr
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: NLA/RA02/DistinctHistory.lean:54:20: Variable name `hlen` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hlen
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/RA02/DistinctHistory.lean:59:0: 'NLA.RA02.pathResidual_distinct_state' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/DistinctHistory.lean:61:0: 'NLA.RA02.distinct_history_state' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3702/3714] Built NLA.RA02.StatePotential (3.2s)
+warning: NLA/RA02/StatePotential.lean:70:86: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/RA02/StatePotential.lean:70:86: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+info: NLA/RA02/StatePotential.lean:116:0: 'NLA.RA02.statePotential_ordinary' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/StatePotential.lean:118:0: 'NLA.RA02.pivotProduct_statePotential' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3703/3714] Built NLA.RA02.DistinctTrace (3.8s)
+info: NLA/RA02/DistinctTrace.lean:49:0: 'NLA.RA02.distinct_prefix_trace_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/DistinctTrace.lean:51:0: 'NLA.RA02.distinct_history_prefix_traces' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3704/3714] Built NLA.RA02.RetainedCombinatorics (3.0s)
+info: NLA/RA02/RetainedCombinatorics.lean:87:0: 'NLA.RA02.retained_residual_when_last' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/RetainedCombinatorics.lean:89:0: 'NLA.RA02.retained_residual_when_ordinary' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3705/3714] Built NLA.RA02.StateTrace (2.8s)
+info: NLA/RA02/StateTrace.lean:70:0: 'NLA.RA02.state_true_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/StateTrace.lean:72:0: 'NLA.RA02.state_false_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/StateTrace.lean:74:0: 'NLA.RA02.state_trace_eq_potential_when_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3706/3714] Built NLA.RA02.FutureEstimates (3.3s)
+warning: NLA/RA02/FutureEstimates.lean:63:62: Variable name `hs` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hs
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: NLA/RA02/FutureEstimates.lean:127:68: Variable name `hs` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hs
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: NLA/RA02/FutureEstimates.lean:158:30: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/RA02/FutureEstimates.lean:158:30: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+info: NLA/RA02/FutureEstimates.lean:162:0: 'NLA.RA02.future_diagonal_sum_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/FutureEstimates.lean:164:0: 'NLA.RA02.future_weighted_ratio_sum_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/FutureEstimates.lean:166:0: 'NLA.RA02.trace_budget_scalar_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3707/3714] Built NLA.RA02.HistoryIdentity (2.9s)
+info: NLA/RA02/HistoryIdentity.lean:38:0: 'NLA.RA02.distinct_history_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3708/3714] Built NLA.RA02.RetainedTrace (2.0s)
+info: NLA/RA02/RetainedTrace.lean:104:0: 'NLA.RA02.state_false_insert_trace_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/RetainedTrace.lean:106:0: 'NLA.RA02.retained_trace_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3709/3714] Built NLA.RA02.RetainedContribution (2.7s)
+warning: NLA/RA02/RetainedContribution.lean:54:38: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/RA02/RetainedContribution.lean:54:38: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+info: NLA/RA02/RetainedContribution.lean:59:0: 'NLA.RA02.retained_prefix_product_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/RetainedContribution.lean:61:0: 'NLA.RA02.retained_contribution_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3710/3714] Built NLA.RA02.ExpectationLower (2.6s)
+info: NLA/RA02/ExpectationLower.lean:43:0: 'NLA.RA02.expectation_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3711/3714] Built NLA.RA02.ExponentialComparison (2.8s)
+warning: NLA/RA02/ExponentialComparison.lean:22:44: Variable name `hr` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hr
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: NLA/RA02/ExponentialComparison.lean:41:65: Variable name `hp` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hp
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: NLA/RA02/ExponentialComparison.lean:60:28: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/RA02/ExponentialComparison.lean:60:28: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+info: NLA/RA02/ExponentialComparison.lean:66:0: 'NLA.RA02.binomial_exponential_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/ExponentialComparison.lean:68:0: 'NLA.RA02.exponential_tail_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/ExponentialComparison.lean:70:0: 'NLA.RA02.exponential_dominates_real_power' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3712/3714] Built NLA.RA02.FinalCounterexample (2.7s)
+info: NLA/RA02/FinalCounterexample.lean:37:0: 'NLA.RA02.universal_counterexamples' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/RA02/FinalCounterexample.lean:39:0: 'NLA.RA02.no_polynomial_trace_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3713/3714] Built Solution (2.5s)
+info: Solution.lean:8:0: 'NLA.RA02.exp_one_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:10:0: 'NLA.RA02.scalar_parameters' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:12:0: 'NLA.RA02.pivot_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:14:0: 'NLA.RA02.finite_path_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:16:0: 'NLA.RA02.zero_residual' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:18:0: 'NLA.RA02.expected_trace_recursion' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:20:0: 'NLA.RA02.ordered_spectrum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:22:0: 'NLA.RA02.least_eigenvalue_rayleigh' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:24:0: 'NLA.RA02.spectral_tail_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:26:0: 'NLA.RA02.arrowhead_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:28:0: 'NLA.RA02.arrowhead_positive_definite' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:30:0: 'NLA.RA02.rayleigh_probe_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:32:0: 'NLA.RA02.arrowhead_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:34:0: 'NLA.RA02.residual_state_positivity' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:36:0: 'NLA.RA02.residual_state_updates' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:38:0: 'NLA.RA02.distinct_history_state' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:40:0: 'NLA.RA02.distinct_history_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:42:0: 'NLA.RA02.retained_history_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:44:0: 'NLA.RA02.retained_prefix_description' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:46:0: 'NLA.RA02.retained_trace_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:48:0: 'NLA.RA02.retained_contribution_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:50:0: 'NLA.RA02.expectation_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:52:0: 'NLA.RA02.binomial_exponential_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:54:0: 'NLA.RA02.exponential_tail_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:56:0: 'NLA.RA02.exponential_dominates_real_power' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:58:0: 'NLA.RA02.universal_counterexamples' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:60:0: 'NLA.RA02.no_polynomial_trace_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (3714 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.RA02.exp_one_bound, NLA.RA02.scalar_parameters, NLA.RA02.pivot_kernel, NLA.RA02.finite_path_law, NLA.RA02.zero_residual, NLA.RA02.expected_trace_recursion, NLA.RA02.ordered_spectrum, NLA.RA02.least_eigenvalue_rayleigh, NLA.RA02.spectral_tail_semantics, NLA.RA02.arrowhead_quadratic, NLA.RA02.arrowhead_positive_definite, NLA.RA02.rayleigh_probe_values, NLA.RA02.arrowhead_tail, NLA.RA02.residual_state_positivity, NLA.RA02.residual_state_updates, NLA.RA02.distinct_history_state, NLA.RA02.distinct_history_identity, NLA.RA02.retained_history_count, NLA.RA02.retained_prefix_description, NLA.RA02.retained_trace_bound, NLA.RA02.retained_contribution_bound, NLA.RA02.expectation_lower_bound, NLA.RA02.binomial_exponential_bound, NLA.RA02.exponential_tail_factor, NLA.RA02.exponential_dominates_real_power, NLA.RA02.universal_counterexamples, NLA.RA02.no_polynomial_trace_factor, propext, Classical.choice, Quot.sound, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+Running Lean default kernel on solution.
+Lean default kernel accepts the solution
+Your solution is okay!
+
+EXIT_STATUS=0

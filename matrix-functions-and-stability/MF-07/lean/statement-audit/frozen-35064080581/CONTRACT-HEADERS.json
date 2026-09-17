@@ -1,0 +1,92 @@
+[
+  {
+    "name": "NLA.MF07.matrix_product_semantics",
+    "normalized_header": "theorem matrix_product_semantics {d : \u2115} : matrixProduct ([] : List (Square d)) = 1 \u2227 \u2200 w : List (Square d), \u2200 A : Square d, matrixProduct (w ++ [A]) = A * matrixProduct w",
+    "sha256": "f66d7b2020a3b3415f8570c6bca98921ae672a9a6ee4565f592a73d44a29f653"
+  },
+  {
+    "name": "NLA.MF07.diagonal_inverse",
+    "normalized_header": "theorem diagonal_inverse {d : \u2115} (\u03c3 : Fin d \u2192 \u211d) (h\u03c3 : \u2200 i, \u03c3 i \u2260 0) : diagonalWeights \u03c3 * inverseDiagonalWeights \u03c3 = 1 \u2227 inverseDiagonalWeights \u03c3 * diagonalWeights \u03c3 = 1",
+    "sha256": "ff7c725e08e2f9bdfa32866d65599e74f0203efb7b8816ff74aac17fc101d7c2"
+  },
+  {
+    "name": "NLA.MF07.family_norm_maximum",
+    "normalized_header": "theorem family_norm_maximum {d : \u2115} (hd : 1 \u2264 d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) : 0 \u2264 familyNorm M \u2227 (\u2203 A \u2208 M, spectralNorm A = familyNorm M) \u2227 \u2200 A \u2208 M, spectralNorm A \u2264 familyNorm M",
+    "sha256": "a1feb5b5f196f109e8a963271b6c66a8cd1af61f61e1f3d647e6bd64611909c9"
+  },
+  {
+    "name": "NLA.MF07.family_growth_maximum",
+    "normalized_header": "theorem family_growth_maximum {d : \u2115} (hd : 1 \u2264 d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (n : \u2115) : 0 \u2264 familyGrowth M n \u2227 familyGrowth M n \u2264 familyNorm M ^ n \u2227 (\u2203 w : List (Square d), w.length = n \u2227 WordIn M w \u2227 spectralNorm (matrixProduct w) = familyGrowth M n) \u2227 \u2200 w : List (Square d), w.length = n \u2192 WordIn M w \u2192 spectralNorm (matrixProduct w) \u2264 familyGrowth M n",
+    "sha256": "208cd671a0aa6761337703871e50b9a3cfb5ca7516f47a4b089b6c7880d811e9"
+  },
+  {
+    "name": "NLA.MF07.family_growth_submultiplicative",
+    "normalized_header": "theorem family_growth_submultiplicative {d : \u2115} (hd : 1 \u2264 d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (m n : \u2115) : familyGrowth M (m + n) \u2264 familyGrowth M m * familyGrowth M n",
+    "sha256": "9c2be4613b4ac727a5f897f0f69c616a186ffb080dc5bad32231de2d8cc272df"
+  },
+  {
+    "name": "NLA.MF07.radius_one_semantics",
+    "normalized_header": "theorem radius_one_semantics {d : \u2115} (hd : 1 \u2264 d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) : (jointSpectralRadius M = 1 \u2194 Filter.Tendsto (rootGrowth M) Filter.atTop (\ud835\udcdd 1)) \u2227 (jointSpectralRadius M = 1 \u2192 1 \u2264 familyNorm M)",
+    "sha256": "92463b6594fcea0e980744441f5a9556977aee42be5fc4acb15fca3d19974880"
+  },
+  {
+    "name": "NLA.MF07.identity_family_semantics",
+    "normalized_header": "theorem identity_family_semantics {d : \u2115} (hd : 1 \u2264 d) : familyNorm ({1} : Set (Square d)) = 1 \u2227 (\u2200 n : \u2115, familyGrowth ({1} : Set (Square d)) n = 1) \u2227 jointSpectralRadius ({1} : Set (Square d)) = 1",
+    "sha256": "bcb6d251eac92ead98e73536671d926cceffda909f49c5c208721f03588d728c"
+  },
+  {
+    "name": "NLA.MF07.approximate_extremal_norm",
+    "normalized_header": "theorem approximate_extremal_norm {d : \u2115} (hd : 1 \u2264 d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (hr : jointSpectralRadius M = 1) (a : \u211d) (ha : 1 < a) : \u2203 v : EuclideanVector d \u2192 \u211d, \u2203 c : \u211d, 1 \u2264 c \u2227 IsComplexNorm v \u2227 (\u2200 x, \u2016x\u2016 \u2264 v x \u2227 v x \u2264 c * \u2016x\u2016) \u2227 \u2200 A \u2208 M, \u2200 x, v (applyMatrix A x) \u2264 a * v x",
+    "sha256": "6039981e9c37cd7e03cb6acb7f9bb717d06be61a19fdce3d450e6110f0672196"
+  },
+  {
+    "name": "NLA.MF07.rounded_extremal_norm",
+    "normalized_header": "theorem rounded_extremal_norm {d : \u2115} (hd : 1 \u2264 d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (hr : jointSpectralRadius M = 1) (a : \u211d) (ha : 1 < a) : \u2203 Q : Square d, \u2203 \u03c3 : Fin d \u2192 \u211d, \u2203 w : EuclideanVector d \u2192 \u211d, IsUnitary Q \u2227 Antitone \u03c3 \u2227 (\u2200 i, 0 < \u03c3 i) \u2227 IsComplexNorm w \u2227 (\u2200 x, \u2016x\u2016 \u2264 w x \u2227 w x \u2264 (d : \u211d) * \u2016x\u2016) \u2227 (\u2200 A \u2208 M, \u2200 x, w (applyMatrix (rotatedGenerator Q \u03c3 A) x) \u2264 a * w x) \u2227 \u2200 A \u2208 M, \u2200 i j : Fin d, \u2016rotatedGenerator Q \u03c3 A i j\u2016 \u2264 familyNorm M * \u03c3 j / \u03c3 i",
+    "sha256": "fceb691893955ad1142b3898cc0e418f538aaec92e749dec0af050cf66092584"
+  },
+  {
+    "name": "NLA.MF07.triangular_damping",
+    "normalized_header": "theorem triangular_damping {d : \u2115} (h : Fin d \u2192 \u211d) (hh : Antitone h) (hpos : \u2200 i, 0 < h i) (X : Square d) (hX : LowerForWeights h X) : spectralNorm (diagonalDamping h X) \u2264 spectralNorm X",
+    "sha256": "af2505b36ae64fd8c460446e2b3f6a4b4440aae82882bdc143123219caa78ada"
+  },
+  {
+    "name": "NLA.MF07.interspersed_product_bound",
+    "normalized_header": "theorem interspersed_product_bound {d : \u2115} (M : Set (Square d)) (C E : Square d \u2192 Square d) (K u v : \u211d) (hK : 1 \u2264 K) (hu : 0 \u2264 u) (hv : 0 \u2264 v) (hC : \u2200 z : List (Square d), WordIn M z \u2192 spectralNorm (matrixProduct (z.map C)) \u2264 K * u ^ z.length) (hE : \u2200 A \u2208 M, spectralNorm (E A) \u2264 v) (z : List (Square d)) (hz : WordIn M z) : spectralNorm (matrixProduct (z.map (fun A => C A + E A))) \u2264 K * (u + K * v) ^ z.length",
+    "sha256": "08daf9d109f2c0d10a513308c85f9539e281437c73db0afc0634039b9f172402"
+  },
+  {
+    "name": "NLA.MF07.quantitative_comparison",
+    "normalized_header": "theorem quantitative_comparison {d : \u2115} (hd : 1 \u2264 d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (hr : jointSpectralRadius M = 1) (s : \u211d) (hs : 1 \u2264 s) (n : \u2115) : familyGrowth M n \u2264 (d : \u211d) * s ^ (d - 1) * (1 + 2 * (d : \u211d) ^ 2 * familyNorm M / s) ^ n",
+    "sha256": "f260d0a61099080b6c6f3008af7c81c6c74e140f1aa219588e5f7ba42caa22df"
+  },
+  {
+    "name": "NLA.MF07.scalar_family_growth",
+    "normalized_header": "theorem scalar_family_growth (M : Set (Square 1)) (hM : IsCompact M) (hne : M.Nonempty) : (\u2200 n : \u2115, familyGrowth M n = familyNorm M ^ n) \u2227 jointSpectralRadius M = familyNorm M",
+    "sha256": "9aa947a84a799325694c8769641f465eff50aef829e70a74861f147fa56108c4"
+  },
+  {
+    "name": "NLA.MF07.exp_one_bound",
+    "normalized_header": "theorem exp_one_bound : Real.exp 1 \u2264 3",
+    "sha256": "f55c4409c793c0e5a5c984a0610f924d8b19d82462c530c319f8f835bf258deb"
+  },
+  {
+    "name": "NLA.MF07.comparison_threshold_bound",
+    "normalized_header": "theorem comparison_threshold_bound (d n : \u2115) (hd : 2 \u2264 d) (hn : 1 \u2264 n) (L : \u211d) (hL : 1 \u2264 L) : 1 \u2264 comparisonThreshold d n L \u2227 (d : \u211d) * comparisonThreshold d n L ^ (d - 1) * (1 + 2 * (d : \u211d) ^ 2 * L / comparisonThreshold d n L) ^ n \u2264 growthConstant d * (L * (n : \u211d)) ^ (d - 1)",
+    "sha256": "f647d437f2a1dbb468e7a471500018555f763e10de4e74dcea9e64be8c1db5e6"
+  },
+  {
+    "name": "NLA.MF07.growth_constant_positive",
+    "normalized_header": "theorem growth_constant_positive (d : \u2115) (hd : 1 \u2264 d) : 0 < growthConstant d",
+    "sha256": "a2a232d1abc2c287b285c1c9ce73d2de2a0913703ca52b4048c9db2f9bdaefe1"
+  },
+  {
+    "name": "NLA.MF07.radius_one_growth",
+    "normalized_header": "theorem radius_one_growth {d : \u2115} (hd : 1 \u2264 d) (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty) (hr : jointSpectralRadius M = 1) (n : \u2115) (hn : 1 \u2264 n) : familyGrowth M n \u2264 growthConstant d * (familyNorm M * (n : \u211d)) ^ (d - 1)",
+    "sha256": "509a5d2411059aa148086bec8fb158855f22c597951a062b2ae1597601389377"
+  },
+  {
+    "name": "NLA.MF07.canonical_uniform_bound",
+    "normalized_header": "theorem canonical_uniform_bound (d : \u2115) (hd : 1 \u2264 d) : \u2203 \u0398 : \u211d, 0 < \u0398 \u2227 \u2200 M : Set (Square d), IsCompact M \u2192 M.Nonempty \u2192 jointSpectralRadius M = 1 \u2192 \u2200 n : \u2115, 1 \u2264 n \u2192 \u2200 A : Fin n \u2192 Square d, (\u2200 i, A i \u2208 M) \u2192 spectralNorm (finiteProduct A) \u2264 \u0398 * (familyNorm M * (n : \u211d)) ^ (d - 1)",
+    "sha256": "027a8e28179a8aa1df610775df1d5024ca7f10d9e8ed1bbd3c64802c61bb7761"
+  }
+]
