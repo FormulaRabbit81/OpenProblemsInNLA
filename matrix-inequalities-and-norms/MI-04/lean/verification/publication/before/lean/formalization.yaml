@@ -1,10 +1,9 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/99c678e569c7c4c0772db297c5ddd5e4c9b6322e/schema/v0.4.schema.json
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
 version: v0.4
 project:
   name: 'MI-04: universal positive-block norm implies essentially Hermitian'
-  description: Complete Lean verification of the full original MI-04 necessity implication. All21 exports
-    passed actual canonical Linux default-kernel, Comparator, axiom and control checks at the immutable
-    proof revision.
+  description: Complete locally compiled proof of the full original MI-04 necessity implication in every
+    positive finite complex dimension. Fresh canonical Linux verification remains pending.
   authors:
   - George Stepaniants
   affiliations:
@@ -56,7 +55,7 @@ related_formalizations:
   relationship: builds-on
   note: Genuine Euclidean matrix operators, PSD/quadratic forms, finite Rayleigh extrema, Hermitian spectral
     theory, orthogonal joint eigenspaces and orthonormal-basis extension are the implemented foundations
-    in the verified source; canonical acceptance is recorded under verification/linux-2026-09-16.
+    in the candidate source; actual full acceptance pending.
 - id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ce47b5630bf3680d9211131c3a43825b022c139a/eigenvalues-and-inverse-problems/SP-05/lean
   relationship: other
   note: Inspected the accepted complex positivity and spectral API usage; no SP-05 theorem imported.
@@ -68,9 +67,9 @@ automation:
   methods:
   - method: agent
     framework: OpenAI Codex
-    tool_setup: Multiple author and independent referee agents; one serial local macOS development compiler,
-      followed by an actual fresh non-root Linux canonical check and independent source-bound evidence
-      audits.
+    tool_setup: Multiple source and referee agents; one coordinator-run serial macOS Lean compiler for
+      development with pinned shared caches. Fresh non-root Linux default-kernel/Comparator/control verification
+      is a separate pending gate.
     prompting_notes: Write all numerical obligations and definitions before proofs; obtain two independent
       statement approvals and actual Linux elaboration; freeze the exact boundary. Keep all dimensions,
       singular and repeated cases and full universal A/B hypothesis. Use symbolic Rayleigh bounds, exact
@@ -88,19 +87,19 @@ status:
     is the full original necessity implication, with the universal A/B premise, singular completions,
     zero/scalar matrices, repeated values, and dimensions one and two retained. No converse or genericity
     assumption is claimed.
-  whole_problem_verified: true
+  whole_problem_verified: false
   sorry_count: 0
   sorry_in_definitions: 0
-  source_scan_note: All21 canonical exports passed default-kernel, kernel-trust and Comparator checks
-    with only standard permitted axioms. Challenge has21 deliberate specification placeholders and is
-    never imported by Solution.
+  source_scan_note: All 21 local Solution exports passed LeanCert kernel-trust assertions and printed
+    only the three permitted axioms. Challenge contains the 21 deliberate independent specification holes
+    and is not imported. Canonical replay and Comparator remain pending.
   main_results:
   - declaration: NLA.MI04.topValue_maximum
     file: NLA/MI04/Rayleigh.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 42
     file_sha256: a9308e19575aa44ec56389ef2a24e75b375bcb577703c706590af6b63ebcca97
     axioms:
@@ -111,8 +110,8 @@ status:
     file: NLA/MI04/Quadratic.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 95
     file_sha256: 81af17f3172536a7bf5e6c4d8f535b3cca8d801fae0884a60a477c4deff9ea18
     axioms:
@@ -123,8 +122,8 @@ status:
     file: NLA/MI04/Rayleigh.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 82
     file_sha256: a9308e19575aa44ec56389ef2a24e75b375bcb577703c706590af6b63ebcca97
     axioms:
@@ -135,8 +134,8 @@ status:
     file: NLA/MI04/Rayleigh.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 105
     file_sha256: a9308e19575aa44ec56389ef2a24e75b375bcb577703c706590af6b63ebcca97
     axioms:
@@ -147,8 +146,8 @@ status:
     file: NLA/MI04/Rayleigh.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 116
     file_sha256: a9308e19575aa44ec56389ef2a24e75b375bcb577703c706590af6b63ebcca97
     axioms:
@@ -159,8 +158,8 @@ status:
     file: NLA/MI04/Unitary.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 71
     file_sha256: 05ccea07c757797829759c8a637ef14d5d216826d28b79a615e8b1df32b738e0
     axioms:
@@ -171,8 +170,8 @@ status:
     file: NLA/MI04/UpperBound.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 113
     file_sha256: 5dc357316ab5e3ff1aeb282c20770870bd8b14d93c2928f64e3807cd96629c20
     axioms:
@@ -183,8 +182,8 @@ status:
     file: NLA/MI04/Limit.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 65
     file_sha256: 7cdbd3546146dc78ce37452fffcc4c95be66ab7c909180f1694ff23009fed981
     axioms:
@@ -195,8 +194,8 @@ status:
     file: NLA/MI04/Quadratic.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 127
     file_sha256: 81af17f3172536a7bf5e6c4d8f535b3cca8d801fae0884a60a477c4deff9ea18
     axioms:
@@ -207,8 +206,8 @@ status:
     file: NLA/MI04/BlockSymmetry.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 126
     file_sha256: 7d5c0e711ba01a8bb98616427b50b06c64768e3bb12aef81ab06cd03720d3826
     axioms:
@@ -219,8 +218,8 @@ status:
     file: NLA/MI04/ScaledSymmetry.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 105
     file_sha256: 54694087df421c0f4e6148008b43447728e053ef075aa319a116d34dbc980457
     axioms:
@@ -231,8 +230,8 @@ status:
     file: NLA/MI04/WeightedProbes.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 93
     file_sha256: e72d7cd3a10c574477a794d26aba66d40da7486c9ead38e9e4e1d31840570eea
     axioms:
@@ -243,8 +242,8 @@ status:
     file: NLA/MI04/Probes.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 60
     file_sha256: 0e4b3d9a0e6bb70c8b91a1669e89785cbefe99777315d9a4b52d961fa93f5f76
     axioms:
@@ -255,8 +254,8 @@ status:
     file: NLA/MI04/BasisTransport.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 83
     file_sha256: b0425ada4b3e2a58d0280929236f92e3a1017c2216f5d09dc8f52163834e8189
     axioms:
@@ -267,8 +266,8 @@ status:
     file: NLA/MI04/Normality.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 74
     file_sha256: ff2d57732f8b619fa2bd9bccb8d42dcce24e5a9e6d214e886801a09548e9df54
     axioms:
@@ -279,8 +278,8 @@ status:
     file: NLA/MI04/Diagonalization.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 95
     file_sha256: 8621b2fa6f84a620b553bce5583f716693e8c64ff8e3f7120b4c1995d86c9d81
     axioms:
@@ -291,8 +290,8 @@ status:
     file: NLA/MI04/Unitary.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 78
     file_sha256: 05ccea07c757797829759c8a637ef14d5d216826d28b79a615e8b1df32b738e0
     axioms:
@@ -303,8 +302,8 @@ status:
     file: NLA/MI04/Geometry.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 72
     file_sha256: 2d3c52a8ec6c9d146310018819e2f7f038de56bd49a8b907a5b46c69e85e91e9
     axioms:
@@ -315,8 +314,8 @@ status:
     file: NLA/MI04/ScalarGeometry.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 41
     file_sha256: 583817923f7be81b7792a89b4e5ce48bd4817b07ef52655068fb17e3f48a4682
     axioms:
@@ -327,8 +326,8 @@ status:
     file: NLA/MI04/Conclusion.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 22
     file_sha256: d12abb7dd84e2407b5a3f52769aec699f3f3a282eb2043fd9a6a00a3fb67b6d8
     axioms:
@@ -339,8 +338,8 @@ status:
     file: NLA/MI04/Conclusion.lean
     sorry_count: 0
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    verification_status: Actual serial macOS development compilation and LeanCert kernel-trust assertions
+      passed. Fresh canonical Linux default-kernel, Comparator and control checks remain pending.
     line: 62
     file_sha256: d12abb7dd84e2407b5a3f52769aec699f3f3a282eb2043fd9a6a00a3fb67b6d8
     axioms:
@@ -360,16 +359,13 @@ fidelity:
     joint-eigenspace construction proves normal diagonalization, retaining multiplicities. None of these
     changes adds a final hypothesis or changes the requested conclusion.
 review:
-  status: Independent full source approvals and nonauthor repair continuations retained; canonical runtime
-    evidence accepted by coordinator and independent nonauthor.
+  status: Complete historical mathematical source approvals with scoped nonauthor repair continuations;
+    package and canonical runtime reviews pending
   reviewers:
   - OpenAI Codex agent /root (independent original statement referee)
   - OpenAI Codex agent /root/next_elimination (independent statement and nonimplementing complete mathematical
     source referee)
   - OpenAI Codex agent /root/next_matrix_functions (nonimplementing complete mathematical source referee)
-  - OpenAI Codex agent /root/ie13_continuation (nonauthor source continuation and canonical runtime evidence
-    audit)
-  - OpenAI Codex agent /root/mf22_publication_referee (nonauthor canonical source/package continuation)
   notes: See reviews/INDEX.json for exact scopes and role disclosures. Source approval does not replace
     canonical runtime evidence. The preparer later authored MI04 repairs, so earlier independent reports
     are historical scoped approvals, not self-approval of the new bodies.
@@ -426,58 +422,37 @@ verification:
     receipt_sha256: 426ea541798ebc1090948a80976bfc3d2dd448d67b6b4c444edaff17e966d5db
     frozen_statement_count: 21
     is_complete_problem_verification: false
-  whole_proof_build: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-    coordinator and independent nonauthor source/evidence audits accepted.'
+  whole_proof_build: passed exact serial macOS local development graph, terminal development06
   local_acceptance: verification/LOCAL-DEVELOPMENT-ACCEPTANCE.json
   local_receipt: verification/local-development/runs/development-06/RECEIPT.json
   local_receipt_sha256: f1d1b536868e2d3f1b093a315b90bcb7c744499ec243ef5433d0b27b0556ac0e
-  canonical_verification_completed: true
-  default_kernel: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-    coordinator and independent nonauthor source/evidence audits accepted.'
-  comparator: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-    coordinator and independent nonauthor source/evidence audits accepted.'
-  sandbox_and_rejection_controls: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-    coordinator and independent nonauthor source/evidence audits accepted.'
-  canonical_source_manifest: 63340ef17139606dce03c4d9000288129b773157
+  canonical_verification_completed: false
+  default_kernel: pending fresh canonical Linux replay
+  comparator: pending all21 actual canonical comparisons
+  sandbox_and_rejection_controls: pending fresh canonical Linux execution
+  canonical_source_manifest: pending literal canonical proof commit
   permitted_axioms:
   - Classical.choice
   - Quot.sound
   - propext
-  transitive_axioms: All21 canonical exports use only propext, Classical.choice and Quot.sound; full actual
-    output is retained and independently audited.
+  transitive_axioms: All21 exact measured local axiom lists are in status.main_results; canonical rechecking
+    pending.
   numerical_certificate:
     declaration: NLA.MI04.quarter_gap_certificate
     statement: 0 < 1/4 over the reals
     trust: kernel
     consumed_in: both actual off-peak denominator-positivity steps of the universal Rayleigh upper bound
     subdivisions: 0
-    runtime_acceptance: 'PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157,
-      coordinator and independent nonauthor source/evidence audits accepted.'
+    runtime_acceptance: Consumed in the actual successful UpperBound build and the complete local graph;
+      canonical replay pending.
   publication_configuration: Only the active Lake default changes to Solution; original frozen bytes and
     the exact patch are retained in verification/packaging.
   historical_metadata_note: Frozen obligations, original receipts, reports and historical draft metadata
     retain their original dates, failures and pending labels. The current top-level metadata governs the
     candidate phase.
   limitations:
-  - Historical local-only limitations remain in the sealed local receipts. The canonical Linux run separately
-    rebuilt the proof and passed its actual sandbox/Comparator/kernel controls.
-  - Evidence audits are not additional Lean executions or a claim that the platform or checker is infallible.
-  - The later documentation/publication commit and upstream PR checkout require separate checks recorded
-    in the PR.
-  publication: Full original target verified at the linked immutable proof revision. Current documentation
-    preserves all21 mathematical sources. Exact publication-commit and upstream PR checks are separate.
-  candidate_canonical_run:
-    run_id: 35150473054
-    url: https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35150473054
-    job_id: 104977317684
-    literal_proof_commit: 63340ef17139606dce03c4d9000288129b773157
-    conclusion: success
-    coordinator_audit: verification/linux-2026-09-16/ROOT-AUDIT.json
-    coordinator_audit_sha256: 52e11df318f3eab49f6a652f95747d49d02eec630466deb10c5a7843f9b60490
-    raw_correspondence: verification/linux-2026-09-16/ROOT-RAW-LOG-CORRESPONDENCE.json
-    raw_correspondence_sha256: 4910aae70ce9f6e32c38b0aa4398f67577fbb7067785f9d1d4d3ab3d082c08e2
-    bound_inputs: 233
-    artifact_id: 10468904090
-    artifact_sha256: 7a9adf5780e494e723df5919810d091ebf1bac532edc34db9b514971d2726da1
-    independent_runtime_review: reviews/canonical-runtime/REVIEW.md
-  proof_note: VERIFICATION-NOTE.md
+  - The contemporaneous direct Quadratic receipt recorded actual exit0, source and output hashes but omitted
+    its log hash. This audit binds the existing log now, not retrospectively as an original recorded field.
+  - Dependencies use pinned shared compiled caches; this is not a fresh Linux sandbox or default-kernel
+    replay/Comparator/control run. No publication commit or PR is accepted here.
+  publication: Private canonical candidate only. No repository status, verified count, Git, CI or PR action.

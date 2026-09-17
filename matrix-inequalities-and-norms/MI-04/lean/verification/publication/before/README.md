@@ -2,8 +2,8 @@
 
 **Difficulty:** challenging  
 **Importance:** interesting to specialist  
-**Status:** Lean verified  
-**Last checked:** 2026-09-16
+**Status:** Solved  
+**Last checked:** 2026-09-11
 
 **Rating rationale:** The universal converse needs new control of positive block completions; its immediate impact is a specific numerical-range characterization.
 
@@ -16,18 +16,6 @@ The universal positive-block operator-norm property holds exactly when the off-d
 The exact target is resolved. The original statement and source evidence are retained below; its former difficulty rating is historical.
 
 **Primary manuscript:** [complete proof PDF](solution.pdf), [standalone TeX](solution.tex), Theorem 1.1 and its proof; [authorship and scope](solution.md). The [independent review](../../references/colbrook-matrix-2026-09-11/verification/reviews/MI-04-review.md) checks the full original argument and records its hash. The draft was AI-assisted; this is independent agent verification, not external human peer review or formal certification. [Submission record](../../references/colbrook-matrix-2026-09-11/README.md).
-
-## Lean proof and verification evidence - 2026-09-16
-
-**The full original implication is Lean verified.** The [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/63340ef17139606dce03c4d9000288129b773157/matrix-inequalities-and-norms/MI-04/lean/Solution.lean) at revision `63340ef17139` passed [Linux run 35150473054](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35150473054/job/104977317684). The [retained evidence](lean/verification/linux-2026-09-16/README.md) and [independent runtime audit](lean/reviews/canonical-runtime/REVIEW.md) cover all 233 submitted inputs, all 21 exported statements, default-kernel replay, Comparator, permitted transitive axioms and actual rejection/isolation controls.
-
-Declaration: `universal_positive_block_essentially_hermitian` in namespace `NLA.MI04`.
-
-The [main Lean theorem](lean/NLA/MI04/Conclusion.lean) assumes the stated operator-norm bound for every genuine positive-semidefinite block completion and constructs an actual Hermitian matrix and complex affine coefficients. Every positive finite complex dimension is included, with singular completions, scalar and zero matrices and repeated spectral values. The manuscript's stronger converse and four-way equivalence are outside the formal claim. The [frozen definitions and 21 targets](lean/Challenge.lean) and [source correspondence](lean/SourceCorrespondence.md) record this comparison.
-
-Formalization and verification submission: **George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. **Matthew J. Colbrook**, Department of Applied Mathematics and Theoretical Physics, University of Cambridge, retains mathematical proof credit. Substantial OpenAI Codex assistance and scoped independent AI-agent reviews are disclosed; no human peer-review or new priority claim is made.
-
-The project pins Lean 4.33.1, [Mathlib](https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474) and [LeanCert](https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926). Its consumed LeanCert certificate proves $`0<1/4`$ in kernel mode without interval subdivision. Every exported result has only `propext`, `Classical.choice` and `Quot.sound` as transitive axioms. Run `lake build` in `matrix-inequalities-and-norms/MI-04/lean`; the [project instructions](lean/README.md) give the full non-root Linux check. Later publication and upstream checks are separate from the immutable proof run.
 
 ## Problem statement
 

@@ -1,6 +1,6 @@
 {
   "problem_id": "MI-04",
-  "phase": "local development accepted; canonical candidate only",
+  "phase": "Complete canonical proof verification accepted; documentation publication in progress",
   "active_source_manifest": "ACTIVE-SOURCE-MANIFEST.json",
   "implementation_map": "IMPLEMENTATION-MAP.json",
   "local_acceptance": "verification/LOCAL-DEVELOPMENT-ACCEPTANCE.json",
@@ -8,22 +8,30 @@
   "local_evidence_path_map": "verification/local-development/PATH-MAP.json",
   "source_review_index": "reviews/INDEX.json",
   "configuration_transition": "verification/packaging/TRANSITION.json",
-  "canonical_verification_completed": false,
-  "canonical_run_id": null,
-  "published_commit": null,
+  "canonical_verification_completed": true,
+  "canonical_run_id": 35150473054,
+  "published_commit": "63340ef17139606dce03c4d9000288129b773157",
   "remaining_gates": [
-    "two independent package reviews",
-    "fresh non-root Linux Solution build and default-kernel replay",
-    "all21 Comparator statement/axiom checks",
-    "real sandbox and rejection controls",
-    "source-bound final runtime referees",
-    "immutable canonical proof revision and publication documentation",
-    "exact published commit and upstream PR execution"
+    "Render/review updated PDFs, catalog and permanent-ID checks",
+    "Fresh final publication-commit and upstream PR checks"
   ],
   "original_source_privacy": "verification/OMITTED-ORIGINALS.json",
   "limitations": [
-    "The contemporaneous direct Quadratic receipt recorded actual exit0, source and output hashes but omitted its log hash. This audit binds the existing log now, not retrospectively as an original recorded field.",
-    "Dependencies use pinned shared compiled caches; this is not a fresh Linux sandbox or default-kernel replay/Comparator/control run. No publication commit or PR is accepted here."
+    "Historical local-only limitations remain in the sealed local receipts. The canonical Linux run separately rebuilt the proof and passed its actual sandbox/Comparator/kernel controls.",
+    "Evidence audits are not additional Lean executions or a claim that the platform or checker is infallible.",
+    "The later documentation/publication commit and upstream PR checkout require separate checks recorded in the PR."
   ],
-  "status_and_count_changed": false
+  "status_and_count_changed": "Canonical status promoted; campaign count awaits completed publication/PR",
+  "candidate_proof_commit": "63340ef17139606dce03c4d9000288129b773157",
+  "candidate_run_url": "https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35150473054",
+  "reported_conclusion": "PASS: actual non-root Linux run35150473054 at63340ef17139606dce03c4d9000288129b773157, coordinator and independent nonauthor source/evidence audits accepted.",
+  "coordinator_runtime_audit": {
+    "file": "verification/linux-2026-09-16/ROOT-AUDIT.json",
+    "sha256": "52e11df318f3eab49f6a652f95747d49d02eec630466deb10c5a7843f9b60490",
+    "accepted": true,
+    "bound_inputs": 233,
+    "exports": 21,
+    "job_id": 104977317684
+  },
+  "independent_runtime_review": "reviews/canonical-runtime/REVIEW.md"
 }
