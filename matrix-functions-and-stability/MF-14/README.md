@@ -1,10 +1,31 @@
 # MF-14 — Degree coverage with seven matrix multiplications
 
-**Difficulty:** challenging  
-**Importance:** interesting to the community  
-**Rating rationale:** Challenging because numerical evidence for coefficient-space coverage needs exact algebraic justification; community impact comes from multiplication budgets for practical matrix-function evaluation.  
-**Last checked:** 2026-09-11  
-**Status:** Partially resolved  
+**Difficulty:** challenging
+
+**Importance:** interesting to the community
+
+**Rating rationale:** Historical ratings for the original conjecture: challenging because numerical evidence for coefficient-space coverage needs exact algebraic justification; community impact comes from multiplication budgets for practical matrix-function evaluation.
+
+**Last checked:** 2026-09-17
+
+**Status:** Solved
+
+
+## Resolution — negative, 17 September 2026
+
+**Author:** Marcus Webb, The University of Manchester. Developed with substantial ChatGPT assistance; two separate Codex agents independently reviewed the proof and recomputed its exact certificates. This is informal AI-agent review, not external human peer review or formal verification.
+
+The conjectured equality is false. [Theorem 1 of the complete proof](../../references/webb-mf14-degree44-2026-09-17/proof.pdf) establishes
+
+```math
+\mathbb C[x]_{\le44}\subseteq\overline{\mathcal P_7}^{\,Z}.
+```
+
+The construction first retains a suitable quadruple of polynomials in the joint closure of four-product computations (Lemma 2). Three more products give a 45-parameter coefficient map whose exact Jacobian determinant is 256. The argument uses the original complex field and all coefficients through degree 128; high-degree coefficients vanish in the limit rather than being discarded.
+
+Corollary 3, using Jarlebring–Lorentzon's dimension theorem, gives $`44\le d_7\le47`$ for the maximum in the retained question. Its exact new value remains undetermined, but this does not prevent a complete negative answer to the specific equality $`d_7=42`$. No exact representation of every degree-44 polynomial, real Euclidean density, or numerical stability is asserted.
+
+[Proof source](../../references/webb-mf14-degree44-2026-09-17/proof.tex) · [Independent reviews and reproduction](../../references/webb-mf14-degree44-2026-09-17/README.md) · [Source conversation and attribution](../../references/webb-mf14-degree44-2026-09-17/README.md#source-and-attribution). The permanent ID, canonical path and original mathematical target are retained. The degree-42 result below retains its separate credit.
 
 <!-- colbrook-matrix-functions -->
 ## Verified partial result — 2026-09-11
@@ -13,7 +34,7 @@
 
 A fixed seven-product scheme has a full-rank complex coefficient map, certified by a nonzero exact integer Jacobian minor. Its image contains a nonempty Zariski-open subset of $`\mathbb C[x]_{\le42}`$ and is Euclidean dense there.
 
-The upper bound excluding degree 43 and above is not proved. The maximal-degree equality remains open; neither exact representation of every polynomial nor real Euclidean dense coverage is asserted. The entry remains in the open count. Its difficulty and importance ratings continue to describe the surviving canonical target.
+This earlier result did not prove an upper bound excluding degree 43 and above, so at the time it left the maximal-degree equality open. It asserted neither exact representation of every polynomial nor real Euclidean dense coverage. The later degree-44 construction above now refutes that equality; the degree-42 theorem remains valid.
 
 **Primary reference:** [complete authored PDF](../../references/colbrook-matrix-functions-2026-09-11/manuscripts/MF-14.pdf), [standalone TeX](../../references/colbrook-matrix-functions-2026-09-11/manuscripts/MF-14.tex), **Theorem 1 and equations (1)-(2)**. [Independent proof review](../../references/colbrook-matrix-functions-2026-09-11/verification/reviews/MF-14-review.md) · [Authorship and submission record](../../references/colbrook-matrix-functions-2026-09-11/README.md). Verification is independent agent review, not external human peer review or formal certification.
 

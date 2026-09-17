@@ -1,0 +1,121 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Nobori's original question, Audenaert's
+refined commutator theorem, and the repository reduction retain their attribution.
+
+Frobenius and Hilbert--Schmidt semantics in the genuine Euclidean entry space.
+The rectangular and square helper statements include empty dimensions.
+-/
+import NLA.MI13.Definitions
+import LeanCert.Tactic
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.MI13
+noncomputable section
+open scoped BigOperators Matrix
+
+@[simp] theorem flatten_apply {m n : ℕ} (A : Rect m n) (i : Fin m) (j : Fin n) :
+    flatten A (i, j) = A i j := rfl
+
+theorem flatten_injective {m n : ℕ} :
+    Function.Injective (flatten (m := m) (n := n)) := by
+  intro A C h
+  funext i j
+  exact congrArg (fun v : EntrySpace m n => v (i, j)) h
+
+@[simp] theorem flatten_zero {m n : ℕ} : flatten (0 : Rect m n) = 0 := by
+  apply PiLp.ext
+  intro ij
+  rfl
+
+@[simp] theorem flatten_add {m n : ℕ} (A C : Rect m n) :
+    flatten (A + C) = flatten A + flatten C := by
+  apply PiLp.ext
+  intro ij
+  rfl
+
+@[simp] theorem flatten_smul {m n : ℕ} (z : ℂ) (A : Rect m n) :
+    flatten (z • A) = z • flatten A := by
+  apply PiLp.ext
+  intro ij
+  rfl
+
+theorem frobenius_norm_sq_eq_entries {m n : ℕ} (A : Rect m n) :
+    frobeniusNorm A ^ 2 = ∑ i, ∑ j, ‖A i j‖ ^ 2 := by
+  rw [frobeniusNorm, EuclideanSpace.norm_sq_eq]
+  simp only [flatten, PiLp.toLp_apply, Fintype.sum_prod_type]
+
+theorem flatten_inner_eq_trace {m n : ℕ} (A C : Rect m n) :
+    inner ℂ (flatten A) (flatten C) = Matrix.trace (A.conjTranspose * C) := by
+  simp only [PiLp.inner_apply, flatten, RCLike.inner_apply',
+    starRingEnd_apply, Fintype.sum_prod_type, Matrix.trace, Matrix.diag_apply,
+    Matrix.mul_apply, Matrix.conjTranspose_apply]
+  exact Finset.sum_comm
+
+theorem frobenius_semantics {m n : ℕ} (A : Rect m n) :
+    frobeniusNorm A ^ 2 = ∑ i, ∑ j, ‖A i j‖ ^ 2 ∧
+    frobeniusNorm A ^ 2 = (Matrix.trace (A.conjTranspose * A)).re ∧
+    0 ≤ frobeniusNorm A ∧ (frobeniusNorm A = 0 ↔ A = 0) := by
+  refine ⟨frobenius_norm_sq_eq_entries A, ?_, norm_nonneg (flatten A), ?_⟩
+  · calc
+      frobeniusNorm A ^ 2 = (inner ℂ (flatten A) (flatten A)).re := by
+        exact norm_sq_eq_re_inner (𝕜 := ℂ) (flatten A)
+      _ = (Matrix.trace (A.conjTranspose * A)).re :=
+        congrArg Complex.re (flatten_inner_eq_trace A A)
+  · constructor
+    · intro h
+      apply flatten_injective
+      rw [flatten_zero]
+      exact norm_eq_zero.mp h
+    · rintro rfl
+      simp only [frobeniusNorm, flatten_zero, norm_zero]
+
+theorem frobenius_linear_bounds {m n : ℕ} (A C : Rect m n) (z : ℂ) :
+    frobeniusNorm (z • A) = ‖z‖ * frobeniusNorm A ∧
+    frobeniusNorm (A + C) ≤ frobeniusNorm A + frobeniusNorm C := by
+  constructor
+  · simp only [frobeniusNorm, flatten_smul, norm_smul]
+  · simpa only [frobeniusNorm, flatten_add] using norm_add_le (flatten A) (flatten C)
+
+theorem commutatorOperator_flatten {r : ℕ} (X Y : Square r) :
+    commutatorOperator X (flatten Y) = flatten (commutator X Y) := by
+  apply PiLp.ext
+  rintro ⟨i, j⟩
+  -- Expose the Euclidean CLM application in entry coordinates. The fixed
+  -- toContinuousLinearMap, toEuclideanLin and WithLp wrappers reduce
+  -- definitionally to this coefficient sum, which the finite-sum lemmas use.
+  change (∑ kl : Fin r × Fin r,
+      ((if kl.2 = j then X i kl.1 else 0) -
+        (if i = kl.1 then X kl.2 j else 0)) * Y kl.1 kl.2) =
+    (∑ k : Fin r, X i k * Y k j) - ∑ k : Fin r, Y i k * X k j
+  simp only [Fintype.sum_prod_type, sub_mul, Finset.sum_sub_distrib]
+  congr 1
+  · apply Finset.sum_congr rfl
+    intro k hk
+    simp [ite_mul]
+  · rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro k hk
+    simp [mul_comm]
+
+theorem hilbert_schmidt_semantics {r : ℕ} (X Y Z : Square r) (z : ℂ) :
+    Function.Injective (flatten (m := r) (n := r)) ∧
+    flatten (z • Y + Z) = z • flatten Y + flatten Z ∧
+    hsInner Y Z = Matrix.trace (Y.conjTranspose * Z) ∧
+    commutatorOperator X (flatten Y) = flatten (commutator X Y) := by
+  refine ⟨flatten_injective, ?_, flatten_inner_eq_trace Y Z,
+    commutatorOperator_flatten X Y⟩
+  rw [flatten_add, flatten_smul]
+
+#print axioms frobenius_semantics
+#assert_trust kernel frobenius_semantics
+#print axioms frobenius_linear_bounds
+#assert_trust kernel frobenius_linear_bounds
+#print axioms hilbert_schmidt_semantics
+#assert_trust kernel hilbert_schmidt_semantics
+
+end
+end NLA.MI13

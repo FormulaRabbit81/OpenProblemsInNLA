@@ -1,0 +1,9 @@
+{
+  "scope": "MI-13 one explicit cast bridge in commutator adjoint proof; unchanged frozen statements",
+  "before_sha256": "f68128ffde2da0cb4deb2ffc56cf334a7b6f7d20c8eb3519c20f78abd262614d",
+  "after_sha256": "0bb27d768d1eed8e6e783508a00887f19e2ad4f62b80428ab49be0fcce368d08",
+  "failed_receipt_sha256": "76d98ede6d9e0a34410ab6d49b4fcaff898312718f0b38ddf31fa46fbc21ea71",
+  "failed_log_sha256": "549a24aefc8417596146fc8fee02bb3be69dfb5d9c00f482f003035e630d1cfc",
+  "diff": "--- \n+++ \n@@ -41,7 +41,8 @@\n       commutator_inner X.conjTranspose A B\n   refine \u27e8hadj.symm, commutator_inner X Y Z, ?_\u27e9\n   rw [commutatorT, \u2190 commutator_inner]\n-  simp only [hsInner, inner_self_eq_norm_sq_to_K, frobeniusNorm, Complex.ofReal_pow]\n+  simp only [hsInner, inner_self_eq_norm_sq_to_K, frobeniusNorm,\n+    RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_pow]\n \n theorem frobenius_conjTranspose {m n : \u2115} (A : Rect m n) :\n     frobeniusNorm A.conjTranspose = frobeniusNorm A := by\n",
+  "retry": "not yet run"
+}

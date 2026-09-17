@@ -1,0 +1,13 @@
+{
+  "reviewer": "/root/sf_ra_runtime_referee",
+  "scope": "Read-only searches, source reading, hashing and private packet writes only. No Lean, Lake, Comparator or Git invocation.",
+  "source_audit": {
+    "command": "python3 -B /tmp/nla-lean-next-20260915/reviews/MI13-full-referee1-20260917/audit.py --run 53 > /tmp/nla-lean-next-20260915/reviews/MI13-full-referee1-20260917/audit-attempt-1.log 2>&1; tail -28 /tmp/nla-lean-next-20260915/reviews/MI13-full-referee1-20260917/audit-attempt-1.log",
+    "observed_combined_shell_exit_code": 0,
+    "audit_stdout_verdict": "PASS",
+    "attempts": 1,
+    "audit_script_sha256": "e83ac3ff258cc99b200c28f18f5ef9818cf757c53516a2b2c14df81eb80112a3"
+  },
+  "searches": "SEARCH-COMMANDS.json",
+  "reading_note": "Some exploratory cat paths used historical spelling and returned file-not-found; rg located the actual files. Some large tool displays were truncated; relevant source files, final logs and exact primary sections were subsequently read in bounded complete outputs. These were read-helper events, not Lean failures."
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "changed_file": "NLA/MI13/Padding.lean",
+    "before_sha256": "aa408184c0f8f567760c9bcd162e4b31f612b0d26e33861075549c0c45476fa7",
+    "after_sha256": "6c5365f6ea185e2a8c27930f2c237d2fda56d8191a662d906c1721d5b82dbac2",
+    "exact_diff": "--- read-baseline\n+++ final\n@@ -87,7 +87,7 @@\n   -- The individual block products are rectangular, so use the matrix zero\n   -- multiplication laws with separate row, inner, and column index types.\n   simp only [D, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_zero,\n-    Matrix.fromBlocks_multiply, Matrix.zero_mul, Matrix.mul_zero, zero_add, add_zero,\n+    Matrix.fromBlocks_multiply, Matrix.zero_mul, Matrix.mul_zero, add_zero,\n     Matrix.charpoly_fromBlocks_zero₁₂, Matrix.charpoly_zero, Fintype.card_fin]\n   exact mul_comm _ _\n \n",
+    "scope": "Independent reading of the sole unused-simp removal; no header, definition or route change."
+  },
+  {
+    "changed_file": "NLA/MI13/ElementaryBounds.lean",
+    "before_sha256": "d72587c8f69b640063789027833f3233410cff28e27dc5b4d2c852f572e56992",
+    "after_sha256": "672653adc4153e10bc5eafe558cde14b6ff965dd7b61c248d4fea98323a72b78",
+    "exact_diff": "--- before\n+++ after\n@@ -46,17 +46,11 @@\n theorem unit_circle_lift (d : ℝ) (hd : 0 ≤ d) (hd1 : d ≤ 1) :\n     Complex.normSq (circlePlus d) = 1 ∧ Complex.normSq (circleMinus d) = 1 ∧\n     (1 / 2 : ℂ) * (circlePlus d + circleMinus d) = (d : ℂ) := by\n-  have hroot : Real.sqrt (1 - d ^ 2) ^ 2 = 1 - d ^ 2 :=\n-    Real.sq_sqrt (by nlinarith)\n+  have hdNorm : ‖d‖ ≤ 1 := by\n+    simpa only [Real.norm_eq_abs, abs_of_nonneg hd] using hd1\n   refine ⟨?_, ?_, ?_⟩\n-  · simp only [circlePlus, Complex.normSq_apply, Complex.add_re, Complex.add_im,\n-      Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,\n-      Complex.I_re, Complex.I_im]\n-    nlinarith\n-  · simp only [circleMinus, Complex.normSq_apply, Complex.sub_re, Complex.sub_im,\n-      Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,\n-      Complex.I_re, Complex.I_im]\n-    nlinarith\n+  · exact Complex.normSq_ofReal_add_I_mul_sqrt_one_sub hdNorm\n+  · exact Complex.normSq_ofReal_sub_I_mul_sqrt_one_sub hdNorm\n   · dsimp only [circlePlus, circleMinus]\n     ring\n \n",
+    "scope": "Discharges independent full-review request by reusing the two exact Mathlib APIs; all headers and averaging certificate consumer unchanged."
+  }
+]

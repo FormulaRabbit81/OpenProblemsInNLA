@@ -1,0 +1,52 @@
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:937:/-- A version of `OrthonormalBasis.toMatrix_orthonormalBasis_mem_unitary` that works for bases with
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:940:theorem OrthonormalBasis.toMatrix_orthonormalBasis_conjTranspose_mul_self [Fintype ι']
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:950:/-- A version of `OrthonormalBasis.toMatrix_orthonormalBasis_mem_unitary` that works for bases with
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:953:theorem OrthonormalBasis.toMatrix_orthonormalBasis_self_mul_conjTranspose [Fintype ι']
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:958:    a.toMatrix_orthonormalBasis_conjTranspose_mul_self b]
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:963:theorem OrthonormalBasis.toMatrix_orthonormalBasis_mem_unitary :
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:966:  exact a.toMatrix_orthonormalBasis_conjTranspose_mul_self b
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:972:  have := (Matrix.det_of_mem_unitary (a.toMatrix_orthonormalBasis_mem_unitary b)).2
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:981:  simp [LinearMap.toMatrix_eq_basisToMatrix, ← coe_map, toMatrix_orthonormalBasis_mem_unitary]
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:990:theorem OrthonormalBasis.toMatrix_orthonormalBasis_mem_orthogonal :
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:992:  a.toMatrix_orthonormalBasis_mem_unitary b
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:998:  simpa [unitary, sq] using! Matrix.det_of_mem_unitary (a.toMatrix_orthonormalBasis_mem_unitary b)
+Mathlib/Data/Matrix/Block.lean:214:theorem fromBlocks_multiply [Fintype l] [Fintype m] [NonUnitalNonAssocSemiring α] (A : Matrix n l α)
+Mathlib/Data/Matrix/Block.lean:229:    simp [ih, pow_succ, fromBlocks_multiply]
+Mathlib/LinearAlgebra/Matrix/Hermitian.lean:177:        diagonal_conjTranspose v).trans <| congr_arg _ h
+Mathlib/LinearAlgebra/Matrix/Transvection.lean:272:  | cons t L IH => simp [Matrix.mul_assoc, IH, toMatrix_sumInl, fromBlocks_multiply]
+Mathlib/LinearAlgebra/Matrix/Transvection.lean:281:  | cons t L IH => simp [IH, toMatrix_sumInl, fromBlocks_multiply]
+Mathlib/LinearAlgebra/Charpoly/ToMatrix.lean:59:    (P * A * Q).charpoly = (φ (P * A * Q)).charpoly := (charpoly_reindex ..).symm
+Mathlib/LinearAlgebra/SymplecticGroup.lean:77:  rw [J, fromBlocks_multiply]
+Mathlib/LinearAlgebra/SymplecticGroup.lean:128:  rw [mem_iff, J, fromBlocks_multiply, fromBlocks_transpose, fromBlocks_multiply]
+Mathlib/LinearAlgebra/SymplecticGroup.lean:232:      simpa [mem_iff, fromBlocks_transpose, J, fromBlocks_multiply,
+Mathlib/LinearAlgebra/SymplecticGroup.lean:236:  · simp only [fromBlocks_transpose, J, fromBlocks_multiply, mul_zero, mul_one, zero_add, mul_neg,
+Mathlib/LinearAlgebra/SymplecticGroup.lean:289:    simp [fromBlocks_transpose, fromBlocks_multiply] at con2; tauto
+Mathlib/LinearAlgebra/SymplecticGroup.lean:315:      simpa [hf, fromBlocks_multiply, fromBlocks_add]
+Mathlib/LinearAlgebra/SymplecticGroup.lean:364:    rw [← M.fromBlocks_toBlocks, fromBlocks_multiply]
+Mathlib/LinearAlgebra/SymplecticGroup.lean:369:    simp [mem_iff, fromBlocks_transpose, hX_symm.eq, J, fromBlocks_multiply]
+Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:55:  simp only [fromBlocks_multiply, Matrix.mul_zero, Matrix.zero_mul, add_zero, zero_add,
+Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:81:    simp_rw [fromBlocks_multiply, Matrix.mul_zero, Matrix.zero_mul, zero_add, add_zero,
+Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:92:    simp_rw [fromBlocks_multiply, Matrix.mul_zero, Matrix.zero_mul, zero_add, add_zero,
+Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:115:      rw [← fromBlocks_toBlocks (⅟(fromBlocks A B 0 D)), fromBlocks_multiply] at this
+Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:121:      rw [← fromBlocks_toBlocks (⅟(fromBlocks A B 0 D)), fromBlocks_multiply] at this
+Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:132:      rw [← fromBlocks_toBlocks (⅟(fromBlocks A 0 C D)), fromBlocks_multiply] at this
+Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:139:      rw [← fromBlocks_toBlocks (⅟(fromBlocks A 0 C D)), fromBlocks_multiply] at this
+Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:256:    simp only [fromBlocks_multiply, Matrix.one_mul, Matrix.mul_one, Matrix.zero_mul,
+Mathlib/LinearAlgebra/Matrix/ConjTranspose.lean:54:theorem diagonal_conjTranspose [AddMonoid α] [StarAddMonoid α] (v : n → α) :
+Mathlib/LinearAlgebra/Matrix/ConjTranspose.lean:169:  (conjTranspose_involutive n α).eq_iff.trans <| by rw [diagonal_conjTranspose]
+Mathlib/LinearAlgebra/Matrix/Reindex.lean:19:* `Matrix.reindexRingEquiv R`: `Matrix.reindex` as a `RingEquiv` between `R`-matrices.
+Mathlib/LinearAlgebra/Matrix/Reindex.lean:82:def reindexRingEquiv (e : m ≃ n) : Matrix m m R ≃+* Matrix n n R where
+Mathlib/LinearAlgebra/Matrix/Reindex.lean:87:theorem coe_reindexRingEquiv (e : m ≃ n) : ⇑(reindexRingEquiv R e) = reindex e e :=
+Mathlib/LinearAlgebra/Matrix/Reindex.lean:91:theorem toEquiv_reindexRingEquiv (e : m ≃ n) :
+Mathlib/LinearAlgebra/Matrix/Reindex.lean:92:    (reindexRingEquiv R e : Matrix m m R ≃ Matrix n n R) = reindex e e :=
+Mathlib/LinearAlgebra/Matrix/Reindex.lean:96:theorem toAddEquiv_reindexRingEquiv (e : m ≃ n) : reindexRingEquiv R e = reindexAddEquiv R e e :=
+Mathlib/LinearAlgebra/Matrix/Reindex.lean:100:theorem symm_reindexRingEquiv (e : m ≃ n) :
+Mathlib/LinearAlgebra/Matrix/Reindex.lean:101:    (reindexRingEquiv R e).symm = reindexRingEquiv R e.symm :=
+Mathlib/LinearAlgebra/Matrix/Reindex.lean:105:theorem reindexRingEquiv_refl : reindexRingEquiv R (.refl n) = .refl _ :=
+Mathlib/LinearAlgebra/Matrix/Reindex.lean:109:theorem reindexRingEquiv_trans_reindexRingEquiv (e : m ≃ n) (e' : n ≃ o) :
+Mathlib/LinearAlgebra/Matrix/Reindex.lean:110:    .trans (reindexRingEquiv R e) (reindexRingEquiv R e') = reindexRingEquiv R (.trans e e') :=
+Mathlib/LinearAlgebra/Matrix/Reindex.lean:212:  __ := reindexRingEquiv A e
+Mathlib/LinearAlgebra/Matrix/Reindex.lean:229:theorem toRingEquiv_reindexAlgEquiv (e : m ≃ n) : reindexAlgEquiv R A e = reindexRingEquiv A e :=
+Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:170:theorem charpoly_reindex (e : n ≃ m)
+Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:250:    simp [M, N, fromBlocks_multiply, smul_eq_mul_diagonal, -diagonal_neg]
+Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:252:    simp [M, N, fromBlocks_multiply, sub_eq_add_neg, -scalar_apply, scalar_comm, Commute.all]

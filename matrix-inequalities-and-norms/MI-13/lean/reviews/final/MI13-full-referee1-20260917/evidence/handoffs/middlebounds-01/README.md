@@ -1,0 +1,1 @@
+Unitary, contraction averaging with actual half certificate consumer, and actual spectral-norm scaling. Zero norm handled separately. Local compilation unrun at preparation; depends on sealed agent candidates still being integrated. Exact frozen headers unchanged.

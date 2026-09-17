@@ -1,0 +1,1 @@
+Rectangular canonical contract via exact padding products, norms and singular values. Local compilation unrun at preparation; depends on sealed agent candidates still being integrated. Exact frozen headers unchanged.

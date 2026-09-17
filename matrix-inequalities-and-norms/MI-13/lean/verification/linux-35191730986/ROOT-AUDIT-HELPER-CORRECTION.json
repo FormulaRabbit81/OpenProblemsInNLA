@@ -1,0 +1,8 @@
+{
+  "scope": "Private audit helper only, not Lean/checker/config change",
+  "initial_attempt": "Rejected same three permitted axioms listed in different order",
+  "reason": "Axiom permission is a three-element set; validate exact cardinality and members, preserving exact config equality to actual run",
+  "original_helper_sha256": "77bcb3744ddb210972f82784be94001c9c7be34d26b3dc7b4d539dbc07352602",
+  "corrected_helper_sha256": "f600a8509b2e6a3b6e8fc32701182710fccfe92ed2ba80b3c744da922690ebaa",
+  "diff": "--- audit_canonical_runtime.py\n+++ audit_canonical_runtime_axiom_set.py\n@@ -35,7 +35,7 @@\n names = config['theorem_names']\n assert names and len(names) == len(set(names))\n assert config['definition_names'] == []\n-assert config['permitted_axioms'] == ['propext', 'Classical.choice', 'Quot.sound']\n+assert len(config['permitted_axioms']) == 3 and set(config['permitted_axioms']) == {'propext', 'Classical.choice', 'Quot.sound'}\n \n all_paths = git('ls-tree', '-r', '--name-only', actual, '--', project).decode().splitlines()\n all_relative = {p[len(project) + 1:] for p in all_paths}\n"
+}

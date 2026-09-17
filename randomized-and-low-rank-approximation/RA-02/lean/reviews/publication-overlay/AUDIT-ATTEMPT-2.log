@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/tmp/nla-lean-next-20260915/reviews/RA02-publication-referee-35175272827/audit.py", line 175, in <module>
+    authenticate_manifest(folder, record['manifest_sha256'])
+  File "/tmp/nla-lean-next-20260915/reviews/RA02-publication-referee-35175272827/audit.py", line 60, in authenticate_manifest
+    check(sha(read(folder / path)) == digest, 'sealed payload ' + str(folder / path))
+  File "/tmp/nla-lean-next-20260915/reviews/RA02-publication-referee-35175272827/audit.py", line 50, in check
+    raise AssertionError(label)
+AssertionError: sealed payload /private/tmp/nla-lean-next-ra02-worktree/randomized-and-low-rank-approximation/RA-02/lean/reviews/final/RA02-full-final-referee/CHECKS.json

@@ -1,0 +1,1 @@
+Remove exactly the unused zero_add simp argument in gram_charpoly_padUpper reported by actual local51 and the independent full referee. Keep every theorem and all frozen definitions/contracts unchanged. Recompile Padding and its complete Solution dependent closure locally; preserve previous successful evidence and output hashes. This is linter cleanup only.

@@ -1,0 +1,41 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Prior mathematical attribution is retained.
+
+Ordered Gram eigenvectors and partial orthonormal completion use the actual
+pinned Mathlib constructions, including repeated and zero singular values.
+The normalized-image orthogonality and full SVD remain separate obligations.
+-/
+import NLA.MI13.SingularSemantics
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.MI13
+noncomputable section
+
+theorem ordered_gram_basis {r : ℕ} (A : Square r) :
+    ∃ v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r), GramBasis A v := by
+  let hn := finrank_euclideanSpace_fin (𝕜 := ℂ) (n := r)
+  refine ⟨(euclideanLin A).isSymmetric_adjoint_comp_self.eigenvectorBasis hn, ?_⟩
+  intro i
+  have h := (euclideanLin A).isSymmetric_adjoint_comp_self.apply_eigenvectorBasis hn i
+  rw [← (euclideanLin A).sq_singularValues_fin hn i] at h
+  simpa only [LinearMap.comp_apply, RCLike.ofReal_eq_complex_ofReal,
+    Complex.ofReal_pow, singularValue] using h
+
+theorem positive_image_extension {r : ℕ} (A : Square r)
+    (v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r))
+    (h : Orthonormal ℂ ((positiveSingularIndices A).domRestrict (normalizedImages A v))) :
+    ∃ u : OrthonormalBasis (Fin r) ℂ (EuclideanVector r),
+      ∀ i ∈ positiveSingularIndices A, u i = normalizedImages A v i := by
+  exact Orthonormal.exists_orthonormalBasis_extension_of_card_eq (by simp) h
+
+#print axioms ordered_gram_basis
+#assert_trust kernel ordered_gram_basis
+#print axioms positive_image_extension
+#assert_trust kernel positive_image_extension
+
+end
+end NLA.MI13

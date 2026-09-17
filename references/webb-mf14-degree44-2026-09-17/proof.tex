@@ -1,0 +1,366 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,array}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\hypersetup{pdftitle={Degree forty-four in the closure of seven-product polynomial evaluations},pdfauthor={Marcus Webb}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newcommand{\C}{\mathbb C}
+\newcommand{\V}[1]{\C[x]_{\le #1}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\cl}{\overline}
+\title{Degree forty-four in the closure of seven-product polynomial evaluations\\
+\large A negative resolution of MF-14}
+\author{Marcus Webb\\The University of Manchester}
+\date{17 September 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Starting from $1,x$ and allowing free complex linear combinations, we prove
+that the Zariski closure of the polynomials computable with seven products
+contains every polynomial of degree at most $44$. This refutes the equality
+to $42$ in MF-14. A simultaneous four-product degeneration retains two
+intermediate polynomials as well as an arbitrary polynomial of degree at most
+$12$. Three further products give a coefficient map with a $45\times45$
+integer Jacobian of determinant $256$. The published dimension theorem of
+Jarlebring and Lorentzon additionally implies $44\le d_7\le47$.
+\end{abstract}
+
+\noindent\textbf{Provenance and review.}
+The construction and earlier computational checks were developed with
+substantial ChatGPT assistance in the conversation supplied by the author
+\cite{chat}. This standalone exposition uses the polynomial-determinant
+version of the border argument in that conversation. Separate Codex agents
+reviewed the border lemma and the continuation/certificate; their reports and
+independently written exact verifiers accompany this manuscript. These are
+informal AI-agent reviews, not external human peer review or formal verification.
+
+\section{Statement and computational model}
+Let $\mathcal P_m$ be the outputs obtainable from $1,x$ using arbitrary
+complex linear combinations of previously available polynomials and at most
+$m$ products of two previously available polynomials. All intermediate
+polynomials have degree at most $2^m$. Put
+\[
+ X_7=\cl{\mathcal P_7}^{\,Z}\subseteq\V{128},\qquad
+ d_7=\max\{d:\V d\subseteq X_7\}.
+\]
+All closures below are Zariski closures in the indicated full coefficient
+spaces. In particular, approximating outputs are allowed to have degree
+greater than the degree of their limits. No coefficient projection is an
+allowed computational operation.
+
+\begin{theorem}\label{thm:main}
+One has $\V{44}\subseteq X_7$. Consequently the equality $d_7=42$ asked
+in MF-14, and in Conjecture 13 of \cite{JL}, is false.
+\end{theorem}
+
+The previously audited degree-$42$ coverage result of Colbrook
+\cite{Colbrook} remains valid. The new proof uses degenerating intermediate
+computations. It does not assert exact representation of every degree-$44$
+polynomial, real Euclidean density, or stable coefficient recovery.
+
+\section{Simultaneous availability after four products}
+Let $\mathcal A_4\subseteq(\V{16})^4$ be the ordered quadruples
+simultaneously available after at most four products, including arbitrary
+free linear combinations of the computed polynomials. Set
+$\mathcal B_4=\cl{\mathcal A_4}^{\,Z}$.
+
+\begin{lemma}\label{lem:border}
+For all $\alpha,\beta\in\C$ and $P\in\V{12}$,
+\[
+ (x^2,x^4+\alpha x^3,x^5+\beta x^3,P)\in\mathcal B_4.
+\]
+\end{lemma}
+
+\begin{proof}
+Fix $\alpha,\beta$, put $\eta=\beta+\alpha^2$, and initially fix an
+arbitrary $\gamma\in\C$. For nonzero $s$ tending to zero, put
+\begin{equation}\label{eq:QR}
+ Q=x^4+\alpha x^3,\qquad
+ R_s=s^2Q^2+\gamma s x^2Q+xQ+\eta x^3.
+\end{equation}
+
+\paragraph{Three products.}
+The first two products give $x^2$ and $Q=x^2(x^2+\alpha x)$.
+For $a=s^2$, $b=\gamma s$, define
+\[
+ g=b-a,\quad \delta=b-2a,\quad
+ \sigma=\frac{\eta-1+\alpha g}{\delta},\quad \rho=1-a\sigma.
+\]
+Direct multiplication gives the identity
+\begin{equation}\label{eq:third}
+ R_s=(aQ+\rho x+g x^2)(Q+\sigma x+x^2)-gQ-\rho\sigma x^2.
+\end{equation}
+Every factor uses only already available polynomials, so this costs one
+additional product. The denominator $s(\gamma-2s)$ is nonzero for all
+sufficiently small nonzero $s$, also when $\gamma=0$. Moreover,
+\begin{equation}\label{eq:Rlimit}
+ R_s-\alpha Q\longrightarrow R_0-\alpha Q=x^5+\beta x^3.
+\end{equation}
+
+\paragraph{The fourth-product image is dense in its product span.}
+Let $V_s=\Span\{1,x,x^2,Q,R_s\}$ and
+$W_s=\Span\{uv:u,v\in V_s\}$. Products from
+$U=\Span\{1,x,x^2,Q\}$ span exactly
+$\V6+\Span\{Q^2\}$: obtain $x^3,x^4$ directly and then
+$x^5=xQ-\alpha x^4$, $x^6=x^2Q-\alpha x^5$.
+Since $R_s$ already lies in that span,
+\begin{equation}\label{eq:W}
+ W_s=\V6+\Span\{Q^2,xR_s,x^2R_s,QR_s,R_s^2\}.
+\end{equation}
+The five extra polynomials have respective degrees $8,9,10,12,16$ and
+nonzero leading coefficients for $s\ne0$. Thus $\dim W_s=12$.
+
+Consider $\Psi_s:V_s^3\to W_s$, $(u,v,w)\mapsto uv+w$.
+At $u=R_s$, $v=Q+\lambda x^2$, its differential includes these twelve columns:
+\begin{equation}\label{eq:minorcols}
+ 1,x,x^2,Q,R_s,\ x(Q+\lambda x^2),x^2(Q+\lambda x^2),
+ Q(Q+\lambda x^2),\ xR_s,x^2R_s,QR_s,R_s^2.
+\end{equation}
+In coefficient rows $0,1,2,3,4,5,6,8,9,10,12,16$, their determinant is
+\begin{equation}\label{eq:minor}
+ a^5\bigl(\lambda-\eta-\alpha\lambda(b-a\lambda)\bigr).
+\end{equation}
+This polynomial identity follows by coefficient expansion; the accompanying
+exact symbolic verifier also recomputes it. Choose $\lambda=\eta+1$.
+The determinant becomes
+\[
+ s^{10}\bigl[1-\alpha(\eta+1)(\gamma s-(\eta+1)s^2)\bigr],
+\]
+which is nonzero for sufficiently small nonzero $s$, for every fixed choice
+of $\alpha,\eta,\gamma$. Hence $\Psi_s$ has full differential rank.
+Restricting to twelve suitable affine directions and applying the complex
+inverse function theorem shows that its image contains a Euclidean-open
+subset of $W_s$, so it is Zariski dense in $W_s$.
+All actual outputs $uv+w$ cost one further product and retain the previous
+intermediates. Closedness therefore gives
+\begin{equation}\label{eq:joint}
+ (x^2,Q,R_s-\alpha Q,p)\in\mathcal B_4\qquad(p\in W_s).
+\end{equation}
+This is a closure argument, not an identification of a sum of products with
+one actual product.
+
+\paragraph{An explicit polynomial degeneration.}
+Set $(f_1,f_2,f_3,f_4,f_5)=(x^2R_s,Q^2,QR_s,R_s^2,xR_s)$ and define
+\begin{equation}\label{eq:E}
+ E_s(x)=\det\begin{pmatrix}
+ [x^7]f_1&\cdots&[x^7]f_5\\
+ [x^8]f_1&\cdots&[x^8]f_5\\
+ [x^9]f_1&\cdots&[x^9]f_5\\
+ [x^{10}]f_1&\cdots&[x^{10}]f_5\\
+ f_1(x)&\cdots&f_5(x)
+ \end{pmatrix}.
+\end{equation}
+Expansion along the last row gives $E_s\in W_s$ and repeated rows give
+$[x^j]E_s=0$ for $7\le j\le10$. Direct polynomial expansion gives
+\begin{align}
+ [x^{11}]E_s&=(4\gamma^2-3\alpha)s^4+O(s^5),\label{eq:lead11}\\
+ [x^{12}]E_s&=-s^4+O(s^5),\label{eq:lead12}
+\end{align}
+while the coefficients in degrees $13,14,15,16$ are divisible by
+$s^5,s^6,s^7,s^7$, respectively. Here the statements are identities in
+$\mathbb Z[\alpha,\eta,\gamma,s]$, so the remainder notation denotes exact
+divisibility. The verifier expands the cofactors of $E_s$ with integer
+polynomial arithmetic and checks every coefficient and divisibility.
+Appendix~\ref{app:cofactors} supplies explicit identities
+for them. Degree is at most $16$.
+
+Write $\pi_{\le6}$ for coefficient truncation used only in this algebraic
+identity. Since $\V6\subseteq W_s$, the polynomial
+\begin{equation}\label{eq:Z}
+ Z_s=-s^{-4}(E_s-\pi_{\le6}E_s)\in W_s\quad(s\ne0)
+\end{equation}
+has coefficients polynomial in $s$, and satisfies
+\begin{equation}\label{eq:Zlimit}
+ Z_0=x^{12}+(3\alpha-4\gamma^2)x^{11}.
+\end{equation}
+The subtraction in \eqref{eq:Z} occurs inside $W_s$; no truncation of an
+actual circuit output is being charged as free.
+
+The eleven polynomials
+\[
+ 1,x,\ldots,x^6,\quad x^2R_s,\quad Q^2,\quad QR_s,\quad R_s^2
+\]
+converge to a basis of $\V{10}$. Indeed $R_0=x^5+\alpha x^4+\eta x^3$,
+and the four last limits are monic of degrees $7,8,9,10$; their coefficient
+matrix together with the first seven monomials is triangular with determinant
+one.
+
+For $P=\sum_{j=0}^{12}p_jx^j$ with $p_{12}\ne0$, choose a complex root
+\[
+ \gamma^2=(3\alpha-p_{11}/p_{12})/4.
+\]
+Then $P-p_{12}Z_0\in\V{10}$. Express this difference in the limiting
+eleven-element basis and use the same constant coefficients at $s\ne0$.
+Adding $p_{12}Z_s$ gives $p_s\in W_s$ with $p_s\to P$ in all coefficients
+through degree $16$. Taking limits in \eqref{eq:joint}, using
+\eqref{eq:Rlimit} and Euclidean closedness of the algebraic set
+$\mathcal B_4$, proves the lemma for $p_{12}\ne0$. For $p_{12}=0$, apply
+that result to $P+\varepsilon x^{12}$ and take $\varepsilon\to0$.
+\end{proof}
+
+\section{Three further products and an exact coefficient certificate}
+Take
+\[
+ Q=x^4+\alpha x^3,\quad R=x^5+\beta x^3,\quad
+ P=x^{12}+\sum_{j\in J}\xi_jx^j,\qquad J=(3,6,7,8,9,10,11).
+\]
+Define $L_3=(x,x^2,Q)$, $L_4=(x,x^2,Q,R)$, $L_5=(x,x^2,Q,R,P)$,
+and compute
+\begin{align}
+ F&=(P+\mathbf u\cdot L_4)(R+\mathbf v\cdot L_3),\label{eq:F}\\
+ G&=(F+\mathbf a\cdot L_5)(R+\mathbf b\cdot L_3),\label{eq:G}\\
+ H&=(G+\mathbf c\cdot L_6)(G+\mathbf d\cdot L_6),
+ \qquad L_6=(x,x^2,Q,R,P,F).\label{eq:H}
+\end{align}
+The final output is
+\begin{equation}\label{eq:output}
+ p=\mathbf z\cdot(1,x,x^2,Q,R,P,F,G,H).
+\end{equation}
+The degrees of $F,G,H$ are at most $17,22,44$ for all parameters.
+Order the parameters by
+\begin{equation}\label{eq:parameters}
+ (\alpha,\beta,\xi_3,\xi_6,\xi_7,\xi_8,\xi_9,\xi_{10},\xi_{11},
+ \mathbf u,\mathbf v,\mathbf a,\mathbf b,\mathbf c,\mathbf d,\mathbf z),
+\end{equation}
+with entries within each vector in their displayed order. The vector lengths
+are $4,3,5,3,6,6,9$, and $\mathbf z=(z_0,\ldots,z_8)$.
+There are $2+7+4+3+5+3+6+6+9=45$ parameters, defining a polynomial map
+$\Phi:\C^{45}\to\V{44}$ with integer coefficients.
+
+\paragraph{Why its image lies in the full seven-product closure.}
+Fix the continuation coefficients in \eqref{eq:F}--\eqref{eq:output}.
+They define a polynomial map $T:(\V{16})^4\to\V{128}$ using the four
+input entries in place of $x^2,Q,R,P$, while retaining the free input $x$.
+On arbitrary inputs its product degrees are at most $32,48,96$, so its
+codomain is indeed the full degree-$128$ space. For every quadruple in
+$\mathcal A_4$, the output costs at most seven products. By continuity,
+\[
+ T(\mathcal B_4)\subseteq\cl{T(\mathcal A_4)}^{\,Z}\subseteq X_7.
+\]
+For example the first inclusion follows by taking the inverse image of the
+closed set on its right. Lemma~\ref{lem:border} therefore implies
+$\Phi(\C^{45})\subseteq X_7$. All high-degree coefficients are retained
+in this argument and vanish by continuity at the limit.
+
+\paragraph{A nonsingular integer Jacobian.}
+Set every parameter to zero except
+\begin{equation}\label{eq:point}
+ \alpha=b_2=d_3=d_5=d_6=z_8=1.
+\end{equation}
+Then
+\[
+ Q=x^4+x^3,\quad R=x^5,\quad P=x^{12},\quad F=x^{17},
+ \quad G=x^{22}+x^{19},\quad H=G(G+Q+P+F).
+\]
+For an explicit derivative table at this point, set
+$B=R+x^2$, $K=2G+Q+P+F$, $L=KB+G$. The Jacobian columns, viewed as
+polynomials, in the order \eqref{eq:parameters}, are
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Parameter group & Derivative polynomials\\
+\midrule
+$\alpha$ & $Gx^3$\\
+$\beta$ & $(LP+KF)x^3$\\
+$\xi_j$ ($j\in J$) & $(LR+G)x^j$\\
+$\mathbf u$ & $LR\,L_4$\\
+$\mathbf v$ & $LP\,L_3$\\
+$\mathbf a$ & $KB\,L_5$\\
+$\mathbf b$ & $KF\,L_3$\\
+$\mathbf c$ & $(G+Q+P+F)L_6$\\
+$\mathbf d$ & $G L_6$\\
+$\mathbf z$ & $(1,x,x^2,Q,R,P,F,G,H)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+With coefficient rows $0,\ldots,44$, exact elimination gives
+\begin{equation}\label{eq:det}
+ \det D\Phi=256\ne0.
+\end{equation}
+The complete integer matrix is supplied with the independent verifier.
+It is reconstructed by simultaneous first-order polynomial arithmetic and
+compared entrywise with this derivative table. All coefficients are retained.
+The entries lie between $0$ and $6$; modular determinants are $1,54,256$
+modulo $3,101,1009$, respectively. A separate whole-circuit interpolation
+check recovered from the original conversation is also supplied.
+
+The complex inverse function theorem now shows that the image of $\Phi$
+is Zariski dense in $\V{44}$. Since $X_7$ is closed and contains that
+image, it contains $\V{44}$. This proves Theorem~\ref{thm:main}.
+
+\section{An additional upper bound}
+\begin{corollary}\label{cor:bounds}
+Using Theorem 10 of Jarlebring and Lorentzon \cite{JL}, one has
+$44\le d_7\le47$.
+\end{corollary}
+\begin{proof}
+All seven-product computations can be parameterized by one affine space:
+at step $k$, multiply two arbitrary linear combinations of $1,x$ and the
+$k-1$ previous product outputs, and finally take an arbitrary linear
+combination of $1,x$ and the seven product outputs. Unused products can be
+padded by zero products. Thus $X_7$ is the closure of the image of an
+irreducible affine space, and is irreducible. The cited dimension theorem
+gives $\dim X_7=49$. If $\V{48}\subseteq X_7$, this closed irreducible
+subspace has the same dimension as $X_7$, so it must equal $X_7$.
+But seven successive squarings compute $x^{128}$, contradicting that
+equality. Therefore $d_7\le47$, and the lower bound follows from
+Theorem~\ref{thm:main}.
+\end{proof}
+Determining which of $44,45,46,47$ equals $d_7$ remains open in this
+contribution. That further question is not needed to refute the retained
+MF-14 equality. The lower bound and negative resolution do not depend on
+the external dimension theorem.
+
+\section{Reproduction and evidence scope}
+The accompanying submission README records exact commands, source hashes,
+machine-readable certificates and two separate review reports. The symbolic
+border verifier and the coefficient-map verifier use exact integer/rational
+arithmetic. Their checks validate the finite identities above; the analytic
+and algebraic closure arguments have been informally reviewed by separate
+agents. No Lean proof or kernel-checking claim is made.
+
+\appendix
+\section{Explicit high-degree coefficient identities}\label{app:cofactors}
+Let $c_i$ be the signed cofactor multiplying $f_i$ in the expansion of
+\eqref{eq:E} along its last row. The first, second and fifth polynomials
+$f_i$ have degree at most ten, so only $c_3QR_s+c_4R_s^2$ contributes
+above degree ten. Direct expansion of the $4\times4$ cofactors gives
+$c_3=s^2 C(s)$ and $c_4=s^3 D(s)$, where
+\begin{align*}
+ C(s)={}&-1-3\alpha\gamma s
+ +(-2\alpha^3+9\alpha^2\gamma^2-6\alpha\eta-2\eta\gamma^2)s^2\\
+ &+(-4\alpha^4\gamma+3\alpha^3\gamma^3+12\alpha^2\eta\gamma)s^3\\
+ &+(-8\alpha^6-4\alpha^5\gamma^2-10\alpha^4\eta)s^4,\\
+ D(s)={}&2\gamma+(3\alpha^2-\alpha\gamma^2-\eta)s
+             -8\alpha^3\gamma s^2+9\alpha^5s^3.
+\end{align*}
+Consequently the exact high-degree coefficients are
+\begin{align*}
+ [x^{11}]E_s&=s^4\{3\alpha C+D[2\gamma+
+        (6\alpha^2+2\eta+2\alpha\gamma^2)s+2\alpha^3\gamma s^2]\},\\
+ [x^{12}]E_s&=s^4\{C+sD[(6\alpha+\gamma^2)+6\alpha^2\gamma s+\alpha^4s^2]\},\\
+ [x^{13}]E_s&=s^5D(2+6\alpha\gamma s+4\alpha^3s^2),\\
+ [x^{14}]E_s&=s^6D(2\gamma+6\alpha^2s),\\
+ [x^{15}]E_s&=4\alpha s^7D,\qquad [x^{16}]E_s=s^7D.
+\end{align*}
+These formulas directly give \eqref{eq:lead11}--\eqref{eq:lead12} and all
+required divisibilities, including special choices where leading coefficients
+vanish. They are checked independently against the full determinant expansion
+by the border verifier.
+
+\begin{thebibliography}{9}
+\bibitem{JL} E. Jarlebring and G. Lorentzon,
+\emph{The polynomial set associated with a fixed number of matrix-matrix
+multiplications}, arXiv:2504.01500v3, Theorem 10 and Conjecture 13.
+\url{https://arxiv.org/html/2504.01500v3}.
+\bibitem{Colbrook} M. J. Colbrook, MF-14 submission, 11 September 2026,
+Theorem 1 and equations (1)--(2). Archived in
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/colbrook-matrix-functions-2026-09-11/manuscripts/MF-14.tex}{the OpenProblemsInNLA manuscript archive}.
+\bibitem{chat} Author-supplied ChatGPT conversation, accessed 17 September
+2026. Degree-$44$ construction and subsequent independent-method validation
+within the same conversation.
+\url{https://chatgpt.com/share/6aaba6d9-3424-83eb-b278-21e3b917a83b}.
+\end{thebibliography}
+\end{document}

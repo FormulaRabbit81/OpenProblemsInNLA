@@ -2,7 +2,7 @@
 
 [← All categories](../README.md) · [Full catalog](../CATALOG.md) · [Solved and claimed solutions](../RESOLVED.md)
 
-**13 problems with open targets.** 12 retained entries are excluded from the open count.
+**12 problems with open targets.** 13 retained entries are excluded from the open count.
 
 | ID | Problem | Status | Difficulty | Impact | Read / source |
 | --- | --- | --- | --- | --- | --- |
@@ -13,7 +13,6 @@
 | [MF-10](MF-10/README.md) | Algebraicity of joint spectral radii from rational input | **🔵 OPEN** | extreme | interesting to the community | [PDF](MF-10/problem.pdf) · [TeX](MF-10/problem.tex) |
 | [MF-11](MF-11/README.md) | Temporal regularity of marginal matrix-product growth | **🔵 OPEN** | challenging | interesting to specialist | [PDF](MF-11/problem.pdf) · [TeX](MF-11/problem.tex) |
 | [MF-13](MF-13/README.md) | Symmetric maximizers for Lyapunov operators of order six | **🔵 OPEN** | challenging | interesting to specialist | [PDF](MF-13/problem.pdf) · [TeX](MF-13/problem.tex) |
-| [MF-14](MF-14/README.md) | Degree coverage with seven matrix multiplications | **🟡 PARTIAL** | challenging | interesting to the community | [PDF](MF-14/problem.pdf) · [TeX](MF-14/problem.tex) |
 | [MF-15](MF-15/README.md) | Critical exponent for generalized doubly nonnegative matrices | **🟡 PARTIAL** | challenging | interesting to the community | [PDF](MF-15/problem.pdf) · [TeX](MF-15/problem.tex) |
 | [MF-17](MF-17/README.md) | Optimal uniform growth after inversion of an exponentially stable generator | **🔵 OPEN** | challenging | interesting to the community | [PDF](MF-17/problem.pdf) · [TeX](MF-17/problem.tex) |
 | [MF-19](MF-19/README.md) | Decidability of zero hitting by rational matrix powers | **🟡 PARTIAL** | extreme | broadly interesting | [PDF](MF-19/problem.pdf) · [TeX](MF-19/problem.tex) |
@@ -30,11 +29,12 @@
 | [MF-06](MF-06/README.md) | A pointwise Lipschitz lower bound for the joint spectral radius | **✅ SOLVED** | challenging | interesting to the community | [PDF](MF-06/problem.pdf) · [TeX](MF-06/problem.tex) |
 | [MF-07](MF-07/README.md) | Uniform polynomial bounds for products at joint spectral radius one | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](MF-07/problem.pdf) · [TeX](MF-07/problem.tex) |
 | [MF-12](MF-12/README.md) | Realizing arbitrary polynomial growth exponents by finite matrix families | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](MF-12/problem.pdf) · [TeX](MF-12/problem.tex) |
+| [MF-14](MF-14/README.md) | Degree coverage with seven matrix multiplications | **✅ SOLVED** | challenging | interesting to the community | [PDF](MF-14/problem.pdf) · [TeX](MF-14/problem.tex) |
 | [MF-16](MF-16/README.md) | Uniqueness of positive definite solutions of two-letter word equations in order two | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](MF-16/problem.pdf) · [TeX](MF-16/problem.tex) |
 | [MF-18](MF-18/README.md) | Imaginary-part rank in a limiting Green-function matrix equation | **✅ SOLVED** | challenging | interesting to specialist | [PDF](MF-18/problem.pdf) · [TeX](MF-18/problem.tex) |
 | [MF-21](MF-21/README.md) | The uniform expansion threshold for Toeplitz symbols with higher-order zeros | **✅ SOLVED** | challenging | interesting to specialist | [PDF](MF-21/problem.pdf) · [TeX](MF-21/problem.tex) |
 | [MF-22](MF-22/README.md) | Polynomial conditioning of the cubic C1 spline Schrödinger Toeplitz family | **🏆 LEAN VERIFIED** | hard | interesting to specialist | [PDF](MF-22/problem.pdf) · [TeX](MF-22/problem.tex) |
 | [MF-24](MF-24/README.md) | A dimension-independent polynomial norm bound from super-identical pseudospectra | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](MF-24/problem.pdf) · [TeX](MF-24/problem.tex) |
-| [SF-01](SF-01/README.md) | Preservation of real H-matrix structure by Newton square-root iterates | **✅ SOLVED** | challenging | interesting to specialist | [PDF](SF-01/problem.pdf) · [TeX](SF-01/problem.tex) |
+| [SF-01](SF-01/README.md) | Preservation of real H-matrix structure by Newton square-root iterates | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](SF-01/problem.pdf) · [TeX](SF-01/problem.tex) |
 
 Ratings are editorial; each entry explains both ratings and the scope of its status evidence. [Definitions](../README.md#problem-status).

@@ -1,0 +1,83 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Nobori's original question, Audenaert's
+refined commutator theorem, and the repository reduction retain their attribution.
+
+The Gram equations give orthonormal normalized images at positive singular
+values. Zero singular values give zero images, and partial basis extension
+supplies complete singular-vector bases in every dimension and at every rank.
+-/
+import NLA.MI13.GramBasis
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.MI13
+noncomputable section
+
+private theorem gram_image_inner {r : ℕ} (A : Square r)
+    (v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r)) (hv : GramBasis A v)
+    (i j : Fin r) :
+    inner ℂ (euclideanLin A (v i)) (euclideanLin A (v j)) =
+      (singularValue A j.val : ℂ) ^ 2 * inner ℂ (v i) (v j) := by
+  calc
+    inner ℂ (euclideanLin A (v i)) (euclideanLin A (v j)) =
+        inner ℂ (v i) ((euclideanLin A).adjoint (euclideanLin A (v j))) :=
+      ((euclideanLin A).adjoint_inner_right (v i) (euclideanLin A (v j))).symm
+    _ = (singularValue A j.val : ℂ) ^ 2 * inner ℂ (v i) (v j) := by
+      rw [hv j, inner_smul_right]
+
+theorem positive_image_orthonormal {r : ℕ} (A : Square r)
+    (v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r)) (hv : GramBasis A v) :
+    Orthonormal ℂ ((positiveSingularIndices A).domRestrict (normalizedImages A v)) := by
+  classical
+  rw [orthonormal_iff_ite]
+  intro i j
+  change inner ℂ (normalizedImages A v i.val) (normalizedImages A v j.val) =
+    if i = j then (1 : ℂ) else 0
+  simp only [normalizedImages, inner_smul_left, inner_smul_right,
+    gram_image_inner A v hv]
+  by_cases hij : i = j
+  · subst j
+    have hi : (singularValue A i.val.val : ℂ) ≠ 0 :=
+      Complex.ofReal_ne_zero.mpr (ne_of_gt i.property)
+    simp only [Complex.conj_inv, Complex.conj_ofReal, v.inner_eq_one,
+      if_pos True.intro, mul_one, pow_two, inv_mul_cancel_left₀ hi, inv_mul_cancel₀ hi]
+  · have hij' : i.val ≠ j.val := fun h => hij (Subtype.ext h)
+    simp only [v.inner_eq_zero hij', mul_zero, if_neg hij]
+
+theorem zero_singular_image {r : ℕ} (A : Square r)
+    (v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r)) (hv : GramBasis A v)
+    (i : Fin r) (hi : singularValue A i.val = 0) : euclideanLin A (v i) = 0 := by
+  apply (inner_self_eq_zero (𝕜 := ℂ)).mp
+  rw [gram_image_inner A v hv i i, hi]
+  simp
+
+theorem full_singular_vector_bases {r : ℕ} (A : Square r) :
+    ∃ u v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r),
+      GramBasis A v ∧ ∀ i, euclideanLin A (v i) = (singularValue A i.val : ℂ) • u i := by
+  obtain ⟨v, hv⟩ := ordered_gram_basis A
+  obtain ⟨u, hu⟩ := positive_image_extension A v (positive_image_orthonormal A v hv)
+  refine ⟨u, v, hv, ?_⟩
+  intro i
+  by_cases hpos : 0 < singularValue A i.val
+  · have himem : i ∈ positiveSingularIndices A := hpos
+    have hi : (singularValue A i.val : ℂ) ≠ 0 :=
+      Complex.ofReal_ne_zero.mpr (ne_of_gt hpos)
+    rw [hu i himem, normalizedImages]
+    exact (smul_inv_smul₀ hi (euclideanLin A (v i))).symm
+  · have hi : singularValue A i.val = 0 :=
+      le_antisymm (le_of_not_gt hpos) ((singular_values_semantics A).1 i.val)
+    rw [zero_singular_image A v hv i hi, hi]
+    simp
+
+#print axioms positive_image_orthonormal
+#assert_trust kernel positive_image_orthonormal
+#print axioms zero_singular_image
+#assert_trust kernel zero_singular_image
+#print axioms full_singular_vector_bases
+#assert_trust kernel full_singular_vector_bases
+
+end
+end NLA.MI13

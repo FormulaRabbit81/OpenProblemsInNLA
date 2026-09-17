@@ -1,0 +1,113 @@
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'SF-01: preservation of real H-matrices by Newton square-root iteration'
+  description: Statement-only draft for every exact Newton iterate from A, for every
+    real positive-diagonal nonsingular H-matrix in every positive finite dimension.
+    The original complex-spectral comparison definition and genuine inverse
+    obligations are retained.
+  authors:
+  - George Stepaniants
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California
+      Institute of Technology, Pasadena, California, USA
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+repository:
+  role: substantive-development
+sources:
+- title: SF-01 — Preservation of real H-matrix structure by Newton square-root iterates
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ce47b5630bf3680d9211131c3a43825b022c139a/matrix-functions-and-stability/SF-01/README.md
+  type: web-post
+  location: Complete original problem statement
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: Permanent ID, spectral comparison predicate, positive real diagonal,
+    original initialization, exact recurrence and all dimensions and iterations preserved.
+- title: Preservation of positive-diagonal H-matrices by scaled Newton and Halley square-root iterations
+  authors:
+  - Matthew J. Colbrook
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ce47b5630bf3680d9211131c3a43825b022c139a/references/colbrook-matrix-functions-2026-09-11/manuscripts/SF-01.tex
+  type: manuscript
+  location: Theorem 1, specialized only to the complete original A-initialized Newton target
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: Original mathematical authorship remains Matthew J. Colbrook, Department of
+    Applied Mathematics and Theoretical Physics, University of Cambridge. Scaled or
+    affine initializations and Halley extensions are not proposed formal claims.
+- title: Partial Fraction Expansions for Newton's and Halley's Iterations for Square Roots
+  authors:
+  - Omran Kouba
+  id: https://arxiv.org/abs/1104.4175v2
+  type: preprint
+  location: Lemma 2.1 and Theorem 2.4
+  relationship: background
+  author_endorsement: not-contacted
+  note: Inspected alternate explicit scalar partial-fraction route. Its conclusions
+    are not imported as assumptions; the proposed route uses finite spectral Woodbury algebra.
+related_formalizations:
+- id: https://github.com/sidneyholden1/OpenProblemsInNLA/tree/281f440650d174602120ca9b2b930d38f9fef205/intervals-and-absolute-value-equations/IV-03/lean
+  relationship: builds-on
+  note: Planned reuse of Sidney Holden's Apache-2.0 finite Z-matrix maximum principle,
+    unitness and nonnegative inverse lemmas. Full Definitions and Proof files were
+    inspected. No implementation is imported into this statement draft; original
+    formalization credit must be preserved when those lemmas are integrated.
+- id: https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474
+  relationship: builds-on
+  note: Pinned actual finite complex spectra, Hermitian spectral theorem, positive
+    definite eigenvalues, Woodbury, Kronecker algebra and inverse continuity.
+- id: https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof
+  relationship: other
+  note: Challenge separation, complete numerical targets and Comparator configuration
+    patterns read; no Forsythe mathematical theorem imported.
+- id: https://github.com/jaumededios/Schiffer
+  relationship: other
+  note: Exact retained campaign Challenge snapshot reread for independent statement
+    organization. Its byte hash is recorded; no fresh head or mathematical proof import claimed.
+- id: https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926
+  relationship: builds-on
+  note: Planned kernel interval certificate for exact positivity of one half, consumed
+    by initialization and coefficient halving. No SF-01 certificate run yet.
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    tool_setup: Multiple independent problem and referee agents. Private statement drafting
+      and static source audits on macOS; later actual elaboration, build, default-kernel
+      replay and Comparator are performed by the coordinator on Linux. No local Lean/Lake.
+    prompting_notes: Write the complete statement and numerical obligations before proofs.
+      Preserve the original spectral H predicate and all n and k. Optimize via an exact
+      finite rational invariant, positive rank-one pole matrix and generic block Woodbury
+      identities, not interval subdivision or finite input sampling. Require two independent
+      statement approvals and actual elaboration before freezing and implementation.
+  notes: AI-assisted statement-only draft by /root/ie13_continuation. Root reviewed the
+    feasibility route, but this exact Lean draft has no independent statement approvals,
+    elaboration, proof implementation, official Tau Ceti endorsement or human peer review.
+status:
+  scope: Definitions and 24 independent unproved Challenge signatures only. No frozen
+    statement boundary, successful elaboration, proof verification or verified-count increment.
+  main_results: []
+fidelity:
+  divergences: The full original Newton target is retained. The source's broader initialization
+    and Halley extensions are outside scope. A finite positive-definite rank-one spectral
+    construction and exact matrix Woodbury identity replace general scalar partial-fraction
+    reasoning. Spectral M-to-weight and weight-to-spectral M bridges are explicit obligations,
+    not assumed replacements of the original H predicate. Actual inverse availability is
+    included in the final conclusion. No final hypothesis is added.
+review:
+  status: unreviewed statement-only draft; source and runtime gates pending
+  reviewers: []
+  notes: Apply the pinned Tau Ceti correctness, generality, proof quality, attribution and
+    reuse rubrics within scope using two independent statement and final proof referees.
+    No official Tau Ceti review is claimed. Actual Linux Comparator, default-kernel replay,
+    rejection controls and exact published-commit authentication remain required.
+alignment:
+  source_correspondence: SourceCorrespondence.md
+  numerical_boundary: NUMERICAL_TARGETS.md
+  proposed_statements: Challenge.lean
+  source_provenance: SOURCE-PROVENANCE.json
+  intended_implementation_entry: Solution.lean
+acknowledgements: Matthew J. Colbrook for the original mathematics; Sidney Holden for the
+  existing IV-03 formalization to be reused with attribution; Mathlib, LeanCert, Comparator,
+  Schiffer and Forsythe contributors for the inspected foundations and workflow patterns.

@@ -1,0 +1,59 @@
+--- before
++++ after
+@@ -34,6 +34,8 @@
+       rw [← (euclideanLin A).sq_singularValues_fin hn i] at h
+       simpa only [b, singularValue, RCLike.ofReal_eq_complex_ofReal,
+         Complex.ofReal_pow] using h
++    -- In the ordered Gram basis the image energy is the sum of the
++    -- squared singular values weighted by the squared coordinates.
+     have henergy (x : EuclideanVector n) :
+         ‖euclideanLin A x‖ ^ 2 =
+           ∑ i : Fin n, singularValue A i.val ^ 2 * ‖b.repr x i‖ ^ 2 := by
+@@ -51,17 +53,23 @@
+           apply Finset.sum_congr rfl
+           intro i hi
+           rw [hcoord x i]
++          -- Complex multiplication is its scalar action on ℂ, exposing
++          -- the second argument for the linearity law inner_smul_right.
+           change (inner ℂ (b.repr x i)
+             (((singularValue A i.val : ℂ) ^ 2) • b.repr x i)).re = _
+           rw [inner_smul_right, inner_self_eq_norm_sq_to_K]
+           simp only [RCLike.ofReal_eq_complex_ofReal, ← Complex.ofReal_pow,
+             ← Complex.ofReal_mul, Complex.ofReal_re]
+     apply le_antisymm
+-    · change ‖euclideanCLM A‖ ≤ singularValue A 0
++    · -- Bound every vector using the largest Gram eigenvalue, then apply
++      -- the CLM norm interface to the defining operator norm.
++      change ‖euclideanCLM A‖ ≤ singularValue A 0
+       apply (euclideanCLM A).opNorm_le_bound (hs.1 0)
+       intro x
+       apply (sq_le_sq₀ (norm_nonneg _)
+         (mul_nonneg (hs.1 0) (norm_nonneg _))).mp
++      -- The finite-dimensional continuous extension has exactly the
++      -- original linear-map action used by the energy identity.
+       change ‖euclideanLin A x‖ ^ 2 ≤ (singularValue A 0 * ‖x‖) ^ 2
+       rw [henergy x, mul_pow]
+       calc
+@@ -74,7 +82,10 @@
+             (hs.2.1 (Nat.zero_le i.val))
+         _ = singularValue A 0 ^ 2 * ‖x‖ ^ 2 := by
+           rw [← Finset.mul_sum, ← EuclideanSpace.norm_sq_eq, b.repr.norm_map]
+-    · by_cases hn0 : n = 0
++    · -- In an empty domain the singular values vanish. Otherwise the
++      -- zeroth Gram basis vector attains the upper bound: its coordinates
++      -- are the Euclidean single at zero, so the energy sum has one term.
++      by_cases hn0 : n = 0
+       · rw [hs.2.2 0 (by simpa only [hn0] using (le_refl (0 : ℕ)))]
+         exact norm_nonneg (euclideanCLM A)
+       · let i : Fin n := ⟨0, Nat.pos_of_ne_zero hn0⟩
+@@ -85,7 +96,9 @@
+           singularValue A 0 = ‖euclideanCLM A (b i)‖ := hnorm.symm
+           _ ≤ spectralNorm A * ‖b i‖ := (euclideanCLM A).le_opNorm (b i)
+           _ = spectralNorm A := by rw [b.norm_eq_one, mul_one]
+-  · constructor
++  · -- Norm definiteness and the two injective map conversions identify
++    -- zero operator norm with the zero matrix, including empty dimensions.
++    constructor
+     · intro h
+       have hclm : euclideanCLM A = 0 := norm_eq_zero.mp h
+       have hlin : euclideanLin A = 0 := by

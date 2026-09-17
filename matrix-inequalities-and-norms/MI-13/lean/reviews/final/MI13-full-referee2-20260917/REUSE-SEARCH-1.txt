@@ -1,0 +1,94 @@
+Mathlib/Analysis/Matrix/Normed.lean:25:  * `Matrix.frobeniusSeminormedAddCommGroup`
+Mathlib/Analysis/Matrix/Normed.lean:26:  * `Matrix.frobeniusNormedAddCommGroup`
+Mathlib/Analysis/Matrix/Normed.lean:27:  * `Matrix.frobeniusNormedSpace`
+Mathlib/Analysis/Matrix/Normed.lean:28:  * `Matrix.frobeniusNormedRing`
+Mathlib/Analysis/Matrix/Normed.lean:29:  * `Matrix.frobeniusNormedAlgebra`
+Mathlib/Analysis/Matrix/Normed.lean:30:  * `Matrix.frobeniusIsBoundedSMul`
+Mathlib/Analysis/Matrix/Normed.lean:31:  * `Matrix.frobeniusNormSMulClass`
+Mathlib/Analysis/Matrix/Normed.lean:492:section frobenius
+Mathlib/Analysis/Matrix/Normed.lean:500:def frobeniusSeminormedAddCommGroup [SeminormedAddCommGroup α] :
+Mathlib/Analysis/Matrix/Normed.lean:509:def frobeniusNormedAddCommGroup [NormedAddCommGroup α] : NormedAddCommGroup (Matrix m n α) :=
+Mathlib/Analysis/Matrix/Normed.lean:514:theorem frobeniusIsBoundedSMul [SeminormedRing R] [SeminormedAddCommGroup α] [Module R α]
+Mathlib/Analysis/Matrix/Normed.lean:523:theorem frobeniusNormSMulClass [SeminormedRing R] [SeminormedAddCommGroup α] [Module R α]
+Mathlib/Analysis/Matrix/Normed.lean:534:def frobeniusNormedSpace [NormedField R] [SeminormedAddCommGroup α] [NormedSpace R α] :
+Mathlib/Analysis/Matrix/Normed.lean:545:theorem frobenius_nnnorm_def (A : Matrix m n α) :
+Mathlib/Analysis/Matrix/Normed.lean:550:theorem frobenius_norm_def (A : Matrix m n α) :
+Mathlib/Analysis/Matrix/Normed.lean:552:  (congr_arg ((↑) : ℝ≥0 → ℝ) (frobenius_nnnorm_def A)).trans <| by simp [NNReal.coe_sum]
+Mathlib/Analysis/Matrix/Normed.lean:555:theorem frobenius_nnnorm_map_eq (A : Matrix m n α) (f : α → β) (hf : ∀ a, ‖f a‖₊ = ‖a‖₊) :
+Mathlib/Analysis/Matrix/Normed.lean:556:    ‖A.map f‖₊ = ‖A‖₊ := by simp_rw [frobenius_nnnorm_def, Matrix.map_apply, hf]
+Mathlib/Analysis/Matrix/Normed.lean:559:theorem frobenius_norm_map_eq (A : Matrix m n α) (f : α → β) (hf : ∀ a, ‖f a‖ = ‖a‖) :
+Mathlib/Analysis/Matrix/Normed.lean:561:  (congr_arg ((↑) : ℝ≥0 → ℝ) <| frobenius_nnnorm_map_eq A f fun a => Subtype.ext <| hf a :)
+Mathlib/Analysis/Matrix/Normed.lean:564:theorem frobenius_nnnorm_transpose (A : Matrix m n α) : ‖Aᵀ‖₊ = ‖A‖₊ := by
+Mathlib/Analysis/Matrix/Normed.lean:565:  rw [frobenius_nnnorm_def, frobenius_nnnorm_def, Finset.sum_comm]
+Mathlib/Analysis/Matrix/Normed.lean:569:theorem frobenius_norm_transpose (A : Matrix m n α) : ‖Aᵀ‖ = ‖A‖ :=
+Mathlib/Analysis/Matrix/Normed.lean:570:  congr_arg ((↑) : ℝ≥0 → ℝ) <| frobenius_nnnorm_transpose A
+Mathlib/Analysis/Matrix/Normed.lean:573:theorem frobenius_nnnorm_conjTranspose [StarAddMonoid α] [NormedStarGroup α] (A : Matrix m n α) :
+Mathlib/Analysis/Matrix/Normed.lean:575:  (frobenius_nnnorm_map_eq _ _ nnnorm_star).trans A.frobenius_nnnorm_transpose
+Mathlib/Analysis/Matrix/Normed.lean:578:theorem frobenius_norm_conjTranspose [StarAddMonoid α] [NormedStarGroup α] (A : Matrix m n α) :
+Mathlib/Analysis/Matrix/Normed.lean:580:  congr_arg ((↑) : ℝ≥0 → ℝ) <| frobenius_nnnorm_conjTranspose A
+Mathlib/Analysis/Matrix/Normed.lean:582:instance frobenius_normedStarGroup [StarAddMonoid α] [NormedStarGroup α] :
+Mathlib/Analysis/Matrix/Normed.lean:584:  ⟨(le_of_eq <| frobenius_norm_conjTranspose ·)⟩
+Mathlib/Analysis/Matrix/Normed.lean:587:lemma frobenius_norm_replicateRow (v : m → α) : ‖replicateRow ι v‖ = ‖toLp 2 v‖ := by
+Mathlib/Analysis/Matrix/Normed.lean:588:  rw [frobenius_norm_def, Fintype.sum_unique, PiLp.norm_eq_of_L2, Real.sqrt_eq_rpow]
+Mathlib/Analysis/Matrix/Normed.lean:592:lemma frobenius_nnnorm_replicateRow (v : m → α) : ‖replicateRow ι v‖₊ = ‖toLp 2 v‖₊ :=
+Mathlib/Analysis/Matrix/Normed.lean:593:  Subtype.ext <| frobenius_norm_replicateRow v
+Mathlib/Analysis/Matrix/Normed.lean:596:lemma frobenius_norm_replicateCol (v : n → α) : ‖replicateCol ι v‖ = ‖toLp 2 v‖ := by
+Mathlib/Analysis/Matrix/Normed.lean:597:  simp [frobenius_norm_def, PiLp.norm_eq_of_L2, Real.sqrt_eq_rpow]
+Mathlib/Analysis/Matrix/Normed.lean:600:lemma frobenius_nnnorm_replicateCol (v : n → α) : ‖replicateCol ι v‖₊ = ‖toLp 2 v‖₊ :=
+Mathlib/Analysis/Matrix/Normed.lean:601:  Subtype.ext <| frobenius_norm_replicateCol v
+Mathlib/Analysis/Matrix/Normed.lean:605:lemma frobenius_nnnorm_diagonal [DecidableEq n] (v : n → α) : ‖diagonal v‖₊ = ‖toLp 2 v‖₊ := by
+Mathlib/Analysis/Matrix/Normed.lean:606:  simp_rw [frobenius_nnnorm_def, ← Finset.sum_product', Finset.univ_product_univ,
+Mathlib/Analysis/Matrix/Normed.lean:618:lemma frobenius_norm_diagonal [DecidableEq n] (v : n → α) : ‖diagonal v‖ = ‖toLp 2 v‖ :=
+Mathlib/Analysis/Matrix/Normed.lean:619:  (congr_arg ((↑) : ℝ≥0 → ℝ) <| frobenius_nnnorm_diagonal v :).trans rfl
+Mathlib/Analysis/Matrix/Normed.lean:623:theorem frobenius_nnnorm_one [DecidableEq n] [SeminormedAddCommGroup α] [One α] :
+Mathlib/Analysis/Matrix/Normed.lean:627:    _ = ‖toLp 2 (Function.const _ 1)‖₊ := frobenius_nnnorm_diagonal _
+Mathlib/Analysis/Matrix/Normed.lean:636:theorem frobenius_nnnorm_mul (A : Matrix l m α) (B : Matrix m n α) : ‖A * B‖₊ ≤ ‖A‖₊ * ‖B‖₊ := by
+Mathlib/Analysis/Matrix/Normed.lean:637:  simp_rw [frobenius_nnnorm_def, Matrix.mul_apply]
+Mathlib/Analysis/Matrix/Normed.lean:646:theorem frobenius_norm_mul (A : Matrix l m α) (B : Matrix m n α) : ‖A * B‖ ≤ ‖A‖ * ‖B‖ :=
+Mathlib/Analysis/Matrix/Normed.lean:647:  frobenius_nnnorm_mul A B
+Mathlib/Analysis/Matrix/Normed.lean:653:def frobeniusNormedRing [DecidableEq m] : NormedRing (Matrix m m α) :=
+Mathlib/Analysis/Matrix/Normed.lean:654:  { Matrix.frobeniusSeminormedAddCommGroup, Matrix.instRing with
+Mathlib/Analysis/Matrix/Normed.lean:655:    norm_mul_le := frobenius_norm_mul
+Mathlib/Analysis/Matrix/Normed.lean:662:def frobeniusNormedAlgebra [DecidableEq m] [NormedField R] [NormedAlgebra R α] :
+Mathlib/Analysis/Matrix/Normed.lean:664:  { Matrix.frobeniusNormedSpace, Matrix.instAlgebra with }
+Mathlib/Analysis/Matrix/Normed.lean:668:end frobenius
+Mathlib/Analysis/Matrix/Normed.lean:672:  Matrix.frobeniusSeminormedAddCommGroup
+Mathlib/Analysis/Matrix/Normed.lean:673:  Matrix.frobeniusNormedAddCommGroup
+Mathlib/Analysis/Matrix/Normed.lean:674:  Matrix.frobeniusNormedSpace
+Mathlib/Analysis/Matrix/Normed.lean:675:  Matrix.frobeniusNormedRing
+Mathlib/Analysis/Matrix/Normed.lean:676:  Matrix.frobeniusNormedAlgebra
+Mathlib/Analysis/Matrix/Normed.lean:677:  Matrix.frobeniusIsBoundedSMul
+Mathlib/Analysis/Matrix/Normed.lean:678:  Matrix.frobeniusNormSMulClass
+Mathlib/Analysis/Normed/Algebra/MatrixExponential.lean:34:`Matrix.frobeniusNormedAddCommGroup`, `Matrix.linftyOpNormedAddCommGroup`), none of them
+Mathlib/LinearAlgebra/UnitaryGroup.lean:87:/-- The kronecker product of two unitary matrices is unitary.
+Mathlib/LinearAlgebra/Matrix/Charpoly/FiniteField.lean:35:    apply (frobenius_inj K[X] p).iterate k
+Mathlib/LinearAlgebra/Matrix/Charpoly/FiniteField.lean:36:    repeat' rw [iterate_frobenius (R := K[X])]; rw [← hk]
+Mathlib/LinearAlgebra/Matrix/Irreducible/Defs.lean:64:matrix, nonnegative, positive, power, quiver, graph, irreducible, primitive, perron-frobenius
+Mathlib/Analysis/CStarAlgebra/Matrix.lean:192:  rw [l2_opNorm_def, toEuclideanLin_eq_toLin_orthonormal, LinearEquiv.trans_apply,
+Mathlib/Analysis/CStarAlgebra/Matrix.lean:201:  rw [l2_opNorm_def, toEuclideanLin_eq_toLin_orthonormal, LinearEquiv.trans_apply,
+Mathlib/Analysis/CStarAlgebra/Unitary/Connected.lean:64:lemma Unitary.two_mul_one_sub_le_norm_sub_one_sq {u : A} (hu : u ∈ unitary A)
+Mathlib/Analysis/CStarAlgebra/Unitary/Connected.lean:90:lemma Unitary.norm_sub_one_lt_two_iff {u : A} (hu : u ∈ unitary A) :
+Mathlib/Analysis/CStarAlgebra/Unitary/Connected.lean:109:lemma Unitary.spectrum_subset_slitPlane_iff_norm_lt_two {u : A} (hu : u ∈ unitary A) :
+Mathlib/Analysis/CStarAlgebra/Unitary/Connected.lean:188:lemma Unitary.two_mul_one_sub_cos_norm_argSelfAdjoint {u : unitary A} (hu : ‖(u - 1 : A)‖ < 2) :
+Mathlib/Analysis/CStarAlgebra/Unitary/Span.lean:70:lemma CStarAlgebra.norm_smul_two_inv_smul_add_four_unitary (x : A) (hx : x ≠ 0) :
+Mathlib/Analysis/CStarAlgebra/Unitary/Span.lean:92:  · have := norm_smul_two_inv_smul_add_four_unitary x hx
+Mathlib/Analysis/Normed/Lp/PiLp.lean:1225:of `Π i, α i`. See for instance `Matrix.frobeniusSeminormedAddCommGroup`.
+Mathlib/Analysis/InnerProductSpace/NormDet.lean:43:* `LinearMap.normDet_eq_prod_singularValues`: `LinearMap.normDet` equals to the product of singular
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:104:theorem singularValues_pos_iff_ne_zero (i : ℕ) :
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:116:    T.singularValues i = √(T.isSymmetric_adjoint_comp_self.eigenvalues hn i) := by
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:121:    T.singularValues i = √(T.isSymmetric_adjoint_comp_self.eigenvalues hn ⟨i, hi⟩) :=
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:129:    T.singularValues i ^ 2 = T.isSymmetric_adjoint_comp_self.eigenvalues hn i := by
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:130:  simp [T.singularValues_fin hn, T.isPositive_adjoint_comp_self.nonneg_eigenvalues hn i]
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:133:    T.singularValues i ^ 2 = T.isSymmetric_adjoint_comp_self.eigenvalues hn ⟨i, hi⟩ :=
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:178:    := by ext i; simp [T.singularValues_fin, T.isPositive_adjoint_comp_self.nonneg_eigenvalues]
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:179:  rw [← T.singularValues.support.card_attachFin hS, this, Finset.card_compl, Fintype.card_fin,
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:186:  rw [Finset.mem_coe, Finsupp.mem_support_iff, ← singularValues_pos_iff_ne_zero] at ⊢ ha
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:198:  rw [singularValues_pos_iff_ne_zero, ← Finsupp.mem_support_iff, support_singularValues,
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:205:theorem singularValues_eq_zero_iff_le_finrank_range {n : ℕ} :
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:210:theorem singularValues_zero : (0 : E →ₗ[𝕜] F).singularValues = 0 := by
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:212:  rw [Finsupp.zero_apply, singularValues_eq_zero_iff_le_finrank_range, range_zero]
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:216:theorem singularValues_eq_zero_iff : T.singularValues = 0 ↔ T = 0 := by
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:219:      ← singularValues_eq_zero_iff_le_finrank_range, h, Finsupp.zero_apply]
+Mathlib/Analysis/InnerProductSpace/SingularValues.lean:220:  · exact h ▸ singularValues_zero
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:962:/-- The change-of-basis matrix between two orthonormal bases `a`, `b` is a unitary matrix. -/
+Mathlib/Analysis/InnerProductSpace/PiL2.lean:1277:lemma toEuclideanLin_eq_toLin_orthonormal [Fintype m] :

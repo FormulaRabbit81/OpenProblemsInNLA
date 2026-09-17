@@ -1,0 +1,1939 @@
+{
+  "time_utc": "2026-09-17T06:15:35.362173+00:00",
+  "scope": "Independent static and textual-contract audit only; no elaboration, Comparator, kernel rerun or publication verification. Exact reviewed compiled source and runtime receipts are separate gates.",
+  "project": "/private/tmp/nla-lean-next-20260915/next-proofs/MI-13",
+  "files": {
+    "NLA/MI13/CancelledSVD.lean": "421d9632779e21ae956c468f5f6212ebda38ef5ae00a514406ab545b9987217a",
+    "NLA/MI13/CommutatorAlgebra.lean": "0bb27d768d1eed8e6e783508a00887f19e2ad4f62b80428ab49be0fcce368d08",
+    "NLA/MI13/CommutatorEigenspaces.lean": "613d4cfb2e4f686411179e9bbf33630bb08e25fd964942a33361a88b11c991c1",
+    "NLA/MI13/CommutatorMaximum.lean": "a870e869415b2d34cc7db9b238dc2c4b110dee4aaf7682eef52881fb45759a39",
+    "NLA/MI13/Complete.lean": "0e3f09dea75b014cce6bff288c5aafdab01781d5ae462f587620e1876a0e0ba6",
+    "NLA/MI13/Definitions.lean": "add61115ca2d92951bfc479c3de4dcbb9f2b850cac2ab793cf0dcf543e75622b",
+    "NLA/MI13/ElementaryBounds.lean": "d72587c8f69b640063789027833f3233410cff28e27dc5b4d2c852f572e56992",
+    "NLA/MI13/Frobenius.lean": "e19ea36fb0c520962a184371ebff51d42246e1ea9ec7f47808a602df0f896c90",
+    "NLA/MI13/GramBasis.lean": "3a3b6e77d4081f20fb9e7df79ce1ae36a0414851f8a81a18186959ecb759f1f9",
+    "NLA/MI13/MiddleBounds.lean": "8f98b9cd37208896164b2fccfe62f751cd38ad936fea93af62bee2ee142a62d6",
+    "NLA/MI13/NormScaling.lean": "2a1371051cb020b7ed599c3ae3be603abe479fcebfaff3416c46388e74b85a5b",
+    "NLA/MI13/NormalizedImages.lean": "c9200151a6ad1fc8dd8cecfad3b133087f5a7597bc7157195751040290db5ea1",
+    "NLA/MI13/Numerical.lean": "91a9cbb39602c1a405eaef117913fee8c6b97ac59d9e55e0082686653d0ba676",
+    "NLA/MI13/OperatorNorm.lean": "e73ee25c908df1a1ff6051b9bd8c7e8aadc43ec211e31b8d888b0479e638844d",
+    "NLA/MI13/Padding.lean": "6c5365f6ea185e2a8c27930f2c237d2fda56d8191a662d906c1721d5b82dbac2",
+    "NLA/MI13/RefinedCommutator.lean": "ffcfc8be476b891ba62895404a3b351fed6c4cb868e51e0cfb37885f2f169326",
+    "NLA/MI13/SVD.lean": "59f701c5d958f92e1f6913ead484903196ba761fb45be9956cef671fb1f3519e",
+    "NLA/MI13/Sharpness.lean": "faf100dc77cd88038802f01d85c7b9d2d0cd5948166514dd4113d33c0272e5dd",
+    "NLA/MI13/SingularSemantics.lean": "90b23f01099b9d9036b6a5ea5155f61f5b6aa77d8cefc0044cd3766ecc3dc61b",
+    "NLA/MI13/TwoUnitaryAverage.lean": "cf31ad350c2577333fcec8ac0856937caa50d670e0c0634b88b58a8c14e73d17",
+    "NLA/MI13/UnitaryInvariance.lean": "bd825d92218cf9b947bad95d34ba6f45bc37b29a0fa5246cd929a9a00889dae8",
+    "Solution.lean": "b5907f41c8c8c468b31d4ce613bdaf232507cbaf53052495f8125af1647520d6"
+  },
+  "source_lines": 1886,
+  "contracts": [
+    {
+      "name": "NLA.MI13.frobenius_semantics",
+      "implementation": "NLA/MI13/Frobenius.lean",
+      "header_sha256": "d7c9cf041378dc3ad8ab54e47dde6f8c707f9c21806b6ddd2f1c5e3fce7489c3",
+      "source_sha256": "e19ea36fb0c520962a184371ebff51d42246e1ea9ec7f47808a602df0f896c90"
+    },
+    {
+      "name": "NLA.MI13.frobenius_linear_bounds",
+      "implementation": "NLA/MI13/Frobenius.lean",
+      "header_sha256": "c3f060994dbb5eca877014e1f9fd6d0574c0db3cde6060ecf40f51da9b76f86a",
+      "source_sha256": "e19ea36fb0c520962a184371ebff51d42246e1ea9ec7f47808a602df0f896c90"
+    },
+    {
+      "name": "NLA.MI13.operator_norm_semantics",
+      "implementation": "NLA/MI13/OperatorNorm.lean",
+      "header_sha256": "6194b51f97d855aa73a1a9db2434e2a7cb5f9a19716c735adcae67ee840d1cb0",
+      "source_sha256": "e73ee25c908df1a1ff6051b9bd8c7e8aadc43ec211e31b8d888b0479e638844d"
+    },
+    {
+      "name": "NLA.MI13.singular_values_semantics",
+      "implementation": "NLA/MI13/SingularSemantics.lean",
+      "header_sha256": "10aa34e2e7ac7ea9e59db95ffd2b5c786088e33b858053529031ea6834244f50",
+      "source_sha256": "90b23f01099b9d9036b6a5ea5155f61f5b6aa77d8cefc0044cd3766ecc3dc61b"
+    },
+    {
+      "name": "NLA.MI13.singular_values_gram",
+      "implementation": "NLA/MI13/SingularSemantics.lean",
+      "header_sha256": "8ac9fa3f40b75a5760896b26789a86e3d77dbe6bd494513f2c37d5c69736fc9d",
+      "source_sha256": "90b23f01099b9d9036b6a5ea5155f61f5b6aa77d8cefc0044cd3766ecc3dc61b"
+    },
+    {
+      "name": "NLA.MI13.ordered_gram_basis",
+      "implementation": "NLA/MI13/GramBasis.lean",
+      "header_sha256": "12f214e956583140f2bac7ded037df678956273e3cf08fb38745c7a92c0bb8f7",
+      "source_sha256": "3a3b6e77d4081f20fb9e7df79ce1ae36a0414851f8a81a18186959ecb759f1f9"
+    },
+    {
+      "name": "NLA.MI13.positive_image_orthonormal",
+      "implementation": "NLA/MI13/NormalizedImages.lean",
+      "header_sha256": "66034ed214c6990f319e6cdee47239fa5f35f789a57473efcee1d698a6a0578d",
+      "source_sha256": "c9200151a6ad1fc8dd8cecfad3b133087f5a7597bc7157195751040290db5ea1"
+    },
+    {
+      "name": "NLA.MI13.zero_singular_image",
+      "implementation": "NLA/MI13/NormalizedImages.lean",
+      "header_sha256": "7553e5d5793c8c1a413b16f4e0eb588c615be8771b903b44a7ef99935002c16c",
+      "source_sha256": "c9200151a6ad1fc8dd8cecfad3b133087f5a7597bc7157195751040290db5ea1"
+    },
+    {
+      "name": "NLA.MI13.positive_image_extension",
+      "implementation": "NLA/MI13/GramBasis.lean",
+      "header_sha256": "3a4b89496c391b845b6f5c311f4fdf0191646ebb35710e6eb76e2b594fa641e2",
+      "source_sha256": "3a3b6e77d4081f20fb9e7df79ce1ae36a0414851f8a81a18186959ecb759f1f9"
+    },
+    {
+      "name": "NLA.MI13.full_singular_vector_bases",
+      "implementation": "NLA/MI13/NormalizedImages.lean",
+      "header_sha256": "0a68c69ae7c9e05816cdea04fe805e1caa171ae81ac1c18c318d9b61ab2145bb",
+      "source_sha256": "c9200151a6ad1fc8dd8cecfad3b133087f5a7597bc7157195751040290db5ea1"
+    },
+    {
+      "name": "NLA.MI13.full_svd",
+      "implementation": "NLA/MI13/SVD.lean",
+      "header_sha256": "3482186a93c2a41640fc0cf74ddfe5297ac925749398a9c1bab0af6df2fe4899",
+      "source_sha256": "59f701c5d958f92e1f6913ead484903196ba761fb45be9956cef671fb1f3519e"
+    },
+    {
+      "name": "NLA.MI13.unitary_norm_invariance",
+      "implementation": "NLA/MI13/UnitaryInvariance.lean",
+      "header_sha256": "ba53ca8638c62cf0b5997a46f212de8ab0fba33673adb8a502be7d68498b09be",
+      "source_sha256": "bd825d92218cf9b947bad95d34ba6f45bc37b29a0fa5246cd929a9a00889dae8"
+    },
+    {
+      "name": "NLA.MI13.unitary_singular_invariance",
+      "implementation": "NLA/MI13/UnitaryInvariance.lean",
+      "header_sha256": "a54fc6245ec56a39593c28e790ef92fd3c15ea89c588f62e48a700837cbbf516",
+      "source_sha256": "bd825d92218cf9b947bad95d34ba6f45bc37b29a0fa5246cd929a9a00889dae8"
+    },
+    {
+      "name": "NLA.MI13.hilbert_schmidt_semantics",
+      "implementation": "NLA/MI13/Frobenius.lean",
+      "header_sha256": "c7ae75caa7d8c47f2ba6fac219f755f29bf8f8192b2c484367ea4a284ce27c18",
+      "source_sha256": "e19ea36fb0c520962a184371ebff51d42246e1ea9ec7f47808a602df0f896c90"
+    },
+    {
+      "name": "NLA.MI13.commutator_adjoint",
+      "implementation": "NLA/MI13/CommutatorAlgebra.lean",
+      "header_sha256": "72006f749006ef979eb6c299e9e2bd1ab197fab1b48c5b4bc527b2000cc23e62",
+      "source_sha256": "0bb27d768d1eed8e6e783508a00887f19e2ad4f62b80428ab49be0fcce368d08"
+    },
+    {
+      "name": "NLA.MI13.commutator_conjugate_symmetry",
+      "implementation": "NLA/MI13/CommutatorAlgebra.lean",
+      "header_sha256": "4211a066f72de33d95b6d62045e8bc540ce6907c64b6f4f87697b17ce53a6f34",
+      "source_sha256": "0bb27d768d1eed8e6e783508a00887f19e2ad4f62b80428ab49be0fcce368d08"
+    },
+    {
+      "name": "NLA.MI13.commutator_spectral_maximum",
+      "implementation": "NLA/MI13/CommutatorMaximum.lean",
+      "header_sha256": "18a9390c69867168ddadc837b0a234a625c51e771b20c0e9299f77af31b105ac",
+      "source_sha256": "a870e869415b2d34cc7db9b238dc2c4b110dee4aaf7682eef52881fb45759a39"
+    },
+    {
+      "name": "NLA.MI13.positive_eigenvector_pair",
+      "implementation": "NLA/MI13/CommutatorEigenspaces.lean",
+      "header_sha256": "0c65f18a44ef740958e357cf77ef9e27afefa27110e425eca7bd15f25d0956c8",
+      "source_sha256": "613d4cfb2e4f686411179e9bbf33630bb08e25fd964942a33361a88b11c991c1"
+    },
+    {
+      "name": "NLA.MI13.eigenspace_functional_kernel",
+      "implementation": "NLA/MI13/CommutatorEigenspaces.lean",
+      "header_sha256": "8354d9049f5ed6c561e8ea3916d9226e5fc536f0960e97774c5631ad9b2c9c6a",
+      "source_sha256": "613d4cfb2e4f686411179e9bbf33630bb08e25fd964942a33361a88b11c991c1"
+    },
+    {
+      "name": "NLA.MI13.two_coordinate_bound",
+      "implementation": "NLA/MI13/ElementaryBounds.lean",
+      "header_sha256": "e3772c435f262726346eb1002b58013933913d746ddc62c885c4be1b235e81ce",
+      "source_sha256": "d72587c8f69b640063789027833f3233410cff28e27dc5b4d2c852f572e56992"
+    },
+    {
+      "name": "NLA.MI13.off_corner_coefficient_bound",
+      "implementation": "NLA/MI13/ElementaryBounds.lean",
+      "header_sha256": "d78f727535f8e9528d8132cb4f17061c2c5ec7562f4e8c3e88b423b06853da33",
+      "source_sha256": "d72587c8f69b640063789027833f3233410cff28e27dc5b4d2c852f572e56992"
+    },
+    {
+      "name": "NLA.MI13.svd_corner_functional",
+      "implementation": "NLA/MI13/CancelledSVD.lean",
+      "header_sha256": "1ca083b0230e01197dd4198469692c12504154e230bf8d847b2e53fc737ee403",
+      "source_sha256": "421d9632779e21ae956c468f5f6212ebda38ef5ae00a514406ab545b9987217a"
+    },
+    {
+      "name": "NLA.MI13.cancelled_svd_bound",
+      "implementation": "NLA/MI13/CancelledSVD.lean",
+      "header_sha256": "e28e3afc2bbb93f639bba0c75c52a53b978ae4409a17139836d9bfb2941556d5",
+      "source_sha256": "421d9632779e21ae956c468f5f6212ebda38ef5ae00a514406ab545b9987217a"
+    },
+    {
+      "name": "NLA.MI13.refined_commutator_bound",
+      "implementation": "NLA/MI13/RefinedCommutator.lean",
+      "header_sha256": "c6463ed4937dd4596fb608ed46330840629c1470ce46769d2f16293c694a1d23",
+      "source_sha256": "ffcfc8be476b891ba62895404a3b351fed6c4cb868e51e0cfb37885f2f169326"
+    },
+    {
+      "name": "NLA.MI13.half_certificate",
+      "implementation": "NLA/MI13/Numerical.lean",
+      "header_sha256": "3263258ea582a4ace442e4acb66c4898a27877b039b26a472662783ec22acac8",
+      "source_sha256": "91a9cbb39602c1a405eaef117913fee8c6b97ac59d9e55e0082686653d0ba676"
+    },
+    {
+      "name": "NLA.MI13.unit_circle_lift",
+      "implementation": "NLA/MI13/ElementaryBounds.lean",
+      "header_sha256": "a6503878648d490f402a26dfe64aab5a78d75d5ab1e2a95b63b5e7fff3304420",
+      "source_sha256": "d72587c8f69b640063789027833f3233410cff28e27dc5b4d2c852f572e56992"
+    },
+    {
+      "name": "NLA.MI13.two_unitary_average",
+      "implementation": "NLA/MI13/TwoUnitaryAverage.lean",
+      "header_sha256": "464d9ceabfa5d3697f1b1f33d4833e89060c230150ef21658581c4c4ff76e4ac",
+      "source_sha256": "cf31ad350c2577333fcec8ac0856937caa50d670e0c0634b88b58a8c14e73d17"
+    },
+    {
+      "name": "NLA.MI13.frobenius_average_bound",
+      "implementation": "NLA/MI13/ElementaryBounds.lean",
+      "header_sha256": "a6f9c977d4be40c6fe9ec76fcd73fb175450ed5beaff6ba1325cb0ddaa9dc1ff",
+      "source_sha256": "d72587c8f69b640063789027833f3233410cff28e27dc5b4d2c852f572e56992"
+    },
+    {
+      "name": "NLA.MI13.unitary_middle_bound",
+      "implementation": "NLA/MI13/MiddleBounds.lean",
+      "header_sha256": "b513982dcd2aca2bdd31b45329c8f43383643236edc7d53f0462cc6fa65836fb",
+      "source_sha256": "8f98b9cd37208896164b2fccfe62f751cd38ad936fea93af62bee2ee142a62d6"
+    },
+    {
+      "name": "NLA.MI13.contraction_middle_bound",
+      "implementation": "NLA/MI13/MiddleBounds.lean",
+      "header_sha256": "8bcf37962efadbe26b790e88bd657d3ad9021f9622ad384da25e0804a34a010b",
+      "source_sha256": "8f98b9cd37208896164b2fccfe62f751cd38ad936fea93af62bee2ee142a62d6"
+    },
+    {
+      "name": "NLA.MI13.square_middle_bound",
+      "implementation": "NLA/MI13/MiddleBounds.lean",
+      "header_sha256": "9f80b4b1ee553cf02facf142426bcf2d08bb556790cf54b2dcbcd8cfa83f3e0a",
+      "source_sha256": "8f98b9cd37208896164b2fccfe62f751cd38ad936fea93af62bee2ee142a62d6"
+    },
+    {
+      "name": "NLA.MI13.padding_product",
+      "implementation": "NLA/MI13/Padding.lean",
+      "header_sha256": "537a806a65fb2337533c492386a99cd61de9d90f1a1e7a985ad1ddd7c5ce488b",
+      "source_sha256": "6c5365f6ea185e2a8c27930f2c237d2fda56d8191a662d906c1721d5b82dbac2"
+    },
+    {
+      "name": "NLA.MI13.padding_norms",
+      "implementation": "NLA/MI13/Padding.lean",
+      "header_sha256": "576545ed904436c9cdfeaf5df8fdc3e041baa933a39caa8b926b742776a78fa6",
+      "source_sha256": "6c5365f6ea185e2a8c27930f2c237d2fda56d8191a662d906c1721d5b82dbac2"
+    },
+    {
+      "name": "NLA.MI13.padding_singular_values",
+      "implementation": "NLA/MI13/Padding.lean",
+      "header_sha256": "6d4a401dd827b07cb00ffc830b2ff7b6d9059d0f95e39b3f405791d869cadee8",
+      "source_sha256": "6c5365f6ea185e2a8c27930f2c237d2fda56d8191a662d906c1721d5b82dbac2"
+    },
+    {
+      "name": "NLA.MI13.canonical_rectangular_bound",
+      "implementation": "NLA/MI13/Complete.lean",
+      "header_sha256": "d271ce4a4a26e7be8365e35ba8ea31c4732598560503aeba7ceec1817d048118",
+      "source_sha256": "0e3f09dea75b014cce6bff288c5aafdab01781d5ae462f587620e1876a0e0ba6"
+    },
+    {
+      "name": "NLA.MI13.sharpness_example",
+      "implementation": "NLA/MI13/Sharpness.lean",
+      "header_sha256": "b7329dfd0502f7fa288820a2fe3c2afbd67aa110620ee092a812dcb745ae1ac1",
+      "source_sha256": "faf100dc77cd88038802f01d85c7b9d2d0cd5948166514dd4113d33c0272e5dd"
+    }
+  ],
+  "checks": [
+    {
+      "label": "freeze Challenge.lean",
+      "pass": true
+    },
+    {
+      "label": "freeze NLA/MI13/Definitions.lean",
+      "pass": true
+    },
+    {
+      "label": "freeze NUMERICAL_TARGETS.md",
+      "pass": true
+    },
+    {
+      "label": "freeze NUMERICAL-FIRST.json",
+      "pass": true
+    },
+    {
+      "label": "freeze DEFINITION-AND-CONTRACT-PLAN.md",
+      "pass": true
+    },
+    {
+      "label": "freeze STATEMENT-HEADERS.json",
+      "pass": true
+    },
+    {
+      "label": "freeze SourceCorrespondence.md",
+      "pass": true
+    },
+    {
+      "label": "freeze REVIEW-PLAN.md",
+      "pass": true
+    },
+    {
+      "label": "freeze comparator.json",
+      "pass": true
+    },
+    {
+      "label": "freeze lean-toolchain",
+      "pass": true
+    },
+    {
+      "label": "freeze lakefile.toml",
+      "pass": true
+    },
+    {
+      "label": "freeze lake-manifest.json",
+      "pass": true
+    },
+    {
+      "label": "freeze LICENSE",
+      "pass": true
+    },
+    {
+      "label": "36 frozen headers",
+      "pass": true
+    },
+    {
+      "label": "22 active inputs at first full candidate",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/CancelledSVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/CancelledSVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/CancelledSVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/CancelledSVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/CancelledSVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/CancelledSVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/CancelledSVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/CancelledSVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/CancelledSVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/CancelledSVD.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/CancelledSVD.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/CancelledSVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/CommutatorAlgebra.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/CommutatorAlgebra.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/CommutatorAlgebra.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/CommutatorAlgebra.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/CommutatorAlgebra.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/CommutatorAlgebra.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/CommutatorAlgebra.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/CommutatorAlgebra.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/CommutatorAlgebra.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/CommutatorAlgebra.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/CommutatorAlgebra.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/CommutatorAlgebra.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/CommutatorEigenspaces.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/CommutatorEigenspaces.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/CommutatorEigenspaces.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/CommutatorEigenspaces.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/CommutatorEigenspaces.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/CommutatorEigenspaces.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/CommutatorEigenspaces.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/CommutatorEigenspaces.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/CommutatorEigenspaces.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/CommutatorEigenspaces.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/CommutatorEigenspaces.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/CommutatorEigenspaces.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/CommutatorMaximum.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/CommutatorMaximum.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/CommutatorMaximum.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/CommutatorMaximum.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/CommutatorMaximum.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/CommutatorMaximum.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/CommutatorMaximum.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/CommutatorMaximum.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/CommutatorMaximum.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/CommutatorMaximum.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/CommutatorMaximum.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/CommutatorMaximum.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/Complete.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/Complete.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/Complete.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/Complete.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/Complete.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/Complete.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/Complete.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/Complete.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/Complete.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/Complete.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/Complete.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/Complete.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/Definitions.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/Definitions.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/Definitions.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/Definitions.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/Definitions.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/Definitions.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/Definitions.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/Definitions.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/Definitions.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/Definitions.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/Definitions.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/Definitions.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/ElementaryBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/ElementaryBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/ElementaryBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/ElementaryBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/ElementaryBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/ElementaryBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/ElementaryBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/ElementaryBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/ElementaryBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/ElementaryBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/ElementaryBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/ElementaryBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/Frobenius.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/Frobenius.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/Frobenius.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/Frobenius.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/Frobenius.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/Frobenius.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/Frobenius.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/Frobenius.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/Frobenius.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/Frobenius.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/Frobenius.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/Frobenius.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/GramBasis.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/GramBasis.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/GramBasis.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/GramBasis.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/GramBasis.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/GramBasis.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/GramBasis.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/GramBasis.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/GramBasis.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/GramBasis.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/GramBasis.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/GramBasis.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/MiddleBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/MiddleBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/MiddleBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/MiddleBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/MiddleBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/MiddleBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/MiddleBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/MiddleBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/MiddleBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/MiddleBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/MiddleBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/MiddleBounds.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/NormScaling.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/NormScaling.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/NormScaling.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/NormScaling.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/NormScaling.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/NormScaling.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/NormScaling.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/NormScaling.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/NormScaling.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/NormScaling.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/NormScaling.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/NormScaling.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/NormalizedImages.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/NormalizedImages.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/NormalizedImages.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/NormalizedImages.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/NormalizedImages.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/NormalizedImages.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/NormalizedImages.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/NormalizedImages.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/NormalizedImages.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/NormalizedImages.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/NormalizedImages.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/NormalizedImages.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/Numerical.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/Numerical.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/Numerical.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/Numerical.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/Numerical.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/Numerical.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/Numerical.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/Numerical.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/Numerical.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/Numerical.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/Numerical.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/Numerical.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/OperatorNorm.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/OperatorNorm.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/OperatorNorm.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/OperatorNorm.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/OperatorNorm.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/OperatorNorm.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/OperatorNorm.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/OperatorNorm.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/OperatorNorm.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/OperatorNorm.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/OperatorNorm.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/OperatorNorm.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/Padding.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/Padding.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/Padding.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/Padding.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/Padding.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/Padding.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/Padding.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/Padding.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/Padding.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/Padding.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/Padding.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/Padding.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/RefinedCommutator.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/RefinedCommutator.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/RefinedCommutator.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/RefinedCommutator.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/RefinedCommutator.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/RefinedCommutator.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/RefinedCommutator.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/RefinedCommutator.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/RefinedCommutator.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/RefinedCommutator.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/RefinedCommutator.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/RefinedCommutator.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/SVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/SVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/SVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/SVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/SVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/SVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/SVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/SVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/SVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/SVD.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/SVD.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/SVD.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/Sharpness.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/Sharpness.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/Sharpness.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/Sharpness.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/Sharpness.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/Sharpness.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/Sharpness.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/Sharpness.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/Sharpness.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/Sharpness.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/Sharpness.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/Sharpness.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/SingularSemantics.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/SingularSemantics.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/SingularSemantics.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/SingularSemantics.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/SingularSemantics.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/SingularSemantics.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/SingularSemantics.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/SingularSemantics.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/SingularSemantics.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/SingularSemantics.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/SingularSemantics.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/SingularSemantics.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/TwoUnitaryAverage.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/TwoUnitaryAverage.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/TwoUnitaryAverage.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/TwoUnitaryAverage.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/TwoUnitaryAverage.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/TwoUnitaryAverage.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/TwoUnitaryAverage.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/TwoUnitaryAverage.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/TwoUnitaryAverage.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/TwoUnitaryAverage.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/TwoUnitaryAverage.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/TwoUnitaryAverage.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b NLA/MI13/UnitaryInvariance.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b NLA/MI13/UnitaryInvariance.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b NLA/MI13/UnitaryInvariance.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b NLA/MI13/UnitaryInvariance.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b NLA/MI13/UnitaryInvariance.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b NLA/MI13/UnitaryInvariance.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b NLA/MI13/UnitaryInvariance.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b NLA/MI13/UnitaryInvariance.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b NLA/MI13/UnitaryInvariance.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import NLA/MI13/UnitaryInvariance.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false NLA/MI13/UnitaryInvariance.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted NLA/MI13/UnitaryInvariance.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bsorry\\b Solution.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\badmit\\b Solution.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*axiom\\b Solution.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bnative_decide\\b Solution.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bunsafe\\b Solution.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*#eval\\b Solution.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*run_elab\\b Solution.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden \\bimplemented_by\\b Solution.lean",
+      "pass": true
+    },
+    {
+      "label": "no forbidden ^\\s*variable\\b Solution.lean",
+      "pass": true
+    },
+    {
+      "label": "no Challenge import Solution.lean",
+      "pass": true
+    },
+    {
+      "label": "explicit autoImplicit false Solution.lean",
+      "pass": true
+    },
+    {
+      "label": "namespace restricted Solution.lean",
+      "pass": true
+    },
+    {
+      "label": "unique implementation frobenius_semantics",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header frobenius_semantics",
+      "pass": true
+    },
+    {
+      "label": "header hash frobenius_semantics",
+      "pass": true
+    },
+    {
+      "label": "unique implementation frobenius_linear_bounds",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header frobenius_linear_bounds",
+      "pass": true
+    },
+    {
+      "label": "header hash frobenius_linear_bounds",
+      "pass": true
+    },
+    {
+      "label": "unique implementation operator_norm_semantics",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header operator_norm_semantics",
+      "pass": true
+    },
+    {
+      "label": "header hash operator_norm_semantics",
+      "pass": true
+    },
+    {
+      "label": "unique implementation singular_values_semantics",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header singular_values_semantics",
+      "pass": true
+    },
+    {
+      "label": "header hash singular_values_semantics",
+      "pass": true
+    },
+    {
+      "label": "unique implementation singular_values_gram",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header singular_values_gram",
+      "pass": true
+    },
+    {
+      "label": "header hash singular_values_gram",
+      "pass": true
+    },
+    {
+      "label": "unique implementation ordered_gram_basis",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header ordered_gram_basis",
+      "pass": true
+    },
+    {
+      "label": "header hash ordered_gram_basis",
+      "pass": true
+    },
+    {
+      "label": "unique implementation positive_image_orthonormal",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header positive_image_orthonormal",
+      "pass": true
+    },
+    {
+      "label": "header hash positive_image_orthonormal",
+      "pass": true
+    },
+    {
+      "label": "unique implementation zero_singular_image",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header zero_singular_image",
+      "pass": true
+    },
+    {
+      "label": "header hash zero_singular_image",
+      "pass": true
+    },
+    {
+      "label": "unique implementation positive_image_extension",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header positive_image_extension",
+      "pass": true
+    },
+    {
+      "label": "header hash positive_image_extension",
+      "pass": true
+    },
+    {
+      "label": "unique implementation full_singular_vector_bases",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header full_singular_vector_bases",
+      "pass": true
+    },
+    {
+      "label": "header hash full_singular_vector_bases",
+      "pass": true
+    },
+    {
+      "label": "unique implementation full_svd",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header full_svd",
+      "pass": true
+    },
+    {
+      "label": "header hash full_svd",
+      "pass": true
+    },
+    {
+      "label": "unique implementation unitary_norm_invariance",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header unitary_norm_invariance",
+      "pass": true
+    },
+    {
+      "label": "header hash unitary_norm_invariance",
+      "pass": true
+    },
+    {
+      "label": "unique implementation unitary_singular_invariance",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header unitary_singular_invariance",
+      "pass": true
+    },
+    {
+      "label": "header hash unitary_singular_invariance",
+      "pass": true
+    },
+    {
+      "label": "unique implementation hilbert_schmidt_semantics",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header hilbert_schmidt_semantics",
+      "pass": true
+    },
+    {
+      "label": "header hash hilbert_schmidt_semantics",
+      "pass": true
+    },
+    {
+      "label": "unique implementation commutator_adjoint",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header commutator_adjoint",
+      "pass": true
+    },
+    {
+      "label": "header hash commutator_adjoint",
+      "pass": true
+    },
+    {
+      "label": "unique implementation commutator_conjugate_symmetry",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header commutator_conjugate_symmetry",
+      "pass": true
+    },
+    {
+      "label": "header hash commutator_conjugate_symmetry",
+      "pass": true
+    },
+    {
+      "label": "unique implementation commutator_spectral_maximum",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header commutator_spectral_maximum",
+      "pass": true
+    },
+    {
+      "label": "header hash commutator_spectral_maximum",
+      "pass": true
+    },
+    {
+      "label": "unique implementation positive_eigenvector_pair",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header positive_eigenvector_pair",
+      "pass": true
+    },
+    {
+      "label": "header hash positive_eigenvector_pair",
+      "pass": true
+    },
+    {
+      "label": "unique implementation eigenspace_functional_kernel",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header eigenspace_functional_kernel",
+      "pass": true
+    },
+    {
+      "label": "header hash eigenspace_functional_kernel",
+      "pass": true
+    },
+    {
+      "label": "unique implementation two_coordinate_bound",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header two_coordinate_bound",
+      "pass": true
+    },
+    {
+      "label": "header hash two_coordinate_bound",
+      "pass": true
+    },
+    {
+      "label": "unique implementation off_corner_coefficient_bound",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header off_corner_coefficient_bound",
+      "pass": true
+    },
+    {
+      "label": "header hash off_corner_coefficient_bound",
+      "pass": true
+    },
+    {
+      "label": "unique implementation svd_corner_functional",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header svd_corner_functional",
+      "pass": true
+    },
+    {
+      "label": "header hash svd_corner_functional",
+      "pass": true
+    },
+    {
+      "label": "unique implementation cancelled_svd_bound",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header cancelled_svd_bound",
+      "pass": true
+    },
+    {
+      "label": "header hash cancelled_svd_bound",
+      "pass": true
+    },
+    {
+      "label": "unique implementation refined_commutator_bound",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header refined_commutator_bound",
+      "pass": true
+    },
+    {
+      "label": "header hash refined_commutator_bound",
+      "pass": true
+    },
+    {
+      "label": "unique implementation half_certificate",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header half_certificate",
+      "pass": true
+    },
+    {
+      "label": "header hash half_certificate",
+      "pass": true
+    },
+    {
+      "label": "unique implementation unit_circle_lift",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header unit_circle_lift",
+      "pass": true
+    },
+    {
+      "label": "header hash unit_circle_lift",
+      "pass": true
+    },
+    {
+      "label": "unique implementation two_unitary_average",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header two_unitary_average",
+      "pass": true
+    },
+    {
+      "label": "header hash two_unitary_average",
+      "pass": true
+    },
+    {
+      "label": "unique implementation frobenius_average_bound",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header frobenius_average_bound",
+      "pass": true
+    },
+    {
+      "label": "header hash frobenius_average_bound",
+      "pass": true
+    },
+    {
+      "label": "unique implementation unitary_middle_bound",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header unitary_middle_bound",
+      "pass": true
+    },
+    {
+      "label": "header hash unitary_middle_bound",
+      "pass": true
+    },
+    {
+      "label": "unique implementation contraction_middle_bound",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header contraction_middle_bound",
+      "pass": true
+    },
+    {
+      "label": "header hash contraction_middle_bound",
+      "pass": true
+    },
+    {
+      "label": "unique implementation square_middle_bound",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header square_middle_bound",
+      "pass": true
+    },
+    {
+      "label": "header hash square_middle_bound",
+      "pass": true
+    },
+    {
+      "label": "unique implementation padding_product",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header padding_product",
+      "pass": true
+    },
+    {
+      "label": "header hash padding_product",
+      "pass": true
+    },
+    {
+      "label": "unique implementation padding_norms",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header padding_norms",
+      "pass": true
+    },
+    {
+      "label": "header hash padding_norms",
+      "pass": true
+    },
+    {
+      "label": "unique implementation padding_singular_values",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header padding_singular_values",
+      "pass": true
+    },
+    {
+      "label": "header hash padding_singular_values",
+      "pass": true
+    },
+    {
+      "label": "unique implementation canonical_rectangular_bound",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header canonical_rectangular_bound",
+      "pass": true
+    },
+    {
+      "label": "header hash canonical_rectangular_bound",
+      "pass": true
+    },
+    {
+      "label": "unique implementation sharpness_example",
+      "pass": true
+    },
+    {
+      "label": "exact frozen header sharpness_example",
+      "pass": true
+    },
+    {
+      "label": "header hash sharpness_example",
+      "pass": true
+    },
+    {
+      "label": "Comparator exact ordered contract set",
+      "pass": true
+    },
+    {
+      "label": "Comparator no definition holes",
+      "pass": true
+    },
+    {
+      "label": "Comparator standard axioms only",
+      "pass": true
+    },
+    {
+      "label": "Challenge only concrete Definitions import",
+      "pass": true
+    },
+    {
+      "label": "36 deliberate Challenge holes",
+      "pass": true
+    },
+    {
+      "label": "closed project module Solution",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.Complete",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.MiddleBounds",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.RefinedCommutator",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.CancelledSVD",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.ElementaryBounds",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.Frobenius",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.Definitions",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.Numerical",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.UnitaryInvariance",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.OperatorNorm",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.SingularSemantics",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.CommutatorEigenspaces",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.CommutatorAlgebra",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.CommutatorMaximum",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.SVD",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.NormalizedImages",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.GramBasis",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.TwoUnitaryAverage",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.NormScaling",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.Padding",
+      "pass": true
+    },
+    {
+      "label": "closed project module NLA.MI13.Sharpness",
+      "pass": true
+    },
+    {
+      "label": "Solution actual whole implementation closure",
+      "pass": true
+    },
+    {
+      "label": "single exact kernel interval_decide",
+      "pass": true
+    },
+    {
+      "label": "positive half genuinely referenced by averaging",
+      "pass": true
+    },
+    {
+      "label": "all 36 standard axiom print requests",
+      "pass": true
+    },
+    {
+      "label": "all 36 kernel trust assertions",
+      "pass": true
+    },
+    {
+      "label": "author and department university",
+      "pass": true
+    },
+    {
+      "label": "no author email in active sources",
+      "pass": true
+    }
+  ],
+  "check_count": 421,
+  "successful": true,
+  "compiler_invoked": false,
+  "Comparator_invoked": false,
+  "count_change": 0
+}

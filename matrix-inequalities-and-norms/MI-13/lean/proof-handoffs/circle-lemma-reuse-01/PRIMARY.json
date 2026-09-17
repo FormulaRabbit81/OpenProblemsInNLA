@@ -1,0 +1,8 @@
+{
+  "source": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Norm.lean",
+  "sha256": "815efa05d2282b0b234139eac16d614f1128d69e39cf02249df887934ccc9741",
+  "pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "excerpt_first": 380,
+  "excerpt_last": 388,
+  "excerpt": "lemma normSq_ofReal_add_I_mul_sqrt_one_sub {x : \u211d} (hx : \u2016x\u2016 \u2264 1) :\n    normSq (x + I * \u221a(1 - x ^ 2)) = 1 := by\n  simp [mul_comm I, normSq_add_mul_I,\n    Real.sq_sqrt (x := 1 - x ^ 2) (by nlinarith [abs_le.mp hx])]\n\nlemma normSq_ofReal_sub_I_mul_sqrt_one_sub {x : \u211d} (hx : \u2016x\u2016 \u2264 1) :\n    normSq (x - I * \u221a(1 - x ^ 2)) = 1 := by\n  rw [\u2190 normSq_neg, neg_sub', sub_neg_eq_add]\n  simpa using normSq_ofReal_add_I_mul_sqrt_one_sub (x := -x) (by simpa)\n"
+}
