@@ -1,0 +1,120 @@
+{
+  "problem_id": "MF-07",
+  "state": "ACTIVE immutable statement boundary approved by root after two full statement reviews and actual Linux elaboration",
+  "proposed_at_utc": "2026-09-16T06:43:42.361036+00:00",
+  "author_agent": "/root/ie13_continuation",
+  "upstream_source_commit": "ce47b5630bf3680d9211131c3a43825b022c139a",
+  "approved_draft_manifest_sha256": "48c0a99fafd8a956b7a5ee009482751d4d14671a70fd647297cecfe1da107989",
+  "statement_count": 18,
+  "statement_names": [
+    "NLA.MF07.matrix_product_semantics",
+    "NLA.MF07.diagonal_inverse",
+    "NLA.MF07.family_norm_maximum",
+    "NLA.MF07.family_growth_maximum",
+    "NLA.MF07.family_growth_submultiplicative",
+    "NLA.MF07.radius_one_semantics",
+    "NLA.MF07.identity_family_semantics",
+    "NLA.MF07.approximate_extremal_norm",
+    "NLA.MF07.rounded_extremal_norm",
+    "NLA.MF07.triangular_damping",
+    "NLA.MF07.interspersed_product_bound",
+    "NLA.MF07.quantitative_comparison",
+    "NLA.MF07.scalar_family_growth",
+    "NLA.MF07.exp_one_bound",
+    "NLA.MF07.comparison_threshold_bound",
+    "NLA.MF07.growth_constant_positive",
+    "NLA.MF07.radius_one_growth",
+    "NLA.MF07.canonical_uniform_bound"
+  ],
+  "frozen_files_sha256": {
+    "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+    "Challenge.lean": "ca4190cbafdc8a5e09317173a9fdb07820a965821b0c0b42d5152d23f21ff7da",
+    "NUMERICAL_TARGETS.md": "cd13a36c5ca167aabb754915c0a6ab834fc50e59329a4f1feb3af4e8b3a959f3",
+    "SourceCorrespondence.md": "88cf78168a76064468fc425b26975bcb93246464c463d7c74a6f713afbbb24c3",
+    "SOURCE-PROVENANCE.json": "647427cfd61f45ea14bcf3cb022893395eebca56313d98e5c8bd0f7f3613c392",
+    "comparator.json": "da9df06bcc2f5b3f696bd6a7ada166e1e52afb464b309217daf09327eb5cee74",
+    "lakefile.toml": "fb3e81b851f20b96c1ded6edfcb81fc34775dcb0fd49f763213c660da35055bc",
+    "lake-manifest.json": "13899bcb8b63f2e638331cad43f6103e7aa04083a5e6db173df3fbc3c3319ddd",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  "snapshot_directory": "statement-audit/frozen-35064080581/snapshots",
+  "mathematical_target": "For each positive natural dimension d, a positive constant chosen before every nonempty compact complex matrix family of joint spectral radius one bounds the actual Euclidean operator norm of every length-n product, for every n>=1, by Theta_d*(L*n)^(d-1), where L is the actual maximum generator operator norm. Arbitrary infinite compact families, reducibility, repetitions, scalar dimension one, and all complex entries remain. Radius-one equivalence between the actual positive-length-root infimum and the original nth-root limit is a mandatory separate contract.",
+  "independent_statement_reviews": [
+    {
+      "reviewer_packet": "MF07-root-statements",
+      "original_private_inventory_manifest_sha256": "742f49f1580aa769135249999a5cd2ec18c56db1b850b920185ed55dcfa5d90d",
+      "original_inventory_not_fully_copied": true,
+      "review_sha256": "ba1d4cc60c8db54cacf1c8ab2a59068e59b23e7e9db7c8e3d8c967475f40d8e5",
+      "checks_sha256": "e06b07cb92bc17f3ea6b2c40d0d223939a26cad0d46bb2d27cc357ea21a9ad13"
+    },
+    {
+      "reviewer_packet": "MF07-mf22-statement",
+      "original_private_inventory_manifest_sha256": "65e85f08e43cc086149ffe202138c84c26efa39435bfdad9cceaeb44041051c9",
+      "original_inventory_not_fully_copied": true,
+      "review_sha256": "882963f973d4b409bcc177d47cc8d5aa6d9b736430cd4f3edefab8429021a57b",
+      "checks_sha256": "19b83a0b0bd0d9a96eaa9004aafa702d8f4d7a020d0cc9a6d210cfe44f7a578b"
+    }
+  ],
+  "actual_linux_statement_run": {
+    "repository": "sgstepaniants/OpenProblemsInNLA",
+    "run_id": 35064080581,
+    "repository_commit": "39865897ba6e213cc89b666cb49a290d151233a3",
+    "job_id": 104690421169,
+    "workflow_conclusion": "failure",
+    "scope_note": "MF07 definition and 18-statement component passed; MI04/IE13 proof failures remain. This is not whole-problem verification.",
+    "definitions_command": [
+      "lake",
+      "build",
+      "NLA.MF07.Definitions"
+    ],
+    "definitions_exit_code": 0,
+    "challenge_command": [
+      "lake",
+      "env",
+      "lean",
+      "Challenges/MF07.lean"
+    ],
+    "challenge_exit_code": 0,
+    "deliberate_specification_hole_count": 18,
+    "all18_exact_warning_locations_match": true,
+    "literal_Git_input_count": 1839,
+    "unchanged_command_pre_post_maps": 9,
+    "receipt_sha256": "8eaa4bddee1c752cc2eeec12bd902c9872a4d0f5e42c69efa5bdec3001a3c372",
+    "artifact_id": 10434175071,
+    "artifact_sha256": "a870d49a26764a83b94c192174c94073276a9125c9aabef5eb54c485c7650071",
+    "shared_audit_sha256": "97691f13fb2d20495d88485b1084b49568642a1dfd4481d5f6e0f0aa52bd7247",
+    "child_operational_manifest_sha256": "453830adeb9100dce4ad7b6a38dfaa557b8e8b7e3b7350b8188f6685a8de4bbb",
+    "child_MF07_component_report_sha256": "0415dbe1bcdf62016dfe324a3352f405a3a7cccfb7668bc9d0e6963229e43e63",
+    "runner_uid": 1001,
+    "all10_dependency_revisions_match": true,
+    "definition_transport": {
+      "draft": "NLA/MF07/Definitions.lean",
+      "actual": ".lean-development/NLA/MF07/Definitions.lean",
+      "same_bytes": true
+    },
+    "challenge_transport": {
+      "draft": "Challenge.lean",
+      "actual": ".lean-development/Challenges/MF07.lean",
+      "same_bytes": true
+    },
+    "helper_invocation_note": "The ROOT-AUDIT helper has a fixed /root field; this child executed it, and root subsequently reported an independent rerun producing the same bytes. No separate root review packet is fabricated here."
+  },
+  "numerical_first_record_sha256": "acb29b5c3b0cf4ffd8db3e1c8401214d0b86a46883020befe0aa386d81194a12",
+  "numerical_scope": "Only planned interval certificate: Real.exp 1 <= 3, at the single exact argument one. No interval computation or LeanCert proof has run. Dimensions, lengths, products and all other parameters remain symbolic.",
+  "standalone_configuration_note": "The ten-file boundary preserves the reviewed standalone draft configuration and its Challenge-only default target as historical statement-stage bytes. Actual elaboration used the separately source-bound shared NLA development library with identical dependency packages and toolchain. The standalone package default was not a proof build. Later proof publication must explicitly target its real solution and disclose any separately approved build-configuration transition.",
+  "formalization_author": "George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology",
+  "original_mathematical_author": "Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics, University of Cambridge",
+  "proof_implementation_exists_at_proposal": false,
+  "local_Lean_execution": false,
+  "LeanCert_execution": false,
+  "Comparator_execution": false,
+  "whole_problem_verified": false,
+  "proof_authorization": "Implementation is separately authorized by IMPLEMENTATION-AUTHORIZATION.json. All 10 frozen inputs and the full original target must remain unchanged; any semantic correction requires renewed independent statement review and actual elaboration.",
+  "metadata_note": "Historical unchecked formalization metadata is retained unchanged; later truthful metadata may record completed gates without replacing mathematical targets.",
+  "approved_by": "/root",
+  "applied_at_utc": "2026-09-16T06:51:22.309984+00:00",
+  "proposal_manifest_sha256": "578977064f6f353cc33ac96038450f232db6f374adbc26d3435bbf5d68c23348",
+  "root_review_scope": "Root read both full statement reviews, the full definitions and all 18 Challenge contracts, the full MF07 component logs and operational review; independently reran the actual run auditor and checked all 60 draft and 25 proposal bindings. No statement mismatch found.",
+  "proof_implementation_exists_at_activation": false
+}
