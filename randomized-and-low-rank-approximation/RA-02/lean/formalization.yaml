@@ -54,21 +54,27 @@ automation:
   methods:
   - method: agent
     framework: OpenAI Codex
-    tool_setup: Parallel proof and independent-referee agents. Actual local development used one coordinator-run
-      macOS compiler, one thread and at most4096MiB per process, with pinned source-matched reuse. Fresh
-      final non-root Linux kernel/Comparator/sandbox execution is a separate gate.
+    tool_setup: Parallel proof and independent-referee agents. Actual serial macOS development used one
+      coordinator-run compiler, one thread and at most 4096 MiB, with pinned source-matched reuse. The
+      separate actual non-root GitHub Linux run completed default-kernel replay, Comparator and required
+      rejection and sandbox controls.
     prompting_notes: Numerical and semantic statements written and hashed before Lean definitions/contracts.
       Preserve actual normalized PSD pivot law, full finite path expectation, true decreasing Hermitian
       eigenvalue tail and arbitrary real exponent. Minimize computation to one consumed kernel-mode LeanCert
       exp(1)<=3 certificate; all rank and path arguments symbolic.
-  notes: Substantial OpenAI Codex assistance. The package preparer /root/mf22_publication_referee authored
-    RA02 statements and most proof modules and is not an independent final referee. Other proof contributors
-    are /root/mi04_independent_referee and /root; the two complete nonauthor final reviewers and exact
-    scopes are retained separately. No official Tau Ceti endorsement or human peer review is claimed.
+  notes: Substantial OpenAI Codex assistance. The original package preparer /root/mf22_publication_referee
+    authored RA-02 statements and most proofs; /root/mi04_independent_referee and /root also contributed
+    proofs. None is counted as a complete nonauthor proof referee. The two complete nonauthor source reviewers
+    are /root/ra02_full_final_referee and /root/ie13_continuation. /root/sf_ra_runtime_referee independently
+    audited the canonical runtime evidence. The current publication overlay author /root/mi13_statement_freeze
+    is not an independent reviewer of this overlay. Exact scopes are retained. No official Tau Ceti endorsement
+    or human peer review is claimed.
 status:
-  scope: Negates the original outer real C>0,p>=0 assertion for all positive dimensions, complex PSD matrices
-    and integer1<=r<=n, with exactly r true RPCholesky steps and actual decreasing eigenvalue tail.
-  whole_problem_verified: false
+  scope: Negates the original outer real C > 0, p >= 0 assertion for all positive dimensions, complex
+    Hermitian PSD matrices and integers 1 <= r <= n, with exactly r actual RPCholesky steps, the normalized
+    full finite path law and actual decreasing eigenvalue tail. The complete original target is verified
+    at the named immutable proof revision.
+  whole_problem_verified: true
   sorry_count: 0
   sorry_in_definitions: 0
   axioms:
@@ -86,8 +92,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.scalar_parameters
     file: NLA/RA02/Parameters.lean
     line: 39
@@ -98,8 +105,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.pivot_kernel
     file: NLA/RA02/PivotKernel.lean
     line: 72
@@ -110,8 +118,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.finite_path_law
     file: NLA/RA02/FiniteExpectation.lean
     line: 54
@@ -122,8 +131,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.zero_residual
     file: NLA/RA02/FiniteExpectation.lean
     line: 80
@@ -134,8 +144,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.expected_trace_recursion
     file: NLA/RA02/FiniteExpectation.lean
     line: 94
@@ -146,8 +157,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.ordered_spectrum
     file: NLA/RA02/OrderedSpectrum.lean
     line: 63
@@ -158,8 +170,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.least_eigenvalue_rayleigh
     file: NLA/RA02/RayleighMinimum.lean
     line: 65
@@ -170,8 +183,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.spectral_tail_semantics
     file: NLA/RA02/SpectralTail.lean
     line: 61
@@ -182,8 +196,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.arrowhead_quadratic
     file: NLA/RA02/ArrowheadQuadratic.lean
     line: 172
@@ -194,8 +209,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.arrowhead_positive_definite
     file: NLA/RA02/ArrowheadQuadratic.lean
     line: 182
@@ -206,8 +222,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.rayleigh_probe_values
     file: NLA/RA02/ProbeValues.lean
     line: 43
@@ -218,8 +235,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.arrowhead_tail
     file: NLA/RA02/ArrowheadTail.lean
     line: 23
@@ -230,8 +248,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.residual_state_positivity
     file: NLA/RA02/StateConstruction.lean
     line: 46
@@ -242,8 +261,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.residual_state_updates
     file: NLA/RA02/StateUpdates.lean
     line: 110
@@ -254,8 +274,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.distinct_history_state
     file: NLA/RA02/DistinctHistory.lean
     line: 53
@@ -266,8 +287,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.distinct_history_identity
     file: NLA/RA02/HistoryIdentity.lean
     line: 22
@@ -278,8 +300,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.retained_history_count
     file: NLA/RA02/CarryEncoding.lean
     line: 166
@@ -290,8 +313,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.retained_prefix_description
     file: NLA/RA02/CarryEncoding.lean
     line: 175
@@ -302,8 +326,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.retained_trace_bound
     file: NLA/RA02/RetainedTrace.lean
     line: 85
@@ -314,8 +339,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.retained_contribution_bound
     file: NLA/RA02/RetainedContribution.lean
     line: 39
@@ -326,8 +352,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.expectation_lower_bound
     file: NLA/RA02/ExpectationLower.lean
     line: 19
@@ -338,8 +365,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.binomial_exponential_bound
     file: NLA/RA02/ExponentialComparison.lean
     line: 22
@@ -350,8 +378,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.exponential_tail_factor
     file: NLA/RA02/ExponentialComparison.lean
     line: 26
@@ -362,8 +391,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.exponential_dominates_real_power
     file: NLA/RA02/ExponentialComparison.lean
     line: 41
@@ -374,8 +404,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.universal_counterexamples
     file: NLA/RA02/FinalCounterexample.lean
     line: 18
@@ -386,8 +417,9 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
   - declaration: NLA.RA02.no_polynomial_trace_factor
     file: NLA/RA02/FinalCounterexample.lean
     line: 30
@@ -398,10 +430,13 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: Actual local source compilation and kernel assertions passed; fresh non-root
-      Linux replay, Comparator and controls pending.
-  source_scan_note: All35 implementation files are hole-free. The27 deliberate Challenge placeholders
-    belong only to the separate specification environment.
+    verification_status: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+      commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+      accepted.'
+  source_scan_note: All 35 implementation files are hole-free. All 27 canonical exports passed default-kernel
+    replay, kernel-trust assertions and Comparator with only propext, Classical.choice and Quot.sound.
+    The 27 deliberate Challenge placeholders belong only to the separate specification environment, which
+    Solution never imports.
 fidelity:
   divergences: The proof uses an explicit real-entry positive-definite arrowhead family of order r+1 with
     factor 2^r/3, sufficient to negate the full universal complex-PSD assertion. It does not formalize
@@ -410,13 +445,19 @@ fidelity:
     proofs. A uniform dummy label at a zero residual preserves exact zero absorption. The tail uses actual
     ordered eigenvalues₀ with only cardinality-index transport.
 review:
-  status: agent-reviewed complete source and actual local evidence; canonical Linux acceptance pending
+  status: Two complete nonauthor proof-source reviews, independent canonical runtime evidence review,
+    and corrected publication-document review accepted
   reviewers:
-  - /root/ra02_full_final_referee
-  - /root/ie13_continuation
-  notes: Both reviewers read all35 sources and the full original target and independently authenticated
-    the local result. Their exact reports and scopes are in reviews/final. The package author is not an
-    independent referee of the proof or this packaging. No official Tau Ceti or human endorsement is asserted.
+  - OpenAI Codex agent /root/ra02_full_final_referee (complete nonauthor source and retained local-evidence
+    review)
+  - OpenAI Codex agent /root/ie13_continuation (complete nonauthor source review; disclosed prior independent
+    review context)
+  - OpenAI Codex agent /root/sf_ra_runtime_referee (independent canonical execution-evidence audit; no
+    new Lean execution)
+  notes: Both source referees read all 35 sources and the full original target. The separate runtime review
+    authenticates all 220 submitted inputs and continuation of their accepted proof bytes. Retained reports
+    keep their original dates and local/runtime limitations. Current publication-document review is separate.
+    No official Tau Ceti or human endorsement is asserted.
 alignment:
   source_correspondence: SourceCorrespondence.md
   numerical_boundary: NUMERICAL_TARGETS.md
@@ -436,15 +477,22 @@ toolchain:
     leancert: 621a43d7cf21f87872392a01e874f2f1dbddc926
     mathlib: 0df444a360eaa60ab8c11dca51a86af692955474
 verification:
-  phase: Actual complete serial macOS source build accepted; canonical Linux verification pending
-  statement_elaboration: Actual original run35083895041 Definitions/Challenge commands passed; full shared
-    run failed elsewhere. Exact record retained.
-  proof_implementation: All35 source inputs compiled successfully through actual development19, with3fresh
-    commands and32source-matched reused successes.
-  canonical_verification_completed: false
-  default_kernel: pending fresh canonical Linux export/replay
-  comparator: pending all27 actual comparisons
-  sandbox_and_rejection_controls: pending actual non-root Linux controls
+  phase: Complete canonical proof and corrected publication documents accepted; exact publication and
+    upstream executions pending
+  statement_elaboration: Original shared run 35083895041 successfully elaborated RA-02 Definitions and
+    Challenge; that shared run failed in unrelated commands. Exact historical records remain. Canonical
+    run 35175272827 separately built the frozen Challenge.
+  proof_implementation: All 35 selected source inputs have actual successful local origins through development
+    19, with 3 fresh commands and 32 source-matched reused successes. The canonical Linux run separately
+    built all 34 NLA modules and Solution.
+  canonical_verification_completed: true
+  default_kernel: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof commit
+    26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits accepted.'
+  comparator: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof commit
+    26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits accepted.'
+  sandbox_and_rejection_controls: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal
+    proof commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence
+    audits accepted.'
   local_acceptance: verification/LOCAL-DEVELOPMENT-ACCEPTANCE.json
   local_acceptance_sha256: 20065f375d68844883266d7ec86176b07ddcb652710c693dd67e3d2b1ff005f3
   local_receipt_sha256: 597f85f212eedd6d17193baa5e7a41342fa23a1a21342d357f5a6bed46791c97
@@ -452,10 +500,11 @@ verification:
   - Classical.choice
   - Quot.sound
   - propext
-  observed_axioms: All27 local output lists match propext, Classical.choice and Quot.sound.
+  observed_axioms: All 27 actual canonical Solution lists contain exactly propext, Classical.choice and
+    Quot.sound; full output is retained.
   numerical_certificate:
     declaration: NLA.RA02.exp_one_bound
-    statement: Real.exp1<=3
+    statement: Real.exp 1 <= 3
     method: interval_decide (trust := kernel)
     consumed_by:
     - rank_denominator_le_three
@@ -463,7 +512,34 @@ verification:
     - universal_counterexamples
     - no_polynomial_trace_factor
     interval_subdivision: none; all rank, matrix, history and real-exponent arguments symbolic
-  publication: Private source preparation only; no status/count/Git/CI/PR change.
+    runtime: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb;
+      coordinator and independent runtime evidence audits accepted.'
+  publication: Complete original target verified at the immutable proof revision. Corrected publication
+    documents, both PDFs, catalog, permanent-ID and metadata checks passed. Exact publication and upstream
+    executions remain pending.
+  whole_proof_build: 'PASS: actual non-root Linux run 35175272827, job 105055587640, at literal proof
+    commit 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb; coordinator and independent runtime evidence audits
+    accepted.'
+  canonical_run:
+    id: 35175272827
+    job: 105055587640
+    url: https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175272827/job/105055587640
+    proof_commit: 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb
+    actual_checkout: 26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb
+    submitted_input_count: 220
+    contract_count: 27
+    root_audit: verification/linux-35175272827/ROOT-AUDIT.json
+    independent_runtime_review: reviews/canonical-runtime/REVIEW.md
+    evidence: verification/linux-35175272827/README.md
+    artifact_id: 10477794322
+    artifact_sha256: a475b2aeecd1d6224ad1b33aa6915858578a4ef6748a3f9f62eb8513fbf5134c
+  limitations:
+  - Evidence audits inspect one recorded GitHub execution; they are not additional compiler executions
+    or claims of checker infallibility.
+  - Historical frozen plans, local receipts and original source-review reports retain their original pending
+    statements as dated evidence.
+  - Final publication-commit and upstream PR checkout checks remain separate from the already accepted
+    immutable proof run and document review.
 acknowledgements: Matthew J. Colbrook for the original mathematical resolution; Chen, Epperly, Tropp and
   Webber for RPCholesky and its comparison problem; Mathlib, LeanCert, Lean Comparator and formalization.yaml
   contributors; Schiffer and Forsythe structure examples.
