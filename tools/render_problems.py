@@ -33,7 +33,7 @@ def restore_pdf_layout(identifier, body):
         # Keep the complete retained question together after verification notices.
         heading = "## Original problem statement\n"
         body = body.replace(heading, "\\newpage\n\n" + heading, 1)
-    if identifier == "SP-05":
+    if identifier in {"SP-05", "MF-14"}:
         # Keep the complete original target together after its verification notice.
         body = body.replace("## Problem statement\n", "\\newpage\n\n## Problem statement\n", 1)
     if identifier in {"IE-14", "MF-02", "MF-12", "MF-24"}:
@@ -118,7 +118,7 @@ def render(source):
             'FR-10', 'FR-11', 'FR-12', 'IE-01', 'IE-02', 'IE-03', 'IE-06', 'IE-08', 'IE-10', 'IE-11', 'IE-13',
             'IE-14', 'IE-15', 'IE-17', 'IE-19', 'IE-21', 'IE-22', 'IE-23',
             'IE-24', 'IE-25', 'IE-26', 'IS-02', 'IS-03', 'IS-05', 'IV-02', 'IV-03', 'IV-04',
-            'IV-05', 'IV-06', 'KE-03', 'KE-04', 'MD-06', 'MF-14', 'MF-15',
+            'IV-05', 'IV-06', 'KE-03', 'KE-04', 'MD-06', 'MF-15',
             'MF-16', 'MF-17', 'MI-03', 'MI-04', 'MI-06', 'MI-07', 'MI-08',
             'MI-09', 'MI-19', 'MI-23', 'MI-27', 'MI-28', 'MI-29', 'NM-03', 'PF-05',
             'RA-02', 'RA-06', 'RA-08', 'RA-09', 'RA-10', 'RA-12',
