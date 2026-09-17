@@ -1,0 +1,136 @@
+{
+  "all_public_headers_unchanged": true,
+  "all_helper_propositions_preserved": true,
+  "helper_alpha_renames": [
+    {
+      "path": "NLA/MF07/SingularCoordinates.lean",
+      "name": "ordered_positive_gram_coordinates",
+      "before": "lemma ordered_positive_gram_coordinates {d : ℕ} (T : Square d) (hT : T.det ≠ 0) : ∃ (Q : Square d) (λ : Fin d → ℝ), IsUnitary Q ∧ (∀ i, 0 < λ i) ∧ Antitone λ ∧ (T * T.conjTranspose) * Q = Q * diagonalWeights λ :=",
+      "after": "lemma ordered_positive_gram_coordinates {d : ℕ} (T : Square d) (hT : T.det ≠ 0) : ∃ (Q : Square d) (lam : Fin d → ℝ), IsUnitary Q ∧ (∀ i, 0 < lam i) ∧ Antitone lam ∧ (T * T.conjTranspose) * Q = Q * diagonalWeights lam :=",
+      "scope": "Only the existing bound eigenvalue function name changes from lambda to lam; no public contract change."
+    }
+  ],
+  "declarations": 187,
+  "files": [
+    {
+      "path": "NLA/MF07/ApproximateNorm.lean",
+      "old_sha256": "883e7e7c0455c5e3b257f5b3946d8ad4fcbef2a3d61e87061f1d92f9099a40a9",
+      "new_sha256": "883e7e7c0455c5e3b257f5b3946d8ad4fcbef2a3d61e87061f1d92f9099a40a9",
+      "changed": false
+    },
+    {
+      "path": "NLA/MF07/Auerbach.lean",
+      "old_sha256": "9e1f04da52c406d325e2fb4ea1bded917a1872385d3b4b98e1bb2b587a1d018a",
+      "new_sha256": "bb77d8267e83654093eae335f95dfb277f032668d5244179886dfddd36ad8001",
+      "changed": true
+    },
+    {
+      "path": "NLA/MF07/BlockComparison.lean",
+      "old_sha256": "a35335a4c1b9eaceb5e18cefd7656a6c943d5738bc9dd3883e7ea727c0d7a498",
+      "new_sha256": "405a056ae751100e601faddb3ef18cbfdbb5dbe4818651aa796aba101d3fe26d",
+      "changed": true
+    },
+    {
+      "path": "NLA/MF07/CappedWeights.lean",
+      "old_sha256": "d805dd0e28524a6add975afb89fe857a639111fb0c65702aec93d27b5493bcc4",
+      "new_sha256": "98b0167850304223a46ff945eb1d748ba556c0e27bd5d879d2c366f1d7122ca6",
+      "changed": true
+    },
+    {
+      "path": "NLA/MF07/CompactGrowth.lean",
+      "old_sha256": "d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9",
+      "new_sha256": "d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9",
+      "changed": false
+    },
+    {
+      "path": "NLA/MF07/Definitions.lean",
+      "old_sha256": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+      "new_sha256": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+      "changed": false
+    },
+    {
+      "path": "NLA/MF07/Final.lean",
+      "old_sha256": "b9daa70a5881d142537010a3739ee348b113f111e558bf5fd87463b419a63468",
+      "new_sha256": "b9daa70a5881d142537010a3739ee348b113f111e558bf5fd87463b419a63468",
+      "changed": false
+    },
+    {
+      "path": "NLA/MF07/Interspersed.lean",
+      "old_sha256": "8f65ea5980bb23640c5185abc3d793964f84b1e1a45550e580ee184bcafdc898",
+      "new_sha256": "8f65ea5980bb23640c5185abc3d793964f84b1e1a45550e580ee184bcafdc898",
+      "changed": false
+    },
+    {
+      "path": "NLA/MF07/MatrixBasics.lean",
+      "old_sha256": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+      "new_sha256": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+      "changed": false
+    },
+    {
+      "path": "NLA/MF07/NormGeometry.lean",
+      "old_sha256": "7a343bf1aed1b29b85416f18b8cb72c26fdcac975e0c6f24db8b6ff69d0bf8b6",
+      "new_sha256": "9069dada9936d5b4c2568aa247a8ce050c3ca79385fa4b50dbf42e2c94fcafe8",
+      "changed": true
+    },
+    {
+      "path": "NLA/MF07/Numerical.lean",
+      "old_sha256": "90407ab2d374d652549c8b57858f9c5123602a1edf72bde8ce2ea2243b786c03",
+      "new_sha256": "90407ab2d374d652549c8b57858f9c5123602a1edf72bde8ce2ea2243b786c03",
+      "changed": false
+    },
+    {
+      "path": "NLA/MF07/ProductEnvelope.lean",
+      "old_sha256": "a770edbd047fc56f53da8f364d1a4207c0bdbaf346d5be359d035dc6aef0b7e0",
+      "new_sha256": "a770edbd047fc56f53da8f364d1a4207c0bdbaf346d5be359d035dc6aef0b7e0",
+      "changed": false
+    },
+    {
+      "path": "NLA/MF07/QuantitativeComparison.lean",
+      "old_sha256": "ad20c7a071d84ea13b6c95f2a915d5ae9fcb362aa7f35d3730e7d910054e6248",
+      "new_sha256": "ad20c7a071d84ea13b6c95f2a915d5ae9fcb362aa7f35d3730e7d910054e6248",
+      "changed": false
+    },
+    {
+      "path": "NLA/MF07/RootSemantics.lean",
+      "old_sha256": "9e4ed1fb3d1d500a5527cadcd6865928be310b047ae3f23bdc18619281dab4ef",
+      "new_sha256": "bee70f65ab8e7e517ebec8f579ea3ee8fb276d52a8f5cd293c9c0e085ab304ee",
+      "changed": true
+    },
+    {
+      "path": "NLA/MF07/RoundedNorm.lean",
+      "old_sha256": "a352a64d47f2f163b648b8804ce9de7341249f20df243a47078e9f92b328dc0a",
+      "new_sha256": "9ef9b6f2a7784054bdf3f1dedf22f4e81f8672176b7a7ec271e5d9a9e26d4ec5",
+      "changed": true
+    },
+    {
+      "path": "NLA/MF07/ScalarFamily.lean",
+      "old_sha256": "65e73510323dcba07445028f2c57d94ca615dcf992a60827d63ebac9e4582228",
+      "new_sha256": "a7e0a6b1dabdb866649f0381934b9bea0c5da7698bf0c93e4bedc38876a4227c",
+      "changed": true
+    },
+    {
+      "path": "NLA/MF07/Similarity.lean",
+      "old_sha256": "c9d06e4ca115f58c384b0dfe2298ae2fd49e9c73d138a7319445ed2d08eb86c3",
+      "new_sha256": "b96e1b6814fca826e1157b9b04dbcf4727e0f1c5ac26c404a10165633897a8d7",
+      "changed": true
+    },
+    {
+      "path": "NLA/MF07/SingularCoordinates.lean",
+      "old_sha256": "158af29c79ee52e90dc05e23b6d942231d0efb080a79ca9bfc6cb4674a1b1b07",
+      "new_sha256": "d10e341a08ca6c99168ae96f63c26f85757149861cb23187ddacac00f97aa629",
+      "changed": true
+    },
+    {
+      "path": "NLA/MF07/TriangularDamping.lean",
+      "old_sha256": "2e4be5f21f0e35bfa4b9393cf1411bf1eb7d00de6642231be2482df5cfc7bffe",
+      "new_sha256": "ea35c872a9c579f4d6e9a259140cbe64afdf12491fa34729272b34e7150aab2a",
+      "changed": true
+    },
+    {
+      "path": "NLA/MF07/UnitaryGeometry.lean",
+      "old_sha256": "ee0bf9c4b7f1fba1dee0534f24e9ba095ecc53b7b57d5910e537f9316edbba1d",
+      "new_sha256": "ee0bf9c4b7f1fba1dee0534f24e9ba095ecc53b7b57d5910e537f9316edbba1d",
+      "changed": false
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "name": "ids",
+    "argv": [
+      "/opt/homebrew/bin/python3",
+      "tools/validate_problem_ids.py",
+      "--base-ref",
+      "origin/main"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "catalog",
+    "argv": [
+      "/opt/homebrew/bin/python3",
+      "tools/update_catalog.py",
+      "--base-ref",
+      "origin/main"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "tests",
+    "argv": [
+      "/opt/homebrew/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_problem_ids.py",
+      "-v"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "manifest",
+    "argv": [
+      "/tmp/nla-lean-formalization/venv/bin/python",
+      "tools/lean/validate_manifest.py",
+      "matrix-functions-and-stability/MF-07/lean"
+    ],
+    "exit_code": 0
+  }
+]
