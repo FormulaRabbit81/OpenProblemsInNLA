@@ -24,4 +24,10 @@ All eleven files from `tensor_computations_submission20.zip` are preserved byte-
 
 The [live public eligibility audit](verification/eligibility-live.json) examined 54 canonical pages across 27 branches in five repositories, plus 21 pull requests and 89 issues. All checked canonical copies still had Partially resolved status, and no existing full resolution or pending solution review was found for these two targets in the inspected public material. This records the inspected scope and date; it does not establish priority or exclude private, unpublished or unlinked work.
 
-AI assistance was used in preparing and checking this submission. The independent reviews are agent reviews, not external human peer review or formal proof certificates. No novelty or priority claim is made. The Solved recommendations rest on the complete mathematical arguments and their explicit scope, not on the supplied verification labels or finite experiments.
+AI assistance was used in preparing and checking this submission. The 2026-09-11 independent reviews are agent reviews, not external human peer review or formal proof certificates. No novelty or priority claim is made. The Solved recommendations rest on the complete mathematical arguments and their explicit scope, not on the supplied verification labels or finite experiments.
+
+## TR-27 author feedback — 2026-09-17
+
+In an email to Alex Townsend dated 17 September 2026, Alessandra Bernardi, a coauthor of *Geometric conditions for strict submultiplicativity of rank and border rank*, said she thought the TR-27 argument works and agreed that it contradicts Conjecture 1.1 in its stated generality. She emphasized that the restrictions to Segre and Veronese varieties remain open. She also said she was not aware of another reference containing this counterexample; this records her knowledge, not a determination of novelty or priority.
+
+This summary records informal mathematical feedback from personal correspondence, not a formal referee report. It concerns TR-27 only. The original 2026-09-11 resolution date, Colbrook's authorship, the reviewed manuscripts and the original agent-review records are unchanged.
