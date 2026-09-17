@@ -2,10 +2,9 @@
 version: v0.4
 project:
   name: 'MF-07: uniform polynomial product bound at joint spectral radius one'
-  description: Complete original MF-07 result for arbitrary nonempty compact complex matrix families at
-    joint spectral radius one, all positive dimensions and every switching word. All 18 exports passed
-    actual canonical Linux default-kernel, Comparator, axiom and control checks at the immutable proof
-    revision.
+  description: Complete original MF-07 result for arbitrary nonempty compact complex matrix families of
+    joint spectral radius one, all positive dimensions and every switching word. The exact 20-module implementation
+    plus entrypoint passed local Lean compilation; canonical Linux verification remains pending.
   authors:
   - George Stepaniants
   affiliations:
@@ -45,16 +44,16 @@ automation:
   methods:
   - method: agent
     framework: OpenAI Codex
-    tool_setup: Parallel proof and independent-referee agents; one serial local macOS development compiler
-      followed by actual non-root GitHub Linux default-kernel, Comparator and sandbox/rejection controls.
-      Source-matched runtime evidence was independently audited.
+    tool_setup: Parallel source and referee agents with one coordinator-run serial macOS compiler and
+      pinned shared caches. Fresh non-root Linux default-kernel/Comparator/control checking is a separate
+      pending gate.
     prompting_notes: Numerical statement boundary written before Lean code. Preserve full original quantifiers,
       true Euclidean norm/root-limit semantics and arbitrary compact complex families. Minimize numerical
       work to one consumed kernel-mode LeanCert exp(1) bound; all dimension and product arguments symbolic.
-  notes: Substantial OpenAI Codex assistance. The implementation author prepared this publication overlay
-    and is not its independent proof or publication referee. Root authored later proof repairs. Two complete
-    nonauthor proof reviews and an independent canonical runtime audit are retained with explicit scopes.
-    No official Tau Ceti endorsement or human peer review is claimed.
+  notes: Substantial OpenAI Codex assistance. The implementation author prepared this package and is not
+    a final independent referee. Historical scoped source/repair reviews and actual successful local command
+    origins are retained. Two current final nonauthor reviews approved the full source; canonical checks remain pending. No
+    human or official Tau Ceti approval is claimed.
 status:
   scope: For each positive natural dimension d, a positive constant chosen before every nonempty compact
     complex matrix family of joint spectral radius one bounds the actual Euclidean operator norm of every
@@ -62,7 +61,7 @@ status:
     operator norm. Arbitrary infinite compact families, reducibility, repetitions, scalar dimension one,
     and all complex entries remain. Radius-one equivalence between the actual positive-length-root infimum
     and the original nth-root limit is a mandatory separate contract.
-  whole_problem_verified: true
+  whole_problem_verified: false
   main_results:
   - declaration: NLA.MF07.matrix_product_semantics
     file: NLA/MF07/MatrixBasics.lean
@@ -74,8 +73,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.diagonal_inverse
     file: NLA/MF07/MatrixBasics.lean
     line: 117
@@ -86,8 +85,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.family_norm_maximum
     file: NLA/MF07/CompactGrowth.lean
     line: 51
@@ -98,8 +97,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.family_growth_maximum
     file: NLA/MF07/CompactGrowth.lean
     line: 85
@@ -110,8 +109,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.family_growth_submultiplicative
     file: NLA/MF07/CompactGrowth.lean
     line: 114
@@ -122,8 +121,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.radius_one_semantics
     file: NLA/MF07/RootSemantics.lean
     line: 157
@@ -134,8 +133,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.identity_family_semantics
     file: NLA/MF07/RootSemantics.lean
     line: 175
@@ -146,8 +145,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.approximate_extremal_norm
     file: NLA/MF07/ApproximateNorm.lean
     line: 54
@@ -158,8 +157,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.rounded_extremal_norm
     file: NLA/MF07/RoundedNorm.lean
     line: 71
@@ -170,8 +169,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.triangular_damping
     file: NLA/MF07/TriangularDamping.lean
     line: 117
@@ -182,8 +181,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.interspersed_product_bound
     file: NLA/MF07/Interspersed.lean
     line: 117
@@ -194,8 +193,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.quantitative_comparison
     file: NLA/MF07/QuantitativeComparison.lean
     line: 140
@@ -206,8 +205,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.scalar_family_growth
     file: NLA/MF07/ScalarFamily.lean
     line: 57
@@ -218,8 +217,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.exp_one_bound
     file: NLA/MF07/Numerical.lean
     line: 22
@@ -230,8 +229,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.comparison_threshold_bound
     file: NLA/MF07/Numerical.lean
     line: 69
@@ -242,8 +241,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.growth_constant_positive
     file: NLA/MF07/Numerical.lean
     line: 93
@@ -254,8 +253,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.radius_one_growth
     file: NLA/MF07/Final.lean
     line: 22
@@ -266,8 +265,8 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   - declaration: NLA.MF07.canonical_uniform_bound
     file: NLA/MF07/Final.lean
     line: 40
@@ -278,32 +277,29 @@ status:
     - Classical.choice
     - Quot.sound
     comparator_config: comparator.json
-    verification_status: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    verification_status: Actual serial macOS compilation and kernel-trust assertions passed. Canonical
+      Linux default-kernel, Comparator and controls remain pending.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms:
   - Classical.choice
   - Quot.sound
   - propext
-  source_scan_note: All 18 canonical exports passed default-kernel, kernel-trust and Comparator checks
-    using only propext, Classical.choice and Quot.sound. The independent Challenge has 18 deliberate specification
-    placeholders and is never imported by Solution.
+  source_scan_note: All 18 exact local exports printed only permitted standard axioms and passed kernel-trust
+    assertions. The independent Challenge contains18 deliberate specification holes and is never imported
+    by the implementation.
 fidelity:
   divergences: Chronological products use reversed lists and final Fin n sequences. JSR uses the actual
     infimum of positive-length nth-root suprema, with mandatory equivalence to the original radius-one
     limit. A larger rational dimension-only constant replaces the manuscript constant using the separately
     required exp(1) ≤ 3 certificate; the original target only asks for some positive dimension-only constant.
 review:
-  status: Two complete nonauthor source reviews and independent canonical runtime evidence review accepted;
-    publication overlay review pending
-  reviewers:
-  - OpenAI Codex agent /root/mi04_independent_referee (complete nonauthor proof-source review)
-  - OpenAI Codex agent /root/ie13_continuation (original statement author, nonauthor complete proof-source
-    and canonical runtime review)
-  notes: Exact reports and role/time limitations are retained in reviews/INDEX.json. The proof author/publication
-    preparer and root repair author do not count as independent complete mathematical referees. No official
-    Tau Ceti or external human review is claimed.
+  status: Historical scoped source/repair approvals retained; two final nonauthor complete-source reviews
+    and canonical package/runtime reviews pending
+  reviewers: []
+  notes: See reviews/INDEX.json. The author of this package implemented MF07 and cannot independently
+    referee that implementation. Root authored later repairs. Existing statements-only and scoped repair
+    reviews retain their original role and temporal limits.
 alignment:
   source_correspondence: SourceCorrespondence.md
   numerical_boundary: NUMERICAL_TARGETS.md
@@ -329,60 +325,36 @@ verification:
     receipt: statement-audit/frozen-35064080581/runtime/receipt.json
     receipt_sha256: 8eaa4bddee1c752cc2eeec12bd902c9872a4d0f5e42c69efa5bdec3001a3c372
     scope: Statements only; unrelated shared proof failures preserved.
-  whole_proof_build: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-    coordinator and independent nonauthor runtime evidence audits accepted.'
+  whole_proof_build: passed exact serial macOS development graph, completed development13
   local_acceptance: verification/LOCAL-DEVELOPMENT-ACCEPTANCE.json
   local_receipt: verification/local-development/runs/development-13/RECEIPT.json
   local_receipt_sha256: 965aac16f4e8c3cba9d6cdb8559e1a7107db0d81ab9488b3eab4207769666521
-  canonical_verification_completed: true
-  default_kernel: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-    coordinator and independent nonauthor runtime evidence audits accepted.'
-  comparator: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-    coordinator and independent nonauthor runtime evidence audits accepted.'
-  sandbox_and_rejection_controls: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-    coordinator and independent nonauthor runtime evidence audits accepted.'
+  canonical_verification_completed: false
+  default_kernel: pending fresh canonical Linux replay
+  comparator: pending all 18 actual canonical comparisons
+  sandbox_and_rejection_controls: pending fresh canonical Linux execution
   permitted_axioms:
   - Classical.choice
   - Quot.sound
   - propext
-  transitive_axioms: All 18 actual canonical lists contain only propext, Classical.choice and Quot.sound;
-    complete output is retained and independently audited.
+  transitive_axioms: All 18 measured local lists appear in status.main_results; canonical rechecking pending.
   numerical_certificate:
     statement: Real.exp 1 ≤ 3
     declaration: NLA.MF07.exp_one_bound
     file: NLA/MF07/Numerical.lean
     method: interval_decide (trust := kernel)
     consumed_by: comparison_threshold_bound and the final dimension-only growth bound
-    runtime: 'PASS: actual non-root Linux run 35172783207 at b2b9acc83ad7d6b7d3888de8390475a30c720af8;
-      coordinator and independent nonauthor runtime evidence audits accepted.'
+    runtime: Executed in the actual successful local Numerical module and complete graph; canonical replay
+      pending.
     interval_subdivision: none; one exact scalar argument; all dimension/length/matrix estimates symbolic
   publication_configuration: Only active Lake default/library registration changes; all original frozen
     bytes and exact patch retained.
   historical_metadata_note: Original frozen/source-correspondence and dated statement/review inventories
     retain past pending wording. Current top-level metadata governs candidate status.
   limitations:
-  - Evidence audits are not additional Lean executions or certification that the platform and checker
-    are infallible.
-  - The earlier local receipts retain historical local-only limitations. The actual canonical Linux run
-    separately passed all required controls.
-  - The later documentation/publication commit and upstream PR checkout require separate source-matched
-    checks; neither is claimed here.
-  publication: Full original target verified at the immutable proof revision. This private documentation
-    overlay preserves all mathematical inputs. Publication-commit replay, upstream PR and its actual check
-    remain pending.
-  canonical_run:
-    id: 35172783207
-    job: 105047879291
-    url: https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35172783207/job/105047879291
-    proof_commit: b2b9acc83ad7d6b7d3888de8390475a30c720af8
-    actual_checkout: b2b9acc83ad7d6b7d3888de8390475a30c720af8
-    literal_published_commit: true
-    submitted_input_count: 297
-    root_audit: verification/linux-35172783207/ROOT-AUDIT.json
-    independent_runtime_review: reviews/canonical-runtime/REVIEW.md
-    evidence: verification/linux-35172783207/README.md
-    artifact_id: 10478290606
-    artifact_sha256: ad4959dc022f8ee39db26150372f5d7ee413246098f44c705d325fa8fac87c2f
+  - Dependencies use pinned shared compiled caches; this is not a fresh Linux sandbox or default-kernel
+    replay/Comparator/control run. No publication commit or PR is accepted here.
+  publication: Private canonical candidate only; no status, count, Git, CI or PR change.
 acknowledgements: Matthew J. Colbrook for the mathematical proof; Epperlein and Wirth for the original
   question; Mathlib, LeanCert, Lean Comparator and formalization.yaml contributors; Schiffer and Forsythe
   structure examples.

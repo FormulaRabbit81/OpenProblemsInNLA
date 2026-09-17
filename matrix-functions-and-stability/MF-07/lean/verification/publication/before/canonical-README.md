@@ -7,29 +7,8 @@
 **Difficulty:** challenging  
 **Importance:** interesting to the community  
 **Rating rationale:** Challenging because the constant must be uniform over all families of a given dimension; community impact spans transient growth and stability analysis.  
-**Status:** Lean verified  
-**Last checked:** 2026-09-17  
-
-## Lean proof and verification evidence
-
-**The complete original target is Lean verified, 2026-09-17 (UTC).** The [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/b2b9acc83ad7d6b7d3888de8390475a30c720af8/matrix-functions-and-stability/MF-07/lean/Solution.lean) at revision `b2b9acc83ad7` passed [non-root Linux run 35172783207](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35172783207/job/105047879291). The [retained source-bound evidence](lean/verification/linux-35172783207/README.md) and [independent runtime review](lean/reviews/canonical-runtime/REVIEW.md) cover all 297 submitted inputs, all 18 exported statements, default-kernel replay, Comparator, standard transitive axioms and actual rejection/isolation controls.
-
-`NLA.MF07.canonical_uniform_bound` chooses a positive constant for each dimension before quantifying over every nonempty compact complex matrix family, every positive product length and every switching word. `NLA.MF07.radius_one_semantics` proves the correspondence with the original nth-root joint-spectral-radius limit. Matrix products and norms are the actual chronological products and Euclidean operator norms. Infinite compact families, reducibility, repetitions and dimension one are included. The [definitions and 18 independent contracts](lean/Challenge.lean) and [source correspondence](lean/SourceCorrespondence.md) record the full match.
-
-The formal proof uses the sufficient dimension-only constants
-
-```math
-\Theta_1=1,\qquad
-\Theta_d=d\left(\frac{6d^2}{d-1}\right)^{d-1}\quad(d\ge2).
-```
-
-This settles the original existential bound. The manuscript's smaller constant, sharpness, general-radius formula, bounded/real-family extensions and separate MF-05 theorem are outside this formal claim. Its mathematical resolution remains unchanged below.
-
-Formalization and verification submission: **George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. **Matthew J. Colbrook**, Department of Applied Mathematics and Theoretical Physics, University of Cambridge, retains original mathematical proof credit. Epperlein and Wirth retain credit for the question. Substantial OpenAI Codex assistance and scoped independent AI-agent reviews are disclosed; no official Tau Ceti endorsement, human peer review or new priority claim is made.
-
-The project pins Lean 4.33.1, [Mathlib](https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474) and [LeanCert](https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926). Its consumed LeanCert certificate proves $`\exp(1)\le3`$ in kernel mode without interval subdivision. All 18 exports use only `propext`, `Classical.choice` and `Quot.sound`. Run `lake build` in `matrix-functions-and-stability/MF-07/lean`; [project instructions](lean/README.md) give the complete Linux check. The local macOS development run and the actual GitHub check are distinct. Later publication-commit and upstream PR executions remain separate from this immutable proof run.
-
-The [formalization note](solution.pdf) and its [LaTeX source](solution.tex) record the scope and authorship.
+**Status:** Solved  
+**Last checked:** 2026-09-11  
 
 <!-- colbrook-jsr-growth -->
 ## Resolution — 2026-09-11
