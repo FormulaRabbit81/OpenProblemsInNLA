@@ -1,0 +1,126 @@
+{
+  "kind": "Proposed headers only; not an immutable freeze or elaboration evidence",
+  "theorem_count": 24,
+  "theorems": [
+    {
+      "declaration": "NLA.SF01.complex_spectral_radius_semantics",
+      "header_sha256": "84fd8cbc43b0da1e7cdeae98223f3a8c1dbf8390605ed14dc36470621a14c76e",
+      "header": "theorem complex_spectral_radius_semantics {n : \u2115} (hn : 1 \u2264 n) (B : Square n) :\n    (complexSpectrum B).Finite \u2227 (complexSpectrum B).Nonempty \u2227\n    0 \u2264 spectralRadius B \u2227\n    (\u2203 z \u2208 complexSpectrum B, \u2016z\u2016 = spectralRadius B) \u2227\n    \u2200 z \u2208 complexSpectrum B, \u2016z\u2016 \u2264 spectralRadius B"
+    },
+    {
+      "declaration": "NLA.SF01.spectral_radius_strict_bound",
+      "header_sha256": "d21ccce600f67d8faf6bcf25c0c5194323309898480da6a5a75d0aeaa96f2569",
+      "header": "theorem spectral_radius_strict_bound {n : \u2115} (hn : 1 \u2264 n) (B : Square n)\n    (r s : \u211d) (hrs : r < s) (hbound : \u2200 z \u2208 complexSpectrum B, \u2016z\u2016 \u2264 r) :\n    spectralRadius B < s"
+    },
+    {
+      "declaration": "NLA.SF01.spectral_homotopy_isUnit",
+      "header_sha256": "6bd6bc9028cd58b19e1a12b9cdf7ebd700cfa0f30d5fd47bca139545a842d86a",
+      "header": "theorem spectral_homotopy_isUnit {n : \u2115} (hn : 1 \u2264 n) (B : Square n)\n    (s : \u211d) (hs : spectralRadius B < s) (t : \u211d) (ht : t \u2208 Set.Icc (0 : \u211d) 1) :\n    IsUnit (spectralHomotopy s B t)"
+    },
+    {
+      "declaration": "NLA.SF01.spectralM_positive_weight",
+      "header_sha256": "eff8b6e88cf040c2c3ad35d98b388202e99cefc850fe9a938da189cbdc6563d7",
+      "header": "theorem spectralM_positive_weight {n : \u2115} (hn : 1 \u2264 n) (C : Square n)\n    (hC : IsSpectralM C) :\n    IsUnit C \u2227 IsZMatrix C \u2227 (\u2200 i, 0 < weightVector C i) \u2227\n      C *\u1d65 weightVector C = (fun _ => 1)"
+    },
+    {
+      "declaration": "NLA.SF01.weighted_Z_spectralM",
+      "header_sha256": "67f3dcced423e2c17b9fbebbc4ef9a7a01788c2f972293f6494c324209bb30fc",
+      "header": "theorem weighted_Z_spectralM {n : \u2115} (hn : 1 \u2264 n) (C : Square n)\n    (v : Vector n) (hZ : IsZMatrix C) (hv : PositiveWeight C v) :\n    IsSpectralM C"
+    },
+    {
+      "declaration": "NLA.SF01.H_positive_weight",
+      "header_sha256": "614845623e06bca34441bc70b95eba6e69d2d2ef55f5e43b341fc914daaaa7b3",
+      "header": "theorem H_positive_weight {n : \u2115} (hn : 1 \u2264 n) (A : Square n)\n    (hA : IsHMatrix A) :\n    IsUnit A \u2227 PositiveWeight (comparison A) (weightVector (comparison A)) \u2227\n      comparison A *\u1d65 weightVector (comparison A) = (fun _ => 1)"
+    },
+    {
+      "declaration": "NLA.SF01.shift_comparison",
+      "header_sha256": "807836a95f4759d4049c3a47c34cce94d320fe192788a23131e45d29f5db29ac",
+      "header": "theorem shift_comparison {n : \u2115} (A : Square n) (hA : PositiveDiagonal A)\n    (t : \u211d) (ht : 0 \u2264 t) :\n    comparison (shifted A t) = shifted (comparison A) t"
+    },
+    {
+      "declaration": "NLA.SF01.H_shift_structure",
+      "header_sha256": "77f0b4c096eb0817c79892a0d8cb5f235d2ff6d3c906a2d6589367741a1ae8cb",
+      "header": "theorem H_shift_structure {n : \u2115} (hn : 1 \u2264 n) (A : Square n)\n    (hA : Admissible A) (t : \u211d) (ht : 0 \u2264 t) :\n    Admissible (shifted A t) \u2227 IsUnit (shifted A t) \u2227\n      PositiveWeight (shifted (comparison A) t) (weightVector (comparison A))"
+    },
+    {
+      "declaration": "NLA.SF01.comparison_abs_mulVec",
+      "header_sha256": "80e454e64a1e120d8bcd508effc0c9d60a81c470ba47298dbe8cd503d139a64a",
+      "header": "theorem comparison_abs_mulVec {n : \u2115} (A : Square n) (hA : PositiveDiagonal A)\n    (t : \u211d) (ht : 0 \u2264 t) (y : Vector n) :\n    \u2200 i, (shifted (comparison A) t *\u1d65 (fun j => |y j|)) i \u2264\n      |(shifted A t *\u1d65 y) i|"
+    },
+    {
+      "declaration": "NLA.SF01.resolvent_domination",
+      "header_sha256": "dced505603fc8df327e60c732402a5056a8160f86bd40aa8456e52f617463ea1",
+      "header": "theorem resolvent_domination {n : \u2115} (hn : 1 \u2264 n) (A : Square n)\n    (hA : Admissible A) (t : \u211d) (ht : 0 \u2264 t) :\n    IsUnit (shifted A t) \u2227 IsUnit (shifted (comparison A) t) \u2227\n      \u2200 i j, |((shifted A t)\u207b\u00b9) i j| \u2264 ((shifted (comparison A) t)\u207b\u00b9) i j"
+    },
+    {
+      "declaration": "NLA.SF01.half_positive_certificate",
+      "header_sha256": "e16255c5810a0719e432e314d2a1e4eb7bcf0d0d423d1f8d557c47daf27d8227",
+      "header": "theorem half_positive_certificate : (0 : \u211d) < 1 / 2"
+    },
+    {
+      "declaration": "NLA.SF01.ridge_comparison_preserver",
+      "header_sha256": "b736531b4a45802745eb6ab3510cded7598303e6fd994e47e2954418cb1f83d0",
+      "header": "theorem ridge_comparison_preserver (d : RidgeData) (hd : ValidData d)\n    {n : \u2115} (hn : 1 \u2264 n) (A : Square n) (hA : Admissible A) :\n    IsZMatrix (ridgeEval d (comparison A)) \u2227\n    PositiveWeight (ridgeEval d (comparison A)) (weightVector (comparison A)) \u2227\n    (\u2200 i, 0 < ridgeEval d (comparison A) i i \u2227\n      ridgeEval d (comparison A) i i \u2264 ridgeEval d A i i) \u2227\n    (\u2200 i j, i \u2260 j \u2192 |ridgeEval d A i j| \u2264 -ridgeEval d (comparison A) i j) \u2227\n    (\u2200 i j, ridgeEval d (comparison A) i j \u2264 comparison (ridgeEval d A) i j) \u2227\n    Admissible (ridgeEval d A) \u2227 IsUnit (ridgeEval d A)"
+    },
+    {
+      "declaration": "NLA.SF01.ridge_commutes",
+      "header_sha256": "5bc6c569416d877a090752d8192d7693c7232f2c773d2fc59dc20733e2b5aeb6",
+      "header": "theorem ridge_commutes (d : RidgeData) (hd : ValidData d)\n    {n : \u2115} (hn : 1 \u2264 n) (A : Square n) (hA : Admissible A) :\n    Commute A (ridgeEval d A)"
+    },
+    {
+      "declaration": "NLA.SF01.pole_positive_definite",
+      "header_sha256": "a75b7fc9753d74e8785869d6a48f7d334a12f163289bc84e8bd4048d1e87eddf",
+      "header": "theorem pole_positive_definite (d : RidgeData) (hd : ValidData d) :\n    (poleMatrix d).PosDef"
+    },
+    {
+      "declaration": "NLA.SF01.pole_diagonalization_exists",
+      "header_sha256": "3269605e557758aef1844bb10adcb4c988ab0414ce2d49170450f01a69c14c89",
+      "header": "theorem pole_diagonalization_exists (d : RidgeData) (hd : ValidData d) :\n    \u2203 Q : Square (d.size + 1), \u2203 lam : Fin (d.size + 1) \u2192 \u211d,\n      PoleDiagonalization d Q lam"
+    },
+    {
+      "declaration": "NLA.SF01.pole_residue_normalization",
+      "header_sha256": "e7cad5dea4ef8fb19ddefda8053f66fcd7bf7eacbbe0e9b561a768b37aac05d4",
+      "header": "theorem pole_residue_normalization (d : RidgeData) (hd : ValidData d)\n    (Q : Square (d.size + 1)) (lam : Fin (d.size + 1) \u2192 \u211d)\n    (hdiag : PoleDiagonalization d Q lam) :\n    \u2211 i : Fin (d.size + 1), spectralCoordinates d Q i ^ 2 / lam i = d.b"
+    },
+    {
+      "declaration": "NLA.SF01.reciprocal_weights_nonnegative",
+      "header_sha256": "ec56dd6c4e8be248d79444c0171a71ce6d5f0c24b2bc3171d7dc83dd0a7e3457",
+      "header": "theorem reciprocal_weights_nonnegative (d : RidgeData)\n    (Q : Square (d.size + 1)) (lam : Fin (d.size + 1) \u2192 \u211d)\n    (hlam : \u2200 i, 0 < lam i) :\n    \u2200 i, 0 \u2264 reciprocalWeights d Q lam i"
+    },
+    {
+      "declaration": "NLA.SF01.reciprocal_blocks_isUnit",
+      "header_sha256": "5c0121cd6086b325c1965de2362f6743ab75f49d6ff3144e7eff434bec997888",
+      "header": "theorem reciprocal_blocks_isUnit (d : RidgeData) (hd : ValidData d)\n    {n : \u2115} (hn : 1 \u2264 n) (A : Square n) (hA : Admissible A) :\n    IsUnit (baseBlock d A) \u2227 IsUnit (poleBlock d A)"
+    },
+    {
+      "declaration": "NLA.SF01.matrix_reciprocal_identity",
+      "header_sha256": "e39cd3f595971dbac57db0eff8ba50fec2204454e8eca59627df99cdd2dfd2de",
+      "header": "theorem matrix_reciprocal_identity (d : RidgeData) (hd : ValidData d)\n    (Q : Square (d.size + 1)) (lam : Fin (d.size + 1) \u2192 \u211d)\n    (hdiag : PoleDiagonalization d Q lam)\n    {n : \u2115} (hn : 1 \u2264 n) (A : Square n) (hA : Admissible A) :\n    (ridgeEval d A)\u207b\u00b9 * A = reciprocalEval d Q lam A"
+    },
+    {
+      "declaration": "NLA.SF01.newton_data_step",
+      "header_sha256": "9a603d9c067c233f230c1a4b2925834fe05e58d02ecc61a21ae3fa410ff6a696",
+      "header": "theorem newton_data_step (d : RidgeData) (hd : ValidData d) :\n    \u2203 d' : RidgeData, ValidData d' \u2227 d'.a = d.a / 2 \u2227 d'.b = d.b / 2 \u2227\n      \u2200 n : \u2115, 1 \u2264 n \u2192 \u2200 A : Square n, Admissible A \u2192\n        ridgeEval d' A = (1 / 2 : \u211d) \u2022 (ridgeEval d A + (ridgeEval d A)\u207b\u00b9 * A)"
+    },
+    {
+      "declaration": "NLA.SF01.initial_data_valid",
+      "header_sha256": "cc9a29dd5d8cc6336b073a547b4160c57d84600381eb1aaff404a3b0eb01375e",
+      "header": "theorem initial_data_valid : ValidData initialData"
+    },
+    {
+      "declaration": "NLA.SF01.newton_first",
+      "header_sha256": "3ecb4d573eb0feff3093b4356975366e502e7daddf5447188861ad61e58dba77",
+      "header": "theorem newton_first {n : \u2115} (hn : 1 \u2264 n) (A : Square n)\n    (hA : Admissible A) :\n    newton A 1 = (1 / 2 : \u211d) \u2022 (A + 1) \u2227 newton A 1 = ridgeEval initialData A"
+    },
+    {
+      "declaration": "NLA.SF01.iterate_ridge_representation",
+      "header_sha256": "d0c902e8da382a62d7c455cf74ed88e9313a6e89a1e6116960d0d064ee65c990",
+      "header": "theorem iterate_ridge_representation (k : \u2115) (hk : 1 \u2264 k) :\n    \u2203 d : RidgeData, ValidData d \u2227\n      \u2200 n : \u2115, 1 \u2264 n \u2192 \u2200 A : Square n, Admissible A \u2192 newton A k = ridgeEval d A"
+    },
+    {
+      "declaration": "NLA.SF01.canonical_newton_preservation",
+      "header_sha256": "7a2b28d64f708ae6fb76dae8275250183545790775729855c37d9a0961699aaf",
+      "header": "theorem canonical_newton_preservation {n : \u2115} (hn : 1 \u2264 n) (A : Square n)\n    (hH : IsHMatrix A) (hdiag : PositiveDiagonal A) (k : \u2115) :\n    IsHMatrix (newton A k) \u2227 PositiveDiagonal (newton A k) \u2227 IsUnit (newton A k)"
+    }
+  ]
+}
