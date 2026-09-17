@@ -1,0 +1,22 @@
+Lines 90–110
+90:   rw [← sUnion_empty]; exact isOpen_sUnion fun a => False.elim
+91: 
+92: theorem Set.Finite.isOpen_sInter {s : Set (Set X)} (hs : s.Finite) (h : ∀ t ∈ s, IsOpen t) :
+93:     IsOpen (⋂₀ s) := by
+94:   induction s, hs using Set.Finite.induction_on with
+95:   | empty => rw [sInter_empty]; exact isOpen_univ
+96:   | insert _ _ ih =>
+97:     simp only [sInter_insert, forall_mem_insert] at h ⊢
+98:     exact h.1.inter (ih h.2)
+99: 
+100: theorem Set.Finite.isOpen_biInter {s : Set α} {f : α → Set X} (hs : s.Finite)
+101:     (h : ∀ i ∈ s, IsOpen (f i)) :
+102:     IsOpen (⋂ i ∈ s, f i) :=
+103:   sInter_image f s ▸ (hs.image _).isOpen_sInter (forall_mem_image.2 h)
+104: 
+105: theorem isOpen_iInter_of_finite [Finite ι] {s : ι → Set X} (h : ∀ i, IsOpen (s i)) :
+106:     IsOpen (⋂ i, s i) :=
+107:   (finite_range _).isOpen_sInter (forall_mem_range.2 h)
+108: 
+109: theorem isOpen_biInter_finset {s : Finset α} {f : α → Set X} (h : ∀ i ∈ s, IsOpen (f i)) :
+110:     IsOpen (⋂ i ∈ s, f i) :=

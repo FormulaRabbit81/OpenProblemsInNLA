@@ -1,0 +1,17 @@
+--- before/AugmentedDerivative.lean
++++ after/AugmentedDerivative.lean
+@@ -27,12 +27,14 @@
+ 
+ private theorem augmented_derivative_initial (v : Parameters) (i : Fin 9) :
+     augmentedDerivative v i.castSucc = coefficientDerivative v i := by
++  -- Expose the frozen continuous matrix maps at coordinate i before rewriting its row.
+   change (∑ j : Fin 10, augmentedJacobian i.castSucc j * v j) =
+     ∑ j : Fin 10, jacobian i j * v j
+   rw [augmented_jacobian_initial_row]
+ 
+ private theorem augmented_derivative_last (v : Parameters) :
+     augmentedDerivative v (Fin.last 9) = v 9 := by
++  -- The last coordinate of the same matrix action is its literal final-row sum.
+   change (∑ j : Fin 10, augmentedJacobian (Fin.last 9) j * v j) = v 9
+   rw [augmented_jacobian_final_row]
+   simp [ite_mul]

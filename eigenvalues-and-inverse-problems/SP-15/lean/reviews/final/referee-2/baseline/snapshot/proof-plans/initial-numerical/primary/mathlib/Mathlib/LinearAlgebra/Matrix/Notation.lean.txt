@@ -1,0 +1,19 @@
+Lines 469–486
+469:   ext i j
+470:   fin_cases i <;> fin_cases j <;> rfl
+471: 
+472: theorem eta_fin_three (A : Matrix (Fin 3) (Fin 3) α) :
+473:     A = !![A 0 0, A 0 1, A 0 2;
+474:            A 1 0, A 1 1, A 1 2;
+475:            A 2 0, A 2 1, A 2 2] := by
+476:   ext i j
+477:   fin_cases i <;> fin_cases j <;> rfl
+478: 
+479: theorem mul_fin_two [AddCommMonoid α] [Mul α] (a₁₁ a₁₂ a₂₁ a₂₂ b₁₁ b₁₂ b₂₁ b₂₂ : α) :
+480:     !![a₁₁, a₁₂;
+481:        a₂₁, a₂₂] * !![b₁₁, b₁₂;
+482:                       b₂₁, b₂₂] = !![a₁₁ * b₁₁ + a₁₂ * b₂₁, a₁₁ * b₁₂ + a₁₂ * b₂₂;
+483:                                      a₂₁ * b₁₁ + a₂₂ * b₂₁, a₂₁ * b₁₂ + a₂₂ * b₂₂] := by
+484:   ext i j
+485:   fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_succ]
+486: 

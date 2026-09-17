@@ -1,0 +1,31 @@
+284: instance [Monoid M] [Subsingleton M] : Unique Mˣ where
+285:   uniq _ := Units.val_eq_one.mp (by subsingleton)
+286: 
+287: namespace IsUnit
+288: 
+289: section Monoid
+290: 
+291: variable [Monoid M] {a b c : M}
+292: 
+293: @[to_additive]
+294: theorem mul_left_inj (h : IsUnit a) : b * a = c * a ↔ b = c :=
+295:   let ⟨u, hu⟩ := h
+296:   hu ▸ u.mul_left_inj
+297: 
+298: @[to_additive]
+299: theorem mul_right_inj (h : IsUnit a) : a * b = a * c ↔ b = c :=
+300:   let ⟨u, hu⟩ := h
+301:   hu ▸ u.mul_right_inj
+302: 
+303: @[to_additive]
+304: protected theorem mul_left_cancel (h : IsUnit a) : a * b = a * c → b = c :=
+305:   h.mul_right_inj.1
+306: 
+307: @[to_additive]
+308: protected theorem mul_right_cancel (h : IsUnit b) : a * b = c * b → a = c :=
+309:   h.mul_left_inj.1
+310: 
+311: @[to_additive]
+312: theorem mul_eq_right (h : IsUnit b) : a * b = b ↔ a = 1 := calc
+313:   a * b = b ↔ a * b = 1 * b := by rw [one_mul]
+314:     _ ↔ a = 1 := by rw [h.mul_left_inj]

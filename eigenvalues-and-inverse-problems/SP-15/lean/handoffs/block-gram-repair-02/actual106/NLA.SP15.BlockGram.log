@@ -1,0 +1,100 @@
+Try this:
+  [apply] abel_nf
+NLA/SP15/BlockGram.lean:25:44: error: unsolved goals
+ι : Type u_1
+inst✝¹ : Fintype ι
+inst✝ : DecidableEq ι
+A : Matrix ι ι ℂ
+z a : ℂ
+hz : star z * z = ↑(Complex.normSq z)
+⊢ a • 1 + (Aᴴ * A + (-1 • star z • A + (-1 • z • Aᴴ + (z * star z) • 1))) =
+    a • 1 + (Aᴴ * A + (-1 • star z • A + (-1 • z • Aᴴ + ↑(Complex.normSq z) • 1)))
+NLA/SP15/BlockGram.lean:30:64: warning: This simp argument is unused:
+  hz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul, Matrix.conjTranspose_one, sub_mul, mul_sub,
+    Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul, Matrix.mul_one, smul_smul, add_smul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/BlockGram.lean:46:34: warning: This simp argument is unused:
+  Matrix.fromCols_mul_fromRows
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [blockMatrix, Matrix.fromRows_zero, Matrix.fromBlocks_conjTranspose,
+    Matrix.conjTranspose_fromCols_eq_fromRows_conjTranspose, Matrix.conjTranspose_zero, Matrix.fromBlocks_multiply,
+    Matrix.fromRows_mul_fromCols, Matrix.zero_mul, Matrix.mul_zero, zero_add, add_zero, Matrix.fromBlocks_add,
+    Matrix.fromBlocks_zero, hgram]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/BlockGram.lean:48:27: warning: This simp argument is unused:
+  Matrix.fromBlocks_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [blockMatrix, Matrix.fromRows_zero, Matrix.fromBlocks_conjTranspose,
+    Matrix.conjTranspose_fromCols_eq_fromRows_conjTranspose, Matrix.conjTranspose_zero, Matrix.fromBlocks_multiply,
+    Matrix.fromRows_mul_fromCols, Matrix.fromCols_mul_fromRows, Matrix.zero_mul, Matrix.mul_zero, zero_add, add_zero,
+    Matrix.fromBlocks_add, hgram]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+NLA/SP15/BlockGram.lean:54:75: error: unsolved goals
+case inl.inr.inl
+x : Parameters
+hx : x ∈ parameterBox
+z : ℂ
+t : ℝ
+i j : Fin 3
+⊢ z = 0 ∨ (0 ⊕ᵥ 0) (Sum.inl j) i = 0
+
+case inl.inr.inr
+x : Parameters
+hx : x ∈ parameterBox
+z : ℂ
+t : ℝ
+i j : Fin 3
+⊢ z = 0 ∨ (0 ⊕ᵥ 0) (Sum.inr j) i = 0
+
+case inr.inl.inl
+x : Parameters
+hx : x ∈ parameterBox
+z : ℂ
+t : ℝ
+i j : Fin 3
+⊢ (-(z • (pRoot x)ᴴ) ⊕ᵥ 0) (Sum.inl i) j =
+    -(z * (starRingEnd ℂ) (pRoot x j i)) - (starRingEnd ℂ) z * (0 ⊕ᵥ 0) (Sum.inl i) j
+
+case inr.inr.inl
+x : Parameters
+hx : x ∈ parameterBox
+z : ℂ
+t : ℝ
+i j : Fin 3
+⊢ (-(z • (pRoot x)ᴴ) ⊕ᵥ 0) (Sum.inr i) j = -((starRingEnd ℂ) z * (0 ⊕ᵥ 0) (Sum.inr i) j)
+'NLA.SP15.regularized_gram_blocks' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/SP15/BlockGram.lean:77:21: error: #assert_trust: 'NLA.SP15.regularized_gram_blocks' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

@@ -1,0 +1,9 @@
+624:     a.succAbove b ≠ last _ := mt (succAbove_eq_last_iff ha).mp hb
+625: 
+626: /-- Embedding `Fin n` into `Fin (n + 1)` with a hole around `last n` embeds by `castSucc`. -/
+627: @[simp] lemma succAbove_last : succAbove (last n) = castSucc := by
+628:   ext; simp only [succAbove_of_castSucc_lt, castSucc_lt_last]
+629: 
+630: lemma succAbove_last_apply (i : Fin n) : succAbove (last n) i = castSucc i := by rw [succAbove_last]
+631: 
+632: /-- Embedding `i : Fin n` into `Fin (n + 1)` using a pivot `p` that is greater

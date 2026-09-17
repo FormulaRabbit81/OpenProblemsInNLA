@@ -1,0 +1,18 @@
+--- before/UnitaryBlocks.lean
++++ after/UnitaryBlocks.lean
+@@ -35,6 +35,7 @@
+   let reidx := Matrix.reindexAlgEquiv ℂ ℂ blockEquiv.symm
+   let V : BlockSquare := reidx U
+   have hconstructed (w : Parameters) : reidx (constructedMatrix w) = blockMatrix w := by
++    -- Expose the construction and inverse reindexing as the same equivalence pair.
+     change (Matrix.reindex blockEquiv blockEquiv).symm
+       ((Matrix.reindex blockEquiv blockEquiv) (blockMatrix w)) = blockMatrix w
+     exact (Matrix.reindex blockEquiv blockEquiv).symm_apply_apply (blockMatrix w)
+@@ -97,6 +98,7 @@
+     have hs := congrArg (fun M : Square 3 => e.conjTranspose * M) h23
+     simpa only [← Matrix.mul_assoc, hee', Matrix.one_mul] using hs.symm
+   refine ⟨a, e, k, haa, hee', hkk', ?_, hR, hS⟩
++  -- The frozen diagonalBlocks is this reindexed block diagonal matrix; return to original indices.
+   change U = Matrix.reindex blockEquiv blockEquiv (tripleBlock a 0 0 0 e 0 0 0 k)
+   rw [← hdiag]
+   exact ((Matrix.reindex blockEquiv blockEquiv).apply_symm_apply U).symm

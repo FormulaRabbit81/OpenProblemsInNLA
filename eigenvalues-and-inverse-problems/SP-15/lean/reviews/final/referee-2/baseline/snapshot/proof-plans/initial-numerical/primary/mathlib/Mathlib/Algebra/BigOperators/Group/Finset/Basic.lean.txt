@@ -1,0 +1,24 @@
+Lines 732–754
+732: 
+733: /-- Taking a product over `s : Finset ι` is the same as multiplying the value on a single element
+734: `f a` by the product of `s.erase a`.
+735: 
+736: See `Multiset.prod_map_erase` for the `Multiset` version. -/
+737: @[to_additive /-- Taking a sum over `s : Finset ι` is the same as adding the value on a single
+738: element `f a` to the sum over `s.erase a`.
+739: 
+740: See `Multiset.sum_map_erase` for the `Multiset` version. -/]
+741: theorem mul_prod_erase [DecidableEq ι] (s : Finset ι) (f : ι → M) {a : ι} (h : a ∈ s) :
+742:     (f a * ∏ x ∈ s.erase a, f x) = ∏ x ∈ s, f x := by
+743:   rw [← prod_insert (notMem_erase a s), insert_erase h]
+744: 
+745: /-- A variant of `Finset.mul_prod_erase` with the multiplication swapped. -/
+746: @[to_additive /-- A variant of `Finset.add_sum_erase` with the addition swapped. -/]
+747: theorem prod_erase_mul [DecidableEq ι] (s : Finset ι) (f : ι → M) {a : ι} (h : a ∈ s) :
+748:     (∏ x ∈ s.erase a, f x) * f a = ∏ x ∈ s, f x := by rw [mul_comm, mul_prod_erase s f h]
+749: 
+750: /-- If a function applied at a point is 1, a product is unchanged by
+751: removing that point, if present, from a `Finset`. -/
+752: @[to_additive /-- If a function applied at a point is 0, a sum is unchanged by
+753: removing that point, if present, from a `Finset`. -/]
+754: theorem prod_erase [DecidableEq ι] (s : Finset ι) {f : ι → M} {a : ι} (h : f a = 1) :

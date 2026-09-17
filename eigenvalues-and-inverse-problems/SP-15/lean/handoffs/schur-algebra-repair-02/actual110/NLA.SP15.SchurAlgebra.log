@@ -1,0 +1,27 @@
+NLA/SP15/SchurAlgebra.lean:27:8: warning: This simp argument is unused:
+  Matrix.smul_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.mul_smul, smul_smul, hs]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/SchurAlgebra.lean:27:25: warning: This simp argument is unused:
+  Matrix.mul_smul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.smul_mul, smul_smul, hs]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+NLA/SP15/SchurAlgebra.lean:31:62: error: unsolved goals
+case e_a
+s z : ℂ
+R : Square 3
+⊢ star z * s⁻¹ * z = s⁻¹ * z * (starRingEnd ℂ) z
+'NLA.SP15.determinant_lower_commuting' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.SP15.final_schur_matrix' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,59 @@
+NLA/SP15/ShiftedDeterminant.lean:37:58: error: unsolved goals
+R S P Q : Square 3
+s t z : ℂ
+hs : s ≠ 0
+hst : s = t + ↑(Complex.normSq z)
+hR : Rᴴ * R = P
+hS : Sᴴ * S = Q
+inst✝ : Invertible (s • 1)
+⊢ (-z • Rᴴ * s⁻¹ • 1 * Matrix.fromCols (-star z • R) 0).fromRows 0 =
+    Matrix.fromBlocks ((↑(Complex.normSq z) / s) • P) 0 0 0
+NLA/SP15/ShiftedDeterminant.lean:38:36: warning: This simp argument is unused:
+  Matrix.fromRows_mul_fromCols
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.fromRows_mul, Matrix.zero_mul, Matrix.mul_zero, first_schur_root_product, hR]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/ShiftedDeterminant.lean:39:23: warning: This simp argument is unused:
+  Matrix.mul_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.fromRows_mul, Matrix.fromRows_mul_fromCols, Matrix.zero_mul, first_schur_root_product, hR]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/ShiftedDeterminant.lean:39:40: warning: This simp argument is unused:
+  first_schur_root_product
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.fromRows_mul, Matrix.fromRows_mul_fromCols, Matrix.zero_mul, Matrix.mul_zero, hR]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/ShiftedDeterminant.lean:39:66: warning: This simp argument is unused:
+  hR
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.fromRows_mul, Matrix.fromRows_mul_fromCols, Matrix.zero_mul, Matrix.mul_zero,
+    first_schur_root_product]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/ShiftedDeterminant.lean:68:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+NLA/SP15/ShiftedDeterminant.lean:69:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+'NLA.SP15.shifted_gram_determinant' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/SP15/ShiftedDeterminant.lean:110:21: error: #assert_trust: 'NLA.SP15.shifted_gram_determinant' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

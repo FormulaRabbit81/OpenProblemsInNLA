@@ -1,0 +1,39 @@
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Algebra/Module/FiniteDimension.lean:476:def toContinuousLinearEquivOfDetNeZero (f : E →L[𝕜] E) (hf : f.det ≠ 0) : E ≃L[𝕜] E :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Algebra/Module/FiniteDimension.lean:480:theorem coe_toContinuousLinearEquivOfDetNeZero (f : E →L[𝕜] E) (hf : f.det ≠ 0) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Algebra/Module/FiniteDimension.lean:481:    (f.toContinuousLinearEquivOfDetNeZero hf : E →L[𝕜] E) = f := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Algebra/Module/FiniteDimension.lean:486:theorem toContinuousLinearEquivOfDetNeZero_apply (f : E →L[𝕜] E) (hf : f.det ≠ 0) (x : E) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Algebra/Module/FiniteDimension.lean:487:    f.toContinuousLinearEquivOfDetNeZero hf x = f x :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:161:theorem localInverse_apply_image (hf : HasStrictFDerivAt f (f' : E →L[𝕜] F) a) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:165:theorem eventually_right_inverse (hf : HasStrictFDerivAt f (f' : E →L[𝕜] F) a) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:167:  (hf.toOpenPartialHomeomorph f).eventually_right_inverse' hf.mem_toOpenPartialHomeomorph_source
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:169:theorem localInverse_continuousAt (hf : HasStrictFDerivAt f (f' : E →L[𝕜] F) a) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:173:theorem localInverse_tendsto (hf : HasStrictFDerivAt f (f' : E →L[𝕜] F) a) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean:179:  eventuallyEq_of_left_inv_of_right_inv hg hf.eventually_right_inverse <|
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/ContDiff.lean:59:theorem localInverse_apply_image (hf : ContDiffAt 𝕂 n f a)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/ContDiff.lean:61:  (hf.hasStrictFDerivAt' hf' hn).localInverse_apply_image
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/ContDiff.lean:69:  have := hf.localInverse_apply_image hf' hn
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Deriv.lean:41:lemma eventually_right_inverse : ∀ᶠ x in 𝓝 (f a), f (localInverse f f' a hf hf' x) = x :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Deriv.lean:42:  HasStrictFDerivAt.eventually_right_inverse ..
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Analytic.lean:45:  have : r (f x) = x := HasStrictFDerivAt.localInverse_apply_image ..
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/InverseFunctionTheorem/Analytic.lean:47:  exact (hg.comp hra).congr <| .fun_comp (HasStrictDerivAt.eventually_right_inverse ..) g
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/Implicit.lean:185:  φ.hasStrictFDerivAt.eventually_right_inverse.mono fun ⟨_, _⟩ h => h
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/Implicit.lean:402:  ((hf.implicitToOpenPartialHomeomorphOfComplemented f f' hf' hker).eventually_right_inverse <|
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/LagrangeMultipliers.lean:117:  rcases hextr.exists_linear_map_of_hasStrictFDerivAt (hasStrictFDerivAt_pi.2 fun i => hf' i)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/OfCompLeft.lean:208:  htff'.of_local_left_inverse (f.symm.continuousAt ha) (f.eventually_right_inverse ha)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/OfCompLeft.lean:218:  htff'.of_local_left_inverse (f.symm.continuousAt ha) (f.eventually_right_inverse ha)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/Deriv/Inverse.lean:71:  htff'.of_local_left_inverse (f.symm.continuousAt ha) hf' (f.eventually_right_inverse ha)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/Deriv/Inverse.lean:98:  htff'.of_local_left_inverse (f.symm.continuousAt ha) hf' (f.eventually_right_inverse ha)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/WithLp.lean:51:theorem hasStrictFDerivAt_piLp :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/WithLp.lean:55:  rw [← (PiLp.continuousLinearEquiv p 𝕜 E).comp_hasStrictFDerivAt_iff, hasStrictFDerivAt_pi']
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/ContinuousAlternatingMap.lean:74:  have H₃ := hasStrictFDerivAt_pi.mpr fun i : ι ↦ hasStrictFDerivAt_id (𝕜 := 𝕜) fg.2
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Analytic.lean:643:    (hasStrictFDerivAt_pi.2 fun _ ↦ hasStrictFDerivAt_id _)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Analytic.lean:669:      (hf.prodMk (hasStrictFDerivAt_pi.2 hg))
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/ContinuousMultilinearMap.lean:77:    |>.comp x (hf.prodMk (hasStrictFDerivAt_pi.2 hg))
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Mul.lean:506:    (hasStrictFDerivAt_pi.mpr fun i ↦ h (l.get i) (List.getElem_mem ..)) :) ?_
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Mul.lean:562:      hasStrictFDerivAt_pi.mpr fun i ↦ h (Subtype.val i) i.prop :)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Mul.lean:605:    (hasStrictFDerivAt_finsetProd.comp x <| hasStrictFDerivAt_pi.mpr fun i ↦ hg i i.prop)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Prod.lean:359:theorem hasStrictFDerivAt_pi' :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Prod.lean:364:theorem hasStrictFDerivAt_pi'' (hφ : ∀ i, HasStrictFDerivAt (fun x => Φ x i) ((proj i).comp Φ') x) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Prod.lean:365:    HasStrictFDerivAt Φ Φ' x := hasStrictFDerivAt_pi'.2 hφ
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Prod.lean:372:theorem hasStrictFDerivAt_pi :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Prod.lean:375:  hasStrictFDerivAt_pi'

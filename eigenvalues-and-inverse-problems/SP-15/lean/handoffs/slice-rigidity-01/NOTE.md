@@ -1,0 +1,1 @@
+Root implementation of accepted exact25 plan. Four named consumed helpers reduce arbitrary unitary to diagonal, compare positive edges by exact norms and recover all ten coordinates. No new numerical intervals, finite eigenvalue examples or resource overrides. First local compile pending; no independent proof approval or Comparator result.

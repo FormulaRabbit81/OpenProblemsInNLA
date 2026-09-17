@@ -1,0 +1,43 @@
+155: /-!
+156: ## Positive definite matrices
+157: -/
+158: 
+159: /-- A matrix `M : Matrix n n R` is positive definite if it is Hermitian
+160: and `xᴴMx` is greater than zero for all nonzero `x`. -/
+161: def PosDef (M : Matrix n n R) :=
+162:   M.IsHermitian ∧ ∀ ⦃x : n →₀ R⦄, x ≠ 0 → 0 < x.sum fun i xi ↦ x.sum fun j xj ↦ star xi * M i j * xj
+163: 
+164: namespace PosDef
+165: 
+166: theorem isHermitian {M : Matrix n n R} (hM : M.PosDef) : M.IsHermitian :=
+167:   hM.1
+168: 
+169: theorem posSemidef {M : Matrix n n R} (hM : M.PosDef) : M.PosSemidef :=
+170:   ⟨hM.1, fun x ↦ by obtain rfl | hx := eq_or_ne x 0 <;> simp [le_of_lt, hM.2, *]⟩
+189: protected theorem diagonal [StarOrderedRing R] [DecidableEq n] [NoZeroDivisors R]
+190:     {d : n → R} (h : ∀ i, 0 < d i) :
+191:     PosDef (diagonal d) where
+192:   left := isHermitian_diagonal_of_self_adjoint _ <| funext fun i => IsSelfAdjoint.of_nonneg (h i).le
+193:   right x hx := by
+194:     refine Finsupp.sum_pos' (fun _ _ ↦ Finsupp.sum_nonneg ?_) ?_
+195:     · simp +contextual [diagonal, apply_ite, star_left_conjugate_nonneg (h _).le]
+196:     obtain ⟨i, hxi⟩ := by simpa [Finsupp.ext_iff] using hx
+197:     refine ⟨i, ?_, Finsupp.sum_pos' ?_ ⟨i, ?_, ?_⟩⟩ <;> simp +contextual [diagonal,
+198:       apply_ite, star_left_conjugate_nonneg (h _).le,
+199:       star_left_conjugate_pos (h i), IsRegular.of_ne_zero hxi, Finsupp.mem_support_iff.mpr hxi]
+200: 
+201: @[simp]
+202: theorem _root_.Matrix.posDef_diagonal_iff
+203:     [StarOrderedRing R] [DecidableEq n] [NoZeroDivisors R] [Nontrivial R] {d : n → R} :
+204:     PosDef (diagonal d) ↔ ∀ i, 0 < d i :=
+205:   ⟨fun h i => by simpa using h.2 (x := .single i 1), .diagonal⟩
+503: 
+504: section Field
+505: variable {K : Type*} [Field K] [PartialOrder K] [StarRing K]
+506: 
+507: theorem isUnit [DecidableEq n] {M : Matrix n n K} (hM : M.PosDef) : IsUnit M := by
+508:   by_contra h
+509:   obtain ⟨a, ha, ha2⟩ : ∃ a ≠ 0, M *ᵥ a = 0 := by
+510:     obtain ⟨a, b, ha⟩ := Function.not_injective_iff.mp <| mulVec_injective_iff_isUnit.not.mpr h
+511:     exact ⟨a - b, by simp [sub_eq_zero, ha, mulVec_sub]⟩
+512:   simpa [ha2] using hM.dotProduct_mulVec_pos ha

@@ -1,0 +1,21 @@
+1262:   rfl
+1263: 
+1264: @[deprecated toLpLin_toLp (since := "2026-01-22")]
+1265: theorem toEuclideanLin_apply_piLp_toLp (M : Matrix m n 𝕜) (v : n → 𝕜) :
+1266:     toEuclideanLin M (toLp _ v) = toLp _ (M *ᵥ v) :=
+1267:   rfl
+1268: 
+1269: -- `Matrix.toEuclideanLin` is the same as `Matrix.toLin` applied to `PiLp.basisFun`,
+1270: @[deprecated toLpLin_eq_toLin (since := "2026-01-22")]
+1271: theorem toEuclideanLin_eq_toLin [Finite m] :
+1272:     (toEuclideanLin : Matrix m n 𝕜 ≃ₗ[𝕜] _) =
+1273:       Matrix.toLin (PiLp.basisFun _ _ _) (PiLp.basisFun _ _ _) :=
+1274:   rfl
+1275: 
+1276: open EuclideanSpace in
+1277: lemma toEuclideanLin_eq_toLin_orthonormal [Fintype m] :
+1278:     toEuclideanLin = toLin (basisFun n 𝕜).toBasis (basisFun m 𝕜).toBasis :=
+1279:   rfl
+1280: 
+1281: end Matrix
+1282: 

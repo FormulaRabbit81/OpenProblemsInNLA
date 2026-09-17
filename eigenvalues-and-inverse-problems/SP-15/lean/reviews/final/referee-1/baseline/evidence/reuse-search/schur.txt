@@ -1,0 +1,12 @@
+23:* `Matrix.det_fromBlocks₁₁`, `Matrix.det_fromBlocks₂₂`: determinant of a block matrix in terms of
+370:theorem det_fromBlocks₁₁ (A : Matrix m m α) (B : Matrix m n α) (C : Matrix n m α)
+373:  rw [fromBlocks_eq_of_invertible₁₁ (A := A), det_mul, det_mul, det_fromBlocks_zero₂₁,
+374:    det_fromBlocks_zero₂₁, det_fromBlocks_zero₁₂, det_one, det_one, one_mul, one_mul, mul_one]
+377:theorem det_fromBlocks_one₁₁ (B : Matrix m n α) (C : Matrix n m α) (D : Matrix n n α) :
+380:  rw [det_fromBlocks₁₁, invOf_one, Matrix.mul_one, det_one, one_mul]
+384:theorem det_fromBlocks₂₂ (A : Matrix m m α) (B : Matrix m n α) (C : Matrix n m α)
+391:  rw [this, det_submatrix_equiv_self, det_fromBlocks₁₁]
+394:theorem det_fromBlocks_one₂₂ (A : Matrix m m α) (B : Matrix m n α) (C : Matrix n m α) :
+397:  rw [det_fromBlocks₂₂, invOf_one, Matrix.mul_one, det_one, one_mul]
+405:      rw [det_fromBlocks_one₂₂, Matrix.neg_mul, sub_neg_eq_add]
+406:    _ = det (1 + B * A) := by rw [det_fromBlocks_one₁₁, Matrix.mul_neg, sub_neg_eq_add]

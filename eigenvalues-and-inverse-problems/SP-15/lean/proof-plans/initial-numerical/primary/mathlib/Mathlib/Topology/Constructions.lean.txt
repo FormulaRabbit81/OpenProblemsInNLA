@@ -1,0 +1,14 @@
+Lines 766–778
+766: 
+767: @[continuity, fun_prop]
+768: theorem continuous_pi (h : ∀ i, Continuous fun a => f a i) : Continuous f :=
+769:   continuous_pi_iff.2 h
+770: 
+771: @[continuity, fun_prop]
+772: theorem continuous_apply (i : ι) : Continuous fun p : ∀ i, A i => p i :=
+773:   continuous_iInf_dom continuous_induced_dom
+774: 
+775: @[continuity]
+776: theorem continuous_apply_apply {ρ : κ → ι → Type*} [∀ j i, TopologicalSpace (ρ j i)] (j : κ)
+777:     (i : ι) : Continuous fun p : ∀ j, ∀ i, ρ j i => p j i :=
+778:   (continuous_apply i).comp (continuous_apply j)

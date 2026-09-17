@@ -1,0 +1,201 @@
+"""Verify this SP-15 nonauthor review packet without running a compiler or network tool.
+
+Default: check the sealed copies and exact local-run chain. --live additionally
+compares reviewed project and cited library bytes with their original paths.
+This program is an integrity audit, not Lean, Comparator, or a semantic referee.
+"""
+from pathlib import Path
+import argparse
+import hashlib
+import json
+import re
+
+R = Path(__file__).resolve().parent
+parser = argparse.ArgumentParser()
+parser.add_argument('--live', action='store_true')
+args = parser.parse_args()
+checks = 0
+
+def check(condition, message):
+    global checks
+    checks += 1
+    if not condition:
+        raise AssertionError(message)
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+def read_json(path):
+    return json.loads(path.read_text())
+
+def code_only(text):
+    """Remove nested block and line comments, preserving strings and line numbers."""
+    out=[]
+    i=0
+    depth=0
+    in_string=False
+    while i<len(text):
+        if depth:
+            if text.startswith('/-',i): depth+=1;out.extend('  ');i+=2
+            elif text.startswith('-/',i):depth-=1;out.extend('  ');i+=2
+            else:out.append('\n' if text[i]=='\n' else ' ');i+=1
+        elif in_string:
+            out.append(text[i])
+            if text[i]=='\\' and i+1<len(text):out.append(text[i+1]);i+=2
+            else:
+                if text[i]=='"':in_string=False
+                i+=1
+        elif text.startswith('/-',i):depth=1;out.extend('  ');i+=2
+        elif text.startswith('--',i):
+            end=text.find('\n',i)
+            if end<0:end=len(text)
+            out.extend(' '*(end-i));i=end
+        else:
+            if text[i]=='"':in_string=True
+            out.append(text[i]);i+=1
+    check(depth==0,'unterminated Lean comment')
+    return ''.join(out)
+
+index=read_json(R/'SOURCE-SNAPSHOT.json')
+project=Path(index['project'])
+sources={f['path']:f for f in index['files']}
+texts={}
+for rel,f in sources.items():
+    data=(R/f['snapshot']).read_bytes()
+    check(sha(data)==f['sha256'],f'snapshot digest: {rel}')
+    check(len(data)==f['bytes'],f'snapshot size: {rel}')
+    if args.live:check(sha((project/rel).read_bytes())==f['sha256'],f'live digest: {rel}')
+    if rel.endswith('.lean'):texts[rel]=code_only(data.decode())
+closure={rel for rel,f in sources.items() if f['solution_closure']}
+check(len(closure)==49,'complete local Solution closure')
+
+imports={rel:re.findall(r'^import\s+(\S+)',texts[rel],re.M) for rel in closure}
+def dependencies(rel):
+    result={rel}
+    for module in imports[rel]:
+        path=module.replace('.','/')+'.lean'
+        if path in closure:result.update(dependencies(path))
+    return result
+check(dependencies('Solution.lean')==closure,'exact connected local import closure')
+for rel in closure:
+    c=texts[rel]
+    check(not any('Challenge' in x for x in imports[rel]),f'Challenge import: {rel}')
+    check(re.search(r'\b(sorry|admit|sorryAx|native_decide|ofReduceBool|ofReduceNat|trustCompiler)\b',c) is None,
+          f'forbidden proof term: {rel}')
+    check(re.search(r'^\s*(?:unsafe\s+|axiom\s+|opaque\s+|initialize\b|run_cmd\b|run_elab\b)',c,re.M) is None,
+          f'forbidden declaration/command: {rel}')
+    if rel!='NLA/SP15/Definitions.lean':
+        check('set_option leancert.trust "kernel"' in c,f'kernel trust selection: {rel}')
+
+freeze=read_json(R/sources['STATEMENT-FREEZE.json']['snapshot'])
+for rel,h in freeze['frozen_files'].items():check(sources[rel]['sha256']==h,f'frozen contract changed: {rel}')
+acceptance=read_json(R/'evidence/SP15-ROOT-FREEZE-ACCEPTANCE.json')
+check(acceptance['freeze_sha256']==sources['STATEMENT-FREEZE.json']['sha256'],'root freeze acceptance hash')
+check(acceptance['proof_implementation_authorized'],'recorded pre-implementation acceptance')
+
+standards=read_json(R/sources['STANDARD-BINDINGS.json']['snapshot'])
+for binding in standards['standards']:
+    check(sources[binding['path']]['sha256']==binding['sha256'],f'standard pin: {binding["path"]}')
+tau=[b for b in standards['standards'] if 'TauCetiProject/TauCetiReview' in b['path']]
+check(len(tau)==6,'all six scoped Tau Ceti guidance files')
+check(all(b['upstream']['commit']=='afb424eda89e8ac96d9eb69f6a88972055a4cd1b' for b in tau),'Tau Ceti revision')
+
+def headers(c):
+    result={}
+    for m in re.finditer(r'^theorem\s+([A-Za-z0-9_]+)\b',c,re.M):
+        end=re.search(r':=\s*by\b',c[m.end():])
+        check(end is not None,f'body found: {m[1]}')
+        result[m[1]]=' '.join(c[m.start():m.end()+end.start()].split())
+    return result
+challenge=headers(texts['Challenge.lean'])
+check(len(challenge)==29,'29 frozen challenge contracts')
+implemented={}
+for rel in closure:
+    for name,h in headers(texts[rel]).items():
+        check(name not in implemented,f'duplicate implementation name {name}')
+        implemented[name]=(rel,h)
+for name,h in challenge.items():
+    check(name in implemented,f'missing exact contract {name}')
+    check(implemented[name][1]==h,f'textual contract mismatch {name}')
+config=read_json(R/sources['comparator.json']['snapshot'])
+names=['NLA.SP15.'+x for x in challenge]
+check(config['theorem_names']==names,'Comparator exact contract selection')
+permitted={'propext','Classical.choice','Quot.sound'}
+check(set(config['permitted_axioms'])==permitted,'permitted axiom whitelist')
+check(config['challenge_module']=='Challenge' and config['solution_module']=='Solution','independent Comparator environments')
+sol=texts['Solution.lean']
+check(re.findall(r'^#assert_trust kernel (\S+)',sol,re.M)==list(challenge),'aggregate kernel assertions all29')
+check(re.findall(r'^#print axioms (\S+)',sol,re.M)==list(challenge),'aggregate axiom enumeration all29')
+num=texts['NLA/SP15/Numerical.lean']
+check(num.count('interval_decide (trust := kernel)')==4,'four actual scalar kernel certificates')
+check(texts['NLA/SP15/BoxGeometry.lean'].count('box_scalar_certificate')>=5,'certificate consumed in box geometry/bounds/separation')
+check('parameter_box_bounds x hx' in texts['NLA/SP15/ParameterPositivity.lean'],'box consumed for matrix positivity')
+
+ev=read_json(R/'LOCAL-EVIDENCE.json')
+for binding in ev['bindings']:
+    data=(R/binding['snapshot']).read_bytes()
+    check(sha(data)==binding['sha256'],f'local evidence digest: {binding["snapshot"]}')
+    if args.live:check(sha(Path(binding['original']).read_bytes())==binding['sha256'],f'live local evidence: {binding["original"]}')
+receipts={b['original']:read_json(R/b['snapshot']) for b in ev['bindings'] if b['original'].endswith('/RECEIPT.json')}
+receipt_hashes={b['original']:b['sha256'] for b in ev['bindings'] if b['original'].endswith('/RECEIPT.json')}
+final_path=next(p for p in receipts if p.endswith('/development-116/RECEIPT.json'))
+check(receipt_hashes[final_path]=='c15b57f189a8ed2435230e545f6b4a703a2b33a4eba1a4daf5d03aeef08e67b4','exact116 receipt')
+final=receipts[final_path]
+latest={c['module']:c for c in final['commands']}
+check(final['failed_modules']==[] and final['blocked_modules']==[],'run116 zero failed or blocked modules')
+check(sha((R/'evidence/local-environment/ASSEMBLY-116.json').read_bytes())==final['assembly_sha256'],'exact116 assembly')
+check(sha((R/'evidence/local-environment/serial_compile_v3.py.txt').read_bytes())==final['runner_sha256'],'exact116 serial runner')
+local_pins={x['name']:x['rev'] for x in read_json(R/'evidence/local-environment/lake-manifest.json')['packages']}
+frozen_pins={x['name']:x['rev'] for x in read_json(R/sources['lake-manifest.json']['snapshot'])['packages']}
+check(local_pins==frozen_pins,'all pinned local packages equal frozen project packages')
+fresh=0
+for module,chain in ev['chains'].items():
+    rel=module.replace('.','/')+'.lean'
+    check(rel in closure,f'evidence module belongs to SP15 closure: {module}')
+    needed=dependencies(rel)
+    if latest[module].get('status')!='reused_exact_successful_local_output':fresh+=1
+    for k,node in enumerate(chain):
+        r=receipts[node['receipt']]
+        check(r['platform']=='darwin' and r['threads']==1 and r['memory_cap_mib']==4096 and r['max_compiler_processes']==1,
+              f'serial compiler scope: {module}, {node["receipt"]}')
+        c=next(x for x in r['commands'] if x['module']==module)
+        check(c['source_sha256']==sources[rel]['sha256'],f'source bound local output: {module}')
+        if c.get('status')=='reused_exact_successful_local_output':
+            check(k+1<len(chain),'cache origin exists')
+            check(c['prior_receipt']==chain[k+1]['receipt'],'cache chain linked')
+            check(receipt_hashes[c['prior_receipt']]==c['prior_receipt_sha256'],'prior receipt digest')
+            check(c['output_sha256']==chain[k+1]['output_sha256'],'cached exact successful output hash')
+            for dep in needed:
+                check(c['transitive_source_hashes'].get(dep)==sources[dep]['sha256'],f'cache transitive source: {module}:{dep}')
+        else:
+            check(c['exit_code']==0,f'actual fresh success: {module}')
+            check('--threads=1' in c['argv'] and '--memory=4096' in c['argv'],'actual serial command flags')
+            for dep in needed:
+                check(r['source_inputs'].get(dep)==sources[dep]['sha256'],f'fresh transitive source: {module}:{dep}')
+    origin=ev['successful_origins'][module]
+    log=(R/origin['log_snapshot']).read_text()
+    check(sha(log.encode())==origin['command']['log_sha256'],'actual origin log hash')
+    check(re.search(r'\berror:|\bsorryAx\b|\bLean\.ofReduce|\bLean\.trustCompiler\b',log) is None,'origin clean of errors/unpermitted axioms')
+    for ax in re.findall(r'depends on axioms: \[(.*?)\]',log):
+        check(set(x.strip() for x in ax.split(',') if x.strip())<=permitted,'origin actual permitted axioms')
+aggregate=(R/ev['successful_origins']['Solution']['log_snapshot']).read_text()
+observed=re.findall(r"^'([^']+)' depends on axioms: \[([^]]*)\]$",aggregate,re.M)
+check([x[0] for x in observed]==names,'all29 actual aggregate axiom reports')
+check(all(set(x.strip() for x in ax.split(','))==permitted for _,ax in observed),'aggregate exactly foundational3')
+
+reuse=read_json(R/'REUSE-EVIDENCE.json')
+for q in reuse['searches']:
+    check(sha((R/q['stdout_snapshot']).read_bytes())==q['stdout_sha256'],f'reuse search bound: {q["label"]}')
+    check(q['exit_code'] in (0,1),f'actual search finished: {q["label"]}')
+for binding in reuse['library_snapshots']:
+    check(sha((R/binding['snapshot']).read_bytes())==binding['sha256'],'library source snapshot bound')
+    if args.live:check(sha(Path(binding['original']).read_bytes())==binding['sha256'],'live library bytes match')
+if (R/'MANIFEST.json').exists():
+    manifest=read_json(R/'MANIFEST.json')
+    for rel,h in manifest['files'].items():check(sha((R/rel).read_bytes())==h,f'seal payload {rel}')
+print(json.dumps({'status':'PASS','scope':'Static integrity and actual local-evidence audit; no new Lean/Lake/Comparator/Git/network run.',
+    'assertions':checks,'solution_closure_modules':len(closure),'frozen_contracts':len(challenge),
+    'run116_fresh_SP15_modules':fresh,'run116_reused_SP15_modules':len(closure)-fresh,
+    'raw_receipts':len(receipts),'origin_logs':len(ev['successful_origins']),
+    'scoped_TauCeti_guidance_files':len(tau),'reuse_searches':len(reuse['searches']),
+    'live_compared':args.live,'Comparator_result':'not executed in this review'},indent=2))

@@ -1,0 +1,1 @@
+Actual109 only unsolved goal was a lambda-valued zero component of the iterated block action. Explicitly expose the zero vector, reuse actual mulVec_zero and mulVec_mulVec, then Sum extensionality. No header/hypothesis/limit change.

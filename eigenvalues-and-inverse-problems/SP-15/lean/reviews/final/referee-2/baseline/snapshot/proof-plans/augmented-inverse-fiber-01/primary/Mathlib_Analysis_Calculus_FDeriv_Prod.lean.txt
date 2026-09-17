@@ -1,0 +1,19 @@
+357: 
+358: @[simp]
+359: theorem hasStrictFDerivAt_pi' :
+360:     HasStrictFDerivAt Φ Φ' x ↔ ∀ i, HasStrictFDerivAt (fun x => Φ x i) ((proj i).comp Φ') x :=
+361:   hasFDerivAtFilter_pi'
+362: 
+363: @[fun_prop]
+364: theorem hasStrictFDerivAt_pi'' (hφ : ∀ i, HasStrictFDerivAt (fun x => Φ x i) ((proj i).comp Φ') x) :
+365:     HasStrictFDerivAt Φ Φ' x := hasStrictFDerivAt_pi'.2 hφ
+366: 
+367: @[fun_prop]
+368: theorem hasStrictFDerivAt_apply (i : ι) (f : ∀ i, F' i) :
+369:     HasStrictFDerivAt (𝕜 := 𝕜) (fun f : ∀ i, F' i => f i) (proj i) f :=
+370:   (proj (R := 𝕜) (φ := F') i).hasStrictFDerivAt
+371: 
+372: theorem hasStrictFDerivAt_pi :
+373:     HasStrictFDerivAt (fun x i => φ i x) (ContinuousLinearMap.pi φ') x ↔
+374:       ∀ i, HasStrictFDerivAt (φ i) (φ' i) x :=
+375:   hasStrictFDerivAt_pi'

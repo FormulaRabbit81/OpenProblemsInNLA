@@ -1,0 +1,30 @@
+56: 
+57: /-- `Matrix.unitaryGroup n` is the group of `n` by `n` matrices where the star-transpose is the
+58: inverse.
+59: -/
+60: abbrev unitaryGroup : Submonoid (Matrix n n α) :=
+61:   unitary (Matrix n n α)
+62: 
+63: -- the group and star structure is already defined in another file
+64: example : Group (unitaryGroup n α) := inferInstance
+65: example : StarMul (unitaryGroup n α) := inferInstance
+66: 
+67: end
+68: 
+69: variable {n : Type u} [DecidableEq n] [Fintype n]
+70: variable {α : Type v} [CommRing α] [StarRing α] {A : Matrix n n α}
+71: 
+72: theorem mem_unitaryGroup_iff : A ∈ Matrix.unitaryGroup n α ↔ A * star A = 1 := by
+73:   refine ⟨And.right, fun hA => ⟨?_, hA⟩⟩
+74:   simpa only [mul_eq_one_comm] using hA
+75: 
+76: theorem mem_unitaryGroup_iff' : A ∈ Matrix.unitaryGroup n α ↔ star A * A = 1 := by
+77:   refine ⟨And.left, fun hA => ⟨hA, ?_⟩⟩
+78:   rwa [mul_eq_one_comm] at hA
+79: 
+80: theorem det_of_mem_unitary {A : Matrix n n α} (hA : A ∈ Matrix.unitaryGroup n α) :
+81:     A.det ∈ unitary α := by
+82:   constructor
+83:   · simpa [star, det_transpose] using congr_arg det hA.1
+84:   · simpa [star, det_transpose] using congr_arg det hA.2
+85: 

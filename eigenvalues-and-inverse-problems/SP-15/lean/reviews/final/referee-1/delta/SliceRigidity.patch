@@ -1,0 +1,10 @@
+--- before/SliceRigidity.lean
++++ after/SliceRigidity.lean
+@@ -41,6 +41,7 @@
+     have hdiff : (pCoordinates x i : ℂ) - (pCoordinates y j : ℂ) ≠ 0 := by
+       exact sub_ne_zero.mpr (fun h => p_intervals_separate x y hx hy i j hij
+         (Complex.ofReal_injective h))
++    -- The entrywise intertwining equation makes this scalar difference times V i j zero.
+     apply (mul_eq_zero.mp (show ((pCoordinates x i : ℂ) -
+         (pCoordinates y j : ℂ)) * V i j = 0 by
+       rw [sub_mul, he]

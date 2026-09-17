@@ -1,0 +1,11 @@
+331:   (mul_eq_of_eq_inv_mul₀ hc h.symm).symm
+332: 
+333: /-- A variant of `mul_inv_eq_iff_eq_mul₀` that moves the nonzero hypothesis to another variable. -/
+334: lemma eq_mul_of_mul_inv_eq₀ (hb : b ≠ 0) (h : a * c⁻¹ = b) : a = b * c :=
+335:   (mul_eq_of_eq_mul_inv₀ hb h.symm).symm
+336: 
+337: lemma div_mul_cancel₀ (a : G₀) (h : b ≠ 0) : a / b * b = a := by simp [h]
+338: 
+339: lemma mul_one_div_cancel (h : a ≠ 0) : a * (1 / a) = 1 := h.isUnit.mul_one_div_cancel
+340: 
+341: lemma one_div_mul_cancel (h : a ≠ 0) : 1 / a * a = 1 := h.isUnit.one_div_mul_cancel

@@ -1,0 +1,101 @@
+#!/usr/bin/env python3
+"""Retain exact planning inputs and bounded Fraction diagnostics; no Lean execution."""
+from pathlib import Path
+from fractions import Fraction
+import datetime, hashlib, json
+
+R=Path(__file__).resolve().parent
+P=R.parent.parent
+B=P.parent.parent
+L=Path('/private/tmp/nla-lean-local-shared-20260916')
+M=L/'.lake/packages/mathlib'
+C=L/'.lake/packages/leancert'
+sha=lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+checks=[]
+def require(label, truth):
+    checks.append({'check':label,'passed':bool(truth)})
+    assert truth,label
+
+expected={'NLA/SP15/Definitions.lean':'fa57c71cd3e6d6551f081e479121f9f6a4695858732f3e6d1fa4cd79ad927498',
+          'Challenge.lean':'dc55eda7fac9d89e3c7017593ce3bdb6f8a4b01b15775d4c6f8c8e13b6560833'}
+bindings=[]
+for rel,h in expected.items():
+    require('unchanged exact statement input '+rel,sha(P/rel)==h)
+    bindings.append({'path':str(P/rel),'sha256':h,'scope':'current reviewed statement input; no implementation'})
+record=json.loads((P/'STATEMENT-HEADERS.json').read_text())
+names=['box_scalar_certificate','parameter_box_geometry','parameter_box_bounds',
+       'p_intervals_separate','coefficient_base_value','jacobian_lu_certificate',
+       'jacobian_minor_nonsingular']
+rows=[]
+for i,row in enumerate(record['contracts'],1):
+    if row['name'].split('.')[-1] in names:
+        require('exact header '+row['name'],row['header'] in (P/'Challenge.lean').read_text())
+        require('header hash '+row['name'],hashlib.sha256(row['header'].encode()).hexdigest()==row['header_sha256'])
+        rows.append(dict(row,ordinal=i))
+require('seven planned contracts',len(rows)==7)
+(R/'EXACT-HEADERS.json').write_text(json.dumps(rows,indent=2,ensure_ascii=False)+'\n')
+
+# Primary source excerpts inspected during this plan; complete source hashes retained.
+specs=[
+ (M,'Mathlib/LinearAlgebra/Matrix/Block.lean',[(52,71),(331,350)],['BlockTriangular','IsUpperTriangular','IsLowerTriangular','det_of_isUpperTriangular','det_of_isLowerTriangular']),
+ (M,'Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean',[(122,146)],['det_mul']),
+ (M,'Mathlib/LinearAlgebra/Matrix/Notation.lean',[(469,486)],['Matrix.mul_apply finite-index pattern']),
+ (M,'Mathlib/Topology/Basic.lean',[(90,110)],['isOpen_iInter_of_finite']),
+ (M,'Mathlib/Topology/Order/OrderClosed.lean',[(582,595)],['isOpen_lt']),
+ (M,'Mathlib/Topology/Constructions.lean',[(766,778)],['continuous_apply']),
+ (M,'Mathlib/Analysis/Normed/Group/Continuity.lean',[(186,208)],['Continuous.norm (generated additive theorem)']),
+ (M,'Mathlib/Data/Set/Lattice.lean',[(135,145)],['Set.ofPred_forall']),
+ (M,'Mathlib/Analysis/Complex/Norm.lean',[(96,108),(174,183)],['Complex.norm_real','Complex.norm_le_abs_re_add_abs_im']),
+ (M,'Mathlib/Algebra/Order/Group/Unbundled/Abs.lean',[(260,267)],['abs_lt (generated additive theorem)']),
+ (M,'Mathlib/Algebra/BigOperators/Fin.lean',[(57,100)],['Fin.prod_univ_succ','Fin.sum_univ_succ (generated additive theorem)']),
+ (M,'Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean',[(732,754)],['Finset.add_sum_erase (generated additive theorem)']),
+ (M,'Mathlib/Tactic/FinCases.lean',[(79,91),(128,140)],['fin_cases']),
+ (M,'Mathlib/Tactic/NormNum.lean',[(1,18)],['norm_num tactic imports']),
+ (M,'Mathlib/Tactic/NormNum/Basic.lean',[(55,90)],['norm_num proof-producing rational reduction prerequisites']),
+ (C,'LeanCert/Tactic/IntervalAuto/PointIneq.lean',[(950,1001)],['interval_decide with explicit trust override']),
+ (C,'LeanCert/Tactic/Verification.lean',[(486,513),(530,541),(629,660)],['kernel verification branch','kernel no-fallback rule','#assert_trust kernel']),
+]
+api=[]
+for pkg,rel,ranges,symbols in specs:
+    f=pkg/rel; txt=f.read_text(); lines=txt.splitlines()
+    tag='mathlib' if pkg==M else 'leancert'
+    out=R/'primary'/(tag+'/'+rel+'.txt'); out.parent.mkdir(parents=True,exist_ok=True)
+    excerpt='\n\n'.join(f'Lines {a}–{b}\n'+'\n'.join(f'{i+1}: {lines[i]}' for i in range(a-1,min(b,len(lines)))) for a,b in ranges)
+    out.write_text(excerpt+'\n')
+    olean=pkg/'.lake/build/lib/lean'/Path(rel).with_suffix('.olean')
+    api.append({'path':str(f),'sha256':sha(f),'package':tag,
+        'pin':'0df444a360eaa60ab8c11dca51a86af692955474' if tag=='mathlib' else '621a43d7cf21f87872392a01e874f2f1dbddc926',
+        'inspected_ranges':ranges,'symbols':symbols,'excerpt':str(out.relative_to(R)),
+        'source_matched_execution_not_claimed':True,'olean_present':olean.exists()})
+(R/'API-BINDINGS.json').write_text(json.dumps(api,indent=2,ensure_ascii=False)+'\n')
+for rel in ['NUMERICAL_TARGETS.md','DEFINITION-AND-CONTRACT-PLAN.md','STATEMENT-HEADERS.json',
+            'sources/feasibility/SP15-JACOBIAN-LU.json','sources/feasibility/SP15-JACOBIAN-PREFLIGHT.json',
+            'sources/patterns/Forsythe-NUMERICAL_TARGETS.md','lake-manifest.json','lean-toolchain']:
+    bindings.append({'path':str(P/rel),'sha256':sha(P/rel),'scope':'prior statement-first and pinned planning context'})
+mi=B/'next-proofs/MI-13/NLA/MI13/Numerical.lean'
+bindings.append({'path':str(mi),'sha256':sha(mi),'scope':'kernel interval_decide and trust assertion pattern, not imported or copied theorem'})
+
+lu=json.loads((P/'sources/feasibility/SP15-JACOBIAN-LU.json').read_text())
+lo=[[Fraction(x) for x in r] for r in lu['L']]
+up=[[Fraction(x) for x in r] for r in lu['U']]
+require('identity row order',lu['row_order_zero_based']==list(range(9)))
+require('lower triangular unit diagonal',all(lo[i][j]==0 for i in range(9) for j in range(i+1,9)) and all(lo[i][i]==1 for i in range(9)))
+require('upper triangular',all(up[i][j]==0 for i in range(9) for j in range(i)))
+pivots=[up[i][i] for i in range(9)]; require('nine nonzero pivots',all(x!=0 for x in pivots))
+prefix=[];v=Fraction(1)
+for pivot in pivots:v*=pivot;prefix.append(v)
+require('prefix products small exact integers',prefix==list(map(Fraction,[300,5850,-15000,-296984,-690162,883764,-151308,-16744,-1088])))
+products=sum(lo[i][k]!=0 and up[k][j]!=0 for i in range(9) for j in range(9) for k in range(9))
+require('triangular product workload 285',products==285)
+diag={'scope':'Bounded planning diagnostics only, not Lean proofs or derivative certification',
+      'entry_checks':81,'nonzero_products_after_zero_removal':products,'naive_products':729,
+      'determinant_permutations_avoided':362880,'pivots':list(map(str,pivots)),
+      'prefix_products':list(map(str,prefix)),'kernel_certificate_executed':False}
+(R/'EXACT-PLANNING-DIAGNOSTICS.json').write_text(json.dumps(diag,indent=2)+'\n')
+(R/'SOURCE-BINDINGS.json').write_text(json.dumps(bindings,indent=2)+'\n')
+result={'prepared_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'status':'PRE-CODE PLAN; root freeze acceptance pending',
+        'checks':checks,'checks_passed':len(checks),'proof_implementation_present':False,
+        'Lean_executed':False,'Comparator_executed':False,'whole_problem_verified':False,'count_change':0}
+(R/'PLAN-CHECKS.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({'checks_passed':len(checks),'primary_source_bindings':len(api),'exact_headers':len(rows),
+                  'implementation_status':'NOT STARTED'},indent=2))

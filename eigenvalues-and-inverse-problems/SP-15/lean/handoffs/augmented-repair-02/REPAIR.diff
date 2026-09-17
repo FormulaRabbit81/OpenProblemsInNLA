@@ -1,0 +1,52 @@
+--- before/AugmentedDerivative.lean
++++ NLA/SP15/AugmentedDerivative.lean
+@@ -15,16 +15,27 @@
+ noncomputable section
+ open scoped BigOperators
+ 
++theorem augmented_jacobian_initial_row (i : Fin 9) :
++    augmentedJacobian i.castSucc = jacobian i := by
++  exact Fin.lastCases_castSucc (n := 9) (motive := fun _ : Fin 10 => Fin 10 → ℝ)
++    (last := fun j : Fin 10 => if j = 9 then (1 : ℝ) else 0) (cast := jacobian) i
++
++theorem augmented_jacobian_final_row :
++    augmentedJacobian (Fin.last 9) = fun j : Fin 10 => if j = 9 then (1 : ℝ) else 0 := by
++  exact Fin.lastCases_last (n := 9) (motive := fun _ : Fin 10 => Fin 10 → ℝ)
++    (last := fun j : Fin 10 => if j = 9 then (1 : ℝ) else 0) (cast := jacobian)
++
+ private theorem augmented_derivative_initial (v : Parameters) (i : Fin 9) :
+     augmentedDerivative v i.castSucc = coefficientDerivative v i := by
+   change (∑ j : Fin 10, augmentedJacobian i.castSucc j * v j) =
+     ∑ j : Fin 10, jacobian i j * v j
+-  simp only [augmentedJacobian, Fin.lastCases_castSucc]
++  rw [augmented_jacobian_initial_row]
+ 
+ private theorem augmented_derivative_last (v : Parameters) :
+     augmentedDerivative v (Fin.last 9) = v 9 := by
+   change (∑ j : Fin 10, augmentedJacobian (Fin.last 9) j * v j) = v 9
+-  simp [augmentedJacobian, Fin.lastCases_last, ite_mul]
++  rw [augmented_jacobian_final_row]
++  simp [ite_mul]
+ 
+ private theorem augmented_initial_map (i : Fin 9) :
+     (ContinuousLinearMap.proj i.castSucc : Parameters →L[ℝ] ℝ).comp augmentedDerivative =
+--- before/AugmentedEquivalence.lean
++++ NLA/SP15/AugmentedEquivalence.lean
+@@ -19,14 +19,14 @@
+ 
+ private theorem augmented_jacobian_last_row (j : Fin 10) :
+     augmentedJacobian (Fin.last 9) j = if j = (9 : Fin 10) then 1 else 0 := by
+-  simp only [augmentedJacobian, Fin.lastCases_last]
++  exact congrFun augmented_jacobian_final_row j
+ 
+ private theorem augmented_jacobian_last_minor :
+     augmentedJacobian.submatrix (Fin.last 9).succAbove (Fin.last 9).succAbove =
+       jacobianMinor := by
+   ext i j
+-  simp only [Matrix.submatrix_apply, Fin.succAbove_last, augmentedJacobian,
+-    Fin.lastCases_castSucc, jacobianMinor]
++  simp only [Matrix.submatrix_apply, Fin.succAbove_last, jacobianMinor]
++  exact congrFun (augmented_jacobian_initial_row i) j.castSucc
+ 
+ private theorem augmented_jacobian_determinant :
+     augmentedJacobian.det = (-1088 : ℝ) := by

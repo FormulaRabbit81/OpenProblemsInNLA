@@ -1,0 +1,178 @@
+"""Prepare one canonical package from complete locally checked source bytes.
+
+Preserves original history and exact copy maps. This script performs no Git,
+network, Lean, Comparator or review approval action. Linux results stay pending.
+"""
+from pathlib import Path
+import datetime
+import difflib
+import hashlib
+import json
+import re
+import sys
+
+B = Path(__file__).resolve().parent
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+tag, run_number = sys.argv[1:]
+prefix = tag.replace('-', '')
+W = B / 'next-proofs' / tag
+P = B / f'{prefix}-canonical-package-local{run_number}'
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+read = lambda p: json.loads(Path(p).read_text())
+report_path = B / f'{prefix}-LOCAL-COMPLETE-{run_number}.json'
+report = read(report_path)
+sources = report['sources']
+cfg = read(W / 'comparator.json')
+freeze = read(W / 'STATEMENT-FREEZE.json')
+assert not P.exists()
+assert report['count_change'] == 0
+assert sha(report['receipt']) == report['receipt_sha256']
+assert all(sha(W / rel) == h for rel, h in sources.items())
+assert all(sha(W / rel) == h for rel, h in freeze['frozen_files'].items())
+P.mkdir()
+retained = []
+email = re.compile(rb'[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}')
+
+def put(rel, data):
+    if isinstance(data, str):
+        data = data.encode()
+    assert not email.search(data), ('email-like text requires review before publication', rel)
+    dest = P / rel
+    assert not dest.exists(), rel
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_bytes(data)
+
+def dump(rel, data):
+    put(rel, json.dumps(data, indent=2, ensure_ascii=False) + '\n')
+
+def copy(path, rel):
+    path = Path(path)
+    put(rel, path.read_bytes())
+    retained.append({'original_path': str(path), 'path': rel, 'sha256': sha(path)})
+
+old_metadata = {'README.md', 'formalization.yaml', 'STATE.json', 'CONTRACT-STATUS.json',
+                'METADATA-CHECK.json', 'HANDOFF-MANIFEST.json', 'WORKSPACE-MANIFEST.json'}
+for path in sorted(W.rglob('*')):
+    if not path.is_file():
+        continue
+    rel = path.relative_to(W).as_posix()
+    if rel in old_metadata or rel == 'lakefile.toml':
+        rel = 'statement-history/pre-publication/' + rel
+    elif path.suffix == '.lean' and rel not in sources and rel != 'Challenge.lean':
+        rel += '.txt'
+    elif path.suffix == '.py':
+        rel += '.txt'
+    copy(path, rel)
+
+old_lake = (W / 'lakefile.toml').read_text()
+assert old_lake.count('defaultTargets = ["Challenge"]') == 1
+assert 'name = "Solution"' not in old_lake
+new_lake = old_lake.replace('defaultTargets = ["Challenge"]', 'defaultTargets = ["Solution"]')
+new_lake += '\n[[lean_lib]]\nname = "Solution"\n'
+put('lakefile.toml', new_lake)
+put('verification/packaging/LAKE-REGISTRATION.patch', ''.join(difflib.unified_diff(
+    old_lake.splitlines(True), new_lake.splitlines(True),
+    fromfile='statement-history/pre-publication/lakefile.toml', tofile='lakefile.toml')))
+copy(report_path, 'verification/LOCAL-COMPLETE.json')
+copy(B / f'{prefix}-ROOT-FREEZE-ACCEPTANCE.json', 'statement-audit/COORDINATOR-FREEZE-ACCEPTANCE.json')
+for path, digest in sorted(report['retained_original_evidence'].items()):
+    f = Path(path)
+    assert sha(f) == digest and f.is_relative_to(L)
+    copy(f, 'verification/local-development/' + f.relative_to(L).as_posix())
+copy(report['assembly'], 'verification/local-development/' + Path(report['assembly']).name)
+copy(L / 'serial_compile_v3.py', 'verification/local-development/serial_compile_v3.py.txt')
+copy(L / 'LOCAL-ENVIRONMENT.json', 'verification/local-development/LOCAL-ENVIRONMENT.json')
+copy(Path(__file__), 'verification/packaging/prepare.py.txt')
+copy(B / 'capture_local_completion.py', 'verification/local-development/capture_local_completion.py.txt')
+
+results = []
+for name in cfg['theorem_names']:
+    pattern = r'^theorem\s+' + re.escape(name.split('.')[-1]) + r'\b[\s\S]*?(?=\s*:=\s*by)'
+    found = [(rel, match) for rel in sources
+             if (match := re.search(pattern, (W / rel).read_text(), re.M))]
+    assert len(found) == 1
+    rel, match = found[0]
+    expected = re.search(pattern, (W / 'Challenge.lean').read_text(), re.M)
+    assert expected and match.group() == expected.group()
+    results.append({'declaration': name, 'file': rel,
+                    'line': (W / rel).read_text().count('\n', 0, match.start()) + 1,
+                    'file_sha256': sources[rel], 'sorry_count': 0,
+                    'axioms': report['observed_axioms'][name],
+                    'comparator_config': 'comparator.json',
+                    'verification_status': 'Actual local Lean compilation and kernel trust assertions passed. Final non-root Linux Comparator is pending.'})
+
+if tag == 'SP-15':
+    target = 'The original finite-unitary-class assertion is false: for every M there are M+1 complex 9-by-9 matrices with every ordered singular value equal for every complex shift, and no unitarily similar pair.'
+    explanation = 'The proof checks the exact coefficient polynomials, all 90 derivative entries and an LU certificate with determinant -1088. A genuine inverse-function theorem constructs the coefficient fiber inside one radius-1/16 box. Actual Gram characteristic polynomials give all shifted singular values, with multiplicities; unrestricted unitary conjugation recovers all ten parameters. The Schur proof uses the valid sI+Q pivot, and the unitary proof uses direct block elimination. Supplementary smooth-family and Jordan-type enhancements are outside the original target and are not exported.'
+    numerical = 'Four kernel-mode LeanCert rational inequalities and one exact margin identity certify the single radius-1/16 box and margin 3/4. Box bounds consume the certificate, matrix positivity consumes those bounds, and the final construction consumes positivity. All remaining arguments are symbolic; the determinant uses a nine-pivot product rather than full expansion. No interval subdivision or sampling is used.'
+    attribution = 'George Stepaniants for the retained negative solution and formalization; Maxime Fortier Bourque and Thomas Ransford for the original question and generic-finiteness result.'
+else:
+    assert tag == 'IE-02'
+    target = 'For every complex Jordan block in the original IE-02 range, ideal GMRES equals worst-case GMRES. All polynomial minima, sphere suprema and their attaining witnesses use the actual Euclidean matrix and vector norms.'
+    explanation = 'The finite Schur recursion proves the full maximal-subspace factorization. Scalar polynomial factorization preserves repeated and boundary roots. Complex gradient convexity, real separation and a uniform descent argument produce a norm-attaining orthogonal vector; the affine minimax theorem then transfers to the actual upper Jordan block through reversal. Zero, empty and dependent directions are included in the supporting contracts. No interpolation or minimax theorem is assumed as an oracle.'
+    numerical = 'The exact half and normalization statements are proved using genuine kernel-mode LeanCert and consumed by the symbolic descent bounds. Root selection, factorization, matrix norms and extrema are proved symbolically. There is no interval grid or sampled assertion.'
+    attribution = 'George Stepaniants for the retained solution and formalization contribution, with the original mathematical and library authors identified in Definitions and SourceCorrespondence retained.'
+
+d = read(W / 'formalization.yaml')
+d['project']['description'] = target
+for source in d.get('sources', []):
+    if 'OpenProblemsInNLA' in source.get('id', ''):
+        source['note'] = 'Complete original canonical target and prior authorship retained; exact source correspondence and scoped differences are recorded. Proof implementation is locally checked; final Linux verification remains pending.'
+for related in d.get('related_formalizations', []):
+    if '/mathlib4/' in related.get('id', ''):
+        related['note'] = 'Pinned concrete Mathlib definitions and semantic APIs are genuinely used throughout the locally checked proof; independent mathematical review scopes are recorded separately.'
+    if '/leancert/' in related.get('id', ''):
+        related['note'] = numerical
+d['automation']['notes'] = 'Exact numerical statements, definitions and independent Challenge contracts preceded implementation, with two nonauthor statement approvals. Development and debugging used one serial local Lean compiler. Final source reviews, source-bound cleanup continuations and actual non-root Linux Comparator are separate gates; static evidence audits are not compiler executions.'
+for method in d['automation'].get('methods', []):
+    method['prompting_notes'] = 'Statement-first development, exact frozen mathematical boundary, pinned scoped Tau Ceti reviews, kernel-mode LeanCert, minimized computation and multiple agents. Root alone compiles locally with one thread and a4096MiB cap.'
+d['status'] = {'scope': target, 'sorry_count': 0, 'sorry_in_definitions': 0,
+               'axioms': cfg['permitted_axioms'], 'main_results': results,
+               'whole_problem_verified': False,
+               'source_scan_note': f'Implementation is hole-free. Challenge has {len(results)} intentional independent specification placeholders and is never imported by Solution.'}
+d['review'] = {'status': 'Two original nonauthor full mathematical reviews passed; source-bound cleanup closures and publication review records are being assembled.',
+               'notes': 'Scoped agent reviews apply pinned Tau Ceti guidance; no official Tau Ceti service or external human peer review is claimed. Actual final Linux Comparator remains pending.'}
+d['alignment'].update({'verification_state': 'STATE.json', 'implementation_map': 'IMPLEMENTATION-MAP.json',
+                       'active_sources': 'ACTIVE-SOURCE-MANIFEST.json',
+                       'local_execution': 'verification/LOCAL-COMPLETE.json'})
+dump('formalization.yaml', d)
+dump('STATE.json', {'stage': 'complete local proof; final review/publication and Linux verification pending',
+                    'local_run': int(run_number), 'contracts': len(results), 'count_change': 0,
+                    'local_Lean_passed': True, 'GitHub_Comparator_run': False})
+dump('IMPLEMENTATION-MAP.json', {'results': results})
+dump('ACTIVE-SOURCE-MANIFEST.json', {'source_sha256': sources,
+                                   'Solution_closure_files': len(sources),
+                                   'Challenge_sha256': sha(W / 'Challenge.lean'),
+                                   'local_run': int(run_number), 'Linux_Comparator': 'pending'})
+dump('verification/packaging/TRANSITION.json', {
+    'mathematical_sources_unchanged_from_local_run': True,
+    'frozen_files': freeze['frozen_files'],
+    'only_active_frozen_change': 'Solution library registration/default target; original Lake file and diff retained, dependency pins unchanged.',
+    'active_lake_sha256': sha(P / 'lakefile.toml'),
+    'historical_copies': 'Inactive Lean and Python snapshots gain .txt; exact original paths and byte hashes are in RETAINED-PATHS.json.',
+    'entrypoint_filename_mapping': report['source_filename_mapping'],
+    'Linux_Comparator_run': False})
+put('README.md', f'''# {tag} Lean formalization
+
+{target}
+
+**Complete local Lean checks passed; final Linux Comparator is pending.** All {len(results)} exported statements have actual axiom reports containing only `propext`, `Classical.choice` and `Quot.sound`, and all kernel trust assertions passed. [Local evidence](verification/LOCAL-COMPLETE.json) records the exact sources, commands, logs and successful cache provenance. Local compilation is distinct from final GitHub Comparator, default-kernel replay, sandbox and rejection-control checks. Independent full reviews and their cleanup continuations are recorded separately before publication.
+
+Read [Definitions](NLA/{prefix}/Definitions.lean), the independent [Challenge](Challenge.lean), [Solution](Solution.lean), [implementation map](IMPLEMENTATION-MAP.json), [numerical targets](NUMERICAL_TARGETS.md) and [source correspondence](SourceCorrespondence.md). Challenge deliberately specifies obligations using placeholders and is never imported into Solution. [Comparator](comparator.json) checks every advertised theorem with no replaceable definitions.
+
+{explanation}
+
+{numerical}
+
+With the pinned Lean toolchain and dependencies, run `lake build` from this directory. The shared repository [harness](../../../tools/lean/HARNESS.md) performs the separate non-root Linux checks. No local Comparator installation is needed for the campaign workflow.
+
+The frozen statement history retains its original preparatory wording. The current state is this README and [STATE.json](STATE.json), not an older pending-stage report. The only operational frozen-file change registers Solution as the default Lake target; its [exact diff](verification/packaging/LAKE-REGISTRATION.patch) and original file are retained. Mathematical definitions, statements, IDs, canonical paths and dependency pins are unchanged. [Copy map](verification/RETAINED-PATHS.json) records byte-identical historical payloads with inactive suffixes.
+
+Formalization contributor: **George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. {attribution} Substantial OpenAI Codex assistance is disclosed. Mathlib, LeanCert, Comparator, Tau Ceti, Schiffer and Forsythe contributors retain their attribution. Scoped agent review is not official Tau Ceti endorsement or external human peer review. No email is published. [License](LICENSE).
+''')
+dump('verification/RETAINED-PATHS.json', retained)
+dump('PACKAGE-MANIFEST.json', {'stage': 'local proof package before final Linux execution',
+                              'files': {str(p.relative_to(P)): sha(p) for p in sorted(P.rglob('*')) if p.is_file()}})
+print(json.dumps({'package': str(P), 'files': sum(p.is_file() for p in P.rglob('*')),
+                  'active_Lean_files': len(list(P.rglob('*.lean'))),
+                  'contracts': len(results), 'Linux_Comparator': 'pending'}, indent=2))

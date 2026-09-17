@@ -1,0 +1,71 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Fortier Bourque and Ransford retain
+credit for the original question and generic finiteness theorem.
+
+The actual 3×3 determinant is factored before coefficient collection.
+All parameters and both complex scalar variables remain arbitrary.
+-/
+import NLA.SP15.Numerical
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Ring
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.SP15
+noncomputable section
+open scoped BigOperators Matrix ComplexConjugate
+
+private theorem weighted_three_det (D₁ D₂ D₃ S₁ S₂ S₃ a b z w : ℂ) :
+    Matrix.det !![D₁, S₁ * a, S₁ * b;
+      S₂ * a, D₂, S₂ * z;
+      S₃ * b, S₃ * w, D₃] =
+      D₁ * D₂ * D₃ - (z * w) * S₂ * S₃ * D₁ -
+        b ^ 2 * S₁ * S₃ * D₂ - a ^ 2 * S₁ * S₂ * D₃ +
+        a * b * (z + w) * S₁ * S₂ * S₃ := by
+  rw [Matrix.det_fin_three]
+  dsimp [Matrix.cons_val]
+  ring
+
+private theorem real_conjugate_pair (c d : ℝ) :
+    ((c : ℂ) + Complex.I * (d : ℂ)) * ((c : ℂ) - Complex.I * (d : ℂ)) =
+      ((c ^ 2 + d ^ 2 : ℝ) : ℂ) := by
+  calc
+    _ = ((c : ℂ) + Complex.I * (d : ℂ)) *
+        conj ((c : ℂ) + Complex.I * (d : ℂ)) := by simp [sub_eq_add_neg]
+    _ = (Complex.normSq ((c : ℂ) + Complex.I * (d : ℂ)) : ℂ) :=
+      Complex.mul_conj _
+    _ = _ := by rw [mul_comm Complex.I (d : ℂ), Complex.normSq_add_mul_I]
+
+theorem coefficient_determinant_identity (x : Parameters) (u s : ℂ) :
+    coefficientDeterminant x u s =
+      u ^ 3 + ∑ i : Fin 9, (coefficients x i : ℂ) * coefficientMonomials u s i := by
+  let D₁ := u + s * ((x 0 : ℂ) + (x 3 : ℂ)) + (x 0 : ℂ) * (x 3 : ℂ)
+  let D₂ := u + s * ((x 1 : ℂ) + (x 4 : ℂ)) + (x 1 : ℂ) * (x 4 : ℂ)
+  let D₃ := u + s * ((x 2 : ℂ) + (x 5 : ℂ)) + (x 2 : ℂ) * (x 5 : ℂ)
+  let S₁ := s + (x 0 : ℂ)
+  let S₂ := s + (x 1 : ℂ)
+  let S₃ := s + (x 2 : ℂ)
+  have hmatrix : u • (1 : Square 3) + s • (pMatrix x + qMatrix x) + pMatrix x * qMatrix x =
+      !![D₁, S₁ * (x 6 : ℂ), S₁ * (x 7 : ℂ);
+        S₂ * (x 6 : ℂ), D₂, S₂ * ((x 8 : ℂ) + Complex.I * (x 9 : ℂ));
+        S₃ * (x 7 : ℂ), S₃ * ((x 8 : ℂ) - Complex.I * (x 9 : ℂ)), D₃] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [pMatrix, qMatrix, pCoordinates, Matrix.diagonal_mul, Matrix.cons_val,
+        D₁, D₂, D₃, S₁, S₂, S₃] <;> ring
+  unfold coefficientDeterminant
+  rw [hmatrix, weighted_three_det, real_conjugate_pair]
+  -- Only the nine coefficient terms remain; no larger determinant is expanded.
+  simp only [Fin.sum_univ_succ, Fin.sum_univ_zero]
+  dsimp [D₁, D₂, D₃, S₁, S₂, S₃, coefficients, coefficientMonomials, Matrix.cons_val]
+  push_cast
+  ring
+
+#print axioms coefficient_determinant_identity
+#assert_trust kernel coefficient_determinant_identity
+
+end
+end NLA.SP15

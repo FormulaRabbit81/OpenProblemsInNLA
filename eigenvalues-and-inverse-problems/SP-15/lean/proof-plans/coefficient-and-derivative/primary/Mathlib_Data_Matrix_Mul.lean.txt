@@ -1,0 +1,23 @@
+368: 
+369: @[simp]
+370: theorem diagonal_mul [Fintype m] [DecidableEq m] (d : m → α) (M : Matrix m n α) (i j) :
+371:     (diagonal d * M) i j = d i * M i j :=
+372:   diagonal_dotProduct _ _ _
+373: 
+374: @[simp]
+375: theorem mul_diagonal [Fintype n] [DecidableEq n] (d : n → α) (M : Matrix m n α) (i j) :
+
+698: def mulVec [Fintype n] (M : Matrix m n α) (v : n → α) : m → α
+699:   | i => (fun j => M i j) ⬝ᵥ v
+700: 
+701: @[inherit_doc]
+702: scoped infixr:73 " *ᵥ " => Matrix.mulVec
+703: 
+704: lemma mulVec_apply [Fintype n] (M : Matrix m n α) (v : n → α) (i : m) :
+705:     (M *ᵥ v) i = M.row i ⬝ᵥ v := rfl
+706: 
+707: lemma mulVec_apply_eq_sum [Fintype n] (M : Matrix m n α) (v : n → α) (i : m) :
+708:     (M *ᵥ v) i = ∑ j : n, M i j * v j := rfl
+709: 
+710: /--
+711: `v ᵥ* M` (notation for `vecMul v M`) is the vector-matrix product of vector `v` and matrix `M`,

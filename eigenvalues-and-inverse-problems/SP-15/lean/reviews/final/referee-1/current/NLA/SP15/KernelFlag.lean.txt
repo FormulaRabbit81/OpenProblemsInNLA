@@ -1,0 +1,87 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Fortier Bourque and Ransford retain
+credit for the original question and generic finiteness theorem.
+
+The actual block action and its square identify both kernel flags. Only
+the proved invertibility of the positive roots is needed for cancellation.
+-/
+import NLA.SP15.SquareRoots
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.SP15
+noncomputable section
+open scoped Matrix
+
+private theorem block_action (x : Parameters) (v : BlockIndex → ℂ) :
+    (blockMatrix x).mulVec v =
+      Sum.elim ((pRoot x).mulVec (fun i => v (Sum.inr (Sum.inl i))))
+        (Sum.elim ((qRoot x).mulVec (fun i => v (Sum.inr (Sum.inr i)))) 0) := by
+  simp [blockMatrix, Matrix.fromBlocks_mulVec, Function.comp_def]
+
+private theorem block_square_action (x : Parameters) (v : BlockIndex → ℂ) :
+    (blockMatrix x ^ 2).mulVec v =
+      Sum.elim ((pRoot x * qRoot x).mulVec (fun i => v (Sum.inr (Sum.inr i)))) 0 := by
+  rw [pow_two, ← Matrix.mulVec_mulVec, block_action, block_action]
+  -- Expose the zero third component as the actual zero vector before cancellation.
+  change Sum.elim ((pRoot x).mulVec ((qRoot x).mulVec
+      (fun i => v (Sum.inr (Sum.inr i)))))
+    (Sum.elim ((qRoot x).mulVec (0 : Fin 3 → ℂ)) 0) = _
+  rw [Matrix.mulVec_zero, Matrix.mulVec_mulVec]
+  ext i
+  rcases i with i | (i | i) <;> rfl
+
+theorem constructed_kernel_flag (x : Parameters) (hx : x ∈ parameterBox) :
+    (∀ v : BlockIndex → ℂ,
+      (blockMatrix x).mulVec v = 0 ↔
+        (∀ i : Fin 3, v (Sum.inr (Sum.inl i)) = 0) ∧
+        (∀ i : Fin 3, v (Sum.inr (Sum.inr i)) = 0)) ∧
+    (∀ v : BlockIndex → ℂ,
+      (blockMatrix x ^ 2).mulVec v = 0 ↔
+        ∀ i : Fin 3, v (Sum.inr (Sum.inr i)) = 0) := by
+  have hr := square_root_semantics x hx
+  have hR : IsUnit (pRoot x) := hr.2.2.2.2.1
+  have hS : IsUnit (qRoot x) := hr.2.2.2.2.2
+  constructor
+  · intro v
+    rw [block_action]
+    constructor
+    · intro h
+      have h2 : (pRoot x).mulVec (fun i => v (Sum.inr (Sum.inl i))) = 0 := by
+        ext i
+        exact congrFun h (Sum.inl i)
+      have h3 : (qRoot x).mulVec (fun i => v (Sum.inr (Sum.inr i))) = 0 := by
+        ext i
+        exact congrFun h (Sum.inr (Sum.inl i))
+      have hv2 : (fun i : Fin 3 => v (Sum.inr (Sum.inl i))) = 0 :=
+        Matrix.mulVec_injective_of_isUnit hR (by simpa only [Matrix.mulVec_zero] using h2)
+      have hv3 : (fun i : Fin 3 => v (Sum.inr (Sum.inr i))) = 0 :=
+        Matrix.mulVec_injective_of_isUnit hS (by simpa only [Matrix.mulVec_zero] using h3)
+      exact ⟨fun i => congrFun hv2 i, fun i => congrFun hv3 i⟩
+    · rintro ⟨h2, h3⟩
+      have hv2 : (fun i : Fin 3 => v (Sum.inr (Sum.inl i))) = 0 := funext h2
+      have hv3 : (fun i : Fin 3 => v (Sum.inr (Sum.inr i))) = 0 := funext h3
+      simp [hv2, hv3]
+  · intro v
+    rw [block_square_action]
+    constructor
+    · intro h
+      have hp : (pRoot x * qRoot x).mulVec (fun i => v (Sum.inr (Sum.inr i))) = 0 := by
+        ext i
+        exact congrFun h (Sum.inl i)
+      have hv3 : (fun i : Fin 3 => v (Sum.inr (Sum.inr i))) = 0 :=
+        Matrix.mulVec_injective_of_isUnit (hR.mul hS)
+          (by simpa only [Matrix.mulVec_zero] using hp)
+      exact fun i => congrFun hv3 i
+    · intro h3
+      have hv3 : (fun i : Fin 3 => v (Sum.inr (Sum.inr i))) = 0 := funext h3
+      simp [hv3]
+
+#print axioms constructed_kernel_flag
+#assert_trust kernel constructed_kernel_flag
+
+end
+end NLA.SP15

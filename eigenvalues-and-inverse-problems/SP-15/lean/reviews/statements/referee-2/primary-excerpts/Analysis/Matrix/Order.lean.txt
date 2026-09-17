@@ -1,0 +1,26 @@
+174:     exact_mod_cast h.eigenvalues_nonneg _
+175:   · rw [h1.posSemidef_iff_eigenvalues_nonneg]
+176:     intro i
+177:     simpa [h1.spectrum_eq_image_range] using @h2 (h1.eigenvalues i)
+178: 
+179: /-- A positive semi-definite matrix is positive definite if and only if it is invertible. -/
+180: @[grind =]
+181: theorem PosSemidef.posDef_iff_isUnit [DecidableEq n] {x : Matrix n n 𝕜}
+182:     (hx : x.PosSemidef) : x.PosDef ↔ IsUnit x := by
+183:   refine ⟨fun h => h.isUnit, fun h => .of_dotProduct_mulVec_pos hx.1 fun v hv => ?_⟩
+184:   obtain ⟨y, rfl⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp hx.nonneg
+185:   simp_rw [dotProduct_mulVec, ← vecMul_vecMul, star_eq_conjTranspose, ← star_mulVec,
+186:     ← dotProduct_mulVec, dotProduct_star_self_pos_iff]
+187:   contrapose hv
+188:   rw [← map_eq_zero_iff (f := (yᴴ * y).mulVecLin) (mulVec_injective_iff_isUnit.mpr h),
+189:     mulVecLin_apply, ← mulVec_mulVec, hv, mulVec_zero]
+190: 
+191: theorem isStrictlyPositive_iff_posDef [DecidableEq n] {x : Matrix n n 𝕜} :
+192:     IsStrictlyPositive x ↔ x.PosDef :=
+193:   ⟨fun h => h.nonneg.posSemidef.posDef_iff_isUnit.mpr h.isUnit,
+194:   fun h => h.isUnit.isStrictlyPositive h.posSemidef.nonneg⟩
+195: 
+196: alias ⟨IsStrictlyPositive.posDef, PosDef.isStrictlyPositive⟩ := isStrictlyPositive_iff_posDef
+197: 
+198: attribute [aesop safe forward (rule_sets := [CStarAlgebra])] PosDef.isStrictlyPositive
+199: 

@@ -1,0 +1,11 @@
+--- before/UnitaryBlocks.lean
++++ NLA/SP15/UnitaryBlocks.lean
+@@ -75,7 +75,7 @@
+   have hblocks := hV
+   rw [hupper, triple_conjTranspose, triple_mul, ← triple_one, triple_eq_iff] at hblocks
+   simp only [Matrix.conjTranspose_zero, Matrix.zero_mul, Matrix.mul_zero,
+-    zero_add, add_zero] at hblocks
++    add_zero] at hblocks
+   obtain ⟨haa, ⟨hab, hac⟩, _, hee, hef, _, hkk⟩ := hblocks
+   have hau : IsUnit a.conjTranspose := isUnit_iff_exists_inv.mpr ⟨a, haa⟩
+   have hb : b = 0 := hau.mul_left_cancel (by simpa only [Matrix.mul_zero] using hab)

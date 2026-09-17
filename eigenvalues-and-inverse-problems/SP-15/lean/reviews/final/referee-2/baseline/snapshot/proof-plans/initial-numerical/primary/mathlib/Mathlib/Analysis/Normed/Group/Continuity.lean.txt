@@ -1,0 +1,24 @@
+Lines 186–208
+186: @[to_additive Filter.Tendsto.norm]
+187: theorem Filter.Tendsto.norm' (h : Tendsto f l (𝓝 a)) : Tendsto (fun x => ‖f x‖) l (𝓝 ‖a‖) :=
+188:   tendsto_norm'.comp h
+189: 
+190: @[to_additive Filter.Tendsto.nnnorm]
+191: theorem Filter.Tendsto.nnnorm' (h : Tendsto f l (𝓝 a)) : Tendsto (fun x => ‖f x‖₊) l (𝓝 ‖a‖₊) :=
+192:   Tendsto.comp continuous_nnnorm'.continuousAt h
+193: 
+194: 
+195: end
+196: 
+197: section
+198: 
+199: variable [TopologicalSpace α] {f : α → E} {s : Set α} {a : α}
+200: 
+201: @[to_additive (attr := fun_prop) Continuous.norm]
+202: theorem Continuous.norm' : Continuous f → Continuous fun x => ‖f x‖ :=
+203:   continuous_norm'.comp
+204: 
+205: @[to_additive (attr := fun_prop) Continuous.nnnorm]
+206: theorem Continuous.nnnorm' : Continuous f → Continuous fun x => ‖f x‖₊ :=
+207:   continuous_nnnorm'.comp
+208: 

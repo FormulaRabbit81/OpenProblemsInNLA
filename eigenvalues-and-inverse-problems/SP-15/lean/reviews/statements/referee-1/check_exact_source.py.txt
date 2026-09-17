@@ -1,0 +1,193 @@
+"""Independent source-arithmetic diagnostic; NOT Lean or a proof of SP-15.
+
+Reads the sealed statement literals. Builds the 3x3 determinant independently
+from P and Q, over Q[x0,...,x9,u,s,i]/(i^2+1), and compares whole polynomials.
+It does not import or execute either of the statement author's Python scripts.
+"""
+from fractions import Fraction as F
+from itertools import permutations
+from pathlib import Path
+import ast
+import hashlib
+import json
+import re
+
+ROOT = Path('/tmp/nla-lean-next-20260915/next-proofs/SP-15')
+SOURCE = ROOT / 'NLA/SP15/Definitions.lean'
+src = SOURCE.read_text()
+ZERO = (0,) * 13
+
+
+class P:
+    def __init__(self, value=0):
+        self.terms = dict(value) if isinstance(value, dict) else ({ZERO: F(value)} if value else {})
+        self.terms = {m: c for m, c in self.terms.items() if c}
+
+    @staticmethod
+    def v(i):
+        m = list(ZERO)
+        m[i] = 1
+        return P({tuple(m): F(1)})
+
+    def __add__(self, rhs):
+        rhs = rhs if isinstance(rhs, P) else P(rhs)
+        terms = self.terms.copy()
+        for m, c in rhs.terms.items():
+            terms[m] = terms.get(m, 0) + c
+        return P(terms)
+
+    __radd__ = __add__
+
+    def __neg__(self):
+        return P({m: -c for m, c in self.terms.items()})
+
+    def __sub__(self, rhs):
+        return self + -(rhs if isinstance(rhs, P) else P(rhs))
+
+    def __rsub__(self, lhs):
+        return -self + lhs
+
+    def __mul__(self, rhs):
+        rhs = rhs if isinstance(rhs, P) else P(rhs)
+        terms = {}
+        for m, c in self.terms.items():
+            for n, d in rhs.terms.items():
+                v = [a + b for a, b in zip(m, n)]
+                sign = (-1) ** (v[12] // 2)
+                v[12] %= 2
+                key = tuple(v)
+                terms[key] = terms.get(key, 0) + sign * c * d
+        return P(terms)
+
+    __rmul__ = __mul__
+
+    def __pow__(self, n):
+        assert isinstance(n, int) and n >= 0
+        out = P(1)
+        for _ in range(n):
+            out = out * self
+        return out
+
+    def at(self, x, derivative=None):
+        out = F(0)
+        for m, c in self.terms.items():
+            assert all(t == 0 for t in m[10:])
+            powers = list(m[:10])
+            if derivative is not None:
+                c *= powers[derivative]
+                if not c:
+                    continue
+                powers[derivative] -= 1
+            for a, e in zip(x, powers):
+                c *= a ** e
+            out += c
+        return out
+
+
+def parse(expr, env):
+    expr = expr.translate(str.maketrans('₁₂₃', '123')).replace('^', '**')
+    expr = re.sub(r'\(x (\d+) : ℂ\)', r'x\1', expr)
+    expr = re.sub(r'\bx (\d+)\b', r'x\1', expr).replace('Complex.I', 'ii')
+    tree = ast.parse(' '.join(expr.split()), mode='eval').body
+
+    def visit(n):
+        if isinstance(n, ast.Constant) and isinstance(n.value, int):
+            return F(n.value)
+        if isinstance(n, ast.Name):
+            return env[n.id]
+        if isinstance(n, ast.UnaryOp) and isinstance(n.op, ast.USub):
+            return -visit(n.operand)
+        if isinstance(n, ast.BinOp):
+            a, b = visit(n.left), visit(n.right)
+            if isinstance(n.op, ast.Add): return a + b
+            if isinstance(n.op, ast.Sub): return a - b
+            if isinstance(n.op, ast.Mult): return a * b
+            if isinstance(n.op, ast.Div): return a / b
+            if isinstance(n.op, ast.Pow):
+                assert b.denominator == 1
+                return a ** int(b)
+        raise ValueError(ast.dump(n))
+    return visit(tree)
+
+
+def body(name):
+    return re.search(r'^def ' + name + r'\b.*?:=\s*(.*?)(?=\n(?:/--|def |end)|\Z)',
+                     src, re.M | re.S).group(1)
+
+
+def vector(name, env):
+    return [parse(x, env) for x in body(name).split('![', 1)[1].split(']', 1)[0].split(',')]
+
+
+def matrix(name, env):
+    return [[parse(x, env) for x in row.split(',')]
+            for row in body(name).split('!![', 1)[1].split(']', 1)[0].split(';')]
+
+
+env = {'x' + str(j): P.v(j) for j in range(10)}
+env.update(u=P.v(10), s=P.v(11), ii=P.v(12))
+p = vector('pCoordinates', env)
+q = matrix('qMatrix', env)
+assert len(p) == len(q) == 3 and all(len(row) == 3 for row in q)
+u, s = env['u'], env['s']
+M = [[(u + s * p[i] if i == j else P()) + (s + p[i]) * q[i][j]
+      for j in range(3)] for i in range(3)]
+det = P()
+for perm in permutations(range(3)):
+    inv = sum(perm[i] > perm[j] for i in range(3) for j in range(i + 1, 3))
+    term = P((-1) ** inv)
+    for i, j in enumerate(perm):
+        term = term * M[i][j]
+    det += term
+
+coef_body = body('coefficients')
+for line in re.split(r';|\n', coef_body.split('![', 1)[0]):
+    line = line.strip()
+    if not line: continue
+    name, expression = line.removeprefix('let ').split(':=', 1)
+    env[name.strip().translate(str.maketrans('₁₂₃', '123'))] = parse(expression, env)
+coeff = vector('coefficients', env)
+monomials = vector('coefficientMonomials', env)
+assert len(coeff) == len(monomials) == 9
+residual = det - (u ** 3 + sum((c * m for c, m in zip(coeff, monomials)), P()))
+assert not residual.terms, residual.terms
+
+base = vector('basePoint', {})
+base_value = vector('coefficientBaseValue', {})
+assert [c.at(base) for c in coeff] == base_value
+jacobian = matrix('jacobian', {})
+assert len(jacobian) == 9 and all(len(row) == 10 for row in jacobian)
+assert [[c.at(base, j) for j in range(10)] for c in coeff] == jacobian
+lower, upper = matrix('lowerCertificate', {}), matrix('upperCertificate', {})
+assert all(len(A) == 9 and all(len(row) == 9 for row in A) for A in (lower, upper))
+assert [[sum(lower[i][k] * upper[k][j] for k in range(9)) for j in range(9)]
+        for i in range(9)] == [row[:9] for row in jacobian]
+assert all(lower[i][j] == 0 for i in range(9) for j in range(i + 1, 9))
+assert all(lower[i][i] == 1 for i in range(9))
+assert all(upper[i][j] == 0 for i in range(9) for j in range(i))
+assert all(upper[i][i] != 0 for i in range(9))
+product = F(1)
+for i in range(9):
+    product *= upper[i][i]
+assert product == -1088
+delta = parse(body('boxRadius'), {})
+assert delta == F(1, 16)
+assert 0 < delta and 0 < 1 - delta and 0 < 1 - 2 * delta
+assert 3 * (1 + delta) < 4 - delta
+assert (4 - delta) - 3 * (1 + delta) == F(3, 4)
+print(json.dumps({
+    'scope': 'Independent exact source arithmetic; no Lean/kernel/spectral/IFT verification',
+    'source_path': str(SOURCE),
+    'source_sha256': hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
+    'result': 'PASS',
+    'direct_symbolic_3x3_determinant_terms': len(det.terms),
+    'determinant_minus_written_coefficient_polynomials_terms': len(residual.terms),
+    'exact_base_coefficients': list(map(str, base_value)),
+    'derivative_entries_matched': 90,
+    'lu_entries_matched': 81,
+    'triangular_and_nonzero_diagonal': True,
+    'jacobian_minor_determinant_from_lu': str(product),
+    'box_radius': str(delta),
+    'diagonal_dominance_margin': '3/4',
+    'imports_author_preflight_or_checker': False,
+}, indent=2))

@@ -1,0 +1,52 @@
+536:   normSq_natCast _
+537: 
+538: @[simp]
+539: theorem normSq_mk (x y : ℝ) : normSq ⟨x, y⟩ = x * x + y * y :=
+540:   rfl
+541: 
+542: theorem normSq_add_mul_I (x y : ℝ) : normSq (x + y * I) = x ^ 2 + y ^ 2 := by
+543:   rw [← mk_eq_add_mul_I, normSq_mk, sq, sq]
+544: 
+545: theorem normSq_eq_conj_mul_self {z : ℂ} : (normSq z : ℂ) = conj z * z := by
+546:   ext <;> simp [normSq, mul_comm, ofReal]
+547: 
+
+575:   normSq.map_mul z w
+576: 
+577: theorem normSq_add (z w : ℂ) : normSq (z + w) = normSq z + normSq w + 2 * (z * conj w).re := by
+578:   simp [normSq]; ring
+579: 
+580: theorem re_sq_le_normSq (z : ℂ) : z.re * z.re ≤ normSq z :=
+581:   le_add_of_nonneg_right (mul_self_nonneg _)
+582: 
+583: theorem im_sq_le_normSq (z : ℂ) : z.im * z.im ≤ normSq z :=
+584:   le_add_of_nonneg_left (mul_self_nonneg _)
+585: 
+586: theorem mul_conj (z : ℂ) : z * conj z = normSq z :=
+587:   Complex.ext_iff.2 <| by simp [normSq, mul_comm, sub_eq_neg_add, add_comm, ofReal]
+588: 
+589: theorem add_conj (z : ℂ) : z + conj z = (2 * z.re : ℝ) :=
+
+470: @[simp]
+471: theorem conj_im (z : ℂ) : (conj z).im = -z.im :=
+472:   rfl
+473: 
+474: @[simp]
+475: theorem conj_ofReal (r : ℝ) : conj (r : ℂ) = r :=
+476:   Complex.ext_iff.2 <| by simp
+477: 
+478: @[simp]
+479: theorem conj_I : conj I = -I :=
+480:   Complex.ext_iff.2 <| by simp
+481: 
+
+660: @[simp, norm_cast]
+661: theorem ofReal_sub (r s : ℝ) : ((r - s : ℝ) : ℂ) = r - s :=
+662:   Complex.ext_iff.2 <| by simp [ofReal]
+663: 
+664: @[simp, norm_cast]
+665: theorem ofReal_pow (r : ℝ) (n : ℕ) : ((r ^ n : ℝ) : ℂ) = (r : ℂ) ^ n := by
+666:   induction n <;> simp [*, ofReal_mul, pow_succ]
+667: 
+668: theorem sub_conj (z : ℂ) : z - conj z = (2 * z.im : ℝ) * I :=
+669:   Complex.ext_iff.2 <| by simp [two_mul, sub_eq_add_neg, ofReal]

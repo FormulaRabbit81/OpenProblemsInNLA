@@ -1,0 +1,12 @@
+Lines 135–145
+135: 
+136: theorem ofPred_exists (p : ι → β → Prop) : { x | ∃ i, p i x } = ⋃ i, { x | p i x } :=
+137:   ext fun _ => .symm <| mem_iUnion
+138: 
+139: @[deprecated (since := "2026-07-09")] alias setOf_exists := ofPred_exists
+140: 
+141: theorem ofPred_forall (p : ι → β → Prop) : { x | ∀ i, p i x } = ⋂ i, { x | p i x } :=
+142:   ext fun _ => .symm <| mem_iInter
+143: 
+144: @[deprecated (since := "2026-07-09")] alias setOf_forall := ofPred_forall
+145: 

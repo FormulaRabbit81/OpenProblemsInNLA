@@ -1,0 +1,84 @@
+--- corrected-draft/formalization.yaml
++++ freeze-handoff/formalization.yaml
+@@ -2,7 +2,7 @@
+   "version": "v0.4",
+   "project": {
+     "name": "SP-15: failure of a finite unitary-class bound for complete shifted singular values",
+-    "description": "Draft concrete definitions and 29 proposed contracts for the full negative answer in dimension nine. The construction must yield arbitrarily large finite families sharing every ordered singular value of every complex shift, with no unitary-similar pair. Actual root local61 elaborated Definitions; Challenge failed on missing ComplexOrder. A scope-only repair awaits actual retry. No proof, freeze or verified result is claimed.",
++    "description": "Concrete Definitions and all 29 exact statements for the full negative answer in dimension nine have two independent nonauthor statement approvals and actual local elaboration in run 63. An immutable freeze proposal awaits root acceptance before proof implementation. The intended result is arbitrarily large finite families with every ordered singular value equal for every complex shift and no unitary-similar pair. No mathematical proof result is yet claimed.",
+     "authors": [
+       "George Stepaniants"
+     ],
+@@ -19,13 +19,13 @@
+   },
+   "sources": [
+     {
+-      "title": "SP-15 — Finitely many unitary classes with prescribed shifted singular values",
++      "title": "SP-15 \u2014 Finitely many unitary classes with prescribed shifted singular values",
+       "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/d348d7471e2ff881ae30fb8a9c40323a61cd383a/eigenvalues-and-inverse-problems/SP-15/README.md",
+       "type": "web-post",
+       "location": "Complete original finiteness question and retained negative resolution",
+       "relationship": "formalizes",
+       "author_endorsement": "not-contacted",
+-      "note": "Exact retained canonical source read. The original IDs, path and mathematical target are preserved. This is an unverified statement draft."
++      "note": "Exact canonical identity, path and target retained. Statements are independently reviewed and locally elaborated; proof and complete-target acceptance remain pending."
+     },
+     {
+       "title": "SP-15 complete negative solution",
+@@ -34,7 +34,7 @@
+       ],
+       "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/d348d7471e2ff881ae30fb8a9c40323a61cd383a/eigenvalues-and-inverse-problems/SP-15/solution.tex",
+       "type": "web-post",
+-      "location": "Theorem and Sections 1–4",
++      "location": "Theorem and Sections 1\u20134",
+       "relationship": "formalizes",
+       "author_endorsement": "not-contacted",
+       "note": "Complete supplied proof read. The draft replaces the unspecified maximal-rank constant-rank argument by an exact rational submersion point and the established inverse-function theorem; the universal spectral and unitary transports remain mandatory proof goals."
+@@ -81,22 +81,25 @@
+         "method": "agent",
+         "framework": "OpenAI Codex",
+         "tool_setup": "Parallel statement/proof authoring and independent reviews. Root alone runs local Lean serially with one compiler/thread and a 4096 MiB limit. Final real Comparator/default-kernel/sandbox verification is reserved for a separate non-root Linux GitHub environment.",
+-        "prompting_notes": "Write final numerical and definition/contract plans before Lean statements, then obtain two nonauthor reviews, actual local elaboration and coordinator freeze before any proof implementation. Minimize exact arithmetic through LU and one 1/16 box; retain the actual derivative bridge and both universal transports."
++        "prompting_notes": "Numerical/definition plans preceded the original statements. Both nonauthor statement reviews and actual local elaboration are now retained. Root must accept the exact freeze handoff before any proof implementation. Minimize exact computation through LU and one 1/16 box; retain actual derivative and both universal transports."
+       }
+     ],
+-    "notes": "The author wrote these draft statements and is not an independent reviewer. The retained standard-library exact Python determinant/Jacobian/LU preflight and the new source-expression cross-check are arithmetic reconnaissance only, not Lean proof or independent verification. Actual root local61 compiled Definitions successfully and rejected Challenge at four PosDef uses because ComplexOrder was not open. This continuation opens that existing standard scope only. The author authenticated retained local61 logs but did not run Lean; no LeanCert or Comparator execution occurred."
++    "notes": "Statement author /root/mi13_full_referee2 is not an independent reviewer. Referee 1 /root/ie02_foundation_preflight and referee 2 /root/sf_ra_runtime_referee independently approved the exact corrected statements. Referee 2 independently checked the exact determinant coefficients, 90 Jacobian entries, 81 LU entries and audited actual local61/63. Python arithmetic is reconnaissance, not Lean proof. Root local61 passed Definitions and failed original Challenge on missing ComplexOrder; the sole scope repair passed actual63 with 29 intentional specification holes, reusing only exact successful Definitions output from 61. This administrative handoff ran no Lean, LeanCert or Comparator."
+   },
+   "status": {
+-    "scope": "Draft Definitions and 29 intentional Challenge specification holes. Actual root local61: Definitions passed, Challenge failed on missing ComplexOrder. Scope-only repair awaiting actual retry and two nonauthor reviews. No Solution, proof implementation, freeze, kernel LeanCert run, Lean proof result, Comparator acceptance, publication or count increment.",
++    "scope": "Statement freeze proposal prepared after two independent nonauthor statement reviews and actual local63 elaboration. Root acceptance pending before implementation. No Solution, mathematical proof, LeanCert execution, Comparator acceptance, publication or count increment. Intentional Challenge holes specify 29 future proof obligations.",
+     "main_results": []
+   },
+   "fidelity": {
+-    "divergences": "The canonical original target is preserved literally. An explicit rational submersion point and genuine inverse-function theorem replace unknown maximal rank/constant rank. Finite arbitrary families suffice to refute the universal bound. The source’s supplementary smoothness and nilpotent Jordan type are not exported; no matrix-square-root smoothness is needed. No theorem is assumed by an oracle hypothesis."
++    "divergences": "The canonical original target is preserved literally. An explicit rational submersion point and genuine inverse-function theorem replace unknown maximal rank/constant rank. Finite arbitrary families suffice to refute the universal bound. The source\u2019s supplementary smoothness and nilpotent Jordan type are not exported; no matrix-square-root smoothness is needed. No theorem is assumed by an oracle hypothesis."
+   },
+   "review": {
+-    "status": "Two independent nonauthor statement reviews pending; root numerical-feasibility acceptance is for preparation only",
+-    "reviewers": [],
+-    "notes": "Use the pinned Tau Ceti rubrics as appropriate. Future scoped AI-agent reviews are distinct from official Tau Ceti service output, external human peer review, actual Lean runs and actual Comparator runs. The current author may not count as a nonauthor reviewer."
++    "status": "agent-reviewed statements only; coordinator freeze acceptance pending",
++    "reviewers": [
++      "/root/ie02_foundation_preflight",
++      "/root/sf_ra_runtime_referee"
++    ],
++    "notes": "Two sealed independent nonauthor statement approvals bound in STATEMENT-FREEZE.json; no proof review or external human peer review is claimed. Pinned Tau Ceti guidance applied, without official review-service execution. Referee2 later prepared this administrative handoff, which is not a third independent review. Original private packet manifests/verification commands use original layouts and paths; the retained copies are verified by explicit maps here."
+   },
+   "alignment": {
+     "source_correspondence": "SourceCorrespondence.md",
+@@ -108,7 +111,13 @@
+     "source_provenance": "SOURCE-PROVENANCE.json",
+     "intended_implementation_entry": "Solution.lean",
+     "verification_state": "STATE.json",
+-    "latest_statement_continuation": "statement-continuations/complex-order-01/CONTINUATION.json"
++    "latest_statement_continuation": "statement-continuations/complex-order-01/CONTINUATION.json",
++    "statement_freeze": "STATEMENT-FREEZE.json",
++    "history": "statement-history/COPY-MAP.json",
++    "statement_reviews": "reviews/statements/COPY-MAP.json",
++    "actual_elaboration": "statement-audit/local63/RECEIPT.json",
++    "current_handoff_inventory": "HANDOFF-MANIFEST.json",
++    "appended_precode_plan": "proof-plans/initial-numerical/MANIFEST.json"
+   },
+   "acknowledgements": "Fortier Bourque and Ransford for the original question and generic finiteness theorem; Mathlib, LeanCert, Comparator and Tau Ceti contributors for the retained mathematical foundations and workflow guidance. Accepted MI-13 Gram/singular semantics and Schiffer/Forsythe statement patterns were read as source-bound references."
+ }

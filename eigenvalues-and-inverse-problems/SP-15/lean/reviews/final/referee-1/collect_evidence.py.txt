@@ -1,0 +1,85 @@
+"""Copy exact existing local-run evidence; never invoke Lean/Lake/Git/network."""
+from pathlib import Path
+import hashlib
+import json
+
+R = Path(__file__).resolve().parent
+B = Path('/private/tmp/nla-lean-next-20260915')
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+def keep(src, dest):
+    data = src.read_bytes()
+    out = R / dest
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_bytes(data)
+    return {'original': str(src), 'snapshot': str(dest), 'sha256': sha(data), 'bytes': len(data)}
+
+sources = {f['path']: f for f in json.loads((R / 'CURRENT-SNAPSHOT.json').read_text())['files']}
+final_path = L / 'runs/development-122/RECEIPT.json'
+assert sha(final_path.read_bytes()) == 'aa40d956092a75f9ec570218d165814913de75b7a0674b27e51758d15be6f852'
+final = json.loads(final_path.read_text())
+assert final['end'] and final['failed_modules'] == [] and final['blocked_modules'] == []
+assert final['completed_modules'] == 48
+latest = {c['module']: c for c in final['commands']}
+records = []
+for rel in ['ASSEMBLY-122.json', 'LOCAL-ENVIRONMENT.json', 'lake-manifest.json', 'lean-toolchain', 'serial_compile_v3.py']:
+    dest = Path('evidence/local-environment') / rel
+    if dest.suffix == '.py': dest = dest.with_suffix('.py.txt')
+    records.append(keep(L / rel, dest))
+root_evidence = B / 'SP15-LOCAL-COMPLETE-122.json'
+assert sha(root_evidence.read_bytes()) == 'ec993327fee96346466d11e4d775eea1c946c2d0cdf3d2543491ebf0e8b99c67'
+records.append(keep(root_evidence, 'evidence/SP15-LOCAL-COMPLETE-122.json'))
+receipt_records = {}
+receipts = {}
+origins = {}
+chains = {}
+
+def receipt(path):
+    if str(path) not in receipts:
+        rec = keep(path, Path('evidence/local-runs') / path.parent.name / 'RECEIPT.json')
+        receipt_records[str(path)] = rec
+        receipts[str(path)] = json.loads((R / rec['snapshot']).read_text())
+    return receipts[str(path)]
+
+def follow(module, path):
+    chain = []
+    seen = set()
+    while True:
+        assert str(path) not in seen
+        seen.add(str(path))
+        r = receipt(path)
+        c = next(c for c in r['commands'] if c['module'] == module)
+        chain.append({'receipt': str(path), 'source_sha256': c['source_sha256'],
+                      'output_sha256': c['output_sha256'], 'status': c.get('status', 'fresh')})
+        if c.get('status') != 'reused_exact_successful_local_output':
+            assert c['exit_code'] == 0
+            log = path.parent / (module + '.log')
+            assert sha(log.read_bytes()) == c['log_sha256']
+            dest = Path('evidence/local-runs') / path.parent.name / log.name
+            records.append(keep(log, dest))
+            origins[module] = {'run': path.parent.name, 'command': c,
+                               'receipt_snapshot': receipt_records[str(path)]['snapshot'],
+                               'log_snapshot': str(dest)}
+            return chain
+        prior = Path(c['prior_receipt'])
+        assert sha(prior.read_bytes()) == c['prior_receipt_sha256']
+        pc = next(x for x in receipt(prior)['commands'] if x['module'] == module)
+        assert pc['source_sha256'] == c['source_sha256'] and pc['output_sha256'] == c['output_sha256']
+        path = prior
+
+for rel, f in sources.items():
+    if not f['solution_closure']: continue
+    module = rel.removesuffix('.lean').replace('/', '.')
+    assert latest[module]['source_sha256'] == f['sha256']
+    chains[module] = follow(module, final_path)
+records.extend(receipt_records.values())
+result = {'scope': 'Independent read-only audit of completed actual root macOS run 122 and exact successful cached origins; no compiler run by this reviewer.',
+          'final_run': 'development-122', 'final_receipt_sha256': sha(final_path.read_bytes()),
+          'solution_closure_count': len(chains), 'chains': chains, 'successful_origins': origins,
+          'bindings': records, 'github_comparator_executed_by_reviewer': False}
+(R / 'LOCAL-EVIDENCE.json').write_text(json.dumps(result, indent=2) + '\n')
+print(json.dumps({'closure': len(chains), 'raw_receipts': len(receipt_records),
+                  'successful_origin_logs': len(origins), 'final_receipt_sha256': result['final_receipt_sha256']}, indent=2))

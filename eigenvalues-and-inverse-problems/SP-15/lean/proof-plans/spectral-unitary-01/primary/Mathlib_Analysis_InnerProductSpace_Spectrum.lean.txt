@@ -1,0 +1,36 @@
+352:   ext i j
+353:   simp [toMatrix_apply, Matrix.diagonal_apply, RCLike.real_smul_eq_coe_mul]
+354:   grind
+355: 
+356: open Polynomial in
+357: theorem charpoly_eq (hT : T.IsSymmetric) (hn : Module.finrank 𝕜 E = n) :
+358:     T.charpoly = ∏ i, (X - C (hT.eigenvalues hn i : 𝕜)) := by
+359:   simp [← T.charpoly_toMatrix (hT.eigenvectorBasis hn).toBasis, toMatrix_eigenvectorBasis,
+360:     Matrix.charpoly_diagonal]
+361: 
+362: theorem roots_charpoly_eq_eigenvalues (hT : T.IsSymmetric) (hn : Module.finrank 𝕜 E = n) :
+363:     T.charpoly.roots = Multiset.map (RCLike.ofReal ∘ hT.eigenvalues hn) Finset.univ.val := by
+364:   rw [← charpoly_toMatrix _ (hT.eigenvectorBasis hn).toBasis, toMatrix_eigenvectorBasis,
+365:     Matrix.charpoly_diagonal, Polynomial.roots_prod _ _ (by
+366:       simp [Finset.prod_ne_zero_iff, Polynomial.X_sub_C_ne_zero])]
+367:   simp
+368: 
+369: theorem sort_roots_charpoly_eq_eigenvalues (hT : T.IsSymmetric) (hn : Module.finrank 𝕜 E = n) :
+370:     (T.charpoly.roots.map RCLike.re).sort (· ≥ ·) = List.ofFn (hT.eigenvalues hn) := by
+371:   simp_rw [hT.roots_charpoly_eq_eigenvalues, Fin.univ_val_map, Multiset.map_coe, List.map_ofFn,
+372:     Function.comp_def, RCLike.ofReal_re, Multiset.coe_sort]
+373:   have := hn.symm
+374:   convert! List.mergeSort_of_pairwise ?_
+375:   simp_rw [decide_eq_true_eq, ← List.sortedGE_iff_pairwise]
+376:   convert! (hT.eigenvalues_antitone hn).sortedGE_ofFn
+377: 
+378: theorem eigenvalues_eq_eigenvalues_iff {E' : Type*} [NormedAddCommGroup E'] [InnerProductSpace 𝕜 E']
+379:     [FiniteDimensional 𝕜 E'] {T' : E' →ₗ[𝕜] E'} (hT : T.IsSymmetric) (hn : Module.finrank 𝕜 E = n)
+380:     (hT' : T'.IsSymmetric) (hn' : Module.finrank 𝕜 E' = n) :
+381:     hT.eigenvalues hn = hT'.eigenvalues hn' ↔ T.charpoly = T'.charpoly where
+382:   mp h := by rw [hT.charpoly_eq hn, hT'.charpoly_eq hn', h]
+383:   mpr h := by
+384:     rw [← List.ofFn_inj, ← sort_roots_charpoly_eq_eigenvalues, ← sort_roots_charpoly_eq_eigenvalues,
+385:       h]
+386: 
+387: theorem splits_charpoly (hT : T.IsSymmetric) : T.charpoly.Splits := by

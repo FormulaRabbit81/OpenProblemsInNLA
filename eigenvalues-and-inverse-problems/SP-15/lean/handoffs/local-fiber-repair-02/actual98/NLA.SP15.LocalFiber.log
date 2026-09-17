@@ -1,0 +1,20 @@
+NLA/SP15/LocalFiber.lean:42:2: error: `simp` made no progress
+NLA/SP15/LocalFiber.lean:48:4: error: Type mismatch: After simplification, term
+  continuous_id
+ has type
+  @Continuous ℝ ℝ PseudoMetricSpace.toUniformSpace.toTopologicalSpace
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace id
+but is expected to have type
+  @Continuous ℝ ℝ PseudoMetricSpace.toUniformSpace.toTopologicalSpace
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace fun a => a
+NLA/SP15/LocalFiber.lean:59:4: error: Type mismatch: After simplification, term
+  Continuous.continuousAt continuous_coefficient_line
+ has type
+  ContinuousAt coefficientLine 1
+but is expected to have type
+  Filter.Tendsto coefficientLine (𝓝 1) (𝓝 (augmented basePoint))
+'NLA.SP15.local_augmented_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.SP15.local_coefficient_fiber' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/SP15/LocalFiber.lean:77:21: error: #assert_trust: 'NLA.SP15.local_coefficient_fiber' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

@@ -1,0 +1,45 @@
+Lines 57–100
+57:   rw [← List.ofFn_eq_map, prod_ofFn]
+58: 
+59: /-- A product of a function `f : Fin 0 → M` is `1` because `Fin 0` is empty -/
+60: @[to_additive /-- A sum of a function `f : Fin 0 → M` is `0` because `Fin 0` is empty -/]
+61: theorem prod_univ_zero (f : Fin 0 → M) : ∏ i, f i = 1 :=
+62:   rfl
+63: 
+64: /-- A product of a function `f : Fin (n + 1) → M` over all `Fin (n + 1)`
+65: is the product of `f x`, for some `x : Fin (n + 1)` times the remaining product -/
+66: @[to_additive /-- A sum of a function `f : Fin (n + 1) → M` over all `Fin (n + 1)` is the sum of
+67: `f x`, for some `x : Fin (n + 1)` plus the remaining sum -/]
+68: theorem prod_univ_succAbove (f : Fin (n + 1) → M) (x : Fin (n + 1)) :
+69:     ∏ i, f i = f x * ∏ i : Fin n, f (x.succAbove i) := by
+70:   rw [univ_succAbove n x, prod_cons, Finset.prod_map, coe_succAboveEmb]
+71: 
+72: /-- A product of a function `f : Fin (n + 1) → M` over all `Fin (n + 1)`
+73: is the product of `f 0` times the remaining product -/
+74: @[to_additive /-- A sum of a function `f : Fin (n + 1) → M` over all `Fin (n + 1)` is the sum of
+75: `f 0` plus the remaining sum -/]
+76: theorem prod_univ_succ (f : Fin (n + 1) → M) :
+77:     ∏ i, f i = f 0 * ∏ i : Fin n, f i.succ :=
+78:   prod_univ_succAbove f 0
+79: 
+80: /-- A product of a function `f : Fin (n + 1) → M` over all `Fin (n + 1)`
+81: is the product of `f (Fin.last n)` times the remaining product -/
+82: @[to_additive /-- A sum of a function `f : Fin (n + 1) → M` over all `Fin (n + 1)` is the sum of
+83: `f (Fin.last n)` plus the remaining sum -/]
+84: theorem prod_univ_castSucc (f : Fin (n + 1) → M) :
+85:     ∏ i, f i = (∏ i : Fin n, f (Fin.castSucc i)) * f (last n) := by
+86:   simpa [mul_comm] using prod_univ_succAbove f (last n)
+87: 
+88: @[to_additive (attr := simp)]
+89: theorem prod_univ_getElem (l : List M) : ∏ i : Fin l.length, l[i.1] = l.prod := by
+90:   simp [Finset.prod_eq_multiset_prod]
+91: 
+92: @[to_additive (attr := simp)]
+93: theorem prod_univ_fun_getElem (l : List ι) (f : ι → M) :
+94:     ∏ i : Fin l.length, f l[i.1] = (l.map f).prod := by
+95:   simp [Finset.prod_eq_multiset_prod]
+96: 
+97: @[to_additive (attr := simp)]
+98: theorem prod_cons (x : M) (f : Fin n → M) :
+99:     (∏ i : Fin n.succ, (cons x f : Fin n.succ → M) i) = x * ∏ i : Fin n, f i := by
+100:   simp_rw [prod_univ_succ, cons_zero, cons_succ]

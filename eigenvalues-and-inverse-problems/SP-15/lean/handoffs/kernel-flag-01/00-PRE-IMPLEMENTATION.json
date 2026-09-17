@@ -1,0 +1,14 @@
+{
+  "time": "2026-09-17T09:59:25.395367+00:00",
+  "author": "/root",
+  "scope": "Exact22 only; before implementation",
+  "approved_plan_manifest_sha256": "4c305ccf1aa3fd37d3a36e1b74e61461115ce4e737795fdc8d5afbe8097d5e05",
+  "accepted_plan_sha256": "2c3e7cdb46afe4eb384f83d1b4038f35d12b25c3131adf553a8e59290357926a",
+  "exact_header": {
+    "name": "NLA.SP15.constructed_kernel_flag",
+    "header": "theorem constructed_kernel_flag (x : Parameters) (hx : x \u2208 parameterBox) :\n    (\u2200 v : BlockIndex \u2192 \u2102,\n      (blockMatrix x).mulVec v = 0 \u2194\n        (\u2200 i : Fin 3, v (Sum.inr (Sum.inl i)) = 0) \u2227\n        (\u2200 i : Fin 3, v (Sum.inr (Sum.inr i)) = 0)) \u2227\n    (\u2200 v : BlockIndex \u2192 \u2102,\n      (blockMatrix x ^ 2).mulVec v = 0 \u2194\n        \u2200 i : Fin 3, v (Sum.inr (Sum.inr i)) = 0)",
+    "header_sha256": "9b588c0cef8ec1a105cfb9213427daf7ece41828076f757674bc688e82edf183"
+  },
+  "numerical_target": "No new numerical computation. Prove actual Av=(Rv2,Sv3,0), A\u00b2v=(RSv3,0,0); use genuine root-unit injectivity. Both exact kernel equivalences for every complex vector.",
+  "implementation_refinement": "Obtain A\u00b2 action by mulVec_mulVec and two uses of the actual Av formula; avoids a second standalone matrix block square expansion. No mathematical target change."
+}

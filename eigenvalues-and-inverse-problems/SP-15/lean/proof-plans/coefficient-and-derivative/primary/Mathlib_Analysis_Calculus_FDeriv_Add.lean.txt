@@ -1,0 +1,37 @@
+190: 
+191: @[to_fun]
+192: theorem HasFDerivAtFilter.add (hf : HasFDerivAtFilter f f' L)
+193:     (hg : HasFDerivAtFilter g g' L) : HasFDerivAtFilter (f + g) (f' + g') L :=
+194:   .of_isLittleO <| (hf.isLittleO.add hg.isLittleO).congr_left fun _ => by
+195:     grind [Pi.add_apply]
+196: 
+197: @[to_fun (attr := fun_prop)]
+198: theorem HasStrictFDerivAt.add (hf : HasStrictFDerivAt f f' x) (hg : HasStrictFDerivAt g g' x) :
+199:     HasStrictFDerivAt (f + g) (f' + g') x :=
+200:   HasFDerivAtFilter.add hf hg
+201: 
+202: @[to_fun (attr := fun_prop)]
+203: theorem HasFDerivWithinAt.add (hf : HasFDerivWithinAt f f' s x)
+204:     (hg : HasFDerivWithinAt g g' s x) : HasFDerivWithinAt (f + g) (f' + g') s x :=
+205:   HasFDerivAtFilter.add hf hg
+206: 
+207: @[to_fun (attr := fun_prop)]
+208: theorem HasFDerivAt.add (hf : HasFDerivAt f f' x) (hg : HasFDerivAt g g' x) :
+
+610: 
+611: @[to_fun]
+612: theorem HasFDerivAtFilter.sub (hf : HasFDerivAtFilter f f' L) (hg : HasFDerivAtFilter g g' L) :
+613:     HasFDerivAtFilter (f - g) (f' - g') L := by
+614:   simpa only [sub_eq_add_neg] using hf.add hg.neg
+615: 
+616: @[to_fun (attr := fun_prop)]
+617: theorem HasStrictFDerivAt.sub (hf : HasStrictFDerivAt f f' x) (hg : HasStrictFDerivAt g g' x) :
+618:     HasStrictFDerivAt (f - g) (f' - g') x :=
+619:   HasFDerivAtFilter.sub hf hg
+620: 
+621: @[to_fun (attr := fun_prop)]
+622: theorem HasFDerivWithinAt.sub (hf : HasFDerivWithinAt f f' s x)
+623:     (hg : HasFDerivWithinAt g g' s x) : HasFDerivWithinAt (f - g) (f' - g') s x :=
+624:   HasFDerivAtFilter.sub hf hg
+625: 
+626: @[to_fun (attr := fun_prop)]

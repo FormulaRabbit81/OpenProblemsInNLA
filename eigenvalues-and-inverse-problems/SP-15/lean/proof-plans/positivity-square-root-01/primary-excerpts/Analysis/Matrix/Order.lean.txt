@@ -1,0 +1,64 @@
+18: # The partial order on matrices
+19: 
+20: This file constructs the partial order and star ordered instances on matrices on `𝕜`.
+21: This allows us to use more general results from C⋆-algebras, like `CFC.sqrt`.
+22: 
+23: ## Main results
+24: 
+25: * `Matrix.instPartialOrder`: the partial order on matrices given by `x ≤ y := (y - x).PosSemidef`.
+26: * `Matrix.PosSemidef.dotProduct_mulVec_zero_iff`: for a positive semi-definite matrix `A`,
+27:   we have `x⋆ A x = 0` iff `A x = 0`.
+28: * `Matrix.toMatrixInnerProductSpace`: the inner product on matrices induced by a
+29:   positive semi-definite matrix `M`: `⟪x, y⟫ = (y * M * xᴴ).trace`.
+30: 
+31: ## Implementation notes
+32: 
+33: Note that the partial order instance is scoped to `MatrixOrder`.
+34: Please `open scoped MatrixOrder` to use this.
+35: -/
+39: variable {𝕜 n : Type*} [RCLike 𝕜]
+40: 
+41: open scoped ComplexOrder
+42: open Matrix
+43: 
+44: namespace Matrix
+45: 
+46: section PartialOrder
+47: 
+48: /-- The preorder on matrices given by `A ≤ B := (B - A).PosSemidef`. -/
+49: abbrev instPreOrder : Preorder (Matrix n n 𝕜) where
+50:   le A B := (B - A).PosSemidef
+51:   le_refl A := sub_self A ▸ PosSemidef.zero
+52:   le_trans A B C h₁ h₂ := sub_add_sub_cancel C B A ▸ h₂.add h₁
+53: 
+54: scoped[MatrixOrder] attribute [instance] Matrix.instPreOrder
+55: 
+56: open MatrixOrder
+57: 
+58: lemma le_iff {A B : Matrix n n 𝕜} : A ≤ B ↔ (B - A).PosSemidef := Iff.rfl
+59: 
+60: lemma nonneg_iff_posSemidef {A : Matrix n n 𝕜} : 0 ≤ A ↔ A.PosSemidef := by rw [le_iff, sub_zero]
+61: 
+62: protected alias ⟨LE.le.posSemidef, PosSemidef.nonneg⟩ := nonneg_iff_posSemidef
+63: 
+64: attribute [aesop safe forward (rule_sets := [CStarAlgebra])] PosSemidef.nonneg
+179: /-- A positive semi-definite matrix is positive definite if and only if it is invertible. -/
+180: @[grind =]
+181: theorem PosSemidef.posDef_iff_isUnit [DecidableEq n] {x : Matrix n n 𝕜}
+182:     (hx : x.PosSemidef) : x.PosDef ↔ IsUnit x := by
+183:   refine ⟨fun h => h.isUnit, fun h => .of_dotProduct_mulVec_pos hx.1 fun v hv => ?_⟩
+184:   obtain ⟨y, rfl⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp hx.nonneg
+185:   simp_rw [dotProduct_mulVec, ← vecMul_vecMul, star_eq_conjTranspose, ← star_mulVec,
+186:     ← dotProduct_mulVec, dotProduct_star_self_pos_iff]
+187:   contrapose hv
+188:   rw [← map_eq_zero_iff (f := (yᴴ * y).mulVecLin) (mulVec_injective_iff_isUnit.mpr h),
+189:     mulVecLin_apply, ← mulVec_mulVec, hv, mulVec_zero]
+190: 
+191: theorem isStrictlyPositive_iff_posDef [DecidableEq n] {x : Matrix n n 𝕜} :
+192:     IsStrictlyPositive x ↔ x.PosDef :=
+193:   ⟨fun h => h.nonneg.posSemidef.posDef_iff_isUnit.mpr h.isUnit,
+194:   fun h => h.isUnit.isStrictlyPositive h.posSemidef.nonneg⟩
+195: 
+196: alias ⟨IsStrictlyPositive.posDef, PosDef.isStrictlyPositive⟩ := isStrictlyPositive_iff_posDef
+197: 
+198: attribute [aesop safe forward (rule_sets := [CStarAlgebra])] PosDef.isStrictlyPositive

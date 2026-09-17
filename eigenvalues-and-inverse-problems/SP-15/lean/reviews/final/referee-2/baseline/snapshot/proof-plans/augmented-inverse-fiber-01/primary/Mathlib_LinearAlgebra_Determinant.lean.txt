@@ -1,0 +1,17 @@
+214:   have := Classical.decEq M
+215:   rw [det_eq_det_toMatrix_of_finset b.reindexFinsetRange,
+216:     det_toMatrix_eq_det_toMatrix b b.reindexFinsetRange]
+217: 
+218: @[simp]
+219: theorem det_toMatrix' {ι : Type*} [Fintype ι] [DecidableEq ι] (f : (ι → A) →ₗ[A] ι → A) :
+220:     Matrix.det (LinearMap.toMatrix' f) = LinearMap.det f := by simp [← toMatrix_eq_toMatrix']
+221: 
+222: @[simp]
+223: theorem det_toLin (b : Basis ι R M) (f : Matrix ι ι R) :
+224:     LinearMap.det (Matrix.toLin b b f) = f.det := by
+225:   rw [← LinearMap.det_toMatrix b, LinearMap.toMatrix_toLin]
+226: 
+227: @[simp]
+228: theorem det_toLin' (f : Matrix ι ι R) : LinearMap.det (Matrix.toLin' f) = Matrix.det f := by
+229:   simp only [← toLin_eq_toLin', det_toLin]
+230: 
