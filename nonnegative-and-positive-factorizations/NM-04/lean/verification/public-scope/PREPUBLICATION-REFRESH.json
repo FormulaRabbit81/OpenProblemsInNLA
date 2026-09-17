@@ -1,0 +1,50 @@
+{
+  "time": "2026-09-17T19:39:42.909187+00:00",
+  "scope": "Current upstream revision, title/search-index NM04 PR matches and candidate branch existence; not exhaustive fork audit",
+  "observations": [
+    {
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "api",
+        "repos/ajt60gaibb/OpenProblemsInNLA/commits/main",
+        "--jq",
+        "{sha:.sha,date:.commit.committer.date}"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"date\":\"2026-09-17T16:44:36Z\",\"sha\":\"3923b68ecee13d02e732085a57b42a2e7e95ac7a\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "pr",
+        "list",
+        "--repo",
+        "ajt60gaibb/OpenProblemsInNLA",
+        "--state",
+        "all",
+        "--search",
+        "NM-04",
+        "--limit",
+        "100",
+        "--json",
+        "number,title,state,headRefName,headRepositoryOwner,url,mergedAt"
+      ],
+      "exit_code": 0,
+      "stdout": "[{\"headRefName\":\"codex/colbrook-factorization-resolutions\",\"headRepositoryOwner\":{\"id\":\"MDQ6VXNlcjI4NTkyNTQ4\",\"name\":\"Matthew Colbrook\",\"login\":\"MColbrook\"},\"mergedAt\":\"2026-09-11T18:55:37Z\",\"number\":40,\"state\":\"MERGED\",\"title\":\"Record five reviewed factorization resolutions and two partial results by Matthew J. Colbrook\",\"url\":\"https://github.com/ajt60gaibb/OpenProblemsInNLA/pull/40\"}]\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "api",
+        "repos/sgstepaniants/OpenProblemsInNLA/git/matching-refs/heads/codex/lean-nm04-verification",
+        "--jq",
+        "map({ref:.ref,sha:.object.sha})"
+      ],
+      "exit_code": 0,
+      "stdout": "[]\n",
+      "stderr": ""
+    }
+  ]
+}

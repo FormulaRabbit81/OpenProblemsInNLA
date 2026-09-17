@@ -1,0 +1,205 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Rowland and Wu retain authorship of the
+coefficient question; Matthew J. Colbrook retains authorship of its solution.
+
+Universal rank-one and bordered determinant identities over commutative rings.
+-/
+import NLA.NM04.Definitions
+import LeanCert.Tactic
+import Mathlib.Logic.Equiv.Fin.Basic
+import Mathlib.Tactic.Ring
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.NM04
+noncomputable section
+open scoped BigOperators Matrix
+universe u v w
+
+/-- Multilinearity leaves the unchanged term and the single-row replacements:
+any selection of at least two perturbed rows has two proportional rows. -/
+private theorem det_add_vecMulVec_universal {D : Type*} [Fintype D] [DecidableEq D]
+    {𝕜 : Type*} [CommRing 𝕜] (A : Matrix D D 𝕜) (u v : D → 𝕜) :
+    (A + Matrix.vecMulVec u v).det = A.det +
+      ∑ i, ∑ j, A.adjugate j i * (u i * v j) := by
+  let F : (D → 𝕜) [⋀^D]→ₗ[𝕜] 𝕜 := Matrix.detRowAlternating
+  -- Give the multilinear API its explicit row-function type, avoiding a matrix
+  -- abbreviation at the stricter transparency level used by rewriting.
+  let rows : D → D → 𝕜 := fun i j => A i j
+  let perturbation : D → D → 𝕜 := fun i j => u i * v j
+  have hzero :
+      (∑ E : Finset D with 2 ≤ E.card, F (E.piecewise perturbation rows)) = 0 := by
+    apply Finset.sum_eq_zero
+    intro E hE
+    obtain ⟨i, hi, j, hj, hij⟩ := Finset.one_lt_card.mp (Finset.mem_filter.mp hE).2
+    have hrows : E.piecewise perturbation rows =
+        fun i => (if i ∈ E then u i else 1) • E.piecewise (fun _ => v) rows i := by
+      ext i j
+      by_cases hi : i ∈ E <;> simp [Finset.piecewise, perturbation, hi, smul_eq_mul]
+    have hrepeat : F (E.piecewise (fun _ => v) rows) = 0 := by
+      apply F.map_eq_zero_of_eq _ (i := i) (j := j) ?_ hij
+      simp [Finset.piecewise, hi, hj]
+    rw [hrows, F.map_smul_univ, hrepeat, smul_zero]
+  have hlinear : F.toMultilinearMap.linearDeriv rows perturbation =
+      ∑ i, ∑ j, A.adjugate j i * (u i * v j) := by
+    rw [MultilinearMap.linearDeriv_apply]
+    apply Finset.sum_congr rfl
+    intro i _
+    -- The multilinear single-row replacement is the matrix update used by Cramer.
+    change (A.updateRow i (fun j => u i * v j)).det = _
+    rw [← Matrix.cramer_transpose_apply, Matrix.cramer_eq_adjugate_mulVec]
+    simp only [Matrix.mulVec, dotProduct, ← Matrix.adjugate_transpose, Matrix.transpose_apply]
+  have hexpand : F (rows + perturbation) =
+      F rows + F.toMultilinearMap.linearDeriv rows perturbation +
+        ∑ E : Finset D with 2 ≤ E.card, F (E.piecewise perturbation rows) :=
+    F.toMultilinearMap.map_add_eq_map_add_linearDeriv_add rows perturbation
+  rw [hzero, hlinear, add_zero] at hexpand
+  exact hexpand
+
+/-- The unit scalar corner allows the existing Schur-complement formula without
+any invertibility assumption on the leading block. -/
+private theorem bordered_det_one {𝕜 : Type*} [CommRing 𝕜] {k : ℕ}
+    (V : Matrix (Fin k) (Fin k) 𝕜) (a b : Fin k → 𝕜) :
+    (borderedMatrix V a b 1).det = (V - Matrix.vecMulVec b a).det := by
+  let e : Fin k ⊕ Fin 1 ≃ Fin (k + 1) := finSumFinEquiv
+  let B := Matrix.fromBlocks V (Matrix.replicateCol (Fin 1) b)
+    (Matrix.replicateRow (Fin 1) a) (1 : Matrix (Fin 1) (Fin 1) 𝕜)
+  -- The sum-index equivalence sends the leading block to castSucc and its corner to last.
+  have hblocks : (borderedMatrix V a b 1).submatrix e e = B := by
+    ext i j
+    rcases i with i | i <;> rcases j with j | j
+    · change borderedMatrix V a b 1 i.castSucc j.castSucc = V i j
+      simp only [borderedMatrix, Fin.snoc_castSucc]
+    · have hj : j = (0 : Fin 1) := Subsingleton.elim _ _
+      subst j
+      change borderedMatrix V a b 1 i.castSucc (Fin.last k) = b i
+      simp only [borderedMatrix, Fin.snoc_castSucc, Fin.snoc_last]
+    · have hi : i = (0 : Fin 1) := Subsingleton.elim _ _
+      subst i
+      change borderedMatrix V a b 1 (Fin.last k) j.castSucc = a j
+      simp only [borderedMatrix, Fin.snoc_last, Fin.snoc_castSucc]
+    · have hi : i = (0 : Fin 1) := Subsingleton.elim _ _
+      have hj : j = (0 : Fin 1) := Subsingleton.elim _ _
+      subst i
+      subst j
+      change borderedMatrix V a b 1 (Fin.last k) (Fin.last k) = 1
+      simp only [borderedMatrix, Fin.snoc_last]
+  calc
+    _ = B.det :=
+      (Matrix.det_submatrix_equiv_self e _).symm.trans (congrArg Matrix.det hblocks)
+    _ = _ := by
+      dsimp [B]
+      rw [Matrix.det_fromBlocks_one₂₂]
+      exact congrArg (fun X : Matrix (Fin k) (Fin k) 𝕜 => (V - X).det)
+        (Matrix.vecMulVec_eq (Fin 1) b a).symm
+
+/-- The determinant is affine in the last corner, by linearity in the last row. -/
+private theorem bordered_det_affine {𝕜 : Type*} [CommRing 𝕜] {k : ℕ}
+    (V : Matrix (Fin k) (Fin k) 𝕜) (a b : Fin k → 𝕜) (d : 𝕜) :
+    (borderedMatrix V a b d).det = (borderedMatrix V a b 0).det +
+      d * (borderedMatrix V 0 b 1).det := by
+  let T := borderedMatrix V a b 0
+  have hupdate (x : Fin k → 𝕜) (y : 𝕜) :
+      T.updateRow (Fin.last k) (Fin.snoc x y) = borderedMatrix V x b y := by
+    -- Expose the row update as an update of the appended-row function.
+    change Function.update
+      (Fin.snoc (fun i : Fin k => Fin.snoc (V i) (b i)) (Fin.snoc a 0) :
+        Fin (k + 1) → Fin (k + 1) → 𝕜)
+      (Fin.last k) (Fin.snoc x y) = _
+    exact Fin.update_snoc_last (α := fun _ : Fin (k + 1) => Fin (k + 1) → 𝕜)
+      (Fin.snoc a 0) (fun i : Fin k => Fin.snoc (V i) (b i)) (Fin.snoc x y)
+  have hrow : Fin.snoc a d = Fin.snoc a 0 + d • Fin.snoc (0 : Fin k → 𝕜) 1 := by
+    funext i
+    cases i using Fin.lastCases <;> simp
+  calc
+    _ = (T.updateRow (Fin.last k)
+        (Fin.snoc a 0 + d • Fin.snoc (0 : Fin k → 𝕜) 1)).det := by
+      rw [← hrow, hupdate]
+    _ = (T.updateRow (Fin.last k) (Fin.snoc a 0)).det +
+        d * (T.updateRow (Fin.last k) (Fin.snoc (0 : Fin k → 𝕜) 1)).det := by
+      rw [Matrix.det_updateRow_add, Matrix.det_updateRow_smul]
+    _ = _ := by rw [hupdate, hupdate]
+
+-- Public declarations match the frozen Definitions and Challenge convention.
+attribute [local instance] Classical.propDecidable
+
+/-- Universal rank-one update, including singular and empty selected minors. -/
+theorem universal_rank_one_update {α : Type u} {β : Type v} {𝕜 : Type w}
+    [LinearOrder α] [LinearOrder β] [CommRing 𝕜]
+    (T : Matrix α β 𝕜) (u : α → 𝕜) (v : β → 𝕜) (z : 𝕜) (I : MinorIndex α β) :
+    minor (T + z • Matrix.vecMulVec u v) I =
+      minor T I + z * cofactorForm T I (Matrix.vecMulVec u v) := by
+  let r := I.1.1.orderEmbOfFin rfl
+  let c := I.1.2.orderEmbOfFin I.property.symm
+  have hselected : minorMatrix (T + z • Matrix.vecMulVec u v) I =
+      minorMatrix T I + Matrix.vecMulVec (fun i => z * u (r i)) (fun j => v (c j)) := by
+    ext i j
+    simp only [minorMatrix, Matrix.add_apply, Matrix.smul_apply, Matrix.vecMulVec_apply,
+      smul_eq_mul, r, c]
+    ring
+  unfold minor
+  rw [hselected, det_add_vecMulVec_universal]
+  congr 1
+  unfold cofactorForm
+  simp only [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro i _
+  apply Finset.sum_congr rfl
+  intro j _
+  -- Expand the selected rank-one entry so the scalar z can be factored from
+  -- the adjugate pairing without changing the sorted row and column indices.
+  change (minorMatrix T I).adjugate j i * ((z * u (r i)) * v (c j)) =
+    z * ((minorMatrix T I).adjugate j i * (u (r i) * v (c j)))
+  ring
+
+theorem universal_bordered_determinant {𝕜 : Type w} [CommRing 𝕜] {k : ℕ}
+    (V : Matrix (Fin k) (Fin k) 𝕜) (a b : Fin k → 𝕜) (d : 𝕜) :
+    (∑ i : Fin k, a i * (V.adjugate.mulVec b) i) =
+      d * V.det - (borderedMatrix V a b d).det := by
+  let q := ∑ i : Fin k, a i * (V.adjugate.mulVec b) i
+  have hsum : (∑ i, ∑ j, V.adjugate j i * ((-b) i * a j)) = -q := by
+    dsimp [q]
+    simp only [neg_mul, mul_neg, Finset.sum_neg_distrib]
+    congr 1
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro j _
+    simp only [Matrix.mulVec, dotProduct, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    ring
+  have hnegative : (V - Matrix.vecMulVec b a).det = V.det - q := by
+    have hr := det_add_vecMulVec_universal V (-b) a
+    have hmatrix : V + Matrix.vecMulVec (-b) a = V - Matrix.vecMulVec b a := by
+      ext i j
+      simp [Matrix.vecMulVec_apply, sub_eq_add_neg]
+    rw [hmatrix, hsum, ← sub_eq_add_neg] at hr
+    exact hr
+  have hone : (borderedMatrix V a b 1).det = V.det - q :=
+    (bordered_det_one V a b).trans hnegative
+  have hcorner : (borderedMatrix V 0 b 1).det = V.det := by
+    simpa using bordered_det_one V (0 : Fin k → 𝕜) b
+  have hzero : (borderedMatrix V a b 0).det = -q := by
+    have he : V.det + (-q) = V.det + (borderedMatrix V a b 0).det := by
+      calc
+        _ = (borderedMatrix V a b 1).det := by
+          simpa only [sub_eq_add_neg] using hone.symm
+        _ = (borderedMatrix V a b 0).det + V.det := by
+          simpa only [hcorner, one_mul] using bordered_det_affine V a b 1
+        _ = _ := add_comm _ _
+    exact (add_left_cancel he).symm
+  -- Name the already expanded adjugate pairing by q for the final scalar identity.
+  change q = d * V.det - (borderedMatrix V a b d).det
+  rw [bordered_det_affine, hcorner, hzero]
+  ring
+
+#print axioms universal_rank_one_update
+#assert_trust kernel universal_rank_one_update
+#print axioms universal_bordered_determinant
+#assert_trust kernel universal_bordered_determinant
+
+end
+end NLA.NM04

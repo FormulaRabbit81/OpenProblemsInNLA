@@ -1,0 +1,59 @@
+{
+  "prepared_by": "/root/ie02_full_referee2",
+  "role": "NM-04 pre-code statement preparer; not an independent reviewer of this packet",
+  "canonical_read": {
+    "README": "full exact pinned Git object read",
+    "Colbrook manuscript": "full exact pinned Git object read before this packet; Sections 1–4 reread for target and proof route",
+    "source_sha256": "cc794d1fe11d5ae3bc5eaf1a635720ed0ad5c977cba4c7c7064dc7f29bff0c8f"
+  },
+  "standards_read": [
+    "Full pinned Tau Ceti REVIEWING and all five applicable rubrics",
+    "Full pinned Comparator README",
+    "Full pinned formalization.yaml README",
+    "Full retained Schiffer Challenge snapshot",
+    "Full retained Forsythe Challenge and NUMERICAL_TARGETS snapshots"
+  ],
+  "library_scope": "Primary files copied and bounded relevant declarations inspected; no assertion that every line of each complete copied Mathlib file was read. No Lean elaboration attempted.",
+  "inspected_apis": [
+    "Finset.orderEmbOfFin and sorted/member/range APIs",
+    "Matrix determinant update-column/add/smul/sum and repeated-column lemmas",
+    "Matrix adjugate cofactor API",
+    "Matrix SchurComplement rank-one TODO and invertibility hypothesis",
+    "Matrix.det_piecewise_one_eq_submatrix_det and the full coeff_det_one_add_X_smul_eq_sum_minors proof",
+    "Compact minimum existence API",
+    "Real exp/log positivity/continuity/derivative APIs",
+    "LeanCert kernel trust pattern and interval entry points"
+  ],
+  "triage": "The other agent provided a mathematical feasibility route. This is credited as internal agent assistance; it is not counted as independent approval of this packet.",
+  "no_runs": [
+    "Lean",
+    "Lake",
+    "LeanCert",
+    "Comparator",
+    "GitHub workflow",
+    "Tau Ceti CLI/service",
+    "rational diagnostic rerun"
+  ],
+  "operational_notes": [
+    "One attempted shell process creation failed after inherited Research cwd disappeared; explicit workdir=/private/tmp succeeded.",
+    "One apply_patch call reported file-not-found while explicit /private/tmp reads confirmed the file; the intended paragraph was added by a narrowly scoped Python text replacement.",
+    "No source repository, cache or Git state was created or repaired. No mathematical statements were compiled.",
+    "The first packet verifier run failed because the manifest generator excluded a nested source MANIFEST.json by basename. Corrected exclusion to the two top-level output paths, retained this audit note, and reran. This was a packet-inventory defect, not a mathematical or Lean check."
+  ],
+  "attribution": {
+    "original_solution": "Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics, University of Cambridge",
+    "original_question": "Eric Rowland and Jason Wu",
+    "formalization_contributor": "George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology",
+    "assistance": "Substantial OpenAI Codex assistance",
+    "george_email_published": false,
+    "local_inherited_source": "The exact retained original TeX includes its pre-existing public Colbrook author preamble; this packet is a local review packet."
+  },
+  "review_gate": {
+    "required_precode_reviewers": 2,
+    "accepted": 0,
+    "concrete_definitions_and_challenge": "not written; awaiting pre-code review and root authorization",
+    "proof_implementation": "not authorized in this task",
+    "statement_freeze": "not performed"
+  },
+  "source_status_after_acquisition": "The original Research tree became unavailable after primary source acquisition; the immutable copied source files remain available. Default packet verification uses only copies and does not claim live original-tree availability."
+}

@@ -1,0 +1,270 @@
+{
+  "version": 1,
+  "stage": "precode_plan_for_independent_review",
+  "canonical_problem": "NM-04",
+  "theorem_count": 35,
+  "definition_holes": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "arithmetic_generalization": "Pure multilinear algebra is over a general commutative ring and specializes to the real canonical proof; analysis and the final target remain real.",
+  "contracts": [
+    {
+      "id": "C01",
+      "name": "NLA.NM04.coercivity_half_certificate",
+      "group": "numerical",
+      "proposition": "0 < (1:ℝ)/2 ∧ (1:ℝ)/2 < 1. Both bounds are consumed in the positive coercivity coefficient.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C02",
+      "name": "NLA.NM04.row_partition_positive",
+      "group": "scaling",
+      "proposition": "∀ m n≥1, positive A, t, i: 0 < Z_A,i(t), where Z_A,i=Σ_j A_ij exp(t_j).",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C03",
+      "name": "NLA.NM04.potential_continuous",
+      "group": "scaling",
+      "proposition": "∀ m n≥1, positive A: Continuous F_A on the full space ℝ^n, with F_A=Σ_i log Z_i−(m/n)Σ_j t_j.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C04",
+      "name": "NLA.NM04.potential_line_derivative",
+      "group": "scaling",
+      "proposition": "∀ m n≥1, positive A, t d: HasDerivAt (s↦F_A(t+s*d)) (Σ_j d_j*g_A,j(t)) 0, where g_A,j=Σ_i A_ij exp(t_j)/Z_i−m/n.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C05",
+      "name": "NLA.NM04.zero_mean_coercivity",
+      "group": "scaling",
+      "proposition": "∀ m n≥1, positive A, a>0 with ∀i j,a≤A_ij, t with Σ_j t_j=0: (1/2)*(m/n)*‖t‖∞+m*log a ≤ F_A(t). The norm is the finite-product sup norm.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C06",
+      "name": "NLA.NM04.potential_attains_minimum",
+      "group": "scaling",
+      "proposition": "∀ m n≥1, positive A: ∃ t₀, Σ_j t₀_j=0 ∧ ∀t,Σ_j t_j=0→F_A(t₀)≤F_A(t). No existence oracle is a hypothesis.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C07",
+      "name": "NLA.NM04.potential_minimum_has_margins",
+      "group": "scaling",
+      "proposition": "∀ m n≥1, positive A, t₀: (Σ_j t₀_j=0)→(∀t,Σ_j t_j=0→F_A(t₀)≤F_A(t))→∀j,g_A,j(t₀)=0. The preceding contract supplies this actual minimum.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C08",
+      "name": "NLA.NM04.positive_balanced_scaling_exists",
+      "group": "scaling",
+      "proposition": "∀ m n≥1, positive A: ∃ S, ScaledBalanced A S. The predicate requires actual positive α,β, S_ij=α_i A_ij β_j, row sums 1 and column sums m/n.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C09",
+      "name": "NLA.NM04.positive_balanced_scaling_unique",
+      "group": "scaling",
+      "proposition": "∀ m n≥1, positive A, S T: ScaledBalanced A S→ScaledBalanced A T→S=T. Individual scaling factors are not claimed unique.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C10",
+      "name": "NLA.NM04.sinkhorn_semantics",
+      "group": "scaling",
+      "proposition": "∀ m n≥1, positive A: ScaledBalanced A (sinkhorn A) ∧ Positive (sinkhorn A) ∧ ∀S,ScaledBalanced A S→S=sinkhorn A. Proves the total choice is the canonical unique matrix.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C11",
+      "name": "NLA.NM04.position_sorted_semantics",
+      "group": "indices",
+      "proposition": "∀ finite linearly ordered α, U:Finset α, i:Fin U.card: pos(U.orderEmbOfFin rfl i,U)=i.val+1. Positions start at 1.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C12",
+      "name": "NLA.NM04.empty_minor_values",
+      "group": "indices",
+      "proposition": "∀ m n≥1, real A: minor(tail A,empty)=1 ∧ Δ_A(empty)=A₁₁ ∧ Γ_A(empty)=A₁₁. Positivity is unnecessary.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C13",
+      "name": "NLA.NM04.H_diagonal",
+      "group": "coefficients",
+      "proposition": "∀ m n, I:D(m,n): H I I=(|R_I|:ℤ)*((m:ℤ)+(n:ℤ))−(m:ℤ)*(n:ℤ). Integer, not natural subtraction.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C14",
+      "name": "NLA.NM04.H_raising",
+      "group": "coefficients",
+      "proposition": "∀ m n, I≠J, row s,column t: τ(I,J)=(∅,{s},∅,{t})→H I J=(-1)^(pos(s,R_J)+pos(t,C_J))*(m:ℤ).",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C15",
+      "name": "NLA.NM04.H_lowering",
+      "group": "coefficients",
+      "proposition": "∀ m n, I≠J, row s,column t: τ(I,J)=({s},∅,{t},∅)→H I J=(-1)^(pos(s,R_I)+pos(t,C_I)+1)*(n:ℤ).",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C16",
+      "name": "NLA.NM04.H_column_exchange",
+      "group": "coefficients",
+      "proposition": "∀ m n, I≠J, columns s t: τ(I,J)=(∅,∅,{s},{t})→H I J=(-1)^(pos(s,C_I)+pos(t,C_J))*(m:ℤ).",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C17",
+      "name": "NLA.NM04.H_row_exchange",
+      "group": "coefficients",
+      "proposition": "∀ m n, I≠J, rows s t: τ(I,J)=({s},{t},∅,∅)→H I J=(-1)^(pos(s,R_I)+pos(t,R_J))*(n:ℤ).",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C18",
+      "name": "NLA.NM04.H_other",
+      "group": "coefficients",
+      "proposition": "∀ m n, I≠J: if none of the four explicitly quantified singleton-support predicates holds, then H I J=0. Every unsupported off-diagonal pair is included.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C19",
+      "name": "NLA.NM04.weighted_principal_minor_expansion",
+      "group": "algebra",
+      "proposition": "∀ commutative ring K, finite D, M:D×D→K, γ δ:D→K,z:K: det(diag γ+z•(M*diag δ))=Σ E⊆D,det(M_E)*(Π I∈E,δ_I)*(Π I∉E,γ_I)*z^|E|. Empty D/E and zero factors included.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C20",
+      "name": "NLA.NM04.cofactor_signed_minor_formula",
+      "group": "algebra",
+      "proposition": "∀ commutative ring K, finite ordered α β, T Z:Matrix α β K, I=(R,C): D_I(T;Z)=Σ s∈R,t∈C,(-1)^(pos(s,R)+pos(t,C))*Z_st*f_(R−s,C−t)(T). D is defined using actual adjugate entries.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C21",
+      "name": "NLA.NM04.universal_rank_one_update",
+      "group": "algebra",
+      "proposition": "∀ commutative ring K, finite ordered α β, T,u,v,z,I: f_I(T+z•uvᵀ)=f_I(T)+z*D_I(T;uvᵀ). No invertibility, characteristic, rank or nonempty-index hypotheses.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C22",
+      "name": "NLA.NM04.universal_bordered_determinant",
+      "group": "algebra",
+      "proposition": "∀ commutative ring K,k,V:Matrix(Fin k)(Fin k)K,a b:Fin k→K,d:K: a·(adj(V)*b)=d*det V−det([[V,b],[a,d]]). Border is last row/column; k=0 included.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C23",
+      "name": "NLA.NM04.minor_lowering_identity",
+      "group": "algebra",
+      "proposition": "∀ commutative ring K, finite ordered α β,T,I: D_I(T;1*1ᵀ)=(L f(T))_I, with the exact signed deletion operator.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C24",
+      "name": "NLA.NM04.minor_column_exchange_identity",
+      "group": "algebra",
+      "proposition": "∀ commutative ring K, finite ordered α β,T,I of size k: D_I(T;(T*1)*1ᵀ)=(k:K)*f_I(T)+(C₀ f(T))_I. Exact sorted replacement signs.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C25",
+      "name": "NLA.NM04.minor_row_exchange_identity",
+      "group": "algebra",
+      "proposition": "∀ commutative ring K, finite ordered α β,T,I of size k: D_I(T;1*(1ᵀ*T))=(k:K)*f_I(T)+(R₀ f(T))_I. Exact sorted replacement signs.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C26",
+      "name": "NLA.NM04.minor_raising_identity",
+      "group": "algebra",
+      "proposition": "∀ commutative ring K, finite ordered α β,T,I: D_I(T;(T*1)*(1ᵀ*T))=(Σ_i j,T_ij)*f_I(T)−(U f(T))_I. Includes empty/singular selected minors and empty ambient types.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C27",
+      "name": "NLA.NM04.schur_margin_identities",
+      "group": "balanced",
+      "proposition": "∀ m n≥1, positive balanced S, x=S₁₁,T=B−crᵀ/x: T1=1−c/x ∧ 1ᵀT=(m/n)*(1ᵀ−rᵀ/x) ∧ ΣT=m−(m/n)/x. Actual tail matrix/vectors, empty tails included.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C28",
+      "name": "NLA.NM04.schur_bordered_minor",
+      "group": "balanced",
+      "proposition": "∀ m n≥1, real S with S₁₁≠0,I: Δ_S(I)=S₁₁*f_I(B−crᵀ/S₁₁). No invertibility of a selected tail minor or positivity of other entries.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C29",
+      "name": "NLA.NM04.balanced_minor_relation",
+      "group": "balanced",
+      "proposition": "∀ m n≥1, positive balanced S,I of size k: m*minor(B,I)+(k*(m+n)−m*n)*Δ_I+n*(UΔ)_I−m*(LΔ)_I+m*(C₀Δ)_I+n*(R₀Δ)_I=0. Real casts precede subtraction, including empty minor.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C30",
+      "name": "NLA.NM04.weighted_transition_action",
+      "group": "balanced",
+      "proposition": "∀ m n≥1,f:D→ℝ,I of size k: (HReal*diag f).mulVec w I=w_I*((k*(m+n)−m*n)*f_I+n*(Uf)_I−m*(Lf)_I+m*(C₀f)_I+n*(R₀f)_I), w_I=(n/m)^k.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C31",
+      "name": "NLA.NM04.balanced_null_vector",
+      "group": "balanced",
+      "proposition": "∀ m n≥1, positive balanced S: K(S,S₁₁).mulVec w=0 ∧ w_empty=1 ∧ w≠0. Actual pencil and matrix-vector multiplication.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C32",
+      "name": "NLA.NM04.diagonal_minor_covariance",
+      "group": "scaling-transport",
+      "proposition": "∀ m n≥1, real A,α,β, S_ij=α_i A_ij β_j,I: Δ_S(I)=d_I*Δ_A(I) ∧ Γ_S(I)=d_I*Γ_A(I), d_I=α₁β₁Π_R αΠ_C β. No positivity needed for equality.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C33",
+      "name": "NLA.NM04.diagonal_pencil_covariance",
+      "group": "scaling-transport",
+      "proposition": "∀ m n≥1, real A,α,β,z, S_ij=α_i A_ij β_j: K(S,z)=K(A,z)*diag d. Arbitrary z and possibly zero scaling factors.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C34",
+      "name": "NLA.NM04.sinkhorn_pencil_singular",
+      "group": "final",
+      "proposition": "∀ m n≥1, positive A: ∃v:D→ℝ, v_empty>0 ∧ K(A,(sinkhorn A)₁₁).mulVec v=0. Actual existence of scaling is discharged; positive coordinate prevents the zero witness.",
+      "status": "planned_not_written_not_typechecked"
+    },
+    {
+      "id": "C35",
+      "name": "NLA.NM04.rowland_wu_identity",
+      "group": "final",
+      "proposition": "∀ m n≥1, positive A: Σ E⊆D,det((m:ℝ)⁻¹•HReal_E)*(Π I∈E,Δ_A(I))*(Π I∉E,Γ_A(I))*((sinkhorn A)₁₁)^|E|=0. Complete original target; no balancing witness or coefficient surrogate in hypotheses.",
+      "status": "planned_not_written_not_typechecked"
+    }
+  ],
+  "unrun": [
+    "Lean statement elaboration",
+    "LeanCert certificate execution",
+    "proof implementation/build",
+    "independent statement acceptance",
+    "statement freeze",
+    "Comparator",
+    "GitHub workflow"
+  ],
+  "not_new_completion": true
+}

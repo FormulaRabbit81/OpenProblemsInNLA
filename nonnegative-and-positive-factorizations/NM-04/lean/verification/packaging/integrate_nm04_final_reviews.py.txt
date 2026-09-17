@@ -1,0 +1,103 @@
+"""Integrate two accepted exact187 nonauthor reviews; Linux remains pending."""
+from pathlib import Path
+import datetime, gzip, hashlib, io, json, re, shutil, tarfile
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+P = B / 'NM04-canonical-package-local187'
+R = P / 'reviews'
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+local = json.loads((P / 'verification/LOCAL-COMPLETE.json').read_text())
+index = json.loads((R / 'INDEX.json').read_text())
+assert len(index) == 3
+old = P / 'verification/packaging/before-final-review-integration'
+old.mkdir(exist_ok=False)
+for rel in ['PACKAGE-MANIFEST.json', 'README.md', 'formalization.yaml', 'STATE.json', 'IMPLEMENTATION-MAP.json']:
+    shutil.copy2(P / rel, old / rel)
+for label, name, key, manifest_sha in [
+    ('final-1', 'NM04-final-referee1-continuation-20260917', 'source_hashes',
+     'afc66176571c99fc2cbac88c6dd691a60b5fa0123402d247407eb35485598e87'),
+    ('final-2', 'NM04-referee2-local187-continuation-20260917', 'source_sha256',
+     'e172447317cc71f5e90f693505f109799b1d5f7a151750a2d5a6c4082db67d01')]:
+    src = B / 'reviews' / name
+    assert sha(src / 'MANIFEST.json') == manifest_sha
+    verdict = json.loads((src / 'VERDICT.json').read_text())
+    assert verdict[key] == local['sources'] and verdict['verdict'].startswith('APPROVE')
+    for rel, h in json.loads((src / 'MANIFEST.json').read_text())['files'].items():
+        assert sha(src / rel) == h
+    archive = R / (label + '-packet.tar.gz')
+    with archive.open('wb') as raw, gzip.GzipFile(fileobj=raw, mode='wb', mtime=0) as gz:
+        with tarfile.open(fileobj=gz, mode='w') as tar:
+            for f in sorted(src.rglob('*')):
+                assert not f.is_symlink(), f
+                if f.is_file():
+                    data = f.read_bytes()
+                    assert not re.search(r'(?i)(?:george|g?stepaniants|sgstepaniants)[^\s@<>]{0,40}@[\w.-]+\.[A-Za-z]{2,}', data.decode('utf-8', errors='ignore')), f
+                    info = tarfile.TarInfo(name + '/' + str(f.relative_to(src)))
+                    info.size, info.mode = len(data), 0o644
+                    tar.addfile(info, io.BytesIO(data))
+    for original, suffix in [('REVIEW.md', '.md'), ('VERDICT.json', '-verdict.json'), ('MANIFEST.json', '-manifest.json')]:
+        shutil.copy2(src / original, R / (label + suffix))
+    index.append({'label': label, 'original_packet': name, 'report': label + '.md',
+                  'verdict': label + '-verdict.json', 'manifest': label + '-manifest.json',
+                  'manifest_sha256': manifest_sha, 'archive': archive.name,
+                  'archive_sha256': sha(archive), 'archive_bytes': archive.stat().st_size})
+for n in [1, 2]:
+    f = B / f'NM04-ROOT-REFEREE{n}-ACCEPTANCE187.json'
+    assert json.loads(f.read_text())['exit_code'] == 0
+    shutil.copy2(f, P / 'verification' / f.name)
+(R / 'INDEX.json').write_text(json.dumps(index, indent=2) + '\n')
+(R / 'README.md').write_text('''# Independent reviews
+
+Two independent statement reviews preceded implementation. Two independent
+nonauthor final reviewers approved the complete local187 mathematical and Lean
+source proof. These are AI-agent reviews under the pinned Tau Ceti rubrics,
+not external human peer review or an official Tau Ceti service certification.
+
+- [Statement referee 1](statement-1.md): /root, independent of the statement preparer.
+- [Statement referee 2](statement-2.md): /root/formal_review_standards.
+- [Final referee 1](final-1.md): /root/nm04_final_referee1, complete 38-module and 35-contract review.
+- [Final referee 2](final-2-local184.md): /root/mf06_statement_referee2, complete local184 review,
+  extended by the [exact local187 continuation](final-2.md) after two comment-only edits.
+
+The final referees never authored NM-04 proof code. The coordinator later
+contributed proof code and is not counted as an independent final referee.
+All prior requested cleanups were resolved; the original scopes, findings,
+source hashes and read-only consistency checks remain in complete archives
+bound by [INDEX.json](INDEX.json). None of these reviews claims a reviewer
+Lean rerun or actual Linux Comparator execution. The latter is still pending.
+
+Historical statement-stage files intentionally retain their original wording.
+The original plan is in ../precode-01/; the statement snapshot is archived in
+../verification/statement-history/. Some historical audit scripts refer to
+development-machine paths. Those paths are provenance, not required paths for
+the current project's ordinary Lean build or final Linux checker.
+''')
+metadata = json.loads((P / 'formalization.yaml').read_text())
+metadata['project']['description'] = 'Complete original Rowland-Wu coefficient identity for every positive real m-by-n matrix, m,n at least one. All 35 frozen contracts pass actual local Lean and two independent final source reviews; final non-root Linux checks remain pending.'
+metadata['automation']['notes'] = 'Two independent statement approvals preceded implementation. Actual source-bound local187 exports all35 contracts through38 modules, with seven fresh commands and31 exact successful reuses; one compiler process, one thread,4096 MiB. Two independent nonauthor final source reviewers approved the full proof. Linux Comparator remains a separate pending gate; no official Tau Ceti service or human peer review is claimed.'
+metadata['review'] = {'status': 'Two independent statement approvals before implementation and two independent nonauthor final exact187 source approvals.',
+    'reviewers': ['/root (statement only)', '/root/formal_review_standards (statement)',
+                  '/root/nm04_final_referee1 (final)', '/root/mf06_statement_referee2 (final)'],
+    'notes': 'AI-agent reviews under pinned Tau Ceti guidance; scopes/hashes in reviews/INDEX.json. No independent reviewer compiler rerun, official service run, human review or unrun Linux check is claimed.'}
+metadata['verification']['independent_reviews'] = {'statement': 2, 'final': 2, 'result': 'approved exact187 source', 'record': 'reviews/INDEX.json'}
+for item in metadata['status']['main_results']:
+    item['verification_status'] = 'PASS: actual source-bound local Lean compilation187 and kernel trust assertion; two independent final exact-source approvals. GitHub Linux Comparator pending.'
+assert metadata['status']['whole_problem_verified'] is False
+(P / 'formalization.yaml').write_text(json.dumps(metadata, indent=2) + '\n')
+(P / 'IMPLEMENTATION-MAP.json').write_text(json.dumps({'results': metadata['status']['main_results']}, indent=2) + '\n')
+state = json.loads((P / 'STATE.json').read_text())
+state.update(time=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+             stage='complete local proof187 and two independent final source approvals; Linux Comparator and publication pending',
+             final_source_reviews=2, final_source_review_record='reviews/INDEX.json')
+(P / 'STATE.json').write_text(json.dumps(state, indent=2) + '\n')
+text = (P / 'README.md').read_text().replace(
+    'Final independent source approvals and GitHub Linux Comparator checks are pending.',
+    'Two independent final source reviews approved the complete proof; GitHub Linux Comparator checks are pending.')
+(P / 'README.md').write_text(text)
+shutil.copy2(Path(__file__), P / 'verification/packaging/integrate_nm04_final_reviews.py.txt')
+manifest = {'stage': state['stage'], 'files': {str(f.relative_to(P)): sha(f)
+            for f in sorted(P.rglob('*')) if f.is_file() and f != P / 'PACKAGE-MANIFEST.json'}}
+(P / 'PACKAGE-MANIFEST.json').write_text(json.dumps(manifest, indent=2) + '\n')
+print(json.dumps({'manifest_sha256': sha(P / 'PACKAGE-MANIFEST.json'),
+                  'files': len(manifest['files']), 'review_packets': len(index),
+                  'two_final_source_approvals': True, 'Linux_Comparator_run': False}, indent=2))

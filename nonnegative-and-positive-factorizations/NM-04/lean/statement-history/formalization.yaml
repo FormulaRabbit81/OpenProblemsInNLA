@@ -1,0 +1,97 @@
+{
+  "version": "v0.4",
+  "project": {
+    "name": "NM-04: the complete Rowland–Wu polynomial identity for rectangular Sinkhorn scaling",
+    "description": "Statement-only development for all positive real m-by-n matrices with m,n at least one. Concrete scaling and minor definitions plus 35 proposed independent contracts; no formal verification is claimed.",
+    "authors": [
+      "George Stepaniants"
+    ],
+    "affiliations": {
+      "George Stepaniants": "Department of Computing and Mathematical Sciences, California Institute of Technology"
+    },
+    "responsible_maintainers": [
+      "George Stepaniants"
+    ],
+    "license": "Apache-2.0"
+  },
+  "repository": {
+    "role": "substantive-development"
+  },
+  "sources": [
+    {
+      "title": "NM-04 — The Rowland–Wu polynomial identity for Sinkhorn limits",
+      "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/849003686970b372e1b2128ba072f86168f81d38/nonnegative-and-positive-factorizations/NM-04/README.md",
+      "type": "web-post",
+      "location": "Complete original problem statement, including the four coefficient signs and all positive rectangular dimensions",
+      "relationship": "formalizes",
+      "author_endorsement": "not-contacted",
+      "note": "The question is attributed to Eric Rowland and Jason Wu. The canonical page and problem number are preserved; it already records Matthew J. Colbrook’s mathematical solution."
+    },
+    {
+      "title": "A null vector for the Rowland–Wu determinant identity",
+      "authors": [
+        "Matthew J. Colbrook"
+      ],
+      "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/849003686970b372e1b2128ba072f86168f81d38/references/colbrook-factorization-2026-09-11/manuscripts/NM-04_sinkhorn_identity.tex",
+      "type": "web-post",
+      "location": "Theorem 1 and Sections 1–4; later extensions are outside the proposed theorem set",
+      "relationship": "formalizes",
+      "author_endorsement": "not-contacted",
+      "note": "Original mathematical authorship: Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics, University of Cambridge. The complete pinned source was read and retained; the additional scaling existence/uniqueness proof supplies the canonical object internally."
+    }
+  ],
+  "related_formalizations": [
+    {
+      "id": "https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474",
+      "relationship": "builds-on",
+      "note": "Actual sorted finite subsets, determinants, adjugates, compact minima and real exp/log derivatives. Universal singular-valid identities remain proof obligations."
+    },
+    {
+      "id": "https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926",
+      "relationship": "builds-on",
+      "note": "Two planned exact rational half bounds in kernel mode, to be consumed by coercivity. No certificate has executed."
+    },
+    {
+      "id": "https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof",
+      "relationship": "other",
+      "note": "Read retained Challenge and numerical-target examples for independent statement structure; no Forsythe mathematical theorem is imported."
+    },
+    {
+      "id": "https://github.com/jaumededios/Schiffer",
+      "relationship": "other",
+      "note": "Read the byte-bound retained Challenge example for faithful concrete definitions. No fresh repository head or Schiffer proof verification is claimed."
+    }
+  ],
+  "automation": {
+    "methods": [
+      {
+        "method": "agent",
+        "framework": "OpenAI Codex",
+        "tool_setup": "Parallel source work and independent reviews. Root alone owns local Lean compilation with one process, one thread and a 4096 MiB limit. Final real Comparator/kernel/sandbox verification will use GitHub non-root Linux.",
+        "prompting_notes": "Numerical statements first; two independent reviews of actual complete Definitions and Challenge, local statement elaboration and freeze before proof implementation. Preserve all four signs, dimensions and vanishing minors."
+      }
+    ],
+    "notes": "This is the first actual statement draft. No reviewer acceptance, Lean compilation, LeanCert execution or Comparator run is claimed. The sealed pre-code packet is historical preparation and remains unchanged. The author is not counted as an independent reviewer."
+  },
+  "status": {
+    "scope": "35 unreviewed and unelaborated statement contracts; Definitions has no holes, Challenge has exactly 35 intentional statement holes. No Solution or implementation exists, and no completed-target count increment is warranted.",
+    "main_results": []
+  },
+  "fidelity": {
+    "divergences": "The final contract displays the literal canonical coefficient sum. Sinkhorn scaling is defined by the canonical equivalent unique positive scaling characterization; existence and uniqueness are independent obligations. Actual alternating-normalization convergence, arbitrary margins and later manuscript extensions are not claimed. Pure multilinear algebra uses the natural general commutative-ring level. Elementary auxiliary hypotheses are weakened where unnecessary."
+  },
+  "review": {
+    "status": "Pending two independent complete statement reviews and authorized local elaboration; no freeze or proof approval",
+    "notes": "Pinned Tau Ceti correctness, generality, proof quality, reuse and attribution rubrics were read. No official Tau Ceti service or CLI review was run. Comparator contract comparison and final proof reviews are later separate checks."
+  },
+  "alignment": {
+    "source_correspondence": "SourceCorrespondence.md",
+    "numerical_boundary": "NUMERICAL_TARGETS.md",
+    "proposed_statements": "Challenge.lean",
+    "concrete_definitions": "NLA/NM04/Definitions.lean",
+    "exact_statement_headers": "STATEMENT-HEADERS.json",
+    "historical_precode_plan": "precode-01/MANIFEST.json",
+    "intended_implementation_entry": "Solution.lean"
+  },
+  "acknowledgements": "Eric Rowland and Jason Wu for the question; Matthew J. Colbrook for the complete mathematical solution; Mathlib, LeanCert, Comparator, Tau Ceti, Schiffer and Forsythe contributors for mathematical libraries and workflow examples. George Stepaniants contributes the proposed formalization, with substantial OpenAI Codex assistance."
+}
