@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -61,7 +61,7 @@
+         frobeniusNorm C ^ 2 := by
+   by_cases hz : spectralNorm B = 0
+   · have hB : B = 0 := (operator_norm_semantics B).2.1.mp hz
+-    simp [hB, frobeniusNorm, flatten, spectralNorm, euclideanCLM, euclideanLin]
++    simp [hB, frobeniusNorm, spectralNorm, euclideanCLM, euclideanLin]
+   · let t := spectralNorm B
+     have ht : 0 < t := lt_of_le_of_ne (spectralNorm_nonneg B) (Ne.symm hz)
+     let N : Square r := (t : ℂ)⁻¹ • B

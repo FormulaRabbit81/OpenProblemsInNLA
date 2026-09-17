@@ -1,0 +1,92 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Prior mathematical attribution is retained.
+
+Four exact frozen contracts: scalar Cauchy bound, ordered off-corner bound,
+unit-circle lift and Frobenius averaging. The averaging inequality consumes
+the kernel-mode positive-half certificate; all variable algebra is symbolic.
+-/
+import NLA.MI13.Frobenius
+import NLA.MI13.Numerical
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.MI13
+noncomputable section
+
+theorem two_coordinate_bound (s t : ℝ) (hs : 0 ≤ s) (ht : 0 ≤ t) (p q : ℂ) :
+    ‖(s : ℂ) * p - (t : ℂ) * q‖ ^ 2 ≤
+      (s ^ 2 + t ^ 2) * (‖p‖ ^ 2 + ‖q‖ ^ 2) := by
+  have h := norm_sub_le ((s : ℂ) * p) ((t : ℂ) * q)
+  simp only [norm_mul, Complex.norm_real, Real.norm_eq_abs,
+    abs_of_nonneg hs, abs_of_nonneg ht] at h
+  have hpos : 0 ≤ s * ‖p‖ + t * ‖q‖ :=
+    add_nonneg (mul_nonneg hs (norm_nonneg p)) (mul_nonneg ht (norm_nonneg q))
+  have hsq := (sq_le_sq₀ (norm_nonneg _) hpos).2 h
+  nlinarith [sq_nonneg (s * ‖q‖ - t * ‖p‖)]
+
+theorem off_corner_coefficient_bound (s : ℕ → ℝ)
+    (hs : ∀ k, 0 ≤ s k) (hdesc : Antitone s) (i j : ℕ) (hij : (i, j) ≠ (0, 0)) :
+    s i ^ 2 + s j ^ 2 ≤ s 0 ^ 2 + s 1 ^ 2 := by
+  by_cases hi : i = 0
+  · subst i
+    have hj : j ≠ 0 := by
+      intro h
+      exact hij (by simp [h])
+    have hj1 : 1 ≤ j := Nat.one_le_iff_ne_zero.mpr hj
+    have hsq := (sq_le_sq₀ (hs j) (hs 1)).2 (hdesc hj1)
+    linarith
+  · have hi1 : 1 ≤ i := Nat.one_le_iff_ne_zero.mpr hi
+    have hsi := (sq_le_sq₀ (hs i) (hs 1)).2 (hdesc hi1)
+    have hsj := (sq_le_sq₀ (hs j) (hs 0)).2 (hdesc (Nat.zero_le j))
+    linarith
+
+theorem unit_circle_lift (d : ℝ) (hd : 0 ≤ d) (hd1 : d ≤ 1) :
+    Complex.normSq (circlePlus d) = 1 ∧ Complex.normSq (circleMinus d) = 1 ∧
+    (1 / 2 : ℂ) * (circlePlus d + circleMinus d) = (d : ℂ) := by
+  have hroot : Real.sqrt (1 - d ^ 2) ^ 2 = 1 - d ^ 2 :=
+    Real.sq_sqrt (by nlinarith)
+  refine ⟨?_, ?_, ?_⟩
+  · simp only [circlePlus, Complex.normSq_apply, Complex.add_re, Complex.add_im,
+      Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
+      Complex.I_re, Complex.I_im]
+    nlinarith
+  · simp only [circleMinus, Complex.normSq_apply, Complex.sub_re, Complex.sub_im,
+      Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
+      Complex.I_re, Complex.I_im]
+    nlinarith
+  · dsimp only [circlePlus, circleMinus]
+    ring
+
+theorem frobenius_average_bound {m n : ℕ} (X Y : Rect m n) :
+    frobeniusNorm ((1 / 2 : ℂ) • (X + Y)) ^ 2 ≤
+      (1 / 2 : ℝ) * (frobeniusNorm X ^ 2 + frobeniusNorm Y ^ 2) := by
+  have hhalf : (0 : ℝ) ≤ 1 / 2 := le_of_lt half_certificate.1
+  have hscale := (frobenius_linear_bounds (X + Y) 0 (1 / 2 : ℂ)).1
+  have hn : ‖(1 / 2 : ℂ)‖ = (1 / 2 : ℝ) := by norm_num
+  rw [hn] at hscale
+  have hsum := (frobenius_linear_bounds X Y (1 : ℂ)).2
+  have hx : 0 ≤ frobeniusNorm X := (frobenius_semantics X).2.2.1
+  have hy : 0 ≤ frobeniusNorm Y := (frobenius_semantics Y).2.2.1
+  have havg : 0 ≤ frobeniusNorm ((1 / 2 : ℂ) • (X + Y)) :=
+    (frobenius_semantics _).2.2.1
+  have hbound : frobeniusNorm ((1 / 2 : ℂ) • (X + Y)) ≤
+      (1 / 2 : ℝ) * (frobeniusNorm X + frobeniusNorm Y) := by
+    rw [hscale]
+    exact mul_le_mul_of_nonneg_left hsum hhalf
+  have hsq := (sq_le_sq₀ havg (mul_nonneg hhalf (add_nonneg hx hy))).2 hbound
+  nlinarith [sq_nonneg (frobeniusNorm X - frobeniusNorm Y)]
+
+#print axioms two_coordinate_bound
+#assert_trust kernel two_coordinate_bound
+#print axioms off_corner_coefficient_bound
+#assert_trust kernel off_corner_coefficient_bound
+#print axioms unit_circle_lift
+#assert_trust kernel unit_circle_lift
+#print axioms frobenius_average_bound
+#assert_trust kernel frobenius_average_bound
+
+end
+end NLA.MI13

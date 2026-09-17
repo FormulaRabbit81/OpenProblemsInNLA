@@ -1,0 +1,19 @@
+{
+  "source_sha256": "becbf09d8c9aec1cc083d02ed8ce5a666ba139748d566f7468a793e13464e707",
+  "headers": {
+    "unitary_singular_invariance": "theorem unitary_singular_invariance {m n : \u2115} (A : Rect m n)\n    (U : Square m) (V : Square n) (hU : IsUnitary U) (hV : IsUnitary V) (k : \u2115) :\n    singularValue (U * A * V) k = singularValue A k := by",
+    "unitary_norm_invariance": "theorem unitary_norm_invariance {m n : \u2115} (A : Rect m n)\n    (U : Square m) (V : Square n) (hU : IsUnitary U) (hV : IsUnitary V) :\n    frobeniusNorm (U * A * V) = frobeniusNorm A \u2227\n    spectralNorm (U * A * V) = spectralNorm A := by"
+  },
+  "route": "Gram(UAV)=V* Gram(A) V. Actual Euclidean Gram characteristic polynomials equal their matrix characteristic polynomials. Cyclic characteristic-polynomial equality and VV*=I preserve ordered symmetric eigenvalues with multiplicities; nonnegative singular values recover equality, with explicit zero extension outside the domain dimension. Frobenius follows by cyclic Gram trace; actual operator norm follows from the independently compiled largest-singular-value identity.",
+  "primary_source_sha256": {
+    "Analysis/InnerProductSpace/Spectrum.lean": "f12ef613416053c759ef30179147744c64eeec90f7467644cb30e64d532d7aa6",
+    "Analysis/InnerProductSpace/Adjoint.lean": "f28b5896638f712605265a69ffe4469f1f42e1b78b10ade0844738aeecd2b2a2",
+    "Analysis/InnerProductSpace/PiL2.lean": "1f9827b2db67213c725a2dcc3fec52a87772966d1fbd3fc6857a019dbd7a6053",
+    "Analysis/Normed/Lp/Matrix.lean": "976400e4430cbe64214a24e37f3f98c807c30f1c9926c8cbd367ae2fd111e2f9",
+    "LinearAlgebra/Charpoly/ToMatrix.lean": "167cae25a064b15f836022f0441997349a236bd699ca87bcd93cf532b794529a",
+    "LinearAlgebra/Matrix/Charpoly/Basic.lean": "584eb12d39eacb591155c98cfa2089479d88cfdea8eb5f31ba5ed687de200a9a",
+    "LinearAlgebra/Matrix/Trace.lean": "8053b04dc1c67b3a7d14262acc43b574e521940085e031726947f3c2241b7a73"
+  },
+  "compile_status": "not yet run",
+  "new_numeric_computation": false
+}

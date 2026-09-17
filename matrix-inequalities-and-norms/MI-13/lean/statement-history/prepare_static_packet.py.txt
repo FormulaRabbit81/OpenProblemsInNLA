@@ -1,0 +1,236 @@
+#!/usr/bin/env python3
+"""Seal this statement-only draft. No Lean/Lake/network or Git writes."""
+import hashlib
+import json
+from pathlib import Path
+import re
+import shutil
+import subprocess
+from datetime import datetime, timezone
+
+import jsonschema
+import yaml
+
+P = Path(__file__).resolve().parent
+B = Path('/tmp/nla-lean-next-20260915')
+F = B / 'next-statements/MF-07'
+T = B / 'next-statements/MI13-MI16-MI27-triage'
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+M = L / '.lake/packages/mathlib'
+LC = L / '.lake/packages/leancert'
+W = Path('/private/tmp/nla-lean-next-mf22-worktree')
+MREV = '0df444a360eaa60ab8c11dca51a86af692955474'
+LCREV = '621a43d7cf21f87872392a01e874f2f1dbddc926'
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+def digest(path):
+    return sha(path.read_bytes())
+
+def write_json(name, obj):
+    (P / name).write_text(json.dumps(obj, indent=2, ensure_ascii=False) + '\n')
+
+def copy(src, rel):
+    dest = P / rel
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    if dest.exists():
+        assert dest.read_bytes() == src.read_bytes(), 'existing reference differs: ' + rel
+    else:
+        shutil.copyfile(src, dest)
+    return {'source': str(src), 'packet_path': rel,
+            'sha256': digest(dest), 'bytes': dest.stat().st_size}
+
+assert not (P / 'DRAFT-MANIFEST.json').exists(), 'sealed packet is immutable'
+assert digest(P / 'NUMERICAL-FIRST.json') == '1676285e543d2cf9e1d9d01bc8767109b87c68fc86adc8ab91990a659b001f12'
+first = json.loads((P / 'NUMERICAL-FIRST.json').read_text())
+for path, expected in first['files'].items():
+    assert digest(P / path) == expected
+for name in ['informal_route_manifest', 'independent_informal_route_review']:
+    rec = first[name]
+    assert digest(Path(rec['path'])) == rec['sha256']
+
+copy(F / 'LICENSE', 'LICENSE')
+copy(F / 'lean-toolchain', 'lean-toolchain')
+(P / 'lakefile.toml').write_text((F / 'lakefile.toml').read_text().replace('NLAMF07', 'NLAMI13'))
+lake = json.loads((F / 'lake-manifest.json').read_text())
+assert lake['name'] == 'NLAMF07'
+lake['name'] = 'NLAMI13'
+write_json('lake-manifest.json', lake)
+pin_checks = []
+for p in lake['packages']:
+    loc = L / '.lake/packages' / p['name']
+    actual = subprocess.check_output(['git', '-C', str(loc), 'rev-parse', 'HEAD'], text=True).strip()
+    assert actual == p['rev'], p['name']
+    pin_checks.append({'name': p['name'], 'revision': actual, 'matches_retained_lock': True})
+assert next(p['rev'] for p in lake['packages'] if p['name'] == 'mathlib') == MREV
+assert next(p['rev'] for p in lake['packages'] if p['name'] == 'leancert') == LCREV
+
+canon_src = T / 'canonical/matrix-inequalities-and-norms/MI-13/README.md'
+canon = copy(canon_src, 'sources/canonical/README.md')
+canon.update(json.loads((T / 'CANONICAL-SOURCES.json').read_text())[
+    'matrix-inequalities-and-norms/MI-13/README.md'])
+assert canon['sha256'] == '20a8326f71cf7eba180b3cb956cc7c374298823ceb6aae8be72489d49c86f730'
+refs = [canon]
+for name in ['FINITE-ROUTE.md', 'OBLIGATIONS.md', 'DUPLICATE-SCOPE.json']:
+    refs.append(copy(T / name, 'sources/route/' + name))
+for name in ['MANIFEST.json', 'REVIEW.md', 'CHECKS.json', 'BINDINGS.json']:
+    refs.append(copy(B / 'reviews/MI13-mf22-finite-route' / name,
+                     'sources/route/independent-informal-review/' + name))
+
+standards = json.loads((F / 'STANDARDS-PROVENANCE.json').read_text())
+standard_items = standards['records']
+standard_records = []
+for record in standard_items:
+    rel = record['packet_path']
+    assert digest(F / rel) == record['sha256']
+    entry = copy(F / rel, rel)
+    entry['upstream'] = record
+    standard_records.append(entry)
+schema = copy(W / 'docs/lean/schema/v0.4.schema.json', 'sources/standards/v0.4.schema.json')
+assert schema['sha256'] == '25ff6b25ca4511635aff4443cf20480c15e59dddf19591c730950b442ea54fce'
+refs.append(copy(W / 'tools/lean/validate_manifest.py', 'sources/standards/completed-project-validator.py.txt'))
+refs.append(copy(W / 'tools/lean/source-lock.json', 'sources/standards/repository-checker-source-lock.json'))
+refs.append(copy(W / 'docs/lean/README.md', 'sources/standards/repository-Lean-workflow.md'))
+refs.append(schema)
+
+patterns = []
+old_reuse = json.loads((F / 'REUSE-AUDIT.json').read_text())
+for rec in old_reuse['patterns']:
+    if Path(rec['packet_path']).name not in [
+        'Schiffer-Challenge.lean', 'Forsythe-Challenge.lean', 'Forsythe-NUMERICAL_TARGETS.md']:
+        continue
+    assert digest(F / rec['packet_path']) == rec['sha256']
+    dest = rec['packet_path'] + ('.txt' if rec['packet_path'].endswith('.lean') else '')
+    entry = copy(F / rec['packet_path'], dest)
+    entry['retained_source_record'] = rec
+    entry['read_scope'] = 'Entire retained file; organizational/numerical pattern only, no proof import'
+    patterns.append(entry)
+
+primary_ranges = {
+    'Mathlib/Analysis/InnerProductSpace/SingularValues.lean': [[1, 178]],
+    'Mathlib/Analysis/InnerProductSpace/PiL2.lean': [[180, 215], [1000, 1075], [1230, 1280]],
+    'Mathlib/Analysis/InnerProductSpace/Spectrum.lean': [[274, 330]],
+    'Mathlib/Analysis/InnerProductSpace/Rayleigh.lean': [[290, 365]],
+    'Mathlib/Analysis/CStarAlgebra/Matrix.lean': [[82, 128]],
+    'Mathlib/Data/Matrix/Block.lean': [[105, 155], [203, 235]],
+    'Mathlib/Logic/Equiv/Fin/Basic.lean': [[220, 245]],
+    'Mathlib/LinearAlgebra/Matrix/Defs.lean': [[515, 540]],
+    'Mathlib/LinearAlgebra/Matrix/Trace.lean': [[145, 170]],
+}
+primary = []
+for rel, ranges in primary_ranges.items():
+    data = (M / rel).read_bytes()
+    literal = subprocess.check_output(['git', '-C', str(M), 'show', MREV + ':' + rel])
+    assert data == literal, rel
+    rec = copy(M / rel, 'sources/primary/' + rel + '.txt')
+    rec.update({'commit': MREV, 'read_ranges': ranges, 'literal_Git_matches': True})
+    primary.append(rec)
+rel = 'LeanCert/Tactic/IntervalAuto/PointIneq.lean'
+assert (LC / rel).read_bytes() == subprocess.check_output(['git', '-C', str(LC), 'show', LCREV + ':' + rel])
+rec = copy(LC / rel, 'sources/primary/' + rel + '.txt')
+rec.update({'commit': LCREV, 'read_ranges': [[1, 170]], 'literal_Git_matches': True})
+primary.append(rec)
+
+text = (P / 'Challenge.lean').read_text()
+headers = []
+for match in re.finditer(r'^theorem\s+(\w+)\b([\s\S]*?)\s*:= by\n  sorry', text, re.M):
+    header = match.group(0).split(':= by')[0].rstrip()
+    headers.append({'name': 'NLA.MI13.' + match.group(1), 'header': header,
+                    'header_sha256': sha(header.encode()),
+                    'line': text[:match.start()].count('\n') + 1})
+assert len(headers) == 36 and len({r['name'] for r in headers}) == 36
+assert len(re.findall(r'^  sorry$', text, re.M)) == 36
+assert len(re.findall(r'^theorem\s', text, re.M)) == 36
+definitions = (P / 'NLA/MI13/Definitions.lean').read_text()
+defs_code = re.sub(r'/\-[\s\S]*?\-/', '', definitions)
+assert not re.search(r'\b(sorry|axiom|admit|unsafe|native_decide)\b', defs_code)
+assert not re.search(r':=\s*by\b', defs_code)
+assert not (P / 'Solution.lean').exists()
+assert 'import NLA.MI13.Definitions' in text
+assert all(line == 'import NLA.MI13.Definitions' for line in text.splitlines() if line.startswith('import '))
+assert [line for line in definitions.splitlines() if line.startswith('set_option')] == ['set_option autoImplicit false']
+assert [line for line in text.splitlines() if line.startswith('set_option')] == ['set_option autoImplicit false']
+write_json('STATEMENT-HEADERS.json', {'scope': 'Proposed text headers; not an elaborated freeze', 'declarations': headers})
+write_json('comparator.json', {
+    'challenge_module': 'Challenge', 'solution_module': 'Solution',
+    'theorem_names': [r['name'] for r in headers], 'definition_names': [],
+    'permitted_axioms': ['propext', 'Quot.sound', 'Classical.choice']})
+
+write_json('SOURCE-PROVENANCE.json', {
+    'canonical_id': 'MI-13', 'canonical': canon,
+    'reference_copies': refs,
+    'historical_reference_scope': 'Retained snapshots; original relative links and review-manifest scopes refer to original locations. No fresh network audit.',
+    'numerical_first_sha256': digest(P / 'NUMERICAL-FIRST.json'),
+    'informal_route_manifest': first['informal_route_manifest'],
+    'informal_referee_manifest': first['independent_informal_route_review'],
+    'formalization_author': 'George Stepaniants',
+    'affiliation': 'Department of Computing and Mathematical Sciences, California Institute of Technology',
+    'author_agent': '/root/mi04_independent_referee',
+    'author_is_not_statement_referee': True,
+    'original_mathematical_credit': 'Nobori question; Audenaert refined commutator theorem; repository reduction, no inferred individual attribution or priority claim',
+    'two_exact_statement_reviews': 'pending', 'elaboration': 'not run', 'count_change': 0})
+write_json('REUSE-AUDIT.json', {
+    'standards': standard_records, 'patterns': patterns, 'primary': primary,
+    'dependency_pin_checks': pin_checks,
+    'targeted_reuse': {
+        'singular values': 'Reuse actual LinearMap.singularValues and square/antitone/nonnegative/zero-extension API.',
+        'all-rank SVD': 'Reuse ordered Gram eigenvectorBasis and Orthonormal.exists_orthonormalBasis_extension_of_card_eq on positive indices; no unnecessary rank-counting proof.',
+        'Rayleigh': 'Reuse LinearMap.IsSymmetric.hasEigenvalue_iSup_of_finiteDimensional, prove positivity and energy semantic bridge.',
+        'padding': 'Reuse actual fromBlocks/reindex algebra; ordered singular-value preservation remains explicit new transport work.',
+        'commutator': 'Internal finite proof required; no external literature assumption.',
+        'LeanCert': 'Plan narrow PointIneq import and kernel mode; exact half certificate only, no computation run.'},
+    'limits': 'Targeted pinned API reading, not a global proof of absence in every repository. Reference snapshots are inactive .txt files. No existing problem-specific theorem is imported.'})
+
+metadata = yaml.safe_load((P / 'formalization.yaml').read_text())
+schema_obj = json.loads((P / schema['packet_path']).read_text())
+validator = jsonschema.validators.validator_for(schema_obj)
+validator.check_schema(schema_obj)
+validator(schema_obj).validate(metadata)
+assert metadata['status']['main_results'] == []
+assert metadata['review']['reviewers'] == []
+assert 'unreviewed' in metadata['review']['status']
+assert 'affiliations' in metadata['project']
+assert metadata['project']['authors'] == ['George Stepaniants']
+
+active_files = ['Challenge.lean', 'NLA/MI13/Definitions.lean']
+assert sorted(str(p.relative_to(P)) for p in P.rglob('*.lean')) == sorted(active_files)
+email = re.compile(rb'[A-Za-z0-9.!#$%&\x27*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+')
+privacy_checked = 0
+for path in P.rglob('*'):
+    if path.is_file():
+        assert not email.search(path.read_bytes()), 'contact-like text: ' + str(path)
+        privacy_checked += 1
+state = {
+    'created_at_utc': datetime.now(timezone.utc).isoformat(),
+    'stage': 'statement-only draft awaiting two independent exact statement reviews and local elaboration',
+    'numerical_plan_sealed_before_Lean_statement_code': True,
+    'active_Lean_files': {rel: digest(P / rel) for rel in active_files},
+    'proposed_contract_count': 36, 'intentional_Challenge_holes': 36,
+    'definition_holes': 0, 'proof_implementation': False,
+    'local_Lean_Lake_or_cache_invocation': False, 'LeanCert_executed': False,
+    'Comparator_executed': False, 'statement_freeze': False,
+    'canonical_verified': False, 'Git_mutation': False, 'published': False,
+    'count_change': 0, 'numerical_first_sha256': digest(P / 'NUMERICAL-FIRST.json')}
+write_json('STATE.json', state)
+write_json('STATIC-CHECKS.json', {
+    'v0_4_schema_only': 'PASS', 'schema_sha256': schema['sha256'],
+    'textual_proposed_Comparator_coverage': 'PASS: 36 distinct headers, all selected once',
+    'completed_project_validator_run': False,
+    'why_not_completed_validator': 'It requires completed zero-sorry advertised results. This honest draft has no implementation or proved results; that later gate is not weakened or claimed.',
+    'active_Lean_files': state['active_Lean_files'],
+    'literal_primary_Git_bindings': len(primary), 'dependency_pin_matches': len(pin_checks),
+    'intentional_Challenge_holes': 36, 'definition_holes': 0,
+    'Lean_elaboration_or_proof_check': False, 'privacy_files_scanned_before_generated_state': privacy_checked,
+    'privacy_contact_like_matches': 0,
+    'script_sha256': digest(Path(__file__)),
+    'script_executor': '/root/mi04_independent_referee, statement author; not independent review'})
+files = {str(path.relative_to(P)): digest(path) for path in sorted(P.rglob('*')) if path.is_file()}
+write_json('DRAFT-MANIFEST.json', {
+    'scope': 'MI-13 statement-only draft, no statement freeze or proof acceptance',
+    'files': files, 'inventory_file_count': len(files), 'manifest_itself_additional_file': True,
+    'active_source_sha256': state['active_Lean_files'], 'contract_count': 36,
+    'numerical_first_sha256': digest(P / 'NUMERICAL-FIRST.json'), 'count_change': 0})
+print(json.dumps({'status': 'STATEMENT DRAFT SEALED; schema/static checks only',
+                  'files_plus_manifest': len(files) + 1, 'manifest_sha256': digest(P / 'DRAFT-MANIFEST.json'),
+                  'active_sources': state['active_Lean_files']}))

@@ -1,0 +1,14 @@
+{
+  "author": "/root",
+  "scope": "Exact frozen full_svd source candidate, not yet compiled",
+  "header": "theorem full_svd {r : \u2115} (A : Square r) :\n    \u2203 U V : Square r, IsUnitary U \u2227 IsUnitary V \u2227\n      A = U * singularDiagonal A * V.conjTranspose",
+  "source_sha256": "59f701c5d958f92e1f6913ead484903196ba761fb45be9956cef671fb1f3519e",
+  "freeze_sha256": "bddc9d048f92e28dd8912f9bfb8293e12f07f2458fe7fb5a77e5b3c57e16e732",
+  "proof_route": "Actual standard-basis coordinate matrices are unitary by the two pinned orthonormal change-of-basis identities. The proved singular vector equations give AV=U Sigma entrywise; multiply by V adjoint using VV*=I. No positivity/rank/dimension premise added.",
+  "primary_sources": {
+    "Mathlib/Analysis/InnerProductSpace/PiL2.lean": "1f9827b2db67213c725a2dcc3fec52a87772966d1fbd3fc6857a019dbd7a6053",
+    "Mathlib/LinearAlgebra/Matrix/Basis.lean": "6b4bba5144422e5082911e36726f35d6252cc64d436d3b8bc0183f053c889655",
+    "Mathlib/Data/Matrix/Mul.lean": "9ce6ecd0751e977f58fc47d6f271dff381e59868474a6955730ff07a99aa0e6b"
+  },
+  "count_delta": 0
+}

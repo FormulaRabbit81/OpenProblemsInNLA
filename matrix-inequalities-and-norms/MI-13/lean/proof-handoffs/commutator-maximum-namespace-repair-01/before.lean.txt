@@ -1,0 +1,84 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance; original mathematical attribution retained.
+
+Use the finite-dimensional Rayleigh maximum of the actual entry-space Gram
+operator. No maximizer or eigenvalue is postulated as an extra hypothesis.
+-/
+import NLA.MI13.CommutatorAlgebra
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.MI13
+noncomputable section
+
+theorem commutator_spectral_maximum {r : ℕ} (hr : 2 ≤ r) (X : Square r) :
+    ∃ (lam : ℝ) (Y : Square r), 0 ≤ lam ∧ Y ≠ 0 ∧
+      commutatorT X Y = (lam : ℂ) • Y ∧
+      ∀ Z : Square r, frobeniusNorm (commutator X Z) ^ 2 ≤ lam * frobeniusNorm Z ^ 2 := by
+  letI : Nonempty (Fin r) := ⟨⟨0, by omega⟩⟩
+  let L := (commutatorOperator X).toLinearMap
+  let G := L.adjoint ∘ₗ L
+  let T := G.toContinuousLinearMap
+  let lam : ℝ := ⨆ x : {x : EntrySpace r r // x ≠ 0}, T.rayleighQuotient x
+  have hsym : G.IsSymmetric := L.isSymmetric_adjoint_comp_self
+  have hbdd : BddAbove (Set.range (fun x : {x : EntrySpace r r // x ≠ 0} =>
+      T.rayleighQuotient x)) := by
+    refine ⟨‖T‖, ?_⟩
+    rintro _ ⟨x, rfl⟩
+    exact (le_abs_self _).trans (T.rayleighQuotient_le_norm x)
+  have henergy (x : EntrySpace r r) : (inner ℂ (G x) x).re = ‖L x‖ ^ 2 := by
+    simp only [G, LinearMap.comp_apply, LinearMap.adjoint_inner_left]
+    exact (norm_sq_eq_re_inner (𝕜 := ℂ) (L x)).symm
+  have heigen := hsym.hasEigenvalue_iSup_of_finiteDimensional
+  -- The CLM and linear-map Rayleigh expressions have the same action;
+  -- unfolding these fixed wrappers identifies the explicitly chosen supremum.
+  change G.HasEigenvalue (lam : ℂ) at heigen
+  obtain ⟨v, hv⟩ := heigen.exists_hasEigenvector
+  have hqnonneg : 0 ≤ T.rayleighQuotient v := by
+    rw [ContinuousLinearMap.rayleighQuotient, ContinuousLinearMap.reApplyInnerSelf_apply]
+    -- The finite-dimensional continuous extension has the original action.
+    change 0 ≤ (inner ℂ (G v) v).re / ‖v‖ ^ 2
+    rw [henergy]
+    exact div_nonneg (sq_nonneg _) (sq_nonneg _)
+  have hlam : 0 ≤ lam := le_ciSup_of_le hbdd ⟨v, hv.2⟩ hqnonneg
+  have hG (Y : Square r) : G (flatten Y) = flatten (commutatorT X Y) := by
+    -- LinearMap.adjoint and CLM.adjoint agree under the finite-dimensional
+    -- conversion; this exposes the previously proved commutator adjoint.
+    change (commutatorOperator X).adjoint (commutatorOperator X (flatten Y)) = _
+    rw [(commutator_adjoint X Y Y).1, commutatorOperator_flatten,
+      commutatorOperator_flatten]
+    rfl
+  let Y : Square r := fun i j => v (i, j)
+  have hY : flatten Y = v := by ext ij; rfl
+  refine ⟨lam, Y, hlam, ?_, ?_, ?_⟩
+  · intro hzero
+    apply hv.2
+    rw [← hY, hzero, flatten_zero]
+  · apply flatten_injective
+    rw [flatten_smul, ← hG, hY]
+    exact hv.apply_eq_smul
+  · intro Z
+    by_cases hz : Z = 0
+    · subst Z
+      simp only [commutator, Matrix.mul_zero, Matrix.zero_mul, sub_zero,
+        frobeniusNorm, flatten_zero, norm_zero, zero_pow (by decide : 2 ≠ 0), mul_zero,
+        le_refl]
+    · have hf : flatten Z ≠ 0 := fun h => hz (flatten_injective (h.trans flatten_zero.symm))
+      have hq : T.rayleighQuotient (flatten Z) ≤ lam := le_ciSup hbdd ⟨flatten Z, hf⟩
+      rw [ContinuousLinearMap.rayleighQuotient,
+        ContinuousLinearMap.reApplyInnerSelf_apply] at hq
+      -- Replace only the continuous extension by its original linear action.
+      change (inner ℂ (G (flatten Z)) (flatten Z)).re / ‖flatten Z‖ ^ 2 ≤ lam at hq
+      rw [henergy] at hq
+      have hbound := (div_le_iff₀ (sq_pos_of_pos (norm_pos_iff.mpr hf))).mp hq
+      simpa only [L, ContinuousLinearMap.coe_coe, commutatorOperator_flatten,
+        frobeniusNorm] using hbound
+
+#print axioms commutator_spectral_maximum
+#assert_trust kernel commutator_spectral_maximum
+
+end
+end NLA.MI13

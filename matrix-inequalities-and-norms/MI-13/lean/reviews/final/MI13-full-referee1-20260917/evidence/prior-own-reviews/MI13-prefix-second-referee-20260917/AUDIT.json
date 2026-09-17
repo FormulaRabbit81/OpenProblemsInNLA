@@ -1,0 +1,71 @@
+{
+  "reviewer": "/root/sf_ra_runtime_referee",
+  "at_utc": "2026-09-17T04:58:47.098395+00:00",
+  "scope": "Independent source review and authentication of existing local evidence for exactly seven files and fifteen frozen MI-13 contracts; no fresh compiler, Comparator, publication, or complete-target acceptance.",
+  "all_checks_passed": true,
+  "checks": 1827,
+  "resolved_external_bindings": 361,
+  "full_source_files_read": 7,
+  "full_source_lines_read": 507,
+  "implemented_frozen_contracts_in_scope": 15,
+  "total_frozen_contracts": 36,
+  "unreviewed_contracts": [
+    "NLA.MI13.operator_norm_semantics",
+    "NLA.MI13.full_svd",
+    "NLA.MI13.unitary_norm_invariance",
+    "NLA.MI13.unitary_singular_invariance",
+    "NLA.MI13.commutator_adjoint",
+    "NLA.MI13.commutator_conjugate_symmetry",
+    "NLA.MI13.commutator_spectral_maximum",
+    "NLA.MI13.positive_eigenvector_pair",
+    "NLA.MI13.eigenspace_functional_kernel",
+    "NLA.MI13.svd_corner_functional",
+    "NLA.MI13.cancelled_svd_bound",
+    "NLA.MI13.refined_commutator_bound",
+    "NLA.MI13.two_unitary_average",
+    "NLA.MI13.unitary_middle_bound",
+    "NLA.MI13.contraction_middle_bound",
+    "NLA.MI13.square_middle_bound",
+    "NLA.MI13.padding_product",
+    "NLA.MI13.padding_norms",
+    "NLA.MI13.padding_singular_values",
+    "NLA.MI13.canonical_rectangular_bound",
+    "NLA.MI13.sharpness_example"
+  ],
+  "origin_runs": {
+    "Definitions": 20,
+    "Numerical": 21,
+    "SingularSemantics": 21,
+    "GramBasis": 25,
+    "Frobenius": 24,
+    "ElementaryBounds": 26,
+    "NormalizedImages": 28
+  },
+  "successful_origin_modules": 7,
+  "standard_three_axiom_reports": 15,
+  "authenticated_reuse_trace_nodes": 24,
+  "prerequisite_review_inventories": {
+    "MI13-root-statements": {
+      "payloads": 3,
+      "external_bindings_reauthenticated": 58
+    },
+    "MI13-ra02-statements": {
+      "payloads": 4,
+      "external_bindings_reauthenticated": 0
+    },
+    "MI13-local20-statement-freeze": {
+      "payloads": 29,
+      "external_bindings_reauthenticated": 292
+    }
+  },
+  "required_style_followup": [
+    "Explain the representation bridge before change in Frobenius.lean:87, or replace it with a named API rewrite.",
+    "Explain the subtype/domRestrict bridge before change in NormalizedImages.lean:37, or replace it with a named API rewrite.",
+    "Remove the unused PiLp.toLp_apply at Frobenius.lean:53 and ite_mul at Frobenius.lean:99, then root locally checks the altered source and dependent outputs."
+  ],
+  "fresh_Lean_execution": false,
+  "GitHub_Comparator_claim": false,
+  "whole_problem_verified": false,
+  "SVD_module_in_scope": false,
+  "count_change": 0
+}

@@ -1,0 +1,1 @@
+Actual local46 rejects the proposed mul_le_mul_right₀ name. Use actual inspected le_of_mul_le_mul_right from pinned Mathlib Algebra/Order/GroupWithZero/Defs.lean lines250-251 with inequality and strict factor positivity. Exact frozen header unchanged; prior mistaken API proposal remains retained. Retry unrun at preparation.

@@ -1,0 +1,82 @@
+{
+  "prepared_by": "/root/mi13_statement_freeze",
+  "coordinator": "/root",
+  "prepared_at_utc": "2026-09-17T03:59:21.175270+00:00",
+  "status": "Exact reviewed and locally elaborated statements frozen; coordinator independent acceptance pending before proof assignment.",
+  "problem": "MI-13",
+  "canonical_README_path": "matrix-inequalities-and-norms/MI-13/README.md",
+  "source_draft": "/tmp/nla-lean-next-20260915/next-statements/MI-13",
+  "original_draft_manifest_sha256": "388c3556730a9fc132ac7cd2f72493b468f233d6e683dba74d69b9d40fd972c7",
+  "original_draft_unchanged": true,
+  "historical_status_scope": "The original manifest, original status-bearing metadata and original preparation script are retained under statement-history. Unchanged pre-code text in the mathematical files and source records describes their original stage; this file, README.md and current formalization.yaml describe the later handoff. The original manifest is not an inventory of the current workspace.",
+  "source_author_agent": "/root/mi04_independent_referee",
+  "actual_statement_contracts_elaborated": 36,
+  "intentional_Challenge_specification_holes": 36,
+  "definition_holes": 0,
+  "frozen_files": {
+    "Challenge.lean": "6fc6f34a1a559097379921a8237c1b23ea15c67ff7bf23b7ffd60ff3d107f088",
+    "NLA/MI13/Definitions.lean": "add61115ca2d92951bfc479c3de4dcbb9f2b850cac2ab793cf0dcf543e75622b",
+    "NUMERICAL_TARGETS.md": "8b543e9aee1dcc5ab410fb6e1a6b3d1c11d3a65f7018edd040e2a471875e547a",
+    "NUMERICAL-FIRST.json": "1676285e543d2cf9e1d9d01bc8767109b87c68fc86adc8ab91990a659b001f12",
+    "DEFINITION-AND-CONTRACT-PLAN.md": "13cd87b16fe256a231fd870ab5bc92d27552d382818d8ebbbdb1c6552752e90f",
+    "STATEMENT-HEADERS.json": "0d91672982b105e49b10f0b8f39043ff0db3f567cc42d753f0a73bc9e548cd1f",
+    "SourceCorrespondence.md": "893b44e5fe2e711c3b2a500096f6e350534ed9506af1c40bad131128759d21a9",
+    "REVIEW-PLAN.md": "51c70cd23029124c1c266a7d66eeab13c017a72ac35535a9b849d9747ec90fa0",
+    "comparator.json": "e5d4cfc356c77115d15693c5793c4000ed154c423b3d6825545a5ffbe37dd579",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+    "lakefile.toml": "743fd6d83bc63b597be0b8d4643737bff8dffc43e1685c169ddc6f5630d504b0",
+    "lake-manifest.json": "a41db6f9be699eddf36ff93a1ea98d17f30e55e58d2d8983c18deedf531ea89c",
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  "statement_review_manifest_bindings": {
+    "/tmp/nla-lean-next-20260915/reviews/MI13-root-statements/MANIFEST.json": "d13fd9a5bb8eb32a34fab8d65d585e68f3d7dafae8bde8b55ab6cbcd7b9c0a54",
+    "/tmp/nla-lean-next-20260915/reviews/MI13-ra02-statements/MANIFEST.json": "d6836fcabf01d3d0a0694a365ac3abcbcb72f90714f8ea724a0d1075f045683f"
+  },
+  "independent_runtime_audit": {
+    "directory": "/tmp/nla-lean-next-20260915/reviews/MI13-local20-statement-freeze",
+    "manifest_sha256": "eed2e7d5aee3f57ccfc5a318850863efbf4762878868c9eb9a740d03ab1106ec",
+    "audit_sha256": "1c31349c3f5a3073e4c37dce89367527f1759e459ae866682d7d458e7d337773",
+    "checks": 585,
+    "external_bindings": 292,
+    "authenticated_statement_review_bindings": 138
+  },
+  "actual_local_elaboration": {
+    "run": "development-20",
+    "platform": "macOS",
+    "assembly_sha256": "e1f54dff4502e507061927e27802cd51c001e6c26e3eb13e543accbb128039f6",
+    "receipt_sha256": "2c8e42dd19f2ae562bb8c7459071ec9ba9f15718a9bbdefc76fbffe09386becc",
+    "receipt": "statement-audit/local20/RECEIPT.json",
+    "max_compiler_processes": 1,
+    "threads": 1,
+    "memory_cap_mib": 4096,
+    "module_order": [
+      "NLA.MI13.Definitions",
+      "NLA.MI13.Challenge"
+    ],
+    "exit_codes": [
+      0,
+      0
+    ],
+    "transport": "Challenge.lean was copied byte-identically to NLA/MI13/Challenge.lean in the shared local environment.",
+    "project_level_Challenge_target_built": false,
+    "proof_or_numerical_certificate_executed": false,
+    "final_Linux_Comparator_kernel_sandbox_checked": false
+  },
+  "coordinator_acceptance_record": null,
+  "proof_implementation_authorized_by_this_record": false,
+  "rules": [
+    "The coordinator must independently check this sealed handoff before assigning proof implementation; add its acceptance as a separate record rather than rewriting this freeze.",
+    "Preserve exact Definitions, all 36 Challenge contracts, numerical targets and source meaning. Any mathematical boundary change reopens independent statement review.",
+    "After coordinator acceptance, add proof modules in the isolated workspace and preserve the separate Challenge and Solution environments; Solution must never import Challenge.",
+    "Develop and fix failures locally before pushing. At most one coordinated local Lean compiler process, one thread, and a 4096 MiB limit. This supersedes historical remote-only restrictions.",
+    "Reuse only pinned caches and exact source-matched successful outputs; preserve commands, hashes, logs and actual execution scope.",
+    "Use explicit kernel-mode LeanCert for the planned positive-half certificate and genuinely consume it in averaging. Keep other algebra symbolic; do not enlarge the computation or weaken the domain.",
+    "No custom axioms, native/unsafe evaluation, replaced definitions, skipped controls, weakened exports, silent pin or resource changes.",
+    "Later operational registration of Solution in the Lake configuration requires a recorded diff retaining dependency pins; it does not authorize a mathematical boundary change.",
+    "Require two nonauthor final proof reviews and fresh GitHub non-root Linux default-kernel, Comparator, sandbox and rejection controls for all 36 contracts; local statement elaboration is not that check.",
+    "Preserve original problem ID/path and all attribution. Credit George Stepaniants with Caltech Computing and Mathematical Sciences, with no email. Keep truthful metadata and no count increment until the full original target is accepted."
+  ],
+  "whole_problem_verified": false,
+  "published": false,
+  "count_change": 0
+}

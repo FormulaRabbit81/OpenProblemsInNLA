@@ -1,0 +1,4 @@
+{
+  "ordered_gram_basis": "theorem ordered_gram_basis {r : ℕ} (A : Square r) :\n    ∃ v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r), GramBasis A v := by",
+  "positive_image_extension": "theorem positive_image_extension {r : ℕ} (A : Square r)\n    (v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r))\n    (h : Orthonormal ℂ ((positiveSingularIndices A).domRestrict (normalizedImages A v))) :\n    ∃ u : OrthonormalBasis (Fin r) ℂ (EuclideanVector r),\n      ∀ i ∈ positiveSingularIndices A, u i = normalizedImages A v i := by"
+}

@@ -1,0 +1,38 @@
+Mathlib/Algebra/Polynomial/Roots.lean:171:theorem roots_mul {p q : R[X]} (hpq : p * q ≠ 0) : (p * q).roots = p.roots + q.roots := by
+Mathlib/Algebra/Polynomial/Roots.lean:178:  exact Multiset.le_iff_exists_add.mpr ⟨k.roots, roots_mul h⟩
+Mathlib/Algebra/Polynomial/Roots.lean:214:    simp only [roots_mul, *, Ne, mul_eq_zero, C_eq_zero, or_self_iff, not_false_iff, roots_C,
+Mathlib/Algebra/Polynomial/Roots.lean:269:    rw [List.prod_cons, roots_mul (mul_ne_zero (Ne.symm H.1) <| List.prod_ne_zero H.2), ←
+Mathlib/Algebra/Polynomial/Roots.lean:272:theorem roots_multiset_prod (m : Multiset R[X]) : (0 : R[X]) ∉ m → m.prod.roots = m.bind roots := by
+Mathlib/Algebra/Polynomial/Roots.lean:279:  simpa [Multiset.prod_eq_zero_iff, Multiset.bind_map] using roots_multiset_prod (m.map f)
+Mathlib/Algebra/Polynomial/Roots.lean:288:    · rw [pow_succ, roots_mul (mul_ne_zero (pow_ne_zero _ hp) hp), ihn, add_smul, one_smul]
+Mathlib/Algebra/Polynomial/Roots.lean:290:theorem roots_X_pow (n : ℕ) : (X ^ n : R[X]).roots = n • ({0} : Multiset R) := by
+Mathlib/Algebra/Polynomial/Roots.lean:295:  rw [roots_C_mul _ ha, roots_X_pow]
+Mathlib/Algebra/Polynomial/Roots.lean:308:theorem roots_multiset_prod_X_sub_C (s : Multiset R) : (s.map fun a => X - C a).prod.roots = s := by
+Mathlib/Algebra/Polynomial/Roots.lean:309:  rw [roots_multiset_prod, Multiset.bind_map]
+Mathlib/Algebra/Polynomial/Roots.lean:327:theorem card_roots_X_pow_sub_C {n : ℕ} (hn : 0 < n) (a : R) :
+Mathlib/Algebra/Polynomial/Roots.lean:451:  rw [nthRoots, h₁, roots_mul (h₁ ▸ h₂), roots_X_add_C, roots_X_sub_C]; rfl
+Mathlib/Algebra/Polynomial/Roots.lean:487:theorem aroots_mul [IsDomain T] [CommRing S] [IsDomain S] [Algebra T S]
+Mathlib/Algebra/Polynomial/Roots.lean:491:    rw [aroots_def, Polynomial.map_mul, roots_mul this]
+Mathlib/Algebra/Polynomial/Roots.lean:542:theorem aroots_X_pow [CommRing S] [IsDomain S] [Algebra T S] (n : ℕ) :
+Mathlib/Algebra/Polynomial/Roots.lean:549:  rw [aroots_C_mul _ ha, aroots_X_pow]
+Mathlib/Algebra/Polynomial/Roots.lean:836:    rw [roots_mul, roots_multiset_prod_X_sub_C] at he
+Mathlib/Data/List/Cycle.lean:873:      pairwise_append.2
+Mathlib/Data/List/Cycle.lean:884:    simp only [pairwise_append, pairwise_cons, mem_append, mem_singleton, List.not_mem_nil,
+Mathlib/Data/List/Sublists.lean:307:    simp only [sublists'_cons, pairwise_append, pairwise_map, mem_sublists', mem_map, exists_imp,
+Mathlib/Data/List/Nodup.lean:168:  simp only [Nodup, pairwise_append, disjoint_iff_ne]
+Mathlib/Data/List/GetD.lean:70:theorem getD_append (l l' : List α) (d : α) (n : ℕ) (h : n < l.length) :
+Mathlib/Data/List/GetD.lean:74:theorem getD_append_right (l l' : List α) (d : α) (n : ℕ) (h : l.length ≤ n) :
+Mathlib/Data/List/GetD.lean:117:    (l ++ l').getI n = l.getI n := getD_append _ _ _ _ h
+Mathlib/Data/List/GetD.lean:121:  getD_append_right _ _ _ _ h
+Mathlib/Data/List/ToFinsupp.lean:102:    rw [getD_append _ _ _ _ h, Finsupp.embDomain_of_notMem_range, add_zero]
+Mathlib/Data/List/ToFinsupp.lean:107:    rw [getD_append_right _ _ _ _ h, Nat.add_sub_cancel_left, getD_eq_default _ _ h, zero_add]
+Mathlib/Data/Multiset/Sort.lean:43:theorem coe_sort : sort l r = mergeSort l (r · ·) :=
+Mathlib/Data/Multiset/Sort.lean:73:  List.mergeSort_eq_self _ (sortedLT_range n).sortedLE.pairwise
+Mathlib/Data/List/Sort.lean:346:theorem mergeSort_eq_self {l : List α} : Pairwise r l → mergeSort l (r · ·) = l :=
+Mathlib/Data/Multiset/Fintype.lean:231:  · rw [← m.toEnumFinset.prod_coe_sort fun x ↦ f x.1 x.2]
+Mathlib/Algebra/Polynomial/RuleOfSigns.lean:392:  · simp [← h, roots_mul (ne_zero_of_mem_roots η_root), η_pos, ← Nat.succ.injEq]
+Mathlib/Algebra/Polynomial/Splits.lean:305:    rw [hm, roots_C_mul _ hf0, roots_multiset_prod_X_sub_C]
+Mathlib/Algebra/Polynomial/Splits.lean:387:  | mul x y _ _ hx hy => simp_all [roots_mul, show x * y ≠ 0 by aesop]
+Mathlib/Algebra/Polynomial/Splits.lean:414:theorem Splits.nextCoeff_eq_neg_sum_roots_mul_leadingCoeff (hf : Splits f) :
+Mathlib/Algebra/Polynomial/Splits.lean:423:  simp [hf.nextCoeff_eq_neg_sum_roots_mul_leadingCoeff, hm]
+Mathlib/Algebra/Polynomial/Splits.lean:431:    roots_mul (mul_ne_zero (X_sub_C_ne_zero _) hf₀), roots_X_sub_C,

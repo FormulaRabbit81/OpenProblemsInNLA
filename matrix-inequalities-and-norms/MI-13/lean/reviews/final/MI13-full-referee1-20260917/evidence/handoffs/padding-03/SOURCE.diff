@@ -1,0 +1,23 @@
+--- padding-02/Padding.lean
++++ padding-03/Padding.lean
+@@ -84,8 +84,10 @@
+   rw [← E.map_mul]
+   change (Matrix.reindex e e (D.conjTranspose * D)).charpoly = _
+   rw [Matrix.charpoly_reindex]
++  -- The individual block products are rectangular, so use the matrix zero
++  -- multiplication laws with separate row, inner, and column index types.
+   simp only [D, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_zero,
+-    Matrix.fromBlocks_multiply, zero_mul, mul_zero, zero_add, add_zero,
++    Matrix.fromBlocks_multiply, Matrix.zero_mul, Matrix.mul_zero, zero_add, add_zero,
+     Matrix.charpoly_fromBlocks_zero₁₂, Matrix.charpoly_zero, Fintype.card_fin]
+   exact mul_comm _ _
+ 
+@@ -104,7 +106,7 @@
+   change (Matrix.reindex e e (D.conjTranspose * D)).charpoly = _
+   rw [Matrix.charpoly_reindex]
+   simp only [D, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_zero,
+-    Matrix.fromBlocks_multiply, zero_mul, mul_zero, zero_add, add_zero,
++    Matrix.fromBlocks_multiply, Matrix.zero_mul, Matrix.mul_zero, zero_add, add_zero,
+     Matrix.charpoly_fromBlocks_zero₁₂, Matrix.charpoly_zero, Fintype.card_fin]
+ 
+ private theorem gram_sorted_roots {m n : ℕ} (A : Rect m n) :

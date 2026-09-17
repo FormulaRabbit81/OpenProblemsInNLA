@@ -1,0 +1,1 @@
+Actual local45 failed solely because mul_le_mul_right is monotonicity, not cancellation equivalence. Replace with pinned mul_le_mul_right₀ for positive factor. Exact frozen theorem header unchanged; failed source/receipt/log retained; retry unrun at preparation.

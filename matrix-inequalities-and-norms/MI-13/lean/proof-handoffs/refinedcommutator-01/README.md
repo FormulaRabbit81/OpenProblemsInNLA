@@ -1,0 +1,1 @@
+Top spectral eigenspace kernel plus cancelled SVD bound. No whole target claim. Local compilation unrun at preparation; depends on sealed agent candidates still being integrated. Exact frozen headers unchanged.

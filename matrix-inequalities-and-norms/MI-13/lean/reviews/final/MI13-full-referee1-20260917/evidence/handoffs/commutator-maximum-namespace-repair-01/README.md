@@ -1,0 +1,1 @@
+Local38 failed on unresolved eigenvalue namespace. Qualify Module.End.HasEigenvalue and apply the reported letI/let style cleanup. Exact theorem header unchanged. Retry unrun at preparation; no whole-problem acceptance.

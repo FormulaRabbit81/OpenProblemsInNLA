@@ -1,0 +1,20 @@
+[
+  {
+    "name": "NLA.MI13.frobenius_semantics",
+    "header": "theorem frobenius_semantics {m n : ℕ} (A : Rect m n) :\n    frobeniusNorm A ^ 2 = ∑ i, ∑ j, ‖A i j‖ ^ 2 ∧\n    frobeniusNorm A ^ 2 = (Matrix.trace (A.conjTranspose * A)).re ∧\n    0 ≤ frobeniusNorm A ∧ (frobeniusNorm A = 0 ↔ A = 0)",
+    "header_sha256": "d7c9cf041378dc3ad8ab54e47dde6f8c707f9c21806b6ddd2f1c5e3fce7489c3",
+    "line": 15
+  },
+  {
+    "name": "NLA.MI13.frobenius_linear_bounds",
+    "header": "theorem frobenius_linear_bounds {m n : ℕ} (A C : Rect m n) (z : ℂ) :\n    frobeniusNorm (z • A) = ‖z‖ * frobeniusNorm A ∧\n    frobeniusNorm (A + C) ≤ frobeniusNorm A + frobeniusNorm C",
+    "header_sha256": "c3f060994dbb5eca877014e1f9fd6d0574c0db3cde6060ecf40f51da9b76f86a",
+    "line": 21
+  },
+  {
+    "name": "NLA.MI13.hilbert_schmidt_semantics",
+    "header": "theorem hilbert_schmidt_semantics {r : ℕ} (X Y Z : Square r) (z : ℂ) :\n    Function.Injective (flatten (m := r) (n := r)) ∧\n    flatten (z • Y + Z) = z • flatten Y + flatten Z ∧\n    hsInner Y Z = Matrix.trace (Y.conjTranspose * Z) ∧\n    commutatorOperator X (flatten Y) = flatten (commutator X Y)",
+    "header_sha256": "c7ae75caa7d8c47f2ba6fac219f755f29bf8f8192b2c484367ea4a284ce27c18",
+    "line": 83
+  }
+]
