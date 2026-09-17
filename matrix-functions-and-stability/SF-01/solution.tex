@@ -1,0 +1,84 @@
+% SF-01 formalization note. The original shared mathematical manuscript is unchanged.
+% Compile twice with pdflatex; no external bibliography or figures are needed.
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,microtype}
+\usepackage[margin=27mm]{geometry}
+\usepackage{xurl,hyperref}
+\hypersetup{hidelinks,pdftitle={SF-01: Lean verification of Newton H-matrix preservation},pdfauthor={George Stepaniants}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}\setlength{\emergencystretch}{2em}
+\title{\textbf{SF-01: Lean verification\\of Newton H-matrix preservation}}
+\author{George Stepaniants\\[3pt]\small Department of Computing and Mathematical Sciences\\\small California Institute of Technology}
+\date{17 September 2026 (UTC)}
+\begin{document}\maketitle
+\textbf{Scope and attribution.} This note records formalization of the complete
+original SF-01 target. Matthew J. Colbrook, Department of Applied Mathematics
+and Theoretical Physics, University of Cambridge, retains mathematical
+authorship of the original resolution. His manuscript, \emph{Preservation of
+positive-diagonal H-matrices by scaled Newton and Halley square-root
+iterations}, Theorem~1, remains unchanged. Sidney Holden retains authorship
+and Apache-2.0 credit for the two unchanged IV-03 Lean files genuinely
+imported by this proof.
+
+\section*{Original target and exact formal theorem}
+For a real square matrix $Y$, its comparison matrix has entries
+\[
+ \mathcal M(Y)_{ii}=|Y_{ii}|,\qquad
+ \mathcal M(Y)_{ij}=-|Y_{ij}|\quad(i\ne j).
+\]
+It is a nonsingular H-matrix if $\mathcal M(Y)=sI-B$ for an entrywise
+nonnegative real matrix $B$ with $s>\rho(B)$, where $\rho$ is the full complex
+algebraic spectral radius.
+For every $n\ge1$ and every nonsingular real H-matrix
+$A\in\mathbb R^{n\times n}$ with strictly positive diagonal, define
+\[
+ X_0=A,\qquad X_{k+1}=\tfrac12(X_k+X_k^{-1}A)\quad(k\ge0).
+\]
+The Lean theorem \texttt{NLA.SF01.canonical\_newton\_preservation} proves
+that every $X_k$ is invertible and a real nonsingular H-matrix with strictly
+positive diagonal. Every positive dimension and every iteration is included.
+No symmetry, normality, entrywise positivity, finite iteration bound or
+assumed rational representation is imposed.
+
+The proof establishes both directions between the original spectral condition
+and positive diagonal-dominance weights. Actual shifted resolvent domination
+and block inverse identities produce a finite rational invariant for every
+Newton step. Empty pole families, repeated poles and zero weights are included.
+The manuscript's scaled or affine initializations and Halley extension are
+outside this formal claim; they are not needed for the original target.
+
+\section*{Executed verification and reproduction}
+The immutable proof revision is
+\begin{center}\small\texttt{3312b0795873cfecade03fa421a5433651d47674}.\end{center}
+Actual non-root Linux run
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175258802/job/105055517720}{35175258802},
+job 105055517720, checked all 271 submitted inputs and all 24 independent
+Comparator contracts. Default-kernel replay, Comparator, transitive axiom
+checks and the required rejection, regression and sandbox controls passed.
+All exports use only \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound}. The deliberate Challenge placeholders are specifications
+and are never imported by the implementation.
+
+Lean 4.33.1, Mathlib revision
+\nolinkurl{0df444a360eaa60ab8c11dca51a86af692955474}, and LeanCert revision
+\nolinkurl{621a43d7cf21f87872392a01e874f2f1dbddc926} are pinned.
+The sole interval certificate proves $0<1/2$ with LeanCert kernel trust and
+is consumed by initialization and coefficient halving. All variable matrix,
+spectral and iteration arguments are symbolic; no interval subdivision or
+numerical sampling is used.
+
+With the pinned dependencies, run \texttt{lake build} in
+\begin{center}\small\nolinkurl{matrix-functions-and-stability/SF-01/lean}.\end{center}
+The project README gives the full shared Linux bootstrap, self-test and
+verification commands, source correspondence, logs and axiom report.
+The final Solution import closure has 31 files; all 37 selected sources,
+including six earlier export probes, are retained and distinguished.
+
+Two complete nonauthor source reviews and a separate independent runtime
+evidence audit are retained with explicit reviewer roles. Substantial OpenAI
+Codex assistance is disclosed. Neither these agent reviews nor the runtime
+checks assert official Tau Ceti endorsement, human peer review or checker
+infallibility. Local serial macOS development is a distinct execution from
+the Linux run above. Auditing a recorded run is not another execution.
+Later publication-commit and upstream PR checks are recorded separately.
+\end{document}

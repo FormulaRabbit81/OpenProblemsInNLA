@@ -7,20 +7,8 @@
 **Difficulty:** challenging  
 **Importance:** interesting to specialist  
 **Rating rationale:** Challenging because convergence does not control comparison-matrix structure at each iterate; specialist impact concerns square-root algorithms for H-matrices.  
-**Status:** Lean verified  
-**Last checked:** 2026-09-17  
-
-## Lean proof and verification evidence
-
-**The complete original Newton target is Lean verified, 2026-09-17 (UTC).** The [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/3312b0795873cfecade03fa421a5433651d47674/matrix-functions-and-stability/SF-01/lean/Solution.lean) at `3312b0795873` passed [actual non-root Linux run 35175258802](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175258802/job/105055517720). The [retained logs and source hashes](lean/verification/linux-35175258802/README.md) and [independent runtime review](lean/reviews/canonical-runtime/REVIEW.md) cover all 271 submitted inputs, all 24 Comparator targets, default-kernel replay, standard transitive axioms and the actual rejection/isolation controls.
-
-`NLA.SF01.canonical_newton_preservation` proves that the original exact recurrence, initialized at $`X_0=A`$, is defined and preserves the nonsingular real H-matrix property and strictly positive diagonal for every positive dimension and every iteration. The comparison matrix and full complex algebraic spectral radius match the original definitions. Spectral-to-weight and weight-to-spectral bridges are proved; no symmetry, normality, positive-entry, bounded-iteration or supplied-representation premise is added. See the [independent contracts](lean/Challenge.lean) and [source correspondence](lean/SourceCorrespondence.md). The manuscript's scaled/affine initializations and Halley extensions are outside this formal claim.
-
-Formalization and verification: **George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. **Matthew J. Colbrook**, Department of Applied Mathematics and Theoretical Physics, University of Cambridge, retains original mathematical authorship. **Sidney Holden** retains authorship and Apache-2.0 credit for two unchanged, actually imported [IV-03 source files](lean/REUSE-IV03.md). AI assistance and scoped independent agent reviews are disclosed; no official Tau Ceti or human endorsement is claimed.
-
-The project pins Lean 4.33.1, [Mathlib](https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474) and [LeanCert](https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926). A consumed kernel-mode LeanCert certificate proves $`0< 1/2`$; the dimension, matrix and iteration arguments are symbolic, with no interval subdivision. All 24 exported theorems use only `propext`, `Classical.choice` and `Quot.sound`. Run `lake build` in `matrix-functions-and-stability/SF-01/lean`; the [project README](lean/README.md) gives the complete Linux checker commands and separates the actual local macOS development from the GitHub execution. Later publication-commit and upstream PR runs are separate checks.
-
-The [formalization note](solution.pdf) and [TeX source](solution.tex) record the scope and authorship. The original mathematical resolution remains unchanged below.
+**Status:** Solved  
+**Last checked:** 2026-09-11  
 
 <!-- colbrook-matrix-functions -->
 ## Resolution — 2026-09-11

@@ -1,0 +1,65 @@
+[
+  {
+    "name": "format",
+    "argv": [
+      "python3",
+      "tools/format_math.py",
+      "--check",
+      "SF-01"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "render",
+    "argv": [
+      "python3",
+      "tools/render_problems.py",
+      "SF-01"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "ids",
+    "argv": [
+      "python3",
+      "tools/validate_problem_ids.py",
+      "--base-ref",
+      "origin/main"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "catalog",
+    "argv": [
+      "python3",
+      "tools/update_catalog.py",
+      "--base-ref",
+      "origin/main"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "tests",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_problem_ids.py",
+      "-v"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "manifest",
+    "argv": [
+      "/Users/georgestepaniants/miniforge3/bin/python",
+      "tools/lean/validate_manifest.py",
+      "matrix-functions-and-stability/SF-01/lean"
+    ],
+    "exit_code": 0
+  }
+]

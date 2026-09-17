@@ -34,7 +34,7 @@ iterates},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}SF-01}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-11}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-17}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -51,13 +51,75 @@ of real H-matrix structure by Newton square-root iterates\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to specialist\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
 \textbf{Rating rationale:} Challenging because convergence does not
 control comparison-matrix structure at each iterate; specialist impact
 concerns square-root algorithms for H-matrices.
+
+\subsection{Lean proof and verification
+evidence}\label{lean-proof-and-verification-evidence}
+
+\textbf{The complete original Newton target is Lean verified, 2026-09-17
+(UTC).} The
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/3312b0795873cfecade03fa421a5433651d47674/matrix-functions-and-stability/SF-01/lean/Solution.lean}{immutable
+proof} at \textit{3312b0795873} passed
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175258802/job/105055517720}{actual
+non-root Linux run 35175258802}. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/lean/verification/linux-35175258802/README.md}{retained
+logs and source hashes} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/lean/reviews/canonical-runtime/REVIEW.md}{independent
+runtime review} cover all 271 submitted inputs, all 24 Comparator
+targets, default-kernel replay, standard transitive axioms and the
+actual rejection/isolation controls.
+
+\textit{NLA.SF01.canonical\_newton\_preservation} proves that the
+original exact recurrence, initialized at \(X_0=A\), is defined and
+preserves the nonsingular real H-matrix property and strictly positive
+diagonal for every positive dimension and every iteration. The
+comparison matrix and full complex algebraic spectral radius match the
+original definitions. Spectral-to-weight and weight-to-spectral bridges
+are proved; no symmetry, normality, positive-entry, bounded-iteration or
+supplied-representation premise is added. See the
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/lean/Challenge.lean}{independent
+contracts} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/lean/SourceCorrespondence.md}{source
+correspondence}. The manuscript's scaled/affine initializations and
+Halley extensions are outside this formal claim.
+
+Formalization and verification: \textbf{George Stepaniants}, Department
+of Computing and Mathematical Sciences, California Institute of
+Technology. \textbf{Matthew J. Colbrook}, Department of Applied
+Mathematics and Theoretical Physics, University of Cambridge, retains
+original mathematical authorship. \textbf{Sidney Holden} retains
+authorship and Apache-2.0 credit for two unchanged, actually imported
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/lean/REUSE-IV03.md}{IV-03
+source files}. AI assistance and scoped independent agent reviews are
+disclosed; no official Tau Ceti or human endorsement is claimed.
+
+The project pins Lean 4.33.1,
+\href{https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474}{Mathlib}
+and
+\href{https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926}{LeanCert}.
+A consumed kernel-mode LeanCert certificate proves \(0< 1/2\); the
+dimension, matrix and iteration arguments are symbolic, with no interval
+subdivision. All 24 exported theorems use only \textit{propext},
+\textit{Classical.choice} and \textit{Quot.sound}. Run
+\textit{lake build} in
+\textit{matrix-functions-and-stability/SF-01/lean}; the
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/lean/README.md}{project
+README} gives the complete Linux checker commands and separates the
+actual local macOS development from the GitHub execution. Later
+publication-commit and upstream PR runs are separate checks.
+
+The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/solution.pdf}{formalization
+note} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/SF-01/solution.tex}{TeX
+source} record the scope and authorship. The original mathematical
+resolution remains unchanged below.
 
 \subsection{Resolution --- 2026-09-11}\label{resolution-2026-09-11}
 
@@ -98,9 +160,7 @@ Let \(n\ge1\) and let \(A\in\mathbb R^{n\times n}\) be a nonsingular
 H-matrix with \(a_{ii}>0\) for every \(i\). Consider the
 exact-arithmetic recurrence
 
-\[
-X_0=A,\qquad X_{k+1}=\tfrac12(X_k+X_k^{-1}A),\qquad k\ge0.
-\]
+\[X_0=A,\qquad X_{k+1}=\tfrac12(X_k+X_k^{-1}A),\qquad k\ge0.\]
 
 Is every \(X_k\) a nonsingular H-matrix with strictly positive diagonal?
 The known existence of these iterates and their convergence to the

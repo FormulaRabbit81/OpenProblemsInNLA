@@ -2,7 +2,7 @@
 
 **113 problems with open targets:** 42 open and 71 partially resolved. **104 other retained entries**, excluded from the open count.
 
-**Resolution evidence:** 59 solved (published or independently audited); 45 solved with Lean verification.
+**Resolution evidence:** 58 solved (published or independently audited); 46 solved with Lean verification.
 
 Each entry records its own literature-check date. Literature checks are bounded; ratings are editorial. “Impact” uses the canonical `Importance` field.
 
@@ -115,7 +115,7 @@ Retained entries outside the open count:
 | [MF-21](matrix-functions-and-stability/MF-21/README.md) | The uniform expansion threshold for Toeplitz symbols with higher-order zeros | **✅ SOLVED** | challenging | interesting to specialist | [PDF](matrix-functions-and-stability/MF-21/problem.pdf) · [TeX](matrix-functions-and-stability/MF-21/problem.tex) |
 | [MF-22](matrix-functions-and-stability/MF-22/README.md) | Polynomial conditioning of the cubic C1 spline Schrödinger Toeplitz family | **🏆 LEAN VERIFIED** | hard | interesting to specialist | [PDF](matrix-functions-and-stability/MF-22/problem.pdf) · [TeX](matrix-functions-and-stability/MF-22/problem.tex) |
 | [MF-24](matrix-functions-and-stability/MF-24/README.md) | A dimension-independent polynomial norm bound from super-identical pseudospectra | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-24/problem.pdf) · [TeX](matrix-functions-and-stability/MF-24/problem.tex) |
-| [SF-01](matrix-functions-and-stability/SF-01/README.md) | Preservation of real H-matrix structure by Newton square-root iterates | **✅ SOLVED** | challenging | interesting to specialist | [PDF](matrix-functions-and-stability/SF-01/problem.pdf) · [TeX](matrix-functions-and-stability/SF-01/problem.tex) |
+| [SF-01](matrix-functions-and-stability/SF-01/README.md) | Preservation of real H-matrix structure by Newton square-root iterates | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](matrix-functions-and-stability/SF-01/problem.pdf) · [TeX](matrix-functions-and-stability/SF-01/problem.tex) |
 
 
 ## [Randomized and low-rank approximation](randomized-and-low-rank-approximation/README.md)
