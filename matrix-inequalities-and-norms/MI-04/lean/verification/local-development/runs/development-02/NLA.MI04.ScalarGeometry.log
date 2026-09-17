@@ -1,0 +1,28 @@
+NLA/MI04/ScalarGeometry.lean:28:14: warning: This simp argument is unused:
+  mul_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Complex.normSq_apply, Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im,
+    Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero, zero_add] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/MI04/ScalarGeometry.lean:28:34: warning: This simp argument is unused:
+  zero_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Complex.normSq_apply, Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im,
+    Complex.ofReal_re, Complex.ofReal_im, zero_mul, mul_zero, sub_zero] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/MI04/ScalarGeometry.lean:48:2: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+NLA/MI04/ScalarGeometry.lean:61:18: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+'NLA.MI04.weighted_square_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.MI04.collinear_values_affine' depends on axioms: [propext, Classical.choice, Quot.sound]

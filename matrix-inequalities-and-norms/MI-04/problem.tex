@@ -34,7 +34,7 @@ matrices},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}MI-04}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-11}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-16}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -52,7 +52,7 @@ matrices\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to specialist\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
@@ -87,6 +87,58 @@ draft was AI-assisted; this is independent agent verification, not
 external human peer review or formal certification.
 \href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/colbrook-matrix-2026-09-11/README.md}{Submission
 record}.
+
+\subsection{Lean proof and verification evidence -
+2026-09-16}\label{lean-proof-and-verification-evidence---2026-09-16}
+
+\textbf{The full original implication is Lean verified.} The
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/63340ef17139606dce03c4d9000288129b773157/matrix-inequalities-and-norms/MI-04/lean/Solution.lean}{immutable
+proof} at revision \textit{63340ef17139} passed
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35150473054/job/104977317684}{Linux
+run 35150473054}. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-inequalities-and-norms/MI-04/lean/verification/linux-2026-09-16/README.md}{retained
+evidence} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-inequalities-and-norms/MI-04/lean/reviews/canonical-runtime/REVIEW.md}{independent
+runtime audit} cover all 233 submitted inputs, all 21 exported
+statements, default-kernel replay, Comparator, permitted transitive
+axioms and actual rejection/isolation controls.
+
+Declaration: \textit{universal\_positive\_block\_essentially\_hermitian}
+in namespace \textit{NLA.MI04}.
+
+The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-inequalities-and-norms/MI-04/lean/NLA/MI04/Conclusion.lean}{main
+Lean theorem} assumes the stated operator-norm bound for every genuine
+positive-semidefinite block completion and constructs an actual
+Hermitian matrix and complex affine coefficients. Every positive finite
+complex dimension is included, with singular completions, scalar and
+zero matrices and repeated spectral values. The manuscript's stronger
+converse and four-way equivalence are outside the formal claim. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-inequalities-and-norms/MI-04/lean/Challenge.lean}{frozen
+definitions and 21 targets} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-inequalities-and-norms/MI-04/lean/SourceCorrespondence.md}{source
+correspondence} record this comparison.
+
+Formalization and verification submission: \textbf{George Stepaniants},
+Department of Computing and Mathematical Sciences, California Institute
+of Technology. \textbf{Matthew J. Colbrook}, Department of Applied
+Mathematics and Theoretical Physics, University of Cambridge, retains
+mathematical proof credit. Substantial OpenAI Codex assistance and
+scoped independent AI-agent reviews are disclosed; no human peer-review
+or new priority claim is made.
+
+The project pins Lean 4.33.1,
+\href{https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474}{Mathlib}
+and
+\href{https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926}{LeanCert}.
+Its consumed LeanCert certificate proves \(0<1/4\) in kernel mode
+without interval subdivision. Every exported result has only
+\textit{propext}, \textit{Classical.choice} and \textit{Quot.sound} as
+transitive axioms. Run \textit{lake build} in
+\textit{matrix-inequalities-and-norms/MI-04/lean}; the
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-inequalities-and-norms/MI-04/lean/README.md}{project
+instructions} give the full non-root Linux check. Later publication and
+upstream checks are separate from the immutable proof run.
 
 \subsection{Problem statement}\label{problem-statement}
 

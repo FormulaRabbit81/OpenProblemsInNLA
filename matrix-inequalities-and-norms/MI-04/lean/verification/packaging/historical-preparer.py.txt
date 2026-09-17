@@ -1,0 +1,459 @@
+"""Prepare MI-04 only after a future root-authenticated development pass.
+
+This file is a preparation script, not evidence that any run has succeeded.
+It invokes no Lean, Lake, shell, Git, network, CI, publication or status update.
+It writes only a new private package; the author tree and draft remain immutable.
+
+Required MI04-DEVELOPMENT-ACCEPTANCE.json keys follow the MF22 preparer:
+  complete_development_graph_passed: true
+  frozen_export_count: 21
+  canonical_verification_completed: false
+  accepted_source_sha256: all 21 author-relative Lean source paths/hashes
+  observed_axioms: exactly the 21 fully qualified Comparator names and measured lists
+  run_id, commit, component_summary
+Additionally root_audit_sha256 binds development-runs/<run_id>/ROOT-AUDIT.json.
+The actual receipt, root audit, complete-module log, all source pre/post hashes,
+21 final-entrypoint axiom prints and dependency revisions are checked again here.
+An overall shared workflow may have failed elsewhere; MI-04's full component
+must have passed. Canonical verification stays pending regardless.
+
+Run only after coordinator review and actual success, using the existing Python
+environment with PyYAML/jsonschema. This script must not be imported as a test.
+"""
+
+from pathlib import Path, PurePosixPath
+import datetime
+import hashlib
+import json
+import re
+import shutil
+
+import jsonschema
+import yaml
+
+
+B = Path('/tmp/nla-lean-next-20260915')
+S = B / 'inequalities/MI-04'
+D = S / 'publication-draft'
+P = B / 'MI04-canonical-package'
+STAGING = B / 'MI04-canonical-package.preparing'
+PERMITTED = {'propext', 'Classical.choice', 'Quot.sound'}
+FREEZE_SHA = 'c5ca666f10da44ad1c47a81b0fe81898abf3a7a9ea789e90ec9dfbc8c8cf4c6c'
+SCHEMA_SHA = '25ff6b25ca4511635aff4443cf20480c15e59dddf19591c730950b442ea54fce'
+DRAFT_SHA = 'a906db5e4b88f073eee660eb88f623f4357311cae1d0d23827b4a5972918f66f'
+REVIEWED_CLOSURE_SHA = 'b88418d07385ad40f2cbb861baf0608102ab75889b3b6bd78b529e726928bacf'
+REQUIRED_REVIEWS = {
+    'MI04-matrix-functions-complete/REVIEW.md':
+        '97bd470acb88150818382a58147ee3ce5a0dd0ca5b9688d6c2370a397ff14bb3',
+    'MI04-elimination-full-source-referee/REVIEW.md':
+        '3df5650ab9182568508130624d24c290a9e720f077eabf8af36b5a0a83cd5f64',
+    'MI04-matrix-functions-repair-35048156414/REVIEW.md':
+        '819a232e82ba52ab70553f9d9dc9ce28c50eddd71e5be65ebf6155f046ab9d4f',
+    'MI04-elimination-full-source-referee/repair-35048156414-addendum/REVIEW.md':
+        '108b4e0bb8341e3729ed8ed4f7939e14b76a43bf062d79843eeceba71f97897a',
+    'MI04-matrix-functions-repair-35050121652/REVIEW.md':
+        '831026c8c01e70f4c124d6c37e2cb826ca13dadaf705a53eaec552d18b012267',
+    'MI04-elimination-full-source-referee/repair-35050121652-addendum/REVIEW.md':
+        'd1ac0c4c1ead0f5c5d019cb465deb6aa2b0b0991035187b785e78b54f50e9903',
+}
+
+
+def require(condition, message):
+    if not condition:
+        raise RuntimeError(message)
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def read_json(path):
+    return json.loads(Path(path).read_text())
+
+
+def safe_child(root, relative):
+    rel = PurePosixPath(relative)
+    require(not rel.is_absolute() and '..' not in rel.parts, f'Unsafe path: {relative}')
+    path = Path(root) / relative
+    require(not path.is_symlink(), f'Symlink is not a retained input: {path}')
+    return path
+
+
+def checked_files(root, entries):
+    require(isinstance(entries, dict), 'Expected a path/hash map')
+    for rel, digest in entries.items():
+        require(re.fullmatch(r'[0-9a-f]{64}', digest) is not None, f'Invalid digest: {rel}')
+        require(sha(safe_child(root, rel)) == digest, f'Hash mismatch: {root}/{rel}')
+
+
+def declaration(text, short_name):
+    pattern = re.compile(
+        r'^\s*(?:theorem|lemma)\s+' + re.escape(short_name) + r'\b[\s\S]*?\s:=',
+        re.MULTILINE,
+    )
+    matches = list(pattern.finditer(text))
+    require(len(matches) == 1, f'Expected one declaration of {short_name}')
+    match = matches[0]
+    header = match.group(0).strip()
+    offset = match.start() + len(match.group(0)) - len(match.group(0).lstrip())
+    return header, text.count('\n', 0, offset) + 1
+
+
+def cosmetic_header(text):
+    # Matches the two independent source reviews: lemma/theorem spelling and
+    # intentionally unused explicit hypothesis names do not change the type.
+    text = re.sub(r'^(theorem|lemma)\s+', '', text)
+    text = re.sub(r'\b_(h[A-Za-z0-9_]*)\b', r'\1', text)
+    return ''.join(text.split())
+
+
+def main():
+    acceptance_path = B / 'MI04-DEVELOPMENT-ACCEPTANCE.json'
+    acceptance = read_json(acceptance_path)  # Missing future receipt must fail closed.
+    require(acceptance['complete_development_graph_passed'] is True, 'No complete MI04 pass')
+    require(acceptance['frozen_export_count'] == 21, 'Wrong export count')
+    require(acceptance['canonical_verification_completed'] is False, 'Wrong verification phase')
+    require(not P.exists() and not STAGING.exists(), 'Destination/staging already exists')
+    accepted = acceptance['accepted_source_sha256']
+    expected_paths = {str(p.relative_to(S)) for p in (S / 'NLA/MI04').glob('*.lean')}
+    expected_paths.add('Solution.lean')
+    require(len(accepted) == 21 and set(accepted) == expected_paths, 'Incomplete source closure')
+    checked_files(S, accepted)
+    reviewed_closure_path = S / 'proof-handoffs/repair-35050121652/FINAL-CLOSURE.json'
+    require(sha(reviewed_closure_path) == REVIEWED_CLOSURE_SHA, 'Reviewed closure changed')
+    require(read_json(reviewed_closure_path)['all_active_sources'] == accepted,
+            'New proof bytes require source-review reconciliation and a preparer update')
+
+    require(sha(S / 'STATEMENT-FREEZE.json') == FREEZE_SHA, 'Statement freeze changed')
+    freeze = read_json(S / 'STATEMENT-FREEZE.json')
+    frozen = freeze['frozen_files_sha256']
+    require(len(frozen) == 10, 'Wrong frozen boundary size')
+    checked_files(S, frozen)
+    require(sha(D / 'DRAFT-MANIFEST.json') == DRAFT_SHA, 'Historical draft manifest changed')
+    draft = read_json(D / 'DRAFT-MANIFEST.json')
+    checked_files(D, draft['files'])
+    checked_files(S, draft['active_metadata'])
+    require(draft['frozen10_boundary'] == frozen, 'Draft/freeze boundary differs')
+    # This historical map intentionally predates later proof repairs. Compare
+    # its paths, preserve its old hashes, and record the actual differences.
+    require(set(draft['all21_held_sources']) == set(accepted), 'Historical source paths differ')
+    draft_delta = {
+        rel: {'draft_sha256': digest, 'accepted_sha256': accepted[rel]}
+        for rel, digest in draft['all21_held_sources'].items() if digest != accepted[rel]
+    }
+
+    comparator = read_json(S / 'comparator.json')
+    names = comparator['theorem_names']
+    require(len(names) == len(set(names)) == 21, 'Comparator target mismatch')
+    require(comparator['definition_names'] == [], 'Definition holes are forbidden')
+    require(set(comparator['permitted_axioms']) == PERMITTED, 'Axiom policy changed')
+    observed = acceptance['observed_axioms']
+    require(set(observed) == set(names), 'Axiom receipt does not cover exact target names')
+    for name, axioms in observed.items():
+        require(isinstance(axioms, list) and len(axioms) == len(set(axioms)), f'Invalid axioms: {name}')
+        require(set(axioms) <= PERMITTED, f'Unpermitted axiom: {name}')
+
+    run_id, commit = acceptance['run_id'], acceptance['commit']
+    require(str(run_id).isdigit(), 'Invalid run ID')
+    require(re.fullmatch(r'[0-9a-f]{40}', commit) is not None, 'Commit must be immutable')
+    run = B / 'development-runs' / str(run_id)
+    audit_path = run / 'ROOT-AUDIT.json'
+    require(sha(audit_path) == acceptance['root_audit_sha256'], 'Root audit is not bound')
+    audit = read_json(audit_path)
+    require(audit['reviewer'] == '/root', 'Coordinator authentication missing')
+    require(str(audit['run']) == str(run_id) and audit['actual_checkout'] == commit,
+            'Root audit identifies a different run/commit')
+    require(audit['all_source_hashes_unchanged_during_commands'] is True, 'Unstable run inputs')
+    artifacts = run / 'artifacts/lean-development-statements'
+    receipt_path = artifacts / 'receipt.json'
+    receipt = read_json(receipt_path)
+    require(str(receipt['run_id']) == str(run_id) and receipt['repository_commit'] == commit,
+            'Runtime receipt identifies a different run/commit')
+    require(receipt['uid'] != 0 and receipt['platform'].startswith('Linux-'), 'Wrong execution platform')
+    commands = [c for c in receipt['commands'] if c['argv'] == ['lake', 'build', 'NLA.MI04.Complete']]
+    require(len(commands) == 1 and commands[0]['exit_code'] == 0, 'Complete MI04 build did not pass')
+    command = commands[0]
+    log_path = safe_child(artifacts, command['log'])
+    require(sha(log_path) == command['sha256'], 'Complete build log does not match receipt')
+    require(any(c['argv'] == command['argv'] and c['exit_code'] == 0 and
+                c['sha256'] == command['sha256'] for c in audit['commands']),
+            'Root audit does not authenticate the complete build command')
+    development_map = {
+        rel: ('NLA/MI04/Complete.lean' if rel == 'Solution.lean' else rel) for rel in accepted
+    }
+    for author_rel, development_rel in development_map.items():
+        digest = accepted[author_rel]
+        require(receipt['source_sha256'][development_rel] == digest, f'Run input: {author_rel}')
+        require(command['source_sha256_after'][development_rel] == digest, f'Run output: {author_rel}')
+    for rel, digest in {'NLA/MI04/Definitions.lean': frozen['NLA/MI04/Definitions.lean'],
+                        'Challenges/MI04.lean': frozen['Challenge.lean']}.items():
+        require(receipt['source_sha256'][rel] == digest, f'Runtime frozen input: {rel}')
+        require(command['source_sha256_after'][rel] == digest, f'Runtime frozen output: {rel}')
+    lake_manifest = read_json(S / 'lake-manifest.json')
+    for package in lake_manifest['packages']:
+        require(receipt['dependency_commits'][package['name']] == package['rev'],
+                f'Dependency revision changed: {package["name"]}')
+        require(audit['dependencies'][package['name']] == package['rev'],
+                f'Root dependency audit changed: {package["name"]}')
+
+    log = re.sub(r'\x1b\[[0-9;]*m', '', log_path.read_text())
+    require(not re.search(r'^error:', log, re.MULTILINE), 'Complete log has errors')
+    prints = re.findall(
+        r"info: NLA/MI04/Complete\.lean:\d+:\d+: '([^']+)' depends on axioms: \[([^\]]*)\]", log)
+    require(len(prints) == 21 and {name for name, _ in prints} == set(names),
+            'Expected 21 measured final-entrypoint exports')
+    for name, raw in prints:
+        measured = [] if not raw.strip() else [a.strip() for a in raw.split(',')]
+        require(set(measured) == set(observed[name]), f'Axiom measurement differs: {name}')
+
+    # Recompute declaration locations from accepted bytes, not historical draft
+    # line numbers. Header comparison is a source check, never Comparator evidence.
+    texts = {rel: (S / rel).read_text() for rel in accepted}
+    challenge_text = (S / 'Challenge.lean').read_text()
+    locations = []
+    for name in names:
+        short = name.rsplit('.', 1)[1]
+        hits = [rel for rel, text in texts.items() if re.search(
+            r'^\s*(?:theorem|lemma)\s+' + re.escape(short) + r'\b', text, re.MULTILINE)]
+        require(len(hits) == 1, f'Expected one implementation location: {name}')
+        rel = hits[0]
+        header, line = declaration(texts[rel], short)
+        frozen_header, _ = declaration(challenge_text, short)
+        require(cosmetic_header(header) == cosmetic_header(frozen_header), f'Header changed: {name}')
+        locations.append({'name': short, 'declaration': name, 'path': rel, 'line': line,
+                          'file_sha256': accepted[rel],
+                          'header_sha256': hashlib.sha256(header.encode()).hexdigest(),
+                          'frozen_header_sha256': hashlib.sha256(frozen_header.encode()).hexdigest(),
+                          'source_header_matches_cosmetic_normalization': True})
+        require('#assert_trust kernel ' + short in texts['Solution.lean'], f'Missing trust check: {name}')
+    require('import Challenge' not in texts['Solution.lean'], 'Solution imports Challenge')
+
+    schema_path = D / 'evidence/v0.4.schema.json'
+    require(sha(schema_path) == SCHEMA_SHA, 'Schema changed')
+    schema = read_json(schema_path)
+    metadata = yaml.safe_load((D / 'lean/formalization.yaml').read_text())
+    jsonschema.Draft7Validator(schema).validate(metadata)
+    require(len(metadata['status']['main_results']) == 21 and
+            {r['declaration'] for r in metadata['status']['main_results']} == set(names),
+            'Draft metadata declaration map differs')
+    for rel, digest in REQUIRED_REVIEWS.items():
+        require(sha(B / 'reviews' / rel) == digest, f'Independent review changed: {rel}')
+    peer_repair = B / 'reviews/MI04-elimination-full-source-referee/repair-35048156414-addendum'
+    require(read_json(peer_repair / 'CHECKS.json')['repair_manifest_sha256'] ==
+            '0a55ca2654eb1faeb206e55e79c52a99c0cf81db6fd5d2b5326a38117848168f',
+            'Second independent repair review is missing')
+    latest_peer_repair = B / 'reviews/MI04-elimination-full-source-referee/repair-35050121652-addendum'
+    latest_peer_checks = read_json(latest_peer_repair / 'CHECKS.json')
+    require(latest_peer_checks['repair_manifest_sha256'] ==
+            'da7f62612efea9c6b24d7f9167de85418fdb2477822284d4ee5c142cf2f546e6' and
+            latest_peer_checks['final_closure_sha256'] == REVIEWED_CLOSURE_SHA,
+            'Latest independent repair review does not bind the reviewed source')
+
+    old_lake = (S / 'lakefile.toml').read_bytes()
+    require(old_lake.count(b'defaultTargets = ["Challenge"]') == 1, 'Unexpected Lake default')
+    new_lake = old_lake.replace(b'defaultTargets = ["Challenge"]', b'defaultTargets = ["Solution"]')
+    require(b'name = "Solution"' in old_lake, 'Solution library is missing')
+
+    # All prerequisites above are read-only. No package is made on an absent,
+    # partial, stale or unauthenticated acceptance record.
+    STAGING.mkdir()
+    retained_paths = []
+
+    def copy(src, relative):
+        src = Path(src)
+        dst = safe_child(STAGING, str(relative))
+        require(not src.is_symlink() and src.is_file(), f'Invalid copy input: {src}')
+        require(not dst.exists(), f'Duplicate retained destination: {relative}')
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, dst)
+        require(src.read_bytes() == dst.read_bytes(), f'Copy changed bytes: {src}')
+        retained_paths.append({'source': str(src), 'retained_path': str(relative), 'sha256': sha(dst)})
+
+    def archive(src, relative):
+        src = Path(src)
+        require(src.is_dir(), f'Missing history directory: {src}')
+        for f in sorted(src.rglob('*')):
+            require(not f.is_symlink(), f'History contains a symlink: {f}')
+            if f.is_file():
+                suffix = '.txt' if f.suffix == '.lean' else ''
+                copy(f, Path(relative) / (str(f.relative_to(src)) + suffix))
+
+    def write_json(relative, value):
+        dst = safe_child(STAGING, relative)
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        dst.write_text(json.dumps(value, indent=2, ensure_ascii=False) + '\n')
+
+    for rel in accepted:
+        copy(S / rel, rel)
+    for rel in set(frozen) | {'STATEMENT-FREEZE.json', 'IMPLEMENTATION-AUTHORIZATION.json'}:
+        # The amended active Lakefile is created separately below. Its original
+        # bytes belong only to immutable retained paths, never a stale map entry.
+        if rel != 'lakefile.toml' and not (STAGING / rel).exists():
+            copy(S / rel, rel)
+    for folder in ['statement-audit', 'source']:
+        archive(S / folder, folder)
+    for rel in ['README.md', 'formalization.yaml', 'lakefile.toml']:
+        copy(S / rel, 'verification/packaging/before/' + rel)
+    archive(D, 'verification/packaging/publication-draft')
+    archive(S / 'proof-handoffs', 'reviews/development-history')
+    for folder in ['MI04-root-statements', 'MI04-elimination-statements']:
+        archive(B / 'reviews' / folder, 'reviews/statement-source/' + folder)
+    for folder in ['MI04-matrix-functions-complete', 'MI04-elimination-full-source-referee',
+                   'MI04-matrix-functions-repair-35048156414',
+                   'MI04-matrix-functions-repair-35050121652',
+                   'MI04-matrix-functions-repair-35046126916', 'MI04-matrix-functions-prefix']:
+        archive(B / 'reviews' / folder, 'reviews/proof-source/' + folder)
+    copy(acceptance_path, 'verification/DEVELOPMENT-ACCEPTANCE.json')
+    archive(run, 'verification/development-' + str(run_id))
+    copy(schema_path, 'verification/packaging/v0.4.schema.json')
+    (STAGING / 'lakefile.toml').write_bytes(new_lake)
+
+    implementation_map = {'problem_id': 'MI-04', 'source_root': '.',
+        'status': 'complete development graph accepted; canonical verification pending',
+        'comparator_config': 'comparator.json', 'source_sha256': accepted,
+        'export_locations': locations,
+        'note': 'Source-header checks and measured development axioms do not replace Comparator.'}
+    write_json('IMPLEMENTATION-MAP.json', implementation_map)
+    by_name = {item['declaration']: item for item in locations}
+    metadata['project']['description'] = (
+        'Complete compiled proof candidate for the full original MI-04 necessity implication, '
+        'in every positive finite complex dimension, using genuine Euclidean norms and all '
+        'Hermitian positive-semidefinite block completions. Canonical verification remains pending.')
+    metadata['status']['whole_problem_verified'] = False
+    metadata['status']['scope'] = freeze['mathematical_target']
+    metadata['status']['axioms'] = sorted(set().union(*(set(a) for a in observed.values())))
+    metadata['status']['source_scan_note'] = (
+        'All 21 frozen exports passed the actual complete development build and kernel trust '
+        'assertions. Deliberate independent Challenge placeholders are excluded. '
+        'Canonical axiom checking and Comparator remain separate pending gates.')
+    for result in metadata['status']['main_results']:
+        item = by_name[result['declaration']]
+        result.update(file=item['path'], line=item['line'], file_sha256=item['file_sha256'],
+                      axioms=observed[result['declaration']], verification_status=(
+            'Actual complete non-root Linux development compilation and LeanCert kernel trust passed; '
+            'canonical Comparator, default-kernel replay, controls and final referee reconciliation pending.'))
+    metadata['automation']['notes'] = (
+        'AI-assisted implementation by /root/next_inequalities; independent nonimplementing '
+        'source reviews by /root/next_elimination and /root/next_matrix_functions are retained '
+        'with their exact review and repair scopes. Actual complete development compilation '
+        'has now passed; final runtime/referee reconciliation and canonical gates remain pending.')
+    metadata['review']['status'] = (
+        'two complete independent mathematical source approvals and retained repair addenda; '
+        'final accepted-byte/runtime and canonical reconciliation pending')
+    verification = metadata['verification']
+    for key in ['latest_completed_development_run', 'coordinator_reported_current_run']:
+        verification.pop(key, None)
+    verification.update(whole_proof_build='passed complete non-root Linux development build',
+        transitive_axioms='Measured per-export development axiom sets are source-bound in status.main_results.',
+        development_run=run_id, development_commit=commit,
+        latest_development_run=acceptance['component_summary'],
+        default_kernel='pending canonical default-kernel replay', comparator='pending canonical Comparator',
+        sandbox_and_rejection_controls='pending canonical project run',
+        canonical_source_manifest='pending immutable canonical proof commit',
+        publication='Private standalone package preparation only; no repository status, count, push or PR update.',
+        publication_configuration=(
+            'Only defaultTargets changes from Challenge to Solution. The original frozen Lakefile '
+            'and freeze remain byte-identical in the retained history; see verification/packaging/TRANSITION.json.'),
+        historical_run_note=(
+            'The unchanged publication draft and development-history packets preserve earlier '
+            'failed/in-progress descriptions. They are not silently relabelled as successes.'),
+        permitted_axioms_note='Acceptance policy and the measured development sets agree; canonical checking remains pending.')
+    # A complete Solution build imports the certificate and its kernel assertion.
+    verification['numerical_certificate']['runtime_acceptance'] = (
+        'Accepted as a consumed dependency of the complete development graph; canonical replay pending.')
+    metadata['alignment'].update(active_source_manifest='ACTIVE-SOURCE-MANIFEST.json',
+        implementation_map='IMPLEMENTATION-MAP.json', publication_evidence='verification/DEVELOPMENT-ACCEPTANCE.json')
+    jsonschema.Draft7Validator(schema).validate(metadata)
+    (STAGING / 'formalization.yaml').write_text(
+        '# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json\n' +
+        yaml.safe_dump(metadata, sort_keys=False, allow_unicode=True, width=100))
+
+    readme = (D / 'lean/README.md').read_text()
+    start, end = readme.index('**Verification pending.**'), readme.index('\n\nRead [the numerical targets]')
+    readme = readme[:start] + (
+        '**Complete development build passed; canonical verification pending.** All 21 frozen '
+        'exports and the full 21-file source closure passed actual non-root Linux development '
+        f'run {run_id} at `{commit}`. Independent full mathematical source reviews and repair '
+        'addenda are retained. This standalone package still requires canonical Comparator, '
+        'default-kernel replay, rejection controls and final source-bound referee reconciliation. '
+        'No canonical status or verified count is changed by preparing this package.') + readme[end:]
+    old_paragraph = (
+        'For a development build on Linux, run `lake build Solution`. The historical frozen '
+        'Lakefile defaults to **Challenge**, so plain `lake build` does not demonstrate proof '
+        'completion. A separately reviewed publication configuration amendment to '
+        '`defaultTargets = ["Solution"]` must retain the original frozen Lakefile and its '
+        'evidence. It has not been applied by this draft.')
+    require(old_paragraph in readme, 'Unexpected draft build instructions')
+    readme = readme.replace(old_paragraph, (
+        'With the pinned toolchain and dependencies available on Linux, `lake build` now '
+        'selects the complete Solution graph. The sole publication configuration amendment '
+        'and original Challenge default are retained in '
+        '[the packaging transition](verification/packaging/TRANSITION.json); no proof or pin changes.'))
+    readme = readme.replace(
+        'these are acceptance limits, not yet a complete observed axiom report.',
+        'the actual complete development measurements use only these permitted axioms. '
+        'The canonical run must check them independently again.')
+    (STAGING / 'README.md').write_text(readme)
+
+    active = {'problem_id': 'MI-04', 'phase': 'complete development accepted; canonical gates pending',
+        'run_id': run_id, 'commit': commit, 'source_sha256': accepted,
+        'frozen_mathematical_inputs_unchanged': True, 'publication_default_target_amended': True,
+        'whole_problem_verified': False, 'implementation_map_sha256': sha(STAGING / 'IMPLEMENTATION-MAP.json')}
+    write_json('ACTIVE-SOURCE-MANIFEST.json', active)
+    evidence = read_json(D / 'PUBLICATION-EVIDENCE.json')
+    evidence.update(state='complete development acceptance; standalone canonical gates pending',
+        held_source_files=accepted, current_development_acceptance=acceptance,
+        historical_draft_preserved='verification/packaging/publication-draft/PUBLICATION-EVIDENCE.json',
+        historical_to_accepted_source_delta=draft_delta,
+        current_implementation_map='IMPLEMENTATION-MAP.json',
+        publication_performed=False, verification_count_changed=False)
+    # Replace the old closure label only in this new record, never in the draft.
+    evidence['historical_full_closure_sha256'] = evidence.pop('full_closure_sha256')
+    evidence['active_source_manifest_sha256'] = sha(STAGING / 'ACTIVE-SOURCE-MANIFEST.json')
+    evidence['LeanCert_certificate']['actual_accepted_certificate_log'] = {
+        'scope': 'Imported and kernel checked in the complete development component; canonical replay pending',
+        'retained_path': 'verification/development-' + str(run_id) +
+            '/artifacts/lean-development-statements/' + command['log'],
+        'sha256': command['sha256'], 'run_id': run_id, 'commit': commit}
+    evidence['current_independent_review_reports'] = [
+        {'retained_path': row['retained_path'], 'sha256': row['sha256']}
+        for row in retained_paths if row['retained_path'].startswith('reviews/proof-source/')
+        and row['retained_path'].endswith('/REVIEW.md')]
+    write_json('PUBLICATION-EVIDENCE.json', evidence)
+    write_json('verification/packaging/TRANSITION.json', {
+        'created_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        'all21_accepted_Lean_bytes_unchanged': True, 'author_tree_and_draft_unchanged': True,
+        'original_statement_freeze_preserved': True, 'historical_Lean_sources_archived_as_txt': True,
+        'default_target_amendment': {'before_sha256': hashlib.sha256(old_lake).hexdigest(),
+            'after_sha256': hashlib.sha256(new_lake).hexdigest(),
+            'only_change': 'defaultTargets = ["Challenge"] -> defaultTargets = ["Solution"]'},
+        'historical_draft_source_delta': draft_delta,
+        'historical_draft_manifest_sha256': DRAFT_SHA,
+        'reviewed_source_closure_sha256': REVIEWED_CLOSURE_SHA,
+        'metadata_and_readme_phase': 'actual complete development pass; canonical verification pending',
+        'canonical_verification_completed': False, 'publication_status_changed': False,
+        'local_Lean_or_Lake': False, 'Git_or_CI_or_PR_action': False})
+    write_json('verification/packaging/RETAINED-PATHS.json', retained_paths)
+    for row in retained_paths:
+        require(sha(STAGING / row['retained_path']) == row['sha256'], 'Retained path was overwritten')
+    checked_files(STAGING, accepted)
+    for rel, digest in frozen.items():
+        if rel != 'lakefile.toml':
+            require(sha(STAGING / rel) == digest, f'Packaged frozen bytes changed: {rel}')
+    require(sha(STAGING / 'STATEMENT-FREEZE.json') == FREEZE_SHA, 'Packaged freeze changed')
+    require({str(f.relative_to(STAGING)) for f in STAGING.rglob('*.lean')} ==
+            set(accepted) | {'Challenge.lean'}, 'Incidental Lean module entered the archive')
+    checked_files(S, accepted)
+    checked_files(S, frozen)
+    checked_files(D, draft['files'])
+    checked_files(S, draft['active_metadata'])
+    write_json('PACKAGE-MANIFEST.json', {
+        'phase': 'standalone candidate from authenticated complete development; canonical gates pending',
+        'files': {str(f.relative_to(STAGING)): sha(f) for f in sorted(STAGING.rglob('*')) if f.is_file()}})
+    STAGING.rename(P)
+    print(json.dumps({'package': str(P), 'source_files': 21, 'measured_exports': 21,
+                      'canonical_verification': 'pending'}, indent=2))
+
+
+if __name__ == '__main__':
+    main()

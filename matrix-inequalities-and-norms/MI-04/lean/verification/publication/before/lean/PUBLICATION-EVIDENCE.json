@@ -1,0 +1,29 @@
+{
+  "problem_id": "MI-04",
+  "phase": "local development accepted; canonical candidate only",
+  "active_source_manifest": "ACTIVE-SOURCE-MANIFEST.json",
+  "implementation_map": "IMPLEMENTATION-MAP.json",
+  "local_acceptance": "verification/LOCAL-DEVELOPMENT-ACCEPTANCE.json",
+  "local_acceptance_sha256": "fb5279d24fc4f6c8594ec1975620257bfddaf3e8dc81667bb589bd8737c46ee9",
+  "local_evidence_path_map": "verification/local-development/PATH-MAP.json",
+  "source_review_index": "reviews/INDEX.json",
+  "configuration_transition": "verification/packaging/TRANSITION.json",
+  "canonical_verification_completed": false,
+  "canonical_run_id": null,
+  "published_commit": null,
+  "remaining_gates": [
+    "two independent package reviews",
+    "fresh non-root Linux Solution build and default-kernel replay",
+    "all21 Comparator statement/axiom checks",
+    "real sandbox and rejection controls",
+    "source-bound final runtime referees",
+    "immutable canonical proof revision and publication documentation",
+    "exact published commit and upstream PR execution"
+  ],
+  "original_source_privacy": "verification/OMITTED-ORIGINALS.json",
+  "limitations": [
+    "The contemporaneous direct Quadratic receipt recorded actual exit0, source and output hashes but omitted its log hash. This audit binds the existing log now, not retrospectively as an original recorded field.",
+    "Dependencies use pinned shared compiled caches; this is not a fresh Linux sandbox or default-kernel replay/Comparator/control run. No publication commit or PR is accepted here."
+  ],
+  "status_and_count_changed": false
+}
