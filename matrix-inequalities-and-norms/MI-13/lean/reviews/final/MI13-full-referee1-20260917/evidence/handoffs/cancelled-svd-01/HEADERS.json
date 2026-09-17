@@ -1,0 +1,18 @@
+{
+  "contracts": [
+    {
+      "name": "NLA.MI13.svd_corner_functional",
+      "header": "theorem svd_corner_functional {r : ℕ} (X U V : Square r) :\n    ∃ f : Square r →ₗ[ℂ] ℂ,\n      ∀ Z : Square r, f Z = firstEntry (U.conjTranspose * commutator X Z * V)",
+      "header_sha256": "1ca083b0230e01197dd4198469692c12504154e230bf8d847b2e53fc737ee403",
+      "line": 134
+    },
+    {
+      "name": "NLA.MI13.cancelled_svd_bound",
+      "header": "theorem cancelled_svd_bound {r : ℕ} (hr : 2 ≤ r) (X Z U V : Square r)\n    (hU : IsUnitary U) (hV : IsUnitary V)\n    (hsvd : X = U * singularDiagonal X * V.conjTranspose)\n    (hcorner : firstEntry (U.conjTranspose * commutator X Z * V) = 0) :\n    frobeniusNorm (commutator X Z) ^ 2 ≤\n      2 * (singularValue X 0 ^ 2 + singularValue X 1 ^ 2) * frobeniusNorm Z ^ 2",
+      "header_sha256": "e28e3afc2bbb93f639bba0c75c52a53b978ae4409a17139836d9bfb2941556d5",
+      "line": 139
+    }
+  ],
+  "source_sha256": "421d9632779e21ae956c468f5f6212ebda38ef5ae00a514406ab545b9987217a",
+  "exact_frozen_headers": true
+}

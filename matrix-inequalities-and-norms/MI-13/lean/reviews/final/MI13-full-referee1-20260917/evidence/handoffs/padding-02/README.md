@@ -1,0 +1,11 @@
+# Padding repair after actual local45 failure
+
+The new candidate repairs the four API/representation failures observed by root in development-45. It keeps all three exact frozen contracts and the original mathematical route. The duplicate private Gram characteristic-polynomial lemma is deleted; the module imports UnitaryInvariance and reuses its public `gram_charpoly`, as required by the independent referee. The Frobenius square comparisons use existing semantic nonnegativity. Explicit definitional changes expose the ring reindex wrapper before its multiplication law. Ordered multiset rewrites map the zero replicate before changing its list coercion. The reported unused product simplification argument is removed.
+
+`SOURCE.diff` is the complete bounded source change from immutable padding-01. `sources/Padding.lean.txt` is the new candidate. `EXACT-HEADERS.json` records the unchanged frozen headers. The original packet and all 13 frozen files are byte-identical. `API-REPAIR.md` identifies the reused project theorem and binds the unchanged pinned primary evidence through `INPUT-BINDINGS.json`.
+
+Actual prior evidence: development-45 ran the old source serially with one thread and a 4096 MiB limit, exited 1, and emitted no accepted Padding output. The product theorem's log line listed only the three standard axioms, but the other two exports inherited error placeholders and failed their trust assertions. The complete actual failure log and receipt are copied in `local45`; their hashes and exact source/command binding appear in `FAILURE-BINDING.json`. This is a failed local macOS run, not a Comparator result.
+
+Current verification: the Python source/hash/header audit passes. The repaired candidate's Lean elaboration, emitted axiom lists, executed trust assertions, independent final proof review, and Linux Comparator/kernel/sandbox checks remain UNRUN. Root owns the retry. No compiler, cache, shared runner, Git, definition, pin, resource, or contract change was made by this repair author. Full MI-13 completion is outside this handoff.
+
+George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology; substantial OpenAI Codex assistance. Nobori, Audenaert, and repository reduction attribution are retained. No email is included.

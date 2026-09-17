@@ -1,0 +1,34 @@
+{
+  "time": "2026-09-17T07:32:10.823491+00:00",
+  "checks": [
+    {
+      "argv": [
+        "python3",
+        "tools/update_catalog.py",
+        "--base-ref",
+        "origin/main"
+      ],
+      "cwd": "/private/tmp/nla-lean-next-mi13-worktree",
+      "exit_code": 0,
+      "log": "/private/tmp/nla-lean-next-20260915/MI13-publication-checks-20260917/catalog.log",
+      "log_sha256": "3ef17c8e2d51a2ea897f61636cce6687b9c51107a0b085b30d29762a8137ed0c"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_problem_ids.py",
+        "-v"
+      ],
+      "cwd": "/private/tmp/nla-lean-next-mi13-worktree",
+      "exit_code": 0,
+      "log": "/private/tmp/nla-lean-next-20260915/MI13-publication-checks-20260917/identity-tests.log",
+      "log_sha256": "2419629b1dc508a0d87cc120a311749e73604056aa52e0b5ecfc2089394afc30"
+    }
+  ]
+}

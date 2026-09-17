@@ -51,7 +51,7 @@ trace-error factor after exactly the target rank of pivots\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to the community\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
@@ -81,21 +81,79 @@ complete-source PASS review} ·
 \href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/colbrook-random-pivoting-2026-09-11/README.md}{Authorship,
 exact checks and provenance}.
 
-Verification is independent agent review, not external human peer review
-or formal certification. AI assistance is disclosed; no priority claim
-is made. The original statement and audits remain below; ratings are
-historical.
+The original manuscript audit is independent agent review, not external
+human peer review. The separate Lean verification below covers the
+complete original RA-02 target. AI assistance is disclosed; no priority
+claim is made. The original statement and audits remain below; ratings
+are historical.
+
+\subsection{Lean proof and verification
+evidence}\label{lean-proof-and-verification-evidence}
+
+\textbf{The complete original negative target is Lean verified,
+2026-09-17 (UTC).} The
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/26dc080e47b75a3aaf2e75fc2a282d0b8f4a4bbb/randomized-and-low-rank-approximation/RA-02/lean/Solution.lean}{immutable
+proof} at \textit{26dc080e47b7} passed
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175272827/job/105055587640}{actual
+non-root Linux run 35175272827}. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/RA-02/lean/verification/linux-35175272827/README.md}{retained
+evidence} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/RA-02/lean/reviews/canonical-runtime/REVIEW.md}{independent
+runtime review} authenticate all 220 submitted inputs and all 27
+Comparator contracts, default-kernel replay, standard transitive axioms,
+and the required rejection and sandbox controls.
+
+For every real \(C>0\) and \(p\ge0\),
+\textit{NLA.RA02.universal\_counterexamples} constructs a
+positive-definite complex matrix of order \(r+1\), for some \(r\ge1\),
+with positive actual spectral tail and a strict violation after exactly
+\(r\) pivots. \textit{NLA.RA02.no\_polynomial\_trace\_factor} negates
+the full original assertion over all positive dimensions and complex
+Hermitian PSD matrices. The proof establishes the normalized adaptive
+law on every ordered history and uses the actual decreasing eigenvalue
+tail. Its finite arrowhead estimate \(2^r/3\) is sufficient. The
+manuscript's sharper limiting ratio \(2^r\), entrywise-positive and
+correlation-matrix extensions, LU results, and oversampling are not
+additional formal claims here.
+
+Formalization and verification: \textbf{George Stepaniants}, Department
+of Computing and Mathematical Sciences, California Institute of
+Technology. \textbf{Matthew J. Colbrook}, Department of Applied
+Mathematics and Theoretical Physics, University of Cambridge, retains
+original mathematical authorship. Chen, Epperly, Tropp and Webber retain
+credit for RPCholesky and its comparison problem. Substantial OpenAI
+Codex assistance, two complete nonauthor proof-source reviews and a
+separate runtime evidence audit are disclosed. No external human peer
+review or official Tau Ceti endorsement is claimed.
+
+The project pins Lean 4.33.1,
+\href{https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474}{Mathlib}
+and
+\href{https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926}{LeanCert}.
+The kernel-mode certificate \(\exp(1)\le3\) is consumed by the
+denominator bound, actual-tail estimate and final contradiction; all
+rank and history calculations remain symbolic. All 27 exports use only
+\textit{propext}, \textit{Classical.choice} and \textit{Quot.sound}. Run
+\textit{lake build} in
+\textit{randomized-and-low-rank-approximation/RA-02/lean};
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/RA-02/lean/README.md}{project
+instructions} give the full Linux checks. Local macOS development and
+GitHub Linux verification are distinct. Later publication-commit and
+upstream PR checks remain separate from this immutable proof run.
+
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/randomized-and-low-rank-approximation/RA-02/solution.tex}{Formalization
+note} records the exact scope and attribution. Its PDF and the updated
+canonical PDF are rendered and inspected during publication; the
+historical literature-audit dates below are unchanged.
 
 \subsection{Context and notation}\label{context-and-notation}
 
 For a Hermitian positive-semidefinite \(A\in\mathbb C^{n\times n}\),
 define the exact-arithmetic RPCholesky residuals by \(R_0=A\).
 Conditional on \(R_t\ne0\), select \(j\) with probability
-\((R_t)_{jj}/\operatorname{tr}(R_t)\) and set
+\((R_t)_{jj}/\mathop{\mathrm{tr}}\nolimits(R_t)\) and set
 
-\[
-R_{t+1}=R_t-\frac{R_t(:,j)R_t(j,:)}{(R_t)_{jj}}.
-\]
+\[R_{t+1}=R_t-\frac{R_t(:,j)R_t(j,:)}{(R_t)_{jj}}.\]
 
 If \(R_t=0\), keep all subsequent residuals zero. Eigenvalues are
 ordered \(\lambda_1(A)\geq\cdots\geq\lambda_n(A)\geq0\), and
@@ -104,7 +162,7 @@ Epperly, Tropp, and Webber,
 \href{https://doi.org/10.1002/cpa.22234}{\emph{Randomly pivoted
 Cholesky: Practical approximation of a kernel matrix with few entry
 evaluations}}, Algorithm 1; their Lemma 5.5 gives the current comparison
-\(\mathbb E\operatorname{tr}(R_r)\leq2^r\tau_r(A)\).
+\(\mathbb E\mathop{\mathrm{tr}}\nolimits(R_r)\leq2^r\tau_r(A)\).
 
 \subsection{Problem statement}\label{problem-statement}
 
@@ -112,9 +170,7 @@ Do constants \(C>0\) and \(p\geq0\) exist such that, for every
 \(n\geq1\), every Hermitian positive-semidefinite
 \(A\in\mathbb C^{n\times n}\), and every integer \(1\leq r\leq n\),
 
-\[
-\mathbb E\operatorname{tr}(R_r)\leq Cr^p\tau_r(A)?
-\]
+\[\mathbb E\mathop{\mathrm{tr}}\nolimits(R_r)\leq Cr^p\tau_r(A)?\]
 
 Both constants must be independent of \(n,r,A\). Exactly \(r\)
 RPCholesky steps are permitted, with the zero-residual convention above.
@@ -137,9 +193,10 @@ explicitly reiterate this conjecture.
 \subsection{Source normalization}\label{source-normalization}
 
 The dissertation calls \(A^{(r)}\) a residual but prints
-\(\operatorname{tr}(A-A^{(r)})\), without expectation. We use its cited
-Lemma 5.5 to correct both notation defects. The later paper confirms the
-intended polynomial improvement over that lemma's \(2^r\) factor.
+\(\mathop{\mathrm{tr}}\nolimits(A-A^{(r)})\), without expectation. We
+use its cited Lemma 5.5 to correct both notation defects. The later
+paper confirms the intended polynomial improvement over that lemma's
+\(2^r\) factor.
 
 \subsection{Status check}\label{status-check}
 

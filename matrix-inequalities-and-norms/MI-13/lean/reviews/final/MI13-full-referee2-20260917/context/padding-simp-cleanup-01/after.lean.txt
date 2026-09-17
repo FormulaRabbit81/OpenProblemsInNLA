@@ -1,0 +1,211 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Nobori's original question, Audenaert's
+refined commutator theorem, and the repository reduction retain their attribution.
+
+The frozen zero-extension padding preserves the triple product, the genuine
+Euclidean norms, and every ordered zero-extended singular value. The argument
+uses block algebra and Gram characteristic roots, without invoking full SVD.
+-/
+import NLA.MI13.UnitaryInvariance
+import Mathlib.Data.List.GetD
+import Mathlib.LinearAlgebra.Matrix.Reindex
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.MI13
+noncomputable section
+open scoped BigOperators Matrix
+
+theorem padding_product {m n : ℕ} (A C : Rect m n) (B : Rect n m) :
+    padUpper A * padLower B * padUpper C - padUpper C * padLower B * padUpper A =
+      padUpper (A * B * C - C * B * A) := by
+  classical
+  let e : Fin m ⊕ Fin n ≃ Fin (m + n) := finSumFinEquiv
+  let E := Matrix.reindexRingEquiv ℂ e
+  let U (D : Rect m n) :=
+    Matrix.fromBlocks (0 : Square m) D (0 : Rect n m) (0 : Square n)
+  let L := Matrix.fromBlocks (0 : Square m) (0 : Rect m n) B (0 : Square n)
+  have hblock : U A * L * U C - U C * L * U A = U (A * B * C - C * B * A) := by
+    simp only [U, L, Matrix.fromBlocks_multiply, mul_zero, zero_add, add_zero]
+    ext (i | i) (j | j) <;> simp
+  -- The frozen padding uses the underlying reindex function of this ring
+  -- equivalence; exposing that definitional equality lets map_mul/map_sub apply.
+  change E (U A) * E L * E (U C) - E (U C) * E L * E (U A) =
+    E (U (A * B * C - C * B * A))
+  simpa only [map_sub, map_mul] using congrArg E hblock
+
+private theorem reindex_entry_energy {m n : ℕ}
+    (M : Matrix (Fin m ⊕ Fin n) (Fin m ⊕ Fin n) ℂ) :
+    (∑ i : Fin (m + n), ∑ j : Fin (m + n),
+      ‖Matrix.reindex finSumFinEquiv finSumFinEquiv M i j‖ ^ 2) =
+    ∑ i : Fin m ⊕ Fin n, ∑ j : Fin m ⊕ Fin n, ‖M i j‖ ^ 2 := by
+  classical
+  let e : Fin m ⊕ Fin n ≃ Fin (m + n) := finSumFinEquiv
+  exact Fintype.sum_equiv e.symm _ _ fun i =>
+    Fintype.sum_equiv e.symm _ _ fun j => rfl
+
+private theorem frobenius_padUpper {m n : ℕ} (A : Rect m n) :
+    frobeniusNorm (padUpper A) = frobeniusNorm A := by
+  classical
+  apply (sq_eq_sq₀ (frobenius_semantics (padUpper A)).2.2.1
+    (frobenius_semantics A).2.2.1).mp
+  rw [frobenius_norm_sq_eq_entries, frobenius_norm_sq_eq_entries,
+    padUpper, reindex_entry_energy]
+  simp [Fintype.sum_sum_type]
+
+private theorem frobenius_padLower {m n : ℕ} (B : Rect n m) :
+    frobeniusNorm (padLower B) = frobeniusNorm B := by
+  classical
+  apply (sq_eq_sq₀ (frobenius_semantics (padLower B)).2.2.1
+    (frobenius_semantics B).2.2.1).mp
+  rw [frobenius_norm_sq_eq_entries, frobenius_norm_sq_eq_entries,
+    padLower, reindex_entry_energy]
+  simp [Fintype.sum_sum_type]
+
+private abbrev gramEnd {m n : ℕ} (A : Rect m n) :
+    EuclideanVector n →ₗ[ℂ] EuclideanVector n :=
+  (euclideanLin A).adjoint ∘ₗ euclideanLin A
+
+private theorem gram_charpoly_padUpper {m n : ℕ} (A : Rect m n) :
+    (gramEnd (padUpper A)).charpoly =
+      (gramEnd A).charpoly * (Polynomial.X : Polynomial ℂ) ^ m := by
+  classical
+  let D := Matrix.fromBlocks (0 : Square m) A (0 : Rect n m) (0 : Square n)
+  let e : Fin m ⊕ Fin n ≃ Fin (m + n) := finSumFinEquiv
+  let E := Matrix.reindexRingEquiv ℂ e
+  dsimp only [gramEnd]
+  rw [gram_charpoly, gram_charpoly, padUpper, Matrix.conjTranspose_reindex]
+  -- Expose the ring-equivalence wrapper before map_mul, then its underlying
+  -- reindex function before charpoly_reindex. Both changes are definitional.
+  change (E D.conjTranspose * E D).charpoly = _
+  rw [← E.map_mul]
+  change (Matrix.reindex e e (D.conjTranspose * D)).charpoly = _
+  rw [Matrix.charpoly_reindex]
+  -- The individual block products are rectangular, so use the matrix zero
+  -- multiplication laws with separate row, inner, and column index types.
+  simp only [D, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_zero,
+    Matrix.fromBlocks_multiply, Matrix.zero_mul, Matrix.mul_zero, add_zero,
+    Matrix.charpoly_fromBlocks_zero₁₂, Matrix.charpoly_zero, Fintype.card_fin]
+  exact mul_comm _ _
+
+private theorem gram_charpoly_padLower {m n : ℕ} (B : Rect n m) :
+    (gramEnd (padLower B)).charpoly =
+      (gramEnd B).charpoly * (Polynomial.X : Polynomial ℂ) ^ n := by
+  classical
+  let D := Matrix.fromBlocks (0 : Square m) (0 : Rect m n) B (0 : Square n)
+  let e : Fin m ⊕ Fin n ≃ Fin (m + n) := finSumFinEquiv
+  let E := Matrix.reindexRingEquiv ℂ e
+  dsimp only [gramEnd]
+  rw [gram_charpoly, gram_charpoly, padLower, Matrix.conjTranspose_reindex]
+  -- As above, only the bundled/unbundled view of the same reindexing changes.
+  change (E D.conjTranspose * E D).charpoly = _
+  rw [← E.map_mul]
+  change (Matrix.reindex e e (D.conjTranspose * D)).charpoly = _
+  rw [Matrix.charpoly_reindex]
+  simp only [D, Matrix.fromBlocks_conjTranspose, Matrix.conjTranspose_zero,
+    Matrix.fromBlocks_multiply, Matrix.zero_mul, Matrix.mul_zero, zero_add, add_zero,
+    Matrix.charpoly_fromBlocks_zero₁₂, Matrix.charpoly_zero, Fintype.card_fin]
+
+private theorem gram_sorted_roots {m n : ℕ} (A : Rect m n) :
+    ((gramEnd A).charpoly.roots.map (RCLike.re : ℂ → ℝ)).sort (· ≥ ·) =
+      List.ofFn (gramEigenvalue A) := by
+  exact (euclideanLin A).isSymmetric_adjoint_comp_self.sort_roots_charpoly_eq_eigenvalues
+    (finrank_euclideanSpace_fin (𝕜 := ℂ) (n := n))
+
+private theorem gram_roots_list {m n : ℕ} (A : Rect m n) :
+    (gramEnd A).charpoly.roots.map (RCLike.re : ℂ → ℝ) =
+      (List.ofFn (gramEigenvalue A) : Multiset ℝ) := by
+  calc
+    _ = (((gramEnd A).charpoly.roots.map (RCLike.re : ℂ → ℝ)).sort
+        (· ≥ ·) : Multiset ℝ) := (Multiset.sort_eq _ _).symm
+    _ = _ := congrArg (fun l : List ℝ => (l : Multiset ℝ)) (gram_sorted_roots A)
+
+private theorem singular_sq_getD {m n : ℕ} (A : Rect m n) (k : ℕ) :
+    singularValue A k ^ 2 = (List.ofFn (gramEigenvalue A)).getD k 0 := by
+  by_cases hk : k < n
+  · rw [List.getD_eq_getElem _ _ (by simpa only [List.length_ofFn] using hk),
+      List.getElem_ofFn]
+    exact singular_values_gram A ⟨k, hk⟩
+  · rw [(singular_values_semantics A).2.2 k (Nat.le_of_not_gt hk),
+      List.getD_eq_default _ _ (by simpa only [List.length_ofFn] using
+        (Nat.le_of_not_gt hk))]
+    simp
+
+private theorem getD_append_zeros (l : List ℝ) (d k : ℕ) :
+    (l ++ List.replicate d 0).getD k 0 = l.getD k 0 := by
+  by_cases hk : k < l.length
+  · exact List.getD_append l _ 0 k hk
+  · rw [List.getD_append_right l _ 0 k (Nat.le_of_not_gt hk),
+      List.getD_eq_default l 0 (Nat.le_of_not_gt hk)]
+    simp only [List.getD_eq_getElem?_getD,
+      List.getElem?_getD_replicate_default_eq]
+
+private theorem singular_eq_of_gram_charpoly {m n p q : ℕ}
+    (A : Rect m n) (C : Rect p q) (d : ℕ)
+    (hpoly : (gramEnd C).charpoly =
+      (gramEnd A).charpoly * (Polynomial.X : Polynomial ℂ) ^ d) (k : ℕ) :
+    singularValue C k = singularValue A k := by
+  classical
+  -- A zero block contributes only zero roots, with their full multiplicity.
+  -- No distinct-eigenvalue hypothesis is used here or in the ordering step.
+  have hroots : (gramEnd C).charpoly.roots.map (RCLike.re : ℂ → ℝ) =
+      (List.ofFn (gramEigenvalue A) ++ List.replicate d (0 : ℝ) : Multiset ℝ) := by
+    rw [hpoly, Polynomial.roots_mul (mul_ne_zero
+      (LinearMap.charpoly_monic (gramEnd A)).ne_zero
+      (pow_ne_zero d Polynomial.X_ne_zero))]
+    -- Rewrite the map of the replicate before exposing its list coercion.
+    -- A single bottom-up simp would expose that coercion too early.
+    rw [Multiset.map_add, gram_roots_list, Polynomial.roots_X_pow,
+      Multiset.nsmul_singleton, Multiset.map_replicate, RCLike.zero_re,
+      ← Multiset.coe_replicate, Multiset.coe_add]
+  have hsorted : (List.ofFn (gramEigenvalue A) ++ List.replicate d (0 : ℝ)).Pairwise
+      (· ≥ ·) := by
+    apply List.pairwise_append.mpr
+    refine ⟨?_, List.pairwise_replicate_of_refl, ?_⟩
+    · rw [← gram_sorted_roots A]
+      exact Multiset.pairwise_sort _ _
+    · intro a ha b hb
+      obtain ⟨i, rfl⟩ := List.mem_ofFn.mp ha
+      obtain rfl := List.eq_of_mem_replicate hb
+      rw [← singular_values_gram A i]
+      exact sq_nonneg _
+  have hlist : List.ofFn (gramEigenvalue C) =
+      List.ofFn (gramEigenvalue A) ++ List.replicate d (0 : ℝ) := by
+    rw [← gram_sorted_roots C, hroots, Multiset.coe_sort]
+    exact List.mergeSort_eq_self _ hsorted
+  -- getD extends the finite eigenvalue list by zero. This is the same
+  -- extension as the actual singular-value definition, also in dimension zero.
+  apply (sq_eq_sq₀ ((singular_values_semantics C).1 k)
+    ((singular_values_semantics A).1 k)).mp
+  rw [singular_sq_getD C, singular_sq_getD A, hlist]
+  exact getD_append_zeros _ d k
+
+theorem padding_singular_values {m n : ℕ} (A : Rect m n) (B : Rect n m) (k : ℕ) :
+    singularValue (padUpper A) k = singularValue A k ∧
+    singularValue (padLower B) k = singularValue B k := by
+  exact ⟨singular_eq_of_gram_charpoly A (padUpper A) m (gram_charpoly_padUpper A) k,
+    singular_eq_of_gram_charpoly B (padLower B) n (gram_charpoly_padLower B) k⟩
+
+theorem padding_norms {m n : ℕ} (A : Rect m n) (B : Rect n m) :
+    frobeniusNorm (padUpper A) = frobeniusNorm A ∧
+    spectralNorm (padUpper A) = spectralNorm A ∧
+    frobeniusNorm (padLower B) = frobeniusNorm B ∧
+    spectralNorm (padLower B) = spectralNorm B := by
+  refine ⟨frobenius_padUpper A, ?_, frobenius_padLower B, ?_⟩
+  · rw [(operator_norm_semantics (padUpper A)).1, (operator_norm_semantics A).1]
+    exact (padding_singular_values A B 0).1
+  · rw [(operator_norm_semantics (padLower B)).1, (operator_norm_semantics B).1]
+    exact (padding_singular_values A B 0).2
+
+#print axioms padding_product
+#assert_trust kernel padding_product
+#print axioms padding_norms
+#assert_trust kernel padding_norms
+#print axioms padding_singular_values
+#assert_trust kernel padding_singular_values
+
+end
+end NLA.MI13

@@ -1,0 +1,5 @@
+{
+  "positive_image_orthonormal": "theorem positive_image_orthonormal {r : ℕ} (A : Square r)\n    (v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r)) (hv : GramBasis A v) :\n    Orthonormal ℂ ((positiveSingularIndices A).domRestrict (normalizedImages A v)) := by",
+  "zero_singular_image": "theorem zero_singular_image {r : ℕ} (A : Square r)\n    (v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r)) (hv : GramBasis A v)\n    (i : Fin r) (hi : singularValue A i.val = 0) : euclideanLin A (v i) = 0 := by",
+  "full_singular_vector_bases": "theorem full_singular_vector_bases {r : ℕ} (A : Square r) :\n    ∃ u v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r),\n      GramBasis A v ∧ ∀ i, euclideanLin A (v i) = (singularValue A i.val : ℂ) • u i := by"
+}

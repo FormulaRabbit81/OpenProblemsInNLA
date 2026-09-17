@@ -1,0 +1,25 @@
+# SF-01 source-to-statement correspondence
+
+The canonical source is the complete retained SF-01 page at upstream Git `ce47b5630bf3680d9211131c3a43825b022c139a`, path `matrix-functions-and-stability/SF-01/README.md`, literal SHA-256 `e4fdf200d716585c07f9c0aaeec377ffd23cccd4bd9150565ded5bb38bcf79b3`. Colbrook's full proof is `references/colbrook-matrix-functions-2026-09-11/manuscripts/SF-01.tex`, Theorem 1, literal SHA-256 `e9d14c133db5eeb58523efb4853a6d3bff43e955991cbbd7a67d082c0bb6cee8`. Both full sources were read and matched to literal Git blobs in the separate sealed feasibility packet.
+
+`IsHMatrix` retains exactly comparison(A)=sI-B with B>=0 and rho(B)<s; `spectralRadius` uses the full complex algebraic spectrum. `PositiveDiagonal` is the original strict entrywise diagonal condition. `newton` retains the original A initialization, factor 1/2 and left inverse followed by A. `canonical_newton_preservation` quantifies over every n>=1, all original admissible A and all k>=0, and proves the original H and positive-diagonal conclusions plus actual unitness. No scaling, symmetry, normality, positivity of all A entries, finite-iteration cutoff or bounded-dimension assumption is added.
+
+| Challenge export group | Source role and full scope |
+|---|---|
+| complex_spectral_radius_semantics; spectral_radius_strict_bound | Direct semantics of the original rho(B). Finite-dimensional complex spectrum, not real spectrum, max-entry norm or an arbitrary upper bound replacing rho. |
+| spectral_homotopy_isUnit; spectralM_positive_weight; weighted_Z_spectralM; H_positive_weight | Discharge both required links between the source's spectral definition and its positive-weight arguments. New finite homotopy and maximum-ratio derivations; no assumed M-matrix equivalence. H nonsingularity is also exported. |
+| shift_comparison; H_shift_structure; comparison_abs_mulVec; resolvent_domination | The manuscript's shifted resolvent comparison, retaining all t>=0. Planned proof uses the actual IV03 maximum principle after deriving the positive weight. All inverse existence is explicit. |
+| half_positive_certificate | Meaningful LeanCert kernel numerical dependency for the exact first iterate and coefficient halving. |
+| ridge_comparison_preserver; ridge_commutes | The manuscript's finite rational class preserves positive-diagonal H structure. The comparison theorem exposes strict diagonal and off-diagonal absolute-value bounds before the spectral conclusion. |
+| pole_positive_definite; pole_diagonalization_exists; pole_residue_normalization; reciprocal_weights_nonnegative | New finite spectral proof of the restricted reciprocal closure needed by Newton after its first step. It replaces the manuscript's general scalar partial-fraction/root argument, without a new final hypothesis. Orthogonal matrices, poles and residues are actual explicit matrix data. |
+| reciprocal_blocks_isUnit; matrix_reciprocal_identity | Complete matrix substitution by Woodbury and finite block diagonalization. The theorem is exactly f(A)^-1*A, not only scalar z/f(z). |
+| newton_data_step; initial_data_valid; newton_first; iterate_ridge_representation | Complete all-k finite-family induction, with one scalar data record for all matrices at each step. The k=0 branch remains the original assumption. |
+| canonical_newton_preservation | The full original question, with genuine inverse availability made explicit. |
+
+The internal strict a,b>0 rational class is sufficient because X_1=(A+I)/2. New reciprocal sums have nonnegative weights and positive poles; averaging preserves strictly positive a and b. Empty families, zero weights, repeated poles, n=1 and k=0 all remain in scope. The final theorem does not assume that a rational representation or a positive weight is supplied by the input.
+
+The canonical manuscript also proves scaled/affine initialization and Halley extensions. Those are not part of the original SF-01 target and are not asserted in this draft. The finite rank-one and block-Woodbury proof route is a formalization plan developed in this campaign, not a claim of historical priority. Its complete prose derivation is privately bound in the feasibility packet and must receive independent review.
+
+Formal reuse must credit Sidney Holden's existing Apache-2.0 IV03 maximum-principle development. No IV03 source is imported into Definitions or Challenge and no proof implementation has been copied here. Future proof modules should reuse those existing lemmas with their author/license intact rather than manufacture an uncredited duplicate. George Stepaniants receives credit for this new formalization; Matthew J. Colbrook remains the mathematical author.
+
+Schiffer's independent Challenge organization and Forsythe's separate numerical-target and Comparator modules were reread as structural examples; none of their mathematical claims is used. Primary Mathlib, standards, Comparator and LeanCert pattern references are hash-bound in `SOURCE-PROVENANCE.json`. Their original private inventories are not claims that all their files are republished here.

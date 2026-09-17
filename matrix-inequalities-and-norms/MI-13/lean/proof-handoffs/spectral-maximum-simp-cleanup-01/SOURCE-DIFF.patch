@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -63,7 +63,7 @@
+   · intro Z
+     by_cases hz : Z = 0
+     · subst Z
+-      simp only [commutator, Matrix.mul_zero, Matrix.zero_mul, sub_zero,
++      simp only [commutator, Matrix.zero_mul, sub_zero,
+         frobeniusNorm, flatten_zero, norm_zero, zero_pow (by decide : 2 ≠ 0), mul_zero,
+         le_refl]
+     · have hf : flatten Z ≠ 0 := fun h => hz (flatten_injective (h.trans flatten_zero.symm))

@@ -1,0 +1,189 @@
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Algebra/Equiv.lean:553:@[simp] theorem linearEquivConj_mulLeftRight (f : A₁ ≃ₐ[R] A₂) (x : A₁ × A₁) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Algebra/Equiv.lean:554:    f.toLinearEquiv.conj (.mulLeftRight R x) = .mulLeftRight R (Prod.map f f x) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Combinatorics/SetFamily/FourFunctions.lean:86:  refine le_of_mul_le_mul_right ?_ hcd
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Combinatorics/SetFamily/LYM.lean:104:    apply le_of_mul_le_mul_right _ (pos_iff_ne_zero.2 hr)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Combinatorics/Additive/PluenneckeRuzsa.lean:224:    refine le_of_mul_le_mul_right ?_ (by positivity : (0 : ℚ≥0) < #A)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Combinatorics/Additive/PluenneckeRuzsa.lean:243:  refine le_of_mul_le_mul_right ?_ (by positivity : (0 : ℚ≥0) < #C)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Combinatorics/Additive/Randomisation.lean:32:  refine Complex.ofReal_injective ?_
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Combinatorics/Additive/DoublingConst.lean:190:  refine le_of_mul_le_mul_right ?_ (by positivity : (0 : ℚ≥0) < #A * #A)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Combinatorics/Additive/DoublingConst.lean:221:  refine le_of_mul_le_mul_right ?_ (by positivity : (0 : ℚ≥0) < #A * #A)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Combinatorics/Additive/VerySmallDoubling.lean:463:        gcongr; exact le_of_mul_le_mul_right ineq <| by positivity
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Combinatorics/Additive/Corner/Roth.lean:90:  refine hG.not_ge (le_of_mul_le_mul_right ?_ (by positivity : (0 : ℝ) < card G ^ 2))
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Combinatorics/Additive/RuzsaCovering.lean:40:  refine ⟨F, hFA, le_of_mul_le_mul_right ?_ (by positivity : (0 : ℝ) < #B), fun a ha ↦ ?_⟩
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Combinatorics/SimpleGraph/Extremal/ErdosStoneSimonovits.lean:185:        refine Nat.le_of_mul_le_mul_right ?_ (Nat.sub_pos_of_lt ht_lt_t')
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Matrix/Block.lean:214:theorem fromBlocks_multiply [Fintype l] [Fintype m] [NonUnitalNonAssocSemiring α] (A : Matrix n l α)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Matrix/Block.lean:229:    simp [ih, pow_succ, fromBlocks_multiply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/SpecificGroups/Alternating.lean:333:    le_of_mul_le_mul_right (le_trans h (by norm_num only [card_fin])) (by simp)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Algebra/GelfandFormula.lean:66:      (((ContinuousLinearMap.mulLeftRight 𝕜 A) (resolvent a k)) (resolvent a k)) a := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/BoundedLinearMaps.lean:429:/-- The function `ContinuousLinearMap.mulLeftRight : 𝕜' × 𝕜' → (𝕜' →L[𝕜] 𝕜')` is a bounded
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/BoundedLinearMaps.lean:431:theorem ContinuousLinearMap.mulLeftRight_isBoundedBilinear (𝕜' : Type*) [SeminormedRing 𝕜']
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/BoundedLinearMaps.lean:433:    IsBoundedBilinearMap 𝕜 fun p : 𝕜' × 𝕜' => ContinuousLinearMap.mulLeftRight 𝕜 𝕜' p.1 p.2 :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/BoundedLinearMaps.lean:434:  (ContinuousLinearMap.mulLeftRight 𝕜 𝕜').isBoundedBilinearMap
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Mul.lean:74:continuous trilinear map. This is akin to its non-continuous version `LinearMap.mulLeftRight`,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Mul.lean:75:but there is a minor difference: `LinearMap.mulLeftRight` is uncurried. -/
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Mul.lean:76:def mulLeftRight : R →L[𝕜] R →L[𝕜] R →L[𝕜] R :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Mul.lean:80:theorem mulLeftRight_apply (x y z : R) : mulLeftRight 𝕜 R x y z = x * z * y :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Mul.lean:83:theorem opNorm_mulLeftRight_apply_apply_le (x y : R) : ‖mulLeftRight 𝕜 R x y‖ ≤ ‖x‖ * ‖y‖ :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Mul.lean:90:theorem opNorm_mulLeftRight_apply_le (x : R) : ‖mulLeftRight 𝕜 R x‖ ≤ ‖x‖ :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Mul.lean:91:  opNorm_le_bound _ (norm_nonneg x) (opNorm_mulLeftRight_apply_apply_le 𝕜 R x)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Mul.lean:93:theorem opNorm_mulLeftRight_le :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Mul.lean:94:    ‖mulLeftRight 𝕜 R‖ ≤ 1 :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Mul.lean:95:  opNorm_le_bound _ zero_le_one fun x => (one_mul ‖x‖).symm ▸ opNorm_mulLeftRight_apply_le 𝕜 R x
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Mul.lean:270:  refine le_of_mul_le_mul_right ?_ (norm_pos_iff.mpr hy)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Mul.lean:294:  refine le_of_mul_le_mul_right ?_ (norm_pos_iff.mpr hy)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/CosetCover.lean:282:    refine le_of_mul_le_mul_right ?_ (Nat.cast_pos.mpr (Nat.pos_of_ne_zero hD.index_ne_zero))
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Module/LinearMap/Defs.lean:1013:section mulLeftRight
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Module/LinearMap/Defs.lean:1069:def mulLeftRight (ab : A × A) : A →ₗ[R] A :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Module/LinearMap/Defs.lean:1073:theorem mulLeftRight_apply (a b x : A) : mulLeftRight R (a, b) x = a * x * b :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Module/LinearMap/Defs.lean:1076:end mulLeftRight
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Module/LinearMap/Basic.lean:120:section mulLeftRight
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Module/LinearMap/Basic.lean:171:end mulLeftRight
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Ring/Associator.lean:71:(semi)-ring is an `AddMonoidHom` in each argument. See also `LinearMap.mulLeftRight` for a
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Ring/CentroidHom.lean:434:lemma centroid_eq_centralizer_mulLeftRight :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Ring/CentroidHom.lean:512:  rw [NonUnitalNonAssocSemiring.mem_center_iff, CentroidHom.centroid_eq_centralizer_mulLeftRight,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Lie/Classical.lean:279:    simp [PD, JD, Matrix.fromBlocks_transpose, Matrix.fromBlocks_multiply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Lie/Classical.lean:280:  rw [h, PD, s_as_blocks, Matrix.fromBlocks_multiply, Matrix.fromBlocks_smul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Lie/Classical.lean:285:    Matrix.fromBlocks_multiply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Lie/Classical.lean:350:  rw [PB, Matrix.fromBlocks_multiply, mul_invOf_self]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Lie/Classical.lean:358:  simp [PB, JB, jd_transform, Matrix.fromBlocks_transpose, Matrix.fromBlocks_multiply,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Nat/Totient.lean:352:  apply le_of_mul_le_mul_right _ hd0
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Nat/Choose/Basic.lean:315:  refine Nat.le_of_mul_le_mul_right ?_ (Nat.sub_pos_of_lt (h.trans_le (n.div_le_self 2)))
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Mul.lean:662:    HasFDerivAt Ring.inverse (-mulLeftRight 𝕜 R ↑x⁻¹ ↑x⁻¹) x := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Mul.lean:681:theorem fderiv_inverse (x : Rˣ) : fderiv 𝕜 (@Ring.inverse R _) x = -mulLeftRight 𝕜 R ↑x⁻¹ ↑x⁻¹ :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Mul.lean:685:    HasStrictFDerivAt Ring.inverse (-mulLeftRight 𝕜 R ↑x⁻¹ ↑x⁻¹) x := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Mul.lean:728:    HasStrictFDerivAt Inv.inv (-mulLeftRight 𝕜 R x⁻¹ x⁻¹) x := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Mul.lean:736:    HasFDerivAt Inv.inv (-mulLeftRight 𝕜 R x⁻¹ x⁻¹) x := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Mul.lean:753:theorem fderiv_inv' {x : R} (hx : x ≠ 0) : fderiv 𝕜 Inv.inv x = -mulLeftRight 𝕜 R x⁻¹ x⁻¹ :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Mul.lean:758:    fderivWithin 𝕜 (fun x => x⁻¹) s x = -mulLeftRight 𝕜 R x⁻¹ x⁻¹ := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Norm.lean:194:  apply le_of_mul_le_mul_right _ (norm_pos_iff.2 this)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/Valuation/ValuativeRel/Basic.lean:709:    apply le_of_mul_le_mul_right h
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Complex/Basic.lean:103:theorem ofReal_injective : Function.Injective ((↑) : ℝ → ℂ) := fun _ _ => congrArg re
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/ContinuousFunctionalCalculus/Rpow/ConjSqrt.lean:34:  toLinearMap := .mulLeftRight ℝ (sqrt c, sqrt c)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/ContinuousFunctionalCalculus/Rpow/ConjSqrt.lean:38:    (conjSqrt c).toLinearMap = .mulLeftRight ℝ (sqrt c, sqrt c) := rfl
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Complex/CircleMap.lean:122:        mul_left_injective₀ I_ne_zero).preimage ofReal_injective
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Defs.lean:43:def AlgHom.mulLeftRight : (A ⊗[R] Aᵐᵒᵖ) →ₐ[R] Module.End R A :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Defs.lean:52:lemma AlgHom.mulLeftRight_apply (a : A) (b : Aᵐᵒᵖ) (x : A) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Defs.lean:53:    AlgHom.mulLeftRight R A (a ⊗ₜ b) x = a * x * b.unop := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Defs.lean:54:  simp only [AlgHom.mulLeftRight, Algebra.lsmul_coe]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Defs.lean:59:  `AlgHom.mulLeftRight R A : (A ⊗[R] Aᵐᵒᵖ) →ₐ[R] Module.End R A` is an isomorphism. -/
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Defs.lean:61:    bij : Function.Bijective <| AlgHom.mulLeftRight R A
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Basic.lean:43:lemma AlgHom.mulLeftRight_bij [h : IsAzumaya R A] :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Basic.lean:44:    Function.Bijective (AlgHom.mulLeftRight R A) := h.bij
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Basic.lean:47:  to `AlgHom.mulLeftRight R R`. -/
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Basic.lean:51:lemma coe_tensorEquivEnd : tensorEquivEnd R = AlgHom.mulLeftRight R R := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Basic.lean:64:  | mulLeftRight R A       | mulLeftRight R B
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Basic.lean:71:lemma mulLeftRight_comp_congr (e : A ≃ₐ[R] B) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Basic.lean:72:    (AlgHom.mulLeftRight R B).comp (Algebra.TensorProduct.congr e e.op).toAlgHom =
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Basic.lean:73:    (e.toLinearEquiv.conjAlgEquiv R).toAlgHom.comp (AlgHom.mulLeftRight R A) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Basic.lean:80:  ⟨Function.Bijective.of_comp_iff (AlgHom.mulLeftRight R B)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Basic.lean:82:    rw [← AlgEquiv.coe_toAlgHom, ← AlgHom.coe_comp, mulLeftRight_comp_congr]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Basic.lean:83:    simp [AlgHom.mulLeftRight_bij]⟩
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Basic.lean:90:  have := of_algEquiv R _ _ (AlgEquiv.ofBijective (.mulLeftRight R A) IsAzumaya.bij).symm
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Matrix.lean:32:/-- `AlgHom.mulLeftRight` for matrix algebra sends basis Eᵢⱼ⊗Eₖₗ to
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Matrix.lean:35:abbrev AlgHom.mulLeftRightMatrix_inv :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Matrix.lean:42:lemma AlgHom.mulLeftRightMatrix.inv_comp :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Matrix.lean:43:    (AlgHom.mulLeftRightMatrix_inv R n).comp
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Matrix.lean:44:    (AlgHom.mulLeftRight R (Matrix n n R)).toLinearMap = .id :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Matrix.lean:48:      mulLeftRight_apply, single, Matrix.mul_apply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Matrix.lean:50:lemma AlgHom.mulLeftRightMatrix.comp_inv :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Matrix.lean:51:    (AlgHom.mulLeftRight R (Matrix n n R)).toLinearMap.comp
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Matrix.lean:52:    (AlgHom.mulLeftRightMatrix_inv R n) = .id := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Matrix.lean:68:    ⟨AlgHom.mulLeftRightMatrix_inv R n,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Matrix.lean:69:    DFunLike.congr_fun (AlgHom.mulLeftRightMatrix.inv_comp R n),
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Azumaya/Matrix.lean:70:    DFunLike.congr_fun (AlgHom.mulLeftRightMatrix.comp_inv R n)⟩
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Ring/Unbundled/Basic.lean:465:  le_of_mul_le_mul_right (h.trans <| le_mul_of_one_le_right hb hc) <| zero_lt_one.trans_le hc
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Convex/Birkhoff.lean:62:    suffices #A * s ≤ #(A.biUnion f) * s by exact_mod_cast le_of_mul_le_mul_right this hs
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Ring/WithTop.lean:492:    exact le_of_mul_le_mul_right h x0
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/GroupWithZero/Defs.lean:223:  elim _ _ _ := ‹MulRightReflectLE α›.le_of_mul_le_mul_right'
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/GroupWithZero/Defs.lean:250:theorem le_of_mul_le_mul_right [MulPosReflectLE α] (bc : b * a ≤ c * a) (a0 : 0 < a) : b ≤ c :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/GroupWithZero/Defs.lean:256:alias le_of_mul_le_mul_of_pos_right := le_of_mul_le_mul_right
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/GroupWithZero/Defs.lean:438:    not_le.1 fun h ↦ hbc.not_ge <| le_of_mul_le_mul_right h ha
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/GroupWithZero/Basic.lean:280:  le_of_mul_le_mul_right (by simpa) hb
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Module/Defs.lean:281:  le_of_smul_le_smul_right _b hb _a₁ _a₂ h := le_of_mul_le_mul_right h hb
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Transvection.lean:272:  | cons t L IH => simp [Matrix.mul_assoc, IH, toMatrix_sumInl, fromBlocks_multiply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Transvection.lean:281:  | cons t L IH => simp [IH, toMatrix_sumInl, fromBlocks_multiply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/CauchyIntegral.lean:523:      (hs.preimage ((add_right_injective w).comp ofReal_injective)).mono hsub
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:592:  ofReal_injective <| by simp [sin_add]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:605:  ofReal_injective <| by simp [cos_add]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:614:  ofReal_injective <| by simp [sin_add_sin]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:617:  ofReal_injective <| by simp [sin_sub_sin]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:620:  ofReal_injective <| by simp [cos_add_cos]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:623:  ofReal_injective <| by simp [cos_sub_cos]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:638:  ofReal_injective <| by simp only [ofReal_tan, tan_eq_sin_div_cos, ofReal_div, ofReal_sin,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:642:  ofReal_injective <| by simp [cot_eq_cos_div_sin]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:649:  ofReal_injective <| by simp
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:653:  ofReal_injective <| by simp
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:663:  ofReal_injective (by simp [sin_sq_add_cos_sq])
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:693:  ofReal_injective <| by simp [cos_two_mul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:696:  ofReal_injective <| by simp [cos_two_mul']
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:699:  ofReal_injective <| by simp [cos_two_mul_eq_one_sub]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:702:  ofReal_injective <| by simp [sin_two_mul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:705:  ofReal_injective <| by simp [cos_sq]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Trigonometric.lean:748:  ofReal_injective <| by simp [Complex.sinh]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:55:  simp only [fromBlocks_multiply, Matrix.mul_zero, Matrix.zero_mul, add_zero, zero_add,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:81:    simp_rw [fromBlocks_multiply, Matrix.mul_zero, Matrix.zero_mul, zero_add, add_zero,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:92:    simp_rw [fromBlocks_multiply, Matrix.mul_zero, Matrix.zero_mul, zero_add, add_zero,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:115:      rw [← fromBlocks_toBlocks (⅟(fromBlocks A B 0 D)), fromBlocks_multiply] at this
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:121:      rw [← fromBlocks_toBlocks (⅟(fromBlocks A B 0 D)), fromBlocks_multiply] at this
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:132:      rw [← fromBlocks_toBlocks (⅟(fromBlocks A 0 C D)), fromBlocks_multiply] at this
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:139:      rw [← fromBlocks_toBlocks (⅟(fromBlocks A 0 C D)), fromBlocks_multiply] at this
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SchurComplement.lean:256:    simp only [fromBlocks_multiply, Matrix.one_mul, Matrix.mul_one, Matrix.zero_mul,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:19:* `Matrix.reindexRingEquiv R`: `Matrix.reindex` as a `RingEquiv` between `R`-matrices.
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:82:def reindexRingEquiv (e : m ≃ n) : Matrix m m R ≃+* Matrix n n R where
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:87:theorem coe_reindexRingEquiv (e : m ≃ n) : ⇑(reindexRingEquiv R e) = reindex e e :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:91:theorem toEquiv_reindexRingEquiv (e : m ≃ n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:92:    (reindexRingEquiv R e : Matrix m m R ≃ Matrix n n R) = reindex e e :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:96:theorem toAddEquiv_reindexRingEquiv (e : m ≃ n) : reindexRingEquiv R e = reindexAddEquiv R e e :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:100:theorem symm_reindexRingEquiv (e : m ≃ n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:101:    (reindexRingEquiv R e).symm = reindexRingEquiv R e.symm :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:105:theorem reindexRingEquiv_refl : reindexRingEquiv R (.refl n) = .refl _ :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:109:theorem reindexRingEquiv_trans_reindexRingEquiv (e : m ≃ n) (e' : n ≃ o) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:110:    .trans (reindexRingEquiv R e) (reindexRingEquiv R e') = reindexRingEquiv R (.trans e e') :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:212:  __ := reindexRingEquiv A e
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:229:theorem toRingEquiv_reindexAlgEquiv (e : m ≃ n) : reindexAlgEquiv R A e = reindexRingEquiv A e :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Exponential.lean:234:  ofReal_injective (by simp [exp_nat_mul])
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Exponential.lean:241:  ofReal_injective <| by simp [exp_neg]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Order/Filter/AtTopBot/Ring.lean:82:    fun _x hx => le_of_mul_le_mul_right hx hc
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Order/Filter/AtTopBot/Monoid.lean:119:  tendsto_atTop.2 fun b => (tendsto_atTop.1 hf (b * C)).mono fun _ => le_of_mul_le_mul_right'
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:250:    simp [M, N, fromBlocks_multiply, smul_eq_mul_diagonal, -diagonal_neg]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:252:    simp [M, N, fromBlocks_multiply, sub_eq_add_neg, -scalar_apply, scalar_comm, Commute.all]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/RCLike/Basic.lean:164:theorem ofReal_injective : Function.Injective ((↑) : ℝ → K) :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Group/Defs.lean:50:  le_of_mul_le_mul_right a b c bc := by simpa using mul_le_mul_right bc a⁻¹
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/CStarMatrix.lean:604:    · exact le_of_mul_le_mul_right this h
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/CStarMatrix.lean:617:  · refine le_of_mul_le_mul_right ?_ h₀
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Basic.lean:126:        · refine le_of_mul_le_mul_right ?_ hx
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Basic.lean:138:    · refine le_of_mul_le_mul_right ?_ hx
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/AddTorsor.lean:118:  le_of_smul_le_smul_right _ _ _ := le_of_mul_le_mul_right'
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/SymplecticGroup.lean:77:  rw [J, fromBlocks_multiply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/SymplecticGroup.lean:128:  rw [mem_iff, J, fromBlocks_multiply, fromBlocks_transpose, fromBlocks_multiply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/SymplecticGroup.lean:232:      simpa [mem_iff, fromBlocks_transpose, J, fromBlocks_multiply,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/SymplecticGroup.lean:236:  · simp only [fromBlocks_transpose, J, fromBlocks_multiply, mul_zero, mul_one, zero_add, mul_neg,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/SymplecticGroup.lean:289:    simp [fromBlocks_transpose, fromBlocks_multiply] at con2; tauto
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/SymplecticGroup.lean:315:      simpa [hf, fromBlocks_multiply, fromBlocks_add]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/SymplecticGroup.lean:364:    rw [← M.fromBlocks_toBlocks, fromBlocks_multiply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/SymplecticGroup.lean:369:    simp [mem_iff, fromBlocks_transpose, hX_symm.eq, J, fromBlocks_multiply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/Units.lean:109:alias ⟨le_of_mul_le_mul_right, _⟩ := mul_le_mul_right
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/Defs.lean:244:  /-- Do not use this. Use `le_of_mul_le_mul_right'` instead. -/
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/Defs.lean:245:  protected le_of_mul_le_mul_right' {b a₁ a₂ : M} : a₁ * b ≤ a₂ * b → a₁ ≤ a₂
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/Defs.lean:337:  le_of_mul_le_mul_right' := Group.covariant_swap_iff_contravariant_swap.mp CovariantClass.elim _
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/Defs.lean:503:    covariant_lt_iff_contravariant_le .. |>.mpr fun _ ↦ MulRightReflectLE.le_of_mul_le_mul_right'
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/Defs.lean:528:  le_of_mul_le_mul_right' := contravariant_flip_iff .. |>.mpr
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/Defs.lean:575:  le_of_mul_le_mul_right' := contravariant_le_iff_contravariant_lt_and_eq N N _ |>.mpr
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/Basic.lean:82:theorem le_of_mul_le_mul_right' [MulRightReflectLE α] {a b c : α} (bc : b * a ≤ c * a) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/Basic.lean:84:  MulRightReflectLE.le_of_mul_le_mul_right' bc
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/Basic.lean:94:  rel_iff_cov' ‹MulRightMono α›.elim fun _ ↦ MulRightReflectLE.le_of_mul_le_mul_right'
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/Basic.lean:279:  mul_right_cancel _ _ _ h := (le_of_mul_le_mul_right' h.le).antisymm (le_of_mul_le_mul_right' h.ge)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/Basic.lean:454:  le_of_mul_le_mul_right' (a := b) <| by simpa only [one_mul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/Basic.lean:460:  le_of_mul_le_mul_right' (a := b) <| by simpa only [one_mul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/OrderDual.lean:34:  le_of_mul_le_mul_right' :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Unbundled/OrderDual.lean:35:    Contravariant.flip (μ := swap (· * ·)) (fun _ ↦ ‹MulRightReflectLE α›.le_of_mul_le_mul_right') _
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/TwoDim.lean:198:        refine le_of_mul_le_mul_right ?_ h
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/TwoDim.lean:214:        refine le_of_mul_le_mul_right ?_ (by rwa [norm_pos_iff] : 0 < ‖(w : E)‖)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Defs.lean:66:  protected le_of_mul_le_mul_right : ∀ a b c : α, b * a ≤ c * a → b ≤ c := fun a b c h ↦ by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Monoid/Defs.lean:98:    (le_of_mul_le_mul_right' h.le).antisymm <| le_of_mul_le_mul_right' h.ge
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/NumberTheory/NumberField/CanonicalEmbedding/Basic.lean:643:      (by { simpa only [Complex.real_smul, mul_one] using Complex.ofReal_injective })
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/NumberTheory/DiophantineApproximation/Basic.lean:421:    refine _root_.le_of_mul_le_mul_right (le_of_lt_add_one ?_) hv₁
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/NumberTheory/Niven.lean:96:  isIntegral_algebraMap_iff (B := ℂ) RCLike.ofReal_injective |>.mp <| by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/NumberTheory/Niven.lean:101:  isIntegral_algebraMap_iff (B := ℂ) RCLike.ofReal_injective |>.mp <| by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/NumberTheory/Niven.lean:114:  isAlgebraic_algebraMap_iff (A := ℂ) RCLike.ofReal_injective |>.mp <| by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/NumberTheory/LSeries/PrimesInAP.lean:354:    refine ofReal_injective ?_

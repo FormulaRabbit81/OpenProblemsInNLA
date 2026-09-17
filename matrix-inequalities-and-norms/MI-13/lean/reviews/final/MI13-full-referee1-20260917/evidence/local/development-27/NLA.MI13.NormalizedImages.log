@@ -1,0 +1,26 @@
+NLA/MI13/NormalizedImages.lean:42:2: error: unsolved goals
+case pos
+r : ℕ
+A : Square r
+v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r)
+hv : GramBasis A v
+i : ↑(positiveSingularIndices A)
+hi : ↑(singularValue A ↑↑i) ≠ 0
+⊢ 1 = if True then 1 else 0
+NLA/MI13/NormalizedImages.lean:46:6: warning: This simp argument is unused:
+  if_pos rfl
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Complex.conj_inv, Complex.conj_ofReal, v.inner_eq_one, mul_one, pow_two, inv_mul_cancel_left₀ hi,
+    inv_mul_cancel₀ hi]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'NLA.MI13.positive_image_orthonormal' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/MI13/NormalizedImages.lean:76:21: error: #assert_trust: 'NLA.MI13.positive_image_orthonormal' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
+'NLA.MI13.zero_singular_image' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.MI13.full_singular_vector_bases' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/MI13/NormalizedImages.lean:80:21: error: #assert_trust: 'NLA.MI13.full_singular_vector_bases' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

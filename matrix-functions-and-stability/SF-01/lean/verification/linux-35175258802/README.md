@@ -1,0 +1,5 @@
+# SF-01 actual canonical runtime
+
+[Run 35175258802](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35175258802/job/105055517720) verified literal `3312b0795873cfecade03fa421a5433651d47674` with all 271 committed project input hashes and all 24 targets. The default kernel, Comparator, standard-three axioms and every required per-project rejection/regression/sandbox control passed. Both sandbox modes used non-root UID 1001. The separately skipped global checker-control job does not replace or invalidate the actual controls inside the successful verify job.
+
+The exact receipt and logs, source-lock, raw verify-job log and [coordinator audit](ROOT-AUDIT.json) are retained. [Runtime identity](RUNTIME-IDENTITY.json) binds omitted raw API responses and archive by hashes without copying contact fields. The [independent referee](../../reviews/canonical-runtime/REVIEW.md) reviewed actual evidence. Neither audit is another Lean execution or a claim of checker infallibility. Local macOS development is a distinct recorded execution. Later publication and upstream PR checks remain separate.

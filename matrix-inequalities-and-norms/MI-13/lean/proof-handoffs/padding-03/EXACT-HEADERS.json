@@ -1,0 +1,14 @@
+{
+  "padding_product": {
+    "header": "theorem padding_product {m n : ℕ} (A C : Rect m n) (B : Rect n m) :\n    padUpper A * padLower B * padUpper C - padUpper C * padLower B * padUpper A =\n      padUpper (A * B * C - C * B * A) := by",
+    "sha256": "44863220e51390793850f4f9995cfe9ff16d96cf74495f6ab61b2b30e2f13028"
+  },
+  "padding_norms": {
+    "header": "theorem padding_norms {m n : ℕ} (A : Rect m n) (B : Rect n m) :\n    frobeniusNorm (padUpper A) = frobeniusNorm A ∧\n    spectralNorm (padUpper A) = spectralNorm A ∧\n    frobeniusNorm (padLower B) = frobeniusNorm B ∧\n    spectralNorm (padLower B) = spectralNorm B := by",
+    "sha256": "3dac72622ade02ad273402267c1e933d05f1fa9e8d3c29c9c1203e3779c94f4a"
+  },
+  "padding_singular_values": {
+    "header": "theorem padding_singular_values {m n : ℕ} (A : Rect m n) (B : Rect n m) (k : ℕ) :\n    singularValue (padUpper A) k = singularValue A k ∧\n    singularValue (padLower B) k = singularValue B k := by",
+    "sha256": "549ed5bdb332262b4864e5375e3019109bba354d334c9546af3b24f8d58d3645"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "reviewer": "/root/sf_ra_runtime_referee",
+  "at_utc": "2026-09-17T06:16:25.113708+00:00",
+  "kind": "request_changes: proof reuse, not mathematical correctness",
+  "file": "NLA/MI13/ElementaryBounds.lean",
+  "declaration": "NLA.MI13.unit_circle_lift",
+  "baseline_sha256": "d72587c8f69b640063789027833f3233410cff28e27dc5b4d2c852f572e56992",
+  "replacement_source": "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Complex/Norm.lean",
+  "replacement_source_sha256": "815efa05d2282b0b234139eac16d614f1128d69e39cf02249df887934ccc9741",
+  "exact_replacements": [
+    "Complex.normSq_ofReal_add_I_mul_sqrt_one_sub",
+    "Complex.normSq_ofReal_sub_I_mul_sqrt_one_sub"
+  ],
+  "source_lines": [
+    380,
+    385
+  ],
+  "reason": "Both normSq conjuncts directly specialize these existing pinned lemmas after deriving norm d <= 1 from 0 <= d and d <= 1. Preserve the independent frozen contract, exact circle definitions and symbolic average proof.",
+  "required_continuation": "Measured proof-body-only diff and actual successful source-matched affected output closure before full approval.",
+  "earlier_review_limit": "The earlier bounded prefix review did not locate these APIs; this independent broader search supersedes its reuse assessment for this body."
+}

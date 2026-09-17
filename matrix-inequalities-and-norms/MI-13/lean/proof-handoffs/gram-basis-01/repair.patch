@@ -1,0 +1,12 @@
+--- before/GramBasis.lean
++++ after/GramBasis.lean
+@@ -22,7 +22,8 @@
+   intro i
+   have h := (euclideanLin A).isSymmetric_adjoint_comp_self.apply_eigenvectorBasis hn i
+   rw [← (euclideanLin A).sq_singularValues_fin hn i] at h
+-  simpa only [LinearMap.comp_apply, RCLike.ofReal_pow, singularValue] using h
++  simpa only [LinearMap.comp_apply, RCLike.ofReal_eq_complex_ofReal,
++    Complex.ofReal_pow, singularValue] using h
+ 
+ theorem positive_image_extension {r : ℕ} (A : Square r)
+     (v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r))

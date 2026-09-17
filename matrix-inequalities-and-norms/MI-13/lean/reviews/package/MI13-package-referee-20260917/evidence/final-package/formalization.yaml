@@ -1,0 +1,569 @@
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'MI-13: the complete spectral-middle-factor rectangular commutator inequality'
+  description: Full complex rectangular MI-13 inequality with coefficient two, actual Euclidean operator
+    and Frobenius norms and the two largest actual singular values. All ranks, both dimension orderings
+    and every m,n at least two are retained.
+  authors:
+  - George Stepaniants
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California Institute of Technology,
+      Pasadena, California, USA
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+repository:
+  role: substantive-development
+sources:
+- title: MI-13 — Nobori's spectral-middle-factor commutator conjecture
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ebdf2f34dc7690d8e323faaeb40d6dcc30c851ff/matrix-inequalities-and-norms/MI-13/README.md
+  type: web-post
+  location: Complete original problem and repository resolution
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: Exact original target formalized; original repository reduction and attribution retained. No new
+    authorship of the informal reduction is inferred.
+- title: A generalization of the Böttcher–Wenzel inequality for three rectangular matrices
+  authors:
+  - M. Nobori
+  id: https://arxiv.org/abs/2506.17365v2
+  type: article
+  location: Conjecture 3.1, equation (8), as identified in the canonical page
+  relationship: background
+  author_endorsement: not-contacted
+  note: Original question and attribution retained. This draft reads the complete canonical statement
+    and reduction; it does not claim a new audit of the external paper.
+- title: Variance bounds, with an application to norm bounds for commutators
+  authors:
+  - K. M. R. Audenaert
+  id: https://arxiv.org/abs/0907.3913
+  type: article
+  location: Section 7.4, Corollary 5, as identified in the canonical page
+  relationship: independently-proves
+  author_endorsement: not-contacted
+  note: The refined commutator bound is proved internally in Lean by a finite spectral and SVD argument;
+    the literature theorem is not assumed.
+- title: A note on some upper bounds for the Frobenius norm of the q-deformed commutator
+  authors:
+  - M. Nobori
+  id: https://arxiv.org/abs/2608.03897v1
+  type: preprint
+  location: Theorem 1.1 and section 3, as identified in the canonical page
+  relationship: background
+  author_endorsement: not-contacted
+  note: The canonical page records an alternative established route; no theorem from this paper is imported
+    or assumed by this draft.
+related_formalizations:
+- id: https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474
+  relationship: builds-on
+  note: Pinned actual Euclidean maps, ordered singular values, Gram eigenbases, orthonormal extension,
+    Rayleigh extrema, complex unit-circle lemmas and block algebra are genuinely reused.
+- id: https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926
+  relationship: builds-on
+  note: Actual kernel-mode exact half positivity and normalization certificate; positivity is consumed
+    by the Frobenius averaging proof. All variable inequalities remain symbolic; no interval subdivision.
+- id: https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof
+  relationship: other
+  note: Challenge and numerical-boundary patterns read. No mathematical result imported.
+- id: https://github.com/jaumededios/Schiffer
+  relationship: other
+  note: Exact retained Challenge snapshot read and byte-bound. No fresh head query or Schiffer theorem
+    import is claimed.
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    tool_setup: Parallel source and independent referee agents. The coordinator alone runs local Lean
+      serially with one thread and a 4096 MiB limit. Two exact statement reviews and independent local-run
+      evidence audit are retained. Final Comparator, default-kernel and sandbox checks require a real
+      non-root GitHub Linux runner.
+    prompting_notes: Seal numerical statements and the concrete definition plan before Lean statements;
+      obtain two independent statement approvals and actual elaboration before freezing or proof implementation.
+      Avoid rank-counting, full commutator eigenbasis construction and interval subdivision.
+  notes: Exact numerical and mathematical statements preceded implementation, with two independent statement
+    approvals and actual elaboration. Source development and debugging used one serial local Lean process.
+    Final source reviews and non-root Linux Comparator are separate recorded gates; neither a source scan
+    nor an evidence audit is an execution.
+status:
+  scope: Full complex rectangular MI-13 inequality with coefficient two, actual Euclidean operator and
+    Frobenius norms and the two largest actual singular values. All ranks, both dimension orderings and
+    every m,n at least two are retained.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+  - propext
+  - Quot.sound
+  - Classical.choice
+  main_results:
+  - declaration: NLA.MI13.frobenius_semantics
+    file: NLA/MI13/Frobenius.lean
+    line: 58
+    file_sha256: e19ea36fb0c520962a184371ebff51d42246e1ea9ec7f47808a602df0f896c90
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.frobenius_linear_bounds
+    file: NLA/MI13/Frobenius.lean
+    line: 76
+    file_sha256: e19ea36fb0c520962a184371ebff51d42246e1ea9ec7f47808a602df0f896c90
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.operator_norm_semantics
+    file: NLA/MI13/OperatorNorm.lean
+    line: 20
+    file_sha256: e73ee25c908df1a1ff6051b9bd8c7e8aadc43ec211e31b8d888b0479e638844d
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.singular_values_semantics
+    file: NLA/MI13/SingularSemantics.lean
+    line: 18
+    file_sha256: 90b23f01099b9d9036b6a5ea5155f61f5b6aa77d8cefc0044cd3766ecc3dc61b
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.singular_values_gram
+    file: NLA/MI13/SingularSemantics.lean
+    line: 26
+    file_sha256: 90b23f01099b9d9036b6a5ea5155f61f5b6aa77d8cefc0044cd3766ecc3dc61b
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.ordered_gram_basis
+    file: NLA/MI13/GramBasis.lean
+    line: 18
+    file_sha256: 3a3b6e77d4081f20fb9e7df79ce1ae36a0414851f8a81a18186959ecb759f1f9
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.positive_image_orthonormal
+    file: NLA/MI13/NormalizedImages.lean
+    line: 31
+    file_sha256: c9200151a6ad1fc8dd8cecfad3b133087f5a7597bc7157195751040290db5ea1
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.zero_singular_image
+    file: NLA/MI13/NormalizedImages.lean
+    line: 53
+    file_sha256: c9200151a6ad1fc8dd8cecfad3b133087f5a7597bc7157195751040290db5ea1
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.positive_image_extension
+    file: NLA/MI13/GramBasis.lean
+    line: 28
+    file_sha256: 3a3b6e77d4081f20fb9e7df79ce1ae36a0414851f8a81a18186959ecb759f1f9
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.full_singular_vector_bases
+    file: NLA/MI13/NormalizedImages.lean
+    line: 60
+    file_sha256: c9200151a6ad1fc8dd8cecfad3b133087f5a7597bc7157195751040290db5ea1
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.full_svd
+    file: NLA/MI13/SVD.lean
+    line: 35
+    file_sha256: 59f701c5d958f92e1f6913ead484903196ba761fb45be9956cef671fb1f3519e
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.unitary_norm_invariance
+    file: NLA/MI13/UnitaryInvariance.lean
+    line: 60
+    file_sha256: bd825d92218cf9b947bad95d34ba6f45bc37b29a0fa5246cd929a9a00889dae8
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.unitary_singular_invariance
+    file: NLA/MI13/UnitaryInvariance.lean
+    line: 39
+    file_sha256: bd825d92218cf9b947bad95d34ba6f45bc37b29a0fa5246cd929a9a00889dae8
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.hilbert_schmidt_semantics
+    file: NLA/MI13/Frobenius.lean
+    line: 104
+    file_sha256: e19ea36fb0c520962a184371ebff51d42246e1ea9ec7f47808a602df0f896c90
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.commutator_adjoint
+    file: NLA/MI13/CommutatorAlgebra.lean
+    line: 28
+    file_sha256: 0bb27d768d1eed8e6e783508a00887f19e2ad4f62b80428ab49be0fcce368d08
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.commutator_conjugate_symmetry
+    file: NLA/MI13/CommutatorAlgebra.lean
+    line: 57
+    file_sha256: 0bb27d768d1eed8e6e783508a00887f19e2ad4f62b80428ab49be0fcce368d08
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.commutator_spectral_maximum
+    file: NLA/MI13/CommutatorMaximum.lean
+    line: 17
+    file_sha256: a870e869415b2d34cc7db9b238dc2c4b110dee4aaf7682eef52881fb45759a39
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.positive_eigenvector_pair
+    file: NLA/MI13/CommutatorEigenspaces.lean
+    line: 39
+    file_sha256: 613d4cfb2e4f686411179e9bbf33630bb08e25fd964942a33361a88b11c991c1
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.eigenspace_functional_kernel
+    file: NLA/MI13/CommutatorEigenspaces.lean
+    line: 68
+    file_sha256: 613d4cfb2e4f686411179e9bbf33630bb08e25fd964942a33361a88b11c991c1
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.two_coordinate_bound
+    file: NLA/MI13/ElementaryBounds.lean
+    line: 19
+    file_sha256: 672653adc4153e10bc5eafe558cde14b6ff965dd7b61c248d4fea98323a72b78
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.off_corner_coefficient_bound
+    file: NLA/MI13/ElementaryBounds.lean
+    line: 30
+    file_sha256: 672653adc4153e10bc5eafe558cde14b6ff965dd7b61c248d4fea98323a72b78
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.svd_corner_functional
+    file: NLA/MI13/CancelledSVD.lean
+    line: 30
+    file_sha256: 421d9632779e21ae956c468f5f6212ebda38ef5ae00a514406ab545b9987217a
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.cancelled_svd_bound
+    file: NLA/MI13/CancelledSVD.lean
+    line: 113
+    file_sha256: 421d9632779e21ae956c468f5f6212ebda38ef5ae00a514406ab545b9987217a
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.refined_commutator_bound
+    file: NLA/MI13/RefinedCommutator.lean
+    line: 20
+    file_sha256: ffcfc8be476b891ba62895404a3b351fed6c4cb868e51e0cfb37885f2f169326
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.half_certificate
+    file: NLA/MI13/Numerical.lean
+    line: 18
+    file_sha256: 91a9cbb39602c1a405eaef117913fee8c6b97ac59d9e55e0082686653d0ba676
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.unit_circle_lift
+    file: NLA/MI13/ElementaryBounds.lean
+    line: 46
+    file_sha256: 672653adc4153e10bc5eafe558cde14b6ff965dd7b61c248d4fea98323a72b78
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.two_unitary_average
+    file: NLA/MI13/TwoUnitaryAverage.lean
+    line: 55
+    file_sha256: cf31ad350c2577333fcec8ac0856937caa50d670e0c0634b88b58a8c14e73d17
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.frobenius_average_bound
+    file: NLA/MI13/ElementaryBounds.lean
+    line: 57
+    file_sha256: 672653adc4153e10bc5eafe558cde14b6ff965dd7b61c248d4fea98323a72b78
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.unitary_middle_bound
+    file: NLA/MI13/MiddleBounds.lean
+    line: 21
+    file_sha256: 8f98b9cd37208896164b2fccfe62f751cd38ad936fea93af62bee2ee142a62d6
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.contraction_middle_bound
+    file: NLA/MI13/MiddleBounds.lean
+    line: 39
+    file_sha256: 8f98b9cd37208896164b2fccfe62f751cd38ad936fea93af62bee2ee142a62d6
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.square_middle_bound
+    file: NLA/MI13/MiddleBounds.lean
+    line: 58
+    file_sha256: 8f98b9cd37208896164b2fccfe62f751cd38ad936fea93af62bee2ee142a62d6
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.padding_product
+    file: NLA/MI13/Padding.lean
+    line: 22
+    file_sha256: 6c5365f6ea185e2a8c27930f2c237d2fda56d8191a662d906c1721d5b82dbac2
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.padding_norms
+    file: NLA/MI13/Padding.lean
+    line: 192
+    file_sha256: 6c5365f6ea185e2a8c27930f2c237d2fda56d8191a662d906c1721d5b82dbac2
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.padding_singular_values
+    file: NLA/MI13/Padding.lean
+    line: 186
+    file_sha256: 6c5365f6ea185e2a8c27930f2c237d2fda56d8191a662d906c1721d5b82dbac2
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.canonical_rectangular_bound
+    file: NLA/MI13/Complete.lean
+    line: 18
+    file_sha256: 0e3f09dea75b014cce6bff288c5aafdab01781d5ae462f587620e1876a0e0ba6
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  - declaration: NLA.MI13.sharpness_example
+    file: NLA/MI13/Sharpness.lean
+    line: 39
+    file_sha256: faf100dc77cd88038802f01d85c7b9d2d0cd5948166514dd4113d33c0272e5dd
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+    verification_status: Actual source-bound local Lean elaboration and kernel trust assertions passed.
+      Fresh Linux Comparator and isolation checks pending.
+  whole_problem_verified: false
+  source_scan_note: All implementation sources are hole-free. Challenge has 36 intentional specification
+    placeholders and is never imported by Solution.
+fidelity:
+  divergences: The exact original target is retained. The refined commutator inequality is proved internally.
+    Sum-index padding into m+n replaces the informal max(m,n) padding, with proved preservation of actual
+    norms and every zero-extended singular value.
+review:
+  status: Two full nonauthor proof reviews accepted on exact local53 source; independent canonical package
+    review in progress.
+  reviewers:
+  - /root/sf_ra_runtime_referee
+  - /root/mi13_full_referee2
+  notes: Both reports read all 22 implementation inputs and all 36 exact contracts and authenticate actual local
+    evidence. Neither is a fresh referee compiler run or Linux Comparator execution. Apply pinned Tau
+    Ceti guidance within these recorded scopes, with no official endorsement or human peer-review claim.
+    See reviews/INDEX.json.
+alignment:
+  source_correspondence: SourceCorrespondence.md
+  numerical_boundary: NUMERICAL_TARGETS.md
+  proposed_statements: Challenge.lean
+  source_provenance: SOURCE-PROVENANCE.json
+  intended_implementation_entry: Solution.lean
+  statement_freeze: STATEMENT-FREEZE.json
+  local_statement_receipt: statement-audit/local20/RECEIPT.json
+  active_source_manifest: ACTIVE-SOURCE-MANIFEST.json
+  implementation_map: IMPLEMENTATION-MAP.json
+acknowledgements: Nobori for the original question and related results, Audenaert for the established
+  refined commutator theorem, the repository contributors for the reduction, and Mathlib, LeanCert, Comparator,
+  Schiffer and Forsythe contributors for the retained mathematical foundations and workflow patterns.
+verification:
+  local: Actual macOS local53 full Solution passes, with source-bound successful reuse and all 36 standard
+    axiom reports.
+  local_evidence: verification/LOCAL-COMPLETE.json
+  Linux_Comparator: pending
+  default_kernel_replay: pending
+  sandbox_and_rejection_controls: pending
+  publication: Private canonical preparation; source reviews accepted, package review and Linux checks
+    pending; no verified-count change.

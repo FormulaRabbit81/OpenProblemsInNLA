@@ -1,0 +1,118 @@
+{
+  "coordinator": "/root",
+  "time_utc": "2026-09-17T04:24:27.826975+00:00",
+  "scope": "Actual local document checks and independent corrected publication review; no new Lean or Comparator execution",
+  "proof_commit": "3312b0795873cfecade03fa421a5433651d47674",
+  "upstream_base": "d348d7471e2ff881ae30fb8a9c40323a61cd383a",
+  "independent_correction_manifest_sha256": "213e7ddbfb2ff30c83294ec59399a3b477f903449d7601341bd0e27f3227ac86",
+  "independent_correction_bindings_reauthenticated_before_transition": 375,
+  "all37_mathematical_sources_unchanged": true,
+  "actual_local_checks": [
+    {
+      "name": "format",
+      "argv": [
+        "python3",
+        "tools/format_math.py",
+        "--check",
+        "SF-01"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "render",
+      "argv": [
+        "python3",
+        "tools/render_problems.py",
+        "SF-01"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "ids",
+      "argv": [
+        "python3",
+        "tools/validate_problem_ids.py",
+        "--base-ref",
+        "origin/main"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "catalog",
+      "argv": [
+        "python3",
+        "tools/update_catalog.py",
+        "--base-ref",
+        "origin/main"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "tests",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_problem_ids.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "manifest",
+      "argv": [
+        "/Users/georgestepaniants/miniforge3/bin/python",
+        "tools/lean/validate_manifest.py",
+        "matrix-functions-and-stability/SF-01/lean"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "check_file_sha256": {
+    "CHECKS.json": "cd0e9e476920ad93f643ae65c340fba2a90f73e78f9f0e60f2e471c8ad5d8eed",
+    "SOLUTION-PDF-BUILD.json": "693f62516065155cae50052243d579facc1884f83a9d5ed4aad20f9f57698ec1",
+    "catalog.log": "3ef17c8e2d51a2ea897f61636cce6687b9c51107a0b085b30d29762a8137ed0c",
+    "format.log": "a79bf13b65bde7baa6900939f581282565799e78e47c9e2426f83b5b4ccb5a9c",
+    "ids.log": "44cc74bfe8f011df4389835465a6043310e12828a092e8c74d318f50d26da3a0",
+    "manifest.log": "4e813d7d211228b6130706d112327a94e9e0fed27d662d0b038edd6cd62a4e08",
+    "render.log": "e1fa9964ecd55356dab700c72179bf68a29e56233ccaa04859929d62f6f1e726",
+    "solution-pass1.log.txt": "a08234c73918a525fbb30724015a14d2fba0ebddd6726dec65f9f64f4f47ca11",
+    "solution-pass2.log.txt": "f794125804b0fda624b92ef909126008728a44514c76d10dcc116c36207dda6f",
+    "tests.log": "c1ac1a3dd0b8c32893d22fbd7d8e9bd799f668fcaa571193f1dd7247f4f7acf4"
+  },
+  "PDF_visual_inspection": {
+    "reviewer": "/root",
+    "scope": "All5 rendered pages viewed during this work session; no clipping, missing symbols or overlap",
+    "image_sha256": {
+      "solution-1.png": "499cdfbd92e856f5514ce1d6885443d8df24d4dae38374ea60619337d19c5d14",
+      "solution-2.png": "4499b735bebaa3362b2cfbe51fded45c496017279f18af87cf1e2c6b5f0d85f4",
+      "problem-1.png": "bb291ccb549d767df86408765928806c6f7d7f260679854323dec474d029c229",
+      "problem-2.png": "e4e1da6179044e4699832ef90dc5e57583ac7e94e5634e8dd0780db2dd949073",
+      "problem-3.png": "4210a9a36fc739b8c2cc199ae3daef8c0770e2ec875b59f9ea93533d26b64b38"
+    }
+  },
+  "document_sha256": {
+    "README.md": "b19fa947b2a52b26a557e2d0548efd0ba43e38835d322f9ef3370ad1b7a52b37",
+    "problem.tex": "65c2df91fba9869edee64d7fb6d4dd1bb048eaed7ba3c5abff92bd2d6344dc1e",
+    "problem.pdf": "85a076632b388ab0d9fae006d5dd5583385002e3c18723768bdf17b4c77cbfdb",
+    "solution.tex": "0ec21f40ebdad1dfed0564c3c4441169a1312bd85ce64d20c4d3e8eab9658357",
+    "solution.pdf": "9b5794d3b64c7d08a7618b119949411cadab009867025b16127b4660bb14b742"
+  },
+  "catalog_sha256": {
+    "CATALOG.md": "4a41b9ee96194aab3b4cc86840068b82710fa0e2222dac2c4d68a4fc2f2d2232",
+    "README.md": "1a834ad34bd43937d493fc097a9f69c0cb00778426ebc05eaf4f869c17041810",
+    "RESOLVED.md": "bdc1bbdd7bce62cfb5c656c2e34efcc1f80e418200fd94250bdd436645717c0d",
+    "matrix-functions-and-stability/README.md": "dad5f3e72eb82203346b63789c21ac8d781c340fc64eb7176596442625c1cf9e"
+  },
+  "current_document_transition_sha256": {
+    "PUBLICATION-EVIDENCE.json": "8b8f1c86a48ed341903fcfb28109d9bb25751a0b23dc27806811df07862838c8",
+    "reviews/INDEX.json": "b44499c276dc764c1f923e55fb30e3861c5d5341e87876c69deafba9862eb812"
+  },
+  "PR_body_sha256": "01ec8c373dd0a83835cb19b2641fa6d593f6b5dda92fb7f59ed98365b1d9362b",
+  "later_publication_and_upstream_run_pending": true,
+  "count_delta": 0
+}

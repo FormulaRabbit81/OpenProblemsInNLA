@@ -1,0 +1,104 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original question and refined-commutator
+attributions are retained in the project correspondence.
+
+Transfer the refined commutator inequality to a unitary middle factor,
+average two such factors for a contraction, then scale the actual operator norm.
+-/
+import NLA.MI13.RefinedCommutator
+import NLA.MI13.UnitaryInvariance
+import NLA.MI13.TwoUnitaryAverage
+import NLA.MI13.NormScaling
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.MI13
+noncomputable section
+
+theorem unitary_middle_bound {r : ℕ} (hr : 2 ≤ r) (A C W : Square r)
+    (hW : IsUnitary W) :
+    (A * W * C - C * W * A) * W = commutator (A * W) (C * W) ∧
+    frobeniusNorm (A * W * C - C * W * A) ^ 2 ≤
+      2 * (singularValue A 0 ^ 2 + singularValue A 1 ^ 2) * frobeniusNorm C ^ 2 := by
+  have halg : (A * W * C - C * W * A) * W = commutator (A * W) (C * W) := by
+    dsimp only [commutator]
+    noncomm_ring
+  refine ⟨halg, ?_⟩
+  have hI : IsUnitary (1 : Square r) := by simp [IsUnitary]
+  have hn (Z : Square r) : frobeniusNorm (Z * W) = frobeniusNorm Z := by
+    simpa only [Matrix.one_mul] using (unitary_norm_invariance Z 1 W hI hW).1
+  have hs (k : ℕ) : singularValue (A * W) k = singularValue A k := by
+    simpa only [Matrix.one_mul] using unitary_singular_invariance A 1 W hI hW k
+  have h := refined_commutator_bound hr (A * W) (C * W)
+  rw [← halg, hn, hs 0, hs 1, hn] at h
+  exact h
+
+theorem contraction_middle_bound {r : ℕ} (hr : 2 ≤ r) (A B C : Square r)
+    (hB : spectralNorm B ≤ 1) :
+    frobeniusNorm (A * B * C - C * B * A) ^ 2 ≤
+      2 * (singularValue A 0 ^ 2 + singularValue A 1 ^ 2) * frobeniusNorm C ^ 2 := by
+  obtain ⟨U, V, hU, hV, havg⟩ := two_unitary_average B hB
+  let X := A * U * C - C * U * A
+  let Y := A * V * C - C * V * A
+  have hexpand : A * B * C - C * B * A = (1 / 2 : ℂ) • (X + Y) := by
+    rw [havg]
+    dsimp only [X, Y]
+    simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_add, Matrix.add_mul,
+      smul_add, smul_sub]
+    abel
+  have hx := (unitary_middle_bound hr A C U hU).2
+  have hy := (unitary_middle_bound hr A C V hV).2
+  have hmean := frobenius_average_bound X Y
+  rw [hexpand]
+  exact hmean.trans (by dsimp only [X, Y]; linarith)
+
+theorem square_middle_bound {r : ℕ} (hr : 2 ≤ r) (A B C : Square r) :
+    frobeniusNorm (A * B * C - C * B * A) ^ 2 ≤
+      2 * spectralNorm B ^ 2 * (singularValue A 0 ^ 2 + singularValue A 1 ^ 2) *
+        frobeniusNorm C ^ 2 := by
+  by_cases hz : spectralNorm B = 0
+  · have hB : B = 0 := (operator_norm_semantics B).2.1.mp hz
+    simp [hB, frobeniusNorm, flatten, spectralNorm, euclideanCLM, euclideanLin]
+  · let t := spectralNorm B
+    have ht : 0 < t := lt_of_le_of_ne (spectralNorm_nonneg B) (Ne.symm hz)
+    let N : Square r := (t : ℂ)⁻¹ • B
+    have hinv : ‖(t : ℂ)⁻¹‖ = t⁻¹ := by
+      rw [norm_inv, Complex.norm_real, Real.norm_eq_abs, abs_of_pos ht]
+    have hN : spectralNorm N ≤ 1 := by
+      dsimp only [N]
+      rw [spectralNorm_smul, hinv]
+      exact le_of_eq (inv_mul_cancel₀ (ne_of_gt ht))
+    have hB : B = (t : ℂ) • N := by
+      dsimp only [N]
+      rw [smul_smul, mul_inv_cancel₀ (Complex.ofReal_ne_zero.mpr (ne_of_gt ht)), one_smul]
+    have hexpand : A * B * C - C * B * A =
+        (t : ℂ) • (A * N * C - C * N * A) := by
+      rw [hB]
+      simp only [Matrix.mul_smul, Matrix.smul_mul, smul_sub]
+    have hcont := contraction_middle_bound hr A N C hN
+    -- Homogeneity is used after proving t>0; the zero operator was handled
+    -- separately, so the normalization never divides by zero.
+    calc
+      frobeniusNorm (A * B * C - C * B * A) ^ 2 =
+          (t * frobeniusNorm (A * N * C - C * N * A)) ^ 2 := by
+        rw [hexpand, (frobenius_linear_bounds _ 0 (t : ℂ)).1,
+          Complex.norm_real, Real.norm_eq_abs, abs_of_pos ht]
+      _ = t ^ 2 * frobeniusNorm (A * N * C - C * N * A) ^ 2 := mul_pow _ _ _
+      _ ≤ t ^ 2 *
+          (2 * (singularValue A 0 ^ 2 + singularValue A 1 ^ 2) * frobeniusNorm C ^ 2) :=
+        mul_le_mul_of_nonneg_left hcont (sq_nonneg t)
+      _ = 2 * spectralNorm B ^ 2 * (singularValue A 0 ^ 2 + singularValue A 1 ^ 2) *
+          frobeniusNorm C ^ 2 := by dsimp only [t]; ring
+
+#print axioms unitary_middle_bound
+#assert_trust kernel unitary_middle_bound
+#print axioms contraction_middle_bound
+#assert_trust kernel contraction_middle_bound
+#print axioms square_middle_bound
+#assert_trust kernel square_middle_bound
+
+end
+end NLA.MI13
