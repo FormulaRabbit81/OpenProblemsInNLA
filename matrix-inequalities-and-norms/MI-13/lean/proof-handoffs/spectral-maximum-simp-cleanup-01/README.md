@@ -1,0 +1,1 @@
+Remove only the unused Matrix.mul_zero simp argument reported by successful local39. Frozen header unchanged; quarantine successful old output before source-matched rebuild. Retry unrun at preparation.

@@ -1,0 +1,16 @@
+{
+  "scope": "Two exact frozen commutator contracts; all finite dimensions including zero; unrun candidate",
+  "headers": {
+    "commutator_adjoint": "theorem commutator_adjoint {r : \u2115} (X Y Z : Square r) :\n    (commutatorOperator X).adjoint = commutatorOperator X.conjTranspose \u2227\n    hsInner (commutator X Y) Z = hsInner Y (commutator X.conjTranspose Z) \u2227\n    hsInner Y (commutatorT X Y) = ((frobeniusNorm (commutator X Y) ^ 2 : \u211d) : \u2102) := by",
+    "commutator_conjugate_symmetry": "theorem commutator_conjugate_symmetry {r : \u2115} (X Y Z : Square r) (z : \u2102) :\n    commutatorJ X (z \u2022 Y + Z) = star z \u2022 commutatorJ X Y + commutatorJ X Z \u2227\n    commutatorJ X (commutatorJ X Y) = -commutatorT X Y \u2227\n    commutatorT X (commutatorJ X Y) = commutatorJ X (commutatorT X Y) \u2227\n    hsInner Y (commutatorJ X Y) = 0 \u2227\n    frobeniusNorm (commutatorJ X Y) = frobeniusNorm (commutator X Y) := by"
+  },
+  "source_sha256": "f68128ffde2da0cb4deb2ffc56cf334a7b6f7d20c8eb3519c20f78abd262614d",
+  "route": "Trace cyclicity gives the Hilbert-Schmidt adjoint, flattening is surjective on entry space, and the CLM adjoint characterization proves operator equality. Conjugate transpose and noncommutative polynomial identities prove the J symmetry; finite sum transposition preserves the Frobenius norm. All symbolic, no additional numerical certificate.",
+  "primary_source_sha256": {
+    "Analysis/InnerProductSpace/Adjoint.lean": "f28b5896638f712605265a69ffe4469f1f42e1b78b10ade0844738aeecd2b2a2",
+    "Analysis/InnerProductSpace/Basic.lean": "344aa5e0b104223d327bb1f13db092b4d320017c8f82b7ba9846b5f517222468",
+    "LinearAlgebra/Matrix/Trace.lean": "8053b04dc1c67b3a7d14262acc43b574e521940085e031726947f3c2241b7a73",
+    "LinearAlgebra/Matrix/ConjTranspose.lean": "10ace10899567db7c2ccd38c0e89e3bdca2261494975a42d3b1a5535c9e3b1b6"
+  },
+  "not_yet_compiled": true
+}

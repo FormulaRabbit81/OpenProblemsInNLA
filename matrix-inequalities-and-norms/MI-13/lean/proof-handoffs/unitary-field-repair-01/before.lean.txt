@@ -1,0 +1,80 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance; original mathematical attribution retained.
+
+Unitary invariance follows from equality of the actual Gram characteristic
+polynomials and their ordered eigenvalues. Multiplicities and empty dimensions
+are retained; no simple-spectrum or invertibility premise is added to A.
+-/
+import NLA.MI13.OperatorNorm
+import NLA.MI13.Frobenius
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.MI13
+noncomputable section
+
+theorem gram_charpoly {m n : ℕ} (A : Rect m n) :
+    ((euclideanLin A).adjoint ∘ₗ euclideanLin A).charpoly =
+      (A.conjTranspose * A).charpoly := by
+  have hg : (euclideanLin A).adjoint ∘ₗ euclideanLin A =
+      Matrix.toEuclideanLin (A.conjTranspose * A) := by
+    rw [euclideanLin, ← Matrix.toEuclideanLin_conjTranspose_eq_adjoint]
+    exact (Matrix.toLpLin_mul 2 2 2 A.conjTranspose A).symm
+  rw [hg, Matrix.toEuclideanLin_eq_toLin_orthonormal, Matrix.charpoly_toLin]
+
+theorem unitary_gram {m n : ℕ} (A : Rect m n)
+    (U : Square m) (V : Square n) (hU : IsUnitary U) :
+    (U * A * V).conjTranspose * (U * A * V) =
+      V.conjTranspose * (A.conjTranspose * A) * V := by
+  calc
+    (U * A * V).conjTranspose * (U * A * V) =
+        V.conjTranspose * A.conjTranspose * (U.conjTranspose * U) * A * V := by
+      simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
+    _ = V.conjTranspose * (A.conjTranspose * A) * V := by
+      rw [hU.1, Matrix.mul_one, Matrix.mul_assoc V.conjTranspose A.conjTranspose A]
+
+theorem unitary_singular_invariance {m n : ℕ} (A : Rect m n)
+    (U : Square m) (V : Square n) (hU : IsUnitary U) (hV : IsUnitary V) (k : ℕ) :
+    singularValue (U * A * V) k = singularValue A k := by
+  have hchar : ((U * A * V).conjTranspose * (U * A * V)).charpoly =
+      (A.conjTranspose * A).charpoly := by
+    rw [unitary_gram A U V hU, Matrix.charpoly_mul_comm, ← Matrix.mul_assoc,
+      hV.2, Matrix.one_mul]
+  have heigs := ((euclideanLin (U * A * V)).isSymmetric_adjoint_comp_self.
+    eigenvalues_eq_eigenvalues_iff (finrank_euclideanSpace_fin (𝕜 := ℂ) (n := n))
+      (euclideanLin A).isSymmetric_adjoint_comp_self
+      (finrank_euclideanSpace_fin (𝕜 := ℂ) (n := n))).mpr
+        (by simpa only [gram_charpoly] using hchar)
+  by_cases hk : k < n
+  · apply (sq_eq_sq₀ ((singular_values_semantics (U * A * V)).1 k)
+      ((singular_values_semantics A).1 k)).mp
+    rw [singular_values_gram (U * A * V) ⟨k, hk⟩, singular_values_gram A ⟨k, hk⟩]
+    exact congrFun heigs ⟨k, hk⟩
+  · rw [(singular_values_semantics (U * A * V)).2.2 k (Nat.le_of_not_gt hk),
+      (singular_values_semantics A).2.2 k (Nat.le_of_not_gt hk)]
+
+theorem unitary_norm_invariance {m n : ℕ} (A : Rect m n)
+    (U : Square m) (V : Square n) (hU : IsUnitary U) (hV : IsUnitary V) :
+    frobeniusNorm (U * A * V) = frobeniusNorm A ∧
+    spectralNorm (U * A * V) = spectralNorm A := by
+  constructor
+  · have ht : Matrix.trace ((U * A * V).conjTranspose * (U * A * V)) =
+        Matrix.trace (A.conjTranspose * A) := by
+      rw [unitary_gram A U V hU, Matrix.trace_mul_comm, ← Matrix.mul_assoc,
+        hV.2, Matrix.one_mul]
+    apply (sq_eq_sq₀ (frobenius_semantics (U * A * V)).2.2.1
+      (frobenius_semantics A).2.2.1).mp
+    rw [(frobenius_semantics (U * A * V)).2.1, (frobenius_semantics A).2.1, ht]
+  · rw [(operator_norm_semantics (U * A * V)).1, (operator_norm_semantics A).1]
+    exact unitary_singular_invariance A U V hU hV 0
+
+#print axioms unitary_singular_invariance
+#assert_trust kernel unitary_singular_invariance
+#print axioms unitary_norm_invariance
+#assert_trust kernel unitary_norm_invariance
+
+end
+end NLA.MI13

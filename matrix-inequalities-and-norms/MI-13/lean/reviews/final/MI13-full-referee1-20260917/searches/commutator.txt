@@ -1,0 +1,88 @@
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/PosDef.lean:54:  conv_lhs => rw [hA.1.spectral_theorem, conjStarAlgAut_apply, trace_mul_cycle, coe_star_mul_self,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RepresentationTheory/Character.lean:61:    ρ.character (h * g) = ρ.character (g * h) := by simp only [trace_mul_comm, character, map_mul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RepresentationTheory/Character.lean:160:    V.character (h * g) = V.character (g * h) := by simp only [trace_mul_comm, character, map_mul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Ring/Basic.lean:472:lemma norm_commutator_units_sub_one_le (a b : αˣ) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Ring/Basic.lean:485:lemma nnnorm_commutator_units_sub_one_le (a b : αˣ) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Ring/Basic.lean:487:  simpa using! norm_commutator_units_sub_one_le a b
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Field/Basic.lean:104:lemma norm_commutator_sub_one_le (ha : a ≠ 0) (hb : b ≠ 0) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Field/Basic.lean:106:  simpa using norm_commutator_units_sub_one_le (.mk0 a ha) (.mk0 b hb)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Field/Basic.lean:108:lemma nnnorm_commutator_sub_one_le (ha : a ≠ 0) (hb : b ≠ 0) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Field/Basic.lean:110:  simpa using nnnorm_commutator_units_sub_one_le (.mk0 a ha) (.mk0 b hb)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Schreier.lean:196:  have h1 := relIndex_dvd_index_of_normal (center G) (_root_.commutator G)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Schreier.lean:217:def cardCommutatorBound (n : ℕ) :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Schreier.lean:220:/-- A theorem of Schur: The size of the commutator subgroup is bounded in terms of the number of
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Schreier.lean:223:    Nat.card (_root_.commutator G) ≤ cardCommutatorBound (Nat.card (commutatorSet G)) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/SpecificGroups/Alternating/KleinFour.lean:201:    rw [← Subgroup.Normal.quotient_commutative_iff_commutator_le]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/SpecificGroups/ZGroup.lean:170:    have h := Abelianization.commutator_subset_ker ⁅commutator H, commutator H⁆.normalizerMonoidHom
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/SpecificGroups/ZGroup.lean:235:theorem commutator_eq_bot_or_commutator_eq_self [P.Normal] {K : Subgroup G}
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/SpecificGroups/ZGroup.lean:237:  P.2.commutator_eq_bot_or_commutator_eq_self (P.normalizer_eq_top ▸ le_top)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/SpecificGroups/ZGroup.lean:240:/-- A normal cyclic Sylow subgroup is either central or contained in the commutator subgroup. -/
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/SpecificGroups/ZGroup.lean:241:theorem le_center_or_le_commutator [P.Normal] : P ≤ Subgroup.center G ∨ P ≤ commutator G := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/SpecificGroups/ZGroup.lean:249:/-- A cyclic Sylow subgroup is either central in its normalizer or contained in the commutator
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/SpecificGroups/ZGroup.lean:251:theorem normalizer_le_centralizer_or_le_commutator :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/SpecificGroups/ZGroup.lean:252:    Subgroup.normalizer P ≤ Subgroup.centralizer (P : Set G) ∨ P ≤ commutator G := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/SpecificGroups/ZGroup.lean:265:      Subgroup.map_subgroupOf_eq_of_le P.le_normalizer, Subgroup.map_subtype_commutator] at h
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/SpecificGroups/ZGroup.lean:274:  refine (normalizer_le_centralizer_or_le_commutator P).imp ?_ ?_ <;>
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Lie/Classical.lean:85:      (congr_arg (fun x => _ - x) (Matrix.trace_mul_comm Y X))
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Lie/TraceForm.lean:62:  LinearMap.trace_mul_comm R (φ x) (φ y)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Lie/TraceForm.lean:82:  · simp only [LinearMap.trace_mul_cycle' R (φ x) (φ z) (φ y)]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Focal.lean:147:  Normal.quotient_commutative_iff_commutator_le.mpr H.commutator_le_focalSubgroupOf
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Lie/OfAssociative.lean:34:lie algebra, ring commutator, adjoint action
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Lie/Weights/Linear.lean:151:      LieHom.map_lie, Ring.lie_def, map_sub, LinearMap.trace_mul_comm, sub_self]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:211:instance commutator_normal [h₁ : H₁.Normal] [h₂ : H₂.Normal] : Normal ⁅H₁, H₂⁆ := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:223:theorem commutator_def' [H₁.Normal] [H₂.Normal] :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:228:theorem commutator_le_right [h : H₂.Normal] : ⁅H₁, H₂⁆ ≤ H₂ :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:232:theorem commutator_le_left [H₁.Normal] : ⁅H₁, H₂⁆ ≤ H₁ :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:236:theorem commutator_top_left_le_iff : ⁅(⊤ : Subgroup G), H⁆ ≤ H ↔ H.Normal := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:241:theorem commutator_top_right_le_iff : ⁅H, ⊤⁆ ≤ H ↔ H.Normal :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:245:theorem le_normalizer_iff_commutator_le_right : H ≤ normalizer K ↔ ⁅H, K⁆ ≤ K := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:251:theorem le_normalizer_iff_commutator_le_left : H ≤ normalizer K ↔ ⁅K, H⁆ ≤ K :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:252:  commutator_comm H K ▸ le_normalizer_iff_commutator_le_right
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:263:theorem commutator_le_inf [Normal H₁] [Normal H₂] : ⁅H₁, H₂⁆ ≤ H₁ ⊓ H₂ :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:267:theorem commutator_eq_bot_of_disjoint [H₁.Normal] [H₂.Normal] (h : Disjoint H₁ H₂) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:278:theorem normalizer_commutator_ge_left : H₁ ≤ normalizer (⁅H₁, H₂⁆ : Subgroup G) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:286:theorem normalizer_commutator_ge_right : H₂ ≤ normalizer (⁅H₁, H₂⁆ : Subgroup G) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:288:  apply normalizer_commutator_ge_left
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:291:instance normal_subgroupOf_commutator_sup : (⁅H₁, H₂⁆.subgroupOf <| H₁ ⊔ H₂).Normal :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:293:    (normalizer_commutator_ge_left H₁ H₂) (normalizer_commutator_ge_right H₁ H₂)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:381:/-- The commutator subgroup of a group G is the normal subgroup
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:383:@[to_additive /-- The commutator subgroup of an additive group G is the normal additive subgroup
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:388:attribute [to_additive] instNormalCommutator
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:400:lemma commutator_eq_normalClosure : commutator G = Subgroup.normalClosure (commutatorSet G) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:415:theorem Subgroup.Normal.of_commutator_le {H : Subgroup G} (h : _root_.commutator G ≤ H) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:495:theorem Subgroup.Normal.quotient_commutative_iff_commutator_le {N : Subgroup G} [N.Normal] :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:498:  · rw [commutator_eq_normalClosure, ← Subgroup.normalClosure_subset_iff]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Commutator/Basic.lean:515:theorem Subgroup.Normal.commutator_le_of_self_sup_commutative_eq_top {N : Subgroup G} [N.Normal]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Solvable.lean:59:  | succ n ih => exact Subgroup.commutator_normal (derivedSeries G n) (derivedSeries G n)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Solvable.lean:247:    rcases (commutator_normal (⊤ : Subgroup G) (⊤ : Subgroup G)).eq_bot_or_eq_top with h | h
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Solvable.lean:286:    exact commutator_mem_commutator ih ((derivedSeries_normal _ _).conj_mem _ ih _)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/AbsoluteGaloisGroup.lean:25:- `Field.absoluteGaloisGroup.commutator_closure_isNormal` : the topological closure of the
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/AbsoluteGaloisGroup.lean:26:  commutator of `absoluteGaloisGroup` is a normal subgroup.
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/AbsoluteGaloisGroup.lean:53:instance absoluteGaloisGroup.commutator_closure_isNormal :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/AbsoluteGaloisGroup.lean:54:    (commutator (G_K K)).topologicalClosure.Normal :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/AbsoluteGaloisGroup.lean:55:  Subgroup.is_normal_topologicalClosure (commutator (G_K K))
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Nilpotent.lean:445:    apply normalizer_commutator_ge_right
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/Nilpotent.lean:450:  rw [lowerCentralSeries_succ, ← le_normalizer_iff_commutator_le_left]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Rayleigh.lean:26:The corollaries `LinearMap.IsSymmetric.hasEigenvalue_iSup_of_finiteDimensional` and
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Rayleigh.lean:27:`LinearMap.IsSymmetric.hasEigenvalue_iSup_of_finiteDimensional` state that if `E` is
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Rayleigh.lean:325:theorem hasEigenvalue_iSup_of_finiteDimensional [Nontrivial E] (hT : T.IsSymmetric) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Rayleigh.lean:364:    absurd (hT' _) hT.hasEigenvalue_iSup_of_finiteDimensional
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Algebra/Group/TopologicalAbelianization.lean:23:- `instNormalCommutatorClosure` : the topological closure of the commutator of a topological group
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Algebra/Group/TopologicalAbelianization.lean:37:instance instNormalCommutatorClosure : (commutator G).topologicalClosure.Normal :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Algebra/Group/TopologicalAbelianization.lean:38:  Subgroup.is_normal_topologicalClosure (commutator G)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Trace.lean:158:theorem trace_mul_comm [AddCommMonoid R] [CommMagma R] (A : Matrix m n R) (B : Matrix n m R) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Trace.lean:161:theorem trace_mul_cycle [NonUnitalCommSemiring R] (A : Matrix m n R) (B : Matrix n p R)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Trace.lean:163:  rw [trace_mul_comm, Matrix.mul_assoc]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Trace.lean:165:theorem trace_mul_cycle' [NonUnitalCommSemiring R] (A : Matrix m n R) (B : Matrix n p R)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Trace.lean:167:  rw [← Matrix.mul_assoc, trace_mul_comm]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Trace.lean:196:  rw [trace_mul_cycle, Units.inv_mul, one_mul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Trace.lean:67:        rw [Matrix.mul_assoc, Matrix.trace_mul_comm]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Trace.lean:103:theorem trace_mul_comm (f g : M →ₗ[R] M) : trace R M (f * g) = trace R M (g * f) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Trace.lean:108:    apply Matrix.trace_mul_comm
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Trace.lean:111:lemma trace_mul_cycle (f g h : M →ₗ[R] M) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Trace.lean:113:  rw [LinearMap.trace_mul_comm, ← mul_assoc]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Trace.lean:115:lemma trace_mul_cycle' (f g h : M →ₗ[R] M) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Trace.lean:117:  rw [← mul_assoc, LinearMap.trace_mul_comm]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Trace.lean:122:  rw [trace_mul_comm R g (f * h), mul_assoc]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Trace.lean:128:  rw [trace_mul_comm]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Trace.lean:134:  rw [Ring.lie_def, map_sub, trace_mul_comm]

@@ -1,0 +1,86 @@
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/GroupTheory/GroupAction/CardCommute.lean:87:            sum_equiv ConjAct.toConjAct.toEquiv (fun a ↦ card { b // Commute a b })
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Multiset/Sort.lean:73:  List.mergeSort_eq_self _ (sortedLT_range n).sortedLE.pairwise
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/DirectSum/LinearMap.lean:84:  exact Fintype.sum_equiv hN.subtypeEquivToFinset _ _ (fun i ↦ rfl)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/ToFinsupp.lean:56:    exact getD_eq_default _ _
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/ToFinsupp.lean:81:  getD_eq_default _ _ hn
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/ToFinsupp.lean:102:    rw [getD_append _ _ _ _ h, Finsupp.embDomain_of_notMem_range, add_zero]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/ToFinsupp.lean:107:    rw [getD_append_right _ _ _ _ h, Nat.add_sub_cancel_left, getD_eq_default _ _ h, zero_add]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/GetD.lean:46:theorem getD_eq_default {n : ℕ} (hn : l.length ≤ n) : l.getD n d = d := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/GetD.lean:64:theorem getElem?_getD_replicate_default_eq (r n : ℕ) : (replicate r d)[n]?.getD d = d := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/GetD.lean:70:theorem getD_append (l l' : List α) (d : α) (n : ℕ) (h : n < l.length) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/GetD.lean:74:theorem getD_append_right (l l' : List α) (d : α) (n : ℕ) (h : l.length ≤ n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/GetD.lean:111:  getD_eq_default _ _ hn
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/GetD.lean:117:    (l ++ l').getI n = l.getI n := getD_append _ _ _ _ h
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/GetD.lean:121:  getD_append_right _ _ _ _ h
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/Sort.lean:346:theorem mergeSort_eq_self {l : List α} : Pairwise r l → mergeSort l (r · ·) = l :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/BigOperators/Sym.lean:27:  refine (Finset.sum_equiv Sym2.sortEquiv.symm ?_ ?_).symm
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/List/Pairwise.lean:113:theorem pairwise_replicate_of_refl {n} [Std.Refl R] : (replicate n a).Pairwise R :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Defs.lean:525:The difference with `Finset.sum_equiv` is that bijectivity is only required to hold on the domains
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Defs.lean:537:See `Fintype.sum_equiv` for the version where `s` and `t` are `univ`. -/]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Defs.lean:738:@[to_additive /-- `Fintype.sum_equiv` is a specialization of `Finset.sum_bij` that
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/BigOperators/Expect.lean:256:    𝔼 i ∈ s, f i = 𝔼 i ∈ t, g i := by simp_rw [expect, card_equiv e hst, sum_equiv e hst hfg]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Antidiag/Pi.lean:117:    have := Fintype.sum_equiv (e₂.symm.trans e₁) _ g fun _ ↦ rfl
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Antidiag/Pi.lean:129:    exact ⟨Fintype.sum_equiv e _ _ (by simp), by simp +contextual⟩
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/Antidiag/Pi.lean:133:    exact Fintype.sum_equiv e.symm _ _ (by simp)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Lp/PiLp.lean:878:      exact Fintype.sum_equiv e.symm _ _ fun _ => rfl
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Module/FiniteDimension.lean:372:      ‖u e‖₊ = ‖u (∑ i, v.equivFun e i • v i)‖₊ := by rw [v.sum_equivFun]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Group/AddChar.lean:336:  exact Fintype.sum_equiv (Equiv.addLeft x) _ _ fun y ↦ (map_add_eq_mul ..).symm
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Nat/Choose/Multinomial.lean:337:    refine (Fintype.sum_equiv (symInsertEquiv ha) _ _ fun m => ?_).symm
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Group/Translate.lean:82:  Fintype.sum_equiv (Equiv.subRight _) _ _ fun _ ↦ rfl
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Nat/Nth.lean:73:    nth p n = 0 := by rw [nth, dif_pos hf, List.getD_eq_default]; rwa [Finset.length_sort]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Nat/Nth.lean:306:    rw [nth, dif_pos hf, List.getD_eq_default _ _ (by simp [hn])]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Fourier/ZMod.lean:56:    Fintype.sum_equiv (Equiv.neg _) _ _ (fun j ↦ by rw [Equiv.neg_apply, neg_mul_neg])
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Fourier/ZMod.lean:184:  refine Fintype.sum_equiv u.mulLeft _ _ fun x ↦ ?_
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/ContDiff/Bounds.lean:303:    rw [Finset.sum_equiv (Finset.symInsertEquiv hi) (t := Finset.univ)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Star/Conjneg.lean:68:  Fintype.sum_equiv (Equiv.neg _) _ _ fun _ ↦ rfl
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/CStarMatrix.lean:416:      refine Fintype.sum_equiv e _ _ ?_
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/ContDiff/FaaDiBruno.lean:1104:    exact Fintype.sum_equiv (OrderedFinpartition.extendEquiv m) _ _ (fun p ↦ rfl)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Mul.lean:413:    Finset.sum_equiv (finCongr List.length_finRange) (by simp) (by simp)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Mul.lean:422:    Finset.sum_equiv (finCongr List.length_attach.symm) (by simp) (by simp)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/CategoryTheory/Limits/Shapes/BinaryProducts.lean:83:  -- to match equiv.sum_equiv_sigma_bool
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Logic/Equiv/Multiset.lean:101:      simp [-Multiset.map_coe, List.mergeSort_eq_self _ (raise_sorted _ _).pairwise, lower_raise]⟩
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Logic/Equiv/Finset.lean:118:        List.mergeSort_eq_self _ (raise'_sorted _ _).sortedLE.pairwise, lower_raise']⟩
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Basis/Defs.lean:256:theorem Basis.sum_equivFun [Fintype ι] (b : Basis ι R M) (u : M) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Basis/Defs.lean:262:  b.sum_equivFun u
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Finsupp/LinearCombination.lean:508:    exact Fintype.sum_equiv A.symm _ (fun j ↦ c j • (j : M)) (fun i ↦ rfl)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean:154:        Fintype.sum_equiv (Equiv.mulRight σ⁻¹) _ _ fun τ => by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean:227:  apply Fintype.sum_equiv (Equiv.permCongr e)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SemiringInverse.lean:39:  sum_equiv (.inv _) (by simp) fun σ _ ↦ prod_equiv σ (by simp) (by simp)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SemiringInverse.lean:81:  sum_equiv (equivCongr f g) (by simp) fun _ _ ↦ prod_equiv f (by simp) fun _ _ ↦ by simp
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SemiringInverse.lean:175:  have : A.detp 1 = A.detp (-1) := sum_equiv (.mulRight <| swap p q) (by simp [hpq])
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SemiringInverse.lean:219:  ext fun _ _ ↦ sum_equiv (.inv _) (by aesop) fun σ hσ ↦ prod_equiv σ (by aesop) (by simp)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Dual/BaseChange.lean:129:    conv_lhs => rw [← Basis.sum_equivFun b v, map_sum]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Circulant.lean:118:  refine Fintype.sum_equiv (Equiv.subRight j) _ _ ?_
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Circulant.lean:132:  refine Fintype.sum_equiv ((Equiv.subLeft i).trans (Equiv.addRight j)) _ _ ?_
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/AlgebraicGeometry/EllipticCurve/Affine/Point.lean:164:  have h := (CoordinateRing.basis W').sum_equivFun x
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/RootSystem/Finite/CanonicalBilinear.lean:144:  exact Fintype.sum_equiv (P.reflectionPerm i)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/RootSystem/Finite/CanonicalBilinear.lean:257:    exact (Fintype.sum_equiv (P.reflectionPerm i)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Combinatorics/Enumerative/Bell.lean:272:    exact hsub ▸ (Fintype.sum_equiv (Partition.partitionWithPartEquiv h1 h2) _ _ (fun _ ↦ rfl)).symm
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Combinatorics/Enumerative/Bell.lean:276:    refine Fintype.sum_equiv (sigmaPartitionWithPartEquiv n) _ _ ?_
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Transvection/Basic.lean:122:    have : x = ∑ i, b.repr x i • b i := (b.sum_equivFun x).symm
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Differential/Liouville.lean:154:      apply Fintype.sum_equiv (Equiv.mulLeft e)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Category/Profinite/Nobeling/Successor.lean:53:* `GoodProducts.sum_equiv`: the equivalence between `GoodProducts C` and the disjoint union of
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Category/Profinite/Nobeling/Successor.lean:342:def sum_equiv (hsC : contained C (Order.succ o)) (ho : o < Ordinal.type (· < · : I → I → Prop)) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Category/Profinite/Nobeling/Successor.lean:347:theorem sum_equiv_comp_eval_eq_elim : eval C ∘ (sum_equiv C hsC ho).toFun =
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Category/Profinite/Nobeling/Successor.lean:384:  rw [← linearIndependent_equiv (sum_equiv C hsC ho), SumEval,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Category/Profinite/Nobeling/Successor.lean:385:    ← sum_equiv_comp_eval_eq_elim C hsC ho]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Category/Profinite/Nobeling/Successor.lean:393:  rw [← sum_equiv_comp_eval_eq_elim C hsC ho, Equiv.toFun_as_coe,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology/Category/Profinite/Nobeling/Successor.lean:394:    EquivLike.range_comp (e := sum_equiv C hsC ho)]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/NumberTheory/LSeries/ZMod.lean:257:  refine Fintype.sum_equiv (.neg _) _ _ fun i ↦ ?_
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/NumberTheory/LSeries/ZMod.lean:265:  refine Fintype.sum_equiv (.neg _) _ _ fun i ↦ ?_
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/NumberTheory/LSeries/ZMod.lean:424:  exact Fintype.sum_equiv (.neg _) _ _ (by simp [hΦ _])
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/NumberTheory/LSeries/ZMod.lean:450:    exact (Fintype.sum_equiv (.neg _) _ _ fun x ↦ by rfl).symm
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/NumberTheory/ModularForms/Bounds.lean:134:    (fun g τ ↦ (Fintype.sum_equiv (MulAction.toPerm g) _ _ (by simp [-sl_moeb, hf'_inv])).symm)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/HahnSeries/Multiplication.lean:622:    exact Finset.sum_equiv (Equiv.prodComm _ _) (fun _ ↦ swap_mem_antidiagonal.symm) <| by simp
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/HahnSeries/Summable.lean:272:theorem hsum_equiv (e : α ≃ β) (s : SummableFamily Γ R α) : (Equiv e s).hsum = s.hsum := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/HahnSeries/Summable.lean:505:  rw [smul_eq, hsum_equiv, smul_hsum, hsum_unique, const_toFun]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/Trace/Basic.lean:224:  rw [pb.trace_gen_eq_sum_roots hE, Fintype.sum_equiv pb.liftEquiv', Finset.sum_mem_multiset,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/Trace/Basic.lean:243:  rw [Fintype.sum_equiv algHomEquivSigma (fun σ : F →ₐ[K] E => _) fun σ => σ.1 pb.gen,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/Trace/Basic.lean:267:  rw [← Fintype.sum_equiv (Normal.algHomEquivAut K (AlgebraicClosure L) L)]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/Trace/Basic.lean:405:  rw [b.sum_equivFun]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean:317:  apply Fintype.sum_equiv oneEquiv
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean:331:  apply Fintype.sum_equiv (equivCongr e)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean:392:  rw [Fintype.sum_equiv (Equiv.trans Sym.oneEquiv (Equiv.Set.univ (Sym σ 1)).symm)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean:394:  · apply Fintype.sum_equiv (Equiv.subtypeEquivProp this)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/MvPolynomial/Symmetric/Defs.lean:405:  apply Fintype.sum_equiv (Nat.Partition.ofSymShapeEquiv μ e)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/Idempotents.lean:178:    Fintype.sum_equiv i _ e (fun _ ↦ rfl)]

@@ -689,9 +689,12 @@ bound in [Audenaert, Corollary 5](https://arxiv.org/pdf/0907.3913), combined wit
 square padding and a two-unitary decomposition of a contraction, proves the
 exact target for every allowed rectangular dimension. The constant is sharp.
 The complete repository proof passed two independent Codex-agent reviews of
-its assumptions and steps. It has not received external peer review or Lean
-formalization; no novelty claim is made. The former difficulty label remains
+its assumptions and steps. It has not received external peer review; no
+novelty claim is made. The former difficulty label remains
 historical and the entry no longer contributes to the open count.
+
+
+**Lean verified — 2026-09-17. Formalization contributor: George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. The [complete formalization](matrix-inequalities-and-norms/MI-13/lean/README.md) proves the full original complex rectangular target, including the refined commutator bound internally and the sharp constant. Actual [non-root Linux verification](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35191730986/job/105105676064) at immutable revision `e37310121f154b1a0d94efa4f98fdcd469177134` passed all 36 exact Comparator contracts, default-kernel replay, standard-axiom and rejection/isolation checks. Local Lean development and two complete nonauthor source reviews preceded the run; the retained evidence distinguishes those scopes. Original mathematical attribution is unchanged.
 
 ### ✅ Five resolutions by Matthew J. Colbrook — 2026-09-11
 

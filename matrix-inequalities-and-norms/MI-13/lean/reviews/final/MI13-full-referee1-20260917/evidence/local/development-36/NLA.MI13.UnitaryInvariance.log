@@ -1,0 +1,19 @@
+NLA/MI13/UnitaryInvariance.lean:46:73: error: Invalid field notation: Identifier or numeral expected
+NLA/MI13/UnitaryInvariance.lean:41:55: error: unsolved goals
+m n : ℕ
+A : Rect m n
+U : Square m
+V : Square n
+hU : IsUnitary U
+hV : IsUnitary V
+k : ℕ
+hchar : ((U * A * V).conjTranspose * (U * A * V)).charpoly = (Matrix.conjTranspose A * A).charpoly
+⊢ singularValue (U * A * V) k = singularValue A k
+'NLA.MI13.unitary_singular_invariance' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/MI13/UnitaryInvariance.lean:75:21: error: #assert_trust: 'NLA.MI13.unitary_singular_invariance' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
+'NLA.MI13.unitary_norm_invariance' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/MI13/UnitaryInvariance.lean:77:21: error: #assert_trust: 'NLA.MI13.unitary_norm_invariance' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

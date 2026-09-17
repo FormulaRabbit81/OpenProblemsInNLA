@@ -1,0 +1,70 @@
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:171:theorem roots_mul {p q : R[X]} (hpq : p * q ≠ 0) : (p * q).roots = p.roots + q.roots := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:178:  exact Multiset.le_iff_exists_add.mpr ⟨k.roots, roots_mul h⟩
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:214:    simp only [roots_mul, *, Ne, mul_eq_zero, C_eq_zero, or_self_iff, not_false_iff, roots_C,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:269:    rw [List.prod_cons, roots_mul (mul_ne_zero (Ne.symm H.1) <| List.prod_ne_zero H.2), ←
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:272:theorem roots_multiset_prod (m : Multiset R[X]) : (0 : R[X]) ∉ m → m.prod.roots = m.bind roots := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:279:  simpa [Multiset.prod_eq_zero_iff, Multiset.bind_map] using roots_multiset_prod (m.map f)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:288:    · rw [pow_succ, roots_mul (mul_ne_zero (pow_ne_zero _ hp) hp), ihn, add_smul, one_smul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:290:theorem roots_X_pow (n : ℕ) : (X ^ n : R[X]).roots = n • ({0} : Multiset R) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:295:  rw [roots_C_mul _ ha, roots_X_pow]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:308:theorem roots_multiset_prod_X_sub_C (s : Multiset R) : (s.map fun a => X - C a).prod.roots = s := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:309:  rw [roots_multiset_prod, Multiset.bind_map]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:327:theorem card_roots_X_pow_sub_C {n : ℕ} (hn : 0 < n) (a : R) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:451:  rw [nthRoots, h₁, roots_mul (h₁ ▸ h₂), roots_X_add_C, roots_X_sub_C]; rfl
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:487:theorem aroots_mul [IsDomain T] [CommRing S] [IsDomain S] [Algebra T S]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:491:    rw [aroots_def, Polynomial.map_mul, roots_mul this]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:542:theorem aroots_X_pow [CommRing S] [IsDomain S] [Algebra T S] (n : ℕ) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:549:  rw [aroots_C_mul _ ha, aroots_X_pow]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Roots.lean:836:    rw [roots_mul, roots_multiset_prod_X_sub_C] at he
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Splits.lean:305:    rw [hm, roots_C_mul _ hf0, roots_multiset_prod_X_sub_C]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Splits.lean:387:  | mul x y _ _ hx hy => simp_all [roots_mul, show x * y ≠ 0 by aesop]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Splits.lean:414:theorem Splits.nextCoeff_eq_neg_sum_roots_mul_leadingCoeff (hf : Splits f) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Splits.lean:423:  simp [hf.nextCoeff_eq_neg_sum_roots_mul_leadingCoeff, hm]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Splits.lean:431:    roots_mul (mul_ne_zero (X_sub_C_ne_zero _) hf₀), roots_X_sub_C,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/RuleOfSigns.lean:392:  · simp [← h, roots_mul (ne_zero_of_mem_roots η_root), η_pos, ← Nat.succ.injEq]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:149:theorem charpoly_zero : charpoly (0 : Matrix n n R) = X ^ Fintype.card n := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:170:theorem charpoly_reindex (e : n ≃ m)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:181:lemma charpoly_fromBlocks_zero₁₂ :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:187:lemma charpoly_fromBlocks_zero₂₁ :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Charpoly/ToMatrix.lean:59:    (P * A * Q).charpoly = (φ (P * A * Q)).charpoly := (charpoly_reindex ..).symm
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Charpoly/ToMatrix.lean:69:    toMatrix_prodMap b₁ b₂ f₁ f₂, Matrix.charpoly_fromBlocks_zero₁₂]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Charpoly/Basic.lean:56:theorem charpoly_zero [StrongRankCondition R] :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/Polynomial/ScaleRoots.lean:183:lemma scaleRoots_mul (p : R[X]) (r s) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/Polynomial/ScaleRoots.lean:273:  simp [← scaleRoots_mul, scaleRoots_one]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/Polynomial/SmallDegreeVieta.lean:80:      simp [this, Polynomial.roots_mul h2, Polynomial.roots_mul h1]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/AdjoinRoot.lean:820:      rw [powerBasis_gen, minpoly_root hf, aroots_mul, aroots_C, add_zero, Equiv.refl_apply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:172:lemma sort_roots_charpoly_eq_eigenvalues₀ :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:185:    simp_rw [← List.ofFn_inj, ← sort_roots_charpoly_eq_eigenvalues₀, h]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Minpoly/IsIntegrallyClosed.lean:193:      ← scaleRoots_mul, mul_inv_cancel₀ (by simpa), scaleRoots_one]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/SplittingField/IsSplittingField.lean:100:    rw [rootSet, aroots_mul (mul_ne_zero hf hg),
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/SplittingField/Construction.lean:197:    rw [roots_mul hmf0, Polynomial.map_sub, map_X, map_C, roots_X_sub_C, Multiset.toFinset_add,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/PolynomialGaloisGroup.lean:262:  rw [rootSet_def, aroots_mul hpq] at hx
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Perfect.lean:406:theorem roots_X_pow_char_pow_sub_C {y : R} :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Perfect.lean:411:theorem roots_X_pow_char_pow_sub_C_pow {y : R} {m : ℕ} :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Perfect.lean:413:  rw [roots_pow, roots_X_pow_char_pow_sub_C, mul_smul]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Perfect.lean:415:theorem roots_X_pow_char_sub_C {y : R} :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Perfect.lean:417:  have H := roots_X_pow_char_pow_sub_C (p := p) (n := 1) (y := y)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Perfect.lean:420:theorem roots_X_pow_char_sub_C_pow {y : R} {m : ℕ} :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Perfect.lean:422:  have H := roots_X_pow_char_pow_sub_C_pow (p := p) (n := 1) (y := y) (m := m)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/SeparableDegree.lean:431:  simp_rw [natSepDegree_eq_of_isAlgClosed (AlgebraicClosure F), aroots_mul h, Multiset.toFinset_add]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/SeparableDegree.lean:451:  simp_rw [natSepDegree_eq_of_isAlgClosed (AlgebraicClosure F), aroots_mul h, Multiset.toFinset_add,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Finite/Basic.lean:455:theorem roots_X_pow_card_sub_X : roots (X ^ q - X : K[X]) = Finset.univ.val := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Finite/Basic.lean:734:theorem Subfield.roots_X_pow_char_sub_X_bot :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Finite/Basic.lean:739:  exact FiniteField.roots_X_pow_card_sub_X _
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Finite/Basic.lean:744:  rw [splits_iff_card_roots, roots_X_pow_char_sub_X_bot, ← Finset.card_def, Finset.card_univ,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Finite/Basic.lean:749:  have := roots_X_pow_char_sub_X_bot F p ▸
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Finite/GaloisField.lean:50:      map_X, h, FiniteField.roots_X_pow_card_sub_X K, ← Finset.card_def, Finset.card_univ]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Finite/GaloisField.lean:55:    · rw [FiniteField.roots_X_pow_card_sub_X, val_toFinset, coe_univ, Algebra.adjoin_univ]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/FieldTheory/Finite/GaloisField.lean:139:    convert! FiniteField.roots_X_pow_card_sub_X (ZMod p)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:369:theorem sort_roots_charpoly_eq_eigenvalues (hT : T.IsSymmetric) (hn : Module.finrank 𝕜 E = n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:384:    rw [← List.ofFn_inj, ← sort_roots_charpoly_eq_eigenvalues, ← sort_roots_charpoly_eq_eigenvalues,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/NormDet.lean:43:* `LinearMap.normDet_eq_prod_singularValues`: `LinearMap.normDet` equals to the product of singular
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:104:theorem singularValues_pos_iff_ne_zero (i : ℕ) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:186:  rw [Finset.mem_coe, Finsupp.mem_support_iff, ← singularValues_pos_iff_ne_zero] at ⊢ ha
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:198:  rw [singularValues_pos_iff_ne_zero, ← Finsupp.mem_support_iff, support_singularValues,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:205:theorem singularValues_eq_zero_iff_le_finrank_range {n : ℕ} :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:210:theorem singularValues_zero : (0 : E →ₗ[𝕜] F).singularValues = 0 := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:212:  rw [Finsupp.zero_apply, singularValues_eq_zero_iff_le_finrank_range, range_zero]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:216:theorem singularValues_eq_zero_iff : T.singularValues = 0 ↔ T = 0 := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:219:      ← singularValues_eq_zero_iff_le_finrank_range, h, Finsupp.zero_apply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:220:  · exact h ▸ singularValues_zero

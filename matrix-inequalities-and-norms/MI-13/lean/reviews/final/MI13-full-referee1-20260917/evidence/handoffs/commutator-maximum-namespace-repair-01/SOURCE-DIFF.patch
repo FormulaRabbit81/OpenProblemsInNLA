@@ -1,0 +1,20 @@
+--- before
++++ after
+@@ -18,7 +18,7 @@
+     ∃ (lam : ℝ) (Y : Square r), 0 ≤ lam ∧ Y ≠ 0 ∧
+       commutatorT X Y = (lam : ℂ) • Y ∧
+       ∀ Z : Square r, frobeniusNorm (commutator X Z) ^ 2 ≤ lam * frobeniusNorm Z ^ 2 := by
+-  letI : Nonempty (Fin r) := ⟨⟨0, by omega⟩⟩
++  let : Nonempty (Fin r) := ⟨⟨0, by omega⟩⟩
+   let L := (commutatorOperator X).toLinearMap
+   let G := L.adjoint ∘ₗ L
+   let T := G.toContinuousLinearMap
+@@ -35,7 +35,7 @@
+   have heigen := hsym.hasEigenvalue_iSup_of_finiteDimensional
+   -- The CLM and linear-map Rayleigh expressions have the same action;
+   -- unfolding these fixed wrappers identifies the explicitly chosen supremum.
+-  change G.HasEigenvalue (lam : ℂ) at heigen
++  change Module.End.HasEigenvalue G (lam : ℂ) at heigen
+   obtain ⟨v, hv⟩ := heigen.exists_hasEigenvector
+   have hqnonneg : 0 ≤ T.rayleighQuotient v := by
+     rw [ContinuousLinearMap.rayleighQuotient, ContinuousLinearMap.reApplyInnerSelf_apply]

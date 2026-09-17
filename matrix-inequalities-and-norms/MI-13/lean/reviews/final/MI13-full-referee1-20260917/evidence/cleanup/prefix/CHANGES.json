@@ -1,0 +1,40 @@
+{
+  "scope": "MI-13 bounded proof-quality cleanup and source-matched dependent recompilation; no statement or trust change",
+  "reviews": [
+    "ad0cb6bcab403f626d3ef2dcab76d36666b7d62d2e5ecde8f8360553f83807ad",
+    "0c17137ce4dc2297ee25723864a37a7114b95c98e19fa2fc933c58158ffc2c91"
+  ],
+  "changes": {
+    "Frobenius": {
+      "before": "ef35234c3f73b22cc6d1d5b8ae7c3fa4e9cf87cdf244b7be64be2a8400a6c3c3",
+      "after": "e19ea36fb0c520962a184371ebff51d42246e1ea9ec7f47808a602df0f896c90",
+      "diff": "--- before/Frobenius.lean\n+++ after/Frobenius.lean\n@@ -50,7 +50,7 @@\n \n theorem flatten_inner_eq_trace {m n : \u2115} (A C : Rect m n) :\n     inner \u2102 (flatten A) (flatten C) = Matrix.trace (A.conjTranspose * C) := by\n-  simp only [PiLp.inner_apply, flatten, PiLp.toLp_apply, RCLike.inner_apply',\n+  simp only [PiLp.inner_apply, flatten, RCLike.inner_apply',\n     starRingEnd_apply, Fintype.sum_prod_type, Matrix.trace, Matrix.diag_apply,\n     Matrix.mul_apply, Matrix.conjTranspose_apply]\n   exact Finset.sum_comm\n@@ -84,6 +84,9 @@\n     commutatorOperator X (flatten Y) = flatten (commutator X Y) := by\n   apply PiLp.ext\n   rintro \u27e8i, j\u27e9\n+  -- Expose the Euclidean CLM application in entry coordinates. The fixed\n+  -- toContinuousLinearMap, toEuclideanLin and WithLp wrappers reduce\n+  -- definitionally to this coefficient sum, which the finite-sum lemmas use.\n   change (\u2211 kl : Fin r \u00d7 Fin r,\n       ((if kl.2 = j then X i kl.1 else 0) -\n         (if i = kl.1 then X kl.2 j else 0)) * Y kl.1 kl.2) =\n@@ -96,7 +99,7 @@\n   \u00b7 rw [Finset.sum_comm]\n     apply Finset.sum_congr rfl\n     intro k hk\n-    simp [ite_mul, mul_comm]\n+    simp [mul_comm]\n \n theorem hilbert_schmidt_semantics {r : \u2115} (X Y Z : Square r) (z : \u2102) :\n     Function.Injective (flatten (m := r) (n := r)) \u2227\n"
+    },
+    "NormalizedImages": {
+      "before": "ca365a0c2f783736137682a840cde1a7d5723615dab6d60d630f805c7eb3fd2b",
+      "after": "c9200151a6ad1fc8dd8cecfad3b133087f5a7597bc7157195751040290db5ea1",
+      "diff": "--- before/NormalizedImages.lean\n+++ after/NormalizedImages.lean\n@@ -34,6 +34,9 @@\n   classical\n   rw [orthonormal_iff_ite]\n   intro i j\n+  -- After orthonormal_iff_ite, domRestrict applies the family to subtype\n+  -- values. Expose those underlying indices definitionally so the Gram\n+  -- identity and normalized-image formula match without coercion wrappers.\n   change inner \u2102 (normalizedImages A v i.val) (normalizedImages A v j.val) =\n     if i = j then (1 : \u2102) else 0\n   simp only [normalizedImages, inner_smul_left, inner_smul_right,\n"
+    }
+  },
+  "quarantined_outputs": {
+    "Frobenius": {
+      "sha256": "71cdea6be92e5f54f611494fa3a0db498936d25f163d626550bdeb2feb7f6a56",
+      "destination": "/private/tmp/nla-lean-local-shared-20260916/quarantine/MI13-prefix-cleanup-01/Frobenius.olean"
+    },
+    "ElementaryBounds": {
+      "sha256": "03154bae3d871c4a1224ba939332b7df5cb753316d45ac06d57beb47cac3d41f",
+      "destination": "/private/tmp/nla-lean-local-shared-20260916/quarantine/MI13-prefix-cleanup-01/ElementaryBounds.olean"
+    },
+    "NormalizedImages": {
+      "sha256": "680be5dd719d17545260b83201e3d36643b17af745a0dc190acc383b64bf1cec",
+      "destination": "/private/tmp/nla-lean-local-shared-20260916/quarantine/MI13-prefix-cleanup-01/NormalizedImages.olean"
+    },
+    "SVD": {
+      "sha256": "1d2a32effd6b727402741b44b619e7165338eef0766a9aa0fbe87ed4dee22016",
+      "destination": "/private/tmp/nla-lean-local-shared-20260916/quarantine/MI13-prefix-cleanup-01/SVD.olean"
+    }
+  },
+  "assembly_sha256": "ceb9a893b7287037259702fa6b6bc8a1a13c9097b82ba45100cff67c42caacf7",
+  "compile_status": "not yet run",
+  "count_change": 0
+}

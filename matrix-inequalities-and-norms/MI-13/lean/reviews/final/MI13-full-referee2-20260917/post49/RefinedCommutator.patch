@@ -1,0 +1,11 @@
+--- baseline45/NLA/MI13/RefinedCommutator.lean
++++ post49/NLA/MI13/RefinedCommutator.lean
+@@ -43,7 +43,7 @@
+       lt_of_le_of_ne (frobenius_semantics Z).2.2.1
+         (Ne.symm (fun h => hZ ((frobenius_semantics Z).2.2.2.mp h)))
+     have hlam_bound : lam ≤ 2 * (singularValue X 0 ^ 2 + singularValue X 1 ^ 2) :=
+-      (mul_le_mul_right (sq_pos_of_pos hnZ)).mp hcancel
++      le_of_mul_le_mul_right hcancel (sq_pos_of_pos hnZ)
+     exact (hmax Y).trans (mul_le_mul_of_nonneg_right hlam_bound (sq_nonneg _))
+ 
+ #print axioms refined_commutator_bound

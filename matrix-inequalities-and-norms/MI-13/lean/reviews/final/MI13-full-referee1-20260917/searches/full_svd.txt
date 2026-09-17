@@ -1,0 +1,77 @@
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:18:the spectral theorem for linear maps (`LinearMap.IsSymmetric.eigenvectorBasis_apply_self_apply`).
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:69:noncomputable def eigenvectorBasis : OrthonormalBasis n 𝕜 (EuclideanSpace 𝕜 n) :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:70:  ((isSymmetric_toEuclideanLin_iff.mpr hA).eigenvectorBasis finrank_euclideanSpace).reindex
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:73:lemma mulVec_eigenvectorBasis (j : n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:74:    A *ᵥ ⇑(hA.eigenvectorBasis j) = (hA.eigenvalues j) • ⇑(hA.eigenvectorBasis j) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:75:  simpa only [eigenvectorBasis, OrthonormalBasis.reindex_apply, toLpLin_apply,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:77:      congr(⇑$((isSymmetric_toEuclideanLin_iff.mpr hA).apply_eigenvectorBasis
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:86:/-- Unitary matrix whose columns are `Matrix.IsHermitian.eigenvectorBasis`. -/
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:90:  ⟨(EuclideanSpace.basisFun n 𝕜).toBasis.toMatrix (hA.eigenvectorBasis).toBasis,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:91:    (EuclideanSpace.basisFun n 𝕜).toMatrix_orthonormalBasis_mem_unitary (eigenvectorBasis hA)⟩
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:96:      (EuclideanSpace.basisFun n 𝕜).toBasis.toMatrix (hA.eigenvectorBasis).toBasis :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:101:    (eigenvectorUnitary hA)ᵀ j = ⇑(hA.eigenvectorBasis j) :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:106:    Matrix.col (eigenvectorUnitary hA) j = ⇑(hA.eigenvectorBasis j) :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:111:    eigenvectorUnitary hA i j = ⇑(hA.eigenvectorBasis j) i :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:115:    eigenvectorUnitary hA *ᵥ Pi.single j 1 = ⇑(hA.eigenvectorBasis j) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:119:    (star (eigenvectorUnitary hA : Matrix n n 𝕜)) *ᵥ ⇑(hA.eigenvectorBasis j) = Pi.single j 1 := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:131:    eigenvectorUnitary_mulVec, ← mulVec_mulVec, mulVec_eigenvectorBasis,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:140:`LinearMap.IsSymmetric.eigenvectorBasis_apply_self_apply`. -/
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:147:    (hA.eigenvalues i) = RCLike.re (dotProduct (star ⇑(hA.eigenvectorBasis i))
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:148:    (A *ᵥ ⇑(hA.eigenvectorBasis i))) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:150:  simp only [mulVec_eigenvectorBasis, smul_dotProduct, ← EuclideanSpace.inner_eq_star_dotProduct,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:151:    inner_self_eq_norm_sq_to_K, RCLike.smul_re, hA.eigenvectorBasis.orthonormal.1 i,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:235:  exact ⟨_, _, hi, (ofLp_eq_zero 2).ne.2 <| hA.eigenvectorBasis.orthonormal.ne_zero i,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean:236:    hA.mulVec_eigenvectorBasis i⟩
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:104:theorem singularValues_pos_iff_ne_zero (i : ℕ) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:128:theorem sq_singularValues_fin {n : ℕ} (hn : finrank 𝕜 E = n) (i : Fin n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:134:  T.sq_singularValues_fin hn ⟨i, hi⟩
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:139:  simp [← T.sq_singularValues_fin]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:146:    rw [T.sq_singularValues_fin rfl ⟨j, hj⟩, T.sq_singularValues_fin rfl ⟨i, hij.trans_lt hj⟩]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:186:  rw [Finset.mem_coe, Finsupp.mem_support_iff, ← singularValues_pos_iff_ne_zero] at ⊢ ha
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:198:  rw [singularValues_pos_iff_ne_zero, ← Finsupp.mem_support_iff, support_singularValues,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:205:theorem singularValues_eq_zero_iff_le_finrank_range {n : ℕ} :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:210:theorem singularValues_zero : (0 : E →ₗ[𝕜] F).singularValues = 0 := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:212:  rw [Finsupp.zero_apply, singularValues_eq_zero_iff_le_finrank_range, range_zero]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:216:theorem singularValues_eq_zero_iff : T.singularValues = 0 ↔ T = 0 := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:219:      ← singularValues_eq_zero_iff_le_finrank_range, h, Finsupp.zero_apply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/SingularValues.lean:220:  · exact h ▸ singularValues_zero
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:34:* The definition `LinearMap.IsSymmetric.eigenvectorBasis` provides an orthonormal basis for `E`
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:37:  `LinearMap.IsSymmetric.eigenvectorBasis` gives the associated linear isometry equivalence
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:39:  `LinearMap.IsSymmetric.eigenvectorBasis_apply_self_apply` states that, when `T` is
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:211:Instead use the functions eigenvalues and eigenvectorBasis defined below. -/
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:249:private noncomputable def unsortedEigenvectorBasis (hT : T.IsSymmetric)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:253:private theorem hasEigenvector_eigenvectorBasis_helper (hT : T.IsSymmetric)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:255:    HasEigenvector T (hT.unsortedEigenvalues hn i) (hT.unsortedEigenvectorBasis hn i) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:256:  let v : E := hT.unsortedEigenvectorBasis hn i
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:264:      simp_rw [v, unsortedEigenvectorBasis]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:268:    have H₂ : v ≠ 0 := by simpa using (hT.unsortedEigenvectorBasis hn).toBasis.ne_zero i
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:300:noncomputable irreducible_def eigenvectorBasis (hT : T.IsSymmetric) (hn : Module.finrank 𝕜 E = n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:306:theorem hasEigenvector_eigenvectorBasis (hT : T.IsSymmetric) (hn : Module.finrank 𝕜 E = n)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:307:    (i : Fin n) : HasEigenvector T (hT.eigenvalues hn i) (hT.eigenvectorBasis hn i) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:308:  rw [eigenvalues_def, eigenvectorBasis_def, OrthonormalBasis.reindex_apply]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:309:  apply hasEigenvector_eigenvectorBasis_helper
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:322:  Module.End.hasEigenvalue_of_hasEigenvector (hT.hasEigenvector_eigenvectorBasis hn i)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:325:theorem apply_eigenvectorBasis (hT : T.IsSymmetric) (hn : Module.finrank 𝕜 E = n) (i : Fin n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:326:    T (hT.eigenvectorBasis hn i) = (hT.eigenvalues hn i : 𝕜) • hT.eigenvectorBasis hn i :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:327:  mem_eigenspace_iff.mp (hT.hasEigenvector_eigenvectorBasis hn i).1
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:332:theorem eigenvectorBasis_apply_self_apply (hT : T.IsSymmetric) (hn : Module.finrank 𝕜 E = n)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:334:    (hT.eigenvectorBasis hn).repr (T v) i =
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:335:      hT.eigenvalues hn i * (hT.eigenvectorBasis hn).repr v i := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:338:      T ((hT.eigenvectorBasis hn).repr.symm w) =
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:339:        (hT.eigenvectorBasis hn).repr.symm (toLp 2 fun i ↦ hT.eigenvalues hn i * w i) by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:341:      congr_arg (fun v => (hT.eigenvectorBasis hn).repr v i)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:342:        (this ((hT.eigenvectorBasis hn).repr v))
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:344:  simp_rw [← OrthonormalBasis.sum_repr_symm, map_sum, map_smul, apply_eigenvectorBasis]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:349:theorem toMatrix_eigenvectorBasis (hT : T.IsSymmetric) (hn : Module.finrank 𝕜 E = n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:350:    letI b := (hT.eigenvectorBasis hn).toBasis
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:359:  simp [← T.charpoly_toMatrix (hT.eigenvectorBasis hn).toBasis, toMatrix_eigenvectorBasis,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Spectrum.lean:364:  rw [← charpoly_toMatrix _ (hT.eigenvectorBasis hn).toBasis, toMatrix_eigenvectorBasis,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/NormDet.lean:43:* `LinearMap.normDet_eq_prod_singularValues`: `LinearMap.normDet` equals to the product of singular
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/NormDet.lean:379:  simp_rw [sq_singularValues_fin]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Positive.lean:158:  simpa only [hT.isSymmetric.apply_eigenvectorBasis, inner_smul_real_left, RCLike.smul_re,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Positive.lean:160:      using hT.right (hT.isSymmetric.eigenvectorBasis hn i)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Positive.lean:548:    ((hT.isSymmetric.eigenvalues rfl i).sqrt : 𝕜) • hT.isSymmetric.eigenvectorBasis rfl i
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Positive.lean:554:    ← smul_eq_mul, smul_assoc, ← hT.isSymmetric.apply_eigenvectorBasis, ← map_smul, ← map_sum,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/PiL2.lean:1047:theorem Orthonormal.exists_orthonormalBasis_extension_of_card_eq {ι : Type*} [Fintype ι]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/GramSchmidtOrtho.lean:320:  ((gramSchmidtNormed_orthonormal' f).exists_orthonormalBasis_extension_of_card_eq
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/GramSchmidtOrtho.lean:325:  ((gramSchmidtNormed_orthonormal' f).exists_orthonormalBasis_extension_of_card_eq

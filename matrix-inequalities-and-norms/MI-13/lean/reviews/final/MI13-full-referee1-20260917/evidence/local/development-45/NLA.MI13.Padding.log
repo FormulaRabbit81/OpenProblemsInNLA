@@ -1,0 +1,96 @@
+NLA/MI13/Padding.lean:34:49: warning: This simp argument is unused:
+  zero_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [U, L, Matrix.fromBlocks_multiply, mul_zero, zero_add, add_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/MI13/Padding.lean:57:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  frobeniusNorm ?A ^ 2
+in the target expression
+  ‖flatten (padUpper A)‖ ^ 2 = ‖flatten A‖ ^ 2
+
+m n : ℕ
+A : Rect m n
+⊢ ‖flatten (padUpper A)‖ ^ 2 = ‖flatten A‖ ^ 2
+NLA/MI13/Padding.lean:66:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  frobeniusNorm ?A ^ 2
+in the target expression
+  ‖flatten (padLower B)‖ ^ 2 = ‖flatten B‖ ^ 2
+
+m n : ℕ
+B : Rect n m
+⊢ ‖flatten (padLower B)‖ ^ 2 = ‖flatten B‖ ^ 2
+NLA/MI13/Padding.lean:77:4: error: Type mismatch: After simplification, term
+  Matrix.toLpLin_mul_same 2 Aᴴ A
+ has type
+  @Eq (WithLp 2 (Fin n → ℂ) →ₗ[ℂ] WithLp 2 (Fin n → ℂ)) ((Matrix.toLpLin 2 2) (Aᴴ * A))
+    (LinearMap.adjoint (Matrix.toEuclideanLin A) ∘ₗ (Matrix.toLpLin 2 2) A)
+but is expected to have type
+  @Eq (EuclideanVector n →ₗ[ℂ] EuclideanVector n) (Matrix.toEuclideanLin (Aᴴ * A)) (gramEnd A)
+NLA/MI13/Padding.lean:88:4: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (Matrix.reindexRingEquiv ℂ finSumFinEquiv) ?x * (Matrix.reindexRingEquiv ℂ finSumFinEquiv) ?y
+in the target expression
+  ((Matrix.reindex finSumFinEquiv finSumFinEquiv) (Matrix.fromBlocks 0 A 0 0)ᴴ *
+        (Matrix.reindex finSumFinEquiv finSumFinEquiv) (Matrix.fromBlocks 0 A 0 0)).charpoly =
+    (Aᴴ * A).charpoly * Polynomial.X ^ m
+
+m n : ℕ
+A : Rect m n
+⊢ ((Matrix.reindex finSumFinEquiv finSumFinEquiv) (Matrix.fromBlocks 0 A 0 0)ᴴ *
+        (Matrix.reindex finSumFinEquiv finSumFinEquiv) (Matrix.fromBlocks 0 A 0 0)).charpoly =
+    (Aᴴ * A).charpoly * Polynomial.X ^ m
+NLA/MI13/Padding.lean:101:4: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (Matrix.reindexRingEquiv ℂ finSumFinEquiv) ?x * (Matrix.reindexRingEquiv ℂ finSumFinEquiv) ?y
+in the target expression
+  ((Matrix.reindex finSumFinEquiv finSumFinEquiv) (Matrix.fromBlocks 0 0 B 0)ᴴ *
+        (Matrix.reindex finSumFinEquiv finSumFinEquiv) (Matrix.fromBlocks 0 0 B 0)).charpoly =
+    (Bᴴ * B).charpoly * Polynomial.X ^ n
+
+m n : ℕ
+B : Rect n m
+⊢ ((Matrix.reindex finSumFinEquiv finSumFinEquiv) (Matrix.fromBlocks 0 0 B 0)ᴴ *
+        (Matrix.reindex finSumFinEquiv finSumFinEquiv) (Matrix.fromBlocks 0 0 B 0)).charpoly =
+    (Bᴴ * B).charpoly * Polynomial.X ^ n
+NLA/MI13/Padding.lean:150:81: error: unsolved goals
+m n p q : ℕ
+A : Rect m n
+C : Rect p q
+d : ℕ
+hpoly : (gramEnd C).charpoly = (gramEnd A).charpoly * Polynomial.X ^ d
+k : ℕ
+⊢ ↑(List.ofFn (gramEigenvalue A)) + Multiset.map (fun x => RCLike.re x) ↑(List.replicate d 0) =
+    ↑(List.ofFn (gramEigenvalue A) ++ List.replicate d 0)
+NLA/MI13/Padding.lean:155:32: warning: This simp argument is unused:
+  Multiset.map_replicate
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Multiset.map_add, gram_roots_list, Polynomial.roots_X_pow, Multiset.nsmul_singleton,
+    RCLike.zero_re, ← Multiset.coe_replicate, Multiset.coe_add]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/MI13/Padding.lean:155:56: warning: This simp argument is unused:
+  RCLike.zero_re
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Multiset.map_add, gram_roots_list, Polynomial.roots_X_pow, Multiset.nsmul_singleton,
+    Multiset.map_replicate, ← Multiset.coe_replicate, Multiset.coe_add]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/MI13/Padding.lean:156:32: warning: This simp argument is unused:
+  Multiset.coe_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Multiset.map_add, gram_roots_list, Polynomial.roots_X_pow, Multiset.nsmul_singleton,
+    Multiset.map_replicate, RCLike.zero_re, ← Multiset.coe_replicate]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'NLA.MI13.padding_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.MI13.padding_norms' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/MI13/Padding.lean:199:21: error: #assert_trust: 'NLA.MI13.padding_norms' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
+'NLA.MI13.padding_singular_values' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/MI13/Padding.lean:201:21: error: #assert_trust: 'NLA.MI13.padding_singular_values' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

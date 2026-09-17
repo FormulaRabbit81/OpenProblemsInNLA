@@ -1,0 +1,1 @@
+Actual local47 leaves a zero-function representation goal because flatten was unfolded ahead of its proved zero lemma. Remove flatten from simp expansion and reuse existing simp theorem flatten_zero. All3frozenheaders unchanged; failedsource/receipt/log retained. Retry unrun at preparation.

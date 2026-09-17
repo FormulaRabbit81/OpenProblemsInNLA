@@ -1,0 +1,254 @@
+[
+  {
+    "name": "NLA.MI13.frobenius_semantics",
+    "module": "NLA.MI13.Frobenius",
+    "source_sha256": "e19ea36fb0c520962a184371ebff51d42246e1ea9ec7f47808a602df0f896c90",
+    "header_sha256": "d7c9cf041378dc3ad8ab54e47dde6f8c707f9c21806b6ddd2f1c5e3fce7489c3",
+    "header": "theorem frobenius_semantics {m n : ℕ} (A : Rect m n) :\n    frobeniusNorm A ^ 2 = ∑ i, ∑ j, ‖A i j‖ ^ 2 ∧\n    frobeniusNorm A ^ 2 = (Matrix.trace (A.conjTranspose * A)).re ∧\n    0 ≤ frobeniusNorm A ∧ (frobeniusNorm A = 0 ↔ A = 0)"
+  },
+  {
+    "name": "NLA.MI13.frobenius_linear_bounds",
+    "module": "NLA.MI13.Frobenius",
+    "source_sha256": "e19ea36fb0c520962a184371ebff51d42246e1ea9ec7f47808a602df0f896c90",
+    "header_sha256": "c3f060994dbb5eca877014e1f9fd6d0574c0db3cde6060ecf40f51da9b76f86a",
+    "header": "theorem frobenius_linear_bounds {m n : ℕ} (A C : Rect m n) (z : ℂ) :\n    frobeniusNorm (z • A) = ‖z‖ * frobeniusNorm A ∧\n    frobeniusNorm (A + C) ≤ frobeniusNorm A + frobeniusNorm C"
+  },
+  {
+    "name": "NLA.MI13.operator_norm_semantics",
+    "module": "NLA.MI13.OperatorNorm",
+    "source_sha256": "e73ee25c908df1a1ff6051b9bd8c7e8aadc43ec211e31b8d888b0479e638844d",
+    "header_sha256": "6194b51f97d855aa73a1a9db2434e2a7cb5f9a19716c735adcae67ee840d1cb0",
+    "header": "theorem operator_norm_semantics {m n : ℕ} (A : Rect m n) :\n    spectralNorm A = singularValue A 0 ∧\n    (spectralNorm A = 0 ↔ A = 0) ∧\n    ∀ x : EuclideanVector n, ‖euclideanCLM A x‖ ≤ spectralNorm A * ‖x‖"
+  },
+  {
+    "name": "NLA.MI13.singular_values_semantics",
+    "module": "NLA.MI13.SingularSemantics",
+    "source_sha256": "90b23f01099b9d9036b6a5ea5155f61f5b6aa77d8cefc0044cd3766ecc3dc61b",
+    "header_sha256": "10aa34e2e7ac7ea9e59db95ffd2b5c786088e33b858053529031ea6834244f50",
+    "header": "theorem singular_values_semantics {m n : ℕ} (A : Rect m n) :\n    (∀ k, 0 ≤ singularValue A k) ∧ Antitone (singularValue A) ∧\n    ∀ k, n ≤ k → singularValue A k = 0"
+  },
+  {
+    "name": "NLA.MI13.singular_values_gram",
+    "module": "NLA.MI13.SingularSemantics",
+    "source_sha256": "90b23f01099b9d9036b6a5ea5155f61f5b6aa77d8cefc0044cd3766ecc3dc61b",
+    "header_sha256": "8ac9fa3f40b75a5760896b26789a86e3d77dbe6bd494513f2c37d5c69736fc9d",
+    "header": "theorem singular_values_gram {m n : ℕ} (A : Rect m n) (i : Fin n) :\n    singularValue A i.val ^ 2 = gramEigenvalue A i"
+  },
+  {
+    "name": "NLA.MI13.ordered_gram_basis",
+    "module": "NLA.MI13.GramBasis",
+    "source_sha256": "3a3b6e77d4081f20fb9e7df79ce1ae36a0414851f8a81a18186959ecb759f1f9",
+    "header_sha256": "12f214e956583140f2bac7ded037df678956273e3cf08fb38745c7a92c0bb8f7",
+    "header": "theorem ordered_gram_basis {r : ℕ} (A : Square r) :\n    ∃ v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r), GramBasis A v"
+  },
+  {
+    "name": "NLA.MI13.positive_image_orthonormal",
+    "module": "NLA.MI13.NormalizedImages",
+    "source_sha256": "c9200151a6ad1fc8dd8cecfad3b133087f5a7597bc7157195751040290db5ea1",
+    "header_sha256": "66034ed214c6990f319e6cdee47239fa5f35f789a57473efcee1d698a6a0578d",
+    "header": "theorem positive_image_orthonormal {r : ℕ} (A : Square r)\n    (v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r)) (hv : GramBasis A v) :\n    Orthonormal ℂ ((positiveSingularIndices A).domRestrict (normalizedImages A v))"
+  },
+  {
+    "name": "NLA.MI13.zero_singular_image",
+    "module": "NLA.MI13.NormalizedImages",
+    "source_sha256": "c9200151a6ad1fc8dd8cecfad3b133087f5a7597bc7157195751040290db5ea1",
+    "header_sha256": "7553e5d5793c8c1a413b16f4e0eb588c615be8771b903b44a7ef99935002c16c",
+    "header": "theorem zero_singular_image {r : ℕ} (A : Square r)\n    (v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r)) (hv : GramBasis A v)\n    (i : Fin r) (hi : singularValue A i.val = 0) : euclideanLin A (v i) = 0"
+  },
+  {
+    "name": "NLA.MI13.positive_image_extension",
+    "module": "NLA.MI13.GramBasis",
+    "source_sha256": "3a3b6e77d4081f20fb9e7df79ce1ae36a0414851f8a81a18186959ecb759f1f9",
+    "header_sha256": "3a4b89496c391b845b6f5c311f4fdf0191646ebb35710e6eb76e2b594fa641e2",
+    "header": "theorem positive_image_extension {r : ℕ} (A : Square r)\n    (v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r))\n    (h : Orthonormal ℂ ((positiveSingularIndices A).domRestrict (normalizedImages A v))) :\n    ∃ u : OrthonormalBasis (Fin r) ℂ (EuclideanVector r),\n      ∀ i ∈ positiveSingularIndices A, u i = normalizedImages A v i"
+  },
+  {
+    "name": "NLA.MI13.full_singular_vector_bases",
+    "module": "NLA.MI13.NormalizedImages",
+    "source_sha256": "c9200151a6ad1fc8dd8cecfad3b133087f5a7597bc7157195751040290db5ea1",
+    "header_sha256": "0a68c69ae7c9e05816cdea04fe805e1caa171ae81ac1c18c318d9b61ab2145bb",
+    "header": "theorem full_singular_vector_bases {r : ℕ} (A : Square r) :\n    ∃ u v : OrthonormalBasis (Fin r) ℂ (EuclideanVector r),\n      GramBasis A v ∧ ∀ i, euclideanLin A (v i) = (singularValue A i.val : ℂ) • u i"
+  },
+  {
+    "name": "NLA.MI13.full_svd",
+    "module": "NLA.MI13.SVD",
+    "source_sha256": "59f701c5d958f92e1f6913ead484903196ba761fb45be9956cef671fb1f3519e",
+    "header_sha256": "3482186a93c2a41640fc0cf74ddfe5297ac925749398a9c1bab0af6df2fe4899",
+    "header": "theorem full_svd {r : ℕ} (A : Square r) :\n    ∃ U V : Square r, IsUnitary U ∧ IsUnitary V ∧\n      A = U * singularDiagonal A * V.conjTranspose"
+  },
+  {
+    "name": "NLA.MI13.unitary_norm_invariance",
+    "module": "NLA.MI13.UnitaryInvariance",
+    "source_sha256": "bd825d92218cf9b947bad95d34ba6f45bc37b29a0fa5246cd929a9a00889dae8",
+    "header_sha256": "ba53ca8638c62cf0b5997a46f212de8ab0fba33673adb8a502be7d68498b09be",
+    "header": "theorem unitary_norm_invariance {m n : ℕ} (A : Rect m n)\n    (U : Square m) (V : Square n) (hU : IsUnitary U) (hV : IsUnitary V) :\n    frobeniusNorm (U * A * V) = frobeniusNorm A ∧\n    spectralNorm (U * A * V) = spectralNorm A"
+  },
+  {
+    "name": "NLA.MI13.unitary_singular_invariance",
+    "module": "NLA.MI13.UnitaryInvariance",
+    "source_sha256": "bd825d92218cf9b947bad95d34ba6f45bc37b29a0fa5246cd929a9a00889dae8",
+    "header_sha256": "a54fc6245ec56a39593c28e790ef92fd3c15ea89c588f62e48a700837cbbf516",
+    "header": "theorem unitary_singular_invariance {m n : ℕ} (A : Rect m n)\n    (U : Square m) (V : Square n) (hU : IsUnitary U) (hV : IsUnitary V) (k : ℕ) :\n    singularValue (U * A * V) k = singularValue A k"
+  },
+  {
+    "name": "NLA.MI13.hilbert_schmidt_semantics",
+    "module": "NLA.MI13.Frobenius",
+    "source_sha256": "e19ea36fb0c520962a184371ebff51d42246e1ea9ec7f47808a602df0f896c90",
+    "header_sha256": "c7ae75caa7d8c47f2ba6fac219f755f29bf8f8192b2c484367ea4a284ce27c18",
+    "header": "theorem hilbert_schmidt_semantics {r : ℕ} (X Y Z : Square r) (z : ℂ) :\n    Function.Injective (flatten (m := r) (n := r)) ∧\n    flatten (z • Y + Z) = z • flatten Y + flatten Z ∧\n    hsInner Y Z = Matrix.trace (Y.conjTranspose * Z) ∧\n    commutatorOperator X (flatten Y) = flatten (commutator X Y)"
+  },
+  {
+    "name": "NLA.MI13.commutator_adjoint",
+    "module": "NLA.MI13.CommutatorAlgebra",
+    "source_sha256": "0bb27d768d1eed8e6e783508a00887f19e2ad4f62b80428ab49be0fcce368d08",
+    "header_sha256": "72006f749006ef979eb6c299e9e2bd1ab197fab1b48c5b4bc527b2000cc23e62",
+    "header": "theorem commutator_adjoint {r : ℕ} (X Y Z : Square r) :\n    (commutatorOperator X).adjoint = commutatorOperator X.conjTranspose ∧\n    hsInner (commutator X Y) Z = hsInner Y (commutator X.conjTranspose Z) ∧\n    hsInner Y (commutatorT X Y) = ((frobeniusNorm (commutator X Y) ^ 2 : ℝ) : ℂ)"
+  },
+  {
+    "name": "NLA.MI13.commutator_conjugate_symmetry",
+    "module": "NLA.MI13.CommutatorAlgebra",
+    "source_sha256": "0bb27d768d1eed8e6e783508a00887f19e2ad4f62b80428ab49be0fcce368d08",
+    "header_sha256": "4211a066f72de33d95b6d62045e8bc540ce6907c64b6f4f87697b17ce53a6f34",
+    "header": "theorem commutator_conjugate_symmetry {r : ℕ} (X Y Z : Square r) (z : ℂ) :\n    commutatorJ X (z • Y + Z) = star z • commutatorJ X Y + commutatorJ X Z ∧\n    commutatorJ X (commutatorJ X Y) = -commutatorT X Y ∧\n    commutatorT X (commutatorJ X Y) = commutatorJ X (commutatorT X Y) ∧\n    hsInner Y (commutatorJ X Y) = 0 ∧\n    frobeniusNorm (commutatorJ X Y) = frobeniusNorm (commutator X Y)"
+  },
+  {
+    "name": "NLA.MI13.commutator_spectral_maximum",
+    "module": "NLA.MI13.CommutatorMaximum",
+    "source_sha256": "a870e869415b2d34cc7db9b238dc2c4b110dee4aaf7682eef52881fb45759a39",
+    "header_sha256": "18a9390c69867168ddadc837b0a234a625c51e771b20c0e9299f77af31b105ac",
+    "header": "theorem commutator_spectral_maximum {r : ℕ} (hr : 2 ≤ r) (X : Square r) :\n    ∃ (lam : ℝ) (Y : Square r), 0 ≤ lam ∧ Y ≠ 0 ∧\n      commutatorT X Y = (lam : ℂ) • Y ∧\n      ∀ Z : Square r, frobeniusNorm (commutator X Z) ^ 2 ≤ lam * frobeniusNorm Z ^ 2"
+  },
+  {
+    "name": "NLA.MI13.positive_eigenvector_pair",
+    "module": "NLA.MI13.CommutatorEigenspaces",
+    "source_sha256": "613d4cfb2e4f686411179e9bbf33630bb08e25fd964942a33361a88b11c991c1",
+    "header_sha256": "0c65f18a44ef740958e357cf77ef9e27afefa27110e425eca7bd15f25d0956c8",
+    "header": "theorem positive_eigenvector_pair {r : ℕ} (X Y : Square r) (lam : ℝ)\n    (hlam : 0 < lam) (hY : Y ≠ 0) (heig : commutatorT X Y = (lam : ℂ) • Y) :\n    commutatorJ X Y ≠ 0 ∧\n    commutatorT X (commutatorJ X Y) = (lam : ℂ) • commutatorJ X Y ∧\n    hsInner Y (commutatorJ X Y) = 0 ∧\n    frobeniusNorm (commutatorJ X Y) ^ 2 = lam * frobeniusNorm Y ^ 2"
+  },
+  {
+    "name": "NLA.MI13.eigenspace_functional_kernel",
+    "module": "NLA.MI13.CommutatorEigenspaces",
+    "source_sha256": "613d4cfb2e4f686411179e9bbf33630bb08e25fd964942a33361a88b11c991c1",
+    "header_sha256": "8354d9049f5ed6c561e8ea3916d9226e5fc536f0960e97774c5631ad9b2c9c6a",
+    "header": "theorem eigenspace_functional_kernel {r : ℕ} (X Y : Square r) (lam : ℝ)\n    (hlam : 0 < lam) (hY : Y ≠ 0) (heig : commutatorT X Y = (lam : ℂ) • Y)\n    (f : Square r →ₗ[ℂ] ℂ) :\n    ∃ Z : Square r, Z ≠ 0 ∧ commutatorT X Z = (lam : ℂ) • Z ∧ f Z = 0"
+  },
+  {
+    "name": "NLA.MI13.two_coordinate_bound",
+    "module": "NLA.MI13.ElementaryBounds",
+    "source_sha256": "672653adc4153e10bc5eafe558cde14b6ff965dd7b61c248d4fea98323a72b78",
+    "header_sha256": "e3772c435f262726346eb1002b58013933913d746ddc62c885c4be1b235e81ce",
+    "header": "theorem two_coordinate_bound (s t : ℝ) (hs : 0 ≤ s) (ht : 0 ≤ t) (p q : ℂ) :\n    ‖(s : ℂ) * p - (t : ℂ) * q‖ ^ 2 ≤\n      (s ^ 2 + t ^ 2) * (‖p‖ ^ 2 + ‖q‖ ^ 2)"
+  },
+  {
+    "name": "NLA.MI13.off_corner_coefficient_bound",
+    "module": "NLA.MI13.ElementaryBounds",
+    "source_sha256": "672653adc4153e10bc5eafe558cde14b6ff965dd7b61c248d4fea98323a72b78",
+    "header_sha256": "d78f727535f8e9528d8132cb4f17061c2c5ec7562f4e8c3e88b423b06853da33",
+    "header": "theorem off_corner_coefficient_bound (s : ℕ → ℝ)\n    (hs : ∀ k, 0 ≤ s k) (hdesc : Antitone s) (i j : ℕ) (hij : (i, j) ≠ (0, 0)) :\n    s i ^ 2 + s j ^ 2 ≤ s 0 ^ 2 + s 1 ^ 2"
+  },
+  {
+    "name": "NLA.MI13.svd_corner_functional",
+    "module": "NLA.MI13.CancelledSVD",
+    "source_sha256": "421d9632779e21ae956c468f5f6212ebda38ef5ae00a514406ab545b9987217a",
+    "header_sha256": "1ca083b0230e01197dd4198469692c12504154e230bf8d847b2e53fc737ee403",
+    "header": "theorem svd_corner_functional {r : ℕ} (X U V : Square r) :\n    ∃ f : Square r →ₗ[ℂ] ℂ,\n      ∀ Z : Square r, f Z = firstEntry (U.conjTranspose * commutator X Z * V)"
+  },
+  {
+    "name": "NLA.MI13.cancelled_svd_bound",
+    "module": "NLA.MI13.CancelledSVD",
+    "source_sha256": "421d9632779e21ae956c468f5f6212ebda38ef5ae00a514406ab545b9987217a",
+    "header_sha256": "e28e3afc2bbb93f639bba0c75c52a53b978ae4409a17139836d9bfb2941556d5",
+    "header": "theorem cancelled_svd_bound {r : ℕ} (hr : 2 ≤ r) (X Z U V : Square r)\n    (hU : IsUnitary U) (hV : IsUnitary V)\n    (hsvd : X = U * singularDiagonal X * V.conjTranspose)\n    (hcorner : firstEntry (U.conjTranspose * commutator X Z * V) = 0) :\n    frobeniusNorm (commutator X Z) ^ 2 ≤\n      2 * (singularValue X 0 ^ 2 + singularValue X 1 ^ 2) * frobeniusNorm Z ^ 2"
+  },
+  {
+    "name": "NLA.MI13.refined_commutator_bound",
+    "module": "NLA.MI13.RefinedCommutator",
+    "source_sha256": "ffcfc8be476b891ba62895404a3b351fed6c4cb868e51e0cfb37885f2f169326",
+    "header_sha256": "c6463ed4937dd4596fb608ed46330840629c1470ce46769d2f16293c694a1d23",
+    "header": "theorem refined_commutator_bound {r : ℕ} (hr : 2 ≤ r) (X Y : Square r) :\n    frobeniusNorm (commutator X Y) ^ 2 ≤\n      2 * (singularValue X 0 ^ 2 + singularValue X 1 ^ 2) * frobeniusNorm Y ^ 2"
+  },
+  {
+    "name": "NLA.MI13.half_certificate",
+    "module": "NLA.MI13.Numerical",
+    "source_sha256": "91a9cbb39602c1a405eaef117913fee8c6b97ac59d9e55e0082686653d0ba676",
+    "header_sha256": "3263258ea582a4ace442e4acb66c4898a27877b039b26a472662783ec22acac8",
+    "header": "theorem half_certificate : (0 : ℝ) < 1 / 2 ∧ (1 / 2 : ℝ) + 1 / 2 = 1"
+  },
+  {
+    "name": "NLA.MI13.unit_circle_lift",
+    "module": "NLA.MI13.ElementaryBounds",
+    "source_sha256": "672653adc4153e10bc5eafe558cde14b6ff965dd7b61c248d4fea98323a72b78",
+    "header_sha256": "a6503878648d490f402a26dfe64aab5a78d75d5ab1e2a95b63b5e7fff3304420",
+    "header": "theorem unit_circle_lift (d : ℝ) (hd : 0 ≤ d) (hd1 : d ≤ 1) :\n    Complex.normSq (circlePlus d) = 1 ∧ Complex.normSq (circleMinus d) = 1 ∧\n    (1 / 2 : ℂ) * (circlePlus d + circleMinus d) = (d : ℂ)"
+  },
+  {
+    "name": "NLA.MI13.two_unitary_average",
+    "module": "NLA.MI13.TwoUnitaryAverage",
+    "source_sha256": "cf31ad350c2577333fcec8ac0856937caa50d670e0c0634b88b58a8c14e73d17",
+    "header_sha256": "464d9ceabfa5d3697f1b1f33d4833e89060c230150ef21658581c4c4ff76e4ac",
+    "header": "theorem two_unitary_average {r : ℕ} (B : Square r) (hB : spectralNorm B ≤ 1) :\n    ∃ U V : Square r, IsUnitary U ∧ IsUnitary V ∧ B = (1 / 2 : ℂ) • (U + V)"
+  },
+  {
+    "name": "NLA.MI13.frobenius_average_bound",
+    "module": "NLA.MI13.ElementaryBounds",
+    "source_sha256": "672653adc4153e10bc5eafe558cde14b6ff965dd7b61c248d4fea98323a72b78",
+    "header_sha256": "a6f9c977d4be40c6fe9ec76fcd73fb175450ed5beaff6ba1325cb0ddaa9dc1ff",
+    "header": "theorem frobenius_average_bound {m n : ℕ} (X Y : Rect m n) :\n    frobeniusNorm ((1 / 2 : ℂ) • (X + Y)) ^ 2 ≤\n      (1 / 2 : ℝ) * (frobeniusNorm X ^ 2 + frobeniusNorm Y ^ 2)"
+  },
+  {
+    "name": "NLA.MI13.unitary_middle_bound",
+    "module": "NLA.MI13.MiddleBounds",
+    "source_sha256": "8f98b9cd37208896164b2fccfe62f751cd38ad936fea93af62bee2ee142a62d6",
+    "header_sha256": "b513982dcd2aca2bdd31b45329c8f43383643236edc7d53f0462cc6fa65836fb",
+    "header": "theorem unitary_middle_bound {r : ℕ} (hr : 2 ≤ r) (A C W : Square r)\n    (hW : IsUnitary W) :\n    (A * W * C - C * W * A) * W = commutator (A * W) (C * W) ∧\n    frobeniusNorm (A * W * C - C * W * A) ^ 2 ≤\n      2 * (singularValue A 0 ^ 2 + singularValue A 1 ^ 2) * frobeniusNorm C ^ 2"
+  },
+  {
+    "name": "NLA.MI13.contraction_middle_bound",
+    "module": "NLA.MI13.MiddleBounds",
+    "source_sha256": "8f98b9cd37208896164b2fccfe62f751cd38ad936fea93af62bee2ee142a62d6",
+    "header_sha256": "8bcf37962efadbe26b790e88bd657d3ad9021f9622ad384da25e0804a34a010b",
+    "header": "theorem contraction_middle_bound {r : ℕ} (hr : 2 ≤ r) (A B C : Square r)\n    (hB : spectralNorm B ≤ 1) :\n    frobeniusNorm (A * B * C - C * B * A) ^ 2 ≤\n      2 * (singularValue A 0 ^ 2 + singularValue A 1 ^ 2) * frobeniusNorm C ^ 2"
+  },
+  {
+    "name": "NLA.MI13.square_middle_bound",
+    "module": "NLA.MI13.MiddleBounds",
+    "source_sha256": "8f98b9cd37208896164b2fccfe62f751cd38ad936fea93af62bee2ee142a62d6",
+    "header_sha256": "9f80b4b1ee553cf02facf142426bcf2d08bb556790cf54b2dcbcd8cfa83f3e0a",
+    "header": "theorem square_middle_bound {r : ℕ} (hr : 2 ≤ r) (A B C : Square r) :\n    frobeniusNorm (A * B * C - C * B * A) ^ 2 ≤\n      2 * spectralNorm B ^ 2 * (singularValue A 0 ^ 2 + singularValue A 1 ^ 2) *\n        frobeniusNorm C ^ 2"
+  },
+  {
+    "name": "NLA.MI13.padding_product",
+    "module": "NLA.MI13.Padding",
+    "source_sha256": "6c5365f6ea185e2a8c27930f2c237d2fda56d8191a662d906c1721d5b82dbac2",
+    "header_sha256": "537a806a65fb2337533c492386a99cd61de9d90f1a1e7a985ad1ddd7c5ce488b",
+    "header": "theorem padding_product {m n : ℕ} (A C : Rect m n) (B : Rect n m) :\n    padUpper A * padLower B * padUpper C - padUpper C * padLower B * padUpper A =\n      padUpper (A * B * C - C * B * A)"
+  },
+  {
+    "name": "NLA.MI13.padding_norms",
+    "module": "NLA.MI13.Padding",
+    "source_sha256": "6c5365f6ea185e2a8c27930f2c237d2fda56d8191a662d906c1721d5b82dbac2",
+    "header_sha256": "576545ed904436c9cdfeaf5df8fdc3e041baa933a39caa8b926b742776a78fa6",
+    "header": "theorem padding_norms {m n : ℕ} (A : Rect m n) (B : Rect n m) :\n    frobeniusNorm (padUpper A) = frobeniusNorm A ∧\n    spectralNorm (padUpper A) = spectralNorm A ∧\n    frobeniusNorm (padLower B) = frobeniusNorm B ∧\n    spectralNorm (padLower B) = spectralNorm B"
+  },
+  {
+    "name": "NLA.MI13.padding_singular_values",
+    "module": "NLA.MI13.Padding",
+    "source_sha256": "6c5365f6ea185e2a8c27930f2c237d2fda56d8191a662d906c1721d5b82dbac2",
+    "header_sha256": "6d4a401dd827b07cb00ffc830b2ff7b6d9059d0f95e39b3f405791d869cadee8",
+    "header": "theorem padding_singular_values {m n : ℕ} (A : Rect m n) (B : Rect n m) (k : ℕ) :\n    singularValue (padUpper A) k = singularValue A k ∧\n    singularValue (padLower B) k = singularValue B k"
+  },
+  {
+    "name": "NLA.MI13.canonical_rectangular_bound",
+    "module": "NLA.MI13.Complete",
+    "source_sha256": "0e3f09dea75b014cce6bff288c5aafdab01781d5ae462f587620e1876a0e0ba6",
+    "header_sha256": "d271ce4a4a26e7be8365e35ba8ea31c4732598560503aeba7ceec1817d048118",
+    "header": "theorem canonical_rectangular_bound {m n : ℕ} (hm : 2 ≤ m) (hn : 2 ≤ n)\n    (A C : Rect m n) (B : Rect n m) :\n    frobeniusNorm (A * B * C - C * B * A) ^ 2 ≤\n      2 * spectralNorm B ^ 2 * (singularValue A 0 ^ 2 + singularValue A 1 ^ 2) *\n        frobeniusNorm C ^ 2"
+  },
+  {
+    "name": "NLA.MI13.sharpness_example",
+    "module": "NLA.MI13.Sharpness",
+    "source_sha256": "faf100dc77cd88038802f01d85c7b9d2d0cd5948166514dd4113d33c0272e5dd",
+    "header_sha256": "b7329dfd0502f7fa288820a2fe3c2afbd67aa110620ee092a812dcb745ae1ac1",
+    "header": "theorem sharpness_example :\n    frobeniusNorm (sharpA * (1 : Square 2) * sharpC - sharpC * (1 : Square 2) * sharpA) ^ 2 = 4 ∧\n    spectralNorm (1 : Square 2) ^ 2 = 1 ∧ singularValue sharpA 0 ^ 2 = 1 ∧\n    singularValue sharpA 1 ^ 2 = 1 ∧ frobeniusNorm sharpC ^ 2 = 1"
+  }
+]
