@@ -1,0 +1,1086 @@
+{
+  "scope": "macOS serial default-kernel development compilation only; no Comparator, sandbox controls or whole-problem acceptance",
+  "start": "2026-09-16T19:48:46.731780+00:00",
+  "assembly_sha256": "a773c905d63e04567cc9ce3db0d9e7d9305004ab2c2cf2ae477b301b1651b31f",
+  "runner_sha256": "af0cfdf3543c6e7840b316aee0c1a9351a9c3d441338776318867aebd0b32416",
+  "environment_sha256": "75036e204900cadc86bfc6467c43a13bca5a051e025d6c5f4384738598751ec3",
+  "compiler_sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+  "platform": "darwin",
+  "max_compiler_processes": 1,
+  "threads": 1,
+  "memory_cap_mib": 3072,
+  "source_inputs": {
+    "NLA/MI04/BasisTransport.lean": "b0425ada4b3e2a58d0280929236f92e3a1017c2216f5d09dc8f52163834e8189",
+    "NLA/MI04/BlockSymmetry.lean": "7d5c0e711ba01a8bb98616427b50b06c64768e3bb12aef81ab06cd03720d3826",
+    "NLA/MI04/Complete.lean": "f00a126f014cf0220f104ac344991a0075e155218431e9e670607cc0d68dc587",
+    "NLA/MI04/Conclusion.lean": "d12abb7dd84e2407b5a3f52769aec699f3f3a282eb2043fd9a6a00a3fb67b6d8",
+    "NLA/MI04/Coordinates.lean": "9fbf6dac25ce96499fdd7a6371e948c11d6e1b04156788af48998b0919d555d6",
+    "NLA/MI04/Correction.lean": "9c647ae819a57c51b8a1529fe2783d9e27c3bb541ee2979a48a8c84a7de3c740",
+    "NLA/MI04/Definitions.lean": "de70e2a9dd878f1d083adacf8df6808c90c27630ffc2644a62293bf085e41715",
+    "NLA/MI04/Diagonalization.lean": "41b1a60f3a6f4c3aa9b1c09472dd52a61e824999ba3e4540c0c50173d54e06f4",
+    "NLA/MI04/Geometry.lean": "2d3c52a8ec6c9d146310018819e2f7f038de56bd49a8b907a5b46c69e85e91e9",
+    "NLA/MI04/JointBasis.lean": "ea3acff2f539beaeae34d665e1858a14b8b8acd2c195feab46d61df50ef0f584",
+    "NLA/MI04/Limit.lean": "7cdbd3546146dc78ce37452fffcc4c95be66ab7c909180f1694ff23009fed981",
+    "NLA/MI04/Normality.lean": "ff2d57732f8b619fa2bd9bccb8d42dcce24e5a9e6d214e886801a09548e9df54",
+    "NLA/MI04/Probes.lean": "0e4b3d9a0e6bb70c8b91a1669e89785cbefe99777315d9a4b52d961fa93f5f76",
+    "NLA/MI04/Punctured.lean": "8c7ff3d4386c0ff3a466f316b402637ce0ea7e6df02f80e96ade989ae22bc3ad",
+    "NLA/MI04/Quadratic.lean": "81af17f3172536a7bf5e6c4d8f535b3cca8d801fae0884a60a477c4deff9ea18",
+    "NLA/MI04/Rayleigh.lean": "a9308e19575aa44ec56389ef2a24e75b375bcb577703c706590af6b63ebcca97",
+    "NLA/MI04/ScalarGeometry.lean": "583817923f7be81b7792a89b4e5ce48bd4817b07ef52655068fb17e3f48a4682",
+    "NLA/MI04/ScaledSymmetry.lean": "54694087df421c0f4e6148008b43447728e053ef075aa319a116d34dbc980457",
+    "NLA/MI04/Unitary.lean": "05ccea07c757797829759c8a637ef14d5d216826d28b79a615e8b1df32b738e0",
+    "NLA/MI04/UpperBound.lean": "5dc357316ab5e3ff1aeb282c20770870bd8b14d93c2928f64e3807cd96629c20",
+    "NLA/MI04/WeightedProbes.lean": "e72d7cd3a10c574477a794d26aba66d40da7486c9ead38e9e4e1d31840570eea",
+    "NLA/MF07/ApproximateNorm.lean": "883e7e7c0455c5e3b257f5b3946d8ad4fcbef2a3d61e87061f1d92f9099a40a9",
+    "NLA/MF07/Auerbach.lean": "bb77d8267e83654093eae335f95dfb277f032668d5244179886dfddd36ad8001",
+    "NLA/MF07/BlockComparison.lean": "a35335a4c1b9eaceb5e18cefd7656a6c943d5738bc9dd3883e7ea727c0d7a498",
+    "NLA/MF07/CappedWeights.lean": "d805dd0e28524a6add975afb89fe857a639111fb0c65702aec93d27b5493bcc4",
+    "NLA/MF07/CompactGrowth.lean": "d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9",
+    "NLA/MF07/Complete.lean": "04de4ca8c2ab3635777015bcbd4a1425106b08a6b4dd126d085581fe2003aa62",
+    "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+    "NLA/MF07/Final.lean": "b9daa70a5881d142537010a3739ee348b113f111e558bf5fd87463b419a63468",
+    "NLA/MF07/Interspersed.lean": "8f65ea5980bb23640c5185abc3d793964f84b1e1a45550e580ee184bcafdc898",
+    "NLA/MF07/MatrixBasics.lean": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+    "NLA/MF07/NormGeometry.lean": "9069dada9936d5b4c2568aa247a8ce050c3ca79385fa4b50dbf42e2c94fcafe8",
+    "NLA/MF07/Numerical.lean": "90407ab2d374d652549c8b57858f9c5123602a1edf72bde8ce2ea2243b786c03",
+    "NLA/MF07/ProductEnvelope.lean": "a770edbd047fc56f53da8f364d1a4207c0bdbaf346d5be359d035dc6aef0b7e0",
+    "NLA/MF07/QuantitativeComparison.lean": "ad20c7a071d84ea13b6c95f2a915d5ae9fcb362aa7f35d3730e7d910054e6248",
+    "NLA/MF07/RootSemantics.lean": "bee70f65ab8e7e517ebec8f579ea3ee8fb276d52a8f5cd293c9c0e085ab304ee",
+    "NLA/MF07/RoundedNorm.lean": "a352a64d47f2f163b648b8804ce9de7341249f20df243a47078e9f92b328dc0a",
+    "NLA/MF07/ScalarFamily.lean": "a7e0a6b1dabdb866649f0381934b9bea0c5da7698bf0c93e4bedc38876a4227c",
+    "NLA/MF07/Similarity.lean": "c9d06e4ca115f58c384b0dfe2298ae2fd49e9c73d138a7319445ed2d08eb86c3",
+    "NLA/MF07/SingularCoordinates.lean": "1d4e60f2859fb419dda59273122a68c10ece4994337dcb6eab706be7c47c331f",
+    "NLA/MF07/TriangularDamping.lean": "ea35c872a9c579f4d6e9a259140cbe64afdf12491fa34729272b34e7150aab2a",
+    "NLA/MF07/UnitaryGeometry.lean": "ee0bf9c4b7f1fba1dee0534f24e9ba095ecc53b7b57d5910e537f9316edbba1d",
+    "NLA/SF01/AnalyticalChecks.lean": "0a55cabfd580b58eb0a5e3d4b12e671ae3fcbcdf5af515799c6fc62f7bc5b0bb",
+    "NLA/SF01/Complexification.lean": "837168905826f0a7c574cc1b7e9afb429d6bdb8dab8259f1eba41d46ede5a2e3",
+    "NLA/SF01/Definitions.lean": "937c5a9f6908fe90b9633f80aa4db1e40859a51bf37cd3bbf87729d64719057d",
+    "NLA/SF01/FoundationChecks.lean": "39adde092f33f283b7f17137f2ab4f763c75bb324619effa6e0203d9493b65c0",
+    "NLA/SF01/HWeight.lean": "c0a2970679b4073184b5cbf21e6806f01141fbf46a0e20e9c31fbfd225ca0397",
+    "NLA/SF01/Numerical.lean": "b337740491a5d55cc53ff53f59b3bb4f42190c3226be8d564f452ac14502bcb0",
+    "NLA/SF01/PositivePath.lean": "1c90f8d404670af3b514b86b375203669b1fc434122b11c86fcc689121c87bd8",
+    "NLA/SF01/SpectralBridgeChecks.lean": "020c23ab69ad835a9bbcdca56ac5981952d5293e0f8c263f7aea0d0798287df0",
+    "NLA/SF01/SpectralHomotopy.lean": "b58abad7e8b41dabb93b8c7f1eb6a14093848aa467e90c4dc042a6b772fddaac",
+    "NLA/SF01/SpectralMConverse.lean": "8cff7ed155e5ea780b645ec3949d04152912b82d387e5795b8fbc7d14d929b06",
+    "NLA/SF01/SpectralMWeight.lean": "f7dcb6f05ba8ea29e910624d925609c8f0279e5ba72bd9a43cbf69aabcffc639",
+    "NLA/SF01/Spectrum.lean": "c23e6ccabc4004192177b897de819e5c9f3ad402fb1a24a79aa68172ee784114",
+    "NLA/SF01/UnitWeightContinuity.lean": "5af01a58e9e15cd75c6d33a3912a2e0236b5c11a3b2694e301fa4c4463f6be02",
+    "NLA/SF01/WeightedSpectrum.lean": "a87033931229c5df1f452500fd72098b9ddb768aeb5713ed814a88f35efeaada",
+    "NLA/SF01/WeightedZReuse.lean": "cea224b26d76958de082947cd633335394f933fb0cf76c7858767aa6a445722f",
+    "NLA/RA02/ArrowheadEntries.lean": "19b4fcd44ebf58539f1daecc534258ff7d68ad9562fe9f15f2f0f7213b1bf2ae",
+    "NLA/RA02/ArrowheadQuadratic.lean": "f9e086e10f95e6b5512317438215c9d50b68d8b9478fe55a1b5e396c4c0c31a9",
+    "NLA/RA02/Definitions.lean": "1a0f251cfcc38f57787de3ee79dc8c89e7bf0f496ebfe9196a66f8b3f452a376",
+    "NLA/RA02/FiniteExpectation.lean": "4481e779f0c8a54648f1fb34952dbbfbb7623e230002c925297b2346586d6e47",
+    "NLA/RA02/Numerical.lean": "055d55303f717f3765956412d9c852381bb73c43f71bb63bba56f07d4183d8fa",
+    "NLA/RA02/Parameters.lean": "5998ac9d64e920681c48acd2d95fc1e396debc6d566156cf6b5d74e2b192103b",
+    "NLA/RA02/PathSemantics.lean": "48d5d511390da0d5fef239b52ab94c1beab8cd343705e25ed1d95e02dfa129ce",
+    "NLA/RA02/PivotAlgebra.lean": "b792a74df60c919ad2cb142279a8b814c8de94b105e4d9654e7f8ceacc706d17",
+    "NLA/RA02/PivotKernel.lean": "faf91ce03e8a1ee941e155802a5aa617f7b5edb5237acddcbc93675cf979fe29",
+    "NLA/RA02/ProbeValues.lean": "7b1131d9c5586df3d6c6b672908c4dba4f8c2f818a697401f24803f69a5bd703",
+    "NLA/RA02/StateConstruction.lean": "8ee4d12fc5717df95b2de8ed2e0f4685a669cd22b9393d7c5a1cce01be06e856",
+    "NLA/IV03/Definitions.lean": "34d9726c54ec0b10005cb4225adf1c403a7109a0800b42c1f19865c1a897db2b",
+    "NLA/IV03/Proof.lean": "8a6de76006c53aac4b9f37860b790bfe304ba25cf40aea5385daed376acc0272"
+  },
+  "module_order": [
+    "NLA.MI04.Definitions",
+    "NLA.MI04.Quadratic",
+    "NLA.MI04.Coordinates",
+    "NLA.MI04.Punctured",
+    "NLA.MI04.ScalarGeometry",
+    "NLA.MI04.Rayleigh",
+    "NLA.MI04.Correction",
+    "NLA.MI04.UpperBound",
+    "NLA.MI04.Limit",
+    "NLA.MI04.Unitary",
+    "NLA.MI04.BlockSymmetry",
+    "NLA.MI04.ScaledSymmetry",
+    "NLA.MI04.WeightedProbes",
+    "NLA.MI04.Probes",
+    "NLA.MI04.BasisTransport",
+    "NLA.MI04.Normality",
+    "NLA.MI04.JointBasis",
+    "NLA.MI04.Diagonalization",
+    "NLA.MI04.Geometry",
+    "NLA.MI04.Conclusion",
+    "NLA.MI04.Complete",
+    "NLA.MF07.Definitions",
+    "NLA.MF07.MatrixBasics",
+    "NLA.MF07.CompactGrowth",
+    "NLA.MF07.RootSemantics",
+    "NLA.MF07.ProductEnvelope",
+    "NLA.MF07.ApproximateNorm",
+    "NLA.MF07.NormGeometry",
+    "NLA.MF07.Auerbach",
+    "NLA.MF07.UnitaryGeometry",
+    "NLA.MF07.SingularCoordinates",
+    "NLA.MF07.RoundedNorm",
+    "NLA.MF07.TriangularDamping",
+    "NLA.MF07.Interspersed",
+    "NLA.MF07.BlockComparison",
+    "NLA.MF07.CappedWeights",
+    "NLA.MF07.Similarity",
+    "NLA.MF07.QuantitativeComparison",
+    "NLA.MF07.ScalarFamily",
+    "NLA.MF07.Numerical",
+    "NLA.MF07.Final",
+    "NLA.MF07.Complete",
+    "NLA.SF01.Definitions",
+    "NLA.SF01.Numerical",
+    "NLA.SF01.Complexification",
+    "NLA.SF01.Spectrum",
+    "NLA.SF01.SpectralHomotopy",
+    "NLA.IV03.Definitions",
+    "NLA.IV03.Proof",
+    "NLA.SF01.WeightedZReuse",
+    "NLA.SF01.FoundationChecks",
+    "NLA.SF01.UnitWeightContinuity",
+    "NLA.SF01.PositivePath",
+    "NLA.SF01.SpectralMWeight",
+    "NLA.SF01.AnalyticalChecks",
+    "NLA.SF01.HWeight",
+    "NLA.SF01.WeightedSpectrum",
+    "NLA.SF01.SpectralMConverse",
+    "NLA.SF01.SpectralBridgeChecks",
+    "NLA.RA02.Definitions",
+    "NLA.RA02.Parameters",
+    "NLA.RA02.ArrowheadEntries",
+    "NLA.RA02.ArrowheadQuadratic",
+    "NLA.RA02.PivotAlgebra",
+    "NLA.RA02.PivotKernel",
+    "NLA.RA02.PathSemantics",
+    "NLA.RA02.FiniteExpectation",
+    "NLA.RA02.Numerical",
+    "NLA.RA02.ProbeValues",
+    "NLA.RA02.StateConstruction"
+  ],
+  "commands": [
+    {
+      "module": "NLA.MI04.Definitions",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MI04/Definitions.olean",
+        "NLA/MI04/Definitions.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:48:46.732484+00:00",
+      "source_sha256": "de70e2a9dd878f1d083adacf8df6808c90c27630ffc2644a62293bf085e41715",
+      "dependency_olean_sha256": {},
+      "exit_code": 0,
+      "end": "2026-09-16T19:49:02.541476+00:00",
+      "elapsed_seconds": 15.809107332956046,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "maxrss_bytes_macos_cumulative": 2678800384,
+      "output_sha256": "495f946099109321017b4e50c237dcf0362897586d51e26f40e6bae35dbc989f"
+    },
+    {
+      "module": "NLA.MI04.Quadratic",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MI04/Quadratic.olean",
+        "NLA/MI04/Quadratic.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:49:02.550836+00:00",
+      "source_sha256": "81af17f3172536a7bf5e6c4d8f535b3cca8d801fae0884a60a477c4deff9ea18",
+      "dependency_olean_sha256": {
+        "NLA.MI04.Definitions": "495f946099109321017b4e50c237dcf0362897586d51e26f40e6bae35dbc989f"
+      },
+      "exit_code": -6,
+      "end": "2026-09-16T19:49:10.057355+00:00",
+      "elapsed_seconds": 7.506408499903046,
+      "log_sha256": "48bc2200174632932b9ea98fd0a0c30e6dc353ce535531045f1c7efc7b79940a",
+      "maxrss_bytes_macos_cumulative": 3290841088,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.MI04.Coordinates",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.Quadratic"
+      ]
+    },
+    {
+      "module": "NLA.MI04.Punctured",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.Coordinates"
+      ]
+    },
+    {
+      "module": "NLA.MI04.ScalarGeometry",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MI04/ScalarGeometry.olean",
+        "NLA/MI04/ScalarGeometry.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:49:10.067977+00:00",
+      "source_sha256": "583817923f7be81b7792a89b4e5ce48bd4817b07ef52655068fb17e3f48a4682",
+      "dependency_olean_sha256": {
+        "NLA.MI04.Definitions": "495f946099109321017b4e50c237dcf0362897586d51e26f40e6bae35dbc989f"
+      },
+      "exit_code": -6,
+      "end": "2026-09-16T19:49:17.042345+00:00",
+      "elapsed_seconds": 6.974094707984477,
+      "log_sha256": "48bc2200174632932b9ea98fd0a0c30e6dc353ce535531045f1c7efc7b79940a",
+      "maxrss_bytes_macos_cumulative": 3290841088,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.MI04.Rayleigh",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.Quadratic"
+      ]
+    },
+    {
+      "module": "NLA.MI04.Correction",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.Coordinates",
+        "NLA.MI04.Rayleigh"
+      ]
+    },
+    {
+      "module": "NLA.MI04.UpperBound",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.Punctured",
+        "NLA.MI04.ScalarGeometry",
+        "NLA.MI04.Correction"
+      ]
+    },
+    {
+      "module": "NLA.MI04.Limit",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.UpperBound"
+      ]
+    },
+    {
+      "module": "NLA.MI04.Unitary",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.Rayleigh"
+      ]
+    },
+    {
+      "module": "NLA.MI04.BlockSymmetry",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.Unitary",
+        "NLA.MI04.Coordinates"
+      ]
+    },
+    {
+      "module": "NLA.MI04.ScaledSymmetry",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.BlockSymmetry"
+      ]
+    },
+    {
+      "module": "NLA.MI04.WeightedProbes",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.Limit",
+        "NLA.MI04.ScaledSymmetry"
+      ]
+    },
+    {
+      "module": "NLA.MI04.Probes",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.WeightedProbes"
+      ]
+    },
+    {
+      "module": "NLA.MI04.BasisTransport",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.Probes"
+      ]
+    },
+    {
+      "module": "NLA.MI04.Normality",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.BasisTransport"
+      ]
+    },
+    {
+      "module": "NLA.MI04.JointBasis",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.BasisTransport"
+      ]
+    },
+    {
+      "module": "NLA.MI04.Diagonalization",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.JointBasis"
+      ]
+    },
+    {
+      "module": "NLA.MI04.Geometry",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.BasisTransport"
+      ]
+    },
+    {
+      "module": "NLA.MI04.Conclusion",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.Normality",
+        "NLA.MI04.Diagonalization",
+        "NLA.MI04.Geometry"
+      ]
+    },
+    {
+      "module": "NLA.MI04.Complete",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI04.Conclusion"
+      ]
+    },
+    {
+      "module": "NLA.MF07.Definitions",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MF07/Definitions.olean",
+        "NLA/MF07/Definitions.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:49:17.054137+00:00",
+      "source_sha256": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+      "dependency_olean_sha256": {},
+      "exit_code": 0,
+      "end": "2026-09-16T19:49:20.109431+00:00",
+      "elapsed_seconds": 3.0552910829428583,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "maxrss_bytes_macos_cumulative": 3290841088,
+      "output_sha256": "9c0f380362656f07fd55fa493a5728668a33196abd5a7c69bf09ae2bb3f1e2cc"
+    },
+    {
+      "module": "NLA.MF07.MatrixBasics",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MF07/MatrixBasics.olean",
+        "NLA/MF07/MatrixBasics.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:49:20.118514+00:00",
+      "source_sha256": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+      "dependency_olean_sha256": {
+        "NLA.MF07.Definitions": "9c0f380362656f07fd55fa493a5728668a33196abd5a7c69bf09ae2bb3f1e2cc"
+      },
+      "exit_code": -6,
+      "end": "2026-09-16T19:49:24.722748+00:00",
+      "elapsed_seconds": 4.604129667044617,
+      "log_sha256": "48bc2200174632932b9ea98fd0a0c30e6dc353ce535531045f1c7efc7b79940a",
+      "maxrss_bytes_macos_cumulative": 3290841088,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.MF07.CompactGrowth",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.MatrixBasics"
+      ]
+    },
+    {
+      "module": "NLA.MF07.RootSemantics",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.CompactGrowth"
+      ]
+    },
+    {
+      "module": "NLA.MF07.ProductEnvelope",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.MatrixBasics"
+      ]
+    },
+    {
+      "module": "NLA.MF07.ApproximateNorm",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.RootSemantics",
+        "NLA.MF07.ProductEnvelope"
+      ]
+    },
+    {
+      "module": "NLA.MF07.NormGeometry",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.ProductEnvelope"
+      ]
+    },
+    {
+      "module": "NLA.MF07.Auerbach",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.NormGeometry"
+      ]
+    },
+    {
+      "module": "NLA.MF07.UnitaryGeometry",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.ProductEnvelope"
+      ]
+    },
+    {
+      "module": "NLA.MF07.SingularCoordinates",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.Auerbach",
+        "NLA.MF07.UnitaryGeometry"
+      ]
+    },
+    {
+      "module": "NLA.MF07.RoundedNorm",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.SingularCoordinates",
+        "NLA.MF07.ApproximateNorm"
+      ]
+    },
+    {
+      "module": "NLA.MF07.TriangularDamping",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.UnitaryGeometry"
+      ]
+    },
+    {
+      "module": "NLA.MF07.Interspersed",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.ProductEnvelope"
+      ]
+    },
+    {
+      "module": "NLA.MF07.BlockComparison",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.RoundedNorm",
+        "NLA.MF07.TriangularDamping",
+        "NLA.MF07.Interspersed"
+      ]
+    },
+    {
+      "module": "NLA.MF07.CappedWeights",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.BlockComparison"
+      ]
+    },
+    {
+      "module": "NLA.MF07.Similarity",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.CappedWeights"
+      ]
+    },
+    {
+      "module": "NLA.MF07.QuantitativeComparison",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.Similarity"
+      ]
+    },
+    {
+      "module": "NLA.MF07.ScalarFamily",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.RootSemantics"
+      ]
+    },
+    {
+      "module": "NLA.MF07.Numerical",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MF07/Numerical.olean",
+        "NLA/MF07/Numerical.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:49:24.728340+00:00",
+      "source_sha256": "90407ab2d374d652549c8b57858f9c5123602a1edf72bde8ce2ea2243b786c03",
+      "dependency_olean_sha256": {
+        "NLA.MF07.Definitions": "9c0f380362656f07fd55fa493a5728668a33196abd5a7c69bf09ae2bb3f1e2cc"
+      },
+      "exit_code": -6,
+      "end": "2026-09-16T19:49:30.266253+00:00",
+      "elapsed_seconds": 5.537802999955602,
+      "log_sha256": "48bc2200174632932b9ea98fd0a0c30e6dc353ce535531045f1c7efc7b79940a",
+      "maxrss_bytes_macos_cumulative": 3321200640,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.MF07.Final",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.QuantitativeComparison",
+        "NLA.MF07.ScalarFamily",
+        "NLA.MF07.Numerical"
+      ]
+    },
+    {
+      "module": "NLA.MF07.Complete",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.Final"
+      ]
+    },
+    {
+      "module": "NLA.SF01.Definitions",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/SF01/Definitions.olean",
+        "NLA/SF01/Definitions.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:49:30.269658+00:00",
+      "source_sha256": "937c5a9f6908fe90b9633f80aa4db1e40859a51bf37cd3bbf87729d64719057d",
+      "dependency_olean_sha256": {},
+      "exit_code": 0,
+      "end": "2026-09-16T19:49:34.025649+00:00",
+      "elapsed_seconds": 3.756011125049554,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "maxrss_bytes_macos_cumulative": 3321200640,
+      "output_sha256": "ebcf1f06f09393f5231b9827e586c205ef78e61d05927d6eb33554ab28e6d22c"
+    },
+    {
+      "module": "NLA.SF01.Numerical",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/SF01/Numerical.olean",
+        "NLA/SF01/Numerical.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:49:34.028875+00:00",
+      "source_sha256": "b337740491a5d55cc53ff53f59b3bb4f42190c3226be8d564f452ac14502bcb0",
+      "dependency_olean_sha256": {
+        "NLA.SF01.Definitions": "ebcf1f06f09393f5231b9827e586c205ef78e61d05927d6eb33554ab28e6d22c"
+      },
+      "exit_code": -6,
+      "end": "2026-09-16T19:49:40.015928+00:00",
+      "elapsed_seconds": 5.986960291978903,
+      "log_sha256": "48bc2200174632932b9ea98fd0a0c30e6dc353ce535531045f1c7efc7b79940a",
+      "maxrss_bytes_macos_cumulative": 3344220160,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.SF01.Complexification",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/SF01/Complexification.olean",
+        "NLA/SF01/Complexification.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:49:40.018994+00:00",
+      "source_sha256": "837168905826f0a7c574cc1b7e9afb429d6bdb8dab8259f1eba41d46ede5a2e3",
+      "dependency_olean_sha256": {
+        "NLA.SF01.Definitions": "ebcf1f06f09393f5231b9827e586c205ef78e61d05927d6eb33554ab28e6d22c"
+      },
+      "exit_code": 0,
+      "end": "2026-09-16T19:49:43.173499+00:00",
+      "elapsed_seconds": 3.1543470829492435,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "maxrss_bytes_macos_cumulative": 3344220160,
+      "output_sha256": "c997c6a3ad3ee5aec57f83f817c952c6c93ea0dda521617e1a1c139e6958e1a1"
+    },
+    {
+      "module": "NLA.SF01.Spectrum",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/SF01/Spectrum.olean",
+        "NLA/SF01/Spectrum.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:49:43.177055+00:00",
+      "source_sha256": "c23e6ccabc4004192177b897de819e5c9f3ad402fb1a24a79aa68172ee784114",
+      "dependency_olean_sha256": {
+        "NLA.SF01.Complexification": "c997c6a3ad3ee5aec57f83f817c952c6c93ea0dda521617e1a1c139e6958e1a1"
+      },
+      "exit_code": 0,
+      "end": "2026-09-16T19:49:46.659854+00:00",
+      "elapsed_seconds": 3.4827330000698566,
+      "log_sha256": "ca6a315c7fcce832ff3ed04602191ef019182d41646f8622c715b0e590ae0934",
+      "maxrss_bytes_macos_cumulative": 3344220160,
+      "output_sha256": "9b25c98732eeeedf1e2fc8fe6930254e5faf7e1fc6a2bfe4ae827fefd405a6bb"
+    },
+    {
+      "module": "NLA.SF01.SpectralHomotopy",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/SF01/SpectralHomotopy.olean",
+        "NLA/SF01/SpectralHomotopy.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:49:46.663154+00:00",
+      "source_sha256": "b58abad7e8b41dabb93b8c7f1eb6a14093848aa467e90c4dc042a6b772fddaac",
+      "dependency_olean_sha256": {
+        "NLA.SF01.Spectrum": "9b25c98732eeeedf1e2fc8fe6930254e5faf7e1fc6a2bfe4ae827fefd405a6bb"
+      },
+      "exit_code": 0,
+      "end": "2026-09-16T19:49:51.250680+00:00",
+      "elapsed_seconds": 4.587480082991533,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "maxrss_bytes_macos_cumulative": 3344220160,
+      "output_sha256": "0813e19c6822f3f5a7be8d8f72acd5efe280fd7d5b5514c4685dc7672139e789"
+    },
+    {
+      "module": "NLA.IV03.Definitions",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/IV03/Definitions.olean",
+        "NLA/IV03/Definitions.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:49:51.253793+00:00",
+      "source_sha256": "34d9726c54ec0b10005cb4225adf1c403a7109a0800b42c1f19865c1a897db2b",
+      "dependency_olean_sha256": {},
+      "exit_code": 0,
+      "end": "2026-09-16T19:51:07.351249+00:00",
+      "elapsed_seconds": 76.09797825000715,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "maxrss_bytes_macos_cumulative": 3344220160,
+      "output_sha256": "72d68e985e97861e5f4ef45ae16a2148331823a3bbdefb7000d6525593902824"
+    },
+    {
+      "module": "NLA.IV03.Proof",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/IV03/Proof.olean",
+        "NLA/IV03/Proof.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:51:07.361577+00:00",
+      "source_sha256": "8a6de76006c53aac4b9f37860b790bfe304ba25cf40aea5385daed376acc0272",
+      "dependency_olean_sha256": {
+        "NLA.IV03.Definitions": "72d68e985e97861e5f4ef45ae16a2148331823a3bbdefb7000d6525593902824"
+      },
+      "exit_code": -6,
+      "end": "2026-09-16T19:52:13.391361+00:00",
+      "elapsed_seconds": 66.03018195799086,
+      "log_sha256": "48bc2200174632932b9ea98fd0a0c30e6dc353ce535531045f1c7efc7b79940a",
+      "maxrss_bytes_macos_cumulative": 3480207360,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.SF01.WeightedZReuse",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.IV03.Proof"
+      ]
+    },
+    {
+      "module": "NLA.SF01.FoundationChecks",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.SF01.Numerical",
+        "NLA.SF01.WeightedZReuse"
+      ]
+    },
+    {
+      "module": "NLA.SF01.UnitWeightContinuity",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/SF01/UnitWeightContinuity.olean",
+        "NLA/SF01/UnitWeightContinuity.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:52:13.400973+00:00",
+      "source_sha256": "5af01a58e9e15cd75c6d33a3912a2e0236b5c11a3b2694e301fa4c4463f6be02",
+      "dependency_olean_sha256": {
+        "NLA.SF01.SpectralHomotopy": "0813e19c6822f3f5a7be8d8f72acd5efe280fd7d5b5514c4685dc7672139e789"
+      },
+      "exit_code": 0,
+      "end": "2026-09-16T19:52:24.126494+00:00",
+      "elapsed_seconds": 10.72376662492752,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "maxrss_bytes_macos_cumulative": 3480207360,
+      "output_sha256": "94fe11c68788abc1db77fad002762de66c2a9c5c0fd6e6e3a1a9e928326bdd0b"
+    },
+    {
+      "module": "NLA.SF01.PositivePath",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/SF01/PositivePath.olean",
+        "NLA/SF01/PositivePath.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:52:24.136237+00:00",
+      "source_sha256": "1c90f8d404670af3b514b86b375203669b1fc434122b11c86fcc689121c87bd8",
+      "dependency_olean_sha256": {
+        "NLA.SF01.Definitions": "ebcf1f06f09393f5231b9827e586c205ef78e61d05927d6eb33554ab28e6d22c"
+      },
+      "exit_code": 0,
+      "end": "2026-09-16T19:52:27.867203+00:00",
+      "elapsed_seconds": 3.7306041659321636,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "maxrss_bytes_macos_cumulative": 3480207360,
+      "output_sha256": "95ae319240e4014fdc5bd07816319f7d36881bc2620c9660cfb35a5b016e4554"
+    },
+    {
+      "module": "NLA.SF01.SpectralMWeight",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/SF01/SpectralMWeight.olean",
+        "NLA/SF01/SpectralMWeight.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:52:27.870254+00:00",
+      "source_sha256": "f7dcb6f05ba8ea29e910624d925609c8f0279e5ba72bd9a43cbf69aabcffc639",
+      "dependency_olean_sha256": {
+        "NLA.SF01.UnitWeightContinuity": "94fe11c68788abc1db77fad002762de66c2a9c5c0fd6e6e3a1a9e928326bdd0b",
+        "NLA.SF01.PositivePath": "95ae319240e4014fdc5bd07816319f7d36881bc2620c9660cfb35a5b016e4554"
+      },
+      "exit_code": 0,
+      "end": "2026-09-16T19:52:31.827364+00:00",
+      "elapsed_seconds": 3.9569314590189606,
+      "log_sha256": "e6c2c6bda2f9f61043b57c44d6fa3901403cdd9a0f32bbc09341b2cb8148f13f",
+      "maxrss_bytes_macos_cumulative": 3480207360,
+      "output_sha256": "222f610139b2d34da80acf99f8d040dc1690dff27de96693a5738dca4e6e840e"
+    },
+    {
+      "module": "NLA.SF01.AnalyticalChecks",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.SF01.FoundationChecks"
+      ]
+    },
+    {
+      "module": "NLA.SF01.HWeight",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/SF01/HWeight.olean",
+        "NLA/SF01/HWeight.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:52:31.830331+00:00",
+      "source_sha256": "c0a2970679b4073184b5cbf21e6806f01141fbf46a0e20e9c31fbfd225ca0397",
+      "dependency_olean_sha256": {
+        "NLA.SF01.SpectralMWeight": "222f610139b2d34da80acf99f8d040dc1690dff27de96693a5738dca4e6e840e"
+      },
+      "exit_code": 0,
+      "end": "2026-09-16T19:52:35.772617+00:00",
+      "elapsed_seconds": 3.9422159999376163,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "maxrss_bytes_macos_cumulative": 3480207360,
+      "output_sha256": "53a8bd375ee54c215872c10fe9d42966e24bed959b23cb14ab5039264700ba3f"
+    },
+    {
+      "module": "NLA.SF01.WeightedSpectrum",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/SF01/WeightedSpectrum.olean",
+        "NLA/SF01/WeightedSpectrum.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:52:35.775285+00:00",
+      "source_sha256": "a87033931229c5df1f452500fd72098b9ddb768aeb5713ed814a88f35efeaada",
+      "dependency_olean_sha256": {
+        "NLA.SF01.Spectrum": "9b25c98732eeeedf1e2fc8fe6930254e5faf7e1fc6a2bfe4ae827fefd405a6bb"
+      },
+      "exit_code": 0,
+      "end": "2026-09-16T19:52:39.804996+00:00",
+      "elapsed_seconds": 4.029690833995119,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "maxrss_bytes_macos_cumulative": 3480207360,
+      "output_sha256": "3bdfeebd6589c102284f57147b5041a0e5c81b6fd42bc87001294489e1459348"
+    },
+    {
+      "module": "NLA.SF01.SpectralMConverse",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/SF01/SpectralMConverse.olean",
+        "NLA/SF01/SpectralMConverse.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:52:39.808070+00:00",
+      "source_sha256": "8cff7ed155e5ea780b645ec3949d04152912b82d387e5795b8fbc7d14d929b06",
+      "dependency_olean_sha256": {
+        "NLA.SF01.WeightedSpectrum": "3bdfeebd6589c102284f57147b5041a0e5c81b6fd42bc87001294489e1459348"
+      },
+      "exit_code": 0,
+      "end": "2026-09-16T19:52:43.838894+00:00",
+      "elapsed_seconds": 4.030741084017791,
+      "log_sha256": "56bdacab1d85640d8b15cd883244d3135624b76686e0bbac6fef20b86ba733a3",
+      "maxrss_bytes_macos_cumulative": 3480207360,
+      "output_sha256": "972bd6bfcda33a42d810cdf4ce3abc109c992da388ff05dbde11ea2e4659d75a"
+    },
+    {
+      "module": "NLA.SF01.SpectralBridgeChecks",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.SF01.AnalyticalChecks"
+      ]
+    },
+    {
+      "module": "NLA.RA02.Definitions",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/RA02/Definitions.olean",
+        "NLA/RA02/Definitions.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:52:43.842748+00:00",
+      "source_sha256": "1a0f251cfcc38f57787de3ee79dc8c89e7bf0f496ebfe9196a66f8b3f452a376",
+      "dependency_olean_sha256": {},
+      "exit_code": 0,
+      "end": "2026-09-16T19:52:47.020339+00:00",
+      "elapsed_seconds": 3.177608917001635,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "maxrss_bytes_macos_cumulative": 3480207360,
+      "output_sha256": "6ae6ebeb893b9c7d56a82e512c2fbb7095ef6b69cf0f3257e097b619df10d1a3"
+    },
+    {
+      "module": "NLA.RA02.Parameters",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/RA02/Parameters.olean",
+        "NLA/RA02/Parameters.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:52:47.023238+00:00",
+      "source_sha256": "5998ac9d64e920681c48acd2d95fc1e396debc6d566156cf6b5d74e2b192103b",
+      "dependency_olean_sha256": {
+        "NLA.RA02.Definitions": "6ae6ebeb893b9c7d56a82e512c2fbb7095ef6b69cf0f3257e097b619df10d1a3"
+      },
+      "exit_code": -6,
+      "end": "2026-09-16T19:52:53.553957+00:00",
+      "elapsed_seconds": 6.530616124975495,
+      "log_sha256": "48bc2200174632932b9ea98fd0a0c30e6dc353ce535531045f1c7efc7b79940a",
+      "maxrss_bytes_macos_cumulative": 3480207360,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.RA02.ArrowheadEntries",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.RA02.Parameters"
+      ]
+    },
+    {
+      "module": "NLA.RA02.ArrowheadQuadratic",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.RA02.ArrowheadEntries"
+      ]
+    },
+    {
+      "module": "NLA.RA02.PivotAlgebra",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/RA02/PivotAlgebra.olean",
+        "NLA/RA02/PivotAlgebra.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:52:53.557821+00:00",
+      "source_sha256": "b792a74df60c919ad2cb142279a8b814c8de94b105e4d9654e7f8ceacc706d17",
+      "dependency_olean_sha256": {
+        "NLA.RA02.Definitions": "6ae6ebeb893b9c7d56a82e512c2fbb7095ef6b69cf0f3257e097b619df10d1a3"
+      },
+      "exit_code": -6,
+      "end": "2026-09-16T19:52:57.855975+00:00",
+      "elapsed_seconds": 4.297984250006266,
+      "log_sha256": "48bc2200174632932b9ea98fd0a0c30e6dc353ce535531045f1c7efc7b79940a",
+      "maxrss_bytes_macos_cumulative": 3480207360,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.RA02.PivotKernel",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.RA02.PivotAlgebra"
+      ]
+    },
+    {
+      "module": "NLA.RA02.PathSemantics",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.RA02.PivotKernel"
+      ]
+    },
+    {
+      "module": "NLA.RA02.FiniteExpectation",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.RA02.PathSemantics"
+      ]
+    },
+    {
+      "module": "NLA.RA02.Numerical",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=3072",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/RA02/Numerical.olean",
+        "NLA/RA02/Numerical.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T19:52:57.859875+00:00",
+      "source_sha256": "055d55303f717f3765956412d9c852381bb73c43f71bb63bba56f07d4183d8fa",
+      "dependency_olean_sha256": {
+        "NLA.RA02.Definitions": "6ae6ebeb893b9c7d56a82e512c2fbb7095ef6b69cf0f3257e097b619df10d1a3"
+      },
+      "exit_code": -6,
+      "end": "2026-09-16T19:53:02.189665+00:00",
+      "elapsed_seconds": 4.32964691601228,
+      "log_sha256": "48bc2200174632932b9ea98fd0a0c30e6dc353ce535531045f1c7efc7b79940a",
+      "maxrss_bytes_macos_cumulative": 3480207360,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.RA02.ProbeValues",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.RA02.ArrowheadQuadratic"
+      ]
+    },
+    {
+      "module": "NLA.RA02.StateConstruction",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.RA02.ArrowheadQuadratic",
+        "NLA.RA02.PivotAlgebra"
+      ]
+    }
+  ],
+  "count_change": 0,
+  "end": "2026-09-16T19:53:02.193650+00:00",
+  "completed_modules": 14,
+  "failed_modules": [
+    "NLA.MI04.Quadratic",
+    "NLA.MI04.ScalarGeometry",
+    "NLA.MF07.MatrixBasics",
+    "NLA.MF07.Numerical",
+    "NLA.SF01.Numerical",
+    "NLA.IV03.Proof",
+    "NLA.RA02.Parameters",
+    "NLA.RA02.PivotAlgebra",
+    "NLA.RA02.Numerical"
+  ],
+  "blocked_modules": [
+    "NLA.MI04.Coordinates",
+    "NLA.MI04.Punctured",
+    "NLA.MI04.Rayleigh",
+    "NLA.MI04.Correction",
+    "NLA.MI04.UpperBound",
+    "NLA.MI04.Limit",
+    "NLA.MI04.Unitary",
+    "NLA.MI04.BlockSymmetry",
+    "NLA.MI04.ScaledSymmetry",
+    "NLA.MI04.WeightedProbes",
+    "NLA.MI04.Probes",
+    "NLA.MI04.BasisTransport",
+    "NLA.MI04.Normality",
+    "NLA.MI04.JointBasis",
+    "NLA.MI04.Diagonalization",
+    "NLA.MI04.Geometry",
+    "NLA.MI04.Conclusion",
+    "NLA.MI04.Complete",
+    "NLA.MF07.CompactGrowth",
+    "NLA.MF07.RootSemantics",
+    "NLA.MF07.ProductEnvelope",
+    "NLA.MF07.ApproximateNorm",
+    "NLA.MF07.NormGeometry",
+    "NLA.MF07.Auerbach",
+    "NLA.MF07.UnitaryGeometry",
+    "NLA.MF07.SingularCoordinates",
+    "NLA.MF07.RoundedNorm",
+    "NLA.MF07.TriangularDamping",
+    "NLA.MF07.Interspersed",
+    "NLA.MF07.BlockComparison",
+    "NLA.MF07.CappedWeights",
+    "NLA.MF07.Similarity",
+    "NLA.MF07.QuantitativeComparison",
+    "NLA.MF07.ScalarFamily",
+    "NLA.MF07.Final",
+    "NLA.MF07.Complete",
+    "NLA.SF01.WeightedZReuse",
+    "NLA.SF01.FoundationChecks",
+    "NLA.SF01.AnalyticalChecks",
+    "NLA.SF01.SpectralBridgeChecks",
+    "NLA.RA02.ArrowheadEntries",
+    "NLA.RA02.ArrowheadQuadratic",
+    "NLA.RA02.PivotKernel",
+    "NLA.RA02.PathSemantics",
+    "NLA.RA02.FiniteExpectation",
+    "NLA.RA02.ProbeValues",
+    "NLA.RA02.StateConstruction"
+  ]
+}

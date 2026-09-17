@@ -1,0 +1,102 @@
+NLA.MF07.matrix_product_semantics {d : ℕ} :
+  NLA.MF07.matrixProduct [] = 1 ∧
+    ∀ (w : List (NLA.MF07.Square d)) (A : NLA.MF07.Square d),
+      NLA.MF07.matrixProduct (w ++ [A]) = A * NLA.MF07.matrixProduct w
+'NLA.MF07.matrix_product_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.diagonal_inverse {d : ℕ} (σ : Fin d → ℝ) (hσ : ∀ (i : Fin d), σ i ≠ 0) :
+  NLA.MF07.diagonalWeights σ * NLA.MF07.inverseDiagonalWeights σ = 1 ∧
+    NLA.MF07.inverseDiagonalWeights σ * NLA.MF07.diagonalWeights σ = 1
+'NLA.MF07.diagonal_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.family_norm_maximum {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M) (hne : M.Nonempty) :
+  0 ≤ NLA.MF07.familyNorm M ∧
+    (∃ A ∈ M, NLA.MF07.spectralNorm A = NLA.MF07.familyNorm M) ∧
+      ∀ A ∈ M, NLA.MF07.spectralNorm A ≤ NLA.MF07.familyNorm M
+'NLA.MF07.family_norm_maximum' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.family_growth_maximum {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M) (hne : M.Nonempty)
+  (n : ℕ) :
+  0 ≤ NLA.MF07.familyGrowth M n ∧
+    NLA.MF07.familyGrowth M n ≤ NLA.MF07.familyNorm M ^ n ∧
+      (∃ w,
+          w.length = n ∧
+            NLA.MF07.WordIn M w ∧ NLA.MF07.spectralNorm (NLA.MF07.matrixProduct w) = NLA.MF07.familyGrowth M n) ∧
+        ∀ (w : List (NLA.MF07.Square d)),
+          w.length = n →
+            NLA.MF07.WordIn M w → NLA.MF07.spectralNorm (NLA.MF07.matrixProduct w) ≤ NLA.MF07.familyGrowth M n
+'NLA.MF07.family_growth_maximum' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.family_growth_submultiplicative {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M)
+  (hne : M.Nonempty) (m n : ℕ) : NLA.MF07.familyGrowth M (m + n) ≤ NLA.MF07.familyGrowth M m * NLA.MF07.familyGrowth M n
+'NLA.MF07.family_growth_submultiplicative' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.radius_one_semantics {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M) (hne : M.Nonempty) :
+  (NLA.MF07.jointSpectralRadius M = 1 ↔ Filter.Tendsto (NLA.MF07.rootGrowth M) Filter.atTop (nhds 1)) ∧
+    (NLA.MF07.jointSpectralRadius M = 1 → 1 ≤ NLA.MF07.familyNorm M)
+'NLA.MF07.radius_one_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.identity_family_semantics {d : ℕ} (hd : 1 ≤ d) :
+  NLA.MF07.familyNorm {1} = 1 ∧ (∀ (n : ℕ), NLA.MF07.familyGrowth {1} n = 1) ∧ NLA.MF07.jointSpectralRadius {1} = 1
+'NLA.MF07.identity_family_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.approximate_extremal_norm {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M)
+  (hne : M.Nonempty) (hr : NLA.MF07.jointSpectralRadius M = 1) (a : ℝ) (ha : 1 < a) :
+  ∃ v c,
+    1 ≤ c ∧
+      NLA.MF07.IsComplexNorm v ∧
+        (∀ (x : NLA.MF07.EuclideanVector d), ‖x‖ ≤ v x ∧ v x ≤ c * ‖x‖) ∧
+          ∀ A ∈ M, ∀ (x : NLA.MF07.EuclideanVector d), v (NLA.MF07.applyMatrix A x) ≤ a * v x
+'NLA.MF07.approximate_extremal_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.rounded_extremal_norm {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M) (hne : M.Nonempty)
+  (hr : NLA.MF07.jointSpectralRadius M = 1) (a : ℝ) (ha : 1 < a) :
+  ∃ Q σ w,
+    NLA.MF07.IsUnitary Q ∧
+      Antitone σ ∧
+        (∀ (i : Fin d), 0 < σ i) ∧
+          NLA.MF07.IsComplexNorm w ∧
+            (∀ (x : NLA.MF07.EuclideanVector d), ‖x‖ ≤ w x ∧ w x ≤ ↑d * ‖x‖) ∧
+              (∀ A ∈ M,
+                  ∀ (x : NLA.MF07.EuclideanVector d),
+                    w (NLA.MF07.applyMatrix (NLA.MF07.rotatedGenerator Q σ A) x) ≤ a * w x) ∧
+                ∀ A ∈ M, ∀ (i j : Fin d), ‖NLA.MF07.rotatedGenerator Q σ A i j‖ ≤ NLA.MF07.familyNorm M * σ j / σ i
+'NLA.MF07.rounded_extremal_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.triangular_damping {d : ℕ} (h : Fin d → ℝ) (hh : Antitone h) (hpos : ∀ (i : Fin d), 0 < h i)
+  (X : NLA.MF07.Square d) (hX : NLA.MF07.LowerForWeights h X) :
+  NLA.MF07.spectralNorm (NLA.MF07.diagonalDamping h X) ≤ NLA.MF07.spectralNorm X
+'NLA.MF07.triangular_damping' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.interspersed_product_bound {d : ℕ} (M : Set (NLA.MF07.Square d)) (C E : NLA.MF07.Square d → NLA.MF07.Square d)
+  (K u v : ℝ) (hK : 1 ≤ K) (hu : 0 ≤ u) (hv : 0 ≤ v)
+  (hC :
+    ∀ (z : List (NLA.MF07.Square d)),
+      NLA.MF07.WordIn M z → NLA.MF07.spectralNorm (NLA.MF07.matrixProduct (List.map C z)) ≤ K * u ^ z.length)
+  (hE : ∀ A ∈ M, NLA.MF07.spectralNorm (E A) ≤ v) (z : List (NLA.MF07.Square d)) (hz : NLA.MF07.WordIn M z) :
+  NLA.MF07.spectralNorm (NLA.MF07.matrixProduct (List.map (fun A => C A + E A) z)) ≤ K * (u + K * v) ^ z.length
+'NLA.MF07.interspersed_product_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.quantitative_comparison {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M)
+  (hne : M.Nonempty) (hr : NLA.MF07.jointSpectralRadius M = 1) (s : ℝ) (hs : 1 ≤ s) (n : ℕ) :
+  NLA.MF07.familyGrowth M n ≤ ↑d * s ^ (d - 1) * (1 + 2 * ↑d ^ 2 * NLA.MF07.familyNorm M / s) ^ n
+'NLA.MF07.quantitative_comparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.scalar_family_growth (M : Set (NLA.MF07.Square 1)) (hM : IsCompact M) (hne : M.Nonempty) :
+  (∀ (n : ℕ), NLA.MF07.familyGrowth M n = NLA.MF07.familyNorm M ^ n) ∧
+    NLA.MF07.jointSpectralRadius M = NLA.MF07.familyNorm M
+'NLA.MF07.scalar_family_growth' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.exp_one_bound : Real.exp 1 ≤ 3
+'NLA.MF07.exp_one_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.comparison_threshold_bound (d n : ℕ) (hd : 2 ≤ d) (hn : 1 ≤ n) (L : ℝ) (hL : 1 ≤ L) :
+  1 ≤ NLA.MF07.comparisonThreshold d n L ∧
+    ↑d * NLA.MF07.comparisonThreshold d n L ^ (d - 1) * (1 + 2 * ↑d ^ 2 * L / NLA.MF07.comparisonThreshold d n L) ^ n ≤
+      NLA.MF07.growthConstant d * (L * ↑n) ^ (d - 1)
+'NLA.MF07.comparison_threshold_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.growth_constant_positive (d : ℕ) (hd : 1 ≤ d) : 0 < NLA.MF07.growthConstant d
+'NLA.MF07.growth_constant_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.radius_one_growth {d : ℕ} (hd : 1 ≤ d) (M : Set (NLA.MF07.Square d)) (hM : IsCompact M) (hne : M.Nonempty)
+  (hr : NLA.MF07.jointSpectralRadius M = 1) (n : ℕ) (hn : 1 ≤ n) :
+  NLA.MF07.familyGrowth M n ≤ NLA.MF07.growthConstant d * (NLA.MF07.familyNorm M * ↑n) ^ (d - 1)
+'NLA.MF07.radius_one_growth' depends on axioms: [propext, Classical.choice, Quot.sound]
+NLA.MF07.canonical_uniform_bound (d : ℕ) (hd : 1 ≤ d) :
+  ∃ Θ,
+    0 < Θ ∧
+      ∀ (M : Set (NLA.MF07.Square d)),
+        IsCompact M →
+          M.Nonempty →
+            NLA.MF07.jointSpectralRadius M = 1 →
+              ∀ (n : ℕ),
+                1 ≤ n →
+                  ∀ (A : Fin n → NLA.MF07.Square d),
+                    (∀ (i : Fin n), A i ∈ M) →
+                      NLA.MF07.spectralNorm (NLA.MF07.finiteProduct A) ≤ Θ * (NLA.MF07.familyNorm M * ↑n) ^ (d - 1)
+'NLA.MF07.canonical_uniform_bound' depends on axioms: [propext, Classical.choice, Quot.sound]

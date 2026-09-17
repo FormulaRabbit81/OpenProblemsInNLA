@@ -34,7 +34,7 @@ one},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}MF-07}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-11}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-17}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -51,13 +51,82 @@ polynomial bounds for products at joint spectral radius one\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to the community\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
 \textbf{Rating rationale:} Challenging because the constant must be
 uniform over all families of a given dimension; community impact spans
 transient growth and stability analysis.
+
+\subsection{Lean proof and verification
+evidence}\label{lean-proof-and-verification-evidence}
+
+\textbf{The complete original target is Lean verified, 2026-09-17
+(UTC).} The
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/b2b9acc83ad7d6b7d3888de8390475a30c720af8/matrix-functions-and-stability/MF-07/lean/Solution.lean}{immutable
+proof} at revision \textit{b2b9acc83ad7} passed
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35172783207/job/105047879291}{non-root
+Linux run 35172783207}. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-07/lean/verification/linux-35172783207/README.md}{retained
+source-bound evidence} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-07/lean/reviews/canonical-runtime/REVIEW.md}{independent
+runtime review} cover all 297 submitted inputs, all 18 exported
+statements, default-kernel replay, Comparator, standard transitive
+axioms and actual rejection/isolation controls.
+
+\textit{NLA.MF07.canonical\_uniform\_bound} chooses a positive constant
+for each dimension before quantifying over every nonempty compact
+complex matrix family, every positive product length and every switching
+word. \textit{NLA.MF07.radius\_one\_semantics} proves the correspondence
+with the original nth-root joint-spectral-radius limit. Matrix products
+and norms are the actual chronological products and Euclidean operator
+norms. Infinite compact families, reducibility, repetitions and
+dimension one are included. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-07/lean/Challenge.lean}{definitions
+and 18 independent contracts} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-07/lean/SourceCorrespondence.md}{source
+correspondence} record the full match.
+
+The formal proof uses the sufficient dimension-only constants
+
+\[\Theta_1=1,\qquad
+\Theta_d=d\left(\frac{6d^2}{d-1}\right)^{d-1}\quad(d\ge2).\]
+
+This settles the original existential bound. The manuscript's smaller
+constant, sharpness, general-radius formula, bounded/real-family
+extensions and separate MF-05 theorem are outside this formal claim. Its
+mathematical resolution remains unchanged below.
+
+Formalization and verification submission: \textbf{George Stepaniants},
+Department of Computing and Mathematical Sciences, California Institute
+of Technology. \textbf{Matthew J. Colbrook}, Department of Applied
+Mathematics and Theoretical Physics, University of Cambridge, retains
+original mathematical proof credit. Epperlein and Wirth retain credit
+for the question. Substantial OpenAI Codex assistance and scoped
+independent AI-agent reviews are disclosed; no official Tau Ceti
+endorsement, human peer review or new priority claim is made.
+
+The project pins Lean 4.33.1,
+\href{https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474}{Mathlib}
+and
+\href{https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926}{LeanCert}.
+Its consumed LeanCert certificate proves \(\exp(1)\le3\) in kernel mode
+without interval subdivision. All 18 exports use only \textit{propext},
+\textit{Classical.choice} and \textit{Quot.sound}. Run
+\textit{lake build} in
+\textit{matrix-functions-and-stability/MF-07/lean};
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-07/lean/README.md}{project
+instructions} give the complete Linux check. The local macOS development
+run and the actual GitHub check are distinct. Later publication-commit
+and upstream PR executions remain separate from this immutable proof
+run.
+
+The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-07/solution.pdf}{formalization
+note} and its
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-07/solution.tex}{LaTeX
+source} record the scope and authorship.
 
 \subsection{Resolution --- 2026-09-11}\label{resolution-2026-09-11}
 
@@ -67,10 +136,8 @@ manuscript, Theorem 1 and Proposition 5} proves the displayed bound for
 every dimension and every nonempty compact complex matrix family of
 joint spectral radius one, with
 
-\[
-\Theta_1=1,\qquad
-\Theta_d=d\left(\frac{2ed^2}{d-1}\right)^{d-1}\quad(d\ge2).
-\]
+\[\Theta_1=1,\qquad
+\Theta_d=d\left(\frac{2ed^2}{d-1}\right)^{d-1}\quad(d\ge2).\]
 
 This constant is independent of the family and its cardinality. The
 proof covers every switching word and every positive length, without
@@ -98,10 +165,8 @@ Let \(\mathcal H_d\) denote the nonempty compact subsets of
 The joint spectral radius of a nonempty compact set
 \(\mathcal M\subset\mathbb C^{d\times d}\) is
 
-\[
-\widehat\rho(\mathcal M)=\lim_{k\to\infty}
-\max_{A_1,\ldots,A_k\in\mathcal M}\|A_k\cdots A_1\|_2^{1/k}.
-\]
+\[\widehat\rho(\mathcal M)=\lim_{k\to\infty}
+\max_{A_1,\ldots,A_k\in\mathcal M}\|A_k\cdots A_1\|_2^{1/k}.\]
 
 This definition also applies to finite real matrix sets. The ordinary
 spectral radius of one matrix is written \(\rho(A)\).
@@ -112,10 +177,8 @@ Does each \(d\ge1\) admit \(\Theta_d>0\) such that every
 \(\mathcal M\in\mathcal H_d\) with \(\widehat\rho(\mathcal M)=1\)
 satisfies
 
-\[
-\|A_k\cdots A_1\|_2\le\Theta_d(Lk)^{d-1},\qquad
-L=\max_{A\in\mathcal M}\|A\|_2,
-\]
+\[\|A_k\cdots A_1\|_2\le\Theta_d(Lk)^{d-1},\qquad
+L=\max_{A\in\mathcal M}\|A\|_2,\]
 
 for all \(k\ge1\) and all \(A_1,\ldots,A_k\in\mathcal M\)?
 

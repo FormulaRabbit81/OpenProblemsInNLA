@@ -1,0 +1,13 @@
+# SF-01 statement-only draft
+
+This package specifies the complete original preservation theorem for exact Newton square-root iteration on every positive-diagonal real nonsingular H-matrix, with X_0=A. It contains definitions and 24 independent Challenge signatures, all explicitly unproved. It is not a Lean-verified solution or a frozen statement boundary.
+
+The H predicate is the canonical spectral comparison condition. It is not replaced by weighted diagonal dominance. The final statement retains all n>=1, every real input satisfying the original hypothesis, every natural iteration k, and the multiplication order X_k^-1*A. It additionally requires actual unitness at each step, preventing reliance on the total matrix inverse's zero value at singular inputs.
+
+George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology, prepared this formalization draft with OpenAI Codex assistance. Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics, University of Cambridge, retains mathematical authorship. The proof plan reuses Sidney Holden's Apache-2.0 IV-03 maximum-principle development, whose authorship must be preserved when integrated. No IV03 implementation is copied or imported in this statement-only package.
+
+Read `NUMERICAL_TARGETS.md` and `SourceCorrespondence.md` before the Lean signatures. `REVIEW-PLAN.md` records the applicable referee, kernel, Comparator and runtime requirements. The pinned configuration intentionally builds Challenge by default. A successful Challenge build would elaborate the statements with its deliberate proof holes; it would not verify the problem.
+
+Two independent statement approvals and an authenticated Linux elaboration must precede freezing and all proof implementation. There is no `Solution.lean`, no proof implementation, no local Lean execution, no claimed Comparator run, and no verified-count increment. `formalization.yaml` reports this scope explicitly. Whole-problem acceptance requires complete strict kernel and Comparator/control evidence plus a rerun on the exact published commit.
+
+The separate sealed feasibility packet is privately retained at `../SF01-feasibility`, manifest `d4dd3c49af3579c8c1f4fe0474b429c7eec96938860404501941daf54639b181`. It contains exact canonical source, pinned API and fresh public duplicate-scan evidence, plus the finite positive rational, spectral-homotopy and block-Woodbury derivation. Its raw manuscript/API files are private and must not be published wholesale. This package references their exact hashes without claiming that all private archive contents are republished here.

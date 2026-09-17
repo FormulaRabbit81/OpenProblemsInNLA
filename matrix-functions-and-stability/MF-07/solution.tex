@@ -1,0 +1,95 @@
+% MF-07 formalization note; the original shared mathematical manuscript is unchanged.
+% Compile with pdflatex twice. No external bibliography or figures are required.
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,microtype}
+\usepackage[margin=27mm]{geometry}
+\usepackage{xurl,hyperref}
+\hypersetup{hidelinks,pdftitle={MF-07: Lean verification of the uniform product bound},pdfauthor={George Stepaniants}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{2em}
+\title{\textbf{MF-07: Lean verification\\of the uniform product bound}}
+\author{George Stepaniants\\[3pt]\small Department of Computing and Mathematical Sciences\\\small California Institute of Technology}
+\date{17 September 2026 (UTC)}
+\begin{document}
+\maketitle
+\textbf{Scope.} This is a formalization and verification note for the complete
+original MF-07 target. The mathematical resolution remains credited to
+Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics,
+University of Cambridge. His shared manuscript, \emph{Uniform polynomial
+product bounds and sharp H\"older continuity of the joint spectral radius},
+Theorem~1 and Proposition~5, is retained unchanged in the repository.
+Epperlein and Wirth retain credit for the original question.
+
+\section*{Original target and formal result}
+For each positive integer $d$, there is a constant $\Theta_d>0$, chosen before
+the family, such that every nonempty compact
+$\mathcal M\subset\mathbb C^{d\times d}$ of joint spectral radius one satisfies
+\[
+ \|A_k\cdots A_1\|_2\le\Theta_d(Lk)^{d-1},\qquad
+ L=\max_{A\in\mathcal M}\|A\|_2,
+\]
+for every $k\ge1$ and every $A_1,\ldots,A_k\in\mathcal M$.
+The norm is the Euclidean operator norm and the radius is the original limit
+of the maximal product norm to the power $1/k$.
+
+The final Lean declaration is
+\texttt{NLA.MF07.canonical\_uniform\_bound}.
+The declaration \texttt{NLA.MF07.radius\_one\_semantics} proves the required
+infimum/root-limit correspondence. Infinite compact families, reducibility,
+repeated factors, arbitrary complex entries and $d=1$ are included.
+The formal proof takes
+\[
+ \Theta_1=1,\qquad
+ \Theta_d=d\left(\frac{6d^2}{d-1}\right)^{d-1}\quad(d\ge2).
+\]
+This proves the original existential assertion. The manuscript's smaller
+constant with $2e$ in place of $6$, sharpness, general-radius formula,
+bounded/real-family extensions and separate MF-05 result are outside this
+formalization. No irreducibility or assumed exact extremal norm is added.
+
+\section*{Formalization appendix: executed verification}
+The immutable proof revision is
+\begin{center}\small
+\texttt{b2b9acc83ad7d6b7d3888de8390475a30c720af8}.
+\end{center}
+Actual GitHub Linux run \texttt{35172783207}, verify job
+\texttt{105047879291}, completed successfully on 17~September~2026 (UTC).
+All 297 submitted inputs and all 18 exported statements passed default-kernel
+replay, Lean Comparator, permitted transitive-axiom checks and the actual
+per-project rejection and isolation controls. The verify process and sandbox
+used non-root UID~1001. The separate global checker-control job was skipped;
+the required controls ran inside this successful proof job.
+
+Only \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}
+occur in the 18 exported axiom lists. The single numerical calculation,
+$\exp(1)\le3$, uses LeanCert kernel trust and is consumed by the final
+dimension-only constant. All matrix, dimension, length and threshold estimates
+are symbolic, with no interval subdivision.
+
+The project pins Lean~4.33.1, Mathlib revision
+\texttt{0df444a360eaa60ab8c11dca51a86af692955474} and LeanCert revision
+\texttt{621a43d7cf21f87872392a01e874f2f1dbddc926}.
+
+From \nolinkurl{matrix-functions-and-stability/MF-07/lean}, run
+\texttt{lake build} with the pinned dependencies. The project README supplies
+the full non-root Linux harness command and retained evidence.
+
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/b2b9acc83ad7d6b7d3888de8390475a30c720af8/matrix-functions-and-stability/MF-07/lean/Solution.lean}{Immutable proof source}
+\quad\textbullet\quad
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35172783207/job/105047879291}{Actual Linux verification run}.
+
+\textbf{Review and publication limits.} Two nonauthor agents reviewed the
+complete proof source. An independent agent and the coordinator authenticated
+the actual GitHub evidence. These audits are not additional compiler runs or
+claims that the checker or platform is infallible. The earlier macOS local
+development is a distinct execution. Later publication-commit and upstream-PR
+checks remain separate from the immutable proof run above.
+
+\textbf{Attribution.} George Stepaniants supplied the AI-assisted formalization
+and verification submission with substantial OpenAI Codex assistance.
+Original mathematical authorship is retained. Proof authors and independent
+referees have explicit separate roles. No official Tau Ceti endorsement,
+external human peer review or new historical-priority claim is asserted.
+\end{document}
