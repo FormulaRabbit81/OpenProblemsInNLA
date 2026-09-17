@@ -1,0 +1,354 @@
+{
+  "version": "v0.4",
+  "project": {
+    "name": "MF-05: local two-family Holder continuity of the joint spectral radius",
+    "description": "Complete Lean implementation of the original local two-family Holder assertion for arbitrary nonempty compact complex matrix families. All 14 exact contracts passed local kernel compilation; two independent final source reviews approved the proof; non-root Linux Comparator remains a separate pending gate.",
+    "authors": [
+      "George Stepaniants"
+    ],
+    "affiliations": {
+      "George Stepaniants": "Department of Computing and Mathematical Sciences, California Institute of Technology"
+    },
+    "responsible_maintainers": [
+      "George Stepaniants"
+    ],
+    "license": "Apache-2.0"
+  },
+  "sources": [
+    {
+      "title": "MF-05 \u2014 Local H\u00f6lder continuity of the joint spectral radius",
+      "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/5308b2cfa30826e1314d6a8830415c14b5f1d7a3/matrix-functions-and-stability/MF-05/README.md",
+      "type": "web-post",
+      "relationship": "formalizes",
+      "location": "Complete original Context and notation and Problem statement",
+      "author_endorsement": "not-contacted",
+      "note": "Permanent ID, canonical path and original mathematical target preserved; retrieved from the exact local published Git object."
+    },
+    {
+      "title": "Uniform polynomial product bounds and sharp H\u00f6lder continuity of the joint spectral radius",
+      "authors": [
+        "Matthew J. Colbrook"
+      ],
+      "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/5308b2cfa30826e1314d6a8830415c14b5f1d7a3/references/colbrook-jsr-growth-2026-09-11/manuscripts/uniform_growth_and_holder.tex",
+      "type": "manuscript",
+      "relationship": "formalizes",
+      "location": "Theorem 2, Proposition 5, Corollary 7, and proof of Theorem 2",
+      "author_endorsement": "not-contacted",
+      "note": "Original mathematical proof: Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics, University of Cambridge. Entire current manuscript read. New general-root/scaling/identity-adjunction obligations supply a zero-radius route using the unchanged published MF07 theorem. No MF06 or sharpness claim is added."
+    }
+  ],
+  "related_formalizations": [
+    {
+      "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/5308b2cfa30826e1314d6a8830415c14b5f1d7a3/matrix-functions-and-stability/MF-07/lean/NLA/MF07",
+      "relationship": "builds-on",
+      "note": "Exact 20 published modules copied byte-for-byte, preserving NLA.MF07 namespace and authorship. Uses concrete definitions, compact maxima/submultiplicativity, product-envelope norm construction and the radius-one quantitative comparison. Its radius-one limit theorem does not supply the missing arbitrary/zero-radius semantics."
+    },
+    {
+      "id": "https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1",
+      "relationship": "other",
+      "note": "Retained independent-Challenge structural pattern only; no theorem imported."
+    },
+    {
+      "id": "https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof",
+      "relationship": "other",
+      "note": "Retained numerical-first and kernel-trust workflow pattern only; no theorem imported."
+    }
+  ],
+  "automation": {
+    "methods": [
+      {
+        "method": "agent",
+        "framework": "OpenAI Codex",
+        "tool_setup": "Multiple Codex agents developed independent proof modules, new mathematics and nonauthor reviews. Root ran serial local Lean with one thread and at most4096MiB, reusing only authenticated exact-source outputs. Final Comparator runs on GitHub Linux.",
+        "prompting_notes": "Preserve both independently varying nonempty compact complex matrix families, every positive dimension, actual spectral norms and Hausdorff formula, full root-limit semantics and radius zero. No extremal-norm or existence oracle. One planned consumed kernel LeanCert half-radius certificate; all dimensions, words and limits symbolic."
+      }
+    ],
+    "notes": "Substantial OpenAI Codex assistance. The statement and proof authors do not count as independent reviewers of their own work. Two nonauthor statement approvals preceded source freeze and all proof bodies. Two independent nonauthor final source reviews approved the exact final proof after four source cleanups; complete reports and original findings are retained in reviews/. Scoped pinned Tau Ceti guidance is applied; no official Tau Ceti invocation or external human peer review is claimed."
+  },
+  "status": {
+    "scope": "For every d>=1 and every nonempty compact M0 subset of complex d-by-d matrices, choose positive r,C before two arbitrary nonempty compact families M,N in its spectral-Hausdorff r-neighborhood. Prove |rho(M)-rho(N)| <= C*dH(M,N)^(1/d), including reducible and infinite-generator families, dH=0 and either radius zero. The final metric is the literal max-of-sup-inf formula; mandatory contracts identify it with the operator-image metric and identify the actual root-infimum radius with the original nth-root limit.",
+    "whole_problem_verified": false,
+    "sorry_count": 0,
+    "sorry_in_definitions": 0,
+    "challenge_placeholder_count": 14,
+    "source_scan_note": "The implementation and definitions contain zero proof-development sorries. Challenge has14 intentional specification placeholders and is never imported by Solution. All14 actual local target axiom reports contain only the three standard foundational axioms; final Linux Comparator is pending.",
+    "main_results": [
+      {
+        "declaration": "NLA.MF05.half_radius_certificate",
+        "file": "NLA/MF05/Numerical.lean",
+        "line": 22,
+        "file_sha256": "62c4363848f529e48d064c875d8897d55cb6959037af8df517c88287758e55ff",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "declaration": "NLA.MF05.spectral_hausdorff_semantics",
+        "file": "NLA/MF05/Hausdorff.lean",
+        "line": 126,
+        "file_sha256": "02ddcfc3b0d41748168e4cfa97e7e939808b6834a679b9adce4f6352b134e987",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "declaration": "NLA.MF05.general_exponential_envelope",
+        "file": "NLA/MF05/GeneralEnvelope.lean",
+        "line": 66,
+        "file_sha256": "efd92487ff2e5394dd7dc71e3be8d0efd7ebf4664103c8115ce28f7fae95ccdf",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "declaration": "NLA.MF05.general_root_limit_semantics",
+        "file": "NLA/MF05/RootLimit.lean",
+        "line": 54,
+        "file_sha256": "b20107ce3ebf842272abe6b71b4bce756adb6edda3e78ed9344c130b075fa752",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "declaration": "NLA.MF05.positive_scaling_semantics",
+        "file": "NLA/MF05/Scaling.lean",
+        "line": 91,
+        "file_sha256": "591dc04975059f223913870ecbb42fc76b9b863dedb8dd21d5299f56d6d7dbad",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "declaration": "NLA.MF05.exponential_bound_controls_radius",
+        "file": "NLA/MF05/RootLimit.lean",
+        "line": 73,
+        "file_sha256": "b20107ce3ebf842272abe6b71b4bce756adb6edda3e78ed9344c130b075fa752",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "declaration": "NLA.MF05.scalar_identity_adjoin_radius",
+        "file": "NLA/MF05/IdentityAdjoin.lean",
+        "line": 115,
+        "file_sha256": "1102104d39a56703dc669d8da0b2d68aac2e241d02073b9c70586b92c02a7d60",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "declaration": "NLA.MF05.general_quantitative_comparison",
+        "file": "NLA/MF05/GeneralComparison.lean",
+        "line": 72,
+        "file_sha256": "929b22537f6f6009cf5c679e7c12a4e5b095741215179414c5291fd0b8f46f8d",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "declaration": "NLA.MF05.controlled_comparison_norm",
+        "file": "NLA/MF05/ComparisonNorm.lean",
+        "line": 35,
+        "file_sha256": "19586d3faf329ae07f5262fa460231f27aac77dcb08801fc4a48e8bfd8c3d8b4",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "declaration": "NLA.MF05.hausdorff_radius_transfer",
+        "file": "NLA/MF05/RadiusTransfer.lean",
+        "line": 24,
+        "file_sha256": "672087112a751d287a7a73fcd837d08744d7c8a542054113fb8030739a2eaa1f",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "declaration": "NLA.MF05.holder_scale_identity",
+        "file": "NLA/MF05/HolderScale.lean",
+        "line": 23,
+        "file_sha256": "401d05a26e1832f74e0efe758af6e71b514a93095b107983e5d4b5da2488504c",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "declaration": "NLA.MF05.uniform_holder_estimate",
+        "file": "NLA/MF05/UniformHolder.lean",
+        "line": 70,
+        "file_sha256": "7cb2d51b54d1af57be49e1478e06a266159c81780986e8213da9ff8eb48b60e2",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "declaration": "NLA.MF05.local_common_norm_ball",
+        "file": "NLA/MF05/LocalBall.lean",
+        "line": 25,
+        "file_sha256": "fe63e29ff75cd331bfd00e496cdb70ed670c4ec07c54f0ef3385e634ef570123",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "declaration": "NLA.MF05.canonical_local_holder",
+        "file": "NLA/MF05/Final.lean",
+        "line": 24,
+        "file_sha256": "8cc3fce333ae42740caa11fd37af71981ca43a0f5891d6d44c795b98c78bd770",
+        "sorry_count": 0,
+        "challenge_placeholder_count": 0,
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual local source-bound Lean compilation 143 and kernel trust assertion; two independent final source approvals. GitHub Linux Comparator pending.",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    ],
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "fidelity": {
+    "divergences": "No target quantifier is weakened. The backend reuses the actual MF07 infimum of positive-index word-growth roots; general_root_limit_semantics must prove equality with the full original limit, including zero radius. The final contract uses the literal canonicalHausdorff formula and includes its mandatory operator-image semantics. Intermediate uniform estimate uses exactly d*(2*d+1)*L^(1-1/d). Sharper d=1 constant, optimal exponent examples, bounded noncompact extensions and the distinct MF06 problem are not advertised targets."
+  },
+  "review": {
+    "status": "Two independent statement approvals before implementation; two independent nonauthor final approvals after source cleanup.",
+    "reviewers": [
+      "/root (statement only)",
+      "/root/formal_review_standards (statement)",
+      "/root/mf05_full_referee1 (final)",
+      "/root/ie02_full_referee2 (final)"
+    ],
+    "notes": "AI-agent reviews under pinned Tau Ceti guidance; exact scopes and source hashes in reviews/INDEX.json. No reviewer independent Lean/Comparator rerun or external human review is claimed."
+  },
+  "alignment": {
+    "canonical_source": "sources/canonical/README.md",
+    "source_correspondence": "SourceCorrespondence.md",
+    "contracts": "CONTRACT-MAP.json",
+    "numerical_boundary": "NUMERICAL_TARGETS.md",
+    "numerical_first_record": "NUMERICAL-FIRST.json",
+    "published_reuse_bindings": "sources/reuse/MF07-PUBLISHED-BINDINGS.json",
+    "dependency_source_pins": "sources/reuse/DEPENDENCY-PINS.json",
+    "pinned_review_standards": "STANDARD-BINDINGS.json",
+    "current_stage": "STATE.json"
+  },
+  "toolchain": {
+    "lean": "leanprover/lean4:v4.33.1",
+    "mathlib": "0df444a360eaa60ab8c11dca51a86af692955474",
+    "leancert": "621a43d7cf21f87872392a01e874f2f1dbddc926",
+    "dependency_manifest": "lake-manifest.json",
+    "local_cache_policy": "One-thread local Lean, <=4096MiB, source/output/transitive-source-authenticated cache reuse. Detailed original commands/logs and reuse chains are retained in verification/LOCAL-COMPLETE.json and verification/local-development/."
+  },
+  "acknowledgements": "Matthew J. Colbrook for the mathematical proof; George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology, for formalization work. Reused Mathlib, LeanCert and NLA.MF07 authorship remains intact. George Stepaniants's email is not published.",
+  "verification": {
+    "local": {
+      "result": "passed",
+      "record": "verification/LOCAL-COMPLETE.json",
+      "exact_contracts": 14,
+      "closure_modules": 32,
+      "last_run": 143
+    },
+    "github_comparator": {
+      "result": "not run",
+      "published_commit": null
+    },
+    "publication_status": "Reviewed source candidate prepared for final Linux verification; canonical status remains Solved",
+    "independent_reviews": {
+      "statement": 2,
+      "final": 2,
+      "record": "reviews/INDEX.json",
+      "result": "approved at the documented scopes"
+    },
+    "package_preflight": {
+      "result": "approved",
+      "report": "reviews/publication-package.md",
+      "packet": "reviews/publication-package-packet.tar.gz",
+      "packet_sha256": "4285ed7c465926570c5d12829a03ebff2b208ddd647574c08f22f8d67685068e",
+      "manifest_sha256": "15b509a01ee4fd176c05b7a7390db1748de515a1ed5edd8eebaf99cec8f3429d",
+      "actual_checks": 4942,
+      "scope": "Metadata, exact source/review/local-evidence identity; not a new Lean or Comparator run"
+    }
+  }
+}

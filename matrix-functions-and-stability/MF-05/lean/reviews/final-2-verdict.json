@@ -1,0 +1,582 @@
+{
+  "problem": "MF-05",
+  "reviewer": "/root/ie02_full_referee2",
+  "role": "independent nonauthor mathematical/code referee #2",
+  "time": "2026-09-17T17:00:54.450895+00:00",
+  "original_verdict": "block",
+  "original_verdict_reason": "Mathematics and canonical correspondence accepted, but directly replaceable duplicate declarations block the original source under the pinned reuse rubric.",
+  "final_verdict": "approve",
+  "final_scope": "Complete canonical mathematical target, all14 frozen contracts and all32 entrypoint-closure modules after exactly four source cleanups; local141 source/log/output consistency audited. Publication metadata and final GitHub Linux Comparator are separate gates.",
+  "independence": "Did not author MF05 or read peer findings/reports. Root notifications described proposed cleanup changes; replacements and mathematical reasoning were independently checked. The Final positivity simplification is this referee's own additional finding. No author self-review is counted.",
+  "rubrics": {
+    "correctness": "approve",
+    "generality": "approve",
+    "proof_quality": "approve after cleanup",
+    "reuse": "approve after cleanup",
+    "attribution": "approve"
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "original_severity": "block",
+      "file": "NLA/MF05/RadiusTransfer.lean",
+      "lines": [
+        24,
+        43,
+        52
+      ],
+      "issue": "Two declarations reimplemented existing all-word norm and operator-norm estimates; the original change line also obscured the operator-to-vector reduction without explanation.",
+      "located_replacements": [
+        "NLA.MF07.norm_product_from_generator at Interspersed.lean:30",
+        "NLA.MF07.spectralNorm_product_of_norm at BlockComparison.lean:51"
+      ],
+      "remedy": "Delete both helpers and specialize the published spectralNorm_product_of_norm to the identity generator map.",
+      "final_location": "NLA/MF05/RadiusTransfer.lean:69",
+      "closure": "Both declarations, including the unexplained change, are removed. The existing theorem is used directly; source passed actual local140 and the exact final aggregate local141."
+    },
+    {
+      "id": "R2",
+      "original_severity": "request_changes",
+      "file": "NLA/MF05/Scaling.lean",
+      "lines": [
+        53
+      ],
+      "issue": "An induction re-derived uniform scalar multiplication of a list product.",
+      "located_replacements": [
+        "Mathlib List.smul_prod, Algebra/BigOperators/GroupWithZero/Action.lean:102"
+      ],
+      "remedy": "Use (List.smul_prod w.reverse c).symm with chronological-list unfolding.",
+      "closure": "Exact repair imports the existing action API and uses it directly; actual local140 succeeded."
+    },
+    {
+      "id": "R3",
+      "original_severity": "request_changes",
+      "file": "NLA/MF05/IdentityAdjoin.lean",
+      "lines": [
+        91
+      ],
+      "issue": "An induction re-derived the product of replicated scalar identities.",
+      "located_replacements": [
+        "List.prod_replicate, Algebra/BigOperators/Group/List/Defs.lean:90",
+        "smul_pow, Algebra/Group/Action/Defs.lean:488"
+      ],
+      "remedy": "Unfold chronological product and simplify reverse_replicate, prod_replicate, smul_pow, one_pow.",
+      "closure": "Exact source now uses the named existing lemmas; actual local140 succeeded."
+    },
+    {
+      "id": "R4",
+      "original_severity": "request_changes",
+      "file": "NLA/MF05/Final.lean",
+      "lines": [
+        33,
+        34,
+        37,
+        38
+      ],
+      "issue": "The proof instantiated the full uniform Holder estimate twice at the base family solely to obtain its constant positivity, although the exact positivity theorem was already available. The change line was an avoidable elaboration detour. This was independently identified by this referee.",
+      "located_replacements": [
+        "NLA.MF05.holderConstant_pos, UniformHolder.lean:25"
+      ],
+      "remedy": "Use holderConstant_pos hd (localNormBound M0) hball.1 directly.",
+      "final_location": "NLA/MF05/Final.lean:33",
+      "closure": "The complete detour, including the change line, is removed. Actual local141 compiled Final and the fourteen-contract aggregate without warnings."
+    }
+  ],
+  "unresolved_mathematical_findings": [],
+  "contract_coverage": [
+    {
+      "id": "C01",
+      "declaration": "NLA.MF05.half_radius_certificate",
+      "frozen_header": "theorem half_radius_certificate : 0 < localRadius ∧ localRadius < 1",
+      "header_sha256": "fd21798693ef4a8baf32828f7d9bdabf85efc60f88e6ff93c633f09fda3cf9f4",
+      "file": "NLA/MF05/Numerical.lean",
+      "line": 22,
+      "source_sha256": "62c4363848f529e48d064c875d8897d55cb6959037af8df517c88287758e55ff",
+      "verdict": "approve",
+      "reason": "Kernel-mode LeanCert proves both strict rational half-radius inequalities, and LocalBall and Final consume the resulting theorem. No interval subdivision or dimension enumeration is needed."
+    },
+    {
+      "id": "C02",
+      "declaration": "NLA.MF05.spectral_hausdorff_semantics",
+      "frozen_header": "theorem spectral_hausdorff_semantics {d : ℕ} (M N : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) (hN : IsCompact N) (hneN : N.Nonempty) :\n    IsCompact (spectralImage M) ∧ IsCompact (spectralImage N) ∧\n    Metric.hausdorffEDist (spectralImage M) (spectralImage N) ≠ ⊤ ∧\n    spectralHausdorff M N = canonicalHausdorff M N ∧\n    0 ≤ spectralHausdorff M N ∧\n    spectralHausdorff M N = spectralHausdorff N M ∧\n    (spectralHausdorff M N = 0 ↔ M = N) ∧\n    (∀ A ∈ M, ∃ B ∈ N,\n      pointFamilyDistance A N = spectralNorm (A - B) ∧\n      spectralNorm (A - B) ≤ spectralHausdorff M N) ∧\n    (∀ B ∈ N, ∃ A ∈ M,\n      pointFamilyDistance B M = spectralNorm (B - A) ∧\n      spectralNorm (B - A) ≤ spectralHausdorff M N)",
+      "header_sha256": "2db02f9aaed50538115ef887d046b60949ee361393a115f79b9d32c08b7682d7",
+      "file": "NLA/MF05/Hausdorff.lean",
+      "line": 126,
+      "source_sha256": "02ddcfc3b0d41748168e4cfa97e7e939808b6834a679b9adce4f6352b134e987",
+      "verdict": "approve",
+      "reason": "All nine clauses use the genuine Euclidean continuous-linear operator image. Nonempty compactness gives finite Hausdorff edistance, attained nearest matrices, bounded directed suprema, and zero-distance equality via injectivity. The library totalized infinite-distance zero case cannot enter."
+    },
+    {
+      "id": "C03",
+      "declaration": "NLA.MF05.general_exponential_envelope",
+      "frozen_header": "theorem general_exponential_envelope {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))\n    (hM : IsCompact M) (hne : M.Nonempty) (a : ℝ) (ha : jointSpectralRadius M < a) :\n    0 < a ∧ ∃ K : ℝ, 1 ≤ K ∧ ∀ n : ℕ, familyGrowth M n ≤ K * a ^ n",
+      "header_sha256": "707e8a3e3875bba725c75786234521e9ff905cc7cbd64d8b46165f95f9e6b4e0",
+      "file": "NLA/MF05/GeneralEnvelope.lean",
+      "line": 66,
+      "source_sha256": "efd92487ff2e5394dd7dc71e3be8d0efd7ebf4664103c8115ce28f7fae95ccdf",
+      "verdict": "approve",
+      "reason": "The actual infimum over positive-length root growth selects a block with growth below a^k. Quotient/remainder decomposition and finite residual maxima supply K>=1 for every word length. The argument handles zero growth and radius zero without logarithms."
+    },
+    {
+      "id": "C04",
+      "declaration": "NLA.MF05.general_root_limit_semantics",
+      "frozen_header": "theorem general_root_limit_semantics {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))\n    (hM : IsCompact M) (hne : M.Nonempty) :\n    0 ≤ jointSpectralRadius M ∧ jointSpectralRadius M ≤ familyNorm M ∧\n    Tendsto (rootGrowth M) atTop (𝓝 (jointSpectralRadius M))",
+      "header_sha256": "8f0a7b0bcbd9815185d9188fd2fb3888f9ff6cced5b5c34d29678a9912b0240a",
+      "file": "NLA/MF05/RootLimit.lean",
+      "line": 54,
+      "source_sha256": "b20107ce3ebf842272abe6b71b4bce756adb6edda3e78ed9344c130b075fa752",
+      "verdict": "approve",
+      "reason": "An exponential envelope for any a above the actual radius and geometric decay between a and a larger b yield the full root limit; positive-length infimum gives the lower bound. The same actual limit bounds the radius under any positive exponential envelope."
+    },
+    {
+      "id": "C05",
+      "declaration": "NLA.MF05.positive_scaling_semantics",
+      "frozen_header": "theorem positive_scaling_semantics {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))\n    (hM : IsCompact M) (hne : M.Nonempty) (c : ℝ) (hc : 0 < c) :\n    IsCompact (scaledFamily c M) ∧ (scaledFamily c M).Nonempty ∧\n    familyNorm (scaledFamily c M) = c * familyNorm M ∧\n    (∀ n : ℕ, familyGrowth (scaledFamily c M) n = c ^ n * familyGrowth M n) ∧\n    jointSpectralRadius (scaledFamily c M) = c * jointSpectralRadius M",
+      "header_sha256": "b6dc28ae874b219323428fd5c6f70442d384a7b283039c8f88942143a248cbfa",
+      "file": "NLA/MF05/Scaling.lean",
+      "line": 91,
+      "source_sha256": "591dc04975059f223913870ecbb42fc76b9b863dedb8dd21d5299f56d6d7dbad",
+      "verdict": "approve",
+      "reason": "The scaled family remains arbitrary nonempty compact. Actual chronological words have scaled preimages and product scaling; maxima yield growth scaling, and uniqueness of the already proved limits yields radius scaling. The repair invokes List.smul_prod on the reversed chronological list."
+    },
+    {
+      "id": "C06",
+      "declaration": "NLA.MF05.exponential_bound_controls_radius",
+      "frozen_header": "theorem exponential_bound_controls_radius {d : ℕ} (hd : 1 ≤ d)\n    (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty)\n    (K b : ℝ) (hK : 1 ≤ K) (hb : 0 < b)\n    (hbound : ∀ n : ℕ, familyGrowth M n ≤ K * b ^ n) :\n    jointSpectralRadius M ≤ b",
+      "header_sha256": "822ba9ddeed2d4b5dd159f7d0c7d80c598c65f9b2ea715d546091a59c125b3f8",
+      "file": "NLA/MF05/RootLimit.lean",
+      "line": 73,
+      "source_sha256": "b20107ce3ebf842272abe6b71b4bce756adb6edda3e78ed9344c130b075fa752",
+      "verdict": "approve",
+      "reason": "An exponential envelope for any a above the actual radius and geometric decay between a and a larger b yield the full root limit; positive-length infimum gives the lower bound. The same actual limit bounds the radius under any positive exponential envelope."
+    },
+    {
+      "id": "C07",
+      "declaration": "NLA.MF05.scalar_identity_adjoin_radius",
+      "frozen_header": "theorem scalar_identity_adjoin_radius {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))\n    (hM : IsCompact M) (hne : M.Nonempty) (e : ℝ) (he : 0 < e) :\n    IsCompact (identityAdjoin e M) ∧ (identityAdjoin e M).Nonempty ∧\n    familyNorm (identityAdjoin e M) = max (familyNorm M) e ∧\n    jointSpectralRadius (identityAdjoin e M) = max (jointSpectralRadius M) e",
+      "header_sha256": "59c363878d54ed8e2bfcf037de4f0052ac86046bfa3c3600a38199e5ce5df90b",
+      "file": "NLA/MF05/IdentityAdjoin.lean",
+      "line": 115,
+      "source_sha256": "1102104d39a56703dc669d8da0b2d68aac2e241d02073b9c70586b92c02a7d60",
+      "verdict": "approve",
+      "reason": "A word in M union {eI} compresses to a chronological word in M times a scalar power, with the exact length relation. Subset monotonicity, envelopes and repeated eI give the true radius max(rho(M),e). The proof does not commute distinct generators. The repair reuses prod_replicate and smul_pow."
+    },
+    {
+      "id": "C08",
+      "declaration": "NLA.MF05.general_quantitative_comparison",
+      "frozen_header": "theorem general_quantitative_comparison {d : ℕ} (hd : 1 ≤ d)\n    (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty)\n    (L s : ℝ) (hL : 0 < L) (hML : InNormBall M L) (hs : 1 ≤ s) (n : ℕ) :\n    familyGrowth M n ≤ comparisonFactor d s * (comparisonRate d M L s) ^ n",
+      "header_sha256": "53d589390fc1fda6b985d386b4578e1f08b867fddb2a33870d9d2963e2d9db84",
+      "file": "NLA/MF05/GeneralComparison.lean",
+      "line": 72,
+      "source_sha256": "929b22537f6f6009cf5c679e7c12a4e5b095741215179414c5291fd0b8f46f8d",
+      "verdict": "approve",
+      "reason": "Positive radius uses scalar normalization and the published radius-one quantitative comparison. Zero radius adjoins eI, bounds each fixed-length original word for every 0<e<L, and lets e tend to zero in a finite scalar polynomial. No continuity of joint spectral radius is assumed."
+    },
+    {
+      "id": "C09",
+      "declaration": "NLA.MF05.controlled_comparison_norm",
+      "frozen_header": "theorem controlled_comparison_norm {d : ℕ} (hd : 1 ≤ d)\n    (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty)\n    (L s : ℝ) (hL : 0 < L) (hML : InNormBall M L) (hs : 1 ≤ s) :\n    0 < comparisonRate d M L s ∧\n    IsComplexNorm (comparisonNorm d M L s) ∧\n    (∀ x : EuclideanVector d,\n      ‖x‖ ≤ comparisonNorm d M L s x ∧\n      comparisonNorm d M L s x ≤ comparisonFactor d s * ‖x‖) ∧\n    (∀ A ∈ M, ∀ x : EuclideanVector d,\n      comparisonNorm d M L s (applyMatrix A x) ≤\n        comparisonRate d M L s * comparisonNorm d M L s x)",
+      "header_sha256": "ae65843c37263474f63a10c5f7035204ef0a2b174e1eda8f0073dd03661b681a",
+      "file": "NLA/MF05/ComparisonNorm.lean",
+      "line": 35,
+      "source_sha256": "19586d3faf329ae07f5262fa460231f27aac77dcb08801fc4a48e8bfd8c3d8b4",
+      "verdict": "approve",
+      "reason": "The concrete discounted supremum over every actual word is finite by the general comparison theorem and includes the empty word. Existing ProductEnvelope lemmas prove all four complex-norm laws, Euclidean comparisons and generator action bounds; no extremal-norm oracle is a hypothesis."
+    },
+    {
+      "id": "C10",
+      "declaration": "NLA.MF05.hausdorff_radius_transfer",
+      "frozen_header": "theorem hausdorff_radius_transfer {d : ℕ} (hd : 1 ≤ d) (M N : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) (hN : IsCompact N) (hneN : N.Nonempty)\n    (L s : ℝ) (hL : 0 < L) (hML : InNormBall M L) (hs : 1 ≤ s) :\n    jointSpectralRadius N ≤\n      comparisonRate d M L s + comparisonFactor d s * spectralHausdorff M N",
+      "header_sha256": "15ae7ef20867018267d60b34eba163cc97565a5dd3eadfc2953989a10ffeaf7c",
+      "file": "NLA/MF05/RadiusTransfer.lean",
+      "line": 24,
+      "source_sha256": "672087112a751d287a7a73fcd837d08744d7c8a542054113fb8030739a2eaa1f",
+      "verdict": "approve",
+      "reason": "Compact nearest generators transfer the constructed norm from M to N, with error K times the actual Hausdorff distance. The revised proof specializes the published all-word operator estimate to the identity generator map, then applies the genuine growth-to-radius theorem."
+    },
+    {
+      "id": "C11",
+      "declaration": "NLA.MF05.holder_scale_identity",
+      "frozen_header": "theorem holder_scale_identity {d : ℕ} (hd : 1 ≤ d) (L delta : ℝ)\n    (hL : 0 < L) (hdelta : 0 < delta) (hdeltaL : delta ≤ L) :\n    1 ≤ holderScale d L delta ∧\n    (holderScale d L delta) ^ d = L / delta ∧\n    L / holderScale d L delta =\n      Real.rpow L (1 - 1 / (d : ℝ)) * Real.rpow delta (1 / (d : ℝ)) ∧\n    2 * (d : ℝ) ^ 2 * L / holderScale d L delta +\n        comparisonFactor d (holderScale d L delta) * delta =\n      holderConstant d L * Real.rpow delta (1 / (d : ℝ))",
+      "header_sha256": "8af2d0d19d44383138da399f29809d70cba37e37fb3779a36f9a4cb25e44661d",
+      "file": "NLA/MF05/HolderScale.lean",
+      "line": 23,
+      "source_sha256": "401d05a26e1832f74e0efe758af6e71b514a93095b107983e5d4b5da2488504c",
+      "verdict": "approve",
+      "reason": "For every natural d>=1 and positive delta<=L, the symbolic real dth-root choice is >=1 and obeys both exact optimization identities. Positivity justifies all divisions and real-power laws. Nat subtraction is handled for d=1, so the endpoint is not omitted."
+    },
+    {
+      "id": "C12",
+      "declaration": "NLA.MF05.uniform_holder_estimate",
+      "frozen_header": "theorem uniform_holder_estimate {d : ℕ} (hd : 1 ≤ d) (M N : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) (hN : IsCompact N) (hneN : N.Nonempty)\n    (L : ℝ) (hL : 0 < L) (hML : InNormBall M L) (hNL : InNormBall N L) :\n    0 < holderConstant d L ∧\n    |jointSpectralRadius M - jointSpectralRadius N| ≤\n      holderConstant d L * Real.rpow (spectralHausdorff M N) (1 / (d : ℝ))",
+      "header_sha256": "b040c2c77d3f5a646f92259f7933027926ca516c18521b570d507c26758acdc6",
+      "file": "NLA/MF05/UniformHolder.lean",
+      "line": 70,
+      "source_sha256": "7cb2d51b54d1af57be49e1478e06a266159c81780986e8213da9ff8eb48b60e2",
+      "verdict": "approve",
+      "reason": "Both radii lie in [0,L]. Delta=0 uses compact-family equality; 0<delta<=L applies the optimized transfer in both directions; delta>L uses the norm-ball radius bound. The constant is strictly positive and independent of the varying families."
+    },
+    {
+      "id": "C13",
+      "declaration": "NLA.MF05.local_common_norm_ball",
+      "frozen_header": "theorem local_common_norm_ball {d : ℕ} (hd : 1 ≤ d) (M0 : Set (Square d))\n    (hM0 : IsCompact M0) (hne0 : M0.Nonempty) :\n    0 < localNormBound M0 ∧\n    ∀ M : Set (Square d), IsCompact M → M.Nonempty →\n      spectralHausdorff M M0 < localRadius → InNormBall M (localNormBound M0)",
+      "header_sha256": "a77d88bc33d07ac1fedd43d968b0a8076441fc4ba7c183d21ebb3b6043a9231b",
+      "file": "NLA/MF05/LocalBall.lean",
+      "line": 25,
+      "source_sha256": "fe63e29ff75cd331bfd00e496cdb70ed670c4ec07c54f0ef3385e634ef570123",
+      "verdict": "approve",
+      "reason": "The actual family norm of M0 is a finite maximum. The consumed half-radius certificate and nearest generators show every compact family in that fixed neighborhood lies in the one positive common norm ball familyNorm(M0)+1."
+    },
+    {
+      "id": "C14",
+      "declaration": "NLA.MF05.canonical_local_holder",
+      "frozen_header": "theorem canonical_local_holder {d : ℕ} (hd : 1 ≤ d) (M0 : Set (Square d))\n    (hM0 : IsCompact M0) (hne0 : M0.Nonempty) :\n    ∃ r : ℝ, 0 < r ∧ ∃ C : ℝ, 0 < C ∧\n      ∀ M N : Set (Square d),\n        IsCompact M → M.Nonempty → IsCompact N → N.Nonempty →\n        canonicalHausdorff M M0 < r → canonicalHausdorff N M0 < r →\n        |jointSpectralRadius M - jointSpectralRadius N| ≤\n          C * Real.rpow (canonicalHausdorff M N) (1 / (d : ℝ))",
+      "header_sha256": "22b42e01ab617768516f949f8df4191998fcf5c4975e84d28056d9b38e17ef0a",
+      "file": "NLA/MF05/Final.lean",
+      "line": 24,
+      "source_sha256": "8cc3fce333ae42740caa11fd37af71981ca43a0f5891d6d44c795b98c78bd770",
+      "verdict": "approve",
+      "reason": "The positive radius and positive Holder constant are chosen before either M or N varies. Both independent neighborhood assumptions supply the common norm bound. The final estimate converts the actual operator Hausdorff metric back to the canonical max-sup-inf formula."
+    }
+  ],
+  "module_coverage": [
+    {
+      "module": "NLA.MF07.Definitions",
+      "source": "NLA/MF07/Definitions.lean",
+      "sha256": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+      "lines": 101,
+      "whole_file_read": true,
+      "reason": "Actual complex square matrices, Euclidean continuous-linear operator norm, reversed-list chronological multiplication, suprema of true word norms and the infimum over positive-length roots; concrete norm axioms only."
+    },
+    {
+      "module": "NLA.MF07.MatrixBasics",
+      "source": "NLA/MF07/MatrixBasics.lean",
+      "sha256": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+      "lines": 132,
+      "whole_file_read": true,
+      "reason": "Operator norm triangle/submultiplicative/scalar laws and chronological cons/append identities agree with actual matrix multiplication. The diagonal inverse is a real inverse, not a supplied oracle."
+    },
+    {
+      "module": "NLA.MF07.ProductEnvelope",
+      "source": "NLA/MF07/ProductEnvelope.lean",
+      "sha256": "a770edbd047fc56f53da8f364d1a4207c0bdbaf346d5be359d035dc6aef0b7e0",
+      "lines": 180,
+      "whole_file_read": true,
+      "reason": "A supremum over every discounted actual word, including the empty word, is shown bounded under an exponential estimate. It constructs the norm axioms and generator inequality; reuse preserves signs and order."
+    },
+    {
+      "module": "NLA.MF05.Definitions",
+      "source": "NLA/MF05/Definitions.lean",
+      "sha256": "f4ada429ed3cf768c228bd936c3a969f618bd3e87e8bc860cc371b5b315a3cb9",
+      "lines": 91,
+      "whole_file_read": true,
+      "reason": "Concrete definitions reviewed in their entirety: actual spectral image, literal max-sup-inf, scaled/identity-adjoined families, actual discounted word norm, symbolic Holder scale, fixed radius and common norm bound."
+    },
+    {
+      "module": "NLA.MF07.CompactGrowth",
+      "source": "NLA/MF07/CompactGrowth.lean",
+      "sha256": "d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9",
+      "lines": 140,
+      "whole_file_read": true,
+      "reason": "Finite products are parametrized by Fin n -> M, a compact space even for infinite M. Actual maxima, empty-word growth and submultiplicativity follow without finite-cardinality assumptions on generators."
+    },
+    {
+      "module": "NLA.MF07.RootSemantics",
+      "source": "NLA/MF07/RootSemantics.lean",
+      "sha256": "bee70f65ab8e7e517ebec8f579ea3ee8fb276d52a8f5cd293c9c0e085ab304ee",
+      "lines": 198,
+      "whole_file_read": true,
+      "reason": "The radius-one logarithmic/Fekete argument uses positivity only where established; the infimum-root semantics is actual, and the original radius-one assumption is used only inside the separately normalized MF05 route."
+    },
+    {
+      "module": "NLA.MF05.GeneralEnvelope",
+      "source": "NLA/MF05/GeneralEnvelope.lean",
+      "sha256": "efd92487ff2e5394dd7dc71e3be8d0efd7ebf4664103c8115ce28f7fae95ccdf",
+      "lines": 83,
+      "whole_file_read": true,
+      "reason": "The actual infimum over positive-length root growth selects a block with growth below a^k. Quotient/remainder decomposition and finite residual maxima supply K>=1 for every word length. The argument handles zero growth and radius zero without logarithms."
+    },
+    {
+      "module": "NLA.MF05.RootLimit",
+      "source": "NLA/MF05/RootLimit.lean",
+      "sha256": "b20107ce3ebf842272abe6b71b4bce756adb6edda3e78ed9344c130b075fa752",
+      "lines": 92,
+      "whole_file_read": true,
+      "reason": "An exponential envelope for any a above the actual radius and geometric decay between a and a larger b yield the full root limit; positive-length infimum gives the lower bound. The same actual limit bounds the radius under any positive exponential envelope."
+    },
+    {
+      "module": "NLA.MF05.Scaling",
+      "source": "NLA/MF05/Scaling.lean",
+      "sha256": "591dc04975059f223913870ecbb42fc76b9b863dedb8dd21d5299f56d6d7dbad",
+      "lines": 117,
+      "whole_file_read": true,
+      "reason": "The scaled family remains arbitrary nonempty compact. Actual chronological words have scaled preimages and product scaling; maxima yield growth scaling, and uniqueness of the already proved limits yields radius scaling. The repair invokes List.smul_prod on the reversed chronological list."
+    },
+    {
+      "module": "NLA.MF05.IdentityAdjoin",
+      "source": "NLA/MF05/IdentityAdjoin.lean",
+      "sha256": "1102104d39a56703dc669d8da0b2d68aac2e241d02073b9c70586b92c02a7d60",
+      "lines": 149,
+      "whole_file_read": true,
+      "reason": "A word in M union {eI} compresses to a chronological word in M times a scalar power, with the exact length relation. Subset monotonicity, envelopes and repeated eI give the true radius max(rho(M),e). The proof does not commute distinct generators. The repair reuses prod_replicate and smul_pow."
+    },
+    {
+      "module": "NLA.MF07.NormGeometry",
+      "source": "NLA/MF07/NormGeometry.lean",
+      "sha256": "9069dada9936d5b4c2568aa247a8ce050c3ca79385fa4b50dbf42e2c94fcafe8",
+      "lines": 139,
+      "whole_file_read": true,
+      "reason": "Euclidean coordinate estimates and true norm continuity make the relevant complex-norm unit ball compact. Lower and upper comparison constants are proved, not given as the target."
+    },
+    {
+      "module": "NLA.MF07.Auerbach",
+      "source": "NLA/MF07/Auerbach.lean",
+      "sha256": "bb77d8267e83654093eae335f95dfb277f032668d5244179886dfddd36ad8001",
+      "lines": 191,
+      "whole_file_read": true,
+      "reason": "An actual determinant maximum on compact columns exists; an invertible competitor makes it nonzero. Replacing a column yields inverse-coordinate control, providing a constructed Auerbach basis."
+    },
+    {
+      "module": "NLA.MF07.UnitaryGeometry",
+      "source": "NLA/MF07/UnitaryGeometry.lean",
+      "sha256": "ee0bf9c4b7f1fba1dee0534f24e9ba095ecc53b7b57d5910e537f9316edbba1d",
+      "lines": 108,
+      "whole_file_read": true,
+      "reason": "Genuine Euclidean operator norms and matrix unitaries give norm-preserving conjugacy. Cut damping is a convex combination of two unitary conjugations, with verified coefficient signs."
+    },
+    {
+      "module": "NLA.MF07.SingularCoordinates",
+      "source": "NLA/MF07/SingularCoordinates.lean",
+      "sha256": "d10e341a08ca6c99168ae96f63c26f85757149861cb23187ddacac00f97aa629",
+      "lines": 148,
+      "whole_file_read": true,
+      "reason": "The positive definite Gram matrix of the constructed invertible basis is diagonalized by the pinned Hermitian spectral theorem. Positive ordered singular values and both unitary identities are proved; no SVD certificate is postulated."
+    },
+    {
+      "module": "NLA.MF07.ApproximateNorm",
+      "source": "NLA/MF07/ApproximateNorm.lean",
+      "sha256": "883e7e7c0455c5e3b257f5b3946d8ad4fcbef2a3d61e87061f1d92f9099a40a9",
+      "lines": 75,
+      "whole_file_read": true,
+      "reason": "The radius-one root limit supplies a finite uniform exponential envelope above one; ProductEnvelope constructs the approximate extremal norm explicitly."
+    },
+    {
+      "module": "NLA.MF07.RoundedNorm",
+      "source": "NLA/MF07/RoundedNorm.lean",
+      "sha256": "9ef9b6f2a7784054bdf3f1dedf22f4e81f8672176b7a7ec271e5d9a9e26d4ec5",
+      "lines": 146,
+      "whole_file_read": true,
+      "reason": "Auerbach and unitary coordinate changes give the stated d comparison factor and entry ratios, while transporting genuine norms and generator actions through actual inverse matrices."
+    },
+    {
+      "module": "NLA.MF07.TriangularDamping",
+      "source": "NLA/MF07/TriangularDamping.lean",
+      "sha256": "ea35c872a9c579f4d6e9a259140cbe64afdf12491fa34729272b34e7150aab2a",
+      "lines": 133,
+      "whole_file_read": true,
+      "reason": "Single-cut identities and successive clipped weights produce a norm contraction on matrices satisfying the full lower-block condition. Tied weights and zero-dimensional support lemmas are explicitly covered."
+    },
+    {
+      "module": "NLA.MF07.Interspersed",
+      "source": "NLA/MF07/Interspersed.lean",
+      "sha256": "8f65ea5980bb23640c5185abc3d793964f84b1e1a45550e580ee184bcafdc898",
+      "lines": 135,
+      "whole_file_read": true,
+      "reason": "The orbit norm controls actual products interspersed with perturbations and avoids expanding exponentially many terms. The zero-rate case is separate and the empty product is included."
+    },
+    {
+      "module": "NLA.MF07.BlockComparison",
+      "source": "NLA/MF07/BlockComparison.lean",
+      "sha256": "405a056ae751100e601faddb3ef18cbfdbb5dbe4818651aa796aba101d3fe26d",
+      "lines": 146,
+      "whole_file_read": true,
+      "reason": "Entry bounds imply the spectral bound by Cauchy-Schwarz. Lower-for-weights is closed under complete products; damping is applied to the whole product, not unjustifiably to each factor separately."
+    },
+    {
+      "module": "NLA.MF07.CappedWeights",
+      "source": "NLA/MF07/CappedWeights.lean",
+      "sha256": "98b0167850304223a46ff945eb1d748ba556c0e27bd5d879d2c366f1d7122ca6",
+      "lines": 161,
+      "whole_file_read": true,
+      "reason": "Actual capped ratios are positive and ordered, bounded by s^(d-1), and produce the strict weight-gap implication including tied blocks. The dimension and weights remain symbolic."
+    },
+    {
+      "module": "NLA.MF07.Similarity",
+      "source": "NLA/MF07/Similarity.lean",
+      "sha256": "b96e1b6814fca826e1157b9b04dbcf4727e0f1c5ac26c404a10165633897a8d7",
+      "lines": 147,
+      "whole_file_read": true,
+      "reason": "The coordinate maps are actual inverse pairs. Complete words conjugate correctly, diagonal norms are Euclidean operator norms, and undoing the similarity costs the proved condition-number bound."
+    },
+    {
+      "module": "NLA.MF07.QuantitativeComparison",
+      "source": "NLA/MF07/QuantitativeComparison.lean",
+      "sha256": "ad20c7a071d84ea13b6c95f2a915d5ae9fcb362aa7f35d3730e7d910054e6248",
+      "lines": 163,
+      "whole_file_read": true,
+      "reason": "The constructed rounded norm, capped weights, full-product damping and interspersed bound give the quantitative radius-one estimate. Sending the auxiliary scalar to one uses scalar polynomial continuity at fixed word length."
+    },
+    {
+      "module": "NLA.MF05.GeneralComparison",
+      "source": "NLA/MF05/GeneralComparison.lean",
+      "sha256": "929b22537f6f6009cf5c679e7c12a4e5b095741215179414c5291fd0b8f46f8d",
+      "lines": 115,
+      "whole_file_read": true,
+      "reason": "Positive radius uses scalar normalization and the published radius-one quantitative comparison. Zero radius adjoins eI, bounds each fixed-length original word for every 0<e<L, and lets e tend to zero in a finite scalar polynomial. No continuity of joint spectral radius is assumed."
+    },
+    {
+      "module": "NLA.MF05.ComparisonNorm",
+      "source": "NLA/MF05/ComparisonNorm.lean",
+      "sha256": "19586d3faf329ae07f5262fa460231f27aac77dcb08801fc4a48e8bfd8c3d8b4",
+      "lines": 64,
+      "whole_file_read": true,
+      "reason": "The concrete discounted supremum over every actual word is finite by the general comparison theorem and includes the empty word. Existing ProductEnvelope lemmas prove all four complex-norm laws, Euclidean comparisons and generator action bounds; no extremal-norm oracle is a hypothesis."
+    },
+    {
+      "module": "NLA.MF05.Hausdorff",
+      "source": "NLA/MF05/Hausdorff.lean",
+      "sha256": "02ddcfc3b0d41748168e4cfa97e7e939808b6834a679b9adce4f6352b134e987",
+      "lines": 165,
+      "whole_file_read": true,
+      "reason": "All nine clauses use the genuine Euclidean continuous-linear operator image. Nonempty compactness gives finite Hausdorff edistance, attained nearest matrices, bounded directed suprema, and zero-distance equality via injectivity. The library totalized infinite-distance zero case cannot enter."
+    },
+    {
+      "module": "NLA.MF05.RadiusTransfer",
+      "source": "NLA/MF05/RadiusTransfer.lean",
+      "sha256": "672087112a751d287a7a73fcd837d08744d7c8a542054113fb8030739a2eaa1f",
+      "lines": 77,
+      "whole_file_read": true,
+      "reason": "Compact nearest generators transfer the constructed norm from M to N, with error K times the actual Hausdorff distance. The revised proof specializes the published all-word operator estimate to the identity generator map, then applies the genuine growth-to-radius theorem."
+    },
+    {
+      "module": "NLA.MF05.HolderScale",
+      "source": "NLA/MF05/HolderScale.lean",
+      "sha256": "401d05a26e1832f74e0efe758af6e71b514a93095b107983e5d4b5da2488504c",
+      "lines": 75,
+      "whole_file_read": true,
+      "reason": "For every natural d>=1 and positive delta<=L, the symbolic real dth-root choice is >=1 and obeys both exact optimization identities. Positivity justifies all divisions and real-power laws. Nat subtraction is handled for d=1, so the endpoint is not omitted."
+    },
+    {
+      "module": "NLA.MF05.UniformHolder",
+      "source": "NLA/MF05/UniformHolder.lean",
+      "sha256": "7cb2d51b54d1af57be49e1478e06a266159c81780986e8213da9ff8eb48b60e2",
+      "lines": 111,
+      "whole_file_read": true,
+      "reason": "Both radii lie in [0,L]. Delta=0 uses compact-family equality; 0<delta<=L applies the optimized transfer in both directions; delta>L uses the norm-ball radius bound. The constant is strictly positive and independent of the varying families."
+    },
+    {
+      "module": "NLA.MF05.Numerical",
+      "source": "NLA/MF05/Numerical.lean",
+      "sha256": "62c4363848f529e48d064c875d8897d55cb6959037af8df517c88287758e55ff",
+      "lines": 28,
+      "whole_file_read": true,
+      "reason": "Kernel-mode LeanCert proves both strict rational half-radius inequalities, and LocalBall and Final consume the resulting theorem. No interval subdivision or dimension enumeration is needed."
+    },
+    {
+      "module": "NLA.MF05.LocalBall",
+      "source": "NLA/MF05/LocalBall.lean",
+      "sha256": "fe63e29ff75cd331bfd00e496cdb70ed670c4ec07c54f0ef3385e634ef570123",
+      "lines": 49,
+      "whole_file_read": true,
+      "reason": "The actual family norm of M0 is a finite maximum. The consumed half-radius certificate and nearest generators show every compact family in that fixed neighborhood lies in the one positive common norm ball familyNorm(M0)+1."
+    },
+    {
+      "module": "NLA.MF05.Final",
+      "source": "NLA/MF05/Final.lean",
+      "sha256": "8cc3fce333ae42740caa11fd37af71981ca43a0f5891d6d44c795b98c78bd770",
+      "lines": 50,
+      "whole_file_read": true,
+      "reason": "The positive radius and positive Holder constant are chosen before either M or N varies. Both independent neighborhood assumptions supply the common norm bound. The final estimate converts the actual operator Hausdorff metric back to the canonical max-sup-inf formula."
+    },
+    {
+      "module": "NLA.MF05Solution",
+      "source": "Solution.lean",
+      "sha256": "d4a9122ccfba1073e5c626436e533bc3d227aa058cbac5ce5c73fbb6cd32491c",
+      "lines": 43,
+      "whole_file_read": true,
+      "reason": "Imports only Final and prints and kernel-asserts each of the exact fourteen exported contracts. Its private local module alias is byte-identical to the canonical Solution entrypoint."
+    }
+  ],
+  "canonical_target": {
+    "git_object": "849003686970b372e1b2128ba072f86168f81d38",
+    "README_sha256": "ba6abb75a0a1803bc9cfbfc519475d4aabb6a7454cbc8891ef04ff917b1935b4",
+    "manuscript_sha256": "2a07837ba2590c157f950c166a0f667ddd0c9e3a7ee2adb71f20589b9e37e2e4",
+    "parameters": "All natural d>=1; every fixed nonempty compact complex dxd family M0; positive r and C chosen before both independently varying nonempty compact M,N; actual Euclidean spectral operator norm, literal max-sup-inf Hausdorff formula, actual chronological product root limit; exponent 1/d.",
+    "not_claimed": [
+      "Sharper d=1 Lipschitz constant",
+      "Exponent sharpness",
+      "MF-06",
+      "Any new mathematical priority claim"
+    ]
+  },
+  "original_manifest_sha256": "6adc2744599a44458961f3394c48bd579d330bbd26bdc1702c633098d6a52c3d",
+  "statement_freeze_sha256": "e26ab0df733a07f9885aa3e0350b1828ae320286260646a862284b7665eff191",
+  "final_source_changes": {
+    "NLA/MF05/Final.lean": {
+      "original": "e3a622eb759bef048907f1d2bd8c0e2ea11f991c3b93edb4cebf5ed8ca90dc55",
+      "final": "8cc3fce333ae42740caa11fd37af71981ca43a0f5891d6d44c795b98c78bd770"
+    },
+    "NLA/MF05/IdentityAdjoin.lean": {
+      "original": "d9f7be3331f950e4c323814f3bee1c4d09bc956ece02e559f9efd4727cb50019",
+      "final": "1102104d39a56703dc669d8da0b2d68aac2e241d02073b9c70586b92c02a7d60"
+    },
+    "NLA/MF05/RadiusTransfer.lean": {
+      "original": "82d756c68f0fc96b4538f03726b40b425448a11db0cf13a04d8e03e2d64b85af",
+      "final": "672087112a751d287a7a73fcd837d08744d7c8a542054113fb8030739a2eaa1f"
+    },
+    "NLA/MF05/Scaling.lean": {
+      "original": "20c970562f0c613c335a3216bcb96d92bf288d0a5a63f9483a12273830ec84a1",
+      "final": "591dc04975059f223913870ecbb42fc76b9b863dedb8dd21d5299f56d6d7dbad"
+    }
+  },
+  "actual_local_evidence": {
+    "139": {
+      "receipt_sha256": "290e2b8069fd5baec4055b2065900b6148951982fcf93a5dd31fab820ca09bd2",
+      "nodes": 218,
+      "receipts": 17,
+      "observed_retained_outputs": 27
+    },
+    "141": {
+      "receipt_sha256": "bb5c67f6a99a0ce41e332d17a56e4473496f155a7cea424a2e2605bcc540537b",
+      "nodes": 266,
+      "receipts": 19,
+      "observed_retained_outputs": 32
+    },
+    "all_fourteen_printed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "all14_kernel_assertions_in_actual_aggregate": true,
+    "fresh_MF05_logs": "No warnings or errors in any successful MF05 origin reviewed.",
+    "historical_published_MF07_logs": "Harmless style/unused-argument/tactic warnings retained truthfully; exact published dependencies unchanged.",
+    "resource_limits": "One compiler, one thread, current4096MiB; legacy MF07 Definitions fresh origin3072MiB. This referee started no compiler."
+  },
+  "checks_run_by_this_referee": [
+    "Full mathematical and Lean-source reading",
+    "Independent exact published Git-object reads",
+    "Pinned primary API/semantics inspection",
+    "Bounded declaration/concept duplicate searches",
+    "Copied source/hash/import/contract checks",
+    "Recursive original and final local command/source/log/output audit",
+    "Read-only Python packet verifier (result stored separately)"
+  ],
+  "checks_not_run_by_this_referee": [
+    "Lean compiler",
+    "LeanCert compiler rerun",
+    "Comparator",
+    "GitHub Actions",
+    "official Tau Ceti CLI/service"
+  ],
+  "limitations": [
+    "A hash-bound local log is consistent evidence, not an unforgeable cryptographic attestation or independent kernel rerun.",
+    "Only selected relevant Mathlib/LeanCert primary implementation files were inspected; the entire third-party library was not reverified.",
+    "Three exact copied MF07 modules outside the Solution closure (Final, Numerical, ScalarFamily) were checked for published byte identity, not given a new full proof review.",
+    "Historical candidate README/formalization metadata are explicitly drafting records. Final publication-package metadata and schema acceptance are outside this source review.",
+    "Canonical Solution bytes were compiled under private alias NLA.MF05Solution in the reviewed local141 evidence; a later canonical-module-name compile is separately auditable.",
+    "Final non-root Linux Comparator/kernel-export/sandbox check is unrun in this packet and remains required before complete publication acceptance.",
+    "No external human peer review or official Tau Ceti service approval is claimed.",
+    "The bounded reuse search covers pinned Mathlib and published MF07; no independent TauCeti mathematics repository search was available from nearby source checkouts."
+  ],
+  "count_change": 0
+}
