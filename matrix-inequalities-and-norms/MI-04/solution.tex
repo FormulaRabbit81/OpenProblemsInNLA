@@ -8,7 +8,7 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
-\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue,pdfauthor={Matthew J. Colbrook}}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue,pdfauthor={Matthew J. Colbrook; George Stepaniants (Lean formalization)}}
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small Resolution / MI-04}
@@ -46,16 +46,48 @@
 \author{Matthew J. Colbrook\\
 \small Department of Applied Mathematics and Theoretical Physics\\
 \small University of Cambridge, Cambridge, United Kingdom\\
-\small\href{mailto:m.colbrook@damtp.cam.ac.uk}{m.colbrook@damtp.cam.ac.uk}}
+}
 \date{11 September 2026}
 \begin{document}
 \maketitle
-\textbf{Repository status: Solved.}
+\textbf{Repository status: Lean verified (original necessity implication).}
 The complete argument received an independent Codex-agent PASS review
 against the exact catalog target.
 The original draft was AI-assisted; the reviewed proof below is unchanged.
 This is independent agent verification, not external human peer review or
 formal proof certification. \href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/colbrook-matrix-2026-09-11/verification/reviews/MI-04-review.md}{Detailed review and scope}.
+\par\medskip
+\section*{Lean formalization: 16 September 2026}
+\textbf{Formalization and verification submission: George Stepaniants},
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Matthew J. Colbrook retains authorship of the mathematical proof below.
+Substantial OpenAI Codex assistance is disclosed.
+
+The Lean theorem \texttt{universal\_positive\_block\_essentially\_hermitian}
+proves the full original necessity implication for every positive finite complex
+dimension, including singular completions and repeated spectral values.
+The converse and four-way equivalence in the retained manuscript are outside
+this formal claim. The twenty-one independent formal targets use the original
+complex Euclidean operator norm and actual positive-semidefinite matrices.
+
+The verified proof revision is
+\begin{center}\small\texttt{63340ef17139606dce03c4d9000288129b773157}.\end{center}
+The coordinator's source-bound audit accepted
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35150473054}{Linux run 35150473054}.
+It authenticates all 233 project inputs, default-kernel replay, all twenty-one
+Comparator matches, permitted transitive axioms and rejection/isolation controls.
+An independent nonauthor AI agent also audited the complete execution evidence.
+The full original necessity implication is Lean verified. Later publication-commit
+and upstream checks are recorded separately; no future execution is claimed here.
+
+Lean 4.33.1, Mathlib and LeanCert are pinned by the project. The exact certificate
+$0<1/4$ is proved in LeanCert kernel mode and consumed in both required
+denominator-positivity steps; no interval subdivision is used.
+The only permitted axioms are \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound}. The source correspondence, reproduction commands and
+precise verification scope accompany the
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/63340ef17139606dce03c4d9000288129b773157/matrix-inequalities-and-norms/MI-04/lean/Solution.lean}{immutable Lean source}.
+The original mathematical proof is retained verbatim below.
 \par\medskip
 % BEGIN REVIEWED PROOF
 \section{MI-04: a characterization of essentially Hermitian off-diagonal blocks}
