@@ -20,6 +20,12 @@ Each entry records its own literature-check date. Literature checks are bounded;
 **[Browse all 112 open targets →](CATALOG.md)** · **[Solved and claimed solutions →](RESOLVED.md)**
 <!-- /catalog-summary -->
 
+## Special thanks
+
+Special thanks to **George Stepaniants**, **Matthew J. Colbrook**, and **Sidney Holden** for their substantial contributions to this repository so far.
+
+If you would like to get involved but don't know how, please email [townsend@cornell.edu](mailto:townsend@cornell.edu).
+
 ## Browse by category
 
 | Category | Problems |
