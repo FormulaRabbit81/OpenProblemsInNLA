@@ -1,0 +1,19 @@
+65:     0 ≤ (isHermitian_mul_conjTranspose_self A).eigenvalues i :=
+66:   (posSemidef_self_mul_conjTranspose _).eigenvalues_nonneg _
+67: 
+68: /-! ### Positive definite matrices -/
+69: 
+70: /-- A Hermitian matrix is positive-definite if and only if its eigenvalues are positive. -/
+71: lemma IsHermitian.posDef_iff_eigenvalues_pos [DecidableEq n] (hA : A.IsHermitian) :
+72:     A.PosDef ↔ ∀ i, 0 < hA.eigenvalues i := by
+73:   conv_lhs => rw [hA.spectral_theorem]
+74:   simp [isUnit_coe.posDef_star_right_conjugate_iff]
+75: 
+76: namespace PosDef
+77: 
+78: lemma re_dotProduct_pos (hA : A.PosDef) {x : n → 𝕜} (hx : x ≠ 0) :
+79:     0 < RCLike.re (star x ⬝ᵥ (A *ᵥ x)) := RCLike.pos_iff.mp (hA.dotProduct_mulVec_pos hx) |>.1
+80: 
+81: /-- The eigenvalues of a positive definite matrix are positive. -/
+82: lemma eigenvalues_pos [DecidableEq n] (hA : A.PosDef) (i : n) : 0 < hA.1.eigenvalues i :=
+83:   hA.isHermitian.posDef_iff_eigenvalues_pos.mp hA i

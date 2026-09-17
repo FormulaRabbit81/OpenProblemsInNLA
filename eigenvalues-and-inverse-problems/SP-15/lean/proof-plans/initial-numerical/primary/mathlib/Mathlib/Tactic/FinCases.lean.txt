@@ -1,0 +1,28 @@
+Lines 79–91
+79: `fin_cases h` performs case analysis on a hypothesis of the form
+80: `h : A`, where `[Fintype A]` is available, or
+81: `h : a ∈ A`, where `A : Finset X`, `A : Multiset X` or `A : List X`.
+82: 
+83: As an example, in
+84: ```
+85: example (f : ℕ → Prop) (p : Fin 3) (h0 : f 0) (h1 : f 1) (h2 : f 2) : f p.val := by
+86:   fin_cases p; simp
+87:   all_goals assumption
+88: ```
+89: after `fin_cases p; simp`, there are three goals, `f 0`, `f 1`, and `f 2`.
+90: -/
+91: syntax (name := finCases) "fin_cases " ("*" <|> term,+) (" with " term,+)? : tactic
+
+Lines 128–140
+128: /- TODO: In mathlib3 we ran `norm_num` when there is no `with` clause. Is this still useful? -/
+129: 
+130: @[tactic finCases] elab_rules : tactic
+131:   | `(tactic| fin_cases $[$hyps:ident],*) => withMainContext <| focus do
+132:     for h in hyps do
+133:       allGoals <| liftMetaTactic (finCasesAt · (← getFVarId h))
+134: 
+135: end Tactic
+136: 
+137: end Elab
+138: 
+139: end Lean

@@ -1,0 +1,16 @@
+88: theorem Filter.Eventually.self_of_nhds {p : X → Prop} (h : ∀ᶠ y in 𝓝 x, p y) : p x :=
+89:   mem_of_mem_nhds h
+90: 
+91: theorem IsOpen.mem_nhds (hs : IsOpen s) (hx : x ∈ s) : s ∈ 𝓝 x :=
+92:   mem_nhds_iff.2 ⟨s, Subset.refl _, hs, hx⟩
+93: 
+94: protected theorem IsOpen.mem_nhds_iff (hs : IsOpen s) : s ∈ 𝓝 x ↔ x ∈ s :=
+95:   ⟨mem_of_mem_nhds, fun hx => mem_nhds_iff.2 ⟨s, Subset.rfl, hs, hx⟩⟩
+96: 
+97: theorem IsClosed.compl_mem_nhds (hs : IsClosed s) (hx : x ∉ s) : sᶜ ∈ 𝓝 x :=
+98:   hs.isOpen_compl.mem_nhds (mem_compl hx)
+99: 
+100: theorem IsOpen.eventually_mem (hs : IsOpen s) (hx : x ∈ s) :
+101:     ∀ᶠ x in 𝓝 x, x ∈ s :=
+102:   IsOpen.mem_nhds hs hx
+103: 

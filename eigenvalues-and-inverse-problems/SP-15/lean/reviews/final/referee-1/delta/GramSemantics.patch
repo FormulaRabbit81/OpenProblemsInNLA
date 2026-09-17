@@ -1,0 +1,10 @@
+--- before/GramSemantics.lean
++++ after/GramSemantics.lean
+@@ -35,6 +35,7 @@
+     (Matrix.toEuclideanLin B).isSymmetric_adjoint_comp_self
+     (finrank_euclideanSpace_fin (𝕜 := ℂ) (n := n))).mpr
+       (by simpa only [gram_operator_charpoly] using h)
++  -- The frozen matrix singular value is the ordered singular value of its Euclidean map.
+   change (Matrix.toEuclideanLin A).singularValues k =
+     (Matrix.toEuclideanLin B).singularValues k
+   by_cases hk : k < n

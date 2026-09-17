@@ -1,0 +1,58 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Fortier Bourque and Ransford retain
+credit for the original question and generic finiteness theorem.
+
+The primary-library transport follows the accepted MI13 SingularSemantics
+and UnitaryInvariance proof structure, with their code attribution retained.
+It treats ordered eigenvalues with multiplicity and zero-extended singular
+values, including the empty dimension. No numerical spectrum is computed.
+-/
+import NLA.SP15.Numerical
+import Mathlib.LinearAlgebra.Charpoly.ToMatrix
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.SP15
+noncomputable section
+
+private theorem gram_operator_charpoly {n : ℕ} (A : Square n) :
+    ((Matrix.toEuclideanLin A).adjoint ∘ₗ Matrix.toEuclideanLin A).charpoly =
+      (A.conjTranspose * A).charpoly := by
+  have hg : (Matrix.toEuclideanLin A).adjoint ∘ₗ Matrix.toEuclideanLin A =
+      Matrix.toEuclideanLin (A.conjTranspose * A) := by
+    rw [← Matrix.toEuclideanLin_conjTranspose_eq_adjoint]
+    exact (Matrix.toLpLin_mul 2 2 2 A.conjTranspose A).symm
+  rw [hg, Matrix.toEuclideanLin_eq_toLin_orthonormal, Matrix.charpoly_toLin]
+
+theorem gram_charpoly_singular_values {n : ℕ} (A B : Square n)
+    (h : (A.conjTranspose * A).charpoly = (B.conjTranspose * B).charpoly) (k : ℕ) :
+    singularValue A k = singularValue B k := by
+  have heigs := ((Matrix.toEuclideanLin A).isSymmetric_adjoint_comp_self.eigenvalues_eq_eigenvalues_iff
+    (finrank_euclideanSpace_fin (𝕜 := ℂ) (n := n))
+    (Matrix.toEuclideanLin B).isSymmetric_adjoint_comp_self
+    (finrank_euclideanSpace_fin (𝕜 := ℂ) (n := n))).mpr
+      (by simpa only [gram_operator_charpoly] using h)
+  -- The frozen matrix singular value is the ordered singular value of its Euclidean map.
+  change (Matrix.toEuclideanLin A).singularValues k =
+    (Matrix.toEuclideanLin B).singularValues k
+  by_cases hk : k < n
+  · apply (sq_eq_sq₀ ((Matrix.toEuclideanLin A).singularValues_nonneg k)
+      ((Matrix.toEuclideanLin B).singularValues_nonneg k)).mp
+    rw [(Matrix.toEuclideanLin A).sq_singularValues_fin
+        (finrank_euclideanSpace_fin (𝕜 := ℂ) (n := n)) ⟨k, hk⟩,
+      (Matrix.toEuclideanLin B).sq_singularValues_fin
+        (finrank_euclideanSpace_fin (𝕜 := ℂ) (n := n)) ⟨k, hk⟩]
+    exact congrFun heigs ⟨k, hk⟩
+  · rw [(Matrix.toEuclideanLin A).singularValues_of_finrank_le
+        (by simpa using Nat.le_of_not_gt hk),
+      (Matrix.toEuclideanLin B).singularValues_of_finrank_le
+        (by simpa using Nat.le_of_not_gt hk)]
+
+#print axioms gram_charpoly_singular_values
+#assert_trust kernel gram_charpoly_singular_values
+
+end
+end NLA.SP15

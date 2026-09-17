@@ -1,0 +1,26 @@
+282: 
+283: /-- `Matrix.mulVec M` as a linear map.
+284: 
+285: Note this is a special case of `Matrix.mulVecBilin`. -/
+286: abbrev Matrix.mulVecLin [Fintype n] (M : Matrix m n R) : (n → R) →ₗ[R] m → R := mulVecBilin R R M
+287: 
+288: theorem Matrix.coe_mulVecLin [Fintype n] (M : Matrix m n R) :
+289:     (M.mulVecLin : _ → _) = M.mulVec := rfl
+290: 
+291: @[simp]
+292: theorem Matrix.mulVecLin_apply [Fintype n] (M : Matrix m n R) (v : n → R) :
+293:     M.mulVecLin v = M *ᵥ v :=
+294:   rfl
+295: 
+
+382: 
+383: /-- A `Matrix m n R` is linearly equivalent to a linear map `(n → R) →ₗ[R] (m → R)`.
+384: 
+385: Note that the forward-direction does not require `DecidableEq` and is `Matrix.mulVecLin`. -/
+386: def Matrix.toLin' : Matrix m n R ≃ₗ[R] (n → R) →ₗ[R] m → R :=
+387:   LinearMap.toMatrix'.symm
+388: 
+389: theorem Matrix.toLin'_apply' (M : Matrix m n R) : Matrix.toLin' M = M.mulVecLin :=
+390:   rfl
+391: 
+392: @[simp]

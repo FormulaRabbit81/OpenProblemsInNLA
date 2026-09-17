@@ -1,0 +1,113 @@
+"""Static/source-arithmetic audit only: never executes Lean, Lake or Comparator."""
+from pathlib import Path
+from fractions import Fraction
+import ast, hashlib, json, re, sys
+
+P = Path(__file__).resolve().parents[1]
+text = (P / 'NLA/SP15/Definitions.lean').read_text()
+challenge = (P / 'Challenge.lean').read_text()
+pre = json.loads((P / 'sources/feasibility/SP15-JACOBIAN-PREFLIGHT.json').read_text())
+lu = json.loads((P / 'sources/feasibility/SP15-JACOBIAN-LU.json').read_text())
+checks = []
+def check(name, actual, expected=True):
+    checks.append({'check': name, 'passed': actual == expected})
+    assert actual == expected, (name, actual, expected)
+def clean(s):
+    return re.sub(r'/\-.*?\-/', '', s, flags=re.S)
+
+def literal_matrix(name):
+    found = re.search(r'\bdef ' + re.escape(name) + r'\b.*?:=\s*!!\[(.*?)\]', text, re.S)
+    assert found, name
+    return [[Fraction(e.strip()) for e in row.split(',')] for row in found.group(1).split(';')]
+check('literal Jacobian matches the determinant-derived preflight', literal_matrix('jacobian'), [[Fraction(v) for v in r] for r in pre['Jacobian']])
+check('literal L matches the retained LU certificate', literal_matrix('lowerCertificate'), [[Fraction(v) for v in r] for r in lu['L']])
+check('literal U matches the retained LU certificate', literal_matrix('upperCertificate'), [[Fraction(v) for v in r] for r in lu['U']])
+
+# Parse the actual written Lean coefficient expressions as a tiny polynomial grammar.
+# No Lean source is executed, and no Python eval/exec is used.
+Z=(0,)*10
+class Poly:
+    def __init__(self, terms): self.terms={k:v for k,v in terms.items() if v}
+    @staticmethod
+    def scalar(v): return Poly({Z:v})
+    @staticmethod
+    def variable(i):
+        e=[0]*10;e[i]=1;return Poly({tuple(e):1})
+    def __add__(self,b):
+        out=dict(self.terms)
+        for e,v in b.terms.items():out[e]=out.get(e,0)+v
+        return Poly(out)
+    def __neg__(self):return Poly({e:-v for e,v in self.terms.items()})
+    def __sub__(self,b):return self+-b
+    def __mul__(self,b):
+        out={}
+        for e,v in self.terms.items():
+            for f,w in b.terms.items():
+                g=tuple(i+j for i,j in zip(e,f));out[g]=out.get(g,0)+v*w
+        return Poly(out)
+    def power(self,n):
+        out=Poly.scalar(1)
+        for _ in range(n):out=out*self
+        return out
+
+env={}
+trans=str.maketrans('₁₂₃','123')
+def parse_expr(s):
+    s=' '.join(s.translate(trans).split()).replace('^','**')
+    if re.fullmatch(r'x\s+\d+',s):return Poly.variable(int(s.split()[1]))
+    def rec(n):
+        if isinstance(n,ast.Constant) and isinstance(n.value,int):return Poly.scalar(n.value)
+        if isinstance(n,ast.Name):return env[n.id]
+        if isinstance(n,ast.UnaryOp) and isinstance(n.op,ast.USub):return -rec(n.operand)
+        if isinstance(n,ast.BinOp):
+            if isinstance(n.op,ast.Add):return rec(n.left)+rec(n.right)
+            if isinstance(n.op,ast.Sub):return rec(n.left)-rec(n.right)
+            if isinstance(n.op,ast.Mult):return rec(n.left)*rec(n.right)
+            if isinstance(n.op,ast.Pow) and isinstance(n.right,ast.Constant) and isinstance(n.right.value,int):return rec(n.left).power(n.right.value)
+        raise ValueError(ast.dump(n))
+    return rec(ast.parse(s,mode='eval').body)
+body=text.split('def coefficients (x : Parameters) : Coefficients :=',1)[1].split('\ndef coefficientMonomials',1)[0]
+lets,vec=body.split('![',1)
+for name,expr in re.findall(r'let\s+(\w+)\s*:=\s*(.*?)(?:;|\n)',lets):
+    env[name.translate(trans)]=parse_expr(expr)
+expressions=vec.rsplit(']',1)[0].split(',')
+polys=[parse_expr(expr) for expr in expressions]
+check('nine written coefficient expressions',len(polys),9)
+for i,(poly,terms) in enumerate(zip(polys,pre['coefficient_polynomials'])):
+    expected={tuple(t['exponents']):t['coefficient'] for t in terms}
+    check(f'written coefficient {i} equals exact determinant-derived polynomial',poly.terms,expected)
+point=pre['point']
+def value(terms):
+    ans=0
+    for e,c in terms.items():
+        for v,k in zip(point,e):c*=v**k
+        ans+=c
+    return ans
+check('written coefficient values', [value(p.terms) for p in polys],pre['coefficient_values'])
+for i,poly in enumerate(polys):
+    row=[]
+    for j in range(10):
+        terms={}
+        for e,c in poly.terms.items():
+            if e[j]:
+                f=list(e);f[j]-=1;terms[tuple(f)]=c*e[j]
+        row.append(value(terms))
+    check(f'written coefficient {i} symbolic derivative matches literal Jacobian',row,pre['Jacobian'][i])
+
+names=re.findall(r'^theorem\s+(\w+)',challenge,re.M)
+expected=json.loads((P/'NUMERICAL-FIRST.json').read_text())['planned_contracts']
+check('contract order matches numerical-first plan',names,expected)
+comp=json.loads((P/'comparator.json').read_text())
+check('Comparator includes exactly all planned names',comp['theorem_names'],['NLA.SP15.'+n for n in names])
+check('no definition holes',comp['definition_names'],[])
+check('exact permitted axioms',comp['permitted_axioms'],['propext','Quot.sound','Classical.choice'])
+check('Definitions contains no sorry/axiom/unsafe/extern declarations',not re.search(r'\b(sorry|axiom|unsafe|admit|extern)\b',clean(text)))
+check('exactly 29 specification holes',len(re.findall(r'\bsorry\b',clean(challenge))),29)
+check('no Solution implementation exists',not (P/'Solution.lean').exists())
+check('only two active Lean sources exist',sorted(str(p.relative_to(P)) for p in P.rglob('*.lean')),['Challenge.lean','NLA/SP15/Definitions.lean'])
+check('no local cache directory exists',not (P/'.lake').exists())
+check('numerical plan remains exact since pre-code receipt',hashlib.sha256((P/'NUMERICAL_TARGETS.md').read_bytes()).hexdigest(),json.loads((P/'NUMERICAL-FIRST.json').read_text())['numerical_target_sha256'])
+check('definition plan remains exact since pre-code receipt',hashlib.sha256((P/'DEFINITION-AND-CONTRACT-PLAN.md').read_bytes()).hexdigest(),json.loads((P/'NUMERICAL-FIRST.json').read_text())['definition_contract_plan_sha256'])
+report={'scope':'Actual static/source-arithmetic audit only. Lean, Lake, LeanCert and Comparator were not run. The polynomial grammar checks transcription, not kernel derivability or theorem truth.','checks':checks,'all_passed':all(x['passed'] for x in checks),'Definitions_sha256':hashlib.sha256(text.encode()).hexdigest(),'Challenge_sha256':hashlib.sha256(challenge.encode()).hexdigest()}
+if len(sys.argv)>1:Path(sys.argv[1]).write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps({'all_passed':report['all_passed'],'checks':len(checks),'Definitions_sha256':report['Definitions_sha256'],'Challenge_sha256':report['Challenge_sha256']}))

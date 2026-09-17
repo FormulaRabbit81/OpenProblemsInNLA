@@ -1,0 +1,16 @@
+281: variable {k l m n : Type*}
+282: 
+283: /-- `Matrix.mulVec M` as a linear map.
+284: 
+285: Note this is a special case of `Matrix.mulVecBilin`. -/
+286: abbrev Matrix.mulVecLin [Fintype n] (M : Matrix m n R) : (n → R) →ₗ[R] m → R := mulVecBilin R R M
+287: 
+288: theorem Matrix.coe_mulVecLin [Fintype n] (M : Matrix m n R) :
+289:     (M.mulVecLin : _ → _) = M.mulVec := rfl
+290: 
+291: @[simp]
+292: theorem Matrix.mulVecLin_apply [Fintype n] (M : Matrix m n R) (v : n → R) :
+293:     M.mulVecLin v = M *ᵥ v :=
+294:   rfl
+295: 
+296: @[simp]

@@ -1,0 +1,35 @@
+160: 
+161: /-! ### Derivative of the product of two functions -/
+162: 
+163: open scoped RightActions
+164: 
+165: 
+166: variable {𝔸 𝔸' : Type*} [NormedRing 𝔸] [NormedCommRing 𝔸'] [NormedAlgebra 𝕜 𝔸] [NormedAlgebra 𝕜 𝔸']
+167:   {a b : E → 𝔸} {a' b' : E →L[𝕜] 𝔸} {c d : E → 𝔸'} {c' d' : E →L[𝕜] 𝔸'}
+168: 
+169: @[to_fun (attr := fun_prop)]
+170: theorem HasStrictFDerivAt.mul' {x : E} (ha : HasStrictFDerivAt a a' x)
+171:     (hb : HasStrictFDerivAt b b' x) :
+172:     HasStrictFDerivAt (a * b) (a x • b' + a' <• b x) x :=
+173:   ((ContinuousLinearMap.mul 𝕜 𝔸).isBoundedBilinearMap.hasStrictFDerivAt (a x, b x)).comp x
+174:     (ha.prodMk hb)
+175: 
+176: @[to_fun (attr := fun_prop)]
+177: theorem HasStrictFDerivAt.mul (hc : HasStrictFDerivAt c c' x) (hd : HasStrictFDerivAt d d' x) :
+178:     HasStrictFDerivAt (c * d) (c x • d' + d x • c') x := by
+179:   convert! hc.mul' hd
+180:   ext z
+181:   apply mul_comm
+182: 
+
+338:     fderiv 𝕜 (fun y => c y * d) x = d • fderiv 𝕜 c x :=
+339:   (hc.hasFDerivAt.mul_const d).fderiv
+340: 
+341: @[fun_prop]
+342: theorem HasStrictFDerivAt.const_mul (ha : HasStrictFDerivAt a a' x) (b : 𝔸) :
+343:     HasStrictFDerivAt (fun y => b * a y) (b • a') x :=
+344:   ((ContinuousLinearMap.mul 𝕜 𝔸) b).hasStrictFDerivAt.comp x ha
+345: 
+346: @[fun_prop]
+347: theorem HasFDerivWithinAt.const_mul (ha : HasFDerivWithinAt a a' s x) (b : 𝔸) :
+348:     HasFDerivWithinAt (fun y => b * a y) (b • a') s x :=

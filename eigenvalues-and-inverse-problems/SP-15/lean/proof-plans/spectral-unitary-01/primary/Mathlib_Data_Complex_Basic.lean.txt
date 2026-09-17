@@ -1,0 +1,53 @@
+90:   rfl
+91: 
+92: @[simp, norm_cast]
+93: theorem ofReal_im (r : ℝ) : (r : ℂ).im = 0 :=
+94:   rfl
+95: 
+96: theorem ofReal_def (r : ℝ) : (r : ℂ) = ⟨r, 0⟩ :=
+97:   rfl
+98: 
+99: @[simp, norm_cast]
+100: theorem ofReal_inj {z w : ℝ} : (z : ℂ) = w ↔ z = w :=
+101:   ⟨congrArg re, by apply congrArg⟩
+102: 
+103: theorem ofReal_injective : Function.Injective ((↑) : ℝ → ℂ) := fun _ _ => congrArg re
+104: 
+105: instance canLift : CanLift ℂ ℝ (↑) fun z => z.im = 0 where
+106:   prf z hz := ⟨z.re, ext rfl hz.symm⟩
+
+539: theorem normSq_mk (x y : ℝ) : normSq ⟨x, y⟩ = x * x + y * y :=
+540:   rfl
+541: 
+542: theorem normSq_add_mul_I (x y : ℝ) : normSq (x + y * I) = x ^ 2 + y ^ 2 := by
+543:   rw [← mk_eq_add_mul_I, normSq_mk, sq, sq]
+544: 
+545: theorem normSq_eq_conj_mul_self {z : ℂ} : (normSq z : ℂ) = conj z * z := by
+546:   ext <;> simp [normSq, mul_comm, ofReal]
+547: 
+548: theorem normSq_zero : normSq 0 = 0 := by simp
+549: 
+550: theorem normSq_one : normSq 1 = 1 := by simp
+551: 
+552: @[simp]
+553: theorem normSq_I : normSq I = 1 := by simp [normSq]
+554: 
+555: theorem normSq_nonneg (z : ℂ) : 0 ≤ normSq z :=
+556:   add_nonneg (mul_self_nonneg _) (mul_self_nonneg _)
+557: 
+558: theorem normSq_eq_zero {z : ℂ} : normSq z = 0 ↔ z = 0 :=
+559:   ⟨fun h =>
+
+580: theorem re_sq_le_normSq (z : ℂ) : z.re * z.re ≤ normSq z :=
+581:   le_add_of_nonneg_right (mul_self_nonneg _)
+582: 
+583: theorem im_sq_le_normSq (z : ℂ) : z.im * z.im ≤ normSq z :=
+584:   le_add_of_nonneg_left (mul_self_nonneg _)
+585: 
+586: theorem mul_conj (z : ℂ) : z * conj z = normSq z :=
+587:   Complex.ext_iff.2 <| by simp [normSq, mul_comm, sub_eq_neg_add, add_comm, ofReal]
+588: 
+589: theorem add_conj (z : ℂ) : z + conj z = (2 * z.re : ℝ) :=
+590:   Complex.ext_iff.2 <| by simp [two_mul, ofReal]
+591: 
+592: /-- The coercion `ℝ → ℂ` as a `RingHom`. -/

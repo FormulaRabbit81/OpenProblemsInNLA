@@ -1,0 +1,178 @@
+#!/usr/bin/env python3
+"""Verify the SP-15 cleanup review packet; --live also reads original/current workspaces.
+
+No subprocess, compiler, Lake, Git, network, or cache writes are used.
+"""
+from pathlib import Path
+import argparse, hashlib, json, re
+
+R = Path(__file__).resolve().parent
+parser = argparse.ArgumentParser()
+parser.add_argument('--live', action='store_true')
+args = parser.parse_args()
+count = 0
+
+def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def read(rel): return json.loads((R/rel).read_text())
+def need(ok, label):
+    global count
+    count += 1
+    if not ok: raise AssertionError(label)
+
+def strip_comments(text):
+    out, i, depth = [], 0, 0
+    while i < len(text):
+        if depth:
+            if text.startswith('/-', i): depth += 1; i += 2
+            elif text.startswith('-/', i): depth -= 1; i += 2; out.append(' ')
+            else:
+                if text[i] == '\n': out.append('\n')
+                i += 1
+        elif text.startswith('/-', i): out.append(' '); depth = 1; i += 2
+        elif text.startswith('--', i):
+            j = text.find('\n', i); i = len(text) if j < 0 else j; out.append(' ')
+        elif text[i] == '"':
+            j = i + 1
+            while j < len(text):
+                if text[j] == '\\': j += 2
+                elif text[j] == '"': j += 1; break
+                else: j += 1
+            out.append(text[i:j]); i = j
+        else: out.append(text[i]); i += 1
+    need(depth == 0, 'balanced-comment')
+    return ''.join(out)
+
+manifest = read('MANIFEST.json')
+for rel, expected in manifest['files'].items():
+    need((R/rel).is_file() and sha(R/rel)==expected, 'manifest-payload:'+rel)
+need({str(p.relative_to(R)) for p in R.rglob('*') if p.is_file()} <=
+     set(manifest['files']) | set(manifest['excluded_seal_files']) | {'MANIFEST.json'}, 'no-unmanifested-payload')
+binding = read('SOURCE-BINDINGS.json')
+closure = binding['source_files']
+need(len(closure)==48, 'closure48')
+P, L = Path(binding['source_root']), Path(binding['local_source_root'])
+for rel, expected in binding['snapshot_files'].items():
+    need(sha(R/'snapshot'/rel)==expected, 'snapshot:'+rel)
+    if args.live: need(sha(P/rel)==expected, 'live-source:'+rel)
+for rel, expected in binding['frozen_files'].items():
+    need(sha(R/'snapshot'/rel)==expected, 'frozen13:'+rel)
+need(len(binding['frozen_files'])==13, 'frozen13-count')
+old_binding = read('evidence/original-review/SOURCE-BINDINGS.json')
+old_closure = {x['path']:x['sha256'] for x in old_binding['files'] if x['scope']=='solution-closure'}
+need(len(old_closure)==49 and set(old_closure)-set(closure)=={'NLA/SP15/Proof.lean'}, 'only-Proof-deleted')
+delta = read('DELTA-AUDIT.json')
+need(len(delta['changed'])==13, 'changed13')
+for rel, expected in old_closure.items():
+    before = R/'evidence/author-delta/before'/rel
+    if not before.exists(): before = R/'snapshot'/rel
+    need(sha(before)==expected, 'reconstruct-original49:'+rel)
+for row in delta['changed']:
+    rel = row['path']
+    old = (R/'evidence/author-delta/before'/rel).read_text()
+    new = (R/'snapshot'/rel).read_text()
+    need(sha(R/'evidence/author-delta/before'/rel)==row['before_sha256']==old_closure[rel], 'before-delta:'+rel)
+    need(sha(R/'evidence/author-delta/after'/rel)==row['after_sha256']==closure[rel], 'after-delta:'+rel)
+    if rel == 'Solution.lean':
+        need(old.replace('import NLA.SP15.Proof\n','import NLA.SP15.Counterfamilies\nimport NLA.SP15.KernelFlag\n')==new, 'exact-direct-import-change')
+    else:
+        need(' '.join(strip_comments(old).split())==' '.join(strip_comments(new).split()), 'comment-whitespace-only:'+rel)
+if args.live:
+    need(not (P/'NLA/SP15/Proof.lean').exists(), 'live-Proof-absent')
+    need({str(p.relative_to(P)) for p in (P/'NLA/SP15').rglob('*.lean')}==set(closure)-{'Solution.lean'}, 'live-project-inventory')
+    O = R.parent/'SP15-full-referee2-20260917'
+    need(sha(O/'MANIFEST.json')=='f859daf5fec8fd20b84e38bbe9e2036b02caa8dc2619d8bf13833d18ee626193', 'preserved-original-manifest')
+    for row in json.loads((O/'MANIFEST.json').read_text())['files']:
+        need(sha(O/row['path'])==row['sha256'], 'preserved-original-payload:'+row['path'])
+    for rel, expected in json.loads((O/'SEAL.json').read_text())['bindings'].items():
+        need(sha(O/rel)==expected, 'preserved-original-seal:'+rel)
+
+sources = {rel: (R/'snapshot'/rel).read_text() for rel in closure}
+code = {rel: strip_comments(text) for rel,text in sources.items()}
+modules = {rel[:-5].replace('/', '.'):rel for rel in closure}
+def imports(mod):
+    return [word for line in code[modules[mod]].splitlines() if line.startswith('import ')
+            for word in line[7:].split() if word in modules]
+def transitive(mod, seen=None):
+    seen = set() if seen is None else seen
+    if mod in seen: return seen
+    seen.add(mod)
+    for dep in imports(mod): transitive(dep, seen)
+    return seen
+need(transitive('Solution')==set(modules), 'connected48')
+for rel, text in code.items():
+    need(not re.search(r'\b(sorry|admit|axiom|unsafe|native_decide|run_tac|implemented_by)\b',text), 'no-holes-escape:'+rel)
+    need(not any('Challenge' in l or 'NLA.SP15.Proof' in l for l in text.splitlines() if l.startswith('import ')), 'no-Challenge-or-Proof:'+rel)
+contracts = read('snapshot/STATEMENT-HEADERS.json')['contracts']
+config = read('snapshot/comparator.json')
+need(len(contracts)==29 and [x['name'] for x in contracts]==config['theorem_names'], 'exact29-names')
+for x in contracts:
+    name=x['name'].split('.')[-1]
+    pattern=r'^theorem '+re.escape(name)+r'\b[\s\S]*?(?=\s*:= by)'
+    headers=[m.group(0).rstrip() for text in sources.values() if (m:=re.search(pattern,text,re.M))]
+    challenge=re.search(pattern,(R/'snapshot/Challenge.lean').read_text(),re.M).group(0).rstrip()
+    need(headers==[x['header']] and challenge==x['header'], 'verbatim29-header:'+name)
+for directive in ['#assert_trust kernel', '#print axioms']:
+    old=(R/'evidence/author-delta/before/Solution.lean').read_text()
+    before=[line for line in old.splitlines() if line.startswith(directive)]
+    after=[line for line in sources['Solution.lean'].splitlines() if line.startswith(directive)]
+    need(len(after)==29 and before==after, 'all29-aggregate-directives:'+directive)
+
+audit, execution = read('AUDIT.json'), read('AUDIT-EXECUTION.json')
+need(audit['all_pass'] and audit['checks_count']==3309 and len(audit['checks'])==3309 and all(x['pass'] for x in audit['checks']), 'audit3309')
+need(execution['exit_code']==0 and execution['script_sha256']==sha(R/'audit.py'), 'actual-audit-success')
+for stream in ['stdout','stderr']:
+    need(execution[stream+'_sha256']==sha(R/('AUDIT-'+stream.upper()+'.log')), 'audit-log:'+stream)
+runtime=read('RUNTIME-AUDIT.json')
+paths={x['original']:R/x['retained'] for x in runtime['retained']}
+for x in runtime['retained']:
+    need(sha(R/x['retained'])==x['sha256'], 'runtime-retained:'+x['retained'])
+root_path=R/'evidence/runtime/development-122/RECEIPT.json'
+need(sha(root_path)=='aa40d956092a75f9ec570218d165814913de75b7a0674b27e51758d15be6f852', 'actual122-receipt-fixed')
+root=json.loads(root_path.read_text()); rc={c['module']:c for c in root['commands']}
+need(set(rc)==set(modules) and len(root['commands'])==48 and root['failed_modules']==[] and root['blocked_modules']==[], 'actual122-complete48')
+fresh=[c for c in root['commands'] if c.get('status')!='reused_exact_successful_local_output']
+need(len(fresh)==22 and len(root['commands'])-len(fresh)==26, 'actual122-fresh22-reuse26')
+need(all(a['end']<=b['start'] for a,b in zip(fresh,fresh[1:])), 'actual122-sequential-times')
+need((root['platform'],root['max_compiler_processes'],root['threads'],root['memory_cap_mib'])==('darwin',1,1,4096), 'actual122-policy')
+need(len(runtime['modules'])==48, 'runtime48')
+for entry in runtime['modules']:
+    mod=entry['module']; rel=modules[mod]
+    command=entry['fresh_command']
+    allpaths=entry['reuse_chain']+[entry['fresh_receipt']]
+    need(len(allpaths)==len(set(allpaths)) and allpaths[0]==runtime['root_receipt'], 'acyclic-rooted-chain:'+mod)
+    transitive_hashes={modules[d]:closure[modules[d]] for d in transitive(mod)}
+    for index, path in enumerate(allpaths):
+        r=json.loads(paths[path].read_text()); c=next(c for c in r['commands'] if c['module']==mod)
+        need(c['source_sha256']==closure[rel] and c['output_sha256']==rc[mod]['output_sha256'], 'chain-source-output:'+mod+':'+str(index))
+        for dep, expected in transitive_hashes.items():
+            need(r['source_inputs'][dep]==expected, 'chain-transitive:'+mod+':'+dep+':'+str(index))
+        if index<len(allpaths)-1:
+            need(c.get('status')=='reused_exact_successful_local_output' and c['prior_receipt']==allpaths[index+1], 'chain-edge:'+mod+':'+str(index))
+            need(sha(paths[c['prior_receipt']])==c['prior_receipt_sha256'], 'chain-edge-sha:'+mod+':'+str(index))
+            need(c['transitive_source_hashes']==transitive_hashes, 'chain-reuse-transitive:'+mod+':'+str(index))
+        else:
+            need(c==command and c['exit_code']==0, 'fresh-command:'+mod)
+            need(sha(paths[path])==entry['fresh_receipt_sha256'], 'fresh-receipt-sha:'+mod)
+            need(r['compiler_sha256']==root['compiler_sha256'], 'fresh-compiler-sha:'+mod)
+    need(sha(R/entry['retained_log'])==command['log_sha256'], 'fresh-raw-log:'+mod)
+    need('--threads=1' in command['argv'] and '--memory=4096' in command['argv'] and command['argv'][-1]==rel, 'fresh-resource-source:'+mod)
+    for dep, expected in command['dependency_olean_sha256'].items():
+        if dep in modules: need(expected==rc[dep]['output_sha256'], 'dependency-olean:'+mod+':'+dep)
+    if args.live:
+        need(sha(L/rel)==closure[rel], 'live-local-source:'+mod)
+        need(sha(L/'.lake/build/lib/lean'/(rel[:-5]+'.olean'))==command['output_sha256'], 'live-local-output:'+mod)
+        need(sha(Path(entry['fresh_receipt']))==entry['fresh_receipt_sha256'], 'live-origin-receipt:'+mod)
+axioms=re.findall(r"'([^']+)' depends on axioms: \[([^\]]*)\]", (R/'evidence/runtime/development-122/Solution.log').read_text())
+need([name for name,_ in axioms]==config['theorem_names'], 'actual29-axioms')
+for name,names in axioms:
+    need(set(names.split(', '))=={'propext','Classical.choice','Quot.sound'}, 'permitted3:'+name)
+verdict=read('VERDICT.json')
+need(verdict['overall']=='approve' and verdict['closed_findings']==['F1','F2'] and verdict['required_findings']==[], 'scoped-approval')
+need(verdict['Linux_Comparator']=={'executed':False,'run':None,'passed':None}, 'no-unrun-Linux-success')
+need(verdict['author_sources_edited'] is False and verdict['peer_cleanup_findings_read_before_seal'] is False, 'nonauthor-independent')
+if (R/'SEAL.json').exists():
+    for rel, expected in read('SEAL.json')['bindings'].items():
+        need(sha(R/rel)==expected, 'seal:'+rel)
+print(json.dumps({'verified':True, 'checks':count, 'manifest_files':len(manifest['files']),
+    'live_workspaces_checked':args.live, 'source_modules':48, 'contracts':29, 'closed_findings':['F1','F2'],
+    'overall':'approve', 'Lean_executed_by_verifier':False, 'Linux_Comparator_executed':False}))

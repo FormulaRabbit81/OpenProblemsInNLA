@@ -1,0 +1,15 @@
+30: 
+31: theorem norm_mul_self_eq_normSq (z : ℂ) : ‖z‖ * ‖z‖ = normSq z :=
+32:   Real.mul_self_sqrt (normSq_nonneg _)
+33: 
+34: protected theorem norm_nonneg (z : ℂ) : 0 ≤ ‖z‖ :=
+35:   Real.sqrt_nonneg _
+36: 
+37: @[bound]
+38: theorem abs_re_le_norm (z : ℂ) : |z.re| ≤ ‖z‖ := by
+39:   rw [mul_self_le_mul_self_iff (abs_nonneg z.re) (Complex.norm_nonneg _), abs_mul_abs_self,
+40:     norm_mul_self_eq_normSq]
+41:   apply re_sq_le_normSq
+42: 
+43: theorem re_le_norm (z : ℂ) : z.re ≤ ‖z‖ :=
+44:   (abs_le.1 (abs_re_le_norm _)).2

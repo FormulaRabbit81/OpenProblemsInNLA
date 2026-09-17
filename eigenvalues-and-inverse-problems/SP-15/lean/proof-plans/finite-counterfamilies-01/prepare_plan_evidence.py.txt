@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+"""Bind a pre-code plan; no Lean/compiler/network or Git operation is run."""
+from pathlib import Path
+import datetime
+import hashlib
+import json
+
+R = Path(__file__).resolve().parent
+P = R.parents[1]
+B = P.parents[1]
+M = Path('/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib')
+T = Path('/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1')
+sha = lambda f: hashlib.sha256(Path(f).read_bytes()).hexdigest()
+protected = json.loads((P / 'STATEMENT-FREEZE.json').read_text())['frozen_files']
+assert all(sha(P / k) == v for k, v in protected.items())
+all_headers = json.loads((P / 'STATEMENT-HEADERS.json').read_text())['contracts']
+names = {'finite_fiber_selection', 'arbitrary_finite_counterfamilies', 'canonical_finiteness_false'}
+headers = [h for h in all_headers if h['name'].split('.')[-1] in names]
+assert len(headers) == 3
+(R / 'EXACT-HEADERS.json').write_text(json.dumps(headers, indent=2) + '\n')
+
+primary = {
+    'Mathlib/Data/Nat/Cast/Order/Basic.lean': [(61, 75)],
+    'Mathlib/Data/Nat/Cast/Order/Ring.lean': [(50, 59)],
+    'Mathlib/Algebra/CharZero/Defs.lean': [(59, 69)],
+    'Mathlib/Algebra/GroupWithZero/Defs.lean': [(48, 59)],
+    'Mathlib/Algebra/GroupWithZero/Units/Basic.lean': [(331, 341)],
+    'Mathlib/Algebra/Order/GroupWithZero/Basic.lean': [(876, 885)],
+}
+apis = {}
+for rel, ranges in primary.items():
+    path = M / rel
+    lines = path.read_text().splitlines()
+    excerpt = '\n\n'.join('\n'.join(f'{i}: {lines[i-1]}' for i in range(a, b+1))
+                            for a, b in ranges) + '\n'
+    dest = R / 'primary' / (rel.replace('/', '_') + '.txt')
+    dest.parent.mkdir(exist_ok=True, parents=True)
+    dest.write_text(excerpt)
+    assert (M / '.lake/build/lib/lean' / Path(rel).with_suffix('.olean')).is_file()
+    apis[rel] = {'source_sha256': sha(path), 'line_ranges': ranges,
+                'excerpt': str(dest.relative_to(R)), 'excerpt_sha256': sha(dest),
+                'pinned_olean_present': True}
+core = T / 'src/lean/Init/Data/Fin/Lemmas.lean'
+lines = core.read_text().splitlines()
+dest = R / 'primary/Lean_Init_Data_Fin_Lemmas.lean.txt'
+dest.write_text('\n'.join(f'{i}: {lines[i-1]}' for i in range(46, 57)) + '\n')
+apis['Lean/Init/Data/Fin/Lemmas.lean'] = {'source_sha256': sha(core),
+    'line_ranges': [[46, 56]], 'excerpt': str(dest.relative_to(R)),
+    'excerpt_sha256': sha(dest), 'pinned_olean_present':
+    (T / 'lib/lean/Init/Data/Fin/Lemmas.olean').is_file()}
+(R / 'API-BINDINGS.json').write_text(json.dumps(apis, indent=2) + '\n')
+
+deps = [h for h in all_headers if h['name'].split('.')[-1] in
+        {'local_coefficient_fiber', 'coefficient_base_value',
+         'equal_coefficients_shifted_singular_values', 'constructed_unitary_injectivity'}]
+current = {rel: sha(P / rel) for rel in ['NLA/SP15/Definitions.lean',
+    'NLA/SP15/LocalFiber.lean', 'NLA/SP15/CoefficientValue.lean']}
+(R / 'PLAN-CHECKS.json').write_text(json.dumps({
+    'time': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'scope': 'Numerical-first plan for exact27 and final exact28–29 assembly',
+    'protected_files_checked': protected, 'exact_headers_checked': len(headers),
+    'dependency_contracts': deps, 'current_dependency_sources': current,
+    'dependency_gate': 'Authenticate actual successful corrected local fiber before contract27 compilation; exact21 and26 are still outstanding and must be proved before28–29 assembly',
+    'quantifiers': 'Every natural M, including0, and the genuine existential positive epsilon from contract15',
+    'interval': 'All selected t_i strictly satisfy |t_i−1|<epsilon, via i.val<M+1',
+    'no_enumerated_case_check_substituted': True,
+    'plan_acceptance_required_before_implementation': True,
+    'new_Lean_execution': False, 'new_Comparator_execution': False,
+    'new_proof_implementation': False, 'count_change': 0}, indent=2) + '\n')
+print(json.dumps({'protected_files': len(protected), 'headers': len(headers),
+                  'primary_files': len(apis), 'new_Lean_execution': False}, indent=2))

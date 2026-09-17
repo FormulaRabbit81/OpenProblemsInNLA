@@ -7,8 +7,8 @@
 **Topic:** Inverse determination from complete pseudospectral data  
 **Difficulty:** challenging  
 **Importance:** interesting to the community  
-**Status:** Solved
-**Last checked:** 2026-09-12
+**Status:** Lean verified
+**Last checked:** 2026-09-17
 
 **Rating rationale:** Generic finiteness follows from invariant theory, but the exceptional fibers resist that argument; the question measures how much complete pseudospectral data can identify a nonnormal matrix.
 
@@ -20,9 +20,19 @@
 
 [Proof PDF](solution.pdf) · [Standalone proof TeX](solution.tex) · [Independent mathematical review](../../references/stepaniants-sp15-2026-09-12/verification/independent-review-aa01/review.md) · [Submission and eligibility record](../../references/stepaniants-sp15-2026-09-12/README.md).
 
-The full proof passed a separate independent Codex-agent audit. Substantial AI assistance is disclosed; this is informal automated review, not external human peer review or Lean verification. The proof uses an exact block determinant identity and a polynomial dimension argument, with the standard constant-rank theorem. Its finite diagnostic checks are not the proof. Fortier Bourque and Ransford retain credit for the question and generic finiteness theorem, which is compatible with this exceptional fiber.
+The full proof passed a separate independent Codex-agent audit. Substantial AI assistance is disclosed; that earlier audit was informal automated review; the later Lean verification is recorded below. The proof uses an exact block determinant identity and a polynomial dimension argument, with the standard constant-rank theorem. Its finite diagnostic checks are not the proof. Fortier Bourque and Ransford retain credit for the question and generic finiteness theorem, which is compatible with this exceptional fiber.
 
 **Retained historical material.** The original ratings, context, exact target, references and dated pre-resolution status-search text are preserved below. The earlier generic result is unchanged; the older references to an unresolved question describe the pre-resolution record.
+
+## Lean proof and verification evidence - 2026-09-17
+
+**The complete original target is Lean verified.** `NLA.SP15.canonical_finiteness_false` in the [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/69938fe5ac20768f7c23c0bead00b6add2516200/eigenvalues-and-inverse-problems/SP-15/lean/Solution.lean) negates the finiteness assertion: for every M, there are M+1 complex 9-by-9 matrices with equal ordered singular values for every complex shift and no unitarily similar pair. The manuscript's smooth-curve and Jordan-type enhancements are outside this formal claim.
+
+[Linux run 35229660506](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35229660506/job/105230253664) passed all 29 exact Comparator contracts, default-kernel replay and rejection/isolation controls, with only `propext`, `Classical.choice` and `Quot.sound`. [Evidence and independent audits](lean/verification/linux-35229660506/README.md) distinguish local macOS Lean compilation from the final GitHub execution. Two full nonauthor mathematical reviews are retained.
+
+Kernel-mode LeanCert certifies the consumed radius-1/16 box; an exact LU certificate proves determinant -1088 without subdivision. Pins: Lean 4.33.1, [Mathlib `0df444a3`](https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474), and [LeanCert `621a43d7`](https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926). [Project instructions](lean/README.md) give the `lake build` reproduction command and source correspondence.
+
+**Formalization: George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. Prior attribution is retained. Substantial AI assistance and scoped agent reviews are disclosed; external human review is not claimed. Later publication and upstream checks remain pending and will be recorded separately.
 
 ## Context and notation
 

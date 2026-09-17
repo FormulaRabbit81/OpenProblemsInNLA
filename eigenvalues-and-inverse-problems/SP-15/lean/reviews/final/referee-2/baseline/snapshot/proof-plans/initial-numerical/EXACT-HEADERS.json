@@ -1,0 +1,44 @@
+[
+  {
+    "name": "NLA.SP15.box_scalar_certificate",
+    "header": "theorem box_scalar_certificate :\n    0 < boxRadius ∧ 0 < 1 - boxRadius ∧ 0 < 1 - 2 * boxRadius ∧\n    3 * (1 + boxRadius) < 4 - boxRadius ∧\n    (4 - boxRadius) - 3 * (1 + boxRadius) = (3 / 4 : ℝ)",
+    "header_sha256": "50360e6610b8a87577c4119f2519f66f9fbba79a1a0a78410fb89663ca966af3",
+    "ordinal": 1
+  },
+  {
+    "name": "NLA.SP15.parameter_box_geometry",
+    "header": "theorem parameter_box_geometry : IsOpen parameterBox ∧ basePoint ∈ parameterBox",
+    "header_sha256": "94eec5f1d04868f692c946a673dcc94188c89623f25b22162b5f19106216b2ad",
+    "ordinal": 2
+  },
+  {
+    "name": "NLA.SP15.parameter_box_bounds",
+    "header": "theorem parameter_box_bounds (x : Parameters) (hx : x ∈ parameterBox) :\n    (∀ i : Fin 3, 0 < pCoordinates x i) ∧ 0 < x 6 ∧ 0 < x 7 ∧\n    ∀ i : Fin 3,\n      (∑ j ∈ Finset.univ.erase i, ‖qMatrix x i j‖) + 3 / 4 < (qMatrix x i i).re",
+    "header_sha256": "3d66e875acb327d0c0f8aa98b1b9dcabdfcea41eaa3b1f3cb90cb77b16d913fe",
+    "ordinal": 3
+  },
+  {
+    "name": "NLA.SP15.p_intervals_separate",
+    "header": "theorem p_intervals_separate (x y : Parameters) (hx : x ∈ parameterBox)\n    (hy : y ∈ parameterBox) (i j : Fin 3) (hij : i ≠ j) :\n    pCoordinates x i ≠ pCoordinates y j",
+    "header_sha256": "a414a906fc6a23e3c13e434781976b41d7e827bce186f8fb745ebe59f58978bd",
+    "ordinal": 4
+  },
+  {
+    "name": "NLA.SP15.coefficient_base_value",
+    "header": "theorem coefficient_base_value : coefficients basePoint = coefficientBaseValue",
+    "header_sha256": "459fd158b017da86aa5e8436ddbd9f267a34774df3df5f9f62c94bbee2e8d79c",
+    "ordinal": 8
+  },
+  {
+    "name": "NLA.SP15.jacobian_lu_certificate",
+    "header": "theorem jacobian_lu_certificate :\n    jacobianMinor = lowerCertificate * upperCertificate ∧\n    (∀ i j : Fin 9, i < j → lowerCertificate i j = 0) ∧\n    (∀ i : Fin 9, lowerCertificate i i = 1) ∧\n    (∀ i j : Fin 9, j < i → upperCertificate i j = 0) ∧\n    (∀ i : Fin 9, upperCertificate i i ≠ 0) ∧\n    (∏ i : Fin 9, upperCertificate i i) = (-1088 : ℝ)",
+    "header_sha256": "7d5e34c9d73c6d4bc6198a61c823890626bff451ef187a0e7c9f4f8e1844b5dc",
+    "ordinal": 10
+  },
+  {
+    "name": "NLA.SP15.jacobian_minor_nonsingular",
+    "header": "theorem jacobian_minor_nonsingular : jacobianMinor.det = (-1088 : ℝ)",
+    "header_sha256": "9dfc015b30ba65a69e898db4cdb271c711b38678d1989ff1ad8875aedabda781",
+    "ordinal": 11
+  }
+]

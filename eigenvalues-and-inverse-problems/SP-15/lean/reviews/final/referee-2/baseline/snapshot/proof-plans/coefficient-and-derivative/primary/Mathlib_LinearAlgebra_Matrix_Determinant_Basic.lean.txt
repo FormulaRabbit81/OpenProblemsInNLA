@@ -1,0 +1,14 @@
+816: 
+817: /-- Determinant of 3x3 matrix -/
+818: theorem det_fin_three (A : Matrix (Fin 3) (Fin 3) R) :
+819:     det A =
+820:       A 0 0 * A 1 1 * A 2 2 - A 0 0 * A 1 2 * A 2 1
+821:       - A 0 1 * A 1 0 * A 2 2 + A 0 1 * A 1 2 * A 2 0
+822:       + A 0 2 * A 1 0 * A 2 1 - A 0 2 * A 1 1 * A 2 0 := by
+823:   simp only [det_succ_row_zero, submatrix_apply, Fin.succ_zero_eq_one, submatrix_submatrix,
+824:     det_unique, Fin.default_eq_zero, Function.comp_apply, Fin.succ_one_eq_two, Fin.sum_univ_succ,
+825:     Fin.val_zero, Fin.zero_succAbove, univ_unique, Fin.val_succ, Fin.val_eq_zero,
+826:     Fin.succ_succAbove_zero, sum_singleton, Fin.succ_succAbove_one]
+827:   ring
+828: 
+829: end Matrix

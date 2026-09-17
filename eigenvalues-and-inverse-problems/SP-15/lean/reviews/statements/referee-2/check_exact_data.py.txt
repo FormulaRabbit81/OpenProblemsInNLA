@@ -1,0 +1,136 @@
+#!/usr/bin/env python3
+"""Independent exact source arithmetic; standard library only, not a Lean proof.
+
+Parse literal Lean expressions with a small allowlisted AST, expand the 3x3
+determinant over Q[x0,...,x9,u,s,I]/(I^2+1), differentiate symbolically,
+and check the 9x9 LU certificate with Fraction arithmetic. No author checker
+is imported or executed, and no sampled determinant identity is accepted.
+"""
+from pathlib import Path
+from fractions import Fraction as F
+import ast,hashlib,itertools,json,re
+
+R=Path(__file__).resolve().parent
+W=Path('/private/tmp/nla-lean-next-20260915/next-proofs/SP-15')
+source=(W/'NLA/SP15/Definitions.lean').read_text()
+ZERO=(0,)*13
+class Poly:
+    def __init__(self,d=0):
+        self.d={k:F(v) for k,v in d.items() if v} if isinstance(d,dict) else ({ZERO:F(d)} if d else {})
+    def __add__(self,b):
+        b=cast(b);d=self.d.copy()
+        for k,v in b.d.items():d[k]=d.get(k,F(0))+v
+        return Poly(d)
+    __radd__=__add__
+    def __neg__(self):return Poly({k:-v for k,v in self.d.items()})
+    def __sub__(self,b):return self+-cast(b)
+    def __rsub__(self,b):return cast(b)+-self
+    def __mul__(self,b):
+        b=cast(b);d={}
+        for a,av in self.d.items():
+            for be,bv in b.d.items():
+                e=tuple(x+y for x,y in zip(a,be));sign=(-1)**(e[-1]//2);e=e[:-1]+(e[-1]%2,)
+                d[e]=d.get(e,F(0))+sign*av*bv
+        return Poly(d)
+    __rmul__=__mul__
+    def __pow__(self,k):
+        assert isinstance(k,int) and k>=0
+        r=Poly(1)
+        for _ in range(k):r=r*self
+        return r
+    def partial(self,i):
+        d={}
+        for e,v in self.d.items():
+            if e[i]:
+                f=list(e);f[i]-=1;d[tuple(f)]=v*e[i]
+        return Poly(d)
+    def at(self,x):
+        assert len(x)==10 and all(not any(e[10:]) for e in self.d)
+        return sum((v*product(F(xi)**power for xi,power in zip(x,e)) for e,v in self.d.items()),F(0))
+    def __eq__(self,b):return self.d==cast(b).d
+def cast(p):return p if isinstance(p,Poly) else Poly(p)
+def var(i):
+    e=[0]*13;e[i]=1;return Poly({tuple(e):1})
+def product(xs):
+    a=F(1)
+    for x in xs:a=a*x
+    return a
+def translate(t):
+    t=t.translate(str.maketrans('₁₂₃','123')).replace('^','**')
+    return re.sub(r'\bx (\d+)',r'x[\1]',t)
+def expression(t,env):
+    def run(n):
+        if isinstance(n,ast.Expression):return run(n.body)
+        if isinstance(n,ast.Constant) and isinstance(n.value,int):return F(n.value)
+        if isinstance(n,ast.Name):return env[n.id]
+        if isinstance(n,ast.Subscript) and isinstance(n.value,ast.Name) and n.value.id=='x':return env['x'][int(run(n.slice))]
+        if isinstance(n,ast.UnaryOp) and isinstance(n.op,ast.USub):return -run(n.operand)
+        if isinstance(n,ast.BinOp):
+            a=run(n.left);b=run(n.right)
+            if isinstance(n.op,ast.Add):return a+b
+            if isinstance(n.op,ast.Sub):return a-b
+            if isinstance(n.op,ast.Mult):return a*b
+            if isinstance(n.op,ast.Div):return a/b
+            if isinstance(n.op,ast.Pow):return a**int(b)
+        raise ValueError(ast.dump(n))
+    return run(ast.parse(translate(' '.join(t.split())),mode='eval'))
+def body(name):
+    return re.search(r'^def '+name+r'\b.*?:=\s*(.*?)(?=\n(?:/--|def |end\b))',source,re.M|re.S).group(1).strip()
+def vector(t,env):
+    assert t.startswith('![') and t.endswith(']')
+    return [expression(x,env) for x in t[2:-1].split(',')]
+def matrix(name):
+    t=body(name);assert t.startswith('!![') and t.endswith(']')
+    return [[expression(x,{}) for x in row.split(',')] for row in t[3:-1].split(';')]
+x=[var(i) for i in range(10)];u=var(10);s=var(11);imag=var(12)
+env={'x':x};ctext=body('coefficients');prefix,tupletext=ctext.split('![',1)
+for name,t in re.findall(r'let (\S+) := ([^;\n]+)',prefix):env[translate(name)]=expression(t,env)
+coeff=vector('!['+tupletext,env);assert len(coeff)==9
+monomials=vector(body('coefficientMonomials'),{'u':u,'s':s});assert len(monomials)==9
+base=vector(body('basePoint'),{});value=vector(body('coefficientBaseValue'),{})
+J=matrix('jacobian');lo=matrix('lowerCertificate');up=matrix('upperCertificate')
+assert len(J)==9 and all(len(r)==10 for r in J)
+assert all(len(a)==9 and all(len(r)==9 for r in a) for a in [lo,up])
+p=x[:3]
+Q=[[x[3],x[6],x[7]],[x[6],x[4],x[8]+imag*x[9]],[x[7],x[8]-imag*x[9],x[5]]]
+detmat=[[(u+s*p[i] if i==j else Poly())+(s+p[i])*Q[i][j] for j in range(3)] for i in range(3)]
+det=Poly()
+for perm in itertools.permutations(range(3)):
+    inversions=sum(perm[i]>perm[j] for i in range(3) for j in range(i+1,3))
+    term=Poly((-1)**inversions)
+    for i in range(3):term=term*detmat[i][perm[i]]
+    det=det+term
+assert det==u**3+sum((c*m for c,m in zip(coeff,monomials)),Poly()),'exact symbolic determinant coefficients'
+actualvalues=[c.at(base) for c in coeff];assert actualvalues==value
+derived=[[c.partial(j).at(base) for j in range(10)] for c in coeff];assert derived==J,'all90 actual coefficient partials'
+minor=[r[:9] for r in J]
+reconstructed=[[sum((lo[i][k]*up[k][j] for k in range(9)),F(0)) for j in range(9)] for i in range(9)]
+assert minor==reconstructed,'all81 LU reconstruction entries'
+assert all(lo[i][j]==0 for i in range(9) for j in range(9) if i<j)
+assert all(up[i][j]==0 for i in range(9) for j in range(9) if j<i)
+assert all(lo[i][i]==1 and up[i][i]!=0 for i in range(9))
+assert product(up[i][i] for i in range(9))==-1088
+# Independent Gaussian elimination of the numeric minor, without using supplied LU.
+a=[r[:] for r in minor];detminor=F(1)
+for k in range(9):
+    pivot=next(i for i in range(k,9) if a[i][k])
+    if pivot!=k:a[k],a[pivot]=a[pivot],a[k];detminor=-detminor
+    detminor*=a[k][k]
+    for i in range(k+1,9):
+        ratio=a[i][k]/a[k][k]
+        for j in range(k,9):a[i][j]-=ratio*a[k][j]
+assert detminor==-1088
+delta=expression(body('boxRadius'),{})
+assert delta==F(1,16) and delta>0 and 1-delta>0 and 1-2*delta>0
+assert 3*(1+delta)<4-delta and (4-delta)-3*(1+delta)==F(3,4)
+result={'verdict':'PASS exact source arithmetic reconnaissance; no Lean proof',
+ 'Definitions_sha256':hashlib.sha256(source.encode()).hexdigest(),
+ 'symbolic_identity':'Six-term 3x3 determinant in Q[x0..x9,u,s,I]/(I^2+1); all coefficients, no sampling',
+ 'coefficient_polynomial_term_counts':[len(c.d) for c in coeff],
+ 'all9_values':[str(t) for t in actualvalues],'all90_J_entries':[[str(t) for t in r] for r in derived],
+ 'all81_LU_entries_match':True,'unit_lower_and_upper_triangular':True,
+ 'upper_diagonal':[str(up[i][i]) for i in range(9)],'diagonal_product':str(detminor),
+ 'independent_elimination_determinant':str(detminor),'box_radius':str(delta),'box_margin':'3/4',
+ 'kernel_LeanCert_executed':False,'author_preflight_executed':False,'claim':'Independent rational and symbolic check of statement data, not proof implementation.'}
+(R/'EXACT-DATA.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({k:v for k,v in result.items() if k!='all90_J_entries'},indent=2))

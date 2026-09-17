@@ -1,0 +1,32 @@
+321: @[simp]
+322: theorem coe_toContinuousLinearMap' (f : E →ₗ[𝕜] F') : ⇑(LinearMap.toContinuousLinearMap f) = f :=
+323:   rfl
+324: 
+325: @[simp]
+326: theorem coe_toContinuousLinearMap (f : E →ₗ[𝕜] F') :
+327:     ((LinearMap.toContinuousLinearMap f) : E →ₗ[𝕜] F') = f :=
+328:   rfl
+329: 
+
+468: end Module.Basis
+469: 
+470: namespace ContinuousLinearMap
+471: 
+472: variable [T2Space E] [FiniteDimensional 𝕜 E]
+473: 
+474: /-- Builds a continuous linear equivalence from a continuous linear map on a finite-dimensional
+475: vector space whose determinant is nonzero. -/
+476: def toContinuousLinearEquivOfDetNeZero (f : E →L[𝕜] E) (hf : f.det ≠ 0) : E ≃L[𝕜] E :=
+477:   ((f : E →ₗ[𝕜] E).equivOfDetNeZero hf).toContinuousLinearEquiv
+478: 
+479: @[simp]
+480: theorem coe_toContinuousLinearEquivOfDetNeZero (f : E →L[𝕜] E) (hf : f.det ≠ 0) :
+481:     (f.toContinuousLinearEquivOfDetNeZero hf : E →L[𝕜] E) = f := by
+482:   ext x
+483:   rfl
+484: 
+485: @[simp]
+486: theorem toContinuousLinearEquivOfDetNeZero_apply (f : E →L[𝕜] E) (hf : f.det ≠ 0) (x : E) :
+487:     f.toContinuousLinearEquivOfDetNeZero hf x = f x :=
+488:   rfl
+489: 

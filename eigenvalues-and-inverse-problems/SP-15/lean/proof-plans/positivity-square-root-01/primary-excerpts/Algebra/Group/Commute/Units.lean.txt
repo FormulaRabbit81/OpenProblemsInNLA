@@ -1,0 +1,14 @@
+68: /-- If the product of two commuting elements is a unit, then the right multiplier is a unit. -/
+69: @[to_additive /-- If the sum of two commuting elements is an additive unit, then the right summand
+70: is an additive unit. -/]
+71: def Units.rightOfMul (u : Mˣ) (a b : M) (hu : a * b = u) (hc : Commute a b) : Mˣ :=
+72:   u.leftOfMul b a (hc.eq ▸ hu) hc.symm
+73: 
+74: @[to_additive]
+75: theorem Commute.isUnit_mul_iff (h : Commute a b) : IsUnit (a * b) ↔ IsUnit a ∧ IsUnit b :=
+76:   ⟨fun ⟨u, hu⟩ => ⟨(u.leftOfMul a b hu.symm h).isUnit, (u.rightOfMul a b hu.symm h).isUnit⟩,
+77:   fun H => H.1.mul H.2⟩
+78: 
+79: @[to_additive (attr := simp)]
+80: theorem isUnit_mul_self_iff : IsUnit (a * a) ↔ IsUnit a :=
+81:   (Commute.refl a).isUnit_mul_iff.trans and_self_iff

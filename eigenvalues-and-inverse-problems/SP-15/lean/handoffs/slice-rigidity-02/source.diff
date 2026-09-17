@@ -1,0 +1,38 @@
+--- before
++++ after
+@@ -23,7 +23,7 @@
+     ((Matrix.diagonal v).conjTranspose * A * Matrix.diagonal v) i j =
+       star (v i) * A i j * v j := by
+   simp only [Matrix.diagonal_conjTranspose, Matrix.mul_diagonal, Matrix.diagonal_mul,
+-    Function.comp_apply]
++    Pi.star_apply]
+ 
+ private theorem separated_unitary_diagonal (x y : Parameters)
+     (hx : x ∈ parameterBox) (hy : y ∈ parameterBox) (V : Square 3)
+@@ -51,11 +51,11 @@
+     by_cases hij : i = j
+     · subst j
+       simp [v]
+-    · simp [Matrix.diagonal_apply, hij, hoff i j hij]
++    · simp [hij, hoff i j hij]
+   have hu (i : Fin 3) : star (v i) * v i = 1 := by
+     have he := congrArg (fun A : Square 3 => A i i) hV
+     simpa only [hd, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
+-      Matrix.diagonal_apply_eq, Function.comp_apply, Matrix.one_apply_eq] using he
++      Matrix.diagonal_apply_eq, Pi.star_apply, Matrix.one_apply_eq] using he
+   have hn (i : Fin 3) : ‖v i‖ = 1 := by
+     have he := congrArg norm (hu i)
+     simp only [norm_mul, norm_star, norm_one] at he
+@@ -94,10 +94,10 @@
+   have hypos := parameter_box_bounds y hy
+   have hv1 : v 1 = v 0 := phase_eq_of_positive_edge (x 6) (y 6)
+     hxpos.2.1 hypos.2.1 (v 0) (v 1) (hn 0) (hn 1) (hu 0)
+-    (by simpa only [qMatrix, Matrix.cons_val] using hentry 0 1)
++    (by simpa [qMatrix] using hentry 0 1)
+   have hv2 : v 2 = v 0 := phase_eq_of_positive_edge (x 7) (y 7)
+     hxpos.2.2.1 hypos.2.2.1 (v 0) (v 2) (hn 0) (hn 2) (hu 0)
+-    (by simpa only [qMatrix, Matrix.cons_val] using hentry 0 2)
++    (by simpa [qMatrix] using hentry 0 2)
+   have hv (i : Fin 3) : v i = v 0 := by
+     fin_cases i
+     · rfl

@@ -1,0 +1,12 @@
+1043: @[elab_as_elim] def lastCases {n : Nat} {motive : Fin (n + 1) → Sort _} (last : motive (Fin.last n))
+1044:     (cast : ∀ i : Fin n, motive (castSucc i)) (i : Fin (n + 1)) : motive i :=
+1045:   reverseInduction last (fun i _ => cast i) i
+1046: 
+1047: @[simp, grind =] theorem lastCases_last {n : Nat} {motive : Fin (n + 1) → Sort _} {last cast} :
+1048:     (Fin.lastCases last cast (Fin.last n) : motive (Fin.last n)) = last :=
+1049:   reverseInduction_last ..
+1050: 
+1051: @[simp, grind =] theorem lastCases_castSucc {n : Nat} {motive : Fin (n + 1) → Sort _} {last cast}
+1052:     (i : Fin n) : (Fin.lastCases last cast (Fin.castSucc i) : motive (Fin.castSucc i)) = cast i :=
+1053:   reverseInduction_castSucc ..
+1054: 

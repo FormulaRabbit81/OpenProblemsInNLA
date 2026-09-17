@@ -1,0 +1,245 @@
+40:   of fun i => Sum.elim (B₁ i) (B₂ i)
+41: 
+42: /-- Given a column partitioned matrix extract the first column -/
+43: def toCols₁ (A : Matrix m (n₁ ⊕ n₂) R) : Matrix m n₁ R := of fun i j => (A i (Sum.inl j))
+44: 
+45: /-- Given a column partitioned matrix extract the second column -/
+46: def toCols₂ (A : Matrix m (n₁ ⊕ n₂) R) : Matrix m n₂ R := of fun i j => (A i (Sum.inr j))
+47: 
+48: /-- Given a row partitioned matrix extract the first row -/
+49: def toRows₁ (A : Matrix (m₁ ⊕ m₂) n R) : Matrix m₁ n R := of fun i j => (A (Sum.inl i) j)
+50: 
+51: /-- Given a row partitioned matrix extract the second row -/
+52: def toRows₂ (A : Matrix (m₁ ⊕ m₂) n R) : Matrix m₂ n R := of fun i j => (A (Sum.inr i) j)
+53: 
+54: @[simp]
+55: lemma fromRows_apply_inl (A₁ : Matrix m₁ n R) (A₂ : Matrix m₂ n R) (i : m₁) (j : n) :
+56:     (fromRows A₁ A₂) (Sum.inl i) j = A₁ i j := rfl
+57: 
+58: @[simp]
+59: lemma fromRows_apply_inr (A₁ : Matrix m₁ n R) (A₂ : Matrix m₂ n R) (i : m₂) (j : n) :
+60:     (fromRows A₁ A₂) (Sum.inr i) j = A₂ i j := rfl
+61: 
+62: @[simp]
+63: lemma fromCols_apply_inl (A₁ : Matrix m n₁ R) (A₂ : Matrix m n₂ R) (i : m) (j : n₁) :
+64:     (fromCols A₁ A₂) i (Sum.inl j) = A₁ i j := rfl
+65: 
+66: @[simp]
+67: lemma fromCols_apply_inr (A₁ : Matrix m n₁ R) (A₂ : Matrix m n₂ R) (i : m) (j : n₂) :
+68:     (fromCols A₁ A₂) i (Sum.inr j) = A₂ i j := rfl
+69: 
+70: @[simp]
+71: lemma toRows₁_apply (A : Matrix (m₁ ⊕ m₂) n R) (i : m₁) (j : n) :
+72:     (toRows₁ A) i j = A (Sum.inl i) j := rfl
+73: 
+74: @[simp]
+75: lemma toRows₂_apply (A : Matrix (m₁ ⊕ m₂) n R) (i : m₂) (j : n) :
+76:     (toRows₂ A) i j = A (Sum.inr i) j := rfl
+77: 
+78: @[simp]
+79: lemma toRows₁_fromRows (A₁ : Matrix m₁ n R) (A₂ : Matrix m₂ n R) :
+80:     toRows₁ (fromRows A₁ A₂) = A₁ := rfl
+81: 
+82: @[simp]
+83: lemma toRows₂_fromRows (A₁ : Matrix m₁ n R) (A₂ : Matrix m₂ n R) :
+84:     toRows₂ (fromRows A₁ A₂) = A₂ := rfl
+85: 
+86: @[simp]
+87: lemma toCols₁_apply (A : Matrix m (n₁ ⊕ n₂) R) (i : m) (j : n₁) :
+88:     (toCols₁ A) i j = A i (Sum.inl j) := rfl
+89: 
+90: @[simp]
+91: lemma toCols₂_apply (A : Matrix m (n₁ ⊕ n₂) R) (i : m) (j : n₂) :
+92:     (toCols₂ A) i j = A i (Sum.inr j) := rfl
+93: 
+94: @[simp]
+95: lemma toCols₁_fromCols (A₁ : Matrix m n₁ R) (A₂ : Matrix m n₂ R) :
+96:     toCols₁ (fromCols A₁ A₂) = A₁ := rfl
+97: 
+98: @[simp]
+99: lemma toCols₂_fromCols (A₁ : Matrix m n₁ R) (A₂ : Matrix m n₂ R) :
+100:     toCols₂ (fromCols A₁ A₂) = A₂ := rfl
+101: 
+102: @[simp]
+103: lemma fromCols_toCols (A : Matrix m (n₁ ⊕ n₂) R) :
+104:     fromCols A.toCols₁ A.toCols₂ = A := by
+105:   ext i (j | j) <;> simp
+106: 
+107: @[simp]
+108: lemma fromRows_toRows (A : Matrix (m₁ ⊕ m₂) n R) : fromRows A.toRows₁ A.toRows₂ = A := by
+109:   ext (i | i) j <;> simp
+110: 
+111: lemma fromRows_inj : Function.Injective2 (@fromRows R m₁ m₂ n) := by
+112:   intro x1 x2 y1 y2
+113:   simp [← Matrix.ext_iff]
+114: 
+115: lemma fromCols_inj : Function.Injective2 (@fromCols R m n₁ n₂) := by
+116:   intro x1 x2 y1 y2
+117:   simp only [← Matrix.ext_iff]
+118:   simp_all
+119: 
+120: lemma fromCols_ext_iff (A₁ : Matrix m n₁ R) (A₂ : Matrix m n₂ R) (B₁ : Matrix m n₁ R)
+121:     (B₂ : Matrix m n₂ R) :
+122:     fromCols A₁ A₂ = fromCols B₁ B₂ ↔ A₁ = B₁ ∧ A₂ = B₂ := fromCols_inj.eq_iff
+123: 
+124: lemma fromRows_ext_iff (A₁ : Matrix m₁ n R) (A₂ : Matrix m₂ n R) (B₁ : Matrix m₁ n R)
+125:     (B₂ : Matrix m₂ n R) :
+126:     fromRows A₁ A₂ = fromRows B₁ B₂ ↔ A₁ = B₁ ∧ A₂ = B₂ := fromRows_inj.eq_iff
+127: 
+128: /-- A column partitioned matrix when transposed gives a row partitioned matrix with columns of the
+129: initial matrix transposed to become rows. -/
+130: lemma transpose_fromCols (A₁ : Matrix m n₁ R) (A₂ : Matrix m n₂ R) :
+131:     transpose (fromCols A₁ A₂) = fromRows (transpose A₁) (transpose A₂) := by
+132:   ext (i | i) j <;> simp
+133: 
+134: /-- A row partitioned matrix when transposed gives a column partitioned matrix with rows of the
+135: initial matrix transposed to become columns. -/
+136: lemma transpose_fromRows (A₁ : Matrix m₁ n R) (A₂ : Matrix m₂ n R) :
+137:     transpose (fromRows A₁ A₂) = fromCols (transpose A₁) (transpose A₂) := by
+138:   ext i (j | j) <;> simp
+139: 
+140: lemma fromRows_map (A₁ : Matrix m₁ n R) (A₂ : Matrix m₂ n R) {R' : Type*} (f : R → R') :
+141:     (fromRows A₁ A₂).map f = fromRows (A₁.map f) (A₂.map f) := by
+142:   ext (_ | _) <;> rfl
+143: 
+144: lemma fromCols_map (A₁ : Matrix m n₁ R) (A₂ : Matrix m n₂ R) {R' : Type*} (f : R → R') :
+145:     (fromCols A₁ A₂).map f = fromCols (A₁.map f) (A₂.map f) := by
+146:   ext _ (_ | _) <;> rfl
+147: 
+148: section Neg
+149: 
+150: variable [Neg R]
+151: 
+152: /-- Negating a matrix partitioned by rows is equivalent to negating each of the rows. -/
+153: @[simp]
+154: lemma fromRows_neg (A₁ : Matrix m₁ n R) (A₂ : Matrix m₂ n R) :
+155:     -fromRows A₁ A₂ = fromRows (-A₁) (-A₂) := by
+156:   ext (i | i) j <;> simp
+157: 
+158: /-- Negating a matrix partitioned by columns is equivalent to negating each of the columns. -/
+159: @[simp]
+160: lemma fromCols_neg (A₁ : Matrix n m₁ R) (A₂ : Matrix n m₂ R) :
+161:     -fromCols A₁ A₂ = fromCols (-A₁) (-A₂) := by
+162:   ext i (j | j) <;> simp
+163: 
+164: end Neg
+165: 
+166: @[simp]
+167: lemma fromCols_fromRows_eq_fromBlocks (B₁₁ : Matrix m₁ n₁ R) (B₁₂ : Matrix m₁ n₂ R)
+168:     (B₂₁ : Matrix m₂ n₁ R) (B₂₂ : Matrix m₂ n₂ R) :
+169:     fromCols (fromRows B₁₁ B₂₁) (fromRows B₁₂ B₂₂) = fromBlocks B₁₁ B₁₂ B₂₁ B₂₂ := by
+170:   ext (_ | _) (_ | _) <;> simp
+171: 
+172: @[simp]
+173: lemma fromRows_fromCols_eq_fromBlocks (B₁₁ : Matrix m₁ n₁ R) (B₁₂ : Matrix m₁ n₂ R)
+174:     (B₂₁ : Matrix m₂ n₁ R) (B₂₂ : Matrix m₂ n₂ R) :
+175:     fromRows (fromCols B₁₁ B₁₂) (fromCols B₂₁ B₂₂) = fromBlocks B₁₁ B₁₂ B₂₁ B₂₂ := by
+
+180: variable [Semiring R]
+181: 
+182: @[simp]
+183: lemma fromRows_mulVec [Fintype n] (A₁ : Matrix m₁ n R) (A₂ : Matrix m₂ n R) (v : n → R) :
+184:     fromRows A₁ A₂ *ᵥ v = Sum.elim (A₁ *ᵥ v) (A₂ *ᵥ v) := by
+185:   ext (_ | _) <;> rfl
+186: 
+187: @[simp]
+188: lemma vecMul_fromCols [Fintype m] (B₁ : Matrix m n₁ R) (B₂ : Matrix m n₂ R) (v : m → R) :
+189:     v ᵥ* fromCols B₁ B₂ = Sum.elim (v ᵥ* B₁) (v ᵥ* B₂) := by
+190:   ext (_ | _) <;> rfl
+191: 
+192: set_option backward.isDefEq.respectTransparency false in
+193: lemma sumElim_vecMul_fromRows [Fintype m₁] [Fintype m₂] (B₁ : Matrix m₁ n R) (B₂ : Matrix m₂ n R)
+194:     (v₁ : m₁ → R) (v₂ : m₂ → R) :
+195:     Sum.elim v₁ v₂ ᵥ* fromRows B₁ B₂ = v₁ ᵥ* B₁ + v₂ ᵥ* B₂ := by
+196:   ext
+197:   simp [Matrix.vecMul, fromRows, dotProduct]
+198: 
+199: @[simp]
+200: lemma vecMul_fromRows [Fintype m₁] [Fintype m₂]
+201:     (B₁ : Matrix m₁ n R) (B₂ : Matrix m₂ n R) (v : m₁ ⊕ m₂ → R) :
+202:     v ᵥ* fromRows B₁ B₂ = v ∘ Sum.inl ᵥ* B₁ + v ∘ Sum.inr ᵥ* B₂ := by
+203:   simp [← sumElim_vecMul_fromRows]
+204: 
+205: lemma fromCols_mulVec_sumElim [Fintype n₁] [Fintype n₂]
+206:     (A₁ : Matrix m n₁ R) (A₂ : Matrix m n₂ R) (v₁ : n₁ → R) (v₂ : n₂ → R) :
+207:     fromCols A₁ A₂ *ᵥ Sum.elim v₁ v₂ = A₁ *ᵥ v₁ + A₂ *ᵥ v₂ := by
+208:   ext
+209:   simp [Matrix.mulVec, fromCols]
+210: 
+211: @[simp]
+212: lemma fromCols_mulVec [Fintype n₁] [Fintype n₂]
+213:     (A₁ : Matrix m n₁ R) (A₂ : Matrix m n₂ R) (v : n₁ ⊕ n₂ → R) :
+214:     fromCols A₁ A₂ *ᵥ v = A₁ *ᵥ v ∘ Sum.inl + A₂ *ᵥ v ∘ Sum.inr := by
+215:   simp [← fromCols_mulVec_sumElim]
+216: 
+217: @[simp]
+218: lemma fromRows_mul [Fintype n] (A₁ : Matrix m₁ n R) (A₂ : Matrix m₂ n R) (B : Matrix n m R) :
+219:     fromRows A₁ A₂ * B = fromRows (A₁ * B) (A₂ * B) := by
+220:   ext (_ | _) _ <;> simp [mul_apply]
+221: 
+222: @[simp]
+223: lemma mul_fromCols [Fintype n] (A : Matrix m n R) (B₁ : Matrix n n₁ R) (B₂ : Matrix n n₂ R) :
+224:     A * fromCols B₁ B₂ = fromCols (A * B₁) (A * B₂) := by
+225:   ext _ (_ | _) <;> simp [mul_apply]
+226: 
+227: @[simp]
+228: lemma fromRows_zero : fromRows (0 : Matrix m₁ n R) (0 : Matrix m₂ n R) = 0 := by
+229:   ext (_ | _) _ <;> simp
+230: 
+231: @[simp]
+232: lemma fromCols_zero : fromCols (0 : Matrix m n₁ R) (0 : Matrix m n₂ R) = 0 := by
+233:   ext _ (_ | _) <;> simp
+234: 
+235: /-- A row partitioned matrix multiplied by a column partitioned matrix gives a 2 by 2 block
+236: matrix. -/
+237: lemma fromRows_mul_fromCols [Fintype n] (A₁ : Matrix m₁ n R) (A₂ : Matrix m₂ n R)
+238:     (B₁ : Matrix n n₁ R) (B₂ : Matrix n n₂ R) :
+239:     (fromRows A₁ A₂) * (fromCols B₁ B₂) =
+240:       fromBlocks (A₁ * B₁) (A₁ * B₂) (A₂ * B₁) (A₂ * B₂) := by
+241:   ext (_ | _) (_ | _) <;> simp
+242: 
+243: /-- A column partitioned matrix multiplied by a row partitioned matrix gives the sum of the "outer"
+244: products of the block matrices. -/
+245: lemma fromCols_mul_fromRows [Fintype n₁] [Fintype n₂] (A₁ : Matrix m n₁ R) (A₂ : Matrix m n₂ R)
+246:     (B₁ : Matrix n₁ n R) (B₂ : Matrix n₂ n R) :
+247:     fromCols A₁ A₂ * fromRows B₁ B₂ = (A₁ * B₁ + A₂ * B₂) := by
+248:   ext
+249:   simp [mul_apply]
+250: 
+251: /-- A column partitioned matrix multiplied by a block matrix results in a column partitioned
+252: matrix. -/
+253: lemma fromCols_mul_fromBlocks [Fintype m₁] [Fintype m₂] (A₁ : Matrix m m₁ R) (A₂ : Matrix m m₂ R)
+254:     (B₁₁ : Matrix m₁ n₁ R) (B₁₂ : Matrix m₁ n₂ R) (B₂₁ : Matrix m₂ n₁ R) (B₂₂ : Matrix m₂ n₂ R) :
+255:     (fromCols A₁ A₂) * fromBlocks B₁₁ B₁₂ B₂₁ B₂₂ =
+256:       fromCols (A₁ * B₁₁ + A₂ * B₂₁) (A₁ * B₁₂ + A₂ * B₂₂) := by
+257:   ext _ (_ | _) <;> simp [mul_apply]
+258: 
+259: /-- A block matrix multiplied by a row partitioned matrix gives a row partitioned matrix. -/
+260: lemma fromBlocks_mul_fromRows [Fintype n₁] [Fintype n₂] (A₁ : Matrix n₁ n R) (A₂ : Matrix n₂ n R)
+261:     (B₁₁ : Matrix m₁ n₁ R) (B₁₂ : Matrix m₁ n₂ R) (B₂₁ : Matrix m₂ n₁ R) (B₂₂ : Matrix m₂ n₂ R) :
+262:     fromBlocks B₁₁ B₁₂ B₂₁ B₂₂ * (fromRows A₁ A₂) =
+263:       fromRows (B₁₁ * A₁ + B₁₂ * A₂) (B₂₁ * A₁ + B₂₂ * A₂) := by
+264:   ext (_ | _) _ <;> simp [mul_apply]
+265: 
+266: end Semiring
+267: 
+
+295: section Star
+296: variable [Star R]
+297: 
+298: /-- A column partitioned matrix in a Star ring when conjugate transposed gives a row partitioned
+299: matrix with the columns of the initial matrix conjugate transposed to become rows. -/
+300: lemma conjTranspose_fromCols_eq_fromRows_conjTranspose (A₁ : Matrix m n₁ R)
+301:     (A₂ : Matrix m n₂ R) :
+302:     conjTranspose (fromCols A₁ A₂) = fromRows (conjTranspose A₁) (conjTranspose A₂) := by
+303:   ext (_ | _) _ <;> simp
+304: 
+305: /-- A row partitioned matrix in a Star ring when conjugate transposed gives a column partitioned
+306: matrix with the rows of the initial matrix conjugate transposed to become columns. -/
+307: lemma conjTranspose_fromRows_eq_fromCols_conjTranspose (A₁ : Matrix m₁ n R)
+308:     (A₂ : Matrix m₂ n R) : conjTranspose (fromRows A₁ A₂) =
+309:       fromCols (conjTranspose A₁) (conjTranspose A₂) := by
+310:   ext _ (_ | _) <;> simp
+311: 
+312: end Star
+313: 

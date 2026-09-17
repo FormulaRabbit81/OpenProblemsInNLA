@@ -1,0 +1,11 @@
+383: /-- A `Matrix m n R` is linearly equivalent to a linear map `(n → R) →ₗ[R] (m → R)`.
+384: 
+385: Note that the forward-direction does not require `DecidableEq` and is `Matrix.mulVecLin`. -/
+386: def Matrix.toLin' : Matrix m n R ≃ₗ[R] (n → R) →ₗ[R] m → R :=
+387:   LinearMap.toMatrix'.symm
+388: 
+389: theorem Matrix.toLin'_apply' (M : Matrix m n R) : Matrix.toLin' M = M.mulVecLin :=
+390:   rfl
+416: @[simp]
+417: theorem Matrix.toLin'_apply (M : Matrix m n R) (v : n → R) : Matrix.toLin' M v = M *ᵥ v :=
+418:   rfl

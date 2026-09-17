@@ -1,0 +1,43 @@
+Lines 52–71
+52: 
+53: variable [LT α]
+54: 
+55: section Zero
+56: 
+57: variable [Zero R]
+58: 
+59: /-- Let `b` map rows and columns of a square matrix `M` to blocks indexed by `α`s. Then
+60: `BlockTriangular M n b` says the matrix is block triangular. -/
+61: def BlockTriangular (M : Matrix m m R) (b : m → α) : Prop :=
+62:   ∀ ⦃i j⦄, b j < b i → M i j = 0
+63: 
+64: /-- `M` is upper triangular: entries below the diagonal vanish. -/
+65: abbrev IsUpperTriangular [LT m] (M : Matrix m m R) : Prop :=
+66:   M.BlockTriangular id
+67: 
+68: /-- `M` is lower triangular: entries above the diagonal vanish. -/
+69: abbrev IsLowerTriangular [LT m] (M : Matrix m m R) : Prop :=
+70:   M.BlockTriangular toDual
+71: 
+
+Lines 331–350
+331: theorem BlockTriangular.det_fintype [DecidableEq α] [Fintype α] [LinearOrder α]
+332:     (h : BlockTriangular M b) : M.det = ∏ k : α, (M.toSquareBlock b k).det := by
+333:   refine h.det.trans (prod_subset (subset_univ _) fun a _ ha => ?_)
+334:   have : IsEmpty { i // b i = a } := ⟨fun i => ha <| mem_image.2 ⟨i, mem_univ _, i.2⟩⟩
+335:   exact det_isEmpty
+336: 
+337: theorem det_of_isUpperTriangular [LinearOrder m] (h : M.IsUpperTriangular) :
+338:     M.det = ∏ i : m, M i i := by
+339:   have : DecidableEq R := Classical.decEq _
+340:   simp_rw [h.det, image_id, det_toSquareBlock_id]
+341: 
+342: @[deprecated (since := "2026-07-30")] alias det_of_upperTriangular := det_of_isUpperTriangular
+343: 
+344: theorem det_of_isLowerTriangular [LinearOrder m] (M : Matrix m m R) (h : M.IsLowerTriangular) :
+345:     M.det = ∏ i : m, M i i := by
+346:   rw [← det_transpose]
+347:   exact det_of_isUpperTriangular h.transpose
+348: 
+349: @[deprecated (since := "2026-07-30")] alias det_of_lowerTriangular := det_of_isLowerTriangular
+350: 

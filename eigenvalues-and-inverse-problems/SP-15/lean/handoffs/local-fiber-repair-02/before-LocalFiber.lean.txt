@@ -1,0 +1,80 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Fortier Bourque and Ransford retain
+credit for the original question and generic finiteness theorem.
+
+The inverse is supplied by the strict inverse-function theorem. Pulling its
+actual box neighborhood back along the free-coordinate line gives an existential
+positive interval radius; no quantitative inverse radius is assumed.
+-/
+import NLA.SP15.AugmentedEquivalence
+import NLA.SP15.BoxGeometry
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.SP15
+noncomputable section
+open scoped Topology
+
+theorem local_augmented_inverse :
+    ∃ g : Parameters → Parameters,
+      ContinuousAt g (augmented basePoint) ∧ g (augmented basePoint) = basePoint ∧
+      ∀ᶠ y in 𝓝 (augmented basePoint),
+        g y ∈ parameterBox ∧ augmented (g y) = y := by
+  obtain ⟨e, he⟩ := augmented_derivative_equivalence
+  have hf : HasStrictFDerivAt augmented (e : Parameters →L[ℝ] Parameters) basePoint := by
+    rw [he]
+    exact augmented_strict_derivative
+  let g := hf.localInverse augmented e basePoint
+  have hbox : ∀ᶠ y in 𝓝 (augmented basePoint), g y ∈ parameterBox :=
+    hf.localInverse_tendsto.eventually_mem
+      (parameter_box_geometry.1.mem_nhds parameter_box_geometry.2)
+  refine ⟨g, hf.localInverse_continuousAt, hf.localInverse_apply_image, ?_⟩
+  exact hbox.and hf.eventually_right_inverse
+
+private def coefficientLine (t : ℝ) : Parameters :=
+  Fin.lastCases t (coefficients basePoint)
+
+private theorem coefficient_line_one : coefficientLine 1 = augmented basePoint := by
+  have hpoint : basePoint (9 : Fin 10) = (1 : ℝ) := rfl
+  simp only [coefficientLine, augmented, hpoint]
+
+private theorem continuous_coefficient_line : Continuous coefficientLine := by
+  apply continuous_pi
+  intro i
+  refine Fin.lastCases ?_ (fun j => ?_) i
+  · simpa only [coefficientLine, Fin.lastCases_last] using
+      (continuous_id : Continuous (fun t : ℝ => t))
+  · simpa only [coefficientLine, Fin.lastCases_castSucc] using
+      (continuous_const : Continuous (fun _ : ℝ => coefficients basePoint j))
+
+theorem local_coefficient_fiber :
+    ∃ ε : ℝ, 0 < ε ∧ ∃ ψ : ℝ → Parameters,
+      ∀ t : ℝ, |t - 1| < ε →
+        ψ t ∈ parameterBox ∧ coefficients (ψ t) = coefficients basePoint ∧ ψ t 9 = t := by
+  obtain ⟨g, _, _, hg⟩ := local_augmented_inverse
+  have hline : Filter.Tendsto coefficientLine (𝓝 (1 : ℝ)) (𝓝 (augmented basePoint)) := by
+    simpa only [coefficient_line_one] using
+      (continuous_coefficient_line.continuousAt : ContinuousAt coefficientLine (1 : ℝ))
+  have hnear := hline.eventually hg
+  obtain ⟨ε, hε, hball⟩ := Metric.eventually_nhds_iff.mp hnear
+  refine ⟨ε, hε, fun t => g (coefficientLine t), ?_⟩
+  intro t ht
+  have hdist : dist t (1 : ℝ) < ε := by simpa only [Real.dist_eq] using ht
+  obtain ⟨hbox, haug⟩ := hball hdist
+  refine ⟨hbox, ?_, ?_⟩
+  · funext i
+    have hi := congrFun haug i.castSucc
+    simpa only [augmented, coefficientLine, Fin.lastCases_castSucc] using hi
+  · have hi := congrFun haug (Fin.last 9)
+    simpa only [augmented, coefficientLine, Fin.lastCases_last] using hi
+
+#print axioms local_augmented_inverse
+#assert_trust kernel local_augmented_inverse
+#print axioms local_coefficient_fiber
+#assert_trust kernel local_coefficient_fiber
+
+end
+end NLA.SP15

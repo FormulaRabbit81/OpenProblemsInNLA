@@ -1,0 +1,10 @@
+--- before/LocalFiber.lean
++++ after/LocalFiber.lean
+@@ -60,6 +60,7 @@
+   obtain ⟨g, _, _, hg⟩ := local_augmented_inverse
+   have hline : Filter.Tendsto coefficientLine (𝓝 (1 : ℝ)) (𝓝 (augmented basePoint)) := by
+     have h := (continuous_coefficient_line.continuousAt : ContinuousAt coefficientLine (1 : ℝ))
++    -- ContinuousAt is this neighborhood-limit statement at the actual line value.
+     change Filter.Tendsto coefficientLine (𝓝 (1 : ℝ)) (𝓝 (coefficientLine 1)) at h
+     rw [coefficient_line_one] at h
+     exact h

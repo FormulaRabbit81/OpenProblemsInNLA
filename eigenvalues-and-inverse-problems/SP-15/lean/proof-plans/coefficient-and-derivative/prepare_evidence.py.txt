@@ -1,0 +1,136 @@
+#!/usr/bin/env python3
+"""Source-bound planning diagnostics only; invokes no Lean or network operation."""
+from pathlib import Path
+import ast, datetime, hashlib, json, re
+
+R = Path(__file__).resolve().parent
+P = R.parents[1]
+B = P.parents[1]
+M = Path('/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib')
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+freeze = B / 'SP15-ROOT-FREEZE-ACCEPTANCE.json'
+assert sha(freeze) == '46318471938f7d105a113af3e449856e3a8f52154714dc434f5cb905d76db4ca'
+accepted = json.loads(freeze.read_text())
+for rel, h in accepted['protected_files'].items():
+    assert sha(P / rel) == h, rel
+headers = json.loads((P / 'STATEMENT-HEADERS.json').read_text())['contracts']
+selected = [h for h in headers if h['name'] in {
+    'NLA.SP15.coefficient_determinant_identity', 'NLA.SP15.coefficient_strict_derivative'}]
+assert len(selected) == 2
+(R / 'EXACT-HEADERS.json').write_text(json.dumps(selected, indent=2) + '\n')
+
+class Dual:
+    """Exact integer value and the ten formal first-derivative coefficients."""
+    def __init__(self, value, gradient=None):
+        self.value = value
+        self.gradient = tuple(gradient or [0] * 10)
+    @staticmethod
+    def wrap(a): return a if isinstance(a, Dual) else Dual(a)
+    def __add__(self, b):
+        b = self.wrap(b)
+        return Dual(self.value + b.value, [x+y for x,y in zip(self.gradient,b.gradient)])
+    __radd__ = __add__
+    def __neg__(self): return Dual(-self.value, [-x for x in self.gradient])
+    def __sub__(self, b): return self + -self.wrap(b)
+    def __mul__(self, b):
+        b = self.wrap(b)
+        return Dual(self.value*b.value,
+                    [self.value*y+b.value*x for x,y in zip(self.gradient,b.gradient)])
+    __rmul__ = __mul__
+    def __pow__(self, n):
+        assert isinstance(n, int) and n >= 0
+        out = Dual(1)
+        for _ in range(n): out = out * self
+        return out
+
+source = (P / 'NLA/SP15/Definitions.lean').read_text()
+point_text = re.search(r'def basePoint[^\n]*:= !\[(.*?)\]', source).group(1)
+point = [int(t.strip()) for t in point_text.split(',')]
+assert point == [1,2,3,4,4,4,1,1,1,1]
+xs = [Dual(v, [int(i == j) for j in range(10)]) for i,v in enumerate(point)]
+env = {'x': xs}
+translate = str.maketrans({'₁':'1','₂':'2','₃':'3'})
+def parse_expr(s):
+    s = s.translate(translate).replace('^', '**')
+    s = re.sub(r'\bx\s+(\d+)\b', r'x[\1]', s)
+    return ast.parse(' '.join(s.split()), mode='eval').body
+def ev(node):
+    if isinstance(node, ast.Constant):
+        assert isinstance(node.value, int)
+        return node.value
+    if isinstance(node, ast.Name): return env[node.id]
+    if isinstance(node, ast.Subscript):
+        assert isinstance(node.value, ast.Name) and node.value.id == 'x'
+        return xs[ev(node.slice)]
+    if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.USub): return -ev(node.operand)
+    if isinstance(node, ast.BinOp):
+        a,b = ev(node.left), ev(node.right)
+        if isinstance(node.op, ast.Add): return a+b
+        if isinstance(node.op, ast.Sub): return a-b
+        if isinstance(node.op, ast.Mult): return a*b
+        if isinstance(node.op, ast.Pow): return a**b
+    raise AssertionError(ast.dump(node))
+body = source.split('def coefficients (x : Parameters) : Coefficients :=',1)[1].split('\ndef coefficientMonomials',1)[0]
+lets, vector = body.split('![',1)
+bindings = re.findall(r'let\s+(\S+)\s*:=\s*(.*?)(?=\s*;\s*let|\s+let|\Z)', lets, re.S)
+for name, expression in bindings:
+    env[name.translate(translate)] = ev(parse_expr(expression.rstrip('; \n')))
+entries = [s.strip() for s in vector.rsplit(']',1)[0].split(',')]
+assert len(entries) == 9 and len(bindings) == 17
+results = [Dual.wrap(ev(parse_expr(e))) for e in entries]
+jblock = re.search(r'def jacobian :.*?:=\s*!!\[(.*?)\]\n', source, re.S).group(1)
+jacobian = [[int(s.strip()) for s in row.split(',')] for row in jblock.split(';')]
+assert len(jacobian) == 9 and all(len(row) == 10 for row in jacobian)
+assert [list(d.gradient) for d in results] == jacobian
+assert [d.value for d in results] == [300,159,814,24,263,697,18,103,189]
+historical = B / 'next-statements/next-counterexample-feasibility-20260917/SP15-JACOBIAN-PREFLIGHT.json'
+hp = json.loads(historical.read_text())
+assert hp['Jacobian'] == jacobian
+diagnostic = {
+    'scope':'Exact standard-library forward-mode arithmetic on parsed frozen coefficient source; planning only, not a Lean derivative proof',
+    'definitions_sha256':sha(P / 'NLA/SP15/Definitions.lean'),
+    'parsed_let_bindings':len(bindings), 'parsed_coefficients':len(entries),
+    'point':point, 'coefficient_values':[d.value for d in results],
+    'all_90_derivative_entries_match_actual_frozen_jacobian':True,
+    'jacobian':jacobian,
+    'historical_polynomial_preflight_sha256':sha(historical),
+    'collected_real_polynomial_term_counts':[len(c) for c in hp['coefficient_polynomials']],
+    'fresh_Lean_or_Comparator_execution':False, 'count_change':0}
+(R / 'PLANNING-DIAGNOSTIC.json').write_text(json.dumps(diagnostic, indent=2)+'\n')
+
+primary = {
+ 'Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean':[(816,829)],
+ 'Mathlib/Data/Matrix/Mul.lean':[(368,375),(698,711)],
+ 'Mathlib/Data/Complex/Basic.lean':[(536,547),(575,589),(470,481),(660,669)],
+ 'Mathlib/Data/Fin/VecNotation.lean':[(178,219)],
+ 'Mathlib/Analysis/Calculus/FDeriv/Prod.lean':[(357,378)],
+ 'Mathlib/Analysis/Calculus/FDeriv/Add.lean':[(190,208),(610,626)],
+ 'Mathlib/Analysis/Calculus/FDeriv/Mul.lean':[(160,182),(338,348)],
+ 'Mathlib/Analysis/Calculus/FDeriv/Pow.lean':[(169,181)],
+ 'Mathlib/Analysis/Calculus/FDeriv/Congr.lean':[(108,120)],
+ 'Mathlib/Topology/Algebra/Module/FiniteDimension.lean':[(317,329)],
+ 'Mathlib/Topology/Algebra/Module/ContinuousLinearMap/PiProd.lean':[(213,242)],
+ 'Mathlib/Topology/Algebra/Module/ContinuousLinearMap/Basic.lean':[(482,493)],
+ 'Mathlib/LinearAlgebra/Matrix/ToLin.lean':[(281,296)],
+ 'Mathlib/Algebra/BigOperators/Fin.lean':[(64,85)],
+}
+apis = {}
+for rel, ranges in primary.items():
+    src = M / rel
+    text = src.read_text().splitlines()
+    payload = '\n\n'.join('\n'.join(f'{i}: {text[i-1]}' for i in range(a,b+1)) for a,b in ranges)+'\n'
+    dest = R / 'primary' / (rel.replace('/','_')+'.txt')
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(payload)
+    apis[rel] = {'source_sha256':sha(src),'line_ranges':ranges,'excerpt':str(dest.relative_to(R)),
+                 'excerpt_sha256':sha(dest),
+                 'cached_olean_present':(M/'.lake/build/lib/lean'/Path(rel).with_suffix('.olean')).is_file()}
+(R / 'API-BINDINGS.json').write_text(json.dumps(apis,indent=2)+'\n')
+receipt = {'time':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+ 'scope':'Pre-code plan for frozen contracts7,9 only; no implementation authorization inferred',
+ 'freeze_acceptance_sha256':sha(freeze),'protected_files_checked':accepted['protected_files'],
+ 'exact_header_count':2,'all_90_forward_diagnostic_entries_checked':True,
+ 'primary_files':len(apis),'cached_primary_oleans_present':sum(v['cached_olean_present'] for v in apis.values()),
+ 'compiler_executed':False,'count_change':0}
+(R / 'PLAN-CHECKS.json').write_text(json.dumps(receipt,indent=2)+'\n')
+print(json.dumps(receipt,indent=2))

@@ -1,0 +1,38 @@
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Basis.lean:228:    Matrix.reindexAlgEquiv R R e (b.toMatrix (v ∘ e)) := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Adjugate.lean:414:    simp_rw [A', det_reindex_self, adjugate_reindex, reindex_apply, submatrix_apply, ← e.sum_comp,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Transvection.lean:296:    (t.reindexEquiv e).toMatrix = reindexAlgEquiv R _ e t.toMatrix := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Transvection.lean:304:    (L.map (toMatrix ∘ reindexEquiv e)).prod = reindexAlgEquiv R _ e (L.map toMatrix).prod := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Transvection.lean:626:        (L.map toMatrix).prod * Matrix.reindexAlgEquiv 𝕜 _ e M * (L'.map toMatrix).prod =
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Transvection.lean:632:  have : M = reindexAlgEquiv 𝕜 _ e.symm (reindexAlgEquiv 𝕜 _ e M) := by simp
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean:255:    Matrix.det_reindex_self (Equiv.subtypeEquivRight e)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean:271:  rw [← Matrix.det_reindex_self (Equiv.sumCompl p).symm M]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Block.lean:323:    rw [toSquareBlock_def, ← Matrix.det_reindex_self he.symm]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean:173:  rw [charmatrix_reindex, Matrix.det_reindex_self]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean:252:theorem det_reindex_self (e : m ≃ n) (A : Matrix m m R) : det (reindex e e A) = det A :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean:259:  · simp_rw [det_reindex_self, reindex_apply, Equiv.refl_symm, Equiv.coe_refl, det_permute]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:22:* `Matrix.reindexAlgEquiv R A`: `Matrix.reindex` is an `R`-algebra equivalence between `A`-matrices.
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:211:def reindexAlgEquiv (e : m ≃ n) : Matrix m m A ≃ₐ[R] Matrix n n A where
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:216:theorem coe_reindexAlgEquiv (e : m ≃ n) : ⇑(reindexAlgEquiv R A e) = reindex e e :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:220:theorem toEquiv_reindexAlgEquiv (e : m ≃ n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:221:    (reindexAlgEquiv R A e : Matrix m m A ≃ Matrix n n A) = reindex e e :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:225:theorem toAddEquiv_reindexAlgEquiv (e : m ≃ n) : reindexAlgEquiv R A e = reindexAddEquiv A e e :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:229:theorem toRingEquiv_reindexAlgEquiv (e : m ≃ n) : reindexAlgEquiv R A e = reindexRingEquiv A e :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:233:theorem toLinearEquiv_reindexAlgEquiv (e : m ≃ n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:234:    reindexAlgEquiv R A e = reindexLinearEquiv R A e e :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:237:@[deprecated coe_reindexAlgEquiv (since := "2026-06-06")]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:238:theorem reindexAlgEquiv_apply (e : m ≃ n) (M : Matrix m m A) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:239:    reindexAlgEquiv R A e M = reindex e e M := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:243:theorem symm_reindexAlgEquiv (e : m ≃ n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:244:    (reindexAlgEquiv R A e).symm = reindexAlgEquiv R A e.symm :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:247:@[deprecated (since := "2026-06-06")] alias reindexAlgEquiv_symm := symm_reindexAlgEquiv
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:250:theorem reindexAlgEquiv_refl : reindexAlgEquiv R A (Equiv.refl m) = AlgEquiv.refl :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:254:theorem reindexAlgEquiv_trans_reindexAlgEquiv (e : m ≃ n) (e' : n ≃ o) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:255:    .trans (reindexAlgEquiv R A e) (reindexAlgEquiv R A e') = reindexAlgEquiv R A (.trans e e') :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:259:theorem reindexAlgEquiv_mul (e : m ≃ n) (M : Matrix m m A) (N : Matrix m m A) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:260:    reindexAlgEquiv R A e (M * N) = reindexAlgEquiv R A e M * reindexAlgEquiv R A e N :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:271:  det_reindex_self e M
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:277:theorem det_reindexAlgEquiv (B : Type*) [CommSemiring R] [CommRing B] [Algebra R B] [Fintype m]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:279:    det (reindexAlgEquiv R B e A) = det A :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Reindex.lean:280:  det_reindex_self e A
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/ConjTranspose.lean:444:theorem conjTranspose_reindex [Star α] (eₘ : m ≃ l) (eₙ : n ≃ o) (M : Matrix m n α) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Kronecker.lean:257:        kroneckerMap_diagonal_left _ fun _ => _, det_reindex_self]

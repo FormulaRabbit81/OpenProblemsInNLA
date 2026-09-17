@@ -1,0 +1,13 @@
+108:   exact isLittleOTVS_congr (h₀.mono fun y hy => by simp_all [Prod.map]) .rfl
+109: 
+110: theorem Filter.EventuallyEq.hasStrictFDerivAt_iff (h : f₀ =ᶠ[𝓝 x] f₁) (h' : ∀ y, f₀' y = f₁' y) :
+111:     HasStrictFDerivAt f₀ f₀' x ↔ HasStrictFDerivAt f₁ f₁' x :=
+112:   h.prodMap_nhds h |>.hasFDerivAtFilter_iff h'
+113: 
+114: theorem HasStrictFDerivAt.congr_fderiv (h : HasStrictFDerivAt f f' x) (h' : f' = g') :
+115:     HasStrictFDerivAt f g' x :=
+116:   h' ▸ h
+117: 
+118: theorem HasFDerivAt.congr_fderiv (h : HasFDerivAt f f' x) (h' : f' = g') : HasFDerivAt f g' x :=
+119:   h' ▸ h
+120: 

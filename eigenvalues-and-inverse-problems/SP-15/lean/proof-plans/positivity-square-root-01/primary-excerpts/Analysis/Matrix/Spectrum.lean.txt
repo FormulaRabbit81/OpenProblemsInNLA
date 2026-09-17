@@ -1,0 +1,73 @@
+24: @[expose] public section
+25: 
+26: open WithLp
+27: 
+28: namespace Matrix
+29: 
+30: variable {𝕜 : Type*} [RCLike 𝕜] {n : Type*} [Fintype n]
+31: variable {A B : Matrix n n 𝕜}
+32: 
+33: lemma finite_real_spectrum [DecidableEq n] : (spectrum ℝ A).Finite := by
+34:   rw [← spectrum.preimage_algebraMap 𝕜]
+35:   exact A.finite_spectrum.preimage (FaithfulSMul.algebraMap_injective ℝ 𝕜).injOn
+36: 
+37: instance [DecidableEq n] : Finite (spectrum ℝ A) := A.finite_real_spectrum
+38: 
+39: /-- The spectrum of a matrix `A` coincides with the spectrum of `toLpLin p p A`. -/
+40: theorem spectrum_toLpLin [DecidableEq n] (p : ENNReal) :
+41:     spectrum 𝕜 (toLpLin p p A) = spectrum 𝕜 A :=
+42:   AlgEquiv.spectrum_eq (Matrix.toLinAlgEquiv (PiLp.basisFun p 𝕜 n)) _
+43: 
+44: /-- The spectrum of a matrix `A` coincides with the spectrum of `toEuclideanLin A`. -/
+45: @[deprecated spectrum_toLpLin (since := "2026-01-21")]
+46: theorem spectrum_toEuclideanLin [DecidableEq n] : spectrum 𝕜 (toEuclideanLin A) = spectrum 𝕜 A :=
+47:   spectrum_toLpLin 2
+48: 
+49: namespace IsHermitian
+50: 
+51: section DecidableEq
+52: 
+53: variable [DecidableEq n]
+54: variable (hA : A.IsHermitian) (hB : B.IsHermitian)
+55: 
+56: /-- The eigenvalues of a Hermitian matrix, indexed by `Fin (Fintype.card n)` where `n` is the index
+57: type of the matrix. -/
+58: noncomputable def eigenvalues₀ : Fin (Fintype.card n) → ℝ :=
+59:   (isSymmetric_toEuclideanLin_iff.mpr hA).eigenvalues finrank_euclideanSpace
+60: 
+61: lemma eigenvalues₀_antitone : Antitone hA.eigenvalues₀ :=
+62:   LinearMap.IsSymmetric.eigenvalues_antitone ..
+63: 
+64: /-- The eigenvalues of a Hermitian matrix, reusing the index `n` of the matrix entries. -/
+65: noncomputable def eigenvalues : n → ℝ := fun i =>
+66:   hA.eigenvalues₀ <| (Fintype.equivOfCardEq (Fintype.card_fin _)).symm i
+67: 
+68: /-- A choice of an orthonormal basis of eigenvectors of a Hermitian matrix. -/
+69: noncomputable def eigenvectorBasis : OrthonormalBasis n 𝕜 (EuclideanSpace 𝕜 n) :=
+70:   ((isSymmetric_toEuclideanLin_iff.mpr hA).eigenvectorBasis finrank_euclideanSpace).reindex
+71:     (Fintype.equivOfCardEq (Fintype.card_fin _))
+72: 
+73: lemma mulVec_eigenvectorBasis (j : n) :
+74:     A *ᵥ ⇑(hA.eigenvectorBasis j) = (hA.eigenvalues j) • ⇑(hA.eigenvectorBasis j) := by
+75:   simpa only [eigenvectorBasis, OrthonormalBasis.reindex_apply, toLpLin_apply,
+76:     RCLike.real_smul_eq_coe_smul (K := 𝕜)] using!
+77:       congr(⇑$((isSymmetric_toEuclideanLin_iff.mpr hA).apply_eigenvectorBasis
+78:         finrank_euclideanSpace ((Fintype.equivOfCardEq (Fintype.card_fin _)).symm j)))
+79: 
+80: /-- Eigenvalues of a Hermitian matrix A are in the ℝ spectrum of A. -/
+81: theorem eigenvalues_mem_spectrum_real (i : n) : hA.eigenvalues i ∈ spectrum ℝ A := by
+82:   apply spectrum.of_algebraMap_mem 𝕜
+83:   rw [← Matrix.spectrum_toLpLin 2]
+84:   exact LinearMap.IsSymmetric.hasEigenvalue_eigenvalues _ _ _ |>.mem_spectrum
+225: /-- A nonzero Hermitian matrix has an eigenvector with nonzero eigenvalue. -/
+226: lemma exists_eigenvector_of_ne_zero (hA : IsHermitian A) (h_ne : A ≠ 0) :
+227:     ∃ (v : n → 𝕜) (t : ℝ), t ≠ 0 ∧ v ≠ 0 ∧ A *ᵥ v = t • v := by
+228:   classical
+229:   have : hA.eigenvalues ≠ 0 := by
+230:     contrapose h_ne
+231:     have := hA.spectral_theorem
+232:     rwa [h_ne, Pi.comp_zero, RCLike.ofReal_zero, (by rfl : Function.const n (0 : 𝕜) = fun _ ↦ 0),
+233:       diagonal_zero, map_zero] at this
+234:   obtain ⟨i, hi⟩ := Function.ne_iff.mp this
+235:   exact ⟨_, _, hi, (ofLp_eq_zero 2).ne.2 <| hA.eigenvectorBasis.orthonormal.ne_zero i,
+236:     hA.mulVec_eigenvectorBasis i⟩

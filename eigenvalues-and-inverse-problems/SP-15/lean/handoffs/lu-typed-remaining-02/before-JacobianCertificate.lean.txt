@@ -1,0 +1,146 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Fortier Bourque and Ransford retain
+credit for the original question and generic finiteness theorem.
+
+Exact rational data only. Reconstructing the supplied LU factorization costs
+81 short sums; triangular determinants reduce to nine pivots, not 9! terms.
+The displayed matrix is identified with the actual derivative in a later proof.
+-/
+import NLA.SP15.Numerical
+import Mathlib.LinearAlgebra.Matrix.Block
+import Mathlib.Tactic.FinCases
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.SP15
+noncomputable section
+open scoped BigOperators Matrix
+
+theorem coefficient_base_value : coefficients basePoint = coefficientBaseValue := by
+  funext i
+  fin_cases i <;>
+    dsimp [coefficients, basePoint, coefficientBaseValue, Matrix.cons_val] <;> norm_num
+
+-- Each row remains a separate small kernel proof under the default heartbeat limit.
+-- Mathlib's literal-vector simproc eliminates lookups before exact arithmetic.
+private theorem jacobian_lu_row_0 (j : Fin 9) :
+    jacobianMinor 0 j = (lowerCertificate * upperCertificate) 0 j := by
+  fin_cases j <;>
+    simp only [Matrix.mul_apply, Fin.sum_univ_succ] <;>
+    dsimp [jacobianMinor, jacobian, lowerCertificate, upperCertificate, Matrix.cons_val] <;>
+    norm_num
+
+private theorem jacobian_lu_row_1 (j : Fin 9) :
+    jacobianMinor 1 j = (lowerCertificate * upperCertificate) 1 j := by
+  fin_cases j <;>
+    simp only [Matrix.mul_apply, Fin.sum_univ_succ] <;>
+    dsimp [jacobianMinor, jacobian, lowerCertificate, upperCertificate, Matrix.cons_val] <;>
+    norm_num
+
+private theorem jacobian_lu_row_2 (j : Fin 9) :
+    jacobianMinor 2 j = (lowerCertificate * upperCertificate) 2 j := by
+  fin_cases j <;>
+    simp only [Matrix.mul_apply, Fin.sum_univ_succ] <;>
+    dsimp [jacobianMinor, jacobian, lowerCertificate, upperCertificate, Matrix.cons_val] <;>
+    norm_num
+
+private theorem jacobian_lu_row_3 (j : Fin 9) :
+    jacobianMinor 3 j = (lowerCertificate * upperCertificate) 3 j := by
+  fin_cases j <;>
+    simp only [Matrix.mul_apply, Fin.sum_univ_succ] <;>
+    dsimp [jacobianMinor, jacobian, lowerCertificate, upperCertificate, Matrix.cons_val] <;>
+    norm_num
+
+private theorem jacobian_lu_row_4 (j : Fin 9) :
+    jacobianMinor 4 j = (lowerCertificate * upperCertificate) 4 j := by
+  fin_cases j <;>
+    simp only [Matrix.mul_apply, Fin.sum_univ_succ] <;>
+    dsimp [jacobianMinor, jacobian, lowerCertificate, upperCertificate, Matrix.cons_val] <;>
+    norm_num
+
+private theorem jacobian_lu_row_5 (j : Fin 9) :
+    jacobianMinor 5 j = (lowerCertificate * upperCertificate) 5 j := by
+  fin_cases j <;>
+    simp only [Matrix.mul_apply, Fin.sum_univ_succ] <;>
+    dsimp [jacobianMinor, jacobian, lowerCertificate, upperCertificate, Matrix.cons_val] <;>
+    norm_num
+
+private theorem jacobian_lu_row_6 (j : Fin 9) :
+    jacobianMinor 6 j = (lowerCertificate * upperCertificate) 6 j := by
+  fin_cases j <;>
+    simp only [Matrix.mul_apply, Fin.sum_univ_succ] <;>
+    dsimp [jacobianMinor, jacobian, lowerCertificate, upperCertificate, Matrix.cons_val] <;>
+    norm_num
+
+private theorem jacobian_lu_row_7 (j : Fin 9) :
+    jacobianMinor 7 j = (lowerCertificate * upperCertificate) 7 j := by
+  fin_cases j <;>
+    simp only [Matrix.mul_apply, Fin.sum_univ_succ] <;>
+    dsimp [jacobianMinor, jacobian, lowerCertificate, upperCertificate, Matrix.cons_val] <;>
+    norm_num
+
+private theorem jacobian_lu_row_8 (j : Fin 9) :
+    jacobianMinor 8 j = (lowerCertificate * upperCertificate) 8 j := by
+  fin_cases j <;>
+    simp only [Matrix.mul_apply, Fin.sum_univ_succ] <;>
+    dsimp [jacobianMinor, jacobian, lowerCertificate, upperCertificate, Matrix.cons_val] <;>
+    norm_num
+
+private theorem jacobian_lu_reconstruction :
+    jacobianMinor = lowerCertificate * upperCertificate := by
+  ext i j
+  fin_cases i
+  · exact jacobian_lu_row_0 j
+  · exact jacobian_lu_row_1 j
+  · exact jacobian_lu_row_2 j
+  · exact jacobian_lu_row_3 j
+  · exact jacobian_lu_row_4 j
+  · exact jacobian_lu_row_5 j
+  · exact jacobian_lu_row_6 j
+  · exact jacobian_lu_row_7 j
+  · exact jacobian_lu_row_8 j
+
+theorem jacobian_lu_certificate :
+    jacobianMinor = lowerCertificate * upperCertificate ∧
+    (∀ i j : Fin 9, i < j → lowerCertificate i j = 0) ∧
+    (∀ i : Fin 9, lowerCertificate i i = 1) ∧
+    (∀ i j : Fin 9, j < i → upperCertificate i j = 0) ∧
+    (∀ i : Fin 9, upperCertificate i i ≠ 0) ∧
+    (∏ i : Fin 9, upperCertificate i i) = (-1088 : ℝ) := by
+  refine ⟨jacobian_lu_reconstruction, ?_, ?_, ?_, ?_, ?_⟩
+  · intro i j hij
+    fin_cases i <;> fin_cases j <;> norm_num at hij <;>
+      norm_num [lowerCertificate, Matrix.cons_val]
+  · intro i
+    fin_cases i <;> norm_num [lowerCertificate, Matrix.cons_val]
+  · intro i j hij
+    fin_cases i <;> fin_cases j <;> norm_num at hij <;>
+      norm_num [upperCertificate, Matrix.cons_val]
+  · intro i
+    fin_cases i <;> norm_num [upperCertificate, Matrix.cons_val]
+  · norm_num [upperCertificate, Fin.prod_univ_succ, Matrix.cons_val]
+
+theorem jacobian_minor_nonsingular : jacobianMinor.det = (-1088 : ℝ) := by
+  obtain ⟨hreconstruct, hLower, hLowerDiag, hUpper, _, hProduct⟩ := jacobian_lu_certificate
+  have hL : lowerCertificate.IsLowerTriangular := by
+    intro i j hij
+    exact hLower i j hij
+  have hU : upperCertificate.IsUpperTriangular := by
+    intro i j hij
+    exact hUpper i j hij
+  rw [hreconstruct, Matrix.det_mul, Matrix.det_of_isLowerTriangular lowerCertificate hL,
+    Matrix.det_of_isUpperTriangular hU, hProduct]
+  simp [hLowerDiag]
+
+#print axioms coefficient_base_value
+#assert_trust kernel coefficient_base_value
+#print axioms jacobian_lu_certificate
+#assert_trust kernel jacobian_lu_certificate
+#print axioms jacobian_minor_nonsingular
+#assert_trust kernel jacobian_minor_nonsingular
+
+end
+end NLA.SP15

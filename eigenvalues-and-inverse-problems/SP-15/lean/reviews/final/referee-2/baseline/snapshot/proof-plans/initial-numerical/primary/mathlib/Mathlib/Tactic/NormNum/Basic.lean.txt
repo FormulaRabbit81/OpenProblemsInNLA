@@ -1,0 +1,37 @@
+Lines 55–90
+55: 
+56: theorem isNat_zero (α) [AddMonoidWithOne α] : IsNat (Zero.zero : α) (nat_lit 0) :=
+57:   ⟨Nat.cast_zero.symm⟩
+58: 
+59: /-- The `norm_num` extension which identifies the expression `Zero.zero`, returning `0`. -/
+60: @[norm_num Zero.zero] def evalZero : NormNumExt where eval {u α} e := do
+61:   let sα ← inferAddMonoidWithOne α
+62:   match e with
+63:   | ~q(Zero.zero) => return .isNat sα q(nat_lit 0) q(isNat_zero $α)
+64: 
+65: theorem isNat_one (α) [AddMonoidWithOne α] : IsNat (One.one : α) (nat_lit 1) := ⟨Nat.cast_one.symm⟩
+66: 
+67: /-- The `norm_num` extension which identifies the expression `One.one`, returning `1`. -/
+68: @[norm_num One.one] def evalOne : NormNumExt where eval {u α} e := do
+69:   let sα ← inferAddMonoidWithOne α
+70:   match e with
+71:   | ~q(One.one) => return .isNat sα q(nat_lit 1) q(isNat_one $α)
+72: 
+73: theorem isNat_ofNat (α : Type u) [AddMonoidWithOne α] {a : α} {n : ℕ}
+74:     (h : n = a) : IsNat a n := ⟨h.symm⟩
+75: 
+76: /-- The `norm_num` extension which identifies an expression `OfNat.ofNat n`, returning `n`. -/
+77: @[norm_num OfNat.ofNat _] def evalOfNat : NormNumExt where eval {u α} e := do
+78:   let sα ← inferAddMonoidWithOne α
+79:   match e with
+80:   | ~q(@OfNat.ofNat _ $n $oα) =>
+81:     let n : Q(ℕ) ← whnf n
+82:     guard n.isRawNatLit
+83:     let ⟨a, (pa : Q($n = $e))⟩ ← mkOfNat α sα n
+84:     guard <|← isDefEq a e
+85:     return .isNat sα n q(isNat_ofNat $α $pa)
+86: 
+87: theorem isNat_intOfNat : {n n' : ℕ} → IsNat n n' → IsNat (Int.ofNat n) n'
+88:   | _, _, ⟨rfl⟩ => ⟨rfl⟩
+89: 
+90: /-- The `norm_num` extension which identifies the constructor application `Int.ofNat n` such that

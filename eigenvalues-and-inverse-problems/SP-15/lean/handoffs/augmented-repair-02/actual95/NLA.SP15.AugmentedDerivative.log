@@ -1,0 +1,33 @@
+NLA/SP15/AugmentedDerivative.lean:19:68: error: unsolved goals
+v : Parameters
+i : Fin 9
+⊢ ∑ j, Fin.lastCases (motive := fun x => Fin 10 → ℝ) (fun j => if j = 9 then 1 else 0) jacobian i.castSucc j * v j =
+    ∑ j, jacobian i j * v j
+NLA/SP15/AugmentedDerivative.lean:22:32: warning: This simp argument is unused:
+  Fin.lastCases_castSucc
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [augmentedJacobian]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/AugmentedDerivative.lean:25:48: error: unsolved goals
+v : Parameters
+⊢ ∑ j, Fin.lastCases (motive := fun x => Fin 10 → ℝ) (fun j => if j = 9 then 1 else 0) jacobian 9 j * v j = v 9
+NLA/SP15/AugmentedDerivative.lean:27:27: warning: This simp argument is unused:
+  Fin.lastCases_last
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [augmentedJacobian, ite_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/SP15/AugmentedDerivative.lean:27:47: warning: This simp argument is unused:
+  ite_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [augmentedJacobian, Fin.lastCases_last]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'NLA.SP15.augmented_strict_derivative' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/SP15/AugmentedDerivative.lean:54:21: error: #assert_trust: 'NLA.SP15.augmented_strict_derivative' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

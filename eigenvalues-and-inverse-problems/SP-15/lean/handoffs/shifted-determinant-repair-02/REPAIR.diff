@@ -1,0 +1,23 @@
+--- actual111/ShiftedDeterminant.lean
++++ candidate/ShiftedDeterminant.lean
+@@ -35,7 +35,8 @@
+         (s⁻¹ • (1 : Square 3)) * Matrix.fromCols ((-star z) • R) (0 : Square 3) =
+         Matrix.fromBlocks (((Complex.normSq z : ℂ) / s) • P)
+           (0 : Square 3) (0 : Square 3) (0 : Square 3) := by
+-    simp only [Matrix.fromRows_mul, Matrix.fromRows_mul_fromCols,
++    rw [Matrix.fromRows_mul, Matrix.fromRows_mul_fromCols]
++    simp only [
+       Matrix.zero_mul, Matrix.mul_zero, first_schur_root_product, hR]
+   rw [hproduct, hS]
+   simp only [sub_eq_add_neg, Matrix.fromBlocks_neg, Matrix.fromBlocks_add,
+@@ -65,8 +66,8 @@
+   let C : Square 3 := (-z) • (qRoot x).conjTranspose
+   let D : Square 3 := s • 1 + qMatrix x
+   have hD : D.PosDef := hpos.2.1.add (parameter_matrices_positive x hx).2
+-  letI : Invertible (s • (1 : Square 3)) := hpos.2.1.isUnit.invertible
+-  letI : Invertible D := hD.isUnit.invertible
++  let : Invertible (s • (1 : Square 3)) := hpos.2.1.isUnit.invertible
++  let : Invertible D := hD.isUnit.invertible
+   have hCD : C * D = D * C := by
+     dsimp only [C, D]
+     rw [hroots.2.1.eq, ← hroots.2.2.2.1]

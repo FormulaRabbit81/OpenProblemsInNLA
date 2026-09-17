@@ -1,0 +1,11 @@
+72: theorem ContinuousAt.preimage_mem_nhds {t : Set Y} (h : ContinuousAt f x)
+73:     (ht : t ∈ 𝓝 (f x)) : f ⁻¹' t ∈ 𝓝 x :=
+74:   h ht
+75: 
+76: /-- If `f x ∈ s ∈ 𝓝 (f x)` for continuous `f`, then `f y ∈ s` near `x`.
+77: 
+78: This is essentially `Filter.Tendsto.eventually_mem`, but infers in more cases when applied. -/
+79: theorem ContinuousAt.eventually_mem {f : X → Y} {x : X} (hf : ContinuousAt f x) {s : Set Y}
+80:     (hs : s ∈ 𝓝 (f x)) : ∀ᶠ y in 𝓝 x, f y ∈ s :=
+81:   hf hs
+82: 

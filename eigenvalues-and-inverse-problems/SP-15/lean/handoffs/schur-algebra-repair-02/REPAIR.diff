@@ -1,0 +1,19 @@
+--- actual110/SchurAlgebra.lean
++++ candidate/SchurAlgebra.lean
+@@ -24,14 +24,14 @@
+     [Invertible (s • (1 : Square 3))] :
+     ⅟(s • (1 : Square 3)) = s⁻¹ • (1 : Square 3) := by
+   apply invOf_eq_right_inv
+-  simp [Matrix.smul_mul, Matrix.mul_smul, smul_smul, hs]
++  simp [smul_smul, hs]
+ 
+ theorem first_schur_root_product (s z : ℂ) (R : Square 3) :
+     ((-z) • R.conjTranspose) * (s⁻¹ • (1 : Square 3)) * ((-star z) • R) =
+       ((Complex.normSq z : ℂ) / s) • (R.conjTranspose * R) := by
+   simp only [Matrix.smul_mul, Matrix.mul_smul, Matrix.mul_one, smul_smul]
+   congr 1
+-  rw [div_eq_mul_inv, Complex.normSq_eq_conj_mul_self]
++  rw [div_eq_mul_inv, Complex.normSq_eq_conj_mul_self, starRingEnd_apply]
+   ring
+ 
+ theorem scalar_square_commutes (s c : ℂ) (S : Square 3) :

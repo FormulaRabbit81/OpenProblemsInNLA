@@ -1,0 +1,48 @@
+242: 
+243: lemma sqrt_eq_nnrpow (a : A) : sqrt a = a ^ (1 / 2 : ℝ≥0) := by
+244:   simp only [sqrt]
+245:   congr
+246:   ext
+247:   exact_mod_cast NNReal.sqrt_eq_rpow _
+248: 
+249: lemma sqrt_of_not_nonneg {a : A} (ha : ¬0 ≤ a) : sqrt a = 0 :=
+250:   cfcₙ_apply_of_not_predicate a ha
+251: 
+252: @[simp]
+253: lemma sqrt_zero : sqrt (0 : A) = 0 := by simp [sqrt]
+254: 
+255: variable [IsSemitopologicalRing A] [T2Space A]
+256: 
+257: @[simp]
+258: lemma nnrpow_sqrt {a : A} {x : ℝ≥0} : (sqrt a) ^ x = a ^ (x / 2) := by
+259:   rw [sqrt_eq_nnrpow, nnrpow_nnrpow, one_div_mul_eq_div 2 x]
+260: 
+261: lemma nnrpow_sqrt_two (a : A) (ha : 0 ≤ a := by cfc_tac) : (sqrt a) ^ (2 : ℝ≥0) = a := by
+262:   simp only [nnrpow_sqrt, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, div_self]
+263:   rw [nnrpow_one a]
+264: 
+265: lemma sqrt_mul_sqrt_self (a : A) (ha : 0 ≤ a := by cfc_tac) : sqrt a * sqrt a = a := by
+266:   rw [← nnrpow_two _, nnrpow_sqrt_two _]
+267: 
+268: @[simp]
+269: lemma sqrt_nnrpow {a : A} {x : ℝ≥0} : sqrt (a ^ x) = a ^ (x / 2) := by
+270:   simp [sqrt_eq_nnrpow, div_eq_mul_inv]
+734:     exact not_isUnit_zero h
+735:   refine ⟨ha, ?_⟩
+736:   rwa [isUnit_sqrt_iff _ ha] at h
+737: 
+738: @[aesop safe apply]
+739: lemma _root_.IsStrictlyPositive.isUnit_cfcSqrt (a : A) (ha : IsStrictlyPositive a := by cfc_tac) :
+740:     IsUnit (sqrt a) := by grind
+741: 
+742: @[aesop safe apply]
+743: lemma _root_.IsStrictlyPositive.nnrpow (a : A) (y : ℝ≥0) (hy : y ≠ 0)
+744:     (ha : IsStrictlyPositive a := by cfc_tac) : IsStrictlyPositive (a ^ y) := by grind
+745: 
+746: @[aesop safe apply]
+747: lemma _root_.IsStrictlyPositive.sqrt (a : A) (ha : IsStrictlyPositive a := by cfc_tac) :
+748:     IsStrictlyPositive (sqrt a) := by grind
+749: 
+750: omit [T2Space A] [IsSemitopologicalRing A] in
+751: @[aesop safe apply]
+752: lemma _root_.IsStrictlyPositive.rpow (a : A) (y : ℝ) (ha : IsStrictlyPositive a := by cfc_tac) :

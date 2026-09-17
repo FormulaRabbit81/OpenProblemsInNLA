@@ -1,0 +1,150 @@
+[
+  {
+    "id": "F1",
+    "rubric": "proof-quality",
+    "verdict": "request_changes",
+    "severity": "low",
+    "mathematical_defect": false,
+    "title": "Explain remaining representation conversions",
+    "locations": [
+      {
+        "file": "NLA/SP15/AugmentedDerivative.lean",
+        "lines": [
+          30,
+          36
+        ]
+      },
+      {
+        "file": "NLA/SP15/BlockGram.lean",
+        "lines": [
+          65
+        ]
+      },
+      {
+        "file": "NLA/SP15/UnitaryBlocks.lean",
+        "lines": [
+          38,
+          100
+        ]
+      },
+      {
+        "file": "NLA/SP15/LocalFiber.lean",
+        "lines": [
+          63
+        ]
+      },
+      {
+        "file": "NLA/SP15/ShiftedDeterminant.lean",
+        "lines": [
+          89,
+          103
+        ]
+      },
+      {
+        "file": "NLA/SP15/BoxGeometry.lean",
+        "lines": [
+          28,
+          64,
+          66,
+          68
+        ]
+      },
+      {
+        "file": "NLA/SP15/CoefficientIdentity.lean",
+        "lines": [
+          62,
+          65,
+          68,
+          71,
+          74,
+          77,
+          81,
+          84,
+          88
+        ]
+      },
+      {
+        "file": "NLA/SP15/FiniteFiber.lean",
+        "lines": [
+          45
+        ]
+      },
+      {
+        "file": "NLA/SP15/GramPolynomial.lean",
+        "lines": [
+          49
+        ]
+      },
+      {
+        "file": "NLA/SP15/GramSemantics.lean",
+        "lines": [
+          38
+        ]
+      },
+      {
+        "file": "NLA/SP15/AugmentedEquivalence.lean",
+        "lines": [
+          37
+        ]
+      },
+      {
+        "file": "NLA/SP15/SliceRigidity.lean",
+        "lines": [
+          44
+        ]
+      }
+    ],
+    "required_change": "Add specific comments explaining the intended API/representation boundary at unannotated change/show sites, or use an explicit named rewrite/bridge. A single grouped rationale is sufficient for analogous fixed-entry cases. Preserve all 29 headers and Definitions.",
+    "standard": "sources/standards/TauCetiProject/TauCetiReview/rubrics/proof-quality.md",
+    "standard_excerpt": "change and show are a code smell: flag any used without a comment documenting why the goal cannot be reached otherwise."
+  },
+  {
+    "id": "F2",
+    "rubric": "reuse",
+    "verdict": "request_changes",
+    "severity": "low",
+    "mathematical_defect": false,
+    "title": "Remove forwarding Proof module",
+    "locations": [
+      {
+        "file": "NLA/SP15/Proof.lean",
+        "lines": [
+          12,
+          13
+        ]
+      },
+      {
+        "file": "Solution.lean",
+        "lines": [
+          12
+        ]
+      }
+    ],
+    "located_replacement": [
+      "NLA.SP15.Counterfamilies",
+      "NLA.SP15.KernelFlag"
+    ],
+    "required_change": "Import the two existing implementation modules directly in Solution, keep all 29 assertions, and remove the forwarding Proof module. Revalidate the changed local source closure.",
+    "standard": "sources/standards/TauCetiProject/TauCetiReview/rubrics/reuse.md",
+    "standard_excerpt": "Treat compatibility-only aliases, wrapper declarations, forwarding import modules, deprecated shims, and duplicate theorem names as unnecessary duplication."
+  },
+  {
+    "id": "N1",
+    "rubric": "generality",
+    "verdict": "scoped_note",
+    "severity": "informational",
+    "mathematical_defect": false,
+    "title": "Unused hy is in an explicitly frozen contract",
+    "locations": [
+      {
+        "file": "NLA/SP15/UnitaryBlocks.lean",
+        "lines": [
+          23
+        ]
+      }
+    ],
+    "observed_evidence": "Actual development-115 log reports hy not explicitly referenced; source proof uses only hx for root-unit cancellation.",
+    "stronger_signature": "Same unitary_intertwiner_blocks conclusion with x y, hx, U, hU, hA and no hy.",
+    "disposition": "No frozen-header change requested, because explicit user-required verbatim preservation takes priority. No cosmetic premise consumption requested."
+  }
+]

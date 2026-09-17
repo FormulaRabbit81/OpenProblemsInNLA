@@ -1,0 +1,20 @@
+--- before/BoxGeometry.lean
++++ after/BoxGeometry.lean
+@@ -25,7 +25,8 @@
+ 
+ theorem parameter_box_geometry : IsOpen parameterBox ∧ basePoint ∈ parameterBox := by
+   constructor
+-  · change IsOpen {x : Parameters | ∀ i, |x i - basePoint i| < boxRadius}
++  · -- The frozen box is the finite intersection of these open coordinate conditions.
++    change IsOpen {x : Parameters | ∀ i, |x i - basePoint i| < boxRadius}
+     rw [Set.ofPred_forall]
+     apply isOpen_iInter_of_finite
+     intro i
+@@ -60,6 +61,7 @@
+   dsimp only [basePoint, Matrix.cons_val] at hp0 hp1 hp2
+   have hp : ∀ i : Fin 3, 0 < pCoordinates x i := by
+     intro i
++    -- Each fixed p coordinate is the corresponding original real parameter.
+     fin_cases i
+     · change 0 < x 0
+       linarith [hp0.1]
