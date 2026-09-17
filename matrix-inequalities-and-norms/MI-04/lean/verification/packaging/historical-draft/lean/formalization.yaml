@@ -1,0 +1,332 @@
+# yaml-language-server: $schema=../../../docs/lean/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'MI-04: universal positive-block norm implies essentially Hermitian'
+  description: Complete candidate source for the full original MI-04 implication in every positive finite
+    complex dimension, with genuine Euclidean norms, all Hermitian positive semidefinite completions and
+    an actual affine-Hermitian representation. Full verification is pending.
+  authors:
+  - George Stepaniants
+  affiliations:
+    George Stepaniants: Department of Computing and Mathematical Sciences, California Institute of Technology,
+      Pasadena, California, USA
+  responsible_maintainers:
+  - George Stepaniants
+  license: Apache-2.0
+repository:
+  role: substantive-development
+sources:
+- title: MI-04 — A universal block-norm characterization of essentially Hermitian matrices
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ce47b5630bf3680d9211131c3a43825b022c139a/matrix-inequalities-and-norms/MI-04/README.md
+  type: web-post
+  location: Full original problem statement
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: Permanent ID and all original quantifiers, complex field, genuine norms, PSD cases and affine-Hermitian
+    conclusion are preserved.
+- title: 'MI-04: a characterization of essentially Hermitian off-diagonal blocks'
+  authors:
+  - Matthew J. Colbrook
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ce47b5630bf3680d9211131c3a43825b022c139a/references/colbrook-matrix-2026-09-11/original-proofs/MI-04.tex
+  type: manuscript
+  location: Theorem 1.1, necessity implication, subsections 1–3
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: 'Original mathematical author: Matthew J. Colbrook, Department of Applied Mathematics and Theoretical
+    Physics, University of Cambridge. The stronger converse/equivalence is not a proposed formal claim.'
+- title: Eigenvalue inequalities for positive block matrices with the inradius of the numerical range
+  authors:
+  - Jean-Christophe Bourin
+  - Eun-Young Lee
+  id: https://arxiv.org/abs/2111.15180
+  type: preprint
+  location: Conjecture 3.3 as recorded by the retained canonical statement
+  relationship: background
+  author_endorsement: not-contacted
+  note: No unproved theorem from this paper is an intended assumption.
+related_formalizations:
+- id: https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof
+  relationship: other
+  note: Statement/proof separation, numerical obligations, kernel-only LeanCert and exact Comparator reproduction
+    patterns studied; no mathematical theorem imported.
+- id: https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1
+  relationship: other
+  note: Independent Challenge and proof organization studied.
+- id: https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474
+  relationship: builds-on
+  note: Genuine Euclidean matrix operators, PSD/quadratic forms, finite Rayleigh extrema, Hermitian spectral
+    theory, orthogonal joint eigenspaces and orthonormal-basis extension are the implemented foundations
+    in the candidate source; actual full acceptance pending.
+- id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/ce47b5630bf3680d9211131c3a43825b022c139a/eigenvalues-and-inverse-problems/SP-05/lean
+  relationship: other
+  note: Inspected the accepted complex positivity and spectral API usage; no SP-05 theorem imported.
+- id: https://github.com/sgstepaniants/OpenProblemsInNLA/tree/208e30d80f73ef661b1f019c7de93c70254f7e48/matrix-functions-and-stability/MF-24/lean
+  relationship: other
+  note: Reuses the explicit toEuclideanCLM complex operator-norm definition pattern; no MF-24 theorem
+    imported.
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    tool_setup: Multiple problem agents; macOS source authoring, independent nonimplementing referees,
+      and coordinator-run non-root Linux elaboration/build/Comparator. No local Lean/Lake/cache execution.
+    prompting_notes: Write all numerical obligations and definitions before proofs; obtain two independent
+      statement approvals and actual Linux elaboration; freeze the exact boundary. Keep all dimensions,
+      singular and repeated cases and full universal A/B hypothesis. Use symbolic Rayleigh bounds, exact
+      diagonal probes and a full joint-eigenspace spectral theorem. Consume LeanCert quarter-gap certification
+      in kernel mode; require independent full final source/runtime reviews and canonical Comparator with
+      no definition holes.
+  notes: AI-assisted complete candidate source by OpenAI Codex agent /root/next_inequalities. Nonimplementing
+    agents /root/next_elimination and /root/next_matrix_functions independently approved the complete
+    mathematical source, including the consumed numerical certificate. Complete actual proof compilation,
+    final source/runtime reconciliation and canonical acceptance remain pending. No human or official
+    Tau Ceti endorsement is claimed.
+status:
+  scope: For every positive finite dimension and arbitrary complex square matrix X, if every genuine Hermitian
+    positive-semidefinite block completion [A X; X* B] has complex Euclidean operator norm at most that
+    of A+B, then X is an affine complex combination of an actual Hermitian matrix and the identity. This
+    is the full original necessity implication, with the universal A/B premise, singular completions,
+    zero/scalar matrices, repeated values, and dimensions one and two retained. No converse or genericity
+    assumption is claimed. All 21 frozen declarations have candidate implementation source; full proof
+    and canonical acceptance remain pending.
+  whole_problem_verified: false
+  sorry_count: 0
+  sorry_in_definitions: 0
+  source_scan_note: No deliberate holes occur in the candidate implementation; the 21 deliberate independent
+    Challenge placeholders are excluded. This textual count is not an accepted transitive axiom report.
+  main_results:
+  - declaration: NLA.MI04.topValue_maximum
+    file: NLA/MI04/Rayleigh.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.positive_quadratic_iff
+    file: NLA/MI04/Quadratic.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.positive_norm_eq_top
+    file: NLA/MI04/Rayleigh.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.shifted_topValue
+    file: NLA/MI04/Rayleigh.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.scalar_order_iff_top
+    file: NLA/MI04/Rayleigh.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.unitary_topValue
+    file: NLA/MI04/Unitary.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.simple_peak_sandwich
+    file: NLA/MI04/UpperBound.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.simple_peak_second_order
+    file: NLA/MI04/Limit.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.pencil_isHermitian
+    file: NLA/MI04/Quadratic.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.universal_to_extreme_symmetry
+    file: NLA/MI04/BlockSymmetry.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.extreme_symmetry_scaled_unitary
+    file: NLA/MI04/ScaledSymmetry.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.weighted_magnitude_identity
+    file: NLA/MI04/WeightedProbes.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.offDiagonal_magnitude_symmetry
+    file: NLA/MI04/Probes.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.orthonormal_pair_symmetry
+    file: NLA/MI04/BasisTransport.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.pair_symmetry_normal
+    file: NLA/MI04/Normality.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.normal_unitary_diagonalization
+    file: NLA/MI04/Diagonalization.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.pair_symmetry_unitary
+    file: NLA/MI04/Unitary.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.diagonal_pair_collinearity
+    file: NLA/MI04/Geometry.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.collinear_values_affine
+    file: NLA/MI04/ScalarGeometry.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.pair_symmetry_essentially_hermitian
+    file: NLA/MI04/Conclusion.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+  - declaration: NLA.MI04.universal_positive_block_essentially_hermitian
+    file: NLA/MI04/Conclusion.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    verification_status: Complete candidate source; actual complete build, final source/runtime reconciliation
+      and canonical checks pending.
+fidelity:
+  divergences: The full original necessity implication is retained; the manuscript converse and four-way
+    equivalence are not claimed. An exact all-vector Rayleigh-quotient sandwich replaces analytic eigenvalue-branch
+    perturbation. Only diagonal probes with entries 1, 0 and 1/2 are needed. Pair symmetry is first extended
+    to arbitrary orthogonal vectors by homogeneity, so the exact sparse vectors (1,1,1) and (1,I,-1-I)
+    establish collinearity without explicit square-root normalization or cube roots of unity. The full
+    joint-eigenspace construction proves normal diagonalization, retaining multiplicities. None of these
+    changes adds a final hypothesis or changes the requested conclusion.
+review:
+  status: two complete independent mathematical source approvals; actual whole proof and canonical verification
+    pending
+  reviewers:
+  - OpenAI Codex agent /root (independent original statement referee)
+  - OpenAI Codex agent /root/next_elimination (independent statement and nonimplementing complete mathematical
+    source referee)
+  - OpenAI Codex agent /root/next_matrix_functions (nonimplementing complete mathematical source referee)
+  notes: Both independent nonimplementing referees inspected the full original target, all21 frozen contracts
+    and entire final proof closure, including the consumed LeanCert quarter-gap certificate. Exact report
+    hashes are retained in PUBLICATION-EVIDENCE.json. Final acceptance still requires actual proof compilation,
+    specific reconciliation of later repairs, and authentic Linux/Comparator/default-kernel/axiom/control
+    logs. Historical failed runs remain failed. No human peer review or official Tau Ceti endorsement
+    is claimed.
+alignment:
+  source_correspondence: SourceCorrespondence.md
+  numerical_boundary: NUMERICAL_TARGETS.md
+  proposed_statements: Challenge.lean
+  proposed_declarations:
+  - NLA.MI04.topValue_maximum
+  - NLA.MI04.positive_quadratic_iff
+  - NLA.MI04.positive_norm_eq_top
+  - NLA.MI04.shifted_topValue
+  - NLA.MI04.scalar_order_iff_top
+  - NLA.MI04.unitary_topValue
+  - NLA.MI04.simple_peak_sandwich
+  - NLA.MI04.simple_peak_second_order
+  - NLA.MI04.pencil_isHermitian
+  - NLA.MI04.universal_to_extreme_symmetry
+  - NLA.MI04.extreme_symmetry_scaled_unitary
+  - NLA.MI04.weighted_magnitude_identity
+  - NLA.MI04.offDiagonal_magnitude_symmetry
+  - NLA.MI04.orthonormal_pair_symmetry
+  - NLA.MI04.pair_symmetry_normal
+  - NLA.MI04.normal_unitary_diagonalization
+  - NLA.MI04.pair_symmetry_unitary
+  - NLA.MI04.diagonal_pair_collinearity
+  - NLA.MI04.collinear_values_affine
+  - NLA.MI04.pair_symmetry_essentially_hermitian
+  - NLA.MI04.universal_positive_block_essentially_hermitian
+  source_provenance: SOURCE-PROVENANCE.json
+  implementation_entry: Solution.lean
+  statement_freeze: STATEMENT-FREEZE.json
+  implementation_authorization: IMPLEMENTATION-AUTHORIZATION.json
+acknowledgements: Matthew J. Colbrook retains the original mathematical proof credit, with University
+  of Cambridge DAMTP affiliation. Bourin and Lee retain the conjecture credit. George Stepaniants is credited
+  for the formalization with California Institute of Technology Department of Computing and Mathematical
+  Sciences affiliation. Mathlib, LeanCert, Lean Comparator, formalization.yaml, Schiffer and Forsythe
+  contributors are acknowledged. No contact email is supplied.
+toolchain:
+  lean: leanprover/lean4:v4.33.1
+  dependency_manifest: lake-manifest.json
+  dependencies:
+    leancert: 621a43d7cf21f87872392a01e874f2f1dbddc926
+    mathlib: 0df444a360eaa60ab8c11dca51a86af692955474
+verification:
+  statement_elaboration:
+    status: actual MI04 Definitions and all21 Challenge commands succeeded; combined workflow failed only
+      unrelated MF22 draft proofs
+    run_id: 35041873518
+    commit: 5d756f75d6e90f0a391e0fc239b692c656f4c318
+    receipt_sha256: 426ea541798ebc1090948a80976bfc3d2dd448d67b6b4c444edaff17e966d5db
+    frozen_statement_count: 21
+    is_complete_problem_verification: false
+  whole_proof_build: pending
+  transitive_axioms: pending actual complete accepted report
+  default_kernel: pending
+  comparator: pending
+  sandbox_and_rejection_controls: pending canonical project run
+  canonical_source_manifest: pending immutable accepted proof commit
+  permitted_axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+  permitted_axioms_note: Acceptance policy only; no complete observed axiom closure claimed.
+  numerical_certificate:
+    declaration: NLA.MI04.quarter_gap_certificate
+    statement: 0 < 1/4 over the reals
+    trust: kernel
+    consumed_in: both actual off-peak denominator-positivity steps of the universal Rayleigh upper bound
+    subdivisions: 0
+    runtime_acceptance: pending
+  latest_completed_development_run:
+    run_id: 35046126916
+    commit: 64a04495cb03fa7496cbdc3dc72f94779ab4c340
+    conclusion: failure
+    MI04_failed_modules:
+    - Rayleigh
+    - Coordinates
+    MI04_log_sha256: 4c6880cee6100f9f91bbf2d33b38514d03f353d1e25dfd679b39500c60593942
+  coordinator_reported_current_run:
+    run_id: 35048156414
+    commit: 39736a2e9db176f6f9551ae39c8194013ac770a7
+    status_at_handoff: in_progress
+    terminal_conclusion: null
+    actual_log_review_by_draft_author: false
+  publication_configuration: Historical frozen defaultTargets is [Challenge]. Separate reviewed publication-only
+    transition to [Solution] remains pending; preserve its original frozen snapshot. Explicit lake build
+    Solution is needed meanwhile.
+  publication: This isolated documentation draft changes no source, active metadata, status, count, Git
+    state or PR.
