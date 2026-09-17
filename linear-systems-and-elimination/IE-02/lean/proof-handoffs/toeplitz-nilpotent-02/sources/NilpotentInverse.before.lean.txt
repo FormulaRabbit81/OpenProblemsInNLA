@@ -1,0 +1,58 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original mathematical and library attribution
+is retained in Definitions.lean and SourceCorrespondence.md. The two-sided geometric
+sum identities are reused from Mathlib.Algebra.Ring.GeomSum, authored by Neil Strickland.
+
+The finite inverse is proved in both multiplication orders in the matrix ring.
+No nonempty-dimension, commutative-matrix, or spectral assumption is introduced.
+-/
+import NLA.IE02.Toeplitz
+import Mathlib.Algebra.Ring.GeomSum
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+open scoped BigOperators Classical Matrix
+open Polynomial
+
+theorem nilpotent_inverse {n : ℕ} (α : ℂ) (K : Square n)
+    (hα : α ≠ 0) (hK : K ^ n = 0) :
+    (α • 1 + K) * finiteInverse α K = 1 ∧
+    finiteInverse α K * (α • 1 + K) = 1 ∧
+    (IsToeplitz K → IsToeplitz (finiteInverse α K)) := by
+  let N : Square n := -α⁻¹ • K
+  let S : Square n := ∑ j : Fin n, N ^ j.val
+  have hN : N ^ n = 0 := by
+    dsimp only [N]
+    rw [smul_pow, hK, smul_zero]
+  have hleft : (1 - N) * S = 1 := by
+    simpa only [S, Fin.sum_univ_eq_sum_range, hN, sub_zero] using mul_neg_geom_sum N n
+  have hright : S * (1 - N) = 1 := by
+    simpa only [S, Fin.sum_univ_eq_sum_range, hN, sub_zero] using geom_sum_mul_neg N n
+  have hscale : α • (1 - N) = α • 1 + K := by
+    simp [N, smul_sub, smul_smul, hα]
+  refine ⟨?_, ?_, ?_⟩
+  · rw [← hscale]
+    -- finiteInverse is exactly the frozen scalar multiple of this finite sum.
+    change (α • (1 - N)) * (α⁻¹ • S) = 1
+    rw [smul_mul_smul_comm, mul_inv_cancel₀ hα, one_smul, hleft]
+  · rw [← hscale]
+    change (α⁻¹ • S) * (α • (1 - N)) = 1
+    rw [smul_mul_smul_comm, inv_mul_cancel₀ hα, one_smul, hright]
+  · rintro ⟨p, rfl⟩
+    refine ⟨α⁻¹ • ∑ j : Fin n, (-α⁻¹ • p) ^ j.val, ?_⟩
+    -- The right-hand matrix is the image of an explicit polynomial under the
+    -- proved Toeplitz algebra hom; finiteInverse keeps its original definition.
+    change α⁻¹ • (∑ j : Fin n, (-α⁻¹ • toeplitz n p) ^ j.val) =
+      (toeplitzAlgHom n) (α⁻¹ • ∑ j : Fin n, (-α⁻¹ • p) ^ j.val)
+    simp only [map_smul, map_sum, map_pow]
+
+#print axioms nilpotent_inverse
+#assert_trust kernel nilpotent_inverse
+
+end
+end NLA.IE02

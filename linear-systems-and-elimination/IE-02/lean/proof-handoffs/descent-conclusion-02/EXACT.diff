@@ -1,0 +1,20 @@
+--- before
++++ after
+@@ -104,6 +104,8 @@
+     exact hxK
+   apply (sq_lt_sq₀ (norm_nonneg (euclideanCLM _))
+     (norm_nonneg (euclideanCLM T))).mp
++  -- Restore the frozen operatorNorm wrapper after the squared-norm equivalence.
++  change operatorNorm (T - (emptyStep D γ : ℂ) • D) ^ 2 < operatorNorm T ^ 2
+   rw [← hat]
+   exact high_form_decrease T D x hx _ γ hs.1 hs.2.2.1 hform
+ 
+@@ -118,6 +120,8 @@
+     (T - (gapStep T D γ β : ℂ) • D)).2.2.2
+   apply (sq_lt_sq₀ (norm_nonneg (euclideanCLM _))
+     (norm_nonneg (euclideanCLM T))).mp
++  -- Restore the frozen operatorNorm wrapper after the squared-norm equivalence.
++  change operatorNorm (T - (gapStep T D γ β : ℂ) • D) ^ 2 < operatorNorm T ^ 2
+   rw [← hat]
+   by_cases hc : x ∈ descentComplement T D γ
+   · exact low_form_decrease T D x hx _ β hs.1 hs.2.1 hs.2.2.2 (hgap x hc)

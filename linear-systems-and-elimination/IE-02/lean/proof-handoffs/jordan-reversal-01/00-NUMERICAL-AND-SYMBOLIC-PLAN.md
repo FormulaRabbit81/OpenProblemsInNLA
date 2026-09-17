@@ -1,0 +1,11 @@
+# Exact Jordan reversal and polynomial transport, before implementation
+
+Root author plan for the two already frozen statements jordan_reversal and jordan_polynomial_transport. They quantify over every n (including zero), every complex lam and arbitrary complex polynomial p, without degree or nonzero-lam assumptions. Do not edit Definitions, Challenge, original numerical obligations or canonical target.
+
+No new numerical estimate, interval, approximation, enumeration or spectral computation is required. The reversal permutation i -> i.rev is an involution. Finite matrix multiplication selects exactly one entry, giving (R*A)[i,j]=A[i.rev,j] and (A*R)[i,j]=A[i,j.rev]. Prove R*=R, R*R=I, and R*upperShift*R=shift via the exact adjacent-index condition; natural-subtraction boundary arithmetic uses the actual Fin bounds. Scalar identity matrices commute with R. This gives the exact upper/lower Jordan conjugacy.
+
+The actual Euclidean matrix action of R equals frozen reverseVector. Its norm preservation comes from the pinned LinearIsometryEquiv.piLpCongrLeft over Fin.revPerm; no coordinate-norm computation is needed. Involution follows from Fin.rev_rev. These facts include empty Fin0.
+
+For arbitrary polynomial transport, first derive J*R=R*L from R*J*R=L and R*R=I. Induct on the exponent for A^k*R=R*B^k, then polynomial additive/monomial induction with aeval_monomial and scalar algebraMap=c*I. Preserve multiplication order throughout; matrix multiplication is not commutative. Derive actual vector intertwining using Matrix.toLpLin_mul_same, not a replacement evaluation definition. Obtain both continuous operator-norm inequalities by applying the intertwining to x and to reverseVector x and using its genuine isometry and involution. No norm-attaining vector or nonempty dimension is needed.
+
+Sources will be JordanReversal.lean and JordanTransport.lean. Original George Stepaniants Caltech CMS credit and prior mathematical/library attribution retained. Default kernel LeanCert trust, standard-three-axiom assertions, one local compiler/thread4096MiB, no native computations. This is source-author reasoning only; independent proof reviews and final Linux Comparator remain pending. No whole-problem count added.

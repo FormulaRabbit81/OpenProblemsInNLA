@@ -1,0 +1,407 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original mathematical and library attribution
+is retained in Definitions.lean and SourceCorrespondence.md.
+
+Independent statement proposal only: every `sorry` below is an intentional
+Challenge specification. No Solution exists and no proof module may import this
+file. Two nonauthor reviews, actual local elaboration, and root freeze are pending.
+-/
+import NLA.IE02.Definitions
+import LeanCert.Tactic
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+open scoped BigOperators Matrix
+open Polynomial
+
+theorem coefficient_roundtrip (n : ℕ) :
+    (∀ x : H n, coeffVector n (vectorPolynomial x) = x ∧
+      DegreeLT (vectorPolynomial x) n) ∧
+    (∀ p : Poly, DegreeLT p n → vectorPolynomial (coeffVector n p) = p) := by
+  sorry
+
+theorem coefficient_inner_product (n N : ℕ) (p q : Poly) (hp : DegreeLE p N) :
+    ‖coeffVector n p‖ ^ 2 = ∑ i : Fin n, ‖p.coeff i.val‖ ^ 2 ∧
+    (conjReflect N p * q).coeff N =
+      inner ℂ (coeffVector (N + 1) p) (coeffVector (N + 1) q) := by
+  sorry
+
+theorem toeplitz_action {n : ℕ} (p : Poly) (x : H n) :
+    euclideanLin (toeplitz n p) x = coeffVector n (p * vectorPolynomial x) := by
+  sorry
+
+theorem toeplitz_algebra (n : ℕ) (p q : Poly) (c : ℂ) :
+    toeplitz n (1 : Poly) = 1 ∧
+    toeplitz n (p + q) = toeplitz n p + toeplitz n q ∧
+    toeplitz n (p * q) = toeplitz n p * toeplitz n q ∧
+    toeplitz n (C c * p) = c • toeplitz n p ∧
+    shift n ^ n = 0 ∧ polyEval p (shift n) = toeplitz n p := by
+  sorry
+
+theorem nilpotent_inverse {n : ℕ} (α : ℂ) (K : Square n)
+    (hα : α ≠ 0) (hK : K ^ n = 0) :
+    (α • 1 + K) * finiteInverse α K = 1 ∧
+    finiteInverse α K * (α • 1 + K) = 1 ∧
+    (IsToeplitz K → IsToeplitz (finiteInverse α K)) := by
+  sorry
+
+theorem euclidean_norm_attainment {n : ℕ} (hn : 1 ≤ n) (A : Square n) :
+    0 ≤ operatorNorm A ∧ (operatorNorm A = 0 ↔ A = 0) ∧
+    (∀ x : H n, ‖euclideanLin A x‖ ≤ operatorNorm A * ‖x‖) ∧
+    ∃ x : H n, x ∈ unitSphere n ∧ ‖euclideanLin A x‖ = operatorNorm A := by
+  sorry
+
+theorem maximal_space_norm {n : ℕ} (A : Square n) :
+    IsClosed (maximalSpace A : Set (H n)) ∧
+    ∀ x : H n, x ∈ maximalSpace A ↔
+      ‖euclideanLin A x‖ = operatorNorm A * ‖x‖ := by
+  sorry
+
+theorem schur_diagonal_bound {n : ℕ} (hn : 1 ≤ n) (p : Poly)
+    (hU : operatorNorm (toeplitz n p) ≤ 1) : ‖p.coeff 0‖ ≤ 1 := by
+  sorry
+
+theorem schur_scalar_endpoint {n : ℕ} (hn : 1 ≤ n) (p : Poly)
+    (hU : operatorNorm (toeplitz n p) = 1) (hc : ‖p.coeff 0‖ = 1) :
+    toeplitz n p = p.coeff 0 • 1 ∧
+    SchurPair n (toeplitz n p) 0 (C (p.coeff 0)) 1 := by
+  sorry
+
+theorem schur_dimension_one (p : Poly) :
+    operatorNorm (toeplitz 1 p) = ‖p.coeff 0‖ := by
+  sorry
+
+theorem schur_defect_identity {n : ℕ} (U : Square n) (c : ℂ) :
+    (schurM U c).conjTranspose * schurM U c -
+      (U - c • 1).conjTranspose * (U - c • 1) =
+      (((1 - ‖c‖ ^ 2 : ℝ) : ℂ) • (1 - U.conjTranspose * U)) := by
+  sorry
+
+theorem schur_strict_reduction {n : ℕ} (p : Poly)
+    (hU : operatorNorm (toeplitz (n + 2) p) = 1) (hc : ‖p.coeff 0‖ < 1) :
+    ∃ B : Square (n + 2), IsToeplitz B ∧
+      schurM (toeplitz (n + 2) p) (p.coeff 0) * B = 1 ∧
+      B * schurM (toeplitz (n + 2) p) (p.coeff 0) = 1 ∧
+      IsToeplitz (schurZ (toeplitz (n + 2) p) (p.coeff 0) B) ∧
+      (∀ i, schurZ (toeplitz (n + 2) p) (p.coeff 0) B i i = 0) ∧
+      operatorNorm (schurZ (toeplitz (n + 2) p) (p.coeff 0) B) = 1 ∧
+      operatorNorm (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) = 1 ∧
+      (∀ x : H (n + 2),
+        ‖euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x‖ ^ 2 -
+          ‖euclideanLin (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)
+            (euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x)‖ ^ 2 =
+          (1 - ‖p.coeff 0‖ ^ 2) * (‖x‖ ^ 2 - ‖euclideanLin (toeplitz (n + 2) p) x‖ ^ 2)) ∧
+      (∀ x : H (n + 2), x ∈ maximalSpace (toeplitz (n + 2) p) ↔
+        euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x ∈
+          maximalSpace (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) := by
+  sorry
+
+theorem schur_active_block {n : ℕ} (Z : Square (n + 1)) (hZ : IsToeplitz Z)
+    (hdiag : ∀ i, Z i i = 0) (hcon : operatorNorm Z ≤ 1) :
+    IsToeplitz (activeBlock Z) ∧ operatorNorm Z = operatorNorm (activeBlock Z) ∧
+    ∀ (g : H n) (η : ℂ),
+      euclideanLin Z (appendVector g η) = prependZero (euclideanLin (activeBlock Z) g) ∧
+      ‖appendVector g η‖ ^ 2 = ‖g‖ ^ 2 + ‖η‖ ^ 2 ∧
+      (‖euclideanLin Z (appendVector g η)‖ = ‖appendVector g η‖ ↔
+        η = 0 ∧ ‖euclideanLin (activeBlock Z) g‖ = ‖g‖) := by
+  sorry
+
+theorem schur_pair_step {n d : ℕ} (p a b : Poly) (B : Square (n + 2))
+    (hU : operatorNorm (toeplitz (n + 2) p) = 1) (hc : ‖p.coeff 0‖ < 1)
+    (hleft : schurM (toeplitz (n + 2) p) (p.coeff 0) * B = 1)
+    (hright : B * schurM (toeplitz (n + 2) p) (p.coeff 0) = 1)
+    (hV : operatorNorm (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) = 1)
+    (hpair : SchurPair (n + 1)
+      (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) d a b) :
+    SchurPair (n + 2) (toeplitz (n + 2) p) (d + 1)
+      (schurNumerator (p.coeff 0) a b) (schurDenominator (p.coeff 0) a b) := by
+  sorry
+
+theorem finite_schur_boundary {n : ℕ} (hn : 1 ≤ n) (U : Square n)
+    (hU : IsToeplitz U) (hnorm : operatorNorm U = 1) :
+    ∃ (d : ℕ) (a b : Poly), SchurPair n U d a b := by
+  sorry
+
+theorem scaled_maximal_factorization {n : ℕ} (hn : 1 ≤ n) (T : Square n)
+    (hT : IsToeplitz T) (hne : T ≠ 0) :
+    ∃ (d : ℕ) (a b : Poly),
+      SchurPair n ((operatorNorm T : ℂ)⁻¹ • T) d a b ∧
+      (∀ x : H n, x ∈ maximalSpace T ↔
+        ∃ h : Poly, DegreeLE h (n - 1 - d) ∧ x = coeffVector n (b * h)) ∧
+      (∀ h : Poly, DegreeLE h (n - 1 - d) →
+        euclideanLin T (coeffVector n (b * h)) =
+          (operatorNorm T : ℂ) • coeffVector n (a * h)) := by
+  sorry
+
+theorem reflection_algebra (m : ℕ) (p q : Poly) (c : ℂ)
+    (hp : DegreeLE p m) (hq : DegreeLE q m) :
+    DegreeLE (conjReflect m p) m ∧ conjReflect m (conjReflect m p) = p ∧
+    conjReflect m (p + q) = conjReflect m p + conjReflect m q ∧
+    conjReflect m (C c * p) = C (star c) * conjReflect m p ∧
+    (conjReflect m p).coeff m = star (p.coeff 0) := by
+  sorry
+
+theorem reflection_product (d m : ℕ) (p q : Poly)
+    (hp : DegreeLE p d) (hq : DegreeLE q m) :
+    conjReflect (d + m) (p * q) = conjReflect d p * conjReflect m q := by
+  sorry
+
+theorem reflection_evaluation (m : ℕ) (p : Poly) (hp : DegreeLE p m)
+    (z : ℂ) (hz : z ≠ 0) :
+    (conjReflect m p).eval z = z ^ m * star (p.eval ((star z)⁻¹)) ∧
+    (‖z‖ = 1 → (conjReflect m p).eval z = z ^ m * star (p.eval z)) := by
+  sorry
+
+theorem circle_polynomial_uniqueness (p q : Poly) :
+    Set.Infinite {z : ℂ | ‖z‖ = 1} ∧
+    ((∀ z : ℂ, ‖z‖ = 1 → p.eval z = q.eval z) → p = q) := by
+  sorry
+
+theorem weighted_fold {l : ℕ} (m : ℕ) (q : Fin l → Poly) (w : Fin l → ℝ)
+    (hq : ∀ j, DegreeLE (q j) m) (hw : ∀ j, 0 ≤ w j) :
+    (∀ j, DegreeLE (weightedFold (w j) (q j)) m) ∧
+    ∀ z : ℂ, sumSquares (fun j => weightedFold (w j) (q j)) z =
+      ∑ j, w j * ‖(q j).eval z‖ ^ 2 := by
+  sorry
+
+theorem common_circle_root_reduction {l : ℕ} (m : ℕ) (q : Fin l → Poly)
+    (hq : ∀ j, DegreeLE (q j) m) (hne : ∃ j, q j ≠ 0)
+    (z : ℂ) (hz : ‖z‖ = 1) (hroot : ∀ j, (q j).eval z = 0) :
+    1 ≤ m ∧ ∃ r : Fin l → Poly,
+      ∀ j, q j = (X - C z) * r j ∧ DegreeLE (r j) (m - 1) := by
+  sorry
+
+theorem fourier_semantics {l : ℕ} (m : ℕ) (q : Fin l → Poly)
+    (hq : ∀ j, DegreeLE (q j) m) :
+    (∀ r : ℤ, fourierCoeff m q (-r) = star (fourierCoeff m q r)) ∧
+    fourierCoeff m q 0 = ((∑ j, ∑ i : Fin (m + 1), ‖(q j).coeff i.val‖ ^ 2 : ℝ) : ℂ) ∧
+    (∀ z : ℂ, ‖z‖ = 1 → (sumSquares q z : ℂ) =
+      ∑ r : Fin (2 * m + 1),
+        fourierCoeff m q ((r.val : ℤ) - (m : ℤ)) * z ^ ((r.val : ℤ) - (m : ℤ))) := by
+  sorry
+
+theorem effective_factor_polynomial {l : ℕ} (m : ℕ) (q : Fin l → Poly)
+    (hq : ∀ j, DegreeLE (q j) m)
+    (hno : ∀ z : ℂ, ‖z‖ = 1 → ∃ j, (q j).eval z ≠ 0) :
+    ∃ ell : ℕ, ell ≤ m ∧
+      (effectivePolynomial m ell q).degree = (2 * ell : WithBot ℕ) ∧
+      (effectivePolynomial m ell q).coeff 0 ≠ 0 ∧
+      conjReflect (2 * ell) (effectivePolynomial m ell q) = effectivePolynomial m ell q ∧
+      (∀ z : ℂ, ‖z‖ = 1 →
+        (effectivePolynomial m ell q).eval z = z ^ ell * (sumSquares q z : ℂ) ∧
+        (effectivePolynomial m ell q).eval z ≠ 0) := by
+  sorry
+
+theorem reciprocal_root_pairing (ell : ℕ) (P : Poly)
+    (hdeg : P.degree = (2 * ell : WithBot ℕ)) (hzero : P.coeff 0 ≠ 0)
+    (href : conjReflect (2 * ell) P = P)
+    (hcircle : ∀ z : ℂ, ‖z‖ = 1 → P.eval z ≠ 0) :
+    P.roots = P.roots.map reciprocalConj ∧
+    P.roots = insideRoots P + (insideRoots P).map reciprocalConj ∧
+    (insideRoots P).card = ell ∧ (∀ z ∈ P.roots, z ≠ 0) := by
+  sorry
+
+theorem reciprocal_inside_factor (ell : ℕ) (P : Poly)
+    (hdeg : P.degree = (2 * ell : WithBot ℕ)) (hzero : P.coeff 0 ≠ 0)
+    (href : conjReflect (2 * ell) P = P)
+    (hcircle : ∀ z : ℂ, ‖z‖ = 1 → P.eval z ≠ 0) :
+    (rootProduct (insideRoots P)).degree = (ell : WithBot ℕ) ∧
+    (rootProduct (insideRoots P)).eval 0 ≠ 0 ∧
+    (∀ z : ℂ, ‖z‖ = 1 → (rootProduct (insideRoots P)).eval z ≠ 0) ∧
+    ∃ κ : ℂ, κ ≠ 0 ∧ P = C κ *
+      (rootProduct (insideRoots P) * conjReflect ell (rootProduct (insideRoots P))) := by
+  sorry
+
+theorem strict_scalar_factorization {l : ℕ} (m : ℕ) (q : Fin l → Poly)
+    (hq : ∀ j, DegreeLE (q j) m)
+    (hno : ∀ z : ℂ, ‖z‖ = 1 → ∃ j, (q j).eval z ≠ 0) :
+    ∃ h : Poly, DegreeLE h m ∧
+      ∀ z : ℂ, ‖z‖ = 1 → ‖h.eval z‖ ^ 2 = sumSquares q z := by
+  sorry
+
+theorem weighted_scalar_factorization {l : ℕ} (m : ℕ) (q : Fin l → Poly)
+    (w : Fin l → ℝ) (hq : ∀ j, DegreeLE (q j) m) (hw : ∀ j, 0 ≤ w j) :
+    ∃ h : Poly, DegreeLE h m ∧
+      (∀ z : ℂ, ‖z‖ = 1 → ‖h.eval z‖ ^ 2 = ∑ j, w j * ‖(q j).eval z‖ ^ 2) ∧
+      h * conjReflect m h = ∑ j, C (w j : ℂ) * (q j * conjReflect m (q j)) := by
+  sorry
+
+theorem weighted_coefficient_preservation {l k : ℕ} (d m : ℕ)
+    (a b h : Poly) (q : Fin l → Poly) (w : Fin l → ℝ) (r : Fin k → Poly)
+    (ha : DegreeLE a d) (hb : DegreeLE b d) (hh : DegreeLE h m)
+    (hq : ∀ j, DegreeLE (q j) m)
+    (hfactor : h * conjReflect m h = ∑ j, C (w j : ℂ) * (q j * conjReflect m (q j))) :
+    ‖coeffVector (d + m + 1) (b * h)‖ ^ 2 =
+      ∑ j, w j * ‖coeffVector (d + m + 1) (b * q j)‖ ^ 2 ∧
+    ∀ i, inner ℂ (coeffVector (d + m + 1) (a * h))
+        (euclideanLin (toeplitz (d + m + 1) (r i)) (coeffVector (d + m + 1) (b * h))) =
+      ∑ j, (w j : ℂ) * inner ℂ (coeffVector (d + m + 1) (a * q j))
+        (euclideanLin (toeplitz (d + m + 1) (r i)) (coeffVector (d + m + 1) (b * q j))) := by
+  sorry
+
+theorem maximal_complex_preservation {n k l : ℕ} (hn : 1 ≤ n)
+    (T : Square n) (R : Fin k → Square n) (hT : IsToeplitz T) (hne : T ≠ 0)
+    (hR : ∀ j, IsToeplitz (R j)) (f : Fin l → H n) (w : Fin l → ℝ)
+    (hf : ∀ j, f j ∈ unitMaximal T) (hw : ∀ j, 0 ≤ w j) (hsum : ∑ j, w j = 1) :
+    ∃ x : H n, x ∈ unitMaximal T ∧
+      ∀ i, inner ℂ (euclideanLin T x) (euclideanLin (R i) x) =
+        ∑ j, (w j : ℂ) * inner ℂ (euclideanLin T (f j)) (euclideanLin (R i) (f j)) := by
+  sorry
+
+theorem gradient_compact_convex {n k : ℕ} (hn : 1 ≤ n)
+    (T : Square n) (R : Fin k → Square n) (hT : IsToeplitz T) (hne : T ≠ 0)
+    (hR : ∀ j, IsToeplitz (R j)) :
+    (gradientImage T R).Nonempty ∧ IsCompact (gradientImage T R) ∧
+      Convex ℝ (gradientImage T R) := by
+  sorry
+
+theorem real_separator_complex_form {k : ℕ} (ell : H k →L[ℝ] ℝ) :
+    ∀ z : H k, ell z = (∑ j, separatorCoefficients ell j * z j).re := by
+  sorry
+
+theorem gradient_strict_separation {n k : ℕ} (hn : 1 ≤ n)
+    (T : Square n) (R : Fin k → Square n) (hT : IsToeplitz T) (hne : T ≠ 0)
+    (hR : ∀ j, IsToeplitz (R j)) (hzero : 0 ∉ gradientImage T R) :
+    ∃ (c : Fin k → ℂ) (γ : ℝ), 0 < γ ∧
+      ∀ x ∈ unitMaximal T, γ ≤ descentForm T (directionSum R c) x := by
+  sorry
+
+theorem half_certificate : (0 : ℝ) < 1 / 2 := by
+  sorry
+
+theorem descent_step_bounds {n : ℕ} (T D : Square n) (γ β : ℝ)
+    (hγ : 0 < γ) (hβ : 0 < β) :
+    0 < emptyStep D γ ∧ emptyStep D γ ≤ 1 ∧
+    emptyStep D γ ≤ γ / (2 * (descentL D + 1)) ∧
+    0 < gapStep T D γ β ∧ gapStep T D γ β ≤ 1 ∧
+    gapStep T D γ β ≤ γ / (2 * (descentL D + 1)) ∧
+    gapStep T D γ β ≤ β / (2 * (descentC T D + 1)) := by
+  sorry
+
+theorem descent_quadratic_expansion {n : ℕ} (T D : Square n) (ε : ℝ) (x : H n) :
+    ‖euclideanLin (T - (ε : ℂ) • D) x‖ ^ 2 =
+      ‖euclideanLin T x‖ ^ 2 - 2 * ε * descentForm T D x +
+        ε ^ 2 * ‖euclideanLin D x‖ ^ 2 := by
+  sorry
+
+theorem descent_complement_gap {n : ℕ} (hn : 1 ≤ n) (T D : Square n)
+    (hne : T ≠ 0) (γ : ℝ) (hγ : 0 < γ)
+    (hpos : ∀ x ∈ unitMaximal T, γ ≤ descentForm T D x)
+    (hK : (descentComplement T D γ).Nonempty) :
+    ∃ β : ℝ, 0 < β ∧ ∀ x ∈ descentComplement T D γ,
+      ‖euclideanLin T x‖ ^ 2 ≤ operatorNorm T ^ 2 - β := by
+  sorry
+
+theorem descent_empty_complement {n : ℕ} (hn : 1 ≤ n) (T D : Square n)
+    (hne : T ≠ 0) (γ : ℝ) (hγ : 0 < γ) (hK : descentComplement T D γ = ∅) :
+    operatorNorm (T - (emptyStep D γ : ℂ) • D) < operatorNorm T := by
+  sorry
+
+theorem descent_nonempty_complement {n : ℕ} (hn : 1 ≤ n) (T D : Square n)
+    (hne : T ≠ 0) (γ β : ℝ) (hγ : 0 < γ) (hβ : 0 < β)
+    (hK : (descentComplement T D γ).Nonempty)
+    (hgap : ∀ x ∈ descentComplement T D γ,
+      ‖euclideanLin T x‖ ^ 2 ≤ operatorNorm T ^ 2 - β) :
+    operatorNorm (T - (gapStep T D γ β : ℂ) • D) < operatorNorm T := by
+  sorry
+
+theorem positive_gradient_descent {n : ℕ} (hn : 1 ≤ n) (T D : Square n)
+    (hne : T ≠ 0) (γ : ℝ) (hγ : 0 < γ)
+    (hpos : ∀ x ∈ unitMaximal T, γ ≤ descentForm T D x) :
+    ∃ ε : ℝ, 0 < ε ∧ operatorNorm (T - (ε : ℂ) • D) < operatorNorm T := by
+  sorry
+
+theorem minimizer_orthogonality {n k : ℕ} (hn : 1 ≤ n)
+    (T : Square n) (R : Fin k → Square n) (hT : IsToeplitz T) (hne : T ≠ 0)
+    (hR : ∀ j, IsToeplitz (R j))
+    (hmin : ∀ c : Fin k → ℂ, operatorNorm T ≤ operatorNorm (T + directionSum R c)) :
+    ∃ x : H n, x ∈ unitMaximal T ∧
+      ∀ j, inner ℂ (euclideanLin T x) (euclideanLin (R j) x) = 0 := by
+  sorry
+
+theorem affine_operator_minimum {n k : ℕ} (Y : Square n) (R : Fin k → Square n) :
+    ∃ c : Fin k → ℂ, operatorNorm (affineResidual Y R c) = affineIdeal Y R ∧
+      ∀ d : Fin k → ℂ, operatorNorm (affineResidual Y R c) ≤ operatorNorm (affineResidual Y R d) := by
+  sorry
+
+theorem affine_vector_minimum {n k : ℕ} (Y : Square n) (R : Fin k → Square n) (x : H n) :
+    ∃ c : Fin k → ℂ, ‖euclideanLin (affineResidual Y R c) x‖ = affineInner Y R x ∧
+      ∀ d : Fin k → ℂ, ‖euclideanLin (affineResidual Y R c) x‖ ≤
+        ‖euclideanLin (affineResidual Y R d) x‖ := by
+  sorry
+
+theorem affine_minimax_attained {n k : ℕ} (hn : 1 ≤ n)
+    (Y : Square n) (R : Fin k → Square n) (hY : IsToeplitz Y) (hR : ∀ j, IsToeplitz (R j)) :
+    affineWorst Y R = affineIdeal Y R ∧
+    (∀ x ∈ unitSphere n, ∃ c : Fin k → ℂ,
+      ‖euclideanLin (affineResidual Y R c) x‖ = affineInner Y R x) ∧
+    ∃ (c : Fin k → ℂ) (x : H n), x ∈ unitSphere n ∧
+      operatorNorm (affineResidual Y R c) = affineIdeal Y R ∧
+      affineInner Y R x = affineWorst Y R ∧
+      ‖euclideanLin (affineResidual Y R c) x‖ = operatorNorm (affineResidual Y R c) ∧
+      (∀ d : Fin k → ℂ, operatorNorm (affineResidual Y R c) ≤ operatorNorm (affineResidual Y R d)) ∧
+      (∀ d : Fin k → ℂ, ‖euclideanLin (affineResidual Y R c) x‖ ≤
+        ‖euclideanLin (affineResidual Y R d) x‖) ∧
+      (∀ z ∈ unitSphere n, affineInner Y R z ≤ affineInner Y R x) := by
+  sorry
+
+theorem jordan_reversal (n : ℕ) (lam : ℂ) :
+    (reversal n).conjTranspose = reversal n ∧ reversal n * reversal n = 1 ∧
+    reversal n * jordan n lam * (reversal n).conjTranspose = lowerJordan n lam ∧
+    (∀ x : H n, euclideanLin (reversal n) x = reverseVector x ∧ ‖reverseVector x‖ = ‖x‖ ∧
+      reverseVector (reverseVector x) = x) := by
+  sorry
+
+theorem jordan_direction_toeplitz (n k : ℕ) (lam : ℂ) :
+    IsToeplitz (1 : Square n) ∧ ∀ j, IsToeplitz (jordanDirections n k lam j) := by
+  sorry
+
+theorem normalized_polynomial_residuals (n k : ℕ) (lam : ℂ) :
+    (∀ p : Poly, Admissible k p → ∃ c : Fin k → ℂ,
+      polyEval p (lowerJordan n lam) = affineResidual 1 (jordanDirections n k lam) c) ∧
+    (∀ c : Fin k → ℂ, ∃ p : Poly, Admissible k p ∧
+      polyEval p (lowerJordan n lam) = affineResidual 1 (jordanDirections n k lam) c) := by
+  sorry
+
+theorem jordan_polynomial_transport (n : ℕ) (lam : ℂ) (p : Poly) :
+    polyEval p (jordan n lam) * reversal n = reversal n * polyEval p (lowerJordan n lam) ∧
+    operatorNorm (polyEval p (jordan n lam)) = operatorNorm (polyEval p (lowerJordan n lam)) ∧
+    (∀ x : H n, euclideanLin (polyEval p (jordan n lam)) (reverseVector x) =
+      reverseVector (euclideanLin (polyEval p (lowerJordan n lam)) x)) := by
+  sorry
+
+theorem gmres_extrema_semantics {n : ℕ} (A : Square n) (k : ℕ) :
+    (∃ p : Poly, Admissible k p ∧ operatorNorm (polyEval p A) = idealGMRES A k ∧
+      ∀ q : Poly, Admissible k q → operatorNorm (polyEval p A) ≤ operatorNorm (polyEval q A)) ∧
+    (∀ x : H n, ∃ p : Poly, Admissible k p ∧
+      ‖euclideanLin (polyEval p A) x‖ = gmresInner A k x ∧
+      ∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p A) x‖ ≤
+        ‖euclideanLin (polyEval q A) x‖) ∧
+    (∀ x ∈ unitSphere n, 0 ≤ gmresInner A k x ∧ gmresInner A k x ≤ idealGMRES A k) := by
+  sorry
+
+theorem canonical_jordan_minimax (n k : ℕ) (lam : ℂ)
+    (hn : 2 ≤ n) (hlam : lam ≠ 0) (hk : 1 ≤ k) (hkn : k < n) :
+    worstGMRES (jordan n lam) k = idealGMRES (jordan n lam) k ∧
+    (∀ x ∈ unitSphere n, ∃ p : Poly, Admissible k p ∧
+      ‖euclideanLin (polyEval p (jordan n lam)) x‖ = gmresInner (jordan n lam) k x ∧
+      ∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p (jordan n lam)) x‖ ≤
+        ‖euclideanLin (polyEval q (jordan n lam)) x‖) ∧
+    ∃ (p : Poly) (x : H n), Admissible k p ∧ x ∈ unitSphere n ∧
+      operatorNorm (polyEval p (jordan n lam)) = idealGMRES (jordan n lam) k ∧
+      ‖euclideanLin (polyEval p (jordan n lam)) x‖ = operatorNorm (polyEval p (jordan n lam)) ∧
+      gmresInner (jordan n lam) k x = worstGMRES (jordan n lam) k ∧
+      (∀ q : Poly, Admissible k q →
+        operatorNorm (polyEval p (jordan n lam)) ≤ operatorNorm (polyEval q (jordan n lam))) ∧
+      (∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p (jordan n lam)) x‖ ≤
+        ‖euclideanLin (polyEval q (jordan n lam)) x‖) ∧
+      (∀ z ∈ unitSphere n, gmresInner (jordan n lam) k z ≤ gmresInner (jordan n lam) k x) := by
+  sorry
+
+end
+end NLA.IE02

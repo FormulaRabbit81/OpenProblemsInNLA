@@ -1,0 +1,50 @@
+--- before/SchurActiveBlock.lean
++++ after/SchurActiveBlock.lean
+@@ -50,6 +50,24 @@
+   exact (congrFun (Fin.snoc_init_self (α := fun _ : Fin (n + 1) => ℂ)
+     (q := fun j : Fin (n + 1) => x j)) i).symm
+ 
++/-- The zero constant coefficient identifies the active block once for both Schur uses. -/
++theorem activeBlock_toeplitz_divX (n : ℕ) (q : Poly) (hq : q.coeff 0 = 0) :
++    activeBlock (toeplitz (n + 1) q) = toeplitz n q.divX := by
++  ext i j
++  simp only [activeBlock, toeplitz, Fin.val_succ, Fin.val_castSucc,
++    Polynomial.coeff_divX]
++  by_cases hji : j.val ≤ i.val
++  · have hji' : j.val ≤ i.val + 1 := by omega
++    rw [if_pos hji', if_pos hji]
++    congr 1
++    omega
++  · rw [if_neg hji]
++    by_cases hji' : j.val ≤ i.val + 1
++    · rw [if_pos hji']
++      have heq : i.val + 1 - j.val = 0 := by omega
++      rw [heq, hq]
++    · rw [if_neg hji']
++
+ theorem schur_active_block {n : ℕ} (Z : Square (n + 1)) (hZ : IsToeplitz Z)
+     (hdiag : ∀ i, Z i i = 0) (hcon : operatorNorm Z ≤ 1) :
+     IsToeplitz (activeBlock Z) ∧ operatorNorm Z = operatorNorm (activeBlock Z) ∧
+@@ -62,21 +80,7 @@
+   let V : Square n := activeBlock (toeplitz (n + 1) p)
+   have hp0 : p.coeff 0 = 0 := by
+     simpa [toeplitz] using hdiag (0 : Fin (n + 1))
+-  have hblock : V = toeplitz n p.divX := by
+-    ext i j
+-    simp only [V, activeBlock, toeplitz, Fin.val_succ, Fin.val_castSucc,
+-      Polynomial.coeff_divX]
+-    by_cases hji : j.val ≤ i.val
+-    · have hji' : j.val ≤ i.val + 1 := by omega
+-      rw [if_pos hji', if_pos hji]
+-      congr 1
+-      omega
+-    · rw [if_neg hji]
+-      by_cases hji' : j.val ≤ i.val + 1
+-      · rw [if_pos hji']
+-        have heq : i.val + 1 - j.val = 0 := by omega
+-        rw [heq, hp0]
+-      · rw [if_neg hji']
++  have hblock : V = toeplitz n p.divX := activeBlock_toeplitz_divX n p hp0
+   have hrow (j : Fin (n + 1)) : toeplitz (n + 1) p 0 j = 0 := by
+     simp [toeplitz, hp0]
+   have hlast (i : Fin (n + 1)) : toeplitz (n + 1) p i (Fin.last n) = 0 := by

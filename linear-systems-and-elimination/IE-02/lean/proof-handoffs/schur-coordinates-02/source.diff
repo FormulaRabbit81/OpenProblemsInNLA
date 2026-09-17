@@ -1,0 +1,43 @@
+--- before/SchurCoordinates.lean
++++ after/SchurCoordinates.lean
+@@ -39,16 +39,16 @@
+   ext i j
+   simp only [toeplitz]
+   by_cases hji : j.val ≤ i.val
+-  · rw [if_pos hji]
++  · simp only [if_pos hji]
+     cases he : i.val - j.val with
+-    | zero => simp only [he, Polynomial.coeff_X_mul_zero]
++    | zero => simp only [Polynomial.coeff_X_mul_zero]
+     | succ k =>
+       have hk : k < n := by omega
+       have hn : 0 < n := by omega
+       have heq := congrArg (fun A : Square n => A ⟨k, hk⟩ ⟨0, hn⟩) h
+-      rw [he, Polynomial.coeff_X_mul, Polynomial.coeff_X_mul]
++      rw [Polynomial.coeff_X_mul, Polynomial.coeff_X_mul]
+       simpa only [toeplitz, Nat.zero_le, if_true, Nat.sub_zero] using heq
+-  · rw [if_neg hji]
++  · simp only [if_neg hji]
+ 
+ theorem schur_lift_interpolation {n : ℕ} (Z : Square (n + 1)) (a b : Poly)
+     (hZ : IsToeplitz Z) (hdiag : ∀ i, Z i i = 0)
+@@ -65,7 +65,9 @@
+   calc
+     toeplitz (n + 1) q * toeplitz (n + 1) b = toeplitz (n + 1) (q * b) :=
+       (toeplitz_mul _ _ _).symm
+-    _ = toeplitz (n + 1) (X * (q.divX * b)) := by rw [hsplit, mul_assoc]
++    _ = toeplitz (n + 1) ((X * q.divX) * b) :=
++      congrArg (fun r : Poly => toeplitz (n + 1) (r * b)) hsplit
++    _ = toeplitz (n + 1) (X * (q.divX * b)) := by rw [mul_assoc]
+     _ = toeplitz (n + 1) (X * a) := toeplitz_X_lift _ _ hsmall
+ 
+ theorem schur_coeffVector_smul (n : ℕ) (c : ℂ) (p : Poly) :
+@@ -78,7 +80,7 @@
+     coeffVector (n + 2) p = appendVector (coeffVector (n + 1) p) 0 := by
+   have hlast : p.coeff (n + 1) = 0 :=
+     Polynomial.coeff_eq_zero_of_degree_lt
+-      (hp.trans_lt (WithBot.coe_lt_coe.mpr (by omega)))
++      (hp.trans_lt (WithBot.coe_lt_coe.mpr (Nat.lt_succ_self n)))
+   apply PiLp.ext
+   intro i
+   refine Fin.lastCases ?_ (fun j => ?_) i

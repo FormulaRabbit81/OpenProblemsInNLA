@@ -1,0 +1,246 @@
+#!/usr/bin/env python3
+"""Read-only source/evidence checks; writes only this independent review packet.
+
+This script never runs Lean, Lake, Git, Comparator, or a network command.
+It does not prove mathematics or replace the handwritten review.
+"""
+from pathlib import Path
+import datetime
+import hashlib
+import json
+import re
+import subprocess
+
+D = Path(__file__).resolve().parent
+P = Path('/private/tmp/nla-lean-next-20260915/next-proofs/IE-02')
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+S = D / 'snapshots/project'
+M = L / '.lake/packages/mathlib'
+LC = L / '.lake/packages/leancert'
+
+
+def sha(p):
+    return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+
+
+def dump(path, obj):
+    path.write_text(json.dumps(obj, indent=2, ensure_ascii=False) + '\n')
+
+
+def lean_code(text):
+    """Remove nested comments/string contents, preserving newlines for a static scan."""
+    out = []
+    i, depth, string = 0, 0, False
+    while i < len(text):
+        c = text[i]
+        pair = text[i:i+2]
+        if depth:
+            if pair == '/-':
+                depth += 1
+                out.extend('  ')
+                i += 2
+            elif pair == '-/':
+                depth -= 1
+                out.extend('  ')
+                i += 2
+            else:
+                out.append('\n' if c == '\n' else ' ')
+                i += 1
+        elif string:
+            if c == '\\' and i+1 < len(text):
+                out.extend('  ')
+                i += 2
+            else:
+                out.append('\n' if c == '\n' else ' ')
+                string = c != '"'
+                i += 1
+        elif pair == '/-':
+            depth = 1
+            out.extend('  ')
+            i += 2
+        elif pair == '--':
+            j = text.find('\n', i)
+            if j == -1:
+                j = len(text)
+            out.extend(' ' * (j-i))
+            i = j
+        elif c == '"':
+            string = True
+            out.append(' ')
+            i += 1
+        else:
+            out.append(c)
+            i += 1
+    assert depth == 0 and not string
+    return ''.join(out)
+
+
+root = json.loads((D / 'snapshots/IE02-LOCAL-COMPLETE-121.json').read_text())
+freeze = json.loads((S / 'STATEMENT-FREEZE.json').read_text())
+headers = json.loads((S / 'STATEMENT-HEADERS.json').read_text())['headers']
+comparator = json.loads((S / 'comparator.json').read_text())
+modules = root['commands_and_successful_origins']
+assert len(modules) == 56 and len(headers) == 50
+paths = [x['canonical_source_path'] for x in modules]
+texts = {p: (S / p).read_text() for p in paths}
+codes = {p: lean_code(t) for p, t in texts.items()}
+byname = {x['module']: x for x in modules}
+module_name = {x['canonical_source_path']: x['module'] for x in modules}
+module_name['Solution.lean'] = 'Solution'
+canonical_names = set(module_name.values())
+
+protected = {}
+for p, h in freeze['frozen_files'].items():
+    assert sha(S/p) == h and sha(P/p) == h, p
+    protected[p] = h
+
+imports, local_graph = {}, {}
+for p in paths:
+    assert sha(S/p) == byname[next(x['module'] for x in modules if x['canonical_source_path'] == p)]['source_sha256']
+    assert sha(P/p) == sha(S/p), p
+    deps = re.findall(r'^\s*import\s+([\w.]+)', codes[p], re.M)
+    assert all('Challenge' not in x for x in deps), (p, deps)
+    assert all(not x.startswith('NLA.') or x in canonical_names for x in deps), (p, deps)
+    imports[p] = deps
+    local_graph[module_name[p]] = [x for x in deps if x in canonical_names]
+
+visited = set()
+
+
+def walk(name):
+    if name in visited:
+        return
+    visited.add(name)
+    for child in local_graph[name]:
+        walk(child)
+
+
+walk('Solution')
+assert visited == canonical_names
+
+coverage = []
+for h in headers:
+    assert hashlib.sha256(h['header'].encode()).hexdigest() == h['header_sha256']
+    assert (S/'Challenge.lean').read_text().count(h['header']) == 1
+    matches = []
+    for p, txt in texts.items():
+        if h['header'] in txt:
+            assert txt.count(h['header']) == 1
+            start = txt.index(h['header'])
+            tail = txt[start + len(h['header']):]
+            assert re.match(r'\s*:=\s*by\b', tail), (h['name'], p)
+            matches.append({'path': p, 'line': txt[:start].count('\n')+1})
+    assert len(matches) == 1, (h['name'], matches)
+    coverage.append({**h, **matches[0]})
+assert [x['name'] for x in coverage] == comparator['theorem_names']
+assert comparator['definition_names'] == []
+assert set(comparator['permitted_axioms']) == {'propext', 'Classical.choice', 'Quot.sound'}
+
+forbidden = {
+    'proof_holes_or_custom_axioms': r'\b(?:sorry|sorryAx|admit|axiom)\b',
+    'native_or_unsafe_or_meta_override': r'\b(?:native_decide|unsafe|implemented_by)\b|Lean\.(?:ofReduceBool|ofReduceNat|trustCompiler)',
+    'new_elaborator_or_command_execution': r'\b(?:elab_rules|macro_rules|run_tac|run_elab|initialize|command_elab)\b|#(?:eval|reduce)',
+    'resource_or_lint_overrides': r'\bset_option\s+(?:maxHeartbeats|maxRecDepth|debug|linter\.)',
+}
+for label, pattern in forbidden.items():
+    found = [(p, m.group(0)) for p, c in codes.items() for m in re.finditer(pattern, c)]
+    assert not found, (label, found)
+assert not re.search(r'\b(?:def|theorem|lemma|axiom|abbrev|instance)\b', codes['Solution.lean'])
+assert (L/'IE02Solution.lean').read_bytes() == (S/'Solution.lean').read_bytes()
+assert texts['NLA/IE02/Numerical.lean'].count('interval_decide (trust := kernel)') == 1
+assert 'mul_pos half_certificate hm' in texts['NLA/IE02/DescentSteps.lean']
+assert 'NLA.IE02.Numerical' in imports['NLA/IE02/DescentSteps.lean']
+assert sum(t.count('interval_decide') for t in codes.values()) == 1
+assert all('set_option leancert.trust "kernel"' in texts[p] for p in paths if p not in ['Solution.lean', 'NLA/IE02/Proof.lean', 'NLA/IE02/Definitions.lean'])
+email_pattern = r'[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}'
+credit_paths = paths + ['README.md', 'formalization.yaml', 'SourceCorrespondence.md', 'sources/canonical/README.md']
+for p in credit_paths:
+    assert not re.search(email_pattern, (S/p).read_text()), p
+for p in paths:
+    assert 'George Stepaniants' in texts[p], p
+    assert 'Department of Computing and Mathematical Sciences' in texts[p], p
+    assert 'California Institute of Technology' in texts[p], p
+
+audit = json.loads((D/'LOCAL-EVIDENCE-AUDIT-121.json').read_text())
+warning_list = []
+for m in audit['modules']:
+    origin = Path(m['origin_receipt']).parent.name
+    log = D/'evidence'/origin/(m['module']+'.log')
+    assert sha(log) == m['log_sha256']
+    actual = re.findall(r'^.*\.lean:\d+:\d+: warning:.*$', log.read_text(), re.M)
+    m['warnings'] = len(actual)
+    warning_list.extend({'module':m['module'], 'line': x} for x in actual)
+assert len(warning_list) == 11
+audit['warning_count_method'] = 'Anchored Lean diagnostic lines; does not count the explanatory phrase silence this warning.'
+audit['actual_warning_diagnostics'] = warning_list
+audit['actual_warning_count'] = len(warning_list)
+dump(D/'LOCAL-EVIDENCE-AUDIT-121.json', audit)
+
+api = json.loads((S/'PINNED-API-BINDINGS.json').read_text())
+primary = []
+for x in api['sources']:
+    p = M/x['path']
+    assert sha(p) == x['sha256'], p
+    dest = D/'snapshots/primary/mathlib'/x['path']
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_bytes(p.read_bytes())
+    primary.append({'source':str(p),'snapshot':str(dest.relative_to(D)), 'sha256':sha(p), 'pin':api['mathlib_pin'], 'scope':'Full file bytes authenticated; selected APIs read, not a full transitive-library audit.'})
+extra = [
+    (M/'Mathlib/Analysis/LocallyConvex/Separation.lean', 'Mathlib/Analysis/LocallyConvex/Separation.lean', [[218,245]], api['mathlib_pin']),
+    (M/'Mathlib/Analysis/InnerProductSpace/Rayleigh.lean', 'Mathlib/Analysis/InnerProductSpace/Rayleigh.lean', [[245,275]], api['mathlib_pin']),
+    (M/'Mathlib/Topology/MetricSpace/HausdorffDistance.lean', 'Mathlib/Topology/MetricSpace/HausdorffDistance.lean', [[720,746]], api['mathlib_pin']),
+    (LC/'LeanCert/Tactic/Verification.lean', 'LeanCert/Tactic/Verification.lean', [[1,175],[435,522],[593,665]], '621a43d7cf21f87872392a01e874f2f1dbddc926'),
+]
+for p, rel, ranges, pin in extra:
+    dest = D/'snapshots/primary'/rel
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_bytes(p.read_bytes())
+    primary.append({'source':str(p),'snapshot':str(dest.relative_to(D)),'sha256':sha(p),'pin':pin,'selected_read_ranges':ranges,'scope':'Selected semantic APIs read; full bytes bound. No newly fetched source or full library audit.'})
+dump(D/'PRIMARY-SOURCE-AUTHENTICATION.json', {'sources':primary,'network_used':False,'pinned_api_entries_authenticated':len(api['sources'])})
+
+queries = [
+    ('direct-CF-GMRES-factorization', r'schur.*(toeplitz|interpol)|carath[eé]odory.*fej|fej[eé]r.*riesz|spectral.factorization|gmres|roots_reverse|roots.*reflect|reflect.*roots', [str(M/'Mathlib')]),
+    ('polynomial-reuse', r'degree_C_mul_le|degree_mul_C_le|degree_mul_le_of_le|degree_smul_le|semiconj.*eval|SemiconjBy.*eval|roots_multiset_prod_X_sub_C|natDegree_multiset_prod_X_sub_C_eq_card', [str(M/'Mathlib/Algebra/Polynomial'),str(M/'Mathlib/RingTheory/Polynomial')]),
+    ('attainment-and-circle', r'infinite.*sphere|sphere.*infinite|infinite.*circle|circle.*infinite|attain.*norm|norm.*attain|exists.*norm_eq.*norm', [str(M/'Mathlib/Analysis'),str(M/'Mathlib/Topology')]),
+    ('existing-project-action-helper', r'euclideanLin_mul_apply|euclidean_mul_apply', [str(S/'NLA/IE02')]),
+]
+searches = []
+for name, query, targets in queries:
+    argv = ['rg','-n','-i',query,*targets]
+    r = subprocess.run(argv, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    assert r.returncode in [0,1] and not r.stderr, (argv,r.stderr)
+    out = D/(name+'.rg.txt')
+    out.write_text(r.stdout)
+    searches.append({'name':name,'argv':argv,'exit_code':r.returncode,'stdout':out.name,'stdout_sha256':sha(out),'stderr':r.stderr})
+dump(D/'REUSE-SEARCH.json', {
+    'time':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'searches':searches,
+    'Mathlib_pin':api['mathlib_pin'],
+    'Tau_Ceti_guidance_pin':'afb424eda89e8ac96d9eb69f6a88972055a4cd1b',
+    'Tau_Ceti_mathematical_code_search_limitation':'Only retained pinned TauCetiReview guidance exists in the searched local workspace. No full pinned Tau Ceti mathematical source checkout was available; parent also searched and confirmed this. No search of absent code or official Tau Ceti service is claimed.',
+    'result':'One exact project duplicate located: private euclidean_mul_apply in JordanTransport is the public euclideanLin_mul_apply in SchurEnergy. R1 requests direct reuse. No located pinned direct theorem replaced the full finite Schur/GMRES/weighted-factorization developments; negative searches are bounded, not exhaustive literature claims.'
+})
+dump(D/'STATIC-COVERAGE-AUDIT.json', {
+    'time':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'core_source_files':len(paths),
+    'core_source_line_count':sum(t.count('\n') for t in texts.values()),
+    'protected_files':protected,
+    'source_hashes':{p:sha(S/p) for p in paths},
+    'imports':imports,
+    'solution_closure':sorted(visited),
+    'contracts':coverage,
+    'all_50_verbatim_unique_headers':True,
+    'Challenge_imported':False,
+    'concrete_definitions_no_holes':True,
+    'forbidden_scan_patterns':forbidden,
+    'forbidden_active_code_matches':[],
+    'LeanCert_kernel_certificate':'NLA.IE02.half_certificate',
+    'genuine_consumer':'NLA/IE02/DescentSteps.lean: half_min_bounds uses mul_pos half_certificate; it is consumed in both step inequalities and the original final target closure.',
+    'email_scan_paths':credit_paths,
+    'email_matches':[],
+    'original_solution_local_renaming_byte_identical':True,
+    'fresh_Lean_run':False,
+    'fresh_Comparator_run':False,
+    'whole_problem_or_publication_approval':False,
+})
+print(json.dumps({'status':'PASS_SOURCE_AND_EVIDENCE_CHECKS_ONLY','core_files':56,'contracts':50,'frozen_files':13,'actual_warning_diagnostics':11,'pinned_API_entries':len(api['sources']),'primary_source_bindings':len(primary),'reuse_queries':len(searches),'compiler_invoked':False,'Comparator_invoked':False,'open_reuse_findings':['R1']},indent=2))

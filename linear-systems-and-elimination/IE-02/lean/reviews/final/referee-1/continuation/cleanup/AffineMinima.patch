@@ -1,0 +1,10 @@
+--- before/NLA/IE02/AffineMinima.lean
++++ after/NLA/IE02/AffineMinima.lean
+@@ -37,6 +37,7 @@
+   obtain ⟨c, rfl⟩ := hz
+   have hmin (d : Fin k → ℂ) : ‖y - L c‖ ≤ ‖y - L d‖ := by
+     rw [← dist_eq_norm, ← dist_eq_norm, ← hdist]
++    -- S is the actual range of L, so d supplies the membership witness.
+     exact Metric.infDist_le_dist_of_mem (show L d ∈ S from ⟨d, rfl⟩)
+   have hleast : IsLeast (Set.range (fun d : Fin k → ℂ => ‖y - L d‖)) ‖y - L c‖ := by
+     refine ⟨⟨c, rfl⟩, ?_⟩

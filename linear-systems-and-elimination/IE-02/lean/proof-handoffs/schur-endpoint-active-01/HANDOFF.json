@@ -1,0 +1,91 @@
+{
+  "time_utc": "2026-09-17T08:43:40.639374+00:00",
+  "author": "/root/ie02_foundation_preflight",
+  "scope": "Two author candidates for exact frozen IE02 contracts 9 and 13 only",
+  "sources": {
+    "SchurEndpoint": {
+      "path": "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/SchurEndpoint.lean",
+      "sha256": "54e82e982d5b131eac809688a5d917b7f770b150e542c99a5f6fb06361ff1505",
+      "snapshot_sha256": "54e82e982d5b131eac809688a5d917b7f770b150e542c99a5f6fb06361ff1505",
+      "imports": [
+        "NLA.IE02.Toeplitz",
+        "NLA.IE02.MaximalSpace",
+        "Mathlib.Algebra.Order.BigOperators.Group.Finset"
+      ]
+    },
+    "SchurActiveBlock": {
+      "path": "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/SchurActiveBlock.lean",
+      "sha256": "218edd1ae28c177326f02882693f2d0f9fe03b6b8fe8ddf6d4fd7acc59d5882f",
+      "snapshot_sha256": "218edd1ae28c177326f02882693f2d0f9fe03b6b8fe8ddf6d4fd7acc59d5882f",
+      "imports": [
+        "NLA.IE02.Definitions",
+        "Mathlib.Algebra.Polynomial.Inductions",
+        "Mathlib.Algebra.BigOperators.Fin",
+        "LeanCert.Tactic"
+      ]
+    }
+  },
+  "exact_frozen_headers_verified": [
+    {
+      "name": "NLA.IE02.schur_scalar_endpoint",
+      "header": "theorem schur_scalar_endpoint {n : ℕ} (hn : 1 ≤ n) (p : Poly)\n    (hU : operatorNorm (toeplitz n p) = 1) (hc : ‖p.coeff 0‖ = 1) :\n    toeplitz n p = p.coeff 0 • 1 ∧\n    SchurPair n (toeplitz n p) 0 (C (p.coeff 0)) 1",
+      "header_sha256": "89e7628f7f0525cf766a59e9e72971e6ec50098d536c2345d222943ca0a312eb",
+      "ordinal": 9
+    },
+    {
+      "name": "NLA.IE02.schur_active_block",
+      "header": "theorem schur_active_block {n : ℕ} (Z : Square (n + 1)) (hZ : IsToeplitz Z)\n    (hdiag : ∀ i, Z i i = 0) (hcon : operatorNorm Z ≤ 1) :\n    IsToeplitz (activeBlock Z) ∧ operatorNorm Z = operatorNorm (activeBlock Z) ∧\n    ∀ (g : H n) (η : ℂ),\n      euclideanLin Z (appendVector g η) = prependZero (euclideanLin (activeBlock Z) g) ∧\n      ‖appendVector g η‖ ^ 2 = ‖g‖ ^ 2 + ‖η‖ ^ 2 ∧\n      (‖euclideanLin Z (appendVector g η)‖ = ‖appendVector g η‖ ↔\n        η = 0 ∧ ‖euclideanLin (activeBlock Z) g‖ = ‖g‖)",
+      "header_sha256": "05e880da942019cc0207bdf1bd5be0371e0465eb315641aab3726e70bf9e1554",
+      "ordinal": 13
+    }
+  ],
+  "frozen_inputs_unchanged": 13,
+  "pre_code_plan_sha256": "fbe2abef56e4f39b17b5dc96e6870f70582c5a9c5334a90586e04bd972d5eea9",
+  "root_acceptance_sha256": "69f0a4803bf7957355082711a65b847d07aa23c61152acaaf818d7cf143dce10",
+  "original_primary_and_project_bindings_unchanged": 16,
+  "observed_unrelated_sources_unchanged": 4,
+  "additional_primary_bindings": {
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Lp/Matrix.lean": "976400e4430cbe64214a24e37f3f98c807c30f1c9926c8cbd367ae2fd111e2f9",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/GroupWithZero/Basic.lean": "5ae904bb6c2caab184fbeb514e648544f96ad657860f307d43bbc2217ce535cb",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/GroupWithZero/Basic.lean": "6a07f5f5910a8378db7d5fd4ff71d846c6cc54cf97408b4c4961b3e4ebeca24c"
+  },
+  "actual_project_source_closure": {
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/SchurEndpoint.lean": "54e82e982d5b131eac809688a5d917b7f770b150e542c99a5f6fb06361ff1505",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/Toeplitz.lean": "29cfd72873d8211f2b85c7ab2cae4a1c7d9580675736291012a8313802667b7d",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/Coefficients.lean": "edd60266a5a89fd86f2aa254e71cae919ed8cdff47aa5a01b09edb37b71bbbb7",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/Definitions.lean": "ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/MaximalSpace.lean": "d59c07d89b55472fed5298789c1e335ee86dcdb068cf8bbfd7e117e0b79b1fc3",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/SchurActiveBlock.lean": "218edd1ae28c177326f02882693f2d0f9fe03b6b8fe8ddf6d4fd7acc59d5882f"
+  },
+  "new_mathlib_import_availability_read_only": {
+    "Mathlib.Algebra.Polynomial.Inductions": {
+      "source_sha256": "d1c529c0efc818bce959f678d4ecde10ff1181f761f2575925e7718222822494",
+      "olean_exists_read_only": true,
+      "olean_used_by_author": false
+    },
+    "Mathlib.Algebra.BigOperators.Fin": {
+      "source_sha256": "4fe78cba9cdeac4eb8badbdd6359b055031900906fb94f3e51aba6d81451dbd5",
+      "olean_exists_read_only": true,
+      "olean_used_by_author": false
+    },
+    "Mathlib.Algebra.Order.BigOperators.Group.Finset": {
+      "source_sha256": "6a8daafb9e3b8b6ac48a696661c99a2d10dce57f48907ae18280914bf0ac639f",
+      "olean_exists_read_only": true,
+      "olean_used_by_author": false
+    }
+  },
+  "scope_cases": [
+    "all complex symbols and vectors",
+    "endpoint n>=1 with no degree bound on p",
+    "all eleven frozen SchurPair clauses",
+    "active block n>=0 including zero-dimensional domain",
+    "input scalar appended last and output zero prepended first"
+  ],
+  "static_scan": "No holes/custom axioms/native or unsafe shortcuts/Challenge imports found in new files; not kernel validation",
+  "axiom_prints_and_kernel_assertions_present": true,
+  "local_compiler_run": "UNRUN; root alone compiles serially",
+  "independent_proof_review": "PENDING; this agent authored both candidates",
+  "GitHub_Comparator": "UNRUN",
+  "whole_target_complete": false,
+  "count_change": 0
+}

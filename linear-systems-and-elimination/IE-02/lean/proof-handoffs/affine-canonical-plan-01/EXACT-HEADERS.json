@@ -1,0 +1,17 @@
+{
+  "frozen_inventory_sha256": "0907a434a785e15f95e3f977b18592b4cf7ed99ddaf3f604f3bae37105302374",
+  "headers": [
+    {
+      "ordinal": 44,
+      "name": "NLA.IE02.affine_minimax_attained",
+      "header": "theorem affine_minimax_attained {n k : ℕ} (hn : 1 ≤ n)\n    (Y : Square n) (R : Fin k → Square n) (hY : IsToeplitz Y) (hR : ∀ j, IsToeplitz (R j)) :\n    affineWorst Y R = affineIdeal Y R ∧\n    (∀ x ∈ unitSphere n, ∃ c : Fin k → ℂ,\n      ‖euclideanLin (affineResidual Y R c) x‖ = affineInner Y R x) ∧\n    ∃ (c : Fin k → ℂ) (x : H n), x ∈ unitSphere n ∧\n      operatorNorm (affineResidual Y R c) = affineIdeal Y R ∧\n      affineInner Y R x = affineWorst Y R ∧\n      ‖euclideanLin (affineResidual Y R c) x‖ = operatorNorm (affineResidual Y R c) ∧\n      (∀ d : Fin k → ℂ, operatorNorm (affineResidual Y R c) ≤ operatorNorm (affineResidual Y R d)) ∧\n      (∀ d : Fin k → ℂ, ‖euclideanLin (affineResidual Y R c) x‖ ≤\n        ‖euclideanLin (affineResidual Y R d) x‖) ∧\n      (∀ z ∈ unitSphere n, affineInner Y R z ≤ affineInner Y R x)",
+      "header_sha256": "56cef9db001f4e078bb85bcb88fb4fe52b588308c3193abc0128feb32488b889"
+    },
+    {
+      "ordinal": 50,
+      "name": "NLA.IE02.canonical_jordan_minimax",
+      "header": "theorem canonical_jordan_minimax (n k : ℕ) (lam : ℂ)\n    (hn : 2 ≤ n) (hlam : lam ≠ 0) (hk : 1 ≤ k) (hkn : k < n) :\n    worstGMRES (jordan n lam) k = idealGMRES (jordan n lam) k ∧\n    (∀ x ∈ unitSphere n, ∃ p : Poly, Admissible k p ∧\n      ‖euclideanLin (polyEval p (jordan n lam)) x‖ = gmresInner (jordan n lam) k x ∧\n      ∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p (jordan n lam)) x‖ ≤\n        ‖euclideanLin (polyEval q (jordan n lam)) x‖) ∧\n    ∃ (p : Poly) (x : H n), Admissible k p ∧ x ∈ unitSphere n ∧\n      operatorNorm (polyEval p (jordan n lam)) = idealGMRES (jordan n lam) k ∧\n      ‖euclideanLin (polyEval p (jordan n lam)) x‖ = operatorNorm (polyEval p (jordan n lam)) ∧\n      gmresInner (jordan n lam) k x = worstGMRES (jordan n lam) k ∧\n      (∀ q : Poly, Admissible k q →\n        operatorNorm (polyEval p (jordan n lam)) ≤ operatorNorm (polyEval q (jordan n lam))) ∧\n      (∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p (jordan n lam)) x‖ ≤\n        ‖euclideanLin (polyEval q (jordan n lam)) x‖) ∧\n      (∀ z ∈ unitSphere n, gmresInner (jordan n lam) k z ≤ gmresInner (jordan n lam) k x)",
+      "header_sha256": "5ac02eb062acec394aab77f0533de611e1c0442f077c447820b3ec513a6d4d4b"
+    }
+  ]
+}

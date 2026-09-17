@@ -1,0 +1,61 @@
+NLA/IE02/SchurPolynomial.lean:54:13: error: Type mismatch
+  (X * a).degree
+has type
+  WithBot ℕ
+but is expected to have type
+  ℕ
+NLA/IE02/SchurPolynomial.lean:55:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  X * a
+in the target expression
+  ?refine_1 = d + 1
+
+d : ℕ
+c : ℂ
+a b : Poly
+ha : degree a = ↑d
+hb : DegreeLE b d
+hb0 : coeff b 0 = 1
+⊢ ?refine_1 = d + 1
+NLA/IE02/SchurPolynomial.lean:57:75: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  f ≥ 0
+  e ≥ 0
+  e - f ≥ 0
+where
+ e := ↑↑d
+ f := ↑↑(d + 1)
+NLA/IE02/SchurPolynomial.lean:59:8: error(lean.unknownIdentifier): Unknown identifier `hXa`
+NLA/IE02/SchurPolynomial.lean:61:9: error: Invalid `⟨...⟩` notation: The expected type `ℕ` has more than one constructor
+
+Note: This notation can only be used when the expected type is an inductive type with a single constructor
+NLA/IE02/SchurPolynomial.lean:62:58: error(lean.unknownIdentifier): Unknown identifier `hstep.le`
+NLA/IE02/SchurPolynomial.lean:62:4: error: Tactic `apply` failed: could not unify the conclusion of `degree_add_le_of_degree_le (LE.le.trans hb sorry)`
+  (b + ?m.113).degree ≤ ↑?m.114
+with the goal
+  degree (schurNumerator c a b) = ↑(d + 1) ∧
+    DegreeLE (schurDenominator c a b) (d + 1) ∧ coeff (schurDenominator c a b) 0 = 1
+
+Note: The full type of `degree_add_le_of_degree_le (LE.le.trans hb sorry)` is
+  degree ?m.113 ≤ ↑?m.114 → (b + ?m.113).degree ≤ ↑?m.114
+
+case refine_2
+d : ℕ
+c : ℂ
+a b : Poly
+ha : degree a = ↑d
+hb : DegreeLE b d
+hb0 : coeff b 0 = 1
+hXa :
+  (have hstep := ⋯;
+    have hcb := ⋯;
+    sorry) =
+    d + 1
+⊢ degree (schurNumerator c a b) = ↑(d + 1) ∧
+    DegreeLE (schurDenominator c a b) (d + 1) ∧ coeff (schurDenominator c a b) 0 = 1
+NLA/IE02/SchurPolynomial.lean:65:2: error: No goals to be solved
+'NLA.IE02.schur_polynomial_degrees' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/SchurPolynomial.lean:150:21: error: #assert_trust: 'NLA.IE02.schur_polynomial_degrees' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
+'NLA.IE02.schur_polynomial_coprime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE02.schur_polynomial_disk_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,15 @@
+--- before
++++ after
+@@ -44,8 +44,10 @@
+       rw [← henergy x, ContinuousLinearMap.reApplyInnerSelf_apply]
+       -- Expose the same Gram action before substituting its eigen equation.
+       change (inner ℂ (G x) x).re = (operatorNorm A * ‖x‖) ^ 2
+-      rw [hx, inner_smul_left, Complex.conj_ofReal, Complex.re_ofReal_mul,
+-        ← norm_sq_eq_re_inner (𝕜 := ℂ) x, mul_pow]
++      rw [hx, inner_smul_left, Complex.conj_ofReal, Complex.re_ofReal_mul]
++      have hnorm : (inner ℂ x x).re = ‖x‖ ^ 2 :=
++        (norm_sq_eq_re_inner (𝕜 := ℂ) x).symm
++      rw [hnorm, mul_pow]
+     exact (sq_eq_sq₀ (norm_nonneg (L x))
+       (mul_nonneg (norm_nonneg (euclideanCLM A)) (norm_nonneg x))).mp hsquared
+   · intro hx

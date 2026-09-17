@@ -1,0 +1,29 @@
+NLA/IE02/FourierSupport.lean:67:11: error: Application type mismatch: The argument
+  Finset.range (m + 1)
+has type
+  Finset ℕ
+but is expected to have type
+  Finset ℤ
+in the application
+  {k ∈ Finset.range (m + 1) | fourierCoeff m q k ≠ 0}
+NLA/IE02/FourierSupport.lean:70:36: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  b ≥ 0
+  a ≥ 0
+  a - b ≥ 0
+where
+ a := ↑?m.61
+ b := ↑?m.60
+NLA/IE02/FourierSupport.lean:75:24: error: Type mismatch
+  Nat.le_of_lt_succ (Finset.mem_range.mp ?m.116)
+has type
+  ?m.113 ≤ ?m.111
+but is expected to have type
+  ell ≤ ↑m
+'NLA.IE02.sumSquares_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE02.fourier_outside_band' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE02.fourier_zero_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NLA.IE02.fourier_effective_band' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/FourierSupport.lean:104:21: error: #assert_trust: 'NLA.IE02.fourier_effective_band' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

@@ -1,0 +1,1 @@
+Actual58 could not rewrite weightedFold after unfolding the finite sum. Expose the exact scalar-polynomial evaluation goal using change, then reuse the unchanged evaluation/norm/square-root laws. This is a definitional-wrapper body repair, no statement or assumption changes. Preserve actual58 failure and candidate01; rerun locally before acceptance.

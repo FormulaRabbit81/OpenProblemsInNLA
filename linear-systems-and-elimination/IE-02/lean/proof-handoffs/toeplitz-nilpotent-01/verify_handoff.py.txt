@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+"""Static source/header/provenance checks only; never invokes Lean or Git."""
+import hashlib
+import json
+import re
+from pathlib import Path
+H = Path(__file__).resolve().parent
+W = H.parent.parent
+def digest(p):
+    return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def read(p):
+    return json.loads(Path(p).read_text())
+def require(condition, message):
+    if not condition:
+        raise AssertionError(message)
+m = read(H / 'MANIFEST.json')
+files = {str(p.relative_to(H)) for p in H.rglob('*') if p.is_file() and p.name != 'MANIFEST.json'}
+require(files == set(m['files']), 'manifest inventory')
+for rel, sha in m['files'].items():
+    require(digest(H / rel) == sha, 'payload: ' + rel)
+b = read(H / 'PRE-CODE-BINDINGS.json')
+require(len(b['frozen_files']) == 13, 'thirteen frozen files')
+for rel, sha in b['frozen_files'].items():
+    require(digest(W / rel) == sha, 'frozen input unchanged: ' + rel)
+require(digest(W / 'STATEMENT-FREEZE.json') == b['freeze_sha256'], 'freeze')
+require(digest(W.parent.parent / 'IE02-ROOT-FREEZE-ACCEPTANCE.json') == b['root_acceptance_sha256'], 'root acceptance')
+require(digest(W / 'NLA/IE02/Coefficients.lean') == b['coefficient_dependency_sha256'], 'Coefficients unchanged')
+require(digest(W / 'proof-handoffs/coefficients-02/MANIFEST.json') == b['coefficient_handoff_manifest_sha256'], 'prior handoff unchanged')
+frozen = read(W / 'STATEMENT-HEADERS.json')['headers']
+headers = read(H / 'EXACT-HEADERS.json')
+require(len(headers) == 3 and [x['frozen_ordinal'] for x in headers] == [3, 4, 5], 'exact scoped ordinals')
+for e in headers:
+    source = W / 'NLA/IE02' / (e['module'] + '.lean')
+    snapshot = H / 'sources' / (e['module'] + '.lean.txt')
+    require(source.read_bytes() == snapshot.read_bytes(), 'source/snapshot: ' + e['module'])
+    text = source.read_text()
+    match = re.search(r'^theorem ' + e['name'] + r'\b[\s\S]*? := by', text, re.M)
+    require(match is not None and match.group() == e['header'], 'exact header: ' + e['name'])
+    require(hashlib.sha256(e['header'].encode()).hexdigest() == e['header_sha256'], 'header hash')
+    f = frozen[e['frozen_ordinal'] - 1]
+    require(f['name'] == 'NLA.IE02.' + e['name'] and f['header'] + ' := by' == e['header'], 'frozen header identity')
+    require('#print axioms ' + e['name'] in text and '#assert_trust kernel ' + e['name'] in text, 'trust assertions present but UNRUN')
+    code = re.sub(r'/\-[\s\S]*?\-/|--[^\n]*', '', text)
+    require(not re.search(r'\b(sorry|admit|axiom|unsafe|native_decide)\b', code), 'no forbidden proof constructs')
+    require(not re.search(r'^import .*Challenge', code, re.M), 'no Challenge import')
+    require('set_option leancert.trust "kernel"' in code, 'kernel mode')
+api = read(H / 'API-BINDINGS.json')
+for e in api['sources']:
+    require(digest(e['path']) == e['sha256'], 'primary source: ' + e['path'])
+require(digest(api['prior_literal_binding_record']) == api['prior_literal_binding_sha256'], 'prior source provenance')
+d = read(H / 'DEPENDENCY-EVIDENCE.json')
+require(digest(d['local54_receipt_path']) == d['local54_receipt_sha256'], 'actual dependency receipt')
+r = read(d['local54_receipt_path'])
+c = next(c for c in r['commands'] if c['module'] == 'NLA.IE02.Coefficients')
+require(c == d['local54_Coefficients_command'] and c['exit_code'] == 0, 'actual successful dependency command')
+require(c['source_sha256'] == b['coefficient_dependency_sha256'], 'source-matched dependency')
+require(digest(d['local54_Coefficients_log_path']) == c['log_sha256'], 'actual dependency log')
+imp = d['new_library_import']
+require(digest(imp['source']) == imp['source_sha256'] and digest(imp['olean']) == imp['olean_sha256'], 'read-only import availability')
+require(not d['new_module_compiler_execution'] and not d['new_trust_execution'] and not d['Comparator_execution'], 'new candidate UNRUN')
+print(json.dumps({'status': 'PASS', 'payloads': len(files), 'frozen_inputs_unchanged': 13, 'exact_frozen_headers': 3, 'primary_API_files': len(api['sources']), 'existing_Coefficients_unchanged': True, 'candidate_Lean_executed': False, 'candidate_trust_executed': False, 'Comparator_executed': False}, indent=2))

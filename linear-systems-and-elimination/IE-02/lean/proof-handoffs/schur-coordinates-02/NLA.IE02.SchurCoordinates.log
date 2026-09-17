@@ -1,0 +1,63 @@
+NLA/IE02/SchurCoordinates.lean:44:11: error: unsolved goals
+case pos.zero
+n : ℕ
+s t : Poly
+h : toeplitz n s = toeplitz n t
+i j : Fin (n + 1)
+hji : ↑j ≤ ↑i
+he : ↑i - ↑j = 0
+⊢ 0 = if ↑j ≤ ↑i then 0 else 0
+NLA/IE02/SchurCoordinates.lean:49:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ↑i - ↑j
+in the target expression
+  coeff (X * s) (k + 1) = if ↑j ≤ ↑i then coeff (X * t) (k + 1) else 0
+
+case pos.succ
+n : ℕ
+s t : Poly
+h : toeplitz n s = toeplitz n t
+i j : Fin (n + 1)
+hji : ↑j ≤ ↑i
+k : ℕ
+he : ↑i - ↑j = k + 1
+hk : k < n
+hn : 0 < n
+heq : toeplitz n s ⟨k, hk⟩ ⟨0, hn⟩ = toeplitz n t ⟨k, hk⟩ ⟨0, hn⟩
+⊢ coeff (X * s) (k + 1) = if ↑j ≤ ↑i then coeff (X * t) (k + 1) else 0
+NLA/IE02/SchurCoordinates.lean:51:2: error: unsolved goals
+case neg
+n : ℕ
+s t : Poly
+h : toeplitz n s = toeplitz n t
+i j : Fin (n + 1)
+hji : ¬↑j ≤ ↑i
+⊢ 0 = if ↑j ≤ ↑i then coeff (X * t) (↑i - ↑j) else 0
+NLA/IE02/SchurCoordinates.lean:44:25: warning: This simp argument is unused:
+  he
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Polynomial.coeff_X_mul_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/IE02/SchurCoordinates.lean:68:47: error: unsolved goals
+n : ℕ
+a b q : Poly
+hdiag : ∀ (i : Fin (n + 1)), toeplitz (n + 1) q i i = 0
+hinterp : activeBlock (toeplitz (n + 1) q) * toeplitz n b = toeplitz n a
+hq : coeff q 0 = 0
+hsplit : q = X * divX q
+hsmall : toeplitz n (divX q * b) = toeplitz n a
+⊢ toeplitz (n + 1) (X * (divX q * b)) = toeplitz (n + 1) (X * (divX (X * divX q) * b))
+NLA/IE02/SchurCoordinates.lean:81:47: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  b ≥ 0
+  a ≥ 0
+  a - b ≥ 0
+where
+ a := ↑↑n
+ b := ↑↑(n + 1)
+'NLA.IE02.schur_lift_interpolation' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/SchurCoordinates.lean:182:21: error: #assert_trust: 'NLA.IE02.schur_lift_interpolation' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
+'NLA.IE02.schur_maximal_finrank' depends on axioms: [propext, Classical.choice, Quot.sound]

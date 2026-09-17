@@ -1,0 +1,18 @@
+{
+  "time": "2026-09-17T10:08:38.613389+00:00",
+  "exact_headers": {
+    "maximal_complex_preservation": "theorem maximal_complex_preservation {n k l : \u2115} (hn : 1 \u2264 n)\n    (T : Square n) (R : Fin k \u2192 Square n) (hT : IsToeplitz T) (hne : T \u2260 0)\n    (hR : \u2200 j, IsToeplitz (R j)) (f : Fin l \u2192 H n) (w : Fin l \u2192 \u211d)\n    (hf : \u2200 j, f j \u2208 unitMaximal T) (hw : \u2200 j, 0 \u2264 w j) (hsum : \u2211 j, w j = 1) :\n    \u2203 x : H n, x \u2208 unitMaximal T \u2227\n      \u2200 i, inner \u2102 (euclideanLin T x) (euclideanLin (R i) x) =\n        \u2211 j, (w j : \u2102) * inner \u2102 (euclideanLin T (f j)) (euclideanLin (R i) (f j))",
+    "gradient_compact_convex": "theorem gradient_compact_convex {n k : \u2115} (hn : 1 \u2264 n)\n    (T : Square n) (R : Fin k \u2192 Square n) (hT : IsToeplitz T) (hne : T \u2260 0)\n    (hR : \u2200 j, IsToeplitz (R j)) :\n    (gradientImage T R).Nonempty \u2227 IsCompact (gradientImage T R) \u2227\n      Convex \u211d (gradientImage T R)",
+    "gradient_strict_separation": "theorem gradient_strict_separation {n k : \u2115} (hn : 1 \u2264 n)\n    (T : Square n) (R : Fin k \u2192 Square n) (hT : IsToeplitz T) (hne : T \u2260 0)\n    (hR : \u2200 j, IsToeplitz (R j)) (hzero : 0 \u2209 gradientImage T R) :\n    \u2203 (c : Fin k \u2192 \u2102) (\u03b3 : \u211d), 0 < \u03b3 \u2227\n      \u2200 x \u2208 unitMaximal T, \u03b3 \u2264 descentForm T (directionSum R c) x"
+  },
+  "frozen_acceptance_sha256": "acb508e19e36aae8a4160d214850179941858726d2a1187023dc5ebfc93c3adb",
+  "sources": {
+    "NLA/IE02/Definitions.lean": "ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a",
+    "NLA/IE02/ScaledFactorization.lean": "32e7665ca587f037edd2ec58cc086b9be15c40403fcacc8931b8efa8f1ec9ab3",
+    "NLA/IE02/WeightedCoefficients.lean": "6ca298679b9e426c5d4b987372f011aad6d5d0e5d9c0fe3ac70e790d687057e4",
+    "NLA/IE02/RealSeparator.lean": "7c8e6672c19cc6405acab904920ec1fa9feae3cc66417163a866751123c6b98f",
+    "NLA/IE02/GradientTopology.lean": "f021f01054129804aaa3896638e2b78aea0adaa999b3ea10c66e9d0455f17ec4"
+  },
+  "primary_separation_sha256": "649cfe33fdb3999dfe168ee52cdfba11c45856e3fc34f7be4f971c80c772166e",
+  "source_implementation_status": "none at plan creation"
+}

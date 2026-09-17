@@ -1,0 +1,11 @@
+--- before/NLA/IE02/SchurEndpoint.lean
++++ after/NLA/IE02/SchurEndpoint.lean
+@@ -49,7 +49,7 @@
+       _ ≤ 1 := by
+         simpa only [one_pow] using
+           (sq_le_sq₀ (norm_nonneg (euclideanLin (toeplitz n p) e))
+-            (show (0 : ℝ) ≤ 1 by norm_num)).mpr hbound
++            (zero_le_one : (0 : ℝ) ≤ 1)).mpr hbound
+   have hsplit :
+       1 + (∑ i ∈ (Finset.univ : Finset (Fin n)).erase i0, ‖p.coeff i.val‖ ^ 2) =
+         ∑ i : Fin n, ‖p.coeff i.val‖ ^ 2 := by

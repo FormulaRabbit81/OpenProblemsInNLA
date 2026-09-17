@@ -1,0 +1,97 @@
+Mathlib/RingTheory/Localization/Integral.lean:337:    rw [aeval_def, ← eval₂_reflect_mul_pow _ _ N _ ((natDegree_reflect_le ..).trans (by simp [hN]))]
+Mathlib/FieldTheory/IsAlgClosed/Spectrum.lean:101:  have hprod := (IsAlgClosed.splits (C k - p)).eq_prod_roots
+Mathlib/FieldTheory/IsAlgClosed/Spectrum.lean:154:  rw [(IsAlgClosed.splits p).eq_prod_roots_of_monic h_mon] at nu
+Mathlib/FieldTheory/IsAlgClosed/AlgebraicClosure.lean:95:  conv in map _ _ => rw [Splits.eq_prod_roots (Monics.splits_finsetProd h)]
+Mathlib/FieldTheory/KummerExtension.lean:81:  rw [(X_pow_sub_C_splits_of_isPrimitiveRoot hζ e).eq_prod_roots_of_monic
+Mathlib/FieldTheory/SeparableDegree.lean:564:  have h1 := hs.eq_prod_roots_of_monic hm
+Mathlib/RingTheory/Polynomial/Resultant/Basic.lean:406:lemma resultant_eq_prod_roots_sub
+Mathlib/RingTheory/Polynomial/Resultant/Basic.lean:516:  have := resultant_eq_prod_roots_sub (f.map (algebraMap R L))
+Mathlib/FieldTheory/AbelRuffini.lean:153:  have hs : _ = _ * (s.map _).prod := h.eq_prod_roots
+Mathlib/Algebra/Ring/GeomSum.lean:188:lemma Commute.mul_neg_geom_sum₂ (h : Commute x y) (n : ℕ) :
+Mathlib/Algebra/Ring/GeomSum.lean:196:  rw [← neg_sub (y ^ n), ← h.mul_neg_geom_sum₂, ← neg_mul, neg_sub]
+Mathlib/Algebra/Ring/GeomSum.lean:240:lemma geom_sum_mul_neg (x : R) (n : ℕ) : (∑ i ∈ range n, x ^ i) * (1 - x) = 1 - x ^ n := by
+Mathlib/Algebra/Ring/GeomSum.lean:245:lemma mul_neg_geom_sum (x : R) (n : ℕ) : ((1 - x) * ∑ i ∈ range n, x ^ i) = 1 - x ^ n :=
+Mathlib/Algebra/Ring/GeomSum.lean:246:  op_injective <| by simpa using geom_sum_mul_neg (op x) n
+Mathlib/Algebra/Ring/GeomSum.lean:295:  rw [sum_Ico_eq_sub _ hmn, sub_mul, geom_sum_mul_neg, geom_sum_mul_neg, sub_sub_sub_cancel_left]
+Mathlib/Algebra/CubicDiscriminant.lean:428:    Splits.eq_prod_roots <|
+Mathlib/RingTheory/IntegralClosure/IntegralRestrict.lean:548:    norm_eq_prod_roots _ (IsAlgClosed.splits _), ← Multiset.prod_erase
+Mathlib/Algebra/Polynomial/Roots.lean:308:theorem roots_multiset_prod_X_sub_C (s : Multiset R) : (s.map fun a => X - C a).prod.roots = s := by
+Mathlib/Algebra/Polynomial/Roots.lean:834:      natDegree_multiset_prod_X_sub_C_eq_card]
+Mathlib/Algebra/Polynomial/Roots.lean:836:    rw [roots_mul, roots_multiset_prod_X_sub_C] at he
+Mathlib/Algebra/Polynomial/Roots.lean:845:      ((natDegree_multiset_prod_X_sub_C_eq_card _).trans hroots).ge).symm
+Mathlib/NumberTheory/MahlerMeasure.lean:64:      rw [ofFn_coeff_eq_val_of_lt _ i.2]
+Mathlib/NumberTheory/MahlerMeasure.lean:66:    · grind [boxPoly, ofFn_comp_toFn_eq_id_of_natDegree_lt]
+Mathlib/RingTheory/Spectrum/Prime/Topology.lean:1211:      ← reflect_mul _ _ natDegree_map_le (by simp), pow_zero, mul_one, hc,
+Mathlib/RingTheory/Spectrum/Prime/Topology.lean:1212:      ← add_assoc, reflect_mul _ _ (this.trans (by simp)) le_rfl,
+Mathlib/RingTheory/Spectrum/Prime/Topology.lean:1213:      eval_mul, reflect_sub, reflect_mul _ _ (by simp) (by simp)]
+Mathlib/Algebra/Polynomial/OfFn.lean:71:theorem ofFn_coeff_eq_val_of_lt {n i : ℕ} (v : Fin n → R) (hi : i < n) :
+Mathlib/Algebra/Polynomial/OfFn.lean:78:theorem ofFn_coeff_eq_zero_of_ge {n i : ℕ} (v : Fin n → R) (hi : n ≤ i) :
+Mathlib/Algebra/Polynomial/OfFn.lean:85:  exact fun _ h ↦ ofFn_coeff_eq_zero_of_ge _ <| Nat.le_of_pred_lt h
+Mathlib/Algebra/Polynomial/OfFn.lean:115:theorem ofFn_comp_toFn_eq_id_of_natDegree_lt {n : ℕ} {p : R[X]} (h_deg : p.natDegree < n) :
+Mathlib/Algebra/Polynomial/Splits.lean:299:theorem Splits.eq_prod_roots (hf : Splits f) :
+Mathlib/Algebra/Polynomial/Splits.lean:305:    rw [hm, roots_C_mul _ hf0, roots_multiset_prod_X_sub_C]
+Mathlib/Algebra/Polynomial/Splits.lean:307:theorem Splits.eq_prod_roots_of_monic (hf : Splits f) (hm : f.Monic) :
+Mathlib/Algebra/Polynomial/Splits.lean:309:  conv_lhs => rw [hf.eq_prod_roots, hm.leadingCoeff, C_1, one_mul]
+Mathlib/Algebra/Polynomial/Splits.lean:311:theorem Splits.eval_eq_prod_roots (hf : Splits f) (x : R) :
+Mathlib/Algebra/Polynomial/Splits.lean:313:  conv_lhs => rw [hf.eq_prod_roots]
+Mathlib/Algebra/Polynomial/Splits.lean:316:theorem Splits.eval_eq_prod_roots_of_monic (hf : Splits f) (hm : Monic f) (x : R) :
+Mathlib/Algebra/Polynomial/Splits.lean:318:  simp [hf.eval_eq_prod_roots, hm]
+Mathlib/Algebra/Polynomial/Splits.lean:324:  simp [hf.eval_eq_prod_roots_of_monic (hm.map (algebraMap R A)), ← eval_map_algebraMap]
+Mathlib/Algebra/Polynomial/Splits.lean:329:  conv_lhs => rw [hf.eq_prod_roots]
+Mathlib/Algebra/Polynomial/Splits.lean:337:  rw [← eval_multiset_prod_X_sub_C_derivative hx, ← hf.eq_prod_roots_of_monic hm]
+Mathlib/Algebra/Polynomial/Splits.lean:346:  conv_lhs => rw [hf.eq_prod_roots, leadingCoeff_map_of_injective hi]
+Mathlib/Algebra/Polynomial/Splits.lean:352:  rw [hf.eq_prod_roots_of_monic hm, lifts_iff_liftsRing]
+Mathlib/Algebra/Polynomial/Splits.lean:359:  rw [hf.eq_prod_roots, hr]
+Mathlib/Algebra/Polynomial/Splits.lean:366:  · conv_lhs => rw [hf.eq_prod_roots, natDegree_C_mul hf0, natDegree_multiset_prod_X_sub_C_eq_card]
+Mathlib/Algebra/Polynomial/Splits.lean:405:  conv_lhs => rw [hf.eq_prod_roots]
+Mathlib/Algebra/Polynomial/Splits.lean:410:theorem Splits.coeff_zero_eq_prod_roots_of_monic (hf : Splits f) (hm : Monic f) :
+Mathlib/Algebra/Polynomial/Splits.lean:416:  conv_lhs => rw [hf.eq_prod_roots]
+Mathlib/Algebra/Polynomial/Splits.lean:429:  have := hf.eq_prod_roots
+Mathlib/Algebra/Polynomial/Splits.lean:494:  have := hg'.eq_prod_roots
+Mathlib/Algebra/Polynomial/Splits.lean:558:  simp [← eval_map_algebraMap, hf.eval_eq_prod_roots]
+Mathlib/Algebra/Polynomial/Splits.lean:602:  rw [hp.eq_prod_roots, C_mul_dvd (leadingCoeff_ne_zero.2 hp0)]
+Mathlib/Algebra/Polynomial/Splits.lean:649:  simp only [hf.eval_derivative, hf.eval_eq_prod_roots, ← Multiset.sum_map_mul_left, mul_assoc]
+Mathlib/Algebra/Polynomial/Reverse.lean:146:theorem reflect_mul_induction (cf cg : ℕ) (N O : ℕ) (f g : R[X]) (Cf : #f.support ≤ cf.succ)
+Mathlib/Algebra/Polynomial/Reverse.lean:177:theorem reflect_mul (f g : R[X]) {F G : ℕ} (Ff : f.natDegree ≤ F) (Gg : g.natDegree ≤ G) :
+Mathlib/Algebra/Polynomial/Reverse.lean:179:  reflect_mul_induction _ _ F G f g f.support.card.le_succ g.support.card.le_succ Ff Gg
+Mathlib/Algebra/Polynomial/Reverse.lean:191:theorem eval₂_reflect_mul_pow (i : R →+* S) (x : S) [Invertible x] (N : ℕ) (f : R[X])
+Mathlib/Algebra/Polynomial/Reverse.lean:206:  conv_rhs => rw [← eval₂_reflect_mul_pow i x N f hf]
+Mathlib/Algebra/Polynomial/Reverse.lean:274:  rw [natDegree_mul' fg, reflect_mul f g rfl.le rfl.le]
+Mathlib/Algebra/Polynomial/Reverse.lean:334:  eval₂_reflect_mul_pow i _ _ f le_rfl
+Mathlib/Algebra/Polynomial/BigOperators.lean:329:lemma natDegree_multiset_prod_X_sub_C_eq_card (s : Multiset R) :
+Mathlib/Algebra/Polynomial/BigOperators.lean:338:    natDegree_multiset_prod_X_sub_C_eq_card, Multiset.card_map, Finset.card]
+Mathlib/RingTheory/RootsOfUnity/PrimitiveRoots.lean:445:  rw [mul_neg_geom_sum, hζ.pow_eq_one, sub_self]
+Mathlib/RingTheory/RootsOfUnity/CyclotomicUnits.lean:105:  grind [mul_neg_geom_sum]
+Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:19:* `Matrix.det_eq_prod_roots_charpoly_of_splits`: the determinant (in the field of the matrix)
+Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:27:* `Matrix.det_eq_prod_roots_charpoly`: the determinant is the product of the roots of the
+Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:35:The two lemmas `Matrix.det_eq_prod_roots_charpoly` and `Matrix.trace_eq_sum_roots_charpoly` are more
+Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:44:The proofs of `det_eq_prod_roots_charpoly_of_splits` and
+Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:46:`norm_gen_eq_prod_roots` and `trace_gen_eq_sum_roots` respectively, but the
+Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:48:`Polynomial.coeff_zero_eq_prod_roots_of_monic_of_split` and
+Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:83:theorem det_eq_prod_roots_charpoly_of_splits [IsDomain R] (hAps : B.charpoly.Splits) :
+Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:86:    hAps.coeff_zero_eq_prod_roots_of_monic B.charpoly_monic, ← mul_assoc,
+Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:98:theorem det_eq_prod_roots_charpoly [IsAlgClosed K] : A.det = (Matrix.charpoly A).roots.prod :=
+Mathlib/LinearAlgebra/Matrix/Charpoly/Eigs.lean:99:  det_eq_prod_roots_charpoly_of_splits (IsAlgClosed.splits A.charpoly)
+Mathlib/RingTheory/Norm/Basic.lean:72:theorem PowerBasis.norm_gen_eq_prod_roots [Algebra R F] (pb : PowerBasis R S)
+Mathlib/RingTheory/Norm/Basic.lean:79:    hf.coeff_zero_eq_prod_roots_of_monic (this.map _),
+Mathlib/RingTheory/Norm/Basic.lean:159:theorem _root_.IntermediateField.AdjoinSimple.norm_gen_eq_prod_roots (x : L)
+Mathlib/RingTheory/Norm/Basic.lean:166:  rw [← adjoin.powerBasis_gen hx, PowerBasis.norm_gen_eq_prod_roots] <;>
+Mathlib/RingTheory/Norm/Basic.lean:183:  rw [PowerBasis.norm_gen_eq_prod_roots pb hE]
+Mathlib/RingTheory/Norm/Transitivity.lean:223:    norm_gen_eq_prod_roots _ (IsAlgClosed.splits _)]
+Mathlib/RingTheory/Norm/Transitivity.lean:253:theorem norm_eq_prod_roots {x : L} (hF : ((minpoly K x).map (algebraMap K F)).Splits) :
+Mathlib/RingTheory/Norm/Transitivity.lean:256:  rw [norm_eq_norm_adjoin K x, map_pow, IntermediateField.AdjoinSimple.norm_gen_eq_prod_roots _ hF]
+Mathlib/LinearAlgebra/SModEq/Pow.lean:25:  rw [← Commute.mul_neg_geom_sum₂ (.all _ _)]
+Mathlib/LinearAlgebra/Eigenspace/Charpoly.lean:49:lemma det_eq_prod_roots_charpoly_of_splits {f : End K V} (h : f.charpoly.Splits) :
+Mathlib/LinearAlgebra/Eigenspace/Charpoly.lean:52:    Matrix.det_eq_prod_roots_charpoly_of_splits (by simpa using h), charpoly_toMatrix]
+Mathlib/Analysis/Matrix/Spectrum.lean:192:  simp [det_eq_prod_roots_charpoly_of_splits hA.splits_charpoly, hA.roots_charpoly_eq_eigenvalues]
+Mathlib/Analysis/Polynomial/MahlerMeasure.lean:217:  nth_rw 1 [(IsAlgClosed.splits p).eq_prod_roots]
+Mathlib/Analysis/Normed/Unbundled/SpectralNorm.lean:318:          natDegree_multiset_prod_X_sub_C_eq_card]
+Mathlib/Analysis/Normed/Unbundled/SpectralNorm.lean:962:theorem spectralNorm_pow_natDegree_eq_prod_roots (x : L) {E : Type*} [Field E] [Algebra K E]
+Mathlib/Analysis/Normed/Unbundled/SpectralNorm.lean:1004:    hspl.coeff_zero_eq_prod_roots_of_monic _, map_mul, map_pow,
+Mathlib/Analysis/Normed/Unbundled/SpectralNorm.lean:1005:    map_neg_eq_map, map_one, one_pow, one_mul, spectralNorm_pow_natDegree_eq_prod_roots _ _ x]
+Mathlib/Analysis/Normed/Field/Approximation.lean:79:    rw [hg.eval_eq_prod_roots_of_monic hgm]
+Mathlib/Combinatorics/Enumerative/Partition/Glaisher.lean:149:  exact tprod_congr (fun i ↦ by simp_rw [pow_mul, geom_sum_mul_neg])
+Mathlib/Analysis/InnerProductSpace/Spectrum.lean:393:  simp [det_eq_prod_roots_charpoly_of_splits hT.splits_charpoly,
+Mathlib/Analysis/Complex/AbelLimit.lean:133:  simp_rw [← sum_sub_distrib, ← mul_one_sub, ← geom_sum_mul_neg, ← mul_assoc, ← sum_mul,
+Mathlib/Topology/Algebra/InfiniteSum/Ring.lean:282:  simpa [← Finset.sum_mul, geom_sum_mul_neg] using tendsto_const_nhds.sub h.tendsto_atTop_zero
+Mathlib/Topology/Algebra/InfiniteSum/Ring.lean:287:  simpa [← Finset.mul_sum, mul_neg_geom_sum] using tendsto_const_nhds.sub h.tendsto_atTop_zero

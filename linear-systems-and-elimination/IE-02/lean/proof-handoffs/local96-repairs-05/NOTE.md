@@ -1,0 +1,1 @@
+Actual96 failed; retain complete evidence. Repair Fourier finite-range rewrite, starRingEnd coercion and explicit order of the two distributive sum rewrites. Replace Jordan generic symmetric simp cycle with a fixed-index Fin.rev_eq_iff instance. No statement or limits change; await97.

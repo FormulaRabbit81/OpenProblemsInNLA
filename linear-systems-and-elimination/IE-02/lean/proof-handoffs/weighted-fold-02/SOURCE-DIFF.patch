@@ -1,0 +1,14 @@
+--- weighted-fold-01
++++ weighted-fold-02
+@@ -30,7 +30,10 @@
+     unfold sumSquares
+     apply Finset.sum_congr rfl
+     intro j _hj
+-    rw [weightedFold, Polynomial.eval_mul, Polynomial.eval_C, norm_mul,
++    -- Expose the scalar-polynomial product inside the finite sum.
++    change ‖(C (Real.sqrt (w j) : ℂ) * q j).eval z‖ ^ 2 =
++      w j * ‖(q j).eval z‖ ^ 2
++    rw [Polynomial.eval_mul, Polynomial.eval_C, norm_mul,
+       Complex.norm_of_nonneg (Real.sqrt_nonneg _), mul_pow, Real.sq_sqrt (hw j)]
+ 
+ #print axioms weighted_fold

@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -57,7 +57,7 @@
+       reverseVector (reverseVector x) = x) := by
+   have hstar : (reversal n).conjTranspose = reversal n := by
+     ext i j
+-    simp [Matrix.conjTranspose_apply, reversal, ← Fin.rev_eq_iff, eq_comm]
++    simp [Matrix.conjTranspose_apply, reversal, eq_comm.trans (Fin.rev_eq_iff (i := j) (j := i))]
+   have hsquare : reversal n * reversal n = (1 : Square n) := by
+     ext i j
+     rw [reversal_mul_apply]

@@ -1,0 +1,11 @@
+{
+  "time": "2026-09-17T10:15:19.797025+00:00",
+  "exact_header": "theorem minimizer_orthogonality {n k : \u2115} (hn : 1 \u2264 n)\n    (T : Square n) (R : Fin k \u2192 Square n) (hT : IsToeplitz T) (hne : T \u2260 0)\n    (hR : \u2200 j, IsToeplitz (R j))\n    (hmin : \u2200 c : Fin k \u2192 \u2102, operatorNorm T \u2264 operatorNorm (T + directionSum R c)) :\n    \u2203 x : H n, x \u2208 unitMaximal T \u2227\n      \u2200 j, inner \u2102 (euclideanLin T x) (euclideanLin (R j) x) = 0",
+  "source_sha256": {
+    "Challenge.lean": "a09907c4074776caeddf729da4ef9461433f105da5dff60396103121178288f9",
+    "NLA/IE02/Definitions.lean": "ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a",
+    "NLA/IE02/DescentConclusions.lean": "4c0480ac5030d6a745e993825ffacbdb52d44aeb892422d91f5c1bb9bf1b6c94",
+    "NLA/IE02/GradientSeparation.lean": "31e7eea03c37a0b4ee922d44ada55a1180b71c33f6f7358fbf280ba37f2834a2"
+  },
+  "before_implementation": true
+}

@@ -1,0 +1,19 @@
+NLA/IE02/MaximalSpace.lean:48:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  RCLike.re (inner ℂ x x)
+in the target expression
+  operatorNorm A ^ 2 * (inner ℂ x x).re = (operatorNorm A * ‖x‖) ^ 2
+
+n : ℕ
+A : Square n
+L : H n →ₗ[ℂ] H n := euclideanLin A
+G : H n →ₗ[ℂ] H n := LinearMap.adjoint L ∘ₗ L
+T : H n →L[ℂ] H n := LinearMap.toContinuousLinearMap G
+henergy : ∀ (y : H n), T.reApplyInnerSelf y = ‖L y‖ ^ 2
+hmem : ∀ (y : H n), y ∈ maximalSpace A ↔ G y = ↑(operatorNorm A ^ 2) • y
+x : H n
+hx : G x = ↑(operatorNorm A ^ 2) • x
+⊢ operatorNorm A ^ 2 * (inner ℂ x x).re = (operatorNorm A * ‖x‖) ^ 2
+'NLA.IE02.maximal_space_norm' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/MaximalSpace.lean:80:21: error: #assert_trust: 'NLA.IE02.maximal_space_norm' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

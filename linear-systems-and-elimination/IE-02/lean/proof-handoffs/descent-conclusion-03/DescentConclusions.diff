@@ -1,0 +1,18 @@
+--- accepted78
++++ two-referee-comments
+@@ -39,6 +39,7 @@
+         (norm_nonneg _) (norm_nonneg (euclideanCLM T)))
+   have hreal := (abs_le.mp (Complex.abs_re_le_norm
+     (inner ℂ (euclideanLin T x) (euclideanLin D x)))).1
++  -- Expose the frozen descentForm as a real part so the real inequalities apply.
+   change -(operatorNorm T * operatorNorm D) ≤
+     (inner ℂ (euclideanLin T x) (euclideanLin D x)).re
+   linarith
+@@ -85,6 +86,7 @@
+     (mul_le_mul_of_nonneg_left hD (sq_nonneg ε)).trans
+       (mul_le_mul_of_nonneg_right hpow hL)
+   have hf := unit_form_lower T D x hx
++  -- Multiplying by the nonnegative real 2 * ε preserves the lower bound's order.
+   have hlinear := mul_le_mul_of_nonneg_left hf (show 0 ≤ 2 * ε by positivity)
+   rw [descent_quadratic_expansion]
+   dsimp only [descentC] at hcoeff

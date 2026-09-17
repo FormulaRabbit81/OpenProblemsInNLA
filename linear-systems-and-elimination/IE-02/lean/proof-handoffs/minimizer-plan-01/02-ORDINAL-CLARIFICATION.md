@@ -1,0 +1,1 @@
+The frozen header and mathematical target in the original pre-code plan are correct. Its prose ordinal labels were off by one: minimizer_orthogonality is contract 41, and the reused positive_gradient_descent is contract 40. No statement, proof premise, or source definition changed. The earlier plan is retained verbatim.

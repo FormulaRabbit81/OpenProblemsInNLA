@@ -1,0 +1,19 @@
+--- before/WeightedFactorization.lean
++++ after/WeightedFactorization.lean
+@@ -42,14 +42,14 @@
+       · have hne : ∃ j, q j ≠ 0 := not_forall.mp hzero
+         by_cases hno : ∀ z : ℂ, ‖z‖ = 1 → ∃ j, (q j).eval z ≠ 0
+         · exact strict_scalar_factorization m q hq hno
+-        · push_neg at hno
++        · push Not at hno
+           obtain ⟨ζ, hζ, hroot⟩ := hno
+           obtain ⟨hm, r, hr⟩ := common_circle_root_reduction m q hq hne ζ hζ hroot
+           obtain ⟨s, hs, hseval⟩ :=
+             ih (m - 1) (by omega) l r (fun j => (hr j).2)
+           refine ⟨(X - C ζ) * s, ?_, ?_⟩
+           · have hprod : DegreeLE ((X - C ζ) * s) (1 + (m - 1)) := by
+-              simpa only [DegreeLE, Nat.cast_add] using
++              simpa only [DegreeLE, Nat.cast_add, Nat.cast_one] using
+                 Polynomial.degree_mul_le_of_le (Polynomial.degree_X_sub_C ζ).le hs
+             have hbound : 1 + (m - 1) = m := by omega
+             simpa only [hbound] using hprod

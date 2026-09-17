@@ -1,0 +1,68 @@
+{
+  "time_utc": "2026-09-17T08:55:20.410123+00:00",
+  "scope": "Endpoint exact frozen contract9 only; explicit finite-sum calc",
+  "before_sha256": "7cc15fd20d8b41a76414d1edb585da87deea3d52f0409e131db83642b94b3fa9",
+  "after_sha256": "2de791b0512845bbe9443cdf46abd620be28403c03c330362b01d45051ea0585",
+  "exact_header": {
+    "name": "NLA.IE02.schur_scalar_endpoint",
+    "header": "theorem schur_scalar_endpoint {n : ℕ} (hn : 1 ≤ n) (p : Poly)\n    (hU : operatorNorm (toeplitz n p) = 1) (hc : ‖p.coeff 0‖ = 1) :\n    toeplitz n p = p.coeff 0 • 1 ∧\n    SchurPair n (toeplitz n p) 0 (C (p.coeff 0)) 1",
+    "header_sha256": "89e7628f7f0525cf766a59e9e72971e6ec50098d536c2345d222943ca0a312eb"
+  },
+  "frozen_inputs_unchanged": 13,
+  "accepted_ActiveBlock_unchanged": "51e8b22e91073eb638ec533ac1aa55651a824ed738424fc6630c2e36e6839053",
+  "actual88_receipt_sha256": "49d17afa9dfd22d0d763cf980ed80265fa07546643d20b99301d9022dbdad730",
+  "actual88_endpoint": {
+    "module": "NLA.IE02.SchurEndpoint",
+    "argv": [
+      "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+      "--threads=1",
+      "--memory=4096",
+      "-o",
+      "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/IE02/SchurEndpoint.olean",
+      "NLA/IE02/SchurEndpoint.lean"
+    ],
+    "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+    "start": "2026-09-17T08:52:58.935232+00:00",
+    "source_sha256": "7cc15fd20d8b41a76414d1edb585da87deea3d52f0409e131db83642b94b3fa9",
+    "dependency_olean_sha256": {
+      "NLA.IE02.Toeplitz": "d13700c11ea034886c1535c20ebb3addf9c748385db062860a38e44d6a331725",
+      "NLA.IE02.MaximalSpace": "e0b4a9c581e93356ef23a99943ac386679025b20b3c9cae884363d400d25cf25"
+    },
+    "exit_code": 1,
+    "end": "2026-09-17T08:53:20.969940+00:00",
+    "elapsed_seconds": 22.034436334040947,
+    "log_sha256": "64f3d9870d321b4c376987b1a606380746233deee964481f146268e48ce49c05",
+    "maxrss_bytes_macos_cumulative": 3503718400,
+    "output_sha256": null
+  },
+  "actual88_active_block": {
+    "module": "NLA.IE02.SchurActiveBlock",
+    "argv": [
+      "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+      "--threads=1",
+      "--memory=4096",
+      "-o",
+      "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/IE02/SchurActiveBlock.olean",
+      "NLA/IE02/SchurActiveBlock.lean"
+    ],
+    "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+    "start": "2026-09-17T08:53:20.995723+00:00",
+    "source_sha256": "51e8b22e91073eb638ec533ac1aa55651a824ed738424fc6630c2e36e6839053",
+    "dependency_olean_sha256": {
+      "NLA.IE02.Definitions": "2da9eb5297af36ad575c57ef4c38dc7b8bc4f495ab0be0537eef2dcc874bb2bf"
+    },
+    "exit_code": 0,
+    "end": "2026-09-17T08:53:27.281681+00:00",
+    "elapsed_seconds": 6.285264791920781,
+    "log_sha256": "6d854ecce64a5f7263d08ebdeb73e6b1b74e7f2fd3cbd54412b5bea4c0e90a6a",
+    "maxrss_bytes_macos_cumulative": 3614982144,
+    "output_sha256": "d5a98ec8f5e0e10ab41b1b6de21ca45b754dde57ce6495900e91d87487fc5b4e"
+  },
+  "repair02_manifest_sha256": "6812dea10248c70c398aa994afe21c65a6c6e64d1133b23b6719b14e2591f3db",
+  "repair": "Replace only simpa application in hsplit with calc and exact Finset.add_sum_erase",
+  "retry": "UNRUN; root serial compiler only",
+  "independent_review": "PENDING",
+  "Comparator": "UNRUN",
+  "whole_target_complete": false,
+  "count_change": 0
+}

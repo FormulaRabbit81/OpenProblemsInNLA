@@ -1,0 +1,17 @@
+NLA/IE02/WeightedCoefficients.lean:35:4: error: Type mismatch: After simplification, term
+  degree_mul_le_of_le hf hg
+ has type
+  @LE.le (WithBot ℕ) WithBot.instPreorder.toLE (f * g).degree (↑d + ↑m)
+but is expected to have type
+  @LE.le (WithBot ℕ) WithBot.instPreorder.toLE (degree (f * g)) ↑(d + m)
+NLA/IE02/WeightedCoefficients.lean:79:4: error: Type mismatch: After simplification, term
+  hreal
+ has type
+  (inner ℂ (coeffVector (d + m + 1) (b * h)) (coeffVector (d + m + 1) (b * h))).re =
+    ∑ x, w x * (inner ℂ (coeffVector (d + m + 1) (b * q x)) (coeffVector (d + m + 1) (b * q x))).re
+but is expected to have type
+  ‖coeffVector (d + m + 1) (b * h)‖ ^ 2 = ∑ j, w j * ‖coeffVector (d + m + 1) (b * q j)‖ ^ 2
+'NLA.IE02.weighted_coefficient_preservation' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/WeightedCoefficients.lean:87:21: error: #assert_trust: 'NLA.IE02.weighted_coefficient_preservation' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

@@ -1,0 +1,1 @@
+Implementation of prior exact finite-sum plan. Fixed coefficient frequency u-v, unique index u+m-v, all l/m including zero. No new numerical calculation or extra assumptions. Await actual local96. Root is author; independent review pending.

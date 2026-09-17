@@ -1,0 +1,4 @@
+theorem affine_vector_minimum {n k : ℕ} (Y : Square n) (R : Fin k → Square n) (x : H n) :
+    ∃ c : Fin k → ℂ, ‖euclideanLin (affineResidual Y R c) x‖ = affineInner Y R x ∧
+      ∀ d : Fin k → ℂ, ‖euclideanLin (affineResidual Y R c) x‖ ≤
+        ‖euclideanLin (affineResidual Y R d) x‖ := by

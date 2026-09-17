@@ -1,0 +1,14 @@
+[
+  {
+    "ordinal": 47,
+    "name": "NLA.IE02.normalized_polynomial_residuals",
+    "header": "theorem normalized_polynomial_residuals (n k : ℕ) (lam : ℂ) :\n    (∀ p : Poly, Admissible k p → ∃ c : Fin k → ℂ,\n      polyEval p (lowerJordan n lam) = affineResidual 1 (jordanDirections n k lam) c) ∧\n    (∀ c : Fin k → ℂ, ∃ p : Poly, Admissible k p ∧\n      polyEval p (lowerJordan n lam) = affineResidual 1 (jordanDirections n k lam) c)",
+    "header_sha256": "27644ec8ab7ceaa4f60a2c9b95e0131ca95a7a56c333dcd13fd0713d77d6f632"
+  },
+  {
+    "ordinal": 49,
+    "name": "NLA.IE02.gmres_extrema_semantics",
+    "header": "theorem gmres_extrema_semantics {n : ℕ} (A : Square n) (k : ℕ) :\n    (∃ p : Poly, Admissible k p ∧ operatorNorm (polyEval p A) = idealGMRES A k ∧\n      ∀ q : Poly, Admissible k q → operatorNorm (polyEval p A) ≤ operatorNorm (polyEval q A)) ∧\n    (∀ x : H n, ∃ p : Poly, Admissible k p ∧\n      ‖euclideanLin (polyEval p A) x‖ = gmresInner A k x ∧\n      ∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p A) x‖ ≤\n        ‖euclideanLin (polyEval q A) x‖) ∧\n    (∀ x ∈ unitSphere n, 0 ≤ gmresInner A k x ∧ gmresInner A k x ≤ idealGMRES A k)",
+    "header_sha256": "1918f82b30423f701830bebc47da2f0f4a6cb2019ae8d1f4bacd2a7dffd5f87a"
+  }
+]

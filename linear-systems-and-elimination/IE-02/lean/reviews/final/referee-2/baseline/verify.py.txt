@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+"""Read-only verifier for this independent IE-02 original-byte review packet.
+
+No subprocess, compiler, network, evaluator, Git mutation or cache mutation.
+Default verifies only immutable copied material; --sources additionally requires
+all original external files/observed outputs to retain their original bytes.
+--preseal is only for the recorded preparer run before MANIFEST.json exists.
+"""
+from pathlib import Path
+import argparse,hashlib,json,re
+ap=argparse.ArgumentParser();ap.add_argument('--sources',action='store_true');ap.add_argument('--preseal',action='store_true');args=ap.parse_args()
+O=Path(__file__).resolve().parent;P=O/'snapshot/project';checks=[]
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def ck(v,label):
+ if not v:raise AssertionError(label)
+ checks.append(label)
+def mask(s):
+ out=[];i=0;depth=0
+ while i<len(s):
+  if depth:
+   if s[i:i+2]=='/-':depth+=1;out+=[' ',' '];i+=2
+   elif s[i:i+2]=='-/':depth-=1;out+=[' ',' '];i+=2
+   else:out.append('\n' if s[i]=='\n' else ' ');i+=1
+  elif s[i:i+2]=='/-':depth=1;out+=[' ',' '];i+=2
+  elif s[i:i+2]=='--':
+   j=s.find('\n',i);j=len(s) if j<0 else j;out.extend(' '*(j-i));i=j
+  else:out.append(s[i]);i+=1
+ ck(depth==0,'Balanced Lean comments');return ''.join(out)
+snap=json.loads((O/'SNAPSHOT.json').read_text());supp=json.loads((O/'SUPPLEMENTAL-INPUTS.json').read_text())
+for b in snap['bindings']+supp['bindings']:
+ if b.get('copy'):ck(sha(O/b['copy'])==b['sha256'],'Payload '+b['copy'])
+ if args.sources:ck(sha(b['source'])==b['sha256'],'External '+b['source'])
+for q in supp['commands']:
+ if q.get('output'):ck(sha(O/q['output'])==q['output_sha256'],'Query '+q['output'])
+ if args.sources and q.get('archive_external'):ck(sha(q['archive_external'])==q['output_sha256'],'Archived broad query')
+freeze=json.loads((P/'STATEMENT-FREEZE.json').read_text())
+for f,h in freeze['frozen_files'].items():ck(sha(P/f)==h,'Frozen '+f)
+ck(len(freeze['frozen_files'])==13,'Exactly thirteen frozen inputs')
+config=json.loads((P/'comparator.json').read_text());headers=json.loads((P/'STATEMENT-HEADERS.json').read_text())['headers']; names=config['theorem_names'];ck(len(names)==50==len(set(names))==len(headers),'Exactly fifty distinct contracts')
+ck([x['name'] for x in headers]==names,'Comparator order matches frozen headers');ck(config['definition_names']==[],'No definition holes')
+ck(set(config['permitted_axioms'])=={'propext','Quot.sound','Classical.choice'},'Exactly foundational permitted axioms')
+texts={str(p.relative_to(P)):p.read_text() for p in sorted((P/'NLA').rglob('*.lean'))};texts['Solution.lean']=(P/'Solution.lean').read_text();masked={f:mask(s) for f,s in texts.items()};challenge=mask((P/'Challenge.lean').read_text());ck(len(re.findall(r'\bsorry\b',challenge))==50,'Exactly fifty intentional Challenge specifications')
+contract_locations=[]
+for h in headers:
+ header=h['header'];ck(hashlib.sha256(header.encode()).hexdigest()==h['header_sha256'],'Frozen header hash '+h['name']);ck(challenge.count(header+' := by')==1,'Challenge literal '+h['name'])
+ locations=[(f,t.index(header+' := by')) for f,t in masked.items() if header+' := by' in t];ck(len(locations)==1,'Unique literal proof header '+h['name']);f,pos=locations[0];contract_locations.append({'name':h['name'],'source':f,'line':texts[f][:pos].count('\n')+1,'header_sha256':h['header_sha256'],'source_sha256':sha(P/f)})
+ ck(texts['Solution.lean'].count('#print axioms '+h['name']+'\n')==1,'Entrypoint print '+h['name']);ck(texts['Solution.lean'].count('#assert_trust kernel '+h['name']+'\n')==1,'Entrypoint assertion '+h['name'])
+for f,t in masked.items():
+ ck(not re.search(r'\b(sorry|admit|axiom|unsafe|native_decide|run_tac|elab|macro|initialize|implemented_by)\b|#eval|#reduce|ofReduceBool|trustCompiler',t),'No forbidden source construct '+f)
+ ck('Challenge' not in ' '.join(re.findall(r'^import (.*)$',t,re.M)),'No Challenge import '+f)
+ ck(not re.search(r'set_option\s+(maxHeartbeats|maxRecDepth|debug.skipKernelTC|linter.unusedVariables)',t),'No resource/kernel/linter suppression '+f)
+ ck('Department of Computing and Mathematical Sciences, California Institute of Technology.' in texts[f],'Attribution '+f)
+ ck(not re.search(r'[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}',texts[f]),'No email '+f)
+modules={('IE02Solution' if f=='Solution.lean' else f[:-5].replace('/','.')):f for f in texts}
+imports={m:[d for line in masked[f].splitlines() if line.startswith('import ') for d in line[7:].split() if d.startswith('NLA.')] for m,f in modules.items()}
+visited=set();active=set();closures={}
+def visit(m):
+ ck(m not in active,'Acyclic '+m)
+ if m in visited:return closures[m]
+ active.add(m);ds={m}
+ for d in imports[m]:ck(d in modules,'Declared dependency '+d);ds.update(visit(d))
+ active.remove(m);visited.add(m);closures[m]=ds;return ds
+ck(len(visit('IE02Solution'))==56==len(modules),'Complete fifty-six module entrypoint closure')
+rp=O/'evidence/runs/development-121/RECEIPT.json';r=json.loads(rp.read_text());rows={x['module']:x for x in r['commands']};ck(set(rows)==set(modules),'Receipt exact module closure')
+ck(r['failed_modules']==[] and r['blocked_modules']==[] and r['completed_modules']==56,'Complete local121 success')
+ck(r['max_compiler_processes']==1 and r['threads']==1 and r['memory_cap_mib']==4096,'Local resource limits')
+ck(sha(O/'evidence/serial_compile_v3.py.txt')==r['runner_sha256'],'Actual runner bytes')
+assembly=json.loads((O/'evidence/assemblies/ASSEMBLY-121.json').read_text());ck(sha(O/'evidence/assemblies/ASSEMBLY-121.json')==r['assembly_sha256'],'Final assembly binding')
+ck(sha(O/'evidence/LOCAL-ENVIRONMENT.json')==assembly['current_environment_sha256'],'Environment binding')
+hops=0;fresh_origins=[];receipts=set()
+for m,row in rows.items():
+ f=modules[m];localrel=m.replace('.','/')+'.lean';ck(sha(P/f)==row['source_sha256']==assembly['sources'][localrel]['sha256'],'Final source binding '+m);cur=row;path=rp
+ while True:
+  receipts.add(str(path));j=json.loads(path.read_text());ar=O/'evidence/assemblies'/('ASSEMBLY-'+path.parent.name.split('-')[-1]+'.json');ck(sha(ar)==j['assembly_sha256'],'Assembly '+path.parent.name)
+  ck(j['source_inputs'][localrel]==row['source_sha256']==cur['source_sha256'],'Origin source '+m);ck(cur['output_sha256']==row['output_sha256'],'Origin output '+m)
+  ck(j['threads']==1 and j['memory_cap_mib']==4096,'Origin resources '+m)
+  if cur.get('status')=='reused_exact_successful_local_output':
+   ck(set(cur['transitive_source_hashes'])=={v.replace('.','/')+'.lean' for v in closures[m]},'Exact transitive closure '+m)
+   for dep,h in cur['transitive_source_hashes'].items():
+    can='Solution.lean' if dep=='IE02Solution.lean' else dep;ck(sha(P/can)==h,'Transitive input '+dep)
+   prior=O/'evidence/runs'/Path(cur['prior_receipt']).parent.name/'RECEIPT.json';ck(sha(prior)==cur['prior_receipt_sha256'],'Prior receipt binding '+m);cur=next(x for x in json.loads(prior.read_text())['commands'] if x['module']==m);path=prior;hops+=1
+  else:
+   ck(cur['exit_code']==0,'Actual local success '+m);ck(set(cur['dependency_olean_sha256'])==set(imports[m]),'Actual dependency list '+m)
+   for dep,h in cur['dependency_olean_sha256'].items():ck(rows[dep]['output_sha256']==h,'Actual dependency output '+dep)
+   log=path.parent/(m+'.log');ck(sha(log)==cur['log_sha256'],'Actual raw log '+m);ck('--threads=1' in cur['argv'] and '--memory=4096' in cur['argv'],'Actual command '+m)
+   ck(not re.search(r'\berror:|sorryAx|nativeCompiler',log.read_text()),'Clean successful log '+m)
+   fresh_origins.append({'module':m,'run':path.parent.name,'elapsed_seconds':cur['elapsed_seconds'],'source_sha256':cur['source_sha256'],'output_sha256':cur['output_sha256'],'log_sha256':cur['log_sha256'],'command':cur['argv'],'whole_run_failed_modules':j['failed_modules']});break
+entry=(O/'evidence/runs/development-121/IE02Solution.log').read_text();got=re.findall(r"'([^']+)' depends on axioms: \[([^\]]*)\]",entry)
+ck([n for n,_ in got]==names,'All fifty actual entrypoint outputs in order');ck(all(set(a.split(', '))<={'propext','Classical.choice','Quot.sound'} for _,a in got),'All actual entrypoint axioms foundational')
+ck(masked['NLA/IE02/Numerical.lean'].count('interval_decide (trust := kernel)')==1,'Single exact kernel certificate')
+ck(sum(t.count('interval_decide') for t in masked.values())==1,'No numerical sweep')
+ck('mul_pos half_certificate hm' in masked['NLA/IE02/DescentSteps.lean'],'Certificate consumed in actual descent positivity')
+ck('NLA.IE02.Numerical' in closures['NLA.IE02.CanonicalJordan'],'Numerical module on final dependency route')
+spec=json.loads((O/'evidence/statement-elaboration/RECORD.json').read_text())
+spec_receipt=json.loads((O/spec['receipt']).read_text())
+spec_row=next(x for x in spec_receipt['commands'] if x['module']=='NLA.IE02.Challenge')
+ck(spec_row==spec['command'],'Recorded actual specification command')
+ck(spec_row['exit_code']==0,'Actual specification elaboration succeeded')
+ck(spec_row['source_sha256']==spec['challenge_sha256']==sha(P/'Challenge.lean'),'Exact Challenge source elaborated')
+ck(sha(O/spec['log'])==spec_row['log_sha256'],'Actual specification raw log')
+ck((O/spec['log']).read_text().count('declaration uses `sorry`')==50==spec['actual_expected_sorry_warnings'],'Exactly fifty intentional specification warnings')
+ck('--threads=1' in spec_row['argv'] and '--memory=4096' in spec_row['argv'],'Specification resource limits')
+if not args.preseal:
+ manifest=json.loads((O/'MANIFEST.json').read_text())
+ for f,h in manifest['files'].items():ck(sha(O/f)==h,'Manifest '+f)
+ ck(set(manifest['files'])=={str(p.relative_to(O)) for p in O.rglob('*') if p.is_file() and p.name!='MANIFEST.json'},'Exhaustive manifest inventory')
+print(json.dumps({'result':'PASS','checks':len(checks),'modules':len(modules),'contracts':len(names),'frozen_inputs':13,'reuse_hops':hops,'receipt_files':len(receipts),'original_external_sources_required':args.sources,'scope':'Read-only source/evidence audit, not Lean or Comparator rerun','contracts_checked':contract_locations,'actual_success_origins':fresh_origins},indent=2))

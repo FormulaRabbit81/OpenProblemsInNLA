@@ -1,0 +1,205 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original IE-02 mathematical and library
+attribution is retained in Definitions.lean and SourceCorrespondence.md.
+Reuses Mathlib's polynomial coefficient algebra and actual operator-norm bounds.
+
+The strict Schur reduction uses a finite nilpotent inverse. Norm attainment
+retains the boundary norm, and the exact defect transports the whole maximal
+subspace without a singular-value multiplicity assumption.
+-/
+import NLA.IE02.NilpotentInverse
+import NLA.IE02.SchurEnergy
+import NLA.IE02.NormAttainment
+import NLA.IE02.MaximalSpace
+import NLA.IE02.SchurActiveBlock
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+
+theorem toeplitz_sub (n : ℕ) (p q : Poly) :
+    toeplitz n (p - q) = toeplitz n p - toeplitz n q :=
+  map_sub (toeplitzAlgHom n) p q
+
+theorem toeplitz_smul (n : ℕ) (c : ℂ) (p : Poly) :
+    toeplitz n (c • p) = c • toeplitz n p :=
+  map_smul (toeplitzAlgHom n) c p
+
+theorem IsToeplitz.mul {n : ℕ} {A B : Square n}
+    (hA : IsToeplitz A) (hB : IsToeplitz B) : IsToeplitz (A * B) := by
+  rcases hA with ⟨p, rfl⟩
+  rcases hB with ⟨q, rfl⟩
+  exact ⟨p * q, (toeplitz_mul n p q).symm⟩
+
+theorem IsToeplitz.commute {n : ℕ} {A B : Square n}
+    (hA : IsToeplitz A) (hB : IsToeplitz B) : Commute A B := by
+  rcases hA with ⟨p, rfl⟩
+  rcases hB with ⟨q, rfl⟩
+  -- Commute here is exactly equality of the two matrix products.
+  change toeplitz n p * toeplitz n q = toeplitz n q * toeplitz n p
+  rw [← toeplitz_mul, ← toeplitz_mul, mul_comm p q]
+
+theorem toeplitz_nilpotent_of_coeff_zero (n : ℕ) (p : Poly) (hp : p.coeff 0 = 0) :
+    toeplitz n p ^ n = 0 := by
+  have hsplit : p = Polynomial.X * p.divX := by
+    simpa only [hp, Polynomial.C_0, add_zero] using (Polynomial.X_mul_divX_add p).symm
+  have hpower : p ^ n = Polynomial.X ^ n * p.divX ^ n :=
+    (congrArg (fun q : Poly => q ^ n) hsplit).trans (mul_pow _ _ _)
+  have hshift : toeplitz n (Polynomial.X ^ n : Poly) = shift n ^ n :=
+    map_pow (toeplitzAlgHom n) Polynomial.X n
+  calc
+    toeplitz n p ^ n = toeplitz n (p ^ n) := (map_pow (toeplitzAlgHom n) p n).symm
+    _ = toeplitz n (Polynomial.X ^ n * p.divX ^ n) := congrArg (toeplitz n) hpower
+    _ = toeplitz n (Polynomial.X ^ n) * toeplitz n (p.divX ^ n) := toeplitz_mul _ _ _
+    _ = 0 := by rw [hshift, shift_pow_nilpotent, Matrix.zero_mul]
+
+theorem maximal_space_norm_one {n : ℕ} (A : Square n) (hA : operatorNorm A = 1) (x : H n) :
+    x ∈ maximalSpace A ↔ ‖euclideanLin A x‖ = ‖x‖ := by
+  simpa only [hA, one_mul] using (maximal_space_norm A).2 x
+
+theorem schur_strict_reduction {n : ℕ} (p : Poly)
+    (hU : operatorNorm (toeplitz (n + 2) p) = 1) (hc : ‖p.coeff 0‖ < 1) :
+    ∃ B : Square (n + 2), IsToeplitz B ∧
+      schurM (toeplitz (n + 2) p) (p.coeff 0) * B = 1 ∧
+      B * schurM (toeplitz (n + 2) p) (p.coeff 0) = 1 ∧
+      IsToeplitz (schurZ (toeplitz (n + 2) p) (p.coeff 0) B) ∧
+      (∀ i, schurZ (toeplitz (n + 2) p) (p.coeff 0) B i i = 0) ∧
+      operatorNorm (schurZ (toeplitz (n + 2) p) (p.coeff 0) B) = 1 ∧
+      operatorNorm (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) = 1 ∧
+      (∀ x : H (n + 2),
+        ‖euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x‖ ^ 2 -
+          ‖euclideanLin (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)
+            (euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x)‖ ^ 2 =
+          (1 - ‖p.coeff 0‖ ^ 2) * (‖x‖ ^ 2 - ‖euclideanLin (toeplitz (n + 2) p) x‖ ^ 2)) ∧
+      (∀ x : H (n + 2), x ∈ maximalSpace (toeplitz (n + 2) p) ↔
+        euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x ∈
+          maximalSpace (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) := by
+  let U : Square (n + 2) := toeplitz (n + 2) p
+  let c : ℂ := p.coeff 0
+  let α : ℝ := 1 - ‖c‖ ^ 2
+  let K : Square (n + 2) := -star c • (U - c • 1)
+  have hU' : operatorNorm U = 1 := hU
+  have hc' : ‖c‖ < 1 := hc
+  have hαpos : 0 < α := by
+    apply sub_pos.mpr
+    simpa only [one_pow] using (sq_lt_sq₀ (norm_nonneg c) (show (0 : ℝ) ≤ 1 by norm_num)).mpr hc'
+  have hαne : (α : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (ne_of_gt hαpos)
+  have hcnorm : ((‖c‖ ^ 2 : ℝ) : ℂ) = c * star c := by
+    rw [Complex.sq_norm]
+    exact (Complex.mul_conj c).symm
+  have hM : schurM U c = (α : ℂ) • 1 + K := by
+    simp only [schurM, K, α, Complex.ofReal_sub, Complex.ofReal_one, hcnorm,
+      sub_smul, one_smul, smul_sub, smul_smul, neg_mul, neg_smul,
+      mul_comm (star c) c]
+    abel
+  have hKform : K = toeplitz (n + 2) (-star c • (p - Polynomial.C c)) := by
+    simp only [toeplitz_smul, toeplitz_sub, toeplitz_C, K, U]
+  have hKtoep : IsToeplitz K := ⟨-star c • (p - Polynomial.C c), hKform⟩
+  have hKnil : K ^ (n + 2) = 0 := by
+    rw [hKform]
+    apply toeplitz_nilpotent_of_coeff_zero
+    simp [c]
+  let B := finiteInverse (α : ℂ) K
+  have hinv := nilpotent_inverse (α : ℂ) K hαne hKnil
+  have hleft : schurM U c * B = 1 := by
+    rw [hM]
+    exact hinv.1
+  have hright : B * schurM U c = 1 := by
+    rw [hM]
+    exact hinv.2.1
+  have hBtoep : IsToeplitz B := hinv.2.2 hKtoep
+  let Z := schurZ U c B
+  have hWform : U - c • 1 = toeplitz (n + 2) (p - Polynomial.C c) := by
+    simp only [toeplitz_sub, toeplitz_C, U]
+  have hZtoep : IsToeplitz Z :=
+    (show IsToeplitz (U - c • 1) from ⟨p - Polynomial.C c, hWform⟩).mul hBtoep
+  obtain ⟨q, hq⟩ := hBtoep
+  have hZform : Z = toeplitz (n + 2) ((p - Polynomial.C c) * q) := by
+    calc
+      Z = (U - c • 1) * B := rfl
+      _ = toeplitz (n + 2) (p - Polynomial.C c) * toeplitz (n + 2) q := by rw [hWform, hq]
+      _ = toeplitz (n + 2) ((p - Polynomial.C c) * q) := (toeplitz_mul _ _ _).symm
+  have hdiag (i : Fin (n + 2)) : Z i i = 0 := by
+    rw [hZform]
+    simp [toeplitz, Polynomial.mul_coeff_zero, c]
+  have hZmul : Z * schurM U c = U - c • 1 := by
+    -- Expose only the frozen schurZ product, so the right inverse cancels.
+    change ((U - c • 1) * B) * schurM U c = U - c • 1
+    rw [mul_assoc, hright, mul_one]
+  have hMB (x : H (n + 2)) : euclideanLin (schurM U c) (euclideanLin B x) = x := by
+    rw [← euclideanLin_mul_apply, hleft, euclideanLin_one_apply]
+  have hBM (x : H (n + 2)) : euclideanLin B (euclideanLin (schurM U c) x) = x := by
+    rw [← euclideanLin_mul_apply, hright, euclideanLin_one_apply]
+  have hZM (x : H (n + 2)) :
+      euclideanLin Z (euclideanLin (schurM U c) x) = euclideanLin (U - c • 1) x := by
+    rw [← euclideanLin_mul_apply, hZmul]
+  have henergy (x : H (n + 2)) :
+      ‖euclideanLin (schurM U c) x‖ ^ 2 - ‖euclideanLin Z (euclideanLin (schurM U c) x)‖ ^ 2 =
+        α * (‖x‖ ^ 2 - ‖euclideanLin U x‖ ^ 2) := by
+    rw [hZM]
+    exact schur_energy_identity U c x
+  have hUbound (x : H (n + 2)) : ‖euclideanLin U x‖ ≤ ‖x‖ := by
+    calc
+      ‖euclideanLin U x‖ ≤ operatorNorm U * ‖x‖ := (euclideanCLM U).le_opNorm x
+      _ = ‖x‖ := by rw [hU', one_mul]
+  have hZbound (y : H (n + 2)) : ‖euclideanLin Z y‖ ≤ ‖y‖ := by
+    have he := henergy (euclideanLin B y)
+    rw [hMB] at he
+    have hu : ‖euclideanLin U (euclideanLin B y)‖ ^ 2 ≤ ‖euclideanLin B y‖ ^ 2 :=
+      (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mpr (hUbound _)
+    have hnonneg := mul_nonneg (le_of_lt hαpos) (sub_nonneg.mpr hu)
+    apply (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mp
+    linarith
+  have hZcon : operatorNorm Z ≤ 1 := by
+    apply ContinuousLinearMap.opNorm_le_bound (euclideanCLM Z) (by norm_num)
+    intro y
+    -- The continuous extension acts by the same underlying Euclidean linear map.
+    change ‖euclideanLin Z y‖ ≤ 1 * ‖y‖
+    simpa only [one_mul] using hZbound y
+  obtain ⟨x, hx, hUx⟩ := (euclidean_norm_attainment (by omega : 1 ≤ n + 2) U).2.2.2
+  have hxnorm : ‖x‖ = 1 := hx
+  have hxne : x ≠ 0 := norm_ne_zero_iff.mp (by rw [hxnorm]; exact one_ne_zero)
+  let y := euclideanLin (schurM U c) x
+  have hyne : y ≠ 0 := by
+    intro hy
+    apply hxne
+    calc
+      x = euclideanLin B y := (hBM x).symm
+      _ = 0 := by rw [hy, map_zero]
+  have hynorm : ‖euclideanLin Z y‖ = ‖y‖ := by
+    have he := henergy x
+    rw [hxnorm, hUx, hU', sub_self, mul_zero] at he
+    exact (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).mp (sub_eq_zero.mp he).symm
+  have hZnorm : operatorNorm Z = 1 := by
+    apply le_antisymm hZcon
+    apply (mul_le_mul_iff_left₀ (norm_pos_iff.mpr hyne)).mp
+    calc
+      1 * ‖y‖ = ‖euclideanLin Z y‖ := by rw [one_mul, hynorm]
+      _ ≤ operatorNorm Z * ‖y‖ := (euclideanCLM Z).le_opNorm y
+  have hVnorm : operatorNorm (activeBlock Z) = 1 :=
+    (schur_active_block Z hZtoep hdiag hZcon).2.1.symm.trans hZnorm
+  refine ⟨B, ⟨q, hq⟩, hleft, hright, hZtoep, hdiag, hZnorm, hVnorm, henergy, ?_⟩
+  intro x
+  rw [maximal_space_norm_one U hU' x,
+    maximal_space_norm_one Z hZnorm (euclideanLin (schurM U c) x)]
+  constructor
+  · intro hx
+    have he := henergy x
+    rw [hx, sub_self, mul_zero] at he
+    exact (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).mp (sub_eq_zero.mp he).symm
+  · intro hy
+    have he := henergy x
+    rw [hy, sub_self] at he
+    have hz : ‖x‖ ^ 2 - ‖euclideanLin U x‖ ^ 2 = 0 :=
+      (mul_eq_zero.mp he.symm).resolve_left (ne_of_gt hαpos)
+    exact (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).mp (sub_eq_zero.mp hz).symm
+
+#print axioms schur_strict_reduction
+#assert_trust kernel schur_strict_reduction
+
+end
+end NLA.IE02

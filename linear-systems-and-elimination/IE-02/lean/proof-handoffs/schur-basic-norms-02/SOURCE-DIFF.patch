@@ -1,0 +1,13 @@
+--- schur-basic-norms-01
++++ schur-basic-norms-02
+@@ -22,8 +22,8 @@
+   let e : H n := PiLp.single 2 i 1
+   have he : ‖e‖ = 1 := by simp [e]
+   have hcoord : (euclideanLin (toeplitz n p) e) i = p.coeff 0 := by
+-    change (∑ j : Fin n, toeplitz n p i j * (PiLp.single 2 i (1 : ℂ)) j) = _
+-    simp [PiLp.single_apply, toeplitz]
++    change (∑ j : Fin n, toeplitz n p i j * e j) = _
++    simp [e, PiLp.single_apply, toeplitz]
+   calc
+     ‖p.coeff 0‖ = ‖(euclideanLin (toeplitz n p) e) i‖ := congrArg norm hcoord.symm
+     _ ≤ ‖euclideanLin (toeplitz n p) e‖ := PiLp.norm_apply_le _ i

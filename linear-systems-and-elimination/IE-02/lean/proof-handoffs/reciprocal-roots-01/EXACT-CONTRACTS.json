@@ -1,0 +1,17 @@
+{
+  "status": "Unchanged frozen statements; no new proof or elaboration claim",
+  "contracts": [
+    {
+      "ordinal": 25,
+      "name": "NLA.IE02.reciprocal_root_pairing",
+      "header": "theorem reciprocal_root_pairing (ell : ℕ) (P : Poly)\n    (hdeg : P.degree = (2 * ell : WithBot ℕ)) (hzero : P.coeff 0 ≠ 0)\n    (href : conjReflect (2 * ell) P = P)\n    (hcircle : ∀ z : ℂ, ‖z‖ = 1 → P.eval z ≠ 0) :\n    P.roots = P.roots.map reciprocalConj ∧\n    P.roots = insideRoots P + (insideRoots P).map reciprocalConj ∧\n    (insideRoots P).card = ell ∧ (∀ z ∈ P.roots, z ≠ 0)",
+      "header_sha256": "2d2c8603394a47d1197b825a97df93ccdcfdb9dc16ebf3e7c7bf58b0426a0cfc"
+    },
+    {
+      "ordinal": 26,
+      "name": "NLA.IE02.reciprocal_inside_factor",
+      "header": "theorem reciprocal_inside_factor (ell : ℕ) (P : Poly)\n    (hdeg : P.degree = (2 * ell : WithBot ℕ)) (hzero : P.coeff 0 ≠ 0)\n    (href : conjReflect (2 * ell) P = P)\n    (hcircle : ∀ z : ℂ, ‖z‖ = 1 → P.eval z ≠ 0) :\n    (rootProduct (insideRoots P)).degree = (ell : WithBot ℕ) ∧\n    (rootProduct (insideRoots P)).eval 0 ≠ 0 ∧\n    (∀ z : ℂ, ‖z‖ = 1 → (rootProduct (insideRoots P)).eval z ≠ 0) ∧\n    ∃ κ : ℂ, κ ≠ 0 ∧ P = C κ *\n      (rootProduct (insideRoots P) * conjReflect ell (rootProduct (insideRoots P)))",
+      "header_sha256": "6fddc88b69e1feb874ee400b2d03349f62076c71ec1797abbf7fddf487a8f37c"
+    }
+  ]
+}

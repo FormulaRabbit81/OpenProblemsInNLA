@@ -1,0 +1,19 @@
+NLA/IE02/ReciprocalRoots.lean:87:84: error: unsolved goals
+ell : ℕ
+P : Poly
+hdeg : degree P = 2 * ↑ell
+hzero : coeff P 0 ≠ 0
+href : conjReflect (2 * ell) P = P
+hcircle : ∀ (z : ℂ), ‖z‖ = 1 → eval z P ≠ 0
+hP : P ≠ 0
+hnonzero : ∀ z ∈ roots P, z ≠ 0
+hnorm : ∀ z ∈ roots P, ‖z‖ ≠ 1
+hnat : natDegree P = 2 * ell
+hcard : (roots P).card = 2 * ell
+hpair : roots P = Multiset.map reciprocalConj (roots P)
+⊢ Multiset.map reciprocalConj (Multiset.filter ((fun z => ¬‖z‖ < 1) ∘ reciprocalConj) (roots P)) =
+    Multiset.map reciprocalConj (Multiset.filter (fun z => ¬‖reciprocalConj z‖ < 1) (roots P))
+'NLA.IE02.reciprocal_root_pairing' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/ReciprocalRoots.lean:105:21: error: #assert_trust: 'NLA.IE02.reciprocal_root_pairing' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

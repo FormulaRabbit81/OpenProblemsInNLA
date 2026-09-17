@@ -1,0 +1,39 @@
+{
+  "time_utc": "2026-09-17T07:53:17.013197+00:00",
+  "status": "PLAN ONLY; implementation held for MaximalSpace02 actual check/root acknowledgment",
+  "candidate_absent": true,
+  "plan_sha256": "881da3ae0da765f563a7cd08680e810117c8bb0f1462197d2f76c36a992ad5c7",
+  "exact_frozen_header": {
+    "name": "NLA.IE02.weighted_coefficient_preservation",
+    "header": "theorem weighted_coefficient_preservation {l k : ℕ} (d m : ℕ)\n    (a b h : Poly) (q : Fin l → Poly) (w : Fin l → ℝ) (r : Fin k → Poly)\n    (ha : DegreeLE a d) (hb : DegreeLE b d) (hh : DegreeLE h m)\n    (hq : ∀ j, DegreeLE (q j) m)\n    (hfactor : h * conjReflect m h = ∑ j, C (w j : ℂ) * (q j * conjReflect m (q j))) :\n    ‖coeffVector (d + m + 1) (b * h)‖ ^ 2 =\n      ∑ j, w j * ‖coeffVector (d + m + 1) (b * q j)‖ ^ 2 ∧\n    ∀ i, inner ℂ (coeffVector (d + m + 1) (a * h))\n        (euclideanLin (toeplitz (d + m + 1) (r i)) (coeffVector (d + m + 1) (b * h))) =\n      ∑ j, (w j : ℂ) * inner ℂ (coeffVector (d + m + 1) (a * q j))\n        (euclideanLin (toeplitz (d + m + 1) (r i)) (coeffVector (d + m + 1) (b * q j)))",
+    "header_sha256": "d3ab509da0515dda27b2f68e5c7084370ddefdec7f8a109eb4a360be9d01eb52"
+  },
+  "frozen_inputs_verified": {
+    "Challenge.lean": "a09907c4074776caeddf729da4ef9461433f105da5dff60396103121178288f9",
+    "NLA/IE02/Definitions.lean": "ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a",
+    "NUMERICAL_TARGETS.md": "33f5e2b47de6b7c2b7bc0eedaeaa2dec7a0e992f7e45710e19a6cc0509a91e90",
+    "NUMERICAL-FIRST.json": "7ecf430908886532d254f7858dfcab173a44f031a81ccf44fa433f89a8bb7e39",
+    "DEFINITION-AND-CONTRACT-PLAN.md": "23b470cc3715912ab6de5db7062bd48754393105d8fe2292b3584497f6e98c84",
+    "STATEMENT-HEADERS.json": "0907a434a785e15f95e3f977b18592b4cf7ed99ddaf3f604f3bae37105302374",
+    "SourceCorrespondence.md": "d7d26f5a9cbee120c499cf547233bb91b1f6d35aec3b4186f640ce8e501c5440",
+    "REVIEW-PLAN.md": "7ba443c1712766c8b9a6dd598e00cbab4cf02622290efc90412ef4a8a64f5792",
+    "comparator.json": "b553796f4c137f5d3ab1d5491f48aaa5d752bc6cef7a57d80b2b6eeeb6ecb7a7",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+    "lakefile.toml": "392e7aad754a2e38487900b98e003d8a5b352693e39b32ba7699aa7a086f0ac8",
+    "lake-manifest.json": "9d123374c6c7b2dbe8cafc316656ced1c28b1aea86e6f4d9a3c217ea8e488f3c",
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  "primary_sources": {
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/Definitions.lean": "ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/Coefficients.lean": "edd60266a5a89fd86f2aa254e71cae919ed8cdff47aa5a01b09edb37b71bbbb7",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/Reflection.lean": "9c4d833d0d7e9b76b9d80a2443dd02d13c90541367717b7c166012642ffa929d",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/Toeplitz.lean": "29cfd72873d8211f2b85c7ab2cae4a1c7d9580675736291012a8313802667b7d",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Degree/Defs.lean": "ff616e11c821c0baac9f9f4adb43b28eb1b442ef5e4752a9f8d3469350af7ffc",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Coeff.lean": "9afce0783702a4d23d7eab6cb0248845c0954b9d4c0bb0639e23d25238d604e5",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Complex/BigOperators.lean": "c7f8b975f885dfe8e2a3866c7aecd0f7c16223863419d554634cf6ca861c1a6d",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/RCLike/Basic.lean": "a84c795cd067befa1095540ddacd3f580d3d517f91c50965227c6f8e7e34474e",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Basic.lean": "344aa5e0b104223d327bb1f13db092b4d320017c8f82b7ba9846b5f517222468"
+  },
+  "compiler_run": false,
+  "whole_target_claim": false
+}

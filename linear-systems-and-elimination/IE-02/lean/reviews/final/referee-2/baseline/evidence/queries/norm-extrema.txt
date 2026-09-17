@@ -1,0 +1,99 @@
+Mathlib/Algebra/GCDMonoid/Basic.lean:181:theorem normalize_eq_normalize_iff_associated {a b : α} :
+Mathlib/Algebra/GCDMonoid/Basic.lean:193:  rw [← ha, normalize_eq_normalize_iff_associated.mpr h, hb]
+Mathlib/Algebra/GCDMonoid/Basic.lean:209:  normalize_eq_normalize_iff_associated.mpr (associated_of_dvd_dvd hab hba)
+Mathlib/Algebra/GCDMonoid/Basic.lean:211:theorem normalize_eq_normalize_iff {x y : α} : normalize x = normalize y ↔ x ∣ y ∧ y ∣ x := by
+Mathlib/Algebra/GCDMonoid/Basic.lean:212:  rw [normalize_eq_normalize_iff_associated, dvd_dvd_iff_associated]
+Mathlib/Algebra/GCDMonoid/Basic.lean:229:    hu ▸ normalize_eq_normalize_iff_associated.mpr ⟨_, rfl⟩
+Mathlib/Analysis/Normed/Algebra/GelfandMazur.lean:399:  simp only [norm_φ_eq_norm_φ_of_isMinOn h (norm_ne_zero_iff.mpr H)] at this
+Mathlib/Analysis/Normed/Operator/NNNorm.lean:136:theorem exists_mul_lt_of_lt_opNorm (f : E →SL[σ₁₂] F) {r : ℝ} (hr₀ : 0 ≤ r) (hr : r < ‖f‖) :
+Mathlib/Analysis/Normed/Operator/NNNorm.lean:174:theorem exists_lt_apply_of_lt_opNorm (f : E →SL[σ₁₂] F) {r : ℝ}
+Mathlib/Analysis/Convex/Intrinsic.lean:410:    obtain ⟨z, hz₁, hz₂⟩ := h _ (affineSpan 𝕜 s).closed_of_finiteDimensional.isOpen_compl hc
+Mathlib/Analysis/Convex/Measure.lean:41:      (closure_minimal (subset_affineSpan _ _) (affineSpan ℝ s).closed_of_finiteDimensional)
+Mathlib/Analysis/Normed/Module/FiniteDimension.lean:35:* `Submodule.closed_of_finiteDimensional` : a finite-dimensional subspace over a complete field is
+Mathlib/Analysis/Normed/Module/FiniteDimension.lean:400:theorem exists_opNorm_le {ι : Type*} [Finite ι] (v : Basis ι 𝕜 E) :
+Mathlib/Analysis/Normed/Module/FiniteDimension.lean:418:theorem AffineSubspace.closed_of_finiteDimensional {P : Type*} [MetricSpace P]
+Mathlib/Analysis/Normed/Module/FiniteDimension.lean:421:  s.isClosed_direction_iff.mp s.direction.closed_of_finiteDimensional
+Mathlib/Analysis/Normed/Module/FiniteDimension.lean:432:  have Fclosed : IsClosed (F : Set E) := Submodule.closed_of_finiteDimensional _
+Mathlib/Analysis/Convex/Continuous.lean:66:  simp_rw [dist_eq_norm_sub, Real.norm_eq_abs, abs_sub_le_iff]
+Mathlib/Analysis/Normed/Module/HahnBanach.lean:20:* `exists_extension_norm_eq`: Hahn-Banach theorem for continuous linear functionals on normed spaces
+Mathlib/Analysis/Normed/Group/Continuity.lean:65:  simp only [← dist_eq_norm_inv_mul, ← tendsto_iff_dist_tendsto_zero]
+Mathlib/Analysis/Normed/Group/Continuity.lean:309:  simp only [← dist_eq_norm_div, ← tendsto_iff_dist_tendsto_zero]
+Mathlib/Analysis/Normed/Group/Basic.lean:92:  rw [dist_eq_norm_inv_mul, Set.apply_mulIndicator_symmDiff norm_inv']
+Mathlib/Analysis/Normed/Group/Basic.lean:969:  simp [mem_closedBall, Set.mem_smul_set, dist_eq_norm_inv_mul, ← eq_inv_mul_iff_mul_eq, mul_assoc]
+Mathlib/Analysis/Normed/Group/Basic.lean:974:  simp [mem_ball, Set.mem_smul_set, dist_eq_norm_inv_mul, ← eq_inv_mul_iff_mul_eq, mul_assoc]
+Mathlib/NumberTheory/NumberField/CanonicalEmbedding/Basic.lean:465:  rw [norm_eq_norm, Rat.cast_abs, abs_eq_zero, Rat.cast_eq_zero, Algebra.norm_eq_zero_iff,
+Mathlib/NumberTheory/NumberField/Completion/FinitePlace.lean:507:    rw [← Set.range_eq_univ, ← Φ.coe_range, ← Φ.range.closed_of_finiteDimensional.closure_eq]
+Mathlib/Analysis/Complex/Poisson.lean:105:    grind [ball_eq_empty, mem_sphere, dist_eq_norm, norm_pos_iff]
+Mathlib/Analysis/Complex/Poisson.lean:138:    grind [ball_eq_empty, mem_sphere, dist_eq_norm, norm_pos_iff]
+Mathlib/Analysis/Complex/Schwarz.lean:183:  simpa [hgf, h, dist_eq_norm_sub] using schwarz_aux hdiff hmaps hn hmem
+Mathlib/Analysis/Complex/Schwarz.lean:285:      ← dist_eq_norm_sub, ← div_eq_inv_mul, div_le_iff₀]
+Mathlib/Analysis/Complex/Tietze.lean:129:alias exists_norm_eq_restrict_eq := exists_norm_eq_domRestrict_eq
+Mathlib/NumberTheory/Cyclotomic/CyclotomicCharacter.lean:357:    rw [dist_eq_norm, PadicInt.norm_le_pow_iff_mem_span_pow, ← PadicInt.ker_toZModPow,
+Mathlib/Analysis/Complex/Harmonic/Poisson.lean:65:    grind [mem_ball, dist_eq_norm, mem_sphere_iff_norm, (pos_of_mem_ball hw)]
+Mathlib/NumberTheory/Modular.lean:667:    mul_le_iff_le_one_right z.im_pos, normSq_eq_norm_sq, sq_le_one_iff₀ (norm_nonneg _)] at hden
+Mathlib/Geometry/Euclidean/Volume/Measure.lean:298:    (ht.inter (closed_of_finiteDimensional _).measurableSet).preimage measurable_subtype_coe
+Mathlib/Geometry/Euclidean/PerpBisector.lean:95:  rw [dist_eq_norm_vsub V, dist_eq_norm_vsub V, ← real_inner_add_sub_eq_zero_iff,
+Mathlib/Geometry/Euclidean/Sphere/Power.lean:54:    rwa [inner_eq_zero_iff_angle_eq_pi_div_two, ← norm_add_eq_norm_sub_iff_angle_eq_pi_div_two,
+Mathlib/Geometry/Euclidean/Sphere/Power.lean:328:      exact (norm_add_sq_eq_norm_sq_add_norm_sq_iff_real_inner_eq_zero _ _).mp (by linarith)
+Mathlib/Geometry/Euclidean/Sphere/Basic.lean:537:      rw [Ne, inner_eq_norm_mul_iff_real, hp₂', ← sub_eq_zero, ← smul_sub,
+Mathlib/Geometry/Euclidean/Sphere/OrthRadius.lean:150:  rw [norm_add_sq_eq_norm_sq_add_norm_sq_iff_real_inner_eq_zero, ← mem_orthRadius_iff_inner_left]
+Mathlib/Geometry/Euclidean/Angle/Unoriented/Affine.lean:257:  exact (norm_add_eq_norm_sub_iff_angle_eq_pi_div_two (p₃ -ᵥ m) (p₁ -ᵥ m)).mp h.symm
+Mathlib/Geometry/Euclidean/Angle/Unoriented/RightAngle.lean:45:theorem norm_add_sq_eq_norm_sq_add_norm_sq_iff_angle_eq_pi_div_two (x y : V) :
+Mathlib/Geometry/Euclidean/Angle/Unoriented/RightAngle.lean:47:  rw [norm_add_sq_eq_norm_sq_add_norm_sq_iff_real_inner_eq_zero]
+Mathlib/Geometry/Euclidean/Angle/Unoriented/RightAngle.lean:53:  (norm_add_sq_eq_norm_sq_add_norm_sq_iff_angle_eq_pi_div_two x y).2 h
+Mathlib/Geometry/Euclidean/Angle/Unoriented/RightAngle.lean:56:theorem norm_sub_sq_eq_norm_sq_add_norm_sq_iff_angle_eq_pi_div_two (x y : V) :
+Mathlib/Geometry/Euclidean/Angle/Unoriented/RightAngle.lean:58:  rw [norm_sub_sq_eq_norm_sq_add_norm_sq_iff_real_inner_eq_zero]
+Mathlib/Geometry/Euclidean/Angle/Unoriented/RightAngle.lean:64:  (norm_sub_sq_eq_norm_sq_add_norm_sq_iff_angle_eq_pi_div_two x y).2 h
+Mathlib/Geometry/Euclidean/Angle/Unoriented/RightAngle.lean:332:    dist_eq_norm_vsub V p₂ p₃, angle, ← norm_sub_sq_eq_norm_sq_add_norm_sq_iff_angle_eq_pi_div_two,
+Mathlib/Geometry/Euclidean/Angle/Unoriented/Basic.lean:299:theorem norm_add_eq_norm_sub_iff_angle_eq_pi_div_two (x y : V) :
+Mathlib/Geometry/Euclidean/Altitude.lean:323:    rw [← Real.norm_eq_abs, ne_eq, norm_inner_eq_norm_iff (by simp) (by simp)]
+Mathlib/Geometry/Euclidean/SignedDist.lean:189:  rw [inner_eq_norm_mul_iff_real]
+Mathlib/Geometry/Euclidean/SignedDist.lean:284:  simp [hp₀, dist_eq_norm_vsub, orthogonalProjection_eq_self_iff.2 hp₀,
+Mathlib/Analysis/InnerProductSpace/Projection/FiniteDimensional.lean:58:  K.closed_of_finiteDimensional.submodule_topologicalClosure_eq
+Mathlib/NumberTheory/Padics/RingHoms.lean:700:  rw [dist_eq_norm, norm_le_pow_iff_mem_span_pow, ← ker_toZModPow, RingHom.mem_ker,
+Mathlib/Analysis/InnerProductSpace/Affine.lean:49:  rw [dist_eq_norm_vsub V, inner_eq_norm_sq_left_iff, vsub_sub_vsub_cancel_left,
+Mathlib/Analysis/InnerProductSpace/Affine.lean:58:  rw [dist_eq_norm_vsub V, inner_eq_norm_sq_left_iff, vsub_sub_vsub_cancel_right,
+Mathlib/Analysis/InnerProductSpace/l2Space.lean:484:      have := (span 𝕜 (Finset.univ.image b : Set E)).closed_of_finiteDimensional
+Mathlib/Analysis/InnerProductSpace/Basic.lean:21:- `norm_inner_eq_norm_iff`: the equality criterion in the Cauchy-Schwarz inequality (also in many
+Mathlib/Analysis/InnerProductSpace/Basic.lean:294:theorem inner_eq_norm_sq_left_iff {v w : F} : ⟪v, w⟫_ℝ = ‖v‖ ^ 2 ↔ ⟪v, v - w⟫_ℝ = 0 :=
+Mathlib/Analysis/InnerProductSpace/Basic.lean:300:theorem inner_eq_norm_sq_right_iff {v w : F} : ⟪v, w⟫_ℝ = ‖w‖ ^ 2 ↔ ⟪v - w, w⟫_ℝ = 0 :=
+Mathlib/Analysis/InnerProductSpace/Basic.lean:315:  rw [inner_self_eq_norm_sq_to_K, sq_eq_zero_iff, ofReal_eq_zero, norm_eq_zero]
+Mathlib/Analysis/InnerProductSpace/Basic.lean:552:theorem norm_add_sq_eq_norm_sq_add_norm_sq_iff_real_inner_eq_zero (x y : F) :
+Mathlib/Analysis/InnerProductSpace/Basic.lean:560:  rw [← norm_add_sq_eq_norm_sq_add_norm_sq_iff_real_inner_eq_zero, eq_comm, sqrt_eq_iff_mul_self_eq,
+Mathlib/Analysis/InnerProductSpace/Basic.lean:573:  (norm_add_sq_eq_norm_sq_add_norm_sq_iff_real_inner_eq_zero x y).2 h
+Mathlib/Analysis/InnerProductSpace/Basic.lean:577:theorem norm_sub_sq_eq_norm_sq_add_norm_sq_iff_real_inner_eq_zero (x y : F) :
+Mathlib/Analysis/InnerProductSpace/Basic.lean:587:  rw [← norm_sub_sq_eq_norm_sq_add_norm_sq_iff_real_inner_eq_zero, eq_comm, sqrt_eq_iff_mul_self_eq,
+Mathlib/Analysis/InnerProductSpace/Basic.lean:594:  (norm_sub_sq_eq_norm_sq_add_norm_sq_iff_real_inner_eq_zero x y).2 h
+Mathlib/Analysis/InnerProductSpace/Basic.lean:727:Compare `inner_eq_norm_mul_iff`, which takes the stronger hypothesis `⟪x, y⟫ = ‖x‖ * ‖y‖`. -/
+Mathlib/Analysis/InnerProductSpace/Basic.lean:728:theorem norm_inner_eq_norm_iff {x y : E} (hx₀ : x ≠ 0) (hy₀ : y ≠ 0) :
+Mathlib/Analysis/InnerProductSpace/Basic.lean:747:    refine ⟨hx₀, (norm_inner_eq_norm_iff hx₀ hy₀).1 <| eq_of_div_eq_one ?_⟩
+Mathlib/Analysis/InnerProductSpace/Basic.lean:760:theorem inner_eq_norm_mul_iff_div {x y : E} (h₀ : x ≠ 0) :
+Mathlib/Analysis/InnerProductSpace/Basic.lean:775:Compare `norm_inner_eq_norm_iff`, which takes the weaker hypothesis `abs ⟪x, y⟫ = ‖x‖ * ‖y‖`. -/
+Mathlib/Analysis/InnerProductSpace/Basic.lean:776:theorem inner_eq_norm_mul_iff {x y : E} :
+Mathlib/Analysis/InnerProductSpace/Basic.lean:780:  · rw [inner_eq_norm_mul_iff_div h₀, div_eq_inv_mul, mul_smul, inv_smul_eq_iff₀]
+Mathlib/Analysis/InnerProductSpace/Basic.lean:786:Compare `norm_inner_eq_norm_iff`, which takes the weaker hypothesis `abs ⟪x, y⟫ = ‖x‖ * ‖y‖`. -/
+Mathlib/Analysis/InnerProductSpace/Basic.lean:787:theorem inner_eq_norm_mul_iff_real {x y : F} : ⟪x, y⟫_ℝ = ‖x‖ * ‖y‖ ↔ ‖y‖ • x = ‖x‖ • y :=
+Mathlib/Analysis/InnerProductSpace/Basic.lean:788:  inner_eq_norm_mul_iff
+Mathlib/Analysis/InnerProductSpace/Basic.lean:800:    exact ((inner_eq_norm_mul_iff_div hx₀).1 (eq_of_div_eq_one h)).symm
+Mathlib/Analysis/InnerProductSpace/Basic.lean:818:  convert inner_eq_norm_mul_iff (𝕜 := 𝕜) (E := E) <;> simp [hx, hy]
+Mathlib/Analysis/InnerProductSpace/Basic.lean:848:    _ ↔ ‖y‖ • x ≠ ‖x‖ • y := not_congr inner_eq_norm_mul_iff_real
+Mathlib/Analysis/InnerProductSpace/Basic.lean:868:    mul_right_inj' two_ne_zero, ← inner_eq_norm_mul_iff_real]
+Mathlib/MeasureTheory/Measure/Lebesgue/EqHaar.lean:183:    (Submodule.closed_of_finiteDimensional s).measurableSet
+Mathlib/Topology/Algebra/Module/FiniteDimension.lean:530:theorem Submodule.closed_of_finiteDimensional
+Mathlib/Topology/Algebra/Module/FiniteDimension.lean:543:  exact (map s.mkQ t).closed_of_finiteDimensional.preimage continuous_quot_mk
+Mathlib/Topology/Algebra/Module/FiniteDimension.lean:550:  exact (map s.mkQ t).closed_of_finiteDimensional.preimage continuous_quot_mk
+Mathlib/Topology/Algebra/Module/FiniteDimension.lean:569:      simpa [LinearMap.coe_range f] using (LinearMap.range f).closed_of_finiteDimensional }
+Mathlib/Topology/Algebra/Module/FiniteDimension.lean:666:    exact M.closed_of_finiteDimensional.mem_of_tendsto hm_tendsto (Eventually.of_forall hm)
+Mathlib/Topology/TietzeExtension.lean:288:alias exists_norm_eq_restrict_eq_of_closed := exists_norm_eq_domRestrict_eq_of_closed
+Mathlib/Topology/MetricSpace/HausdorffDistance.lean:727:theorem _root_.IsCompact.exists_infDist_eq_dist (h : IsCompact s) (hne : s.Nonempty) (x : α) :
+Mathlib/Topology/MetricSpace/HausdorffDistance.lean:732:theorem _root_.IsClosed.exists_infDist_eq_dist [ProperSpace α] (h : IsClosed s) (hne : s.Nonempty)
+Mathlib/Topology/MetricSpace/HausdorffDistance.lean:739:  obtain ⟨y, ⟨hys, -⟩, hyd⟩ : ∃ y ∈ t, infDist x t = dist x y := htc.exists_infDist_eq_dist htne x
+Mathlib/Topology/MetricSpace/HausdorffDistance.lean:744:  simpa only [infDist_closure] using isClosed_closure.exists_infDist_eq_dist hne.closure x
+Mathlib/Topology/MetricSpace/Thickening.lean:591:    isClosed_closure.exists_infDist_eq_dist (closure_nonempty_iff.mpr hne) x
+Mathlib/MeasureTheory/Function/Jacobian.lean:332:        simpa only [dist_eq_norm, mem_closedBall, mem_closedBall_zero_iff, sub_zero] using zr
+Mathlib/RingTheory/UniqueFactorizationDomain/NormalizedFactors.lean:63:  · exact normalize_eq_normalize_iff.mpr (dvd_dvd_iff_associated.mpr (prod_normalizedFactors ane0))
+Mathlib/RingTheory/UniqueFactorizationDomain/NormalizedFactors.lean:92:  rwa [← normalize_normalized_factor p p_mem, normalize_eq_normalize_iff, dvd_dvd_iff_associated]
+Mathlib/RingTheory/UniqueFactorizationDomain/NormalizedFactors.lean:246:    rwa [← h₂, normalize_eq_normalize_iff_associated, Associated.comm]⟩
+Mathlib/RingTheory/UniqueFactorizationDomain/NormalizedFactors.lean:277:    normalize_eq_normalize_iff]
+Mathlib/RingTheory/Polynomial/Content.lean:159:  rw [← C_mul_X_pow_eq_monomial, ← normalize_content, normalize_eq_normalize_iff_associated]
+Mathlib/GroupTheory/Commutator/Basic.lean:498:  · rw [commutator_eq_normalClosure, ← Subgroup.normalClosure_subset_iff]
