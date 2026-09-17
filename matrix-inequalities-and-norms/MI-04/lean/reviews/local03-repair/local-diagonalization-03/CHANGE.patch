@@ -1,0 +1,53 @@
+--- before/NLA/MI04/Diagonalization.lean
++++ after/NLA/MI04/Diagonalization.lean
+@@ -56,27 +56,41 @@
+     exact isStarNormal_iff_commute_realPart_imaginaryPart.mp hT
+   exact ⟨A, B, hA, hB, hAB, (realPart_add_I_smul_imaginaryPart T).symm⟩
+ 
+-lemma normal_operator_eigenbasis {n : ℕ}
+-    (T : CVector (Fin n) →L[ℂ] CVector (Fin n)) (hT : IsStarNormal T) :
+-    ∃ b : OrthonormalBasis (Fin n) ℂ (CVector (Fin n)), ∃ z : Fin n → ℂ,
++/-- Assemble normal eigenvectors over an abstract space before specializing its instances. -/
++private lemma normal_eigenbasis_of_joint_solver {E : Type*} {ι : Type*}
++    [NormedAddCommGroup E] [InnerProductSpace ℂ E] [CompleteSpace E] [Fintype ι]
++    (hjoint : ∀ A B : Module.End ℂ E,
++      A.IsSymmetric → B.IsSymmetric → Commute A B →
++      ∃ b : OrthonormalBasis ι ℂ E, ∃ α β : ι → ℂ,
++        ∀ i, A (b i) = α i • b i ∧ B (b i) = β i • b i)
++    (T : E →L[ℂ] E) (hT : IsStarNormal T) :
++    ∃ b : OrthonormalBasis ι ℂ E, ∃ z : ι → ℂ,
+       ∀ i, T (b i) = z i • b i := by
+   obtain ⟨A, B, hA, hB, hAB, hparts⟩ := normal_operator_parts T hT
+-  have hlin : Commute (A : Module.End ℂ (CVector (Fin n)))
+-      (B : Module.End ℂ (CVector (Fin n))) := by
+-    exact congrArg (fun S : CVector (Fin n) →L[ℂ] CVector (Fin n) =>
+-      (S : Module.End ℂ (CVector (Fin n)))) hAB.eq
+-  obtain ⟨b, α, β, hb⟩ := commuting_symmetric_eigenbasis A B hA hB hlin
++  have hlin : Commute (A : Module.End ℂ (E))
++      (B : Module.End ℂ (E)) := by
++    exact congrArg (fun S : E →L[ℂ] E =>
++      (S : Module.End ℂ (E))) hAB.eq
++  obtain ⟨b, α, β, hb⟩ := hjoint (A : Module.End ℂ E) (B : Module.End ℂ E) hA hB hlin
+   refine ⟨b, fun i => α i + Complex.I * β i, ?_⟩
+   intro i
+   have ha : A (b i) = α i • b i := (hb i).1
+   have hb' : B (b i) = β i • b i := (hb i).2
+   calc
+     T (b i) = (A + Complex.I • B) (b i) :=
+-      congrArg (fun S : CVector (Fin n) →L[ℂ] CVector (Fin n) => S (b i))
++      congrArg (fun S : E →L[ℂ] E => S (b i))
+         hparts
+     _ = (α i + Complex.I * β i) • b i := by
+       simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply,
+         ha, hb', smul_smul, add_smul]
++
++lemma normal_operator_eigenbasis {n : ℕ}
++    (T : CVector (Fin n) →L[ℂ] CVector (Fin n)) (hT : IsStarNormal T) :
++    ∃ b : OrthonormalBasis (Fin n) ℂ (CVector (Fin n)), ∃ z : Fin n → ℂ,
++      ∀ i, T (b i) = z i • b i := by
++  exact normal_eigenbasis_of_joint_solver
++    (E := CVector (Fin n)) (ι := Fin n)
++    (fun A B hA hB hAB => commuting_symmetric_eigenbasis A B hA hB hAB) T hT
+ 
+ theorem normal_unitary_diagonalization {n : ℕ} (hn : 1 ≤ n) (X : Square n)
+     (hX : X.conjTranspose * X = X * X.conjTranspose) :
