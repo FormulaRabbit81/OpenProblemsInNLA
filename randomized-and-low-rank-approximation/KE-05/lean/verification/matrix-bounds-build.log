@@ -1,0 +1,42 @@
+✖ [8707/8707] Building NLA.KE05.MatrixBounds (101s)
+trace: .> LEAN_PATH=/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Cli/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/batteries/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/Qq/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/aesop/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/importGraph/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/plausible/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/mathlib/.lake/build/lib/lean:/Users/sholden/Projects/OpenProblemsInNLA/intervals-and-absolute-value-equations/IV-06/lean/.lake/packages/leancert/.lake/build/lib/lean:/private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean /private/tmp/nla-lean-runtime/lean-4.33.1-darwin_aarch64/bin/lean /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/NLA/KE05/MatrixBounds.lean -o /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/MatrixBounds.olean -i /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/lib/lean/NLA/KE05/MatrixBounds.ilean -c /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/MatrixBounds.c --setup /private/tmp/nla-lean-ke05/randomized-and-low-rank-approximation/KE-05/lean/.lake/build/ir/NLA/KE05/MatrixBounds.setup.json --json
+warning: NLA/KE05/MatrixBounds.lean:23:29: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [T, u, Fin.sum_univ_two, Matrix.ofLp_toEuclideanCLM, Matrix.mulVec, dotProduct, EuclideanSpace.single]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: NLA/KE05/MatrixBounds.lean:57:29: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (spectralNorm S⁻¹ ^ ?y) ^ ?z
+in the target expression
+  (spectralNorm S⁻¹).rpow (1 / 2) ^ ↑2 = spectralNorm S⁻¹
+
+S : Mat 2
+hS : 0 < Matrix.det S
+h8 : Matrix.det S ≤ 8
+x : ℝ := (spectralNorm S⁻¹).rpow (1 / 2)
+y : ℝ := Real.rpow 8 (-1 / 4)
+hn : 0 ≤ spectralNorm S⁻¹
+hx : 0 ≤ x
+hy : 0 ≤ y
+⊢ (spectralNorm S⁻¹).rpow (1 / 2) ^ ↑2 = spectralNorm S⁻¹
+error: NLA/KE05/MatrixBounds.lean:61:29: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (8 ^ ?y) ^ ?z
+in the target expression
+  Real.rpow 8 (-1 / 4) ^ ↑4 = 1 / 8
+
+S : Mat 2
+hS : 0 < Matrix.det S
+h8 : Matrix.det S ≤ 8
+x : ℝ := (spectralNorm S⁻¹).rpow (1 / 2)
+y : ℝ := Real.rpow 8 (-1 / 4)
+hn : 0 ≤ spectralNorm S⁻¹
+hx : 0 ≤ x
+hy : 0 ≤ y
+hx2 : x ^ 2 = spectralNorm S⁻¹
+⊢ Real.rpow 8 (-1 / 4) ^ ↑4 = 1 / 8
+error: Lean exited with code 1
+Some required targets logged failures:
+- NLA.KE05.MatrixBounds
+error: build failed

@@ -1,0 +1,229 @@
+$ systemd-run --user --quiet --wait --pipe --collect -p 'RestrictAddressFamilies=~AF_UNIX' --working-directory /home/runner/work/_temp/nla-lean-tools/.verification-tmp/nla-fresh-proof-3alw8ynb/project /usr/bin/env -i PATH=/home/runner/.elan/toolchains/leanprover--lean4---v4.33.1/bin:/home/runner/.elan/bin:/home/runner/go/bin:/opt/hostedtoolcache/go/1.27.1/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin HOME=/home/runner LANG=C.UTF-8 XDG_RUNTIME_DIR=/run/user/1001 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus GIT_TERMINAL_PROMPT=0 GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null COMPARATOR_BIN=/home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator COMPARATOR_LEAN4EXPORT=/home/runner/work/_temp/nla-lean-tools/.tools/lean4export/.lake/build/bin/lean4export COMPARATOR_LANDRUN=/home/runner/work/_temp/nla-lean-tools/scripts/strict_landrun.py XDG_CACHE_HOME=/home/runner/work/_temp/nla-lean-tools/.tools/cache TMPDIR=/home/runner/work/_temp/nla-lean-tools/.verification-tmp lake env /home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator comparator.json
+Building Challenge
+✔ [8706/8708] Built NLA.IV03.Definitions (4.3s)
+⚠ [8707/8708] Built Challenge (3.6s)
+warning: Challenge.lean:8:8: declaration uses `sorry`
+warning: Challenge.lean:12:8: declaration uses `sorry`
+warning: Challenge.lean:16:8: declaration uses `sorry`
+warning: Challenge.lean:21:8: declaration uses `sorry`
+Build completed successfully (8708 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.IV03.vertex_formula, NLA.IV03.vertices_admissible, NLA.IV03.nSquaredCriterion, NLA.IV03.twoSignCriterion, propext, Classical.choice, Quot.sound, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+Building Solution
+✔ [8707/8745] Built LeanCert.Core.Interval (3.1s)
+✔ [8708/8745] Built LeanCert.Core.DerivativeIntervals (3.1s)
+✔ [8709/8747] Built LeanCert.Core.Expr (5.6s)
+✔ [8710/8747] Built NLA.IV03.Proof (9.4s)
+✔ [8711/8747] Built LeanCert.Core.IntervalRat.Basic (8.9s)
+✔ [8712/8749] Built LeanCert.Core.Taylor (9.0s)
+✔ [8713/8749] Built LeanCert.Core.IntervalRat.LogReduction (7.1s)
+✔ [8714/8749] Built LeanCert.Core.Support (4.1s)
+✔ [8715/8749] Built LeanCert.Meta.Numeral (3.6s)
+✔ [8716/8749] Built LeanCert.Engine.Eval.Result (2.9s)
+✔ [8717/8749] Built LeanCert.Core.TrigReduction (3.8s)
+⚠ [8718/8750] Built NLA.IV03.Principal (7.1s)
+warning: NLA/IV03/Principal.lean:31:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/IV03/Principal.lean:32:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/IV03/Principal.lean:33:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/IV03/Principal.lean:111:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/IV03/Principal.lean:112:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/IV03/Principal.lean:113:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [8719/8750] Built NLA.IV03.Vertices (7.5s)
+warning: NLA/IV03/Vertices.lean:46:16: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✔ [8720/8751] Built LeanCert.Core.IntervalRat.Transcendental (5.0s)
+✔ [8721/8751] Built LeanCert.Tactic.IntervalAuto.Types (4.1s)
+✔ [8722/8751] Built LeanCert.Contrib.Sinc (4.9s)
+✔ [8723/8751] Built LeanCert.Tactic.IntervalAuto.Extract (4.8s)
+⚠ [8724/8751] Built NLA.IV03.Complementary (8.6s)
+warning: NLA/IV03/Complementary.lean:28:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/IV03/Complementary.lean:29:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/IV03/Complementary.lean:30:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+✔ [8725/8757] Built LeanCert.Meta.ToExpr (7.7s)
+✔ [8726/8758] Built LeanCert.Tactic.IntervalAuto.Norm (6.1s)
+✔ [8727/8758] Built LeanCert.Core.Dyadic (3.7s)
+✔ [8728/8762] Built LeanCert.Tactic.IntervalAuto.Parse (6.0s)
+✔ [8729/8762] Built LeanCert.Core.IntervalRat.Taylor (19s)
+✔ [8730/8763] Built LeanCert.Tactic.Verification (3.6s)
+✔ [8731/8763] Built LeanCert.Tactic.LeanCert.Bridge.Environment (2.6s)
+✔ [8732/8763] Built LeanCert.Tactic.IntervalAuto.Diagnostic (3.4s)
+⚠ [8733/8763] Built NLA.IV03.Adjugate (9.9s)
+warning: NLA/IV03/Adjugate.lean:33:25: This simp argument is unused:
+  Matrix.head_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.det_fin_two, Matrix.submatrix_apply, Matrix.cons_val_zero, Matrix.cons_val_one] at h₁ h₂ h₃
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [8734/8763] Built LeanCert.Tactic.NumericalRefinement (583ms)
+✔ [8735/8763] Built LeanCert.Core.IntervalReal (2.4s)
+✔ [8736/8763] Built LeanCert.Core.IntervalRat.TrigReduced (2.9s)
+✔ [8737/8764] Built LeanCert.Tactic.LeanCert.Normalize (3.4s)
+✔ [8739/8804] Built LeanCert.Core.IntervalRealEndpoints (4.8s)
+✔ [8740/8804] Built LeanCert.Core.IntervalDyadic (6.7s)
+⚠ [8741/8804] Built NLA.IV03.Cofactor (7.6s)
+warning: NLA/IV03/Cofactor.lean:29:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/IV03/Cofactor.lean:24:67: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [P', Q', Matrix.updateRow_apply, Matrix.fromBlocks]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/IV03/Cofactor.lean:26:67: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [P', Q', Matrix.updateRow_apply, Matrix.fromBlocks]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/IV03/Cofactor.lean:28:57: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.updateRow_apply, Matrix.fromBlocks]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [8742/8804] Built LeanCert.Engine.Affine.Basic (6.9s)
+✔ [8743/8804] Built LeanCert.Engine.Eval.Core (6.7s)
+✔ [8744/8804] Built NLA.IV03.Monotonicity (6.6s)
+✔ [8745/8804] Built LeanCert.Engine.Affine.Nonlinear (4.3s)
+✔ [8746/8804] Built LeanCert.Engine.Eval.Extended (2.7s)
+✔ [8747/8804] Built LeanCert.Engine.Bounds.Lemmas (1.9s)
+✔ [8748/8804] Built NLA.IV03.IntervalStructure (4.0s)
+✔ [8749/8804] Built LeanCert.Engine.IntervalEval (1.6s)
+✔ [8750/8804] Built LeanCert.Validity.Bounds.Checked (2.6s)
+✔ [8751/8804] Built LeanCert.Validity.Bounds.Core (2.7s)
+✔ [8752/8804] Built LeanCert.Engine.Affine.Transcendental (3.7s)
+✔ [8753/8804] Built LeanCert.Engine.Optimization.Box (3.1s)
+✔ [8754/8804] Built NLA.IV03.SchurInterval (7.4s)
+✔ [8755/8804] Built LeanCert.Engine.RootFinding.Basic (4.8s)
+✔ [8756/8804] Built LeanCert.Engine.IntervalEvalDyadic (6.9s)
+✔ [8757/8804] Built LeanCert.Engine.AD.Basic (4.2s)
+✔ [8758/8804] Built LeanCert.Engine.Integrate (6.0s)
+✔ [8759/8804] Built LeanCert.Engine.TaylorModel.Core (9.3s)
+✔ [8760/8804] Built LeanCert.Engine.IntervalEvalAffine (5.9s)
+✔ [8761/8804] Built LeanCert.Engine.RootFinding.Bisection (5.1s)
+✔ [8762/8804] Built LeanCert.Validity.DyadicBounds (3.2s)
+✔ [8763/8804] Built NLA.IV03.IntervalAdjugate (7.6s)
+✔ [8764/8804] Built LeanCert.Engine.AD.Transcendental (4.2s)
+✔ [8765/8804] Built LeanCert.Engine.TaylorModel.Special (2.8s)
+✔ [8766/8804] Built LeanCert.Engine.TaylorModel.Integral (3.4s)
+✔ [8767/8804] Built LeanCert.Engine.Affine.Environment (6.6s)
+✔ [8768/8804] Built LeanCert.Engine.TaylorModel.ExpLog (8.0s)
+✔ [8769/8804] Built LeanCert.Engine.TaylorModel.Trig (11s)
+✔ [8770/8804] Built LeanCert.Engine.TaylorModel.Hyperbolic (12s)
+✔ [8771/8804] Built LeanCert.Engine.AD.Eval (2.7s)
+✔ [8772/8804] Built NLA.IV03.IntervalInduction (5.6s)
+✔ [8773/8804] Built LeanCert.Engine.TaylorModel.Functions (1.0s)
+✔ [8774/8804] Built LeanCert.Engine.AD.Correctness (2.6s)
+✔ [8775/8804] Built LeanCert.Engine.AD.Computable (3.5s)
+✔ [8776/8804] Built LeanCert.Engine.TaylorModel.Expr (4.2s)
+✔ [8777/8804] Built LeanCert.Engine.TaylorModel (1.8s)
+✔ [8778/8804] Built LeanCert.Engine.AD.PartialCorrectness (5.5s)
+✔ [8779/8804] Built LeanCert.Engine.AD.DomainChecked (2.8s)
+✔ [8780/8804] Built LeanCert.Engine.AD.Dyadic (2.6s)
+✔ [8781/8804] Built LeanCert.Engine.AD (1.6s)
+✔ [8782/8804] Built LeanCert.Validity.Bounds.Smart (3.4s)
+✔ [8783/8804] Built LeanCert.Meta.ProveSupported (3.9s)
+✔ [8784/8804] Built LeanCert.Engine.IntervalEvalRefined (3.9s)
+✔ [8785/8804] Built LeanCert.Engine.Optimize (6.1s)
+✔ [8786/8804] Built LeanCert.Validity.Bounds.Bridge (3.3s)
+✔ [8787/8804] Built LeanCert.Meta.ProveContinuous (4.9s)
+✔ [8788/8804] Built LeanCert.Tactic.IntervalAuto.ProveCommon (5.4s)
+✔ [8789/8804] Built LeanCert.Engine.RootFinding.Newton (5.0s)
+✔ [8790/8804] Built LeanCert.Validity.Bounds.Basic (2.9s)
+✔ [8791/8804] Built LeanCert.Engine.Optimization.Gradient (5.9s)
+✔ [8792/8804] Built LeanCert.Tactic.IntervalAuto.Basic (3.5s)
+✔ [8793/8804] Built LeanCert.Validity.Integration (6.6s)
+✔ [8794/8804] Built LeanCert.Engine.RootFinding.MVTBounds (8.2s)
+✔ [8795/8804] Built LeanCert.Engine.RootFinding.Krawczyk (8.5s)
+✔ [8796/8804] Built LeanCert.Engine.RootFinding.Contraction (5.7s)
+✔ [8797/8804] Built LeanCert.Engine.RootFinding.Main (1.9s)
+✔ [8798/8804] Built LeanCert.Engine.Optimization.Global (16s)
+✔ [8799/8804] Built LeanCert.Engine.Optimization.BoundVerify (2.2s)
+✔ [8800/8804] Built LeanCert.Validity.Bounds (3.0s)
+✔ [8801/8804] Built LeanCert.Tactic.IntervalAuto.Bound (9.0s)
+✔ [8802/8804] Built LeanCert.Tactic.IntervalAuto.PointIneq (5.5s)
+ℹ [8803/8804] Built Solution (3.7s)
+info: Solution.lean:45:0: 'NLA.IV03.vertex_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:46:0: 'NLA.IV03.vertices_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:47:0: 'NLA.IV03.nSquaredCriterion' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:48:0: 'NLA.IV03.twoSignCriterion' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (8804 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.IV03.vertex_formula, NLA.IV03.vertices_admissible, NLA.IV03.nSquaredCriterion, NLA.IV03.twoSignCriterion, propext, Classical.choice, Quot.sound, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+Running Lean default kernel on solution.
+Lean default kernel accepts the solution
+Your solution is okay!
+
+EXIT_STATUS=0

@@ -1,0 +1,125 @@
+$ systemd-run --user --quiet --wait --pipe --collect -p 'RestrictAddressFamilies=~AF_UNIX' --working-directory /home/runner/work/_temp/nla-lean-tools/.verification-tmp/nla-fresh-proof-4suehhfx/project /usr/bin/env -i PATH=/home/runner/.elan/toolchains/leanprover--lean4---v4.33.1/bin:/home/runner/.elan/bin:/home/runner/go/bin:/opt/hostedtoolcache/go/1.27.1/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin HOME=/home/runner LANG=C.UTF-8 XDG_RUNTIME_DIR=/run/user/1001 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus GIT_TERMINAL_PROMPT=0 GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null COMPARATOR_BIN=/home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator COMPARATOR_LEAN4EXPORT=/home/runner/work/_temp/nla-lean-tools/.tools/lean4export/.lake/build/bin/lean4export COMPARATOR_LANDRUN=/home/runner/work/_temp/nla-lean-tools/scripts/strict_landrun.py XDG_CACHE_HOME=/home/runner/work/_temp/nla-lean-tools/.tools/cache TMPDIR=/home/runner/work/_temp/nla-lean-tools/.verification-tmp lake env /home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator comparator.json
+Building Challenge
+✔ [8706/8708] Built NLA.KE05.Definitions (4.9s)
+⚠ [8707/8708] Built Challenge (3.7s)
+warning: Challenge.lean:10:8: declaration uses `sorry`
+warning: Challenge.lean:19:8: declaration uses `sorry`
+warning: Challenge.lean:23:8: declaration uses `sorry`
+warning: Challenge.lean:29:8: declaration uses `sorry`
+warning: Challenge.lean:33:8: declaration uses `sorry`
+warning: Challenge.lean:40:8: declaration uses `sorry`
+warning: Challenge.lean:46:8: declaration uses `sorry`
+warning: Challenge.lean:50:8: declaration uses `sorry`
+warning: Challenge.lean:54:8: declaration uses `sorry`
+warning: Challenge.lean:58:8: declaration uses `sorry`
+Build completed successfully (8708 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.KE05.literal_recurrence_contract, NLA.KE05.admissibility_and_endpoints, NLA.KE05.exact_rational_witness, NLA.KE05.probability_one_validity, NLA.KE05.probability_one_nonzero_limit, NLA.KE05.literal_lower_bound, NLA.KE05.almost_sure_divergence, NLA.KE05.marginal_probability_limit, NLA.KE05.no_finite_uniform_constant, NLA.KE05.not_uniform_probability_conjecture, propext, Classical.choice, Quot.sound, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+Building Solution
+✔ [8708/8730] Built LeanCert.Tactic.Verification (3.4s)
+⚠ [8709/8730] Built NLA.KE05.MatrixBounds (7.6s)
+warning: NLA/KE05/MatrixBounds.lean:23:29: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [T, u, Fin.sum_univ_two, Matrix.ofLp_toEuclideanCLM, Matrix.mulVec, dotProduct, EuclideanSpace.single]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [8710/8730] Built NLA.KE05.Measurability (7.9s)
+✔ [8711/8730] Built NLA.KE05.Numerics (9.4s)
+⚠ [8712/8730] Built NLA.KE05.PolynomialNull (6.7s)
+warning: NLA/KE05/PolynomialNull.lean:85:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [8713/8730] Built NLA.KE05.Recurrence (4.9s)
+warning: NLA/KE05/Recurrence.lean:26:55: `Fin.coe_cast` has been deprecated: Use `Fin.val_cast` instead
+warning: NLA/KE05/Recurrence.lean:26:69: This simp argument is unused:
+  Fin.val_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.getElem_drop, List.getElem_finRange, Fin.coe_cast] at hv
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [8714/8730] Built NLA.KE05.Endpoints (6.8s)
+⚠ [8715/8730] Built NLA.KE05.Regular (6.3s)
+warning: NLA/KE05/Regular.lean:50:32: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/KE05/Regular.lean:73:32: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/KE05/Regular.lean:50:32: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/KE05/Regular.lean:73:32: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+✔ [8716/8730] Built NLA.KE05.RecurrenceUnique (5.2s)
+✔ [8717/8730] Built NLA.KE05.IdentityWitness (5.5s)
+✔ [8718/8730] Built NLA.KE05.FirstOrdering (5.7s)
+⚠ [8719/8730] Built NLA.KE05.ExtremumBounds (6.0s)
+warning: NLA/KE05/ExtremumBounds.lean:22:59: This simp argument is unused:
+  abs_of_pos (by positivity : 0 < 2 * e)
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Real.norm_eq_abs, abs_of_pos he]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/KE05/ExtremumBounds.lean:22:97: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✔ [8720/8730] Built NLA.KE05.RegularMatrix (4.9s)
+⚠ [8721/8730] Built NLA.KE05.ProbabilityBridge (5.6s)
+warning: NLA/KE05/ProbabilityBridge.lean:22:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: NLA/KE05/ProbabilityBridge.lean:22:15: This simp argument is unused:
+  Set.mem_setOf_eq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Set.mem_empty_iff_false, iff_false]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [8722/8730] Built NLA.KE05.LimitAlgebra (5.1s)
+warning: NLA/KE05/LimitAlgebra.lean:39:53: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.adjugate_fin_two, Matrix.sub_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/KE05/LimitAlgebra.lean:47:38: This simp argument is unused:
+  Matrix.mul_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.det_fin_two, Matrix.sub_apply, Matrix.smul_apply, Matrix.trace, Fin.sum_univ_two,
+    Matrix.adjugate_fin_two, Matrix.vecMul, dotProduct]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [8723/8730] Built NLA.KE05.GenericWitness (3.7s)
+✔ [8724/8730] Built NLA.KE05.RegularRecurrence (3.7s)
+✔ [8725/8730] Built NLA.KE05.GenericValidity (3.5s)
+⚠ [8726/8730] Built NLA.KE05.TotalMeasurability (4.0s)
+warning: NLA/KE05/TotalMeasurability.lean:77:46: `Set.compl_setOf` has been deprecated: Use `Set.compl_ofPred` instead
+✔ [8727/8730] Built NLA.KE05.MatrixLimit (4.7s)
+✔ [8728/8730] Built NLA.KE05.Asymptotic (3.8s)
+ℹ [8729/8730] Built Solution (3.8s)
+info: Solution.lean:65:0: 'NLA.KE05.literal_recurrence_contract' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:68:0: 'NLA.KE05.admissibility_and_endpoints' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:71:0: 'NLA.KE05.exact_rational_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:74:0: 'NLA.KE05.probability_one_validity' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:77:0: 'NLA.KE05.probability_one_nonzero_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:80:0: 'NLA.KE05.literal_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:83:0: 'NLA.KE05.almost_sure_divergence' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:86:0: 'NLA.KE05.marginal_probability_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:89:0: 'NLA.KE05.no_finite_uniform_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:92:0: 'NLA.KE05.not_uniform_probability_conjecture' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (8730 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.KE05.literal_recurrence_contract, NLA.KE05.admissibility_and_endpoints, NLA.KE05.exact_rational_witness, NLA.KE05.probability_one_validity, NLA.KE05.probability_one_nonzero_limit, NLA.KE05.literal_lower_bound, NLA.KE05.almost_sure_divergence, NLA.KE05.marginal_probability_limit, NLA.KE05.no_finite_uniform_constant, NLA.KE05.not_uniform_probability_conjecture, propext, Classical.choice, Quot.sound, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+Running Lean default kernel on solution.
+Lean default kernel accepts the solution
+Your solution is okay!
+
+EXIT_STATUS=0

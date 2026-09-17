@@ -1,0 +1,148 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/99c678e569c7c4c0772db297c5ddd5e4c9b6322e/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: 'KE-05: failure of uniform probabilistic interpolation bounds'
+  description: Complete negative answer to the uniform probabilistic block-polynomial interpolation conjecture,
+    retaining the literal recurrence, all root orderings, actual Euclidean operator norms and independent
+    real standard-Gaussian law.
+  authors:
+  - Sidney Holden
+  responsible_maintainers:
+  - Sidney Holden
+  license: Apache-2.0
+sources:
+- title: KE-05 — Spectral-gap-independent constants for randomized block polynomial interpolation
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/deb549fa9ddd6b119e6c59016f268237e645dfa2/randomized-and-low-rank-approximation/KE-05/README.md
+  type: web-post
+  relationship: formalizes
+  author_endorsement: not-contacted
+  note: Original interpolation framework and conjecture by Nian Shao.
+- title: 'KE-05: failure of spectrum-uniform probabilistic interpolation bounds'
+  authors:
+  - George Stepaniants
+  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/deb549fa9ddd6b119e6c59016f268237e645dfa2/randomized-and-low-rank-approximation/KE-05/solution.md
+  type: manuscript
+  location: Exact target and complete proof in Sections 1–5.
+  relationship: formalizes
+  author_endorsement: not-contacted
+automation:
+  methods:
+  - method: agent
+    framework: OpenAI Codex
+    prompting_notes: Statements before proofs; two independent referees; exact 2-by-2 reduction; LeanCert
+      trust audit and actual Linux Comparator required before completion.
+  notes: AI-assisted formalization prepared at Sidney Holden's request. No source-author endorsement or
+    human peer review asserted.
+status:
+  scope: 'Complete original negative answer with literal recurrence, all root orderings, actual norms
+    and Gaussian law. All ten exports pass LeanCert kernel audits and isolated Linux Comparator/default-kernel
+    at 9acd5d5c9ab91c5c0c07603b6b48c0cb7ede54e6; actual sandbox and rejection controls pass. Two independent
+    statement and two independent nonauthor final reviews passed. Linux: https://github.com/sidneyholden1/OpenProblemsInNLA/actions/runs/34927150695'
+  sorry_count: 0
+  sorry_in_definitions: 0
+  main_results:
+  - declaration: NLA.KE05.literal_recurrence_contract
+    file: Solution.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    literature_dependencies: []
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.KE05.admissibility_and_endpoints
+    file: Solution.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    literature_dependencies: []
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.KE05.exact_rational_witness
+    file: Solution.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    literature_dependencies: []
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.KE05.probability_one_validity
+    file: Solution.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    literature_dependencies: []
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.KE05.probability_one_nonzero_limit
+    file: Solution.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    literature_dependencies: []
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.KE05.literal_lower_bound
+    file: Solution.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    literature_dependencies: []
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.KE05.almost_sure_divergence
+    file: Solution.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    literature_dependencies: []
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.KE05.marginal_probability_limit
+    file: Solution.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    literature_dependencies: []
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.KE05.no_finite_uniform_constant
+    file: Solution.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    literature_dependencies: []
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  - declaration: NLA.KE05.not_uniform_probability_conjecture
+    file: Solution.lean
+    sorry_count: 0
+    comparator_config: comparator.json
+    literature_dependencies: []
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  axioms:
+  - propext
+  - Classical.choice
+  - Quot.sound
+review:
+  status: independent-agent-code-reviewed; isolated-Linux-verified
+  notes: Two independent nonauthor statement approvals preceded implementation. Frozen mathematical statements
+    and dependency pins are unchanged. The build-only addition of the Solution library is recorded in
+    verification/build-config-revision.json. Ten deliberate Challenge placeholders establish no result
+    and are excluded from active-proof counts.
+fidelity:
+  divergences: The fixed b=2,d=3 counterexample is sufficient to negate the complete universally quantified
+    conjecture; no probability law or recurrence is narrowed.
+acknowledgements: Mathematical proof by George Stepaniants; original framework by Nian Shao. Mathlib,
+  LeanCert, Lean Comparator and formalization.yaml retain implementation credit and licenses.

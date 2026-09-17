@@ -1,0 +1,29 @@
+import NLA.IV03.Proof
+import LeanCert.Tactic.IntervalAuto.PointIneq
+set_option leancert.trust "kernel"
+#assert_trust kernel NLA.IV03.inverseM_diagonal_product
+#print axioms NLA.IV03.inverseM_diagonal_product
+#assert_trust kernel NLA.IV03.inverseM_diagonal_pos
+#print axioms NLA.IV03.inverseM_diagonal_pos
+#assert_trust kernel NLA.IV03.inverseM_positive_weight
+#print axioms NLA.IV03.inverseM_positive_weight
+#assert_trust kernel NLA.IV03.zMatrix_maximum_principle
+#print axioms NLA.IV03.zMatrix_maximum_principle
+#assert_trust kernel NLA.IV03.zMatrix_isUnit
+#print axioms NLA.IV03.zMatrix_isUnit
+#assert_trust kernel NLA.IV03.zMatrix_inverse_nonnegative
+#print axioms NLA.IV03.zMatrix_inverse_nonnegative
+#assert_trust kernel NLA.IV03.zMatrix_det_pos
+#print axioms NLA.IV03.zMatrix_det_pos
+#assert_trust kernel NLA.IV03.zMatrix_principal_weight
+#print axioms NLA.IV03.zMatrix_principal_weight
+#assert_trust kernel NLA.IV03.zMatrix_principal_properties
+#print axioms NLA.IV03.zMatrix_principal_properties
+#assert_trust kernel NLA.IV03.inverseM_det_pos
+#print axioms NLA.IV03.inverseM_det_pos
+#assert_trust kernel NLA.IV03.inverseM_inverse_principal
+#print axioms NLA.IV03.inverseM_inverse_principal
+#assert_trust kernel NLA.IV03.threeByThree_negative_minors_det_pos
+#print axioms NLA.IV03.threeByThree_negative_minors_det_pos
+#assert_trust kernel NLA.IV03.zMatrix_schur_offdiagonal
+#print axioms NLA.IV03.zMatrix_schur_offdiagonal
