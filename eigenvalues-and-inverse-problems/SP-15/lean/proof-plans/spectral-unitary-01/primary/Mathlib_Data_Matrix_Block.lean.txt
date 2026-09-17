@@ -1,0 +1,146 @@
+60: @[simp]
+61: theorem fromBlocks_apply₂₁ (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)
+62:     (D : Matrix o m α) (i : o) (j : l) : fromBlocks A B C D (Sum.inr i) (Sum.inl j) = C i j :=
+63:   rfl
+64: 
+65: @[simp]
+66: theorem fromBlocks_apply₂₂ (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)
+67:     (D : Matrix o m α) (i : o) (j : m) : fromBlocks A B C D (Sum.inr i) (Sum.inr j) = D i j :=
+68:   rfl
+69: 
+70: /-- Given a matrix whose row and column indexes are sum types, we can extract the corresponding
+71: "top left" submatrix. -/
+72: def toBlocks₁₁ (M : Matrix (n ⊕ o) (l ⊕ m) α) : Matrix n l α :=
+73:   of fun i j => M (Sum.inl i) (Sum.inl j)
+74: 
+75: /-- Given a matrix whose row and column indexes are sum types, we can extract the corresponding
+76: "top right" submatrix. -/
+77: def toBlocks₁₂ (M : Matrix (n ⊕ o) (l ⊕ m) α) : Matrix n m α :=
+78:   of fun i j => M (Sum.inl i) (Sum.inr j)
+79: 
+80: /-- Given a matrix whose row and column indexes are sum types, we can extract the corresponding
+81: "bottom left" submatrix. -/
+82: def toBlocks₂₁ (M : Matrix (n ⊕ o) (l ⊕ m) α) : Matrix o l α :=
+83:   of fun i j => M (Sum.inr i) (Sum.inl j)
+84: 
+85: /-- Given a matrix whose row and column indexes are sum types, we can extract the corresponding
+86: "bottom right" submatrix. -/
+87: def toBlocks₂₂ (M : Matrix (n ⊕ o) (l ⊕ m) α) : Matrix o m α :=
+88:   of fun i j => M (Sum.inr i) (Sum.inr j)
+89: 
+90: theorem fromBlocks_toBlocks (M : Matrix (n ⊕ o) (l ⊕ m) α) :
+91:     fromBlocks M.toBlocks₁₁ M.toBlocks₁₂ M.toBlocks₂₁ M.toBlocks₂₂ = M := by
+92:   ext i j
+93:   rcases i with ⟨⟩ <;> rcases j with ⟨⟩ <;> rfl
+94: 
+95: @[simp]
+96: theorem toBlocks_fromBlocks₁₁ (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)
+97:     (D : Matrix o m α) : (fromBlocks A B C D).toBlocks₁₁ = A :=
+98:   rfl
+99: 
+100: @[simp]
+101: theorem toBlocks_fromBlocks₁₂ (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)
+102:     (D : Matrix o m α) : (fromBlocks A B C D).toBlocks₁₂ = B :=
+103:   rfl
+104: 
+105: @[simp]
+106: theorem toBlocks_fromBlocks₂₁ (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)
+107:     (D : Matrix o m α) : (fromBlocks A B C D).toBlocks₂₁ = C :=
+108:   rfl
+109: 
+110: @[simp]
+111: theorem toBlocks_fromBlocks₂₂ (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)
+112:     (D : Matrix o m α) : (fromBlocks A B C D).toBlocks₂₂ = D :=
+113:   rfl
+114: 
+115: /-- Two block matrices are equal if their blocks are equal. -/
+116: theorem ext_iff_blocks {A B : Matrix (n ⊕ o) (l ⊕ m) α} :
+117:     A = B ↔
+118:       A.toBlocks₁₁ = B.toBlocks₁₁ ∧
+119:         A.toBlocks₁₂ = B.toBlocks₁₂ ∧ A.toBlocks₂₁ = B.toBlocks₂₁ ∧ A.toBlocks₂₂ = B.toBlocks₂₂ :=
+120:   ⟨fun h => h ▸ ⟨rfl, rfl, rfl, rfl⟩, fun ⟨h₁₁, h₁₂, h₂₁, h₂₂⟩ => by
+121:     rw [← fromBlocks_toBlocks A, ← fromBlocks_toBlocks B, h₁₁, h₁₂, h₂₁, h₂₂]⟩
+122: 
+123: @[simp]
+124: theorem fromBlocks_inj {A : Matrix n l α} {B : Matrix n m α} {C : Matrix o l α} {D : Matrix o m α}
+125:     {A' : Matrix n l α} {B' : Matrix n m α} {C' : Matrix o l α} {D' : Matrix o m α} :
+126:     fromBlocks A B C D = fromBlocks A' B' C' D' ↔ A = A' ∧ B = B' ∧ C = C' ∧ D = D' :=
+127:   ext_iff_blocks
+128: 
+129: theorem fromBlocks_map (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α) (D : Matrix o m α)
+130:     (f : α → β) : (fromBlocks A B C D).map f =
+131:       fromBlocks (A.map f) (B.map f) (C.map f) (D.map f) := by
+132:   ext i j; rcases i with ⟨⟩ <;> rcases j with ⟨⟩ <;> simp [fromBlocks]
+133: 
+134: theorem fromBlocks_transpose (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)
+135:     (D : Matrix o m α) : (fromBlocks A B C D)ᵀ = fromBlocks Aᵀ Cᵀ Bᵀ Dᵀ := by
+136:   ext i j
+137:   rcases i with ⟨⟩ <;> rcases j with ⟨⟩ <;> simp [fromBlocks]
+138: 
+139: theorem fromBlocks_conjTranspose [Star α] (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)
+140:     (D : Matrix o m α) : (fromBlocks A B C D)ᴴ = fromBlocks Aᴴ Cᴴ Bᴴ Dᴴ := by
+141:   simp only [conjTranspose, fromBlocks_transpose, fromBlocks_map]
+142: 
+143: @[simp]
+144: theorem fromBlocks_submatrix_sum_swap_left (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)
+
+196:   ext i j; rcases i with ⟨⟩ <;> rcases j with ⟨⟩ <;> simp [fromBlocks]
+197: 
+198: theorem fromBlocks_neg [Neg R] (A : Matrix n l R) (B : Matrix n m R) (C : Matrix o l R)
+199:     (D : Matrix o m R) : -fromBlocks A B C D = fromBlocks (-A) (-B) (-C) (-D) := by
+200:   ext i j
+201:   cases i <;> cases j <;> simp [fromBlocks]
+202: 
+203: @[simp]
+204: theorem fromBlocks_zero [Zero α] : fromBlocks (0 : Matrix n l α) 0 0 (0 : Matrix o m α) = 0 := by
+205:   ext i j
+206:   rcases i with ⟨⟩ <;> rcases j with ⟨⟩ <;> rfl
+207: 
+208: theorem fromBlocks_add [Add α] (A : Matrix n l α) (B : Matrix n m α) (C : Matrix o l α)
+209:     (D : Matrix o m α) (A' : Matrix n l α) (B' : Matrix n m α) (C' : Matrix o l α)
+210:     (D' : Matrix o m α) : fromBlocks A B C D + fromBlocks A' B' C' D' =
+211:       fromBlocks (A + A') (B + B') (C + C') (D + D') := by
+212:   ext i j; rcases i with ⟨⟩ <;> rcases j with ⟨⟩ <;> rfl
+213: 
+214: theorem fromBlocks_multiply [Fintype l] [Fintype m] [NonUnitalNonAssocSemiring α] (A : Matrix n l α)
+215:     (B : Matrix n m α) (C : Matrix o l α) (D : Matrix o m α) (A' : Matrix l p α) (B' : Matrix l q α)
+216:     (C' : Matrix m p α) (D' : Matrix m q α) :
+217:     fromBlocks A B C D * fromBlocks A' B' C' D' =
+218:       fromBlocks (A * A' + B * C') (A * B' + B * D') (C * A' + D * C') (C * B' + D * D') := by
+219:   ext i j
+220:   rcases i with ⟨⟩ <;> rcases j with ⟨⟩ <;> simp only [fromBlocks, mul_apply, of_apply,
+221:       Sum.elim_inr, Fintype.sum_sum_type, Sum.elim_inl, add_apply]
+222: 
+223: theorem fromBlocks_diagonal_pow [Semiring α] [Fintype n] [Fintype m] [DecidableEq n] [DecidableEq m]
+224:     (A : Matrix n n α) (D : Matrix m m α) (k : ℕ) :
+225:     (fromBlocks A 0 0 D) ^ k = fromBlocks (A ^ k) 0 0 (D ^ k) := by
+226:   induction k with
+227:   | zero => ext (i | i) (j | j) <;> simp [one_apply]
+228:   | succ n ih =>
+229:     simp [ih, pow_succ, fromBlocks_multiply]
+230: 
+231: theorem fromBlocks_mulVec [Fintype l] [Fintype m] [NonUnitalNonAssocSemiring α] (A : Matrix n l α)
+232:     (B : Matrix n m α) (C : Matrix o l α) (D : Matrix o m α) (x : l ⊕ m → α) :
+233:     (fromBlocks A B C D) *ᵥ x =
+234:       Sum.elim (A *ᵥ (x ∘ Sum.inl) + B *ᵥ (x ∘ Sum.inr))
+235:         (C *ᵥ (x ∘ Sum.inl) + D *ᵥ (x ∘ Sum.inr)) := by
+236:   ext i
+237:   cases i <;> simp [mulVec, dotProduct]
+238: 
+239: theorem vecMul_fromBlocks [Fintype n] [Fintype o] [NonUnitalNonAssocSemiring α] (A : Matrix n l α)
+
+291: 
+292: end Zero
+293: 
+294: section HasZeroHasOne
+295: 
+296: variable [Zero α] [One α]
+297: 
+298: @[simp]
+299: theorem fromBlocks_one : fromBlocks (1 : Matrix l l α) 0 0 (1 : Matrix m m α) = 1 := by
+300:   ext i j
+301:   rcases i with ⟨⟩ <;> rcases j with ⟨⟩ <;> simp [one_apply]
+302: 
+303: @[simp]
+304: theorem toBlock_one_self (p : m → Prop) : Matrix.toBlock (1 : Matrix m m α) p p = 1 :=
+305:   toBlock_diagonal_self _ p

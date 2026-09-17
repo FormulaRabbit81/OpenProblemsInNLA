@@ -1,0 +1,26 @@
+Lines 122–146
+122: theorem det_mul_aux {M N : Matrix n n R} {p : n → n} (H : ¬Bijective p) :
+123:     (∑ σ : Perm n, ε σ * ∏ x, M (σ x) (p x) * N (p x) x) = 0 := by
+124:   obtain ⟨i, j, hpij, hij⟩ : ∃ i j, p i = p j ∧ i ≠ j := by
+125:     rw [← Finite.injective_iff_bijective, Injective] at H
+126:     push Not at H
+127:     exact H
+128:   exact
+129:     sum_involution (fun σ _ => σ * Equiv.swap i j)
+130:       (fun σ _ => by
+131:         have : (∏ x, M (σ x) (p x)) = ∏ x, M ((σ * Equiv.swap i j) x) (p x) :=
+132:           Fintype.prod_equiv (swap i j) _ _ (by simp [apply_swap_eq_self hpij])
+133:         simp [this, sign_swap hij, -sign_swap', prod_mul_distrib])
+134:       (fun σ _ _ => (not_congr mul_swap_eq_iff).mpr hij) (fun _ _ => mem_univ _) fun σ _ =>
+135:       mul_swap_involutive i j σ
+136: 
+137: @[simp]
+138: theorem det_mul (M N : Matrix n n R) : det (M * N) = det M * det N :=
+139:   calc
+140:     det (M * N) = ∑ p : n → n, ∑ σ : Perm n, ε σ * ∏ i, M (σ i) (p i) * N (p i) i := by
+141:       simp only [det_apply', mul_apply, prod_univ_sum, mul_sum, Fintype.piFinset_univ]
+142:       rw [Finset.sum_comm]
+143:     _ = ∑ p : n → n with Bijective p, ∑ σ : Perm n, ε σ * ∏ i, M (σ i) (p i) * N (p i) i := by
+144:       refine (sum_subset (filter_subset _ _) fun f _ hbij ↦ det_mul_aux ?_).symm
+145:       simpa only [mem_filter_univ] using hbij
+146:     _ = ∑ τ : Perm n, ∑ σ : Perm n, ε σ * ∏ i, M (σ i) (τ i) * N (τ i) i :=

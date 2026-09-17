@@ -1,0 +1,15 @@
+100: See Note [coercion into rings], or `Mathlib/Data/Nat/Cast/Basic.lean` for more details. -/
+101: noncomputable instance (priority := 900) algebraMapCoe : CoeTC ℝ K :=
+102:   ⟨ofReal⟩
+103: 
+104: theorem ofReal_alg (x : ℝ) : (x : K) = x • (1 : K) :=
+105:   Algebra.algebraMap_eq_smul_one x
+106: 
+107: theorem real_smul_eq_coe_mul (r : ℝ) (z : K) : r • z = (r : K) * z :=
+108:   Algebra.smul_def r z
+109: 
+110: theorem real_smul_eq_coe_smul [AddCommGroup E] [Module K E] [Module ℝ E] [IsScalarTower ℝ K E]
+111:     (r : ℝ) (x : E) : r • x = (r : K) • x := by rw [RCLike.ofReal_alg, smul_one_smul]
+112: 
+113: theorem algebraMap_eq_ofReal : ⇑(algebraMap ℝ K) = ofReal :=
+114:   rfl

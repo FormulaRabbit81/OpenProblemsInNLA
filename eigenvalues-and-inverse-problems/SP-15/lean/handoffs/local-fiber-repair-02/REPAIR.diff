@@ -1,0 +1,38 @@
+--- actual98-source
++++ wrapper-repair02-source
+@@ -38,15 +38,18 @@
+   Fin.lastCases t (coefficients basePoint)
+ 
+ private theorem coefficient_line_one : coefficientLine 1 = augmented basePoint := by
+-  have hpoint : basePoint (9 : Fin 10) = (1 : ℝ) := rfl
+-  simp only [coefficientLine, augmented, hpoint]
++  rfl
+ 
+ private theorem continuous_coefficient_line : Continuous coefficientLine := by
+   apply continuous_pi
+   intro i
+   refine Fin.lastCases ?_ (fun j => ?_) i
+-  · simpa only [coefficientLine, Fin.lastCases_last] using
+-      (continuous_id : Continuous (fun t : ℝ => t))
++  · have hlast : (fun t : ℝ => coefficientLine t (Fin.last 9)) = (id : ℝ → ℝ) := by
++      funext t
++      exact Fin.lastCases_last (n := 9) (motive := fun _ : Fin 10 => ℝ)
++        (last := t) (cast := coefficients basePoint)
++    rw [hlast]
++    exact continuous_id
+   · simpa only [coefficientLine, Fin.lastCases_castSucc] using
+       (continuous_const : Continuous (fun _ : ℝ => coefficients basePoint j))
+ 
+@@ -56,8 +59,10 @@
+         ψ t ∈ parameterBox ∧ coefficients (ψ t) = coefficients basePoint ∧ ψ t 9 = t := by
+   obtain ⟨g, _, _, hg⟩ := local_augmented_inverse
+   have hline : Filter.Tendsto coefficientLine (𝓝 (1 : ℝ)) (𝓝 (augmented basePoint)) := by
+-    simpa only [coefficient_line_one] using
+-      (continuous_coefficient_line.continuousAt : ContinuousAt coefficientLine (1 : ℝ))
++    have h := (continuous_coefficient_line.continuousAt : ContinuousAt coefficientLine (1 : ℝ))
++    change Filter.Tendsto coefficientLine (𝓝 (1 : ℝ)) (𝓝 (coefficientLine 1)) at h
++    rw [coefficient_line_one] at h
++    exact h
+   have hnear := hline.eventually hg
+   obtain ⟨ε, hε, hball⟩ := Metric.eventually_nhds_iff.mp hnear
+   refine ⟨ε, hε, fun t => g (coefficientLine t), ?_⟩

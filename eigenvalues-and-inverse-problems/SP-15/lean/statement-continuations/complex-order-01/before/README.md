@@ -1,0 +1,17 @@
+# SP-15 — draft exact statements for Lean verification
+
+George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology. Substantial OpenAI Codex assistance. Fortier Bourque and Ransford retain credit for the original question and generic finiteness theorem.
+
+This is a **statement draft**, not a verified solution. It contains concrete definitions and 29 intentional Challenge specifications. No Solution, proof implementation, independent statement acceptance, local elaboration, statement freeze, LeanCert execution, or Comparator run exists yet. No target is added to the verified count.
+
+The endpoint negates the exact original universal finite-bound statement. The proposed proof constructs arbitrarily large families of complex 9×9 matrices with identical singular values of every complex scalar shift and no unitary-similar pair. It does not substitute a sampled shift set, only the largest singular value, ordinary similarity, or a conditional local-fiber theorem.
+
+Read [NUMERICAL_TARGETS.md](NUMERICAL_TARGETS.md) and [DEFINITION-AND-CONTRACT-PLAN.md](DEFINITION-AND-CONTRACT-PLAN.md), which were written and hash-bound before Lean statement code. [SourceCorrespondence.md](SourceCorrespondence.md) maps the contracts to the canonical target and supplied proof. [NLA/SP15/Definitions.lean](NLA/SP15/Definitions.lean) fixes every mathematical object; [Challenge.lean](Challenge.lean) fixes the proposed theorem types.
+
+The exact rational point gives a 9×9 derivative minor of determinant −1088. Its retained LU certificate avoids factorial determinant expansion. The 1/16 box gives positivity and disjoint p intervals without eigenvalue approximation or interval subdivision. Actual coefficient differentiation, the real inverse-function theorem, all-shift spectral transport, and arbitrary-unitary flag rigidity remain proof obligations.
+
+The standalone static checker reads the actual coefficient formulas and verifies their symbolic polynomials/Jacobian against the retained determinant-derived data. That check is Python source reconnaissance, not Lean verification. Its initial multiline-expression parser error was repaired without changing Lean sources; the final check passed. Definitions and Challenge are not claimed to elaborate.
+
+The package pins the same Lean 4.33.1, LeanCert and Mathlib sources as the accepted campaign. Its Lake declaration selects only Challenge at this draft stage. The coordinator uses the shared pinned local environment and runs one compiler/thread with a 4096 MiB limit; this packet creates no cache and launches no compiler. After independent reviews, actual local elaboration and freeze, implementation must import Definitions independently and never import Challenge. Final real Comparator/kernel/sandbox checks run separately on GitHub's non-root Linux runner after local development succeeds.
+
+[formalization.yaml](formalization.yaml) reports the present draft scope. [STATE.json](STATE.json) lists the outstanding gates. Pinned Tau Ceti rubrics and Schiffer/Forsythe statement patterns are retained under sources; this is not an official Tau Ceti service result.

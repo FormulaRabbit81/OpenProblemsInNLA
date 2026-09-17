@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+"""Source/API plan binding audit only. Writes this private planning packet."""
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib, json, re
+
+P = Path(__file__).resolve().parent
+B = Path('/private/tmp/nla-lean-next-20260915')
+W = B / 'next-proofs/SP-15'
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+M = L / '.lake/packages/mathlib/Mathlib'
+bindings = {}; checks = []; copies = []
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+
+def ck(name, ok):
+    assert ok, name
+    checks.append(name)
+
+def bind(p, expected=None):
+    p = Path(p).absolute(); h = sha(p)
+    if expected is not None: ck('SHA256 ' + str(p), h == expected)
+    bindings[str(p)] = h
+    return h
+
+def retain(p, name):
+    h = bind(p); q = P / 'evidence' / name
+    q.parent.mkdir(parents=True, exist_ok=True); q.write_bytes(Path(p).read_bytes())
+    ck('Exact copy ' + name, sha(q) == h)
+    copies.append({'source': str(p), 'retained': str(q.relative_to(P)), 'sha256': h})
+
+freeze = json.loads((W / 'STATEMENT-FREEZE.json').read_text())
+bind(W / 'STATEMENT-FREEZE.json', '89132d7b5cd2c2527c667ad88d4e7904543dd3b8e4fd3ee575d7173f7b39aa15')
+ck('Exactly13 frozen files', len(freeze['frozen_files']) == 13)
+for f, h in freeze['frozen_files'].items():
+    bind(W / f, h); retain(W / f, 'frozen/' + f + ('.txt' if f.endswith('.lean') else ''))
+accept = json.loads((B / 'SP15-ROOT-FREEZE-ACCEPTANCE.json').read_text())
+ck('Exact freeze previously accepted for earlier assigned proofs', accept['proof_implementation_authorized'] and accept['freeze_sha256'] == sha(W / 'STATEMENT-FREEZE.json'))
+retain(B / 'SP15-ROOT-FREEZE-ACCEPTANCE.json', 'root/SP15-ROOT-FREEZE-ACCEPTANCE.json')
+retain(W / 'STATEMENT-FREEZE.json', 'frozen/STATEMENT-FREEZE.json')
+future = ['NLA/SP15/ParameterPositivity.lean', 'NLA/SP15/SquareRoots.lean']
+ck('Future proof modules absent before implementation', all(not (W / f).exists() for f in future))
+headers = {}; text = (W / 'Challenge.lean').read_text()
+inventory = json.loads((W / 'STATEMENT-HEADERS.json').read_text())
+rows = {r['name']: r for r in inventory['contracts']}
+for name in ['parameter_matrices_positive', 'square_root_semantics']:
+    h = re.search(r'^theorem ' + name + r'\b.*?(?=\s*:=)', text, re.M | re.S).group(0).rstrip()
+    ck('Exact frozen header ' + name, rows['NLA.SP15.' + name]['header'] == h)
+    headers[name] = {'header': h, 'header_sha256': hashlib.sha256(h.encode()).hexdigest()}
+(P / 'EXACT-HEADERS.json').write_text(json.dumps(headers, indent=2) + '\n')
+pre = {'recorded_utc': datetime.now(timezone.utc).isoformat(), 'author_agent': '/root/sf_ra_runtime_referee',
+       'phase': 'before proof implementation', 'scope': 'SP15 frozen contracts5/6 exact plan and static API feasibility only',
+       'future_modules': future, 'future_modules_absent': True, 'frozen_files': freeze['frozen_files'],
+       'root_freeze_acceptance_sha256': sha(B / 'SP15-ROOT-FREEZE-ACCEPTANCE.json'),
+       'plan_sha256': sha(P / 'PLAN.md'), 'api_feasibility_sha256': sha(P / 'API-FEASIBILITY.md'),
+       'separate_root_plan_approval_required': True, 'proof_source_written': False, 'Lean_compiler_run': False,
+       'cache_mutation': False, 'Git_or_network': False, 'independent_proof_approval_claim': False, 'count_change': 0}
+(P / 'PRE-CODE-BINDINGS.json').write_text(json.dumps(pre, indent=2) + '\n')
+
+baselines = []
+for n, mod, h in [(74, 'Numerical', '5d26e28e533c9c5fdef63499fa2b8986c5d6b9ca56e9ca61d3f826220890b8d1'),
+                  (79, 'BoxGeometry', 'e5a56167fbd147b3958fcf21c3dce4ab43fe28001e8fd484167a95f9c36b13f8')]:
+    rp = L / f'runs/development-{n}/RECEIPT.json'; r = json.loads(rp.read_text()); bind(rp)
+    ap = L / f'ASSEMBLY-{n}.json'; bind(ap, r['assembly_sha256']); ass = json.loads(ap.read_text())
+    c = next(c for c in r['commands'] if c['module'] == 'NLA.SP15.' + mod)
+    rel = f'NLA/SP15/{mod}.lean'; bind(W / rel, h); bind(L / rel, h)
+    ck('Actual baseline source/exit ' + mod, c['exit_code'] == 0 and c['source_sha256'] == h and r['source_inputs'][rel] == h and ass['sources'][rel]['sha256'] == h)
+    log = L / f'runs/development-{n}/NLA.SP15.{mod}.log'; bind(log, c['log_sha256'])
+    bind(L / f'.lake/build/lib/lean/NLA/SP15/{mod}.olean', c['output_sha256'])
+    ck('Baseline one thread/4096MiB ' + mod, c['argv'][1:3] == ['--threads=1', '--memory=4096'] and r['max_compiler_processes'] == 1)
+    found = re.findall(r"^'([^']+)' depends on axioms: \[([^\]]*)\]$", log.read_text(), re.M)
+    ck('Baseline axiom-report count ' + mod, len(found) == (1 if mod == 'Numerical' else 3))
+    for name, ax in found:
+        ck('Baseline standard three ' + name, len(ax.split(',')) == 3 and {a.strip() for a in ax.split(',')} == {'propext', 'Classical.choice', 'Quot.sound'})
+    for p, f in [(rp, 'RECEIPT.json'), (ap, 'ASSEMBLY.json'), (log, mod + '.log')]: retain(p, f'local{n}/' + f)
+    retain(W / rel, 'baseline-sources/' + mod + '.lean.txt')
+    baselines.append({'module': c['module'], 'actual_run': n, 'receipt_sha256': sha(rp), 'command': c,
+                      'whole_run_failed_modules': r['failed_modules'], 'whole_run_blocked_modules': r['blocked_modules'],
+                      'scope': 'Exact existing source/log/output command binding for planning; no new execution or independent full proof approval'})
+(P / 'BASELINE-LOCAL-EVIDENCE.json').write_text(json.dumps(baselines, indent=2) + '\n')
+
+ranges = {
+ 'LinearAlgebra/Matrix/Gershgorin.lean': [[1,76]],
+ 'Analysis/Matrix/PosDef.lean': [[24,43],[68,89]],
+ 'LinearAlgebra/Matrix/PosDef.lean': [[155,170],[189,205],[503,512]],
+ 'Analysis/Matrix/Spectrum.lean': [[24,84],[225,236]],
+ 'Analysis/Matrix/Order.lean': [[18,35],[39,64],[179,198]],
+ 'Analysis/SpecialFunctions/ContinuousFunctionalCalculus/Rpow/Basic.lean': [[77,84],[231,266],[710,728]],
+ 'Algebra/Group/Commute/Units.lean': [[68,81]],
+ 'LinearAlgebra/Eigenspace/Basic.lean': [[403,449]],
+ 'LinearAlgebra/Matrix/ToLin.lean': [[383,390],[416,418]],
+ 'Analysis/Normed/Lp/WithLp.lean': [[163,174]],
+ 'Analysis/RCLike/Basic.lean': [[100,114]],
+ 'LinearAlgebra/Matrix/Hermitian.lean': [[40,66]],
+ 'Analysis/Complex/Order.lean': [[11,28],[35,64]],
+ 'Analysis/Complex/Norm.lean': [[30,44]]}
+api = []
+for name, rr in ranges.items():
+    p = M / name; h = bind(p); lines = p.read_text().splitlines()
+    txt = '\n'.join(f'{i}: {lines[i-1]}' for lo, hi in rr for i in range(lo, hi+1)) + '\n'
+    q = P / 'primary-excerpts' / (name + '.txt'); q.parent.mkdir(parents=True, exist_ok=True); q.write_text(txt)
+    api.append({'path': str(p), 'sha256': h, 'read_ranges': rr, 'excerpt': str(q.relative_to(P)), 'excerpt_sha256': sha(q)})
+(P / 'PINNED-API-BINDINGS.json').write_text(json.dumps(api, indent=2) + '\n')
+for f in ['STANDARD-BINDINGS.json', 'SOURCE-PROVENANCE.json']: retain(W / f, 'frozen/' + f)
+standards = json.loads((W / 'STANDARD-BINDINGS.json').read_text())
+for row in standards['standards']: bind(W / row['path'], row['sha256'])
+env = json.loads((L / 'LOCAL-ENVIRONMENT.json').read_text()); bind(L / 'LOCAL-ENVIRONMENT.json')
+lake = json.loads((W / 'lake-manifest.json').read_text())
+ck('Dependency pins match recorded local environment', {x['name']:x['rev'] for x in lake['packages']} == {x['package']:x['commit'] for x in env['dependencies']})
+for f, h in freeze['frozen_files'].items(): ck('Frozen unchanged after planning ' + f, sha(W / f) == h)
+ck('No active Lean source in plan', not list(P.rglob('*.lean')))
+ck('Future modules still absent', all(not (W / f).exists() for f in future))
+for name, data in [('BINDINGS.json', bindings), ('COPY-MAP.json', copies), ('STATIC-CHECKS.json',
+ {'status':'PASS plan-only source/API/baseline binding checks', 'checks':checks, 'bindings':len(bindings),
+  'core_files':13, 'planned_contracts':2, 'proof_or_compiler_run':False, 'coordinator_plan_approval_pending':True})]:
+    (P / name).write_text(json.dumps(data, indent=2) + '\n')
+print(json.dumps({'status':'PASS', 'checks':len(checks), 'bindings':len(bindings), 'proof_modules_written':False, 'plan_approval':'pending'}, indent=2))

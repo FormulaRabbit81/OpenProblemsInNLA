@@ -1,0 +1,10 @@
+--- before/GramPolynomial.lean
++++ after/GramPolynomial.lean
+@@ -46,6 +46,7 @@
+   apply Polynomial.eq_of_infinite_eval_eq
+   apply Set.infinite_of_injective_forall_mem hf
+   intro k
++  -- Membership in the equality locus is exactly this evaluation at the chosen negative point.
+   change (shiftedGram (constructedMatrix x) z).charpoly.eval (f k) =
+     (shiftedGram (constructedMatrix y) z).charpoly.eval (f k)
+   have ht : (0 : ℝ) < ((k + 1 : ℕ) : ℝ) := by

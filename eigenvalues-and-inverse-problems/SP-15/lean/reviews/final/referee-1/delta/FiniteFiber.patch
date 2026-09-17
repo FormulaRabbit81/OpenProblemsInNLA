@@ -1,0 +1,10 @@
+--- before/FiniteFiber.lean
++++ after/FiniteFiber.lean
+@@ -42,6 +42,7 @@
+   · intro i j hij
+     have htij : t i = t j :=
+       (hpoint i).2.2.symm.trans ((congrFun hij 9).trans (hpoint j).2.2)
++    -- Expose the selected affine grid parameters so positive spacing can be canceled.
+     change 1 + δ * (i.val : ℝ) = 1 + δ * (j.val : ℝ) at htij
+     have hmul : δ * (i.val : ℝ) = δ * (j.val : ℝ) := add_left_cancel htij
+     have hval : (i.val : ℝ) = (j.val : ℝ) := mul_left_cancel₀ (ne_of_gt hδ) hmul

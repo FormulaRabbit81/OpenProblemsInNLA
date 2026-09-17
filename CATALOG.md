@@ -2,7 +2,7 @@
 
 **112 problems with open targets:** 42 open and 70 partially resolved. **105 other retained entries**, excluded from the open count.
 
-**Resolution evidence:** 54 solved (published or independently audited); 51 solved with Lean verification.
+**Resolution evidence:** 53 solved (published or independently audited); 52 solved with Lean verification.
 
 Each entry records its own literature-check date. Literature checks are bounded; ratings are editorial. “Impact” uses the canonical `Importance` field.
 
@@ -79,7 +79,7 @@ Retained entries outside the open count:
 | [SP-11](eigenvalues-and-inverse-problems/SP-11/README.md) | The delta conjecture for minimum symmetric rank | **✅ SOLVED** | extreme | interesting to the community | [PDF](eigenvalues-and-inverse-problems/SP-11/problem.pdf) · [TeX](eigenvalues-and-inverse-problems/SP-11/problem.tex) |
 | [SP-12](eigenvalues-and-inverse-problems/SP-12/README.md) | A chromatic lower bound for positive-semidefinite nullity with SAP | **✅ SOLVED** | challenging | interesting to specialist | [PDF](eigenvalues-and-inverse-problems/SP-12/problem.pdf) · [TeX](eigenvalues-and-inverse-problems/SP-12/problem.tex) |
 | [SP-13](eigenvalues-and-inverse-problems/SP-13/README.md) | Trace-norm-small perturbations preserve Hermitian spectral distributions | **✅ SOLVED** | challenging | interesting to the community | [PDF](eigenvalues-and-inverse-problems/SP-13/problem.pdf) · [TeX](eigenvalues-and-inverse-problems/SP-13/problem.tex) |
-| [SP-15](eigenvalues-and-inverse-problems/SP-15/README.md) | Finitely many unitary classes with prescribed shifted singular values | **✅ SOLVED** | challenging | interesting to the community | [PDF](eigenvalues-and-inverse-problems/SP-15/problem.pdf) · [TeX](eigenvalues-and-inverse-problems/SP-15/problem.tex) |
+| [SP-15](eigenvalues-and-inverse-problems/SP-15/README.md) | Finitely many unitary classes with prescribed shifted singular values | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](eigenvalues-and-inverse-problems/SP-15/problem.pdf) · [TeX](eigenvalues-and-inverse-problems/SP-15/problem.tex) |
 
 
 ## [Matrix functions and stability](matrix-functions-and-stability/README.md)

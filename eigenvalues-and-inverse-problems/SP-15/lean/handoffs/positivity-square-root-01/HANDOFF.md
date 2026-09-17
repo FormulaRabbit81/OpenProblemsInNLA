@@ -1,0 +1,3 @@
+UNRUN positivity candidate for exactly frozen SP-15 contract 5. Root alone compiles. The actual certified whole-box bounds feed a Hermitian Gershgorin eigenvalue positivity bridge; the diagonal P case reuses PosDef.diagonal. All representation/scalar transports are explicit and commented, with no new interval or definition change. The two private helpers are qMatrix Hermitian symmetry and finite-dimensional strict-row-dominance positivity.
+
+The exact header and all13 protected inputs are unchanged. Source-author review is static only; proof success and independent acceptance remain pending. SquareRoots is not yet written and will follow positivity local success. No Git/cache/network/compiler action was performed by this author.

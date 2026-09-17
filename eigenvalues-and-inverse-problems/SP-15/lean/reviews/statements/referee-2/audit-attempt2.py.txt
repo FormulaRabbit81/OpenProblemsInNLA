@@ -1,0 +1,285 @@
+#!/usr/bin/env python3
+"""Read-only SP15 statement/evidence authentication; no compiler, Git or network.
+
+Writes only this review directory. It binds bytes and checks records, not proofs.
+The report separately states which mathematical and API text the reviewer read.
+"""
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib, json, re, difflib
+
+R = Path(__file__).resolve().parent
+B = Path('/private/tmp/nla-lean-next-20260915')
+W = B/'next-proofs/SP-15'
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+C = W/'statement-continuations/complex-order-01'
+PEER = B/'reviews/SP15-statement-referee1-20260917'
+D = 'fa57c71cd3e6d6551f081e479121f9f6a4695858732f3e6d1fa4cd79ad927498'
+CH = 'dc55eda7fac9d89e3c7017593ce3bdb6f8a4b01b15775d4c6f8c8e13b6560833'
+OLD_CH = 'aa3885ea55d22885e816f16d0cdb68e566cc191286a367b7aa18009e69cdab24'
+WORKSPACE = 'c30fff5f1d0411519978317b5e865fd400c66a0d8319a7c835380dada94808e5'
+ORIGINAL = '67feef9692550c0ca103aaf18d43b0fd1bd44d10494efaa24759088c27760fd5'
+bindings, copies, checks = {}, [], []
+
+def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def check(label, truth):
+    if not truth: raise AssertionError(label)
+    checks.append(label)
+def bind(p, expected=None, why='Byte authentication; not a full-text read claim'):
+    p=Path(p).absolute(); raw=p.read_bytes(); digest=hashlib.sha256(raw).hexdigest()
+    if expected is not None: check('SHA256 '+str(p),digest==expected)
+    key=str(p)
+    if key in bindings: check('Stable re-read '+key,bindings[key]['sha256']==digest)
+    else: bindings[key]={'path':key,'sha256':digest,'bytes':len(raw),'scope':why}
+    return digest
+def read(p):
+    bind(p); return json.loads(Path(p).read_text())
+def retain(p, rel):
+    p=Path(p); digest=bind(p); out=R/'evidence'/rel
+    check('Retained path remains in review '+str(rel),out.resolve().is_relative_to(R))
+    out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(p.read_bytes())
+    check('Exact retained bytes '+str(rel),sha(out)==digest)
+    copies.append({'source':str(p.absolute()),'retained':str(out.relative_to(R)),
+                   'sha256':digest,'bytes':p.stat().st_size})
+def manifest(base, name='MANIFEST.json', expected=None):
+    mp=base/name; bind(mp,expected); data=read(mp); rows=data['files']
+    entries=({r['path']:r['sha256'] for r in rows} if isinstance(rows,list)
+             else {k:(v['sha256'] if isinstance(v,dict) else v) for k,v in rows.items()})
+    for name,digest in entries.items():
+        check('Safe manifest path '+name,not Path(name).is_absolute() and '..' not in Path(name).parts)
+        bind(base/name,digest)
+    return data,entries
+
+current,inventory=manifest(W,'WORKSPACE-MANIFEST.json',WORKSPACE)
+check('Exactly 140 sealed current payloads',len(inventory)==140)
+extra_paths={str(p.relative_to(W)) for p in W.rglob('*') if p.is_file()}-(set(inventory)|{'WORKSPACE-MANIFEST.json'})
+check('Only explicitly out-of-scope proof-plan additions beyond sealed workspace',
+      all(p.startswith('proof-plans/initial-numerical/') and not p.endswith('.lean') for p in extra_paths))
+(R/'OUT-OF-SCOPE-ADDITIONS.json').write_text(json.dumps({'scope':'Concurrent author proof planning, not reviewed or approved here; sealed 140-file core unchanged', 'paths_observed':sorted(extra_paths)},indent=2)+'\n')
+cm,cinventory=manifest(C,expected='8e68fb6ae428319594512d2c64e89dc01c33547a0b49370f884d5180a8b347af')
+check('Exactly 75 continuation payloads',len(cinventory)==75)
+before=read(C/'BEFORE-PACKET-MAP.json')
+original=read(C/'before/WORKSPACE-MANIFEST.json')
+bind(C/'before/WORKSPACE-MANIFEST.json',ORIGINAL)
+oldinventory={r['path']:r['sha256'] for r in original['files']}
+mapping={r['original_path']:r for r in before['payloads']}
+check('Original 64 payloads preserved by map, original manifest bound separately',
+      len(oldinventory)==64 and set(mapping)==set(oldinventory))
+for path,row in mapping.items():
+    check('Before map matches original manifest '+path,
+          row['sha256']==(ORIGINAL if path=='WORKSPACE-MANIFEST.json' else oldinventory[path]))
+    bind(C/row['retained_path'],row['sha256'])
+before_text=(C/'before/Challenge.lean.txt').read_text()
+challenge=(W/'Challenge.lean').read_text()
+defs=(W/'NLA/SP15/Definitions.lean').read_text()
+bind(W/'NLA/SP15/Definitions.lean',D); bind(W/'Challenge.lean',CH)
+bind(C/'before/Challenge.lean.txt',OLD_CH)
+line='open scoped BigOperators Matrix MatrixOrder Matrix.Norms.L2Operator Topology'
+check('Only source difference is standard ComplexOrder scoped open',
+      before_text.count(line+'\n')==1 and challenge==before_text.replace(line+'\n',line+' ComplexOrder\n'))
+check('Definitions exact before and after',
+      (C/'before/NLA/SP15/Definitions.lean.txt').read_bytes()==(W/'NLA/SP15/Definitions.lean').read_bytes())
+(R/'REVIEWED-SCOPE.patch').write_text(''.join(difflib.unified_diff(
+    before_text.splitlines(True),challenge.splitlines(True),
+    fromfile='original/Challenge.lean',tofile='corrected/Challenge.lean')))
+
+# Header extraction mirrors literal declaration boundaries, not elaboration.
+def headers(text):
+    return [(m.group(1),m.group(0).rsplit(':=',1)[0].rstrip())
+            for m in re.finditer(r'^theorem\s+(\w+)\b.*?:=',text,re.M|re.S)]
+decls=headers(challenge); olddecls=headers(before_text)
+decl_record=read(W/'STATEMENT-HEADERS.json'); config=read(W/'comparator.json')
+names=['NLA.SP15.'+name for name,_ in decls]
+check('All 29 literal headers unchanged',decls==olddecls and len(decls)==29)
+check('All comparator names exact and ordered',config['theorem_names']==names and len(set(names))==29)
+check('Comparator exact trust boundary',len(config['permitted_axioms'])==3 and
+      set(config['permitted_axioms'])=={'propext','Quot.sound','Classical.choice'} and
+      config['definition_names']==[] and config['challenge_module']=='Challenge' and config['solution_module']=='Solution')
+check('Header-record source hashes',decl_record['Definitions_sha256']==D and decl_record['Challenge_sha256']==CH)
+for (name,header),row in zip(decls,decl_record['contracts']):
+    check('Exact header record '+name,row['name']=='NLA.SP15.'+name and row['header']==header and
+          row['header_sha256']==hashlib.sha256(header.encode()).hexdigest())
+check('Exact number of header rows',len(decl_record['contracts'])==29)
+check('Exactly two active Lean source files',
+      sorted(str(p.relative_to(W)) for p in W.rglob('*.lean'))==['Challenge.lean','NLA/SP15/Definitions.lean'])
+check('No Solution implementation',not (W/'Solution.lean').exists())
+check('Challenge only imports concrete Definitions',re.findall(r'^import (.+)$',challenge,re.M)==['NLA.SP15.Definitions'])
+strip=lambda s:re.sub(r'--[^\n]*','',re.sub(r'/\-.*?\-/','',s,flags=re.S))
+check('No Definitions oracle or proof hole',not re.search(r'\b(?:axiom|sorry|admit|opaque|unsafe|native_decide|sorryAx)\b',strip(defs)))
+check('Exactly 29 intentional Challenge holes',len(re.findall(r'\bsorry\b',strip(challenge)))==29 and
+      len(re.findall(r':= by\s+sorry',strip(challenge)))==29)
+check('No extra Challenge trust primitive',not re.search(r'\b(?:axiom|admit|opaque|unsafe|native_decide|sorryAx)\b',strip(challenge)))
+check('All mathematical definitions concrete and no theorem hidden there',
+      not re.search(r'^\s*(?:theorem|lemma)\s',strip(defs),re.M))
+
+nf=read(W/'NUMERICAL-FIRST.json')
+check('Numerical and definition plan bound before draft',nf['before_Lean_statement_code'] and
+      not nf['Lean_files_exist_at_record'] and nf['prepared_utc']<original['created_utc'])
+bind(W/'NUMERICAL_TARGETS.md',nf['numerical_target_sha256'])
+bind(W/'DEFINITION-AND-CONTRACT-PLAN.md',nf['definition_contract_plan_sha256'])
+check('All 29 names present in numerical-first record',nf['planned_contracts']==[name for name,_ in decls])
+for p in ['NUMERICAL_TARGETS.md','DEFINITION-AND-CONTRACT-PLAN.md','NUMERICAL-FIRST.json','lakefile.toml','lake-manifest.json','lean-toolchain','comparator.json']:
+    check('Unchanged pre-repair plan/pin/config '+p,sha(W/p)==oldinventory[p])
+provenance=read(W/'SOURCE-PROVENANCE.json')
+check('Permanent canonical identity and path preserved',provenance['canonical_problem_id']=='SP-15' and
+      provenance['canonical_path']=='eigenvalues-and-inverse-problems/SP-15/README.md' and
+      provenance['canonical_commit']=='d348d7471e2ff881ae30fb8a9c40323a61cd383a')
+bind(provenance['feasibility_manifest']['path'],provenance['feasibility_manifest']['sha256'])
+check('Numerical-first binds same feasibility manifest',nf['feasibility_manifest_sha256']==provenance['feasibility_manifest']['sha256'])
+for row in read(W/'COPY-MAP.json')['copies']:
+    dest=W/row['destination'];bind(dest,row['sha256']);check('Copy bytes '+row['destination'],dest.stat().st_size==row['bytes'])
+    if 'transformation' not in row:bind(row['source'],row['sha256'])
+    else:
+        src=read(row['source']);target=read(dest)
+        check('Only named lake manifest transformation',row['destination']=='lake-manifest.json' and src['name']=='NLAMI13' and target['name']=='NLASP15')
+        src['name']='NLASP15';check('All dependency data unchanged',src==target)
+
+standards=read(W/'STANDARD-BINDINGS.json')
+for row in standards['standards']:
+    bind(W/row['path'],row['sha256'])
+    check('Standard binding source agreement '+row['path'],row['sha256']==row['upstream']['sha256'])
+bind(W/standards['checker_source_lock']['path'],standards['checker_source_lock']['sha256'])
+apis=read(W/'PINNED-API-BINDINGS.json')
+check('Mathlib revision exact',apis['Mathlib_revision']=='0df444a360eaa60ab8c11dca51a86af692955474')
+for row in apis['immediate_imports']+apis['inspected_auxiliary_sources']:bind(row['path'],row['sha256'])
+check('All 9 immediate imports bound',re.findall(r'^import (.+)$',defs,re.M)==[r['module'] for r in apis['immediate_imports']])
+for row in read(C/'CONTINUATION.json')['primary_sources']:
+    bind(row['source'],row['sha256']);bind(C/row['retained'],row['sha256'])
+primary=[]
+for path,ranges in json.loads((R/'PRIMARY-READ-RANGES.json').read_text()).items():
+    p=L/'.lake/packages/mathlib/Mathlib'/path;digest=bind(p);lines=p.read_text().splitlines()
+    excerpt='\n'.join(f'{i}: {lines[i-1]}' for lo,hi in ranges for i in range(lo,hi+1))+'\n'
+    out=R/'primary-excerpts'/(path+'.txt');out.parent.mkdir(parents=True,exist_ok=True);out.write_text(excerpt)
+    primary.append({'path':str(p),'sha256':digest,'read_ranges':ranges,
+                    'excerpt':str(out.relative_to(R)),'excerpt_sha256':sha(out),
+                    'scope':'Selected primary definitions/signatures/proofs read, not entire import closure'})
+
+# Validate JSON-formatted YAML against pinned schema using existing jsonschema.
+# No installation, network fetch, proof checking, or author-checker execution.
+import jsonschema
+metadata=read(W/'formalization.yaml');schema_path=W/'sources/standards/v0.4.schema.json'
+schema=read(schema_path);jsonschema.Draft202012Validator.check_schema(schema)
+schema_errors=list(jsonschema.Draft202012Validator(schema).iter_errors(metadata))
+check('Pinned v0.4 schema validation',not schema_errors)
+check('Metadata is honest draft with no accepted main result',metadata['version']=='v0.4' and metadata['status']['main_results']==[])
+check('George affiliation and no contact string in current public prose',
+      metadata['project']['authors']==['George Stepaniants'] and
+      'Department of Computing and Mathematical Sciences' in metadata['project']['affiliations']['George Stepaniants'] and
+      'California Institute of Technology' in metadata['project']['affiliations']['George Stepaniants'] and
+      not re.search(r'[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}', '\n'.join((W/p).read_text() for p in
+       ['README.md','SourceCorrespondence.md','formalization.yaml','NLA/SP15/Definitions.lean','Challenge.lean'])))
+state=read(W/'STATE.json')
+check('Historical draft state no proof/freeze/run acceptance',not state['proof_implementation_authorized'] and
+      state['statement_freeze'] is None and state['LeanCert_run'] is None and
+      state['Lean_proof_run'] is None and state['Comparator_run'] is None and state['completed_targets_added']==0)
+
+# Actual retained local run records. Never launch compiler or accept failed output.
+environment=read(L/'LOCAL-ENVIRONMENT.json')
+envsha=bind(L/'LOCAL-ENVIRONMENT.json','75036e204900cadc86bfc6467c43a13bca5a051e025d6c5f4384738598751ec3')
+compiler=environment['compiler'];bind(compiler,'1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554')
+bind(L/'serial_compile_v3.py','d6c00e953688e155c0a313a8f49c7c395ad0fb1166faf3655c0b47f3ea2b2266')
+lake=read(W/'lake-manifest.json')
+pins={p['name']:p['rev'] for p in lake['packages']}
+check('Recorded environment pins match complete Lake package set',pins=={p['package']:p['commit'] for p in environment['dependencies']})
+check('Pinned Lean declaration', (W/'lean-toolchain').read_text().strip()=='leanprover/lean4:v4.33.1')
+records={}; logs={}
+for n,rsha,asha in [
+ (61,'c000e04f102d2edbeb208c9632670c7fd8e9f0abb34dad21dca893feb5172408','79c90ebc4c97cc97f0da6558c47082b2650277a28e6fbbb99c69295de49b414e'),
+ (63,'40b8ee92a1e44506780b1b17ba0508a71c0ea133195032c9bb5c29c9ced33028','8667a13757ba7be170cec1b2f050ee757dceb4ec769c6329a63dc79853ff33bd')]:
+    rp=L/f'runs/development-{n}/RECEIPT.json'; ap=L/f'ASSEMBLY-{n}.json'
+    bind(rp,rsha);bind(ap,asha);r=read(rp);a=read(ap);records[n]=r
+    check(f'Local{n} receipt assembly link',r['assembly_sha256']==asha)
+    check(f'Local{n} exact command environment resources',r['runner_sha256']==sha(L/'serial_compile_v3.py') and
+          r['compiler_sha256']==sha(compiler) and r['platform']=='darwin' and r['max_compiler_processes']==1 and
+          r['threads']==1 and r['memory_cap_mib']==4096 and a['max_processes']==1 and a['memory_cap_mib']==4096)
+    check(f'Local{n} actual environment link',a['current_environment_sha256']==envsha)
+    check(f'Local{n} only SP15 two modules selected',r['module_order']==['NLA.SP15.Definitions','NLA.SP15.Challenge'] and len(r['commands'])==2)
+    expect_sources={'NLA/SP15/Definitions.lean':D,'NLA/SP15/Challenge.lean':OLD_CH if n==61 else CH}
+    for p,h in expect_sources.items():
+        check(f'Local{n} SP15 exact assembly and receipt '+p,r['source_inputs'][p]==h and a['sources'][p]['sha256']==h)
+    for c in r['commands']:
+        module=c['module'];sp=module.replace('.','/')+'.lean'
+        check(f'Local{n} command source '+module,c['source_sha256']==expect_sources[sp])
+        if 'argv' in c:
+            out=str(L/'.lake/build/lib/lean'/(module.replace('.','/')+'.olean'))
+            check(f'Local{n} exact bounded argv '+module,c['argv']==[compiler,'--threads=1','--memory=4096','-o',out,sp] and c['cwd']==str(L))
+            check(f'Local{n} coherent timestamps '+module,r['start']<=c['start']<c['end']<=r['end'] and c['elapsed_seconds']>0)
+            log=L/f'runs/development-{n}'/(module+'.log');bind(log,c['log_sha256']);logs[n,module]=log.read_text()
+            if c['exit_code']==0:bind(out,c['output_sha256'])
+            else:check(f'Local{n} no failed output accepted '+module,c['output_sha256'] is None)
+    root_report=B/f'SP15-LOCAL-STATEMENT-{n}.json';rr=read(root_report)
+    check(f'Root actual{n} report matches receipt',rr['receipt_sha256']==rsha and rr['commands']==r['commands'] and
+          rr['frozen'] is False and rr['proof_implementation'] is False and rr['count_change']==0)
+    retain(rp,f'local{n}/RECEIPT.json');retain(ap,f'local{n}/ASSEMBLY.json');retain(root_report,f'local{n}/ROOT-REPORT.json')
+    for module in r['module_order']:
+        lp=L/f'runs/development-{n}'/(module+'.log')
+        if lp.exists():retain(lp,f'local{n}/{module}.log')
+r61,r63=records[61],records[63]
+check('Actual61 failed Challenge and passed Definitions only',r61['completed_modules']==1 and
+      r61['failed_modules']==['NLA.SP15.Challenge'] and not r61['blocked_modules'] and
+      [r['exit_code'] for r in r61['commands']]==[0,1])
+check('Actual61 Definitions full log empty',logs[61,'NLA.SP15.Definitions']=='')
+failedlog=logs[61,'NLA.SP15.Challenge']
+check('Actual61 full failed log has four actual PartialOrder errors and 27 specification warnings',
+      failedlog.count('error:')==4 and failedlog.count('PartialOrder ℂ')==4 and
+      failedlog.count("warning: declaration uses 'sorry'")==27)
+check('Actual63 all intended statement modules succeeded',r63['completed_modules']==2 and
+      not r63['failed_modules'] and not r63['blocked_modules'] and r63['commands'][1]['exit_code']==0)
+reuse=r63['commands'][0];fresh=r61['commands'][0]
+check('Source-matched successful Definitions reuse only',reuse['status']=='reused_exact_successful_local_output' and
+      reuse['prior_receipt']==str(L/'runs/development-61/RECEIPT.json') and reuse['prior_receipt_sha256']==sha(L/'runs/development-61/RECEIPT.json') and
+      reuse['source_sha256']==fresh['source_sha256']==D and reuse['output_sha256']==fresh['output_sha256'] and
+      reuse['transitive_source_hashes']=={'NLA/SP15/Definitions.lean':D})
+for n in [61,63]:
+    check(f'Local{n} exact Definitions imported output',records[n]['commands'][1]['dependency_olean_sha256']=={'NLA.SP15.Definitions':fresh['output_sha256']})
+warning_lines=[int(x) for x in re.findall(r"^NLA/SP15/Challenge\.lean:(\d+):8: warning: declaration uses 'sorry'$",logs[63,'NLA.SP15.Challenge'],re.M)]
+theorem_lines=[i for i,line in enumerate(challenge.splitlines(),1) if line.startswith('theorem ')]
+check('All and only 29 actual63 intentional declaration-hole warnings',len(logs[63,'NLA.SP15.Challenge'].splitlines())==29 and warning_lines==theorem_lines)
+bind(L/'NLA/SP15/Definitions.lean',D);bind(L/'NLA/SP15/Challenge.lean',CH)
+check('Definitions no local NLA transitive dependency',not re.search(r'^import NLA\.',defs,re.M))
+
+# Peer was read only after recorded independent mathematical/API/exact-data conclusion.
+prior=json.loads((R/'INDEPENDENT-ASSESSMENT-BEFORE-PEER.json').read_text())
+peer,peer_inventory=manifest(PEER,expected='5c49bdab5cfc8f436d1845a44a79d5b2d7b4f9ae5c97cce4a8b00a99afa610fc')
+check('Peer same exact corrected workspace',peer['reviewed_workspace_manifest_sha256']==WORKSPACE)
+root_peer=read(B/'SP15-ROOT-STATEMENT-REVIEW1-ACCEPTANCE.json')
+check('Root peer acceptance binds exact packet',root_peer['manifest_sha256']==sha(PEER/'MANIFEST.json') and root_peer['report_sha256']==sha(PEER/'REPORT.md'))
+
+# Preserve exact scoped text and metadata; no compiled outputs are copied.
+selected=['WORKSPACE-MANIFEST.json','NLA/SP15/Definitions.lean','Challenge.lean',
+ 'README.md','SourceCorrespondence.md','DEFINITION-AND-CONTRACT-PLAN.md','NUMERICAL_TARGETS.md',
+ 'NUMERICAL-FIRST.json','REVIEW-PLAN.md','API-SUMMARY.md','STATE.json','SOURCE-PROVENANCE.json',
+ 'PINNED-API-BINDINGS.json','STANDARD-BINDINGS.json','COPY-MAP.json','STATEMENT-HEADERS.json',
+ 'CONTRACT-STATUS.json','formalization.yaml','METADATA-CHECK.json','comparator.json',
+ 'lakefile.toml','lake-manifest.json','lean-toolchain',
+ 'sources/canonical/README.md','sources/canonical/solution.md','sources/canonical/solution.tex',
+ 'sources/reuse/MI13-SingularSemantics.lean.txt','sources/reuse/MI13-UnitaryInvariance.lean.txt',
+ 'statement-continuations/complex-order-01/CONTINUATION.json',
+ 'statement-continuations/complex-order-01/CHALLENGE-SCOPE.patch',
+ 'statement-continuations/complex-order-01/MANIFEST.json',
+ 'statement-continuations/complex-order-01/BEFORE-PACKET-MAP.json',
+ 'statement-continuations/complex-order-01/before/WORKSPACE-MANIFEST.json',
+ 'statement-continuations/complex-order-01/before/Challenge.lean.txt']
+for path in selected:retain(W/path,'workspace/'+path+('.txt' if path.endswith('.lean') else ''))
+for row in standards['standards']:retain(W/row['path'],'workspace/'+row['path'])
+for f in ['REPORT.md','VERDICT.json','MANIFEST.json']:retain(PEER/f,'peer/'+f)
+for f in ['LOCAL-ENVIRONMENT.json','serial_compile_v3.py']:retain(L/f,'local-environment/'+f)
+retain(B/'SP15-LOCAL-STATEMENT-PREPARATION-61.json','local61/ROOT-PREPARATION.json')
+
+summary={'verdict':'PASS scoped source/statement/runtime evidence authentication',
+ 'reviewer':'/root/sf_ra_runtime_referee','recorded_utc':datetime.now(timezone.utc).isoformat(),
+ 'workspace_manifest_sha256':WORKSPACE,'Definitions_sha256':D,'Challenge_sha256':CH,
+ 'current_workspace_payloads':len(inventory),'continuation_payloads':len(cinventory),
+ 'original_preserved_payloads':len(oldinventory),'exact_unchanged_contracts':29,
+ 'source_bindings':len(bindings),'checks':len(checks),'retained_exact_copies':len(copies),
+ 'actual_local_scope':'Definitions fresh61/reused63; corrected Challenge fresh63; 29 deliberate specification holes; no proof claim',
+ 'failed_local61':'Challenge four missing standard ComplexOrder errors; output not accepted',
+ 'historical_environment_annotation':'LOCAL-ENVIRONMENT initial policy says 2048 MiB; actual61/63 argv, assemblies and receipts explicitly record 4096 MiB. Initial record is not rewritten.',
+ 'schema_validation':'This referee actually validated current JSON-formatted formalization.yaml against pinned v0.4 schema with existing jsonschema; author METADATA-CHECK not-run remains unchanged.',
+ 'metadata_transition':'Current workspace status files retain their pre-local63 draft statements; root must preserve historical bytes and record current exact63 success/reviews in coordinator freeze before implementation.',
+ 'reviewer_compiler_executed':False,'reviewer_LeanCert_executed':False,'reviewer_Comparator_executed':False,
+ 'git_or_network_used':False,'proof_implementation':False,'freeze_issued':False,'count_change':0}
+for name,data in [('AUDIT.json',summary),('CHECKS.json',checks),('SOURCE-BINDINGS.json',list(bindings.values())),
+                  ('RETAINED-COPIES.json',copies),('PRIMARY-API-BINDINGS.json',primary)]:
+    (R/name).write_text(json.dumps(data,indent=2)+'\n')
+print(json.dumps(summary,indent=2))

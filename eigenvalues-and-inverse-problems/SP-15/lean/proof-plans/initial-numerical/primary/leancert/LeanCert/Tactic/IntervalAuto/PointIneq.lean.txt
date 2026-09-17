@@ -1,0 +1,50 @@
+Lines 950–1001
+950:     try
+951:       intervalDecideCoreWithPolicy policy
+952:       return
+953:     catch e =>
+954:       restoreState goalState
+955:       let finalDepth := initialDepth + 2 * policy.taylorDepthStep
+956:       let splitSuccess ← trySumSplitting finalDepth
+957:       if splitSuccess then return
+958:       throw e
+959: 
+960: /-- Recursively handle conjunctions and disjunctions, then apply intervalDecideSingle -/
+961: partial def intervalDecideWithConnectives (depth : Option Nat) : TacticM Unit := do
+962:   intervalNormCore
+963:   let goal ← getMainTarget
+964:   if goal.isAppOfArity ``And 2 then
+965:     evalTactic (← `(tactic| constructor))
+966:     let goals ← getGoals
+967:     match goals with
+968:     | g1 :: g2 :: rest =>
+969:       setGoals [g1]
+970:       intervalDecideWithConnectives depth
+971:       setGoals [g2]
+972:       intervalDecideWithConnectives depth
+973:       setGoals rest
+974:     | [g1] =>
+975:       setGoals [g1]
+976:       intervalDecideWithConnectives depth
+977:     | [] =>
+978:       pure ()
+979:   else if goal.isAppOfArity ``Or 2 then
+980:     let savedState ← saveState
+981:     try
+982:       evalTactic (← `(tactic| left))
+983:       intervalDecideWithConnectives depth
+984:     catch _ =>
+985:       savedState.restore
+986:       evalTactic (← `(tactic| right))
+987:       intervalDecideWithConnectives depth
+988:   else
+989:     intervalDecideSingle depth
+990: 
+991: elab "interval_decide" depth:(num)? t:(leancertTrustItem)? : tactic => do
+992:   -- Validate `leancert.trust` up front so a bad value surfaces as its own
+993:   -- error rather than as a generic tactic failure inside the proof cascade.
+994:   discard <| VerificationConfig.current
+995:   withTrustMode (← elabTrustItem? t) do
+996:     intervalDecideWithConnectives (depth.map (·.getNat))
+997: 
+998: end LeanCert.Tactic.Auto

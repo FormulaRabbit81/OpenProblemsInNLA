@@ -1,0 +1,42 @@
+24: 
+25: open WithLp Matrix Unitary
+26: open scoped ComplexOrder
+27: 
+28: namespace Matrix
+29: variable {m n 𝕜 : Type*} [Fintype m] [Fintype n] [RCLike 𝕜] {A : Matrix n n 𝕜}
+30: 
+31: /-! ### Positive semidefinite matrices -/
+32: 
+33: /-- A Hermitian matrix is positive semi-definite if and only if its eigenvalues are non-negative. -/
+34: lemma IsHermitian.posSemidef_iff_eigenvalues_nonneg [DecidableEq n] (hA : IsHermitian A) :
+35:     PosSemidef A ↔ 0 ≤ hA.eigenvalues := by
+36:   conv_lhs => rw [hA.spectral_theorem]
+37:   simp [isUnit_coe.posSemidef_star_right_conjugate_iff, posSemidef_diagonal_iff, Pi.le_def]
+38: 
+39: namespace PosSemidef
+40: 
+41: /-- The eigenvalues of a positive semi-definite matrix are non-negative -/
+42: lemma eigenvalues_nonneg [DecidableEq n] (hA : A.PosSemidef) (i : n) : 0 ≤ hA.1.eigenvalues i :=
+43:   hA.isHermitian.posSemidef_iff_eigenvalues_nonneg.mp hA _
+68: /-! ### Positive definite matrices -/
+69: 
+70: /-- A Hermitian matrix is positive-definite if and only if its eigenvalues are positive. -/
+71: lemma IsHermitian.posDef_iff_eigenvalues_pos [DecidableEq n] (hA : A.IsHermitian) :
+72:     A.PosDef ↔ ∀ i, 0 < hA.eigenvalues i := by
+73:   conv_lhs => rw [hA.spectral_theorem]
+74:   simp [isUnit_coe.posDef_star_right_conjugate_iff]
+75: 
+76: namespace PosDef
+77: 
+78: lemma re_dotProduct_pos (hA : A.PosDef) {x : n → 𝕜} (hx : x ≠ 0) :
+79:     0 < RCLike.re (star x ⬝ᵥ (A *ᵥ x)) := RCLike.pos_iff.mp (hA.dotProduct_mulVec_pos hx) |>.1
+80: 
+81: /-- The eigenvalues of a positive definite matrix are positive. -/
+82: lemma eigenvalues_pos [DecidableEq n] (hA : A.PosDef) (i : n) : 0 < hA.1.eigenvalues i :=
+83:   hA.isHermitian.posDef_iff_eigenvalues_pos.mp hA i
+84: 
+85: lemma det_pos [DecidableEq n] (hA : A.PosDef) : 0 < det A := by
+86:   rw [hA.isHermitian.det_eq_prod_eigenvalues]
+87:   apply Finset.prod_pos
+88:   intro i _
+89:   simpa using hA.eigenvalues_pos i

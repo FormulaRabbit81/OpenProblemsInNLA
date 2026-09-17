@@ -1,0 +1,56 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Fortier Bourque and Ransford retain
+credit for the original question and generic finiteness theorem.
+
+Select any prescribed finite number of points strictly inside the proved
+local fiber interval. Coordinate 9 certifies injectivity of the selected
+parameters; no global injectivity of the local inverse is assumed.
+-/
+import NLA.SP15.LocalFiber
+import NLA.SP15.CoefficientValue
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.SP15
+noncomputable section
+
+theorem finite_fiber_selection (M : ℕ) :
+    ∃ x : Fin (M + 1) → Parameters, Function.Injective x ∧
+      (∀ i, x i ∈ parameterBox) ∧ (∀ i, coefficients (x i) = coefficientBaseValue) := by
+  obtain ⟨ε, hε, ψ, hψ⟩ := local_coefficient_fiber
+  have hden : (0 : ℝ) < ((M + 1 : ℕ) : ℝ) := by
+    exact_mod_cast Nat.succ_pos M
+  let δ : ℝ := ε / ((M + 1 : ℕ) : ℝ)
+  have hδ : 0 < δ := div_pos hε hden
+  have hδden : δ * ((M + 1 : ℕ) : ℝ) = ε :=
+    div_mul_cancel₀ ε (ne_of_gt hden)
+  let t : Fin (M + 1) → ℝ := fun i => 1 + δ * (i.val : ℝ)
+  have ht (i : Fin (M + 1)) : |t i - 1| < ε := by
+    have hi0 : (0 : ℝ) ≤ (i.val : ℝ) := Nat.cast_nonneg i.val
+    have hi : (i.val : ℝ) < ((M + 1 : ℕ) : ℝ) := by
+      exact_mod_cast i.isLt
+    have hdiff : t i - 1 = δ * (i.val : ℝ) := by
+      dsimp only [t]
+      ring
+    rw [hdiff, abs_of_nonneg (mul_nonneg (le_of_lt hδ) hi0)]
+    exact (mul_lt_mul_of_pos_left hi hδ).trans_eq hδden
+  have hpoint (i : Fin (M + 1)) := hψ (t i) (ht i)
+  refine ⟨fun i => ψ (t i), ?_, fun i => (hpoint i).1, ?_⟩
+  · intro i j hij
+    have htij : t i = t j :=
+      (hpoint i).2.2.symm.trans ((congrFun hij 9).trans (hpoint j).2.2)
+    change 1 + δ * (i.val : ℝ) = 1 + δ * (j.val : ℝ) at htij
+    have hmul : δ * (i.val : ℝ) = δ * (j.val : ℝ) := add_left_cancel htij
+    have hval : (i.val : ℝ) = (j.val : ℝ) := mul_left_cancel₀ (ne_of_gt hδ) hmul
+    exact Fin.ext (Nat.cast_injective hval)
+  · intro i
+    exact (hpoint i).2.1.trans coefficient_base_value
+
+#print axioms finite_fiber_selection
+#assert_trust kernel finite_fiber_selection
+
+end
+end NLA.SP15

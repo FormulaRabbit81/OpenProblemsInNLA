@@ -1,0 +1,44 @@
+95:   Finsupp.embDomain Fin.valEmbedding <|
+96:     Finsupp.ofSupportFinite
+97:       (fun i ↦ √(T.isSymmetric_adjoint_comp_self.eigenvalues rfl i))
+98:       (Set.toFinite _)
+99: 
+100: theorem singularValues_nonneg (i : ℕ) : 0 ≤ T.singularValues i := by
+101:   rw [singularValues, Finsupp.embDomain_apply, Finsupp.ofSupportFinite_coe]
+102:   split_ifs <;> positivity
+103: 
+104: theorem singularValues_pos_iff_ne_zero (i : ℕ) :
+105:     0 < T.singularValues i ↔ T.singularValues i ≠ 0 := by
+106:   grind [T.singularValues_nonneg i]
+107: 
+108: /--
+109: Connection between `LinearMap.singularValues` and `LinearMap.IsSymmetric.eigenvalues`.
+110: Together with `LinearMap.singularValues_of_finrank_le`, this characterizes the singular values.
+111: 
+112: Because of the square root, you probably need to use
+113: `T.isPositive_adjoint_comp_self.nonneg_eigenvalues` to make effective use of this theorem.
+114: -/
+115: theorem singularValues_fin {n : ℕ} (hn : finrank 𝕜 E = n) (i : Fin n) :
+116:     T.singularValues i = √(T.isSymmetric_adjoint_comp_self.eigenvalues hn i) := by
+117:   subst hn
+118:   exact Finsupp.embDomain_apply_self _ _ i
+119: 
+120: theorem singularValues_of_lt {n : ℕ} (hn : finrank 𝕜 E = n) {i : ℕ} (hi : i < n) :
+121:     T.singularValues i = √(T.isSymmetric_adjoint_comp_self.eigenvalues hn ⟨i, hi⟩) :=
+122:   T.singularValues_fin hn ⟨i, hi⟩
+123: 
+124: theorem singularValues_of_finrank_le {i : ℕ} (hi : finrank 𝕜 E ≤ i) : T.singularValues i = 0 := by
+125:   apply Finsupp.embDomain_of_notMem_range
+126:   simp [hi]
+127: 
+128: theorem sq_singularValues_fin {n : ℕ} (hn : finrank 𝕜 E = n) (i : Fin n) :
+129:     T.singularValues i ^ 2 = T.isSymmetric_adjoint_comp_self.eigenvalues hn i := by
+130:   simp [T.singularValues_fin hn, T.isPositive_adjoint_comp_self.nonneg_eigenvalues hn i]
+131: 
+132: theorem sq_singularValues_of_lt {n : ℕ} (hn : finrank 𝕜 E = n) {i : ℕ} (hi : i < n) :
+133:     T.singularValues i ^ 2 = T.isSymmetric_adjoint_comp_self.eigenvalues hn ⟨i, hi⟩ :=
+134:   T.sq_singularValues_fin hn ⟨i, hi⟩
+135: 
+136: theorem hasEigenvalue_adjoint_comp_self_sq_singularValues {n : ℕ} (hn : n < finrank 𝕜 E) :
+137:     End.HasEigenvalue (adjoint T ∘ₗ T) (T.singularValues n ^ 2) := by
+138:   convert! T.isSymmetric_adjoint_comp_self.hasEigenvalue_eigenvalues rfl ⟨n, hn⟩ using 1

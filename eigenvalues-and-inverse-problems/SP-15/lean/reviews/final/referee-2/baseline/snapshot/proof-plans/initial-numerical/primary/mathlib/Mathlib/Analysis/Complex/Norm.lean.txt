@@ -1,0 +1,26 @@
+Lines 96–108
+96: theorem norm_conj (z : ℂ) : ‖conj z‖ = ‖z‖ := by simp [norm_def]
+97: 
+98: @[simp] lemma norm_I : ‖I‖ = 1 := by simp [norm]
+99: 
+100: @[simp] lemma nnnorm_I : ‖I‖₊ = 1 := by simp [nnnorm]
+101: 
+102: @[simp 1100, norm_cast]
+103: lemma norm_real (r : ℝ) : ‖(r : ℂ)‖ = ‖r‖ := by
+104:   simp [norm_def, Real.sqrt_mul_self_eq_abs]
+105: 
+106: protected theorem norm_of_nonneg {r : ℝ} (h : 0 ≤ r) : ‖(r : ℂ)‖ = r :=
+107:   (norm_real _).trans (abs_of_nonneg h)
+108: 
+
+Lines 174–183
+174:   Subset.antisymm (range_subset_iff.2 norm_nonneg) fun x hx ↦ ⟨x, Complex.norm_of_nonneg hx⟩
+175: 
+176: @[simp]
+177: theorem range_normSq : range normSq = Ici 0 :=
+178:   Subset.antisymm (range_subset_iff.2 normSq_nonneg) fun x hx =>
+179:     ⟨√x, by rw [normSq_ofReal, Real.mul_self_sqrt hx]⟩
+180: 
+181: theorem norm_le_abs_re_add_abs_im (z : ℂ) : ‖z‖ ≤ |z.re| + |z.im| := by
+182:     simpa [re_add_im] using norm_add_le (z.re : ℂ) (z.im * I)
+183: 

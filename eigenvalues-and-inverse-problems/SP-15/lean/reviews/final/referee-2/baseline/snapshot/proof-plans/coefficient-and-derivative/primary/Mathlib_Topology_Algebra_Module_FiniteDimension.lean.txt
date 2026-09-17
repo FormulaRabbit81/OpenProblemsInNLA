@@ -1,0 +1,13 @@
+317:   { LinearMap.toContinuousLinearMap with
+318:     map_mul' := fun _ _ ↦ rfl
+319:     commutes' := fun _ ↦ rfl }
+320: 
+321: @[simp]
+322: theorem coe_toContinuousLinearMap' (f : E →ₗ[𝕜] F') : ⇑(LinearMap.toContinuousLinearMap f) = f :=
+323:   rfl
+324: 
+325: @[simp]
+326: theorem coe_toContinuousLinearMap (f : E →ₗ[𝕜] F') :
+327:     ((LinearMap.toContinuousLinearMap f) : E →ₗ[𝕜] F') = f :=
+328:   rfl
+329: 

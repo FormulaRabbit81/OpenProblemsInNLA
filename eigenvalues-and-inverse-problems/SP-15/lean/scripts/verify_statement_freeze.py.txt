@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+"""Read-only exact SP15 handoff validation. No Lean, Lake, Git, or network."""
+from pathlib import Path
+import hashlib,json,sys
+import jsonschema
+W=(Path(sys.argv[1]) if len(sys.argv)>1 else Path(__file__).resolve().parents[1])
+load=lambda p:json.loads(Path(p).read_text())
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+m=load(W/'HANDOFF-MANIFEST.json');listed={r['path']:r['sha256'] for r in m['files']}
+actual={str(p.relative_to(W)) for p in W.rglob('*') if p.is_file()}
+assert actual==set(listed)|{'HANDOFF-MANIFEST.json'},'exact handoff inventory'
+for p,h in listed.items():assert sha(W/p)==h,p
+freeze=load(W/'STATEMENT-FREEZE.json');assert sha(W/'STATEMENT-FREEZE.json')==m['freeze_sha256']
+assert len(freeze['frozen_files'])==13
+for p,h in freeze['frozen_files'].items():assert sha(W/p)==h,p
+maps=['statement-history/COPY-MAP.json','reviews/statements/COPY-MAP.json','statement-audit/COPY-MAP.json']
+copy_count=0
+for mp in maps:
+    for row in load(W/mp)['copies']:
+        assert sha(W/row['retained_path'])==row['sha256'],row['retained_path'];copy_count+=1
+assert len(load(W/'statement-history/COPY-MAP.json')['copies'])==141
+assert sorted(str(p.relative_to(W)) for p in W.rglob('*.lean'))==['Challenge.lean','NLA/SP15/Definitions.lean']
+assert not (W/'Solution.lean').exists()
+state=load(W/'STATE.json');assert state['coordinator_acceptance_pending'] and not state['proof_implementation_authorized_by_this_record']
+assert state['actual_local_run']=='development-63' and state['exact_contract_count']==29
+metadata=load(W/'formalization.yaml');schema=load(W/'sources/standards/v0.4.schema.json')
+validator=jsonschema.validators.validator_for(schema);validator.check_schema(schema);validator(schema).validate(metadata)
+assert metadata['status']['main_results']==[]
+before=W/'statement-history/corrected-draft'
+input_manifest=load(before/'WORKSPACE-MANIFEST.json')
+assert sha(before/'WORKSPACE-MANIFEST.json')==freeze['prepared_from_corrected_draft_manifest_sha256']
+allowed={'README.md','STATE.json','CONTRACT-STATUS.json','formalization.yaml','METADATA-CHECK.json'}
+observed={r['path'] for r in input_manifest['files'] if sha(W/r['path'])!=r['sha256']}
+assert observed==allowed
+plan=W/'proof-plans/initial-numerical';assert sha(plan/'MANIFEST.json')==freeze['independently_appended_planning']['manifest_sha256']
+for p,h in load(plan/'MANIFEST.json')['files'].items():assert sha(plan/p)==h,p
+print(json.dumps({'verdict':'PASS exact prepared statement handoff','workspace_payloads':len(listed),
+ 'protected_files':13,'exact_copy_mappings':copy_count,'original_payloads_preserved':140,
+ 'active_Lean_sources':2,'actual_elaboration':'retained local63,29intentional holes',
+ 'coordinator_acceptance':'pending','proof_implementation_authorized':False,
+ 'compiler_Git_network_executed':False},indent=2))

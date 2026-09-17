@@ -1,0 +1,22 @@
+# SP-15 source-to-contract correspondence
+
+Canonical source: `eigenvalues-and-inverse-problems/SP-15/README.md` at retained upstream commit `d348d7471e2ff881ae30fb8a9c40323a61cd383a`. Complete README, solution.md and solution.tex are retained in `sources/canonical`. This correspondence was authored as part of the statement draft; it is not an independent acceptance.
+
+| Source mathematical content | Concrete definitions and contracts | Fidelity |
+|---|---|---|
+| Original universal finiteness question | `SuperIdentical`, `UnitarySimilar`, `CanonicalFiniteness`; `canonical_finiteness_false` | Literal n≥1 and M≥1 quantifiers, family size M+1, i<j, every z∈ℂ, every decreasing singular value; original one-sided UᴴU=I. |
+| Complete negative resolution at N=9 | `arbitrary_finite_counterfamilies` | Arbitrarily large finite families are sufficient for the entire canonical negation. The contract works also at M=0. |
+| Section 3 ten-parameter slice | `pMatrix`, `qMatrix`, `parameterBox`; first six contracts | Same ten real coordinates and positive-phase convention. The 1/16 box restricts the constructed family, not the original question. No positivity hypothesis survives in the final theorem. |
+| Genuine square roots and nilpotent block construction | `pRoot`, `qRoot`, `blockMatrix`, `blockEquiv`, `constructedMatrix`; `square_root_semantics` | Actual CFC roots and explicit three-block-to-Fin9 reindexing. Invertibility and Hermitian identities must be proved. |
+| Section 2 nine real coefficient map | `coefficientDeterminant`, `coefficients`, `coefficientMonomials`; `coefficient_determinant_identity` | Explicit collected real polynomials must equal the actual determinant for every complex u,s and every real parameter, not only sampled values. |
+| Section 4 local fiber | derivative, LU, augmented-map, inverse and fiber contracts | Exact rational submersion-point route replaces unspecified maximal rank/constant rank with a genuine equal-dimension inverse-function theorem. Every numerical derivative must be derived from the actual coefficient map. |
+| Fixed arithmetic refinement | `basePoint`, `jacobian`, `lowerCertificate`, `upperCertificate`; coefficient-base, strict-derivative and LU contracts | New formalization planning data checked by exact Python; still unproved in Lean. No preflight value is accepted as an axiom. |
+| Section 1 block determinant identity | `regularizedGramBlocks`, `schurPivot`; `regularized_gram_blocks`, `schur_positive_blocks`, `shifted_gram_determinant` | Every complex shift, all positive real t, no commuting-P,Q premise, all Schur invertibility obligations exposed. |
+| Gram polynomial equality to all shifted singular values | three coefficient/Gram/singular contracts | Actual characteristic polynomials and actual Mathlib ordered singular values, including zeros and repeated values. The generic Gram lemma includes empty dimensions and zero extension. |
+| Section 3 flag rigidity | `constructed_kernel_flag`, `unitary_intertwiner_blocks`, `middle_block_conjugacy` | Actual kernels of A and A² reduce every original one-sided-unitary intertwiner to blocks; block diagonality is a conclusion. |
+| Section 3 simultaneous-unitary slice injectivity | `p_intervals_separate`, `parameter_slice_rigidity`, `constructed_unitary_injectivity` | Disjoint fixed p intervals remove eigenvalue permutations; positive real a,b remove phase freedom. All ten parameters must agree. |
+| Arbitrary many examples in one fiber | `finite_fiber_selection`, `arbitrary_finite_counterfamilies` | Uses a proven interval with a genuine free d coordinate; no unproved existence or numerical neighborhood radius is assumed. |
+
+The paper's smoothness and Jordan type (3,3,3) are supplementary properties, not part of the exact canonical finiteness question. Their omission is explicit; neither is used to count a target as complete. The local inverse needs only continuity at its base and a genuine right-inverse neighborhood to select arbitrary finite subfamilies. No square-root smoothness theorem is required.
+
+Original solution authorship: George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology. Original question and generic-finiteness authorship: Maxime Fortier Bourque and Thomas Ransford. The formalization directly builds on pinned Mathlib and plans genuine kernel-mode LeanCert use. The accepted MI-13 Gram/singular development is a source-bound reuse reference; no unrelated SVD/commutator proof is imported by this draft.

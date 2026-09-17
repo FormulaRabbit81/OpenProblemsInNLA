@@ -1,0 +1,63 @@
+77: namespace CFC
+78: 
+79: section NonUnital
+80: 
+81: variable {A : Type*} [PartialOrder A] [NonUnitalRing A] [TopologicalSpace A] [StarRing A]
+82:   [Module ℝ A] [SMulCommClass ℝ A A] [IsScalarTower ℝ A A] [StarOrderedRing A]
+83:   [NonUnitalContinuousFunctionalCalculus ℝ A IsSelfAdjoint]
+84:   [NonnegSpectrumClass ℝ A]
+231: /- ## `sqrt` -/
+232: 
+233: section sqrt
+234: 
+235: /-- Square roots of operators, based on the non-unital continuous functional calculus. -/
+236: noncomputable def sqrt (a : A) : A := cfcₙ NNReal.sqrt a
+237: 
+238: @[simp]
+239: lemma sqrt_nonneg (a : A) : 0 ≤ sqrt a := cfcₙ_predicate _ a
+240: 
+241: grind_pattern sqrt_nonneg => NonnegSpectrumClass ℝ A, sqrt a
+242: 
+243: lemma sqrt_eq_nnrpow (a : A) : sqrt a = a ^ (1 / 2 : ℝ≥0) := by
+244:   simp only [sqrt]
+245:   congr
+246:   ext
+247:   exact_mod_cast NNReal.sqrt_eq_rpow _
+248: 
+249: lemma sqrt_of_not_nonneg {a : A} (ha : ¬0 ≤ a) : sqrt a = 0 :=
+250:   cfcₙ_apply_of_not_predicate a ha
+251: 
+252: @[simp]
+253: lemma sqrt_zero : sqrt (0 : A) = 0 := by simp [sqrt]
+254: 
+255: variable [IsSemitopologicalRing A] [T2Space A]
+256: 
+257: @[simp]
+258: lemma nnrpow_sqrt {a : A} {x : ℝ≥0} : (sqrt a) ^ x = a ^ (x / 2) := by
+259:   rw [sqrt_eq_nnrpow, nnrpow_nnrpow, one_div_mul_eq_div 2 x]
+260: 
+261: lemma nnrpow_sqrt_two (a : A) (ha : 0 ≤ a := by cfc_tac) : (sqrt a) ^ (2 : ℝ≥0) = a := by
+262:   simp only [nnrpow_sqrt, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, div_self]
+263:   rw [nnrpow_one a]
+264: 
+265: lemma sqrt_mul_sqrt_self (a : A) (ha : 0 ≤ a := by cfc_tac) : sqrt a * sqrt a = a := by
+266:   rw [← nnrpow_two _, nnrpow_sqrt_two _]
+710: @[grind =]
+711: lemma isUnit_nnrpow_iff (a : A) (y : ℝ≥0) (hy : y ≠ 0) (ha : 0 ≤ a := by cfc_tac) :
+712:     IsUnit (a ^ y) ↔ IsUnit a := by
+713:   rw [nnrpow_eq_rpow (pos_of_ne_zero hy)]
+714:   refine isUnit_rpow_iff a y ?_ ha
+715:   exact_mod_cast hy
+716: 
+717: @[aesop safe apply]
+718: lemma _root_.IsUnit.cfcNNRpow (a : A) (y : ℝ≥0) (ha_unit : IsUnit a) (hy : y ≠ 0)
+719:     (ha : 0 ≤ a := by cfc_tac) : IsUnit (a ^ y) :=
+720:   (isUnit_nnrpow_iff a y hy ha).mpr ha_unit
+721: 
+722: lemma isUnit_sqrt_iff (a : A) (ha : 0 ≤ a := by cfc_tac) : IsUnit (sqrt a) ↔ IsUnit a := by
+723:   rw [sqrt_eq_rpow]
+724:   exact isUnit_rpow_iff a _ (by simp) ha
+725: 
+726: @[grind =]
+727: lemma isUnit_sqrt_iff_isStrictlyPositive {a : A} : IsUnit (sqrt a) ↔ IsStrictlyPositive a := by
+728:   refine ⟨fun h => ?_, by grind [isUnit_sqrt_iff]⟩

@@ -104,7 +104,7 @@ def render(source):
             input=body.strip(), text=True, capture_output=True, check=True,
         )
         tex = result.stdout
-        if identifier in {"IE-04", "IE-14", "IV-03", "KE-05", "MF-12", "MF-22", "SP-04", "SP-05", "IE-02"}:
+        if identifier in {"IE-02", "IE-04", "IE-14", "IV-03", "KE-05", "MF-12", "MF-22", "SP-04", "SP-05", "SP-15"}:
             # These publication dates record formal verification, not a literature search.
             tex = tex.replace("Literature check:", "Verification check:")
         # The code spans in this catalog are literal search phrases. Set them
@@ -124,7 +124,7 @@ def render(source):
             'RA-02', 'RA-06', 'RA-08', 'RA-09', 'RA-10', 'RA-12',
             'RA-15', 'RE-01', 'RE-02', 'RE-06', 'SP-04',
             'SP-05', 'SP-06', 'SP-09', 'SP-12', 'TR-11', 'TR-20', 'TR-21',
-            'TR-24', 'TR-26', 'TR-30',
+            'TR-24', 'TR-26', 'TR-27', 'TR-30',
             'IE-27', 'MI-30', 'MI-31',
         }:
             tex = re.sub(r"\\subsection\{References?(?:\s+and\s+status\s+check)?\}",

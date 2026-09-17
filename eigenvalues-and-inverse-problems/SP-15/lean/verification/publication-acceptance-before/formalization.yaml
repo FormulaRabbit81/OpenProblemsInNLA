@@ -1,0 +1,573 @@
+{
+  "version": "v0.4",
+  "project": {
+    "name": "SP-15: failure of a finite unitary-class bound for complete shifted singular values",
+    "description": "The original finite-unitary-class assertion is false: for every M there are M+1 complex 9-by-9 matrices with every ordered singular value equal for every complex shift, and no unitarily similar pair.",
+    "authors": [
+      "George Stepaniants"
+    ],
+    "affiliations": {
+      "George Stepaniants": "Department of Computing and Mathematical Sciences, California Institute of Technology, Pasadena, California, USA"
+    },
+    "responsible_maintainers": [
+      "George Stepaniants"
+    ],
+    "license": "Apache-2.0"
+  },
+  "repository": {
+    "role": "substantive-development"
+  },
+  "sources": [
+    {
+      "title": "SP-15 \u2014 Finitely many unitary classes with prescribed shifted singular values",
+      "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/d348d7471e2ff881ae30fb8a9c40323a61cd383a/eigenvalues-and-inverse-problems/SP-15/README.md",
+      "type": "web-post",
+      "location": "Complete original finiteness question and retained negative resolution",
+      "relationship": "formalizes",
+      "author_endorsement": "not-contacted",
+      "note": "Complete original canonical target and prior authorship retained; exact source correspondence and scoped differences are recorded. Proof implementation is locally checked; final Linux verification remains pending."
+    },
+    {
+      "title": "SP-15 complete negative solution",
+      "authors": [
+        "George Stepaniants"
+      ],
+      "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/d348d7471e2ff881ae30fb8a9c40323a61cd383a/eigenvalues-and-inverse-problems/SP-15/solution.tex",
+      "type": "web-post",
+      "location": "Theorem and Sections 1\u20134",
+      "relationship": "formalizes",
+      "author_endorsement": "not-contacted",
+      "note": "Complete original canonical target and prior authorship retained; exact source correspondence and scoped differences are recorded. Proof implementation is locally checked; final Linux verification remains pending."
+    },
+    {
+      "title": "Super-identical pseudospectra",
+      "authors": [
+        "Maxime Fortier Bourque",
+        "Thomas Ransford"
+      ],
+      "id": "https://doi.org/10.1112/jlms/jdn085",
+      "type": "article",
+      "location": "Theorem 1.4 and Section 6.2, as cited by the canonical source",
+      "relationship": "background",
+      "author_endorsement": "not-contacted",
+      "note": "Original question and generic finiteness result retain attribution. No theorem from the article is assumed and no new external-source audit is claimed."
+    }
+  ],
+  "related_formalizations": [
+    {
+      "id": "https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474",
+      "relationship": "builds-on",
+      "note": "Pinned concrete Mathlib definitions and semantic APIs are genuinely used throughout the locally checked proof; independent mathematical review scopes are recorded separately."
+    },
+    {
+      "id": "https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926",
+      "relationship": "builds-on",
+      "note": "Four kernel-mode LeanCert rational inequalities and one exact margin identity certify the single radius-1/16 box and margin 3/4. Box bounds consume the certificate, matrix positivity consumes those bounds, and the final construction consumes positivity. All remaining arguments are symbolic; the determinant uses a nine-pivot product rather than full expansion. No interval subdivision or sampling is used."
+    },
+    {
+      "id": "https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof",
+      "relationship": "other",
+      "note": "Pinned retained Challenge and numerical-target patterns read. No Forsythe theorem is imported."
+    },
+    {
+      "id": "https://github.com/jaumededios/Schiffer",
+      "relationship": "other",
+      "note": "Exact retained Challenge snapshot read and byte-bound. No fresh head query or Schiffer theorem import is claimed."
+    }
+  ],
+  "automation": {
+    "methods": [
+      {
+        "method": "agent",
+        "framework": "OpenAI Codex",
+        "tool_setup": "Parallel statement/proof authoring and independent reviews. Root alone runs local Lean serially with one compiler/thread and a 4096 MiB limit. Final real Comparator/default-kernel/sandbox verification is reserved for a separate non-root Linux GitHub environment.",
+        "prompting_notes": "Statement-first development, exact frozen mathematical boundary, pinned scoped Tau Ceti reviews, kernel-mode LeanCert, minimized computation and multiple agents. Root alone compiles locally with one thread and a 4096 MiB cap."
+      }
+    ],
+    "notes": "Exact numerical statements, definitions and independent Challenge contracts preceded implementation, with two nonauthor statement approvals. Development and debugging used one serial local Lean compiler. Final source reviews, source-bound cleanup continuations and actual non-root Linux Comparator are separate gates; static evidence audits are not compiler executions."
+  },
+  "status": {
+    "scope": "The original finite-unitary-class assertion is false: for every M there are M+1 complex 9-by-9 matrices with every ordered singular value equal for every complex shift, and no unitarily similar pair.",
+    "sorry_count": 0,
+    "sorry_in_definitions": 0,
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "main_results": [
+      {
+        "declaration": "NLA.SP15.box_scalar_certificate",
+        "file": "NLA/SP15/Numerical.lean",
+        "line": 19,
+        "file_sha256": "5d26e28e533c9c5fdef63499fa2b8986c5d6b9ca56e9ca61d3f826220890b8d1",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.parameter_box_geometry",
+        "file": "NLA/SP15/BoxGeometry.lean",
+        "line": 26,
+        "file_sha256": "6e8adf6287164428684b461d5feeec1e6a82e13e51aef2593f01e33cedabbfe6",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.parameter_box_bounds",
+        "file": "NLA/SP15/BoxGeometry.lean",
+        "line": 40,
+        "file_sha256": "6e8adf6287164428684b461d5feeec1e6a82e13e51aef2593f01e33cedabbfe6",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.p_intervals_separate",
+        "file": "NLA/SP15/BoxGeometry.lean",
+        "line": 98,
+        "file_sha256": "6e8adf6287164428684b461d5feeec1e6a82e13e51aef2593f01e33cedabbfe6",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.parameter_matrices_positive",
+        "file": "NLA/SP15/ParameterPositivity.lean",
+        "line": 55,
+        "file_sha256": "4518da9474366f81786b8e321be602146936ba08ad07fcca4253aba8b8e87486",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.square_root_semantics",
+        "file": "NLA/SP15/SquareRoots.lean",
+        "line": 22,
+        "file_sha256": "b2c327df20481beec5871e15deeab8f45a0f51d7e199c73ee44b1426c76c3edb",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.coefficient_determinant_identity",
+        "file": "NLA/SP15/CoefficientIdentity.lean",
+        "line": 45,
+        "file_sha256": "7e32bcef205989688db3b8d0622d026796ce074b79f702ba6a7c9070943d9111",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.coefficient_base_value",
+        "file": "NLA/SP15/CoefficientValue.lean",
+        "line": 17,
+        "file_sha256": "99cc6bd8d9b717c9241b6752672eca1ac5326fa966ec1670d06fb691300c3c16",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.coefficient_strict_derivative",
+        "file": "NLA/SP15/CoefficientDerivative.lean",
+        "line": 25,
+        "file_sha256": "7141e79e6c339a3b99bf92888696ac289aea7a4d65da69da6d31cafd80b8d206",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.jacobian_lu_certificate",
+        "file": "NLA/SP15/JacobianCertificate.lean",
+        "line": 31,
+        "file_sha256": "4f194e45ae5af4482dc79dbd81292e20cd43518d0ea5b5b66366d69cf87a4ad8",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.jacobian_minor_nonsingular",
+        "file": "NLA/SP15/JacobianCertificate.lean",
+        "line": 52,
+        "file_sha256": "4f194e45ae5af4482dc79dbd81292e20cd43518d0ea5b5b66366d69cf87a4ad8",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.augmented_strict_derivative",
+        "file": "NLA/SP15/AugmentedDerivative.lean",
+        "line": 54,
+        "file_sha256": "702f51a01ce0ca3d9ec7f467a9806d5e179e06d409823c376451eaea2f9bd135",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.augmented_derivative_equivalence",
+        "file": "NLA/SP15/AugmentedEquivalence.lean",
+        "line": 48,
+        "file_sha256": "13a4ce2e88c6ff006becf2618dc202b9607fe51d2e9cd36790ee6793a2beb7c2",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.local_augmented_inverse",
+        "file": "NLA/SP15/LocalFiber.lean",
+        "line": 21,
+        "file_sha256": "39ebb793ad253eb9b7c5c0a6b3607234aad049c59a3dda15c706959951d39aa4",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.local_coefficient_fiber",
+        "file": "NLA/SP15/LocalFiber.lean",
+        "line": 56,
+        "file_sha256": "39ebb793ad253eb9b7c5c0a6b3607234aad049c59a3dda15c706959951d39aa4",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.regularized_gram_blocks",
+        "file": "NLA/SP15/BlockGram.lean",
+        "line": 60,
+        "file_sha256": "ed83bc471b62cc15fec97869c2f4f2aaaea7c5547cbdaa72ecb391a44f2bb562",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.schur_positive_blocks",
+        "file": "NLA/SP15/SchurPositivity.lean",
+        "line": 19,
+        "file_sha256": "50741ed60b09ac8f9c7c77f9d612acf69e94564831b2852dfe503a519cb36301",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.shifted_gram_determinant",
+        "file": "NLA/SP15/ShiftedDeterminant.lean",
+        "line": 48,
+        "file_sha256": "23f0b4da2e202de0259357792e2f3ae33611d498d5f918639e720ccd3b6df296",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.equal_coefficients_gram_charpoly",
+        "file": "NLA/SP15/GramPolynomial.lean",
+        "line": 30,
+        "file_sha256": "f7155ec19bc2e37e7078116ab89c416cf617f1c4687e7d76076153f620006a8c",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.gram_charpoly_singular_values",
+        "file": "NLA/SP15/GramSemantics.lean",
+        "line": 30,
+        "file_sha256": "6963dde68a51bfa6532c5753c7c7c8e1ff8e131cd93eba8d29165b0e0ff846d1",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.equal_coefficients_shifted_singular_values",
+        "file": "NLA/SP15/ShiftedSpectrum.lean",
+        "line": 16,
+        "file_sha256": "169eef3f014bebb5b4d3b8eccb20414a9cc612d5022ec6b6282855e6e5a82bcd",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.constructed_kernel_flag",
+        "file": "NLA/SP15/KernelFlag.lean",
+        "line": 37,
+        "file_sha256": "46fded457b5add611e94657b77ee1ffba76ce323e0859ad19826cbacf5e46449",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.unitary_intertwiner_blocks",
+        "file": "NLA/SP15/UnitaryBlocks.lean",
+        "line": 22,
+        "file_sha256": "1e9911a1574f100c8dccc15dc5dfa3f850ebe9d423dd3d0145feb1e7a95a1d69",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.middle_block_conjugacy",
+        "file": "NLA/SP15/MiddleConjugacy.lean",
+        "line": 19,
+        "file_sha256": "89ff8fb7c57cdb5a7b34c172104ca8f64708e3fc1ba775036b024db9e285d65d",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.parameter_slice_rigidity",
+        "file": "NLA/SP15/SliceRigidity.lean",
+        "line": 86,
+        "file_sha256": "63d912a4ba3bdf50501d9819c3ef623d6c6db677edb991912ed169bca52a6767",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.constructed_unitary_injectivity",
+        "file": "NLA/SP15/UnitaryInjectivity.lean",
+        "line": 16,
+        "file_sha256": "4deffb45250b0637e95be2a713a2775c3b168746a3444a0b055a4213f43ecd09",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.finite_fiber_selection",
+        "file": "NLA/SP15/FiniteFiber.lean",
+        "line": 20,
+        "file_sha256": "a8410401a8a0834e00553518cf4c2a674e3dc1ed58483cce97a77a2d23c2de34",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.arbitrary_finite_counterfamilies",
+        "file": "NLA/SP15/Counterfamilies.lean",
+        "line": 21,
+        "file_sha256": "185944a756b2dac24eb27e198402126679b2652d11d6ff83178cc42128306eb1",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      },
+      {
+        "declaration": "NLA.SP15.canonical_finiteness_false",
+        "file": "NLA/SP15/Counterfamilies.lean",
+        "line": 34,
+        "file_sha256": "185944a756b2dac24eb27e198402126679b2652d11d6ff83178cc42128306eb1",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer."
+      }
+    ],
+    "whole_problem_verified": true,
+    "source_scan_note": "Implementation is hole-free. Challenge has 29 intentional independent specification placeholders and is never imported by Solution."
+  },
+  "fidelity": {
+    "divergences": "The canonical original target is preserved literally. An explicit rational submersion point and genuine inverse-function theorem replace unknown maximal rank/constant rank. Finite arbitrary families suffice to refute the universal bound. The source\u2019s supplementary smoothness and nilpotent Jordan type are not exported; no matrix-square-root smoothness is needed. No theorem is assumed by an oracle hypothesis."
+  },
+  "review": {
+    "status": "Two full nonauthor source reviews, package review and independent exact-commit Linux runtime evidence review accepted. Later publication-document review and PR checks remain separate.",
+    "notes": "Pinned Tau Ceti guidance applied in scoped AI-agent reviews; no official Tau Ceti service or external human peer review is claimed.",
+    "reviewers": [
+      "/root/sp15_full_referee1",
+      "/root/sp15_full_referee2"
+    ],
+    "reports": "reviews/final/INDEX.json",
+    "operational_reports": "verification/reviews/INDEX.json"
+  },
+  "alignment": {
+    "source_correspondence": "SourceCorrespondence.md",
+    "numerical_boundary": "NUMERICAL_TARGETS.md",
+    "definition_contract_plan": "DEFINITION-AND-CONTRACT-PLAN.md",
+    "numerical_first_receipt": "NUMERICAL-FIRST.json",
+    "proposed_statements": "Challenge.lean",
+    "concrete_definitions": "NLA/SP15/Definitions.lean",
+    "source_provenance": "SOURCE-PROVENANCE.json",
+    "intended_implementation_entry": "Solution.lean",
+    "verification_state": "STATE.json",
+    "latest_statement_continuation": "statement-continuations/complex-order-01/CONTINUATION.json",
+    "statement_freeze": "STATEMENT-FREEZE.json",
+    "history": "statement-history/COPY-MAP.json",
+    "statement_reviews": "reviews/statements/COPY-MAP.json",
+    "actual_elaboration": "statement-audit/local63/RECEIPT.json",
+    "current_handoff_inventory": "PACKAGE-MANIFEST.json",
+    "appended_precode_plan": "proof-plans/initial-numerical/MANIFEST.json",
+    "implementation_map": "IMPLEMENTATION-MAP.json",
+    "active_sources": "ACTIVE-SOURCE-MANIFEST.json",
+    "local_execution": "verification/LOCAL-COMPLETE.json",
+    "historical_handoff_inventory": "statement-history/pre-publication/HANDOFF-MANIFEST.json",
+    "full_proof_reviews": "reviews/final/INDEX.json"
+  },
+  "acknowledgements": "Fortier Bourque and Ransford for the original question and generic finiteness theorem; Mathlib, LeanCert, Comparator and Tau Ceti contributors for the retained mathematical foundations and workflow guidance. Accepted MI-13 Gram/singular semantics and Schiffer/Forsythe statement patterns were read as source-bound references.",
+  "verification": {
+    "canonical_verification_completed": true,
+    "canonical_proof_commit": "69938fe5ac20768f7c23c0bead00b6add2516200",
+    "canonical_run": 35229660506,
+    "run_url": "https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35229660506",
+    "submitted_inputs": 2237,
+    "contracts": 29,
+    "evidence": "verification/linux-35229660506/README.md",
+    "local_build": {
+      "run": 122,
+      "platform": "macOS",
+      "record": "verification/LOCAL-COMPLETE.json"
+    },
+    "default_kernel": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer.",
+    "comparator": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer.",
+    "sandbox_and_rejection_controls": "PASS: actual non-root Linux run 35229660506 at 69938fe5ac20768f7c23c0bead00b6add2516200; exact contracts, default kernel, permitted axioms and all per-proof controls accepted by root and independent evidence reviewer.",
+    "permitted_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "publication": "Complete original target accepted at the immutable proof commit. Documentation continuation and upstream PR checks are not additional results of that earlier execution.",
+    "limitations": [
+      "Independent evidence audits are not additional Lean executions.",
+      "No checker/platform infallibility or human peer-review claim."
+    ]
+  }
+}

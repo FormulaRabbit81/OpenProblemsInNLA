@@ -1,0 +1,56 @@
+31: @[expose] public section
+32: 
+33: namespace Complex
+34: 
+35: /-- We put a partial order on ℂ so that `z ≤ w` exactly if `w - z` is real and nonnegative.
+36: Complex numbers with different imaginary parts are incomparable.
+37: -/
+38: @[instance_reducible]
+39: protected def partialOrder : PartialOrder ℂ where
+40:   le z w := z.re ≤ w.re ∧ z.im = w.im
+41:   lt z w := z.re < w.re ∧ z.im = w.im
+42:   lt_iff_le_not_ge z w := by
+43:     rw [lt_iff_le_not_ge]
+44:     tauto
+45:   le_refl _ := ⟨le_rfl, rfl⟩
+46:   le_trans _ _ _ h₁ h₂ := ⟨h₁.1.trans h₂.1, h₁.2.trans h₂.2⟩
+47:   le_antisymm _ _ h₁ h₂ := ext (h₁.1.antisymm h₂.1) h₁.2
+48: 
+49: namespace _root_.ComplexOrder
+50: 
+51: scoped[ComplexOrder] attribute [instance] Complex.partialOrder
+52: 
+53: end _root_.ComplexOrder
+54: 
+55: open ComplexOrder
+56: 
+57: theorem le_def {z w : ℂ} : z ≤ w ↔ z.re ≤ w.re ∧ z.im = w.im :=
+58:   Iff.rfl
+59: 
+60: theorem lt_def {z w : ℂ} : z < w ↔ z.re < w.re ∧ z.im = w.im :=
+61:   Iff.rfl
+62: 
+63: theorem nonneg_iff {z : ℂ} : 0 ≤ z ↔ 0 ≤ z.re ∧ 0 = z.im :=
+64:   le_def
+65: 
+66: theorem pos_iff {z : ℂ} : 0 < z ↔ 0 < z.re ∧ 0 = z.im :=
+67:   lt_def
+68: 
+69: theorem nonpos_iff {z : ℂ} : z ≤ 0 ↔ z.re ≤ 0 ∧ z.im = 0 :=
+70:   le_def
+71: 
+72: theorem neg_iff {z : ℂ} : z < 0 ↔ z.re < 0 ∧ z.im = 0 :=
+73:   lt_def
+74: 
+75: theorem sq_nonneg_iff {z : ℂ} : 0 ≤ z ^ 2 ↔ z.im = 0 := by
+76:   rw [nonneg_iff, pow_two, mul_re, mul_im, mul_comm z.im z.re, ← mul_two, eq_comm,
+77:     mul_eq_zero_iff_right two_ne_zero, ← pow_two, ← pow_two, mul_eq_zero]
+78:   exact ⟨by aesop, fun h ↦ by simpa [h] using sq_nonneg z.re⟩
+79: 
+80: theorem sq_nonpos_iff {z : ℂ} : z ^ 2 ≤ 0 ↔ z.re = 0 := by
+81:   rw [nonpos_iff, pow_two, mul_re, mul_im, mul_comm z.im z.re, ← mul_two, mul_eq_zero_iff_right
+82:     two_ne_zero, ← pow_two, ← pow_two, mul_eq_zero]
+83:   exact ⟨by aesop, fun h ↦ by simpa [h] using sq_nonneg z.im⟩
+84: 
+85: @[simp, norm_cast]
+86: theorem real_le_real {x y : ℝ} : (x : ℂ) ≤ (y : ℂ) ↔ x ≤ y := by simp [le_def, ofReal]

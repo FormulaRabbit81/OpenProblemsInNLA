@@ -1,0 +1,30 @@
+213: theorem coe_pi' (f : ∀ i, M →L[R] φ i) : ⇑(pi f) = fun c i => f i c :=
+214:   rfl
+215: 
+216: @[simp]
+217: theorem coe_pi (f : ∀ i, M →L[R] φ i) : (pi f : M →ₗ[R] ∀ i, φ i) = LinearMap.pi fun i => f i :=
+218:   rfl
+219: 
+220: theorem pi_apply (f : ∀ i, M →L[R] φ i) (c : M) (i : ι) : pi f c i = f i c :=
+221:   rfl
+222: 
+223: theorem pi_eq_zero (f : ∀ i, M →L[R] φ i) : pi f = 0 ↔ ∀ i, f i = 0 := by
+224:   simp only [ContinuousLinearMap.ext_iff, pi_apply, funext_iff]
+225:   exact forall_comm
+226: 
+227: theorem pi_zero : pi (fun _ => 0 : ∀ i, M →L[R] φ i) = 0 :=
+228:   ext fun _ => rfl
+229: 
+230: theorem pi_comp (f : ∀ i, M →L[R] φ i) (g : M₂ →L[R] M) :
+231:     (pi f).comp g = pi fun i => (f i).comp g :=
+232:   rfl
+233: 
+234: /-- The projections from a family of topological modules are continuous linear maps. -/
+235: def proj (i : ι) : (∀ i, φ i) →L[R] φ i where
+236:   toLinearMap := .proj i
+237: 
+238: @[simp]
+239: theorem proj_apply (i : ι) (b : ∀ i, φ i) : (proj i : (∀ i, φ i) →L[R] φ i) b = b i :=
+240:   rfl
+241: 
+242: @[simp]

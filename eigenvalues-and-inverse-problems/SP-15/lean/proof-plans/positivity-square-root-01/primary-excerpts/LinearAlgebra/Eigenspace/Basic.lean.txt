@@ -1,0 +1,47 @@
+403: /-- The submodule `eigenspace f μ` for a linear map `f` and a scalar `μ` consists of all vectors `x`
+404: such that `f x = μ • x`. (Def 5.52 of [axler2024]). -/
+405: abbrev eigenspace (f : End R M) (μ : R) : Submodule R M :=
+406:   f.genEigenspace μ 1
+407: 
+408: lemma eigenspace_def {f : End R M} {μ : R} :
+409:     f.eigenspace μ = LinearMap.ker (f - μ • 1) := by
+410:   rw [eigenspace, genEigenspace_one]
+411: 
+412: @[simp]
+413: theorem eigenspace_zero (f : End R M) : f.eigenspace 0 = LinearMap.ker f := by
+414:   simp only [eigenspace, ← Nat.cast_one (R := ℕ∞), genEigenspace_zero_nat, pow_one]
+415: 
+416: /-- A nonzero element of an eigenspace is an eigenvector. (Def 5.8 of [axler2024]) -/
+417: abbrev HasEigenvector (f : End R M) (μ : R) (x : M) : Prop :=
+418:   HasUnifEigenvector f μ 1 x
+419: 
+420: lemma hasEigenvector_iff {f : End R M} {μ : R} {x : M} :
+421:     f.HasEigenvector μ x ↔ x ∈ f.eigenspace μ ∧ x ≠ 0 := Iff.rfl
+422: 
+423: /-- A scalar `μ` is an eigenvalue for a linear map `f` if there are nonzero vectors `x`
+424: such that `f x = μ • x`. (Def 5.5 of [axler2024]). -/
+425: abbrev HasEigenvalue (f : End R M) (a : R) : Prop :=
+426:   HasUnifEigenvalue f a 1
+427: 
+428: lemma hasEigenvalue_iff {f : End R M} {μ : R} :
+429:     f.HasEigenvalue μ ↔ f.eigenspace μ ≠ ⊥ := Iff.rfl
+430: 
+431: /-- The eigenvalues of the endomorphism `f`, as a subtype of `R`. -/
+432: abbrev Eigenvalues (f : End R M) : Type _ :=
+433:   UnifEigenvalues f 1
+434: 
+435: @[coe]
+436: abbrev Eigenvalues.val (f : Module.End R M) : Eigenvalues f → R := UnifEigenvalues.val f 1
+437: 
+438: @[simp]
+439: lemma Eigenvalues.val_mk {f : End R M} {μ : R} (h : f.HasEigenvalue μ) :
+440:     Eigenvalues.val f ⟨μ, h⟩ = μ := rfl
+441: 
+442: @[simp]
+443: lemma Eigenvalues.mk_val {f : End R M} (μ : Eigenvalues f) : ⟨μ.val, μ.property⟩ = μ := rfl
+444: 
+445: theorem hasEigenvalue_of_hasEigenvector {f : End R M} {μ : R} {x : M} (h : HasEigenvector f μ x) :
+446:     HasEigenvalue f μ :=
+447:   h.hasUnifEigenvalue
+448: 
+449: theorem mem_eigenspace_iff {f : End R M} {μ : R} {x : M} : x ∈ eigenspace f μ ↔ f x = μ • x :=

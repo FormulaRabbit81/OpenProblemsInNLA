@@ -1,0 +1,210 @@
+#!/usr/bin/env python3
+"""Generate explicit strict-derivative candidates from frozen polynomial ASTs.
+
+This emits Lean proof terms and definitionally checked scalar goals. It is not
+a derivative oracle: no Python output is a hypothesis in the Lean theorem.
+"""
+from pathlib import Path
+import ast
+import hashlib
+import json
+import re
+import sys
+import textwrap
+
+H = Path(__file__).resolve().parent
+P = H.parents[1]
+source = (P / 'NLA/SP15/Definitions.lean').read_text()
+assert hashlib.sha256(source.encode()).hexdigest() == \
+    'fa57c71cd3e6d6551f081e479121f9f6a4695858732f3e6d1fa4cd79ad927498'
+translate = str.maketrans({'₁': '1', '₂': '2', '₃': '3'})
+untranslate = str.maketrans({'1': '₁', '2': '₂', '3': '₃'})
+
+
+def parse(s):
+    s = re.sub(r'\bx\s+(\d+)\b', r'x[\1]', s.translate(translate).replace('^', '**'))
+    return ast.parse(' '.join(s.split()), mode='eval').body
+
+
+body = source.split('def coefficients (x : Parameters) : Coefficients :=', 1)[1]
+body = body.split('\ndef coefficientMonomials', 1)[0]
+lets, vector = body.split('![', 1)
+bindings = re.findall(r'let\s+(\S+)\s*:=\s*(.*?)(?=\s*;\s*let|\s+let|\Z)', lets, re.S)
+ordered = [(name.translate(translate), parse(expr.rstrip('; \n')))
+           for name, expr in bindings]
+named = dict(ordered)
+entries = [parse(s) for s in vector.rsplit(']', 1)[0].split(',')]
+assert len(ordered) == 17 and len(entries) == 9
+point = [int(x.strip()) for x in re.search(r'def basePoint[^\n]*:= !\[(.*?)\]', source)[1].split(',')]
+jbody = re.search(r'def jacobian :.*?:=\s*!!\[(.*?)\]\n', source, re.S)[1]
+jacobian = [[int(x.strip()) for x in row.split(',')] for row in jbody.split(';')]
+assert len(point) == 10 and len(jacobian) == 9 and all(len(r) == 10 for r in jacobian)
+
+
+def variable(node):
+    return isinstance(node, ast.Subscript) and isinstance(node.value, ast.Name) and node.value.id == 'x'
+
+
+def idx(node):
+    assert variable(node) and isinstance(node.slice, ast.Constant)
+    return node.slice.value
+
+
+def lname(name):
+    return name.translate(untranslate)
+
+
+def needs(node, out):
+    if isinstance(node, ast.Name):
+        if node.id not in out:
+            out.add(node.id)
+            needs(named[node.id], out)
+    elif isinstance(node, ast.BinOp):
+        needs(node.left, out)
+        needs(node.right, out)
+    elif isinstance(node, ast.Constant) or variable(node):
+        pass
+    else:
+        raise AssertionError(ast.dump(node))
+
+
+def proof(node):
+    if variable(node):
+        return f'(h {idx(node)})'
+    if isinstance(node, ast.Name):
+        binding = named[node.id]
+        return proof(binding) if variable(binding) else 'h' + lname(node.id)
+    assert isinstance(node, ast.BinOp), ast.dump(node)
+    if isinstance(node.op, ast.Pow):
+        assert isinstance(node.right, ast.Constant) and node.right.value == 2
+        return f'({proof(node.left)}.pow 2)'
+    if isinstance(node.op, ast.Mult) and isinstance(node.left, ast.Constant):
+        return f'({proof(node.right)}.const_mul {node.left.value})'
+    method = {ast.Add: 'add', ast.Sub: 'sub', ast.Mult: 'mul'}[type(node.op)]
+    return f'({proof(node.left)}.{method} {proof(node.right)})'
+
+
+def value(node):
+    if isinstance(node, ast.Constant):
+        return str(node.value)
+    if variable(node):
+        return str(point[idx(node)])
+    if isinstance(node, ast.Name):
+        binding = named[node.id]
+        return value(binding) if variable(binding) else lname(node.id)
+    assert isinstance(node, ast.BinOp), ast.dump(node)
+    symbol = {ast.Add: '+', ast.Sub: '-', ast.Mult: '*', ast.Pow: '^'}[type(node.op)]
+    return f'({value(node.left)} {symbol} {value(node.right)})'
+
+
+def derivative(node):
+    if isinstance(node, ast.Constant):
+        return '0'
+    if variable(node):
+        return f'v {idx(node)}'
+    if isinstance(node, ast.Name):
+        binding = named[node.id]
+        return derivative(binding) if variable(binding) else 'd' + lname(node.id)
+    assert isinstance(node, ast.BinOp), ast.dump(node)
+    if isinstance(node.op, (ast.Add, ast.Sub)):
+        symbol = '+' if isinstance(node.op, ast.Add) else '-'
+        return f'({derivative(node.left)} {symbol} {derivative(node.right)})'
+    if isinstance(node.op, ast.Mult):
+        if isinstance(node.left, ast.Constant):
+            return f'({node.left.value} * ({derivative(node.right)}))'
+        return f'({value(node.left)} * ({derivative(node.right)}) + {value(node.right)} * ({derivative(node.left)}))'
+    if isinstance(node.op, ast.Pow):
+        assert isinstance(node.right, ast.Constant) and node.right.value == 2
+        return f'((2 • (({value(node.left)} : ℝ) ^ (2 - 1))) * ({derivative(node.left)}))'
+    raise AssertionError(ast.dump(node))
+
+
+copyright = '''/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Prior mathematical attribution is retained.
+
+The displayed scalar identity is the actual derivative map applied to an
+arbitrary perturbation vector. Its ten entries are checked by the kernel.
+-/
+import NLA.SP15.DerivativeRows.Basic
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.SP15
+noncomputable section
+
+'''
+
+
+def wrap(line, indent=2):
+    return textwrap.fill(line.strip(), width=104, initial_indent=' ' * indent,
+                         subsequent_indent=' ' * (indent + 2),
+                         break_long_words=False, break_on_hyphens=False)
+
+
+def make_row(i):
+    dependencies = set()
+    needs(entries[i], dependencies)
+    factored = [(n, e) for n, e in ordered if n in dependencies and not variable(e)]
+    s = copyright
+    s += f'''theorem coefficient_strict_derivative_row_{i} :
+    HasStrictFDerivAt (fun x : Parameters => coefficients x {i})
+      ((ContinuousLinearMap.proj ({i} : Fin 9) : Coefficients →L[ℝ] ℝ).comp
+        coefficientDerivative) basePoint := by
+  have h (i : Fin 10) := hasStrictFDerivAt_apply (𝕜 := ℝ) i basePoint
+'''
+    for n, e in factored:
+        s += wrap(f'have h{lname(n)} := {proof(e)}') + '\n'
+    s += wrap(f'have hc := {proof(entries[i])}') + '\n'
+    s += '''  refine hc.congr_fderiv ?_
+  ext v
+  rw [coefficient_derivative_row_apply]
+  simp only [Fin.sum_univ_succ, Fin.sum_univ_zero]
+'''
+    scalar_bindings = []
+    for n, e in factored:
+        scalar_bindings.extend([(lname(n), value(e)), ('d' + lname(n), derivative(e))])
+    used = set()
+    def include_scalar_dependencies(expression):
+        for name, val in scalar_bindings:
+            if name not in used and re.search(r'(?<!\w)' + re.escape(name) + r'(?!\w)', expression):
+                used.add(name)
+                include_scalar_dependencies(val)
+    include_scalar_dependencies(derivative(entries[i]))
+    for name, expression in scalar_bindings:
+        if name in used:
+            s += wrap(f'let {name} : ℝ := {expression}') + '\n'
+    rhs = '0'
+    for j, a in reversed(list(enumerate(jacobian[i]))):
+        rhs = f'({a} * v {j} + {rhs})'
+    s += wrap(f'change {derivative(entries[i])} = {rhs}') + '\n'
+    if used:
+        names = ', '.join(name for name, _ in scalar_bindings if name in used)
+        s += wrap(f'dsimp only [{names}]') + '\n'
+    if any(isinstance(node, ast.Pow) for node in ast.walk(entries[i])) or 'e' in dependencies:
+        s += '  simp only [nsmul_eq_mul]\n'
+    s += f'''  ring
+
+#print axioms coefficient_strict_derivative_row_{i}
+#assert_trust kernel coefficient_strict_derivative_row_{i}
+
+end
+end NLA.SP15
+'''
+    return s
+
+
+preview = '--preview' in sys.argv
+destination = H / 'uncompiled-preview' if preview else P
+made = {}
+for i in [0, 1, 2, 4, 5, 7, 8]:
+    rel = f'NLA/SP15/DerivativeRows/Row{i}.lean' + ('.txt' if preview else '')
+    target = destination / rel
+    target.parent.mkdir(parents=True, exist_ok=True)
+    s = make_row(i)
+    target.write_text(s)
+    made[rel] = hashlib.sha256(s.encode()).hexdigest()
+print(json.dumps({'scope': 'Uncompiled source generation, not theorem verification',
+                  'preview_only': preview, 'sources': made}, indent=2))

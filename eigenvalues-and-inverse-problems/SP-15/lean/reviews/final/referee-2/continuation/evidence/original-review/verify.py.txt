@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+"""Verify this sealed review packet. Optional --live checks the original workspace too.
+
+No compiler, Git, Lake, process execution, or network access is used.
+Compiled output hashes are authenticated from archived receipts; only --live
+also reads their current local output files. No Linux result is inferred.
+"""
+from pathlib import Path
+import argparse, hashlib, json, re
+
+R = Path(__file__).resolve().parent
+parser = argparse.ArgumentParser()
+parser.add_argument('--live', action='store_true')
+args = parser.parse_args()
+nchecks = 0
+def sha(q): return hashlib.sha256(Path(q).read_bytes()).hexdigest()
+def need(ok, label):
+    global nchecks
+    nchecks += 1
+    if not ok: raise AssertionError(label)
+def read(rel): return json.loads((R/rel).read_text())
+
+manifest = read('MANIFEST.json')
+expected = {x['path']: x for x in manifest['files']}
+for rel, x in expected.items():
+    need((R/rel).is_file(), ('missing',rel))
+    need(sha(R/rel) == x['sha256'], ('file-hash',rel))
+allowed = set(manifest['excluded_seal_files']) | {'MANIFEST.json'}
+actual = {str(p.relative_to(R)) for p in R.rglob('*') if p.is_file()}
+need(actual <= set(expected) | allowed, ('unexpected-files', actual-set(expected)-allowed))
+
+binding = read('SOURCE-BINDINGS.json')
+closure = {x['path']:x['sha256'] for x in binding['files'] if x['scope']=='solution-closure'}
+need(len(closure) == 49, 'closure49')
+for x in binding['files']:
+    need(sha(R/'snapshot'/x['path']) == x['sha256'], ('snapshot-binding',x['path']))
+    if args.live:
+        need(sha(Path(binding['source_root'])/x['path']) == x['sha256'], ('live-original-source',x['path']))
+contracts = read('snapshot/STATEMENT-HEADERS.json')['contracts']
+need(len(contracts)==29,'contract29')
+source = {rel:(R/'snapshot'/rel).read_text() for rel in closure}
+for c in contracts:
+    name = c['name'].split('.')[-1]
+    pattern = r'^theorem '+re.escape(name)+r'\b[\s\S]*?(?=\s*:= by)'
+    found = [m.group(0).rstrip() for text in source.values() if (m:=re.search(pattern,text,re.M))]
+    challenge = re.search(pattern,(R/'snapshot/Challenge.lean').read_text(),re.M)
+    need(found==[c['header']],'implementation-header:'+name)
+    need(challenge.group(0).rstrip()==c['header'],'challenge-header:'+name)
+for rel, text in source.items():
+    code = re.sub(r'/\-[\s\S]*?\-/|--[^\n]*','',text)
+    need(not re.search(r'\b(sorry|admit|axiom|unsafe|native_decide|implemented_by)\b',code),('source-escape',rel))
+    need(not any('Challenge' in line for line in code.splitlines() if line.startswith('import ')),('challenge-import',rel))
+
+audit=read('AUDIT.json')
+need(audit['all_pass'] and audit['checks_count']==3677 and len(audit['checks'])==3677,'audit-count')
+need(all(c['pass'] for c in audit['checks']),'audit-assertions')
+execution=read('AUDIT-EXECUTION.json')
+need(execution['exit_code']==0 and execution['script_sha256']==sha(R/'audit.py'),'audit-execution')
+for stream in ['stdout','stderr']:
+    need(execution[stream+'_sha256']==sha(R/('AUDIT-'+stream.upper()+'.log')),('audit-stream',stream))
+
+runtime=read('RUNTIME-AUDIT.json')
+need(len(runtime['modules'])==49,'runtime49')
+need(len(runtime['aggregate_axioms'])==29,'axioms29')
+receipt_paths={x['original']:R/x['retained'] for x in runtime['retained']}
+root=read('evidence/runtime/development-116/RECEIPT.json')
+need(sha(R/'evidence/runtime/development-116/RECEIPT.json')=='c15b57f189a8ed2435230e545f6b4a703a2b33a4eba1a4daf5d03aeef08e67b4','root-receipt')
+root_commands={c['module']:c for c in root['commands']}
+for entry in runtime['modules']:
+    mod=entry['module']; rel=mod.replace('.','/')+'.lean'
+    need(entry['fresh_command']['source_sha256']==closure[rel],('runtime-source',mod))
+    need(entry['fresh_command']['exit_code']==0,('runtime-fresh-success',mod))
+    need(sha(R/entry['retained_log'])==entry['fresh_command']['log_sha256'],('runtime-log',mod))
+    need(entry['fresh_command']['output_sha256']==root_commands[mod]['output_sha256'],('runtime-output-chain',mod))
+    need('--threads=1' in entry['fresh_command']['argv'] and '--memory=4096' in entry['fresh_command']['argv'],('runtime-resource',mod))
+    for path in entry['reuse_chain']:
+        prior=json.loads(receipt_paths[path].read_text())
+        c=next(c for c in prior['commands'] if c['module']==mod)
+        need(c.get('status')=='reused_exact_successful_local_output',('reuse-status',mod,path))
+        need(sha(receipt_paths[c['prior_receipt']])==c['prior_receipt_sha256'],('reuse-receipt-hash',mod,path))
+        need(c['source_sha256']==closure[rel] and c['output_sha256']==entry['fresh_command']['output_sha256'],('reuse-source-output',mod,path))
+    if args.live:
+        output=Path(entry['fresh_command']['argv'][entry['fresh_command']['argv'].index('-o')+1])
+        need(sha(output)==entry['fresh_command']['output_sha256'],('live-local-output',mod))
+for name, names in runtime['aggregate_axioms']:
+    need(set(names.split(', '))=={'propext','Classical.choice','Quot.sound'},('permitted-axioms',name))
+verdict=read('VERDICT.json')
+need(verdict['mathematical_correctness']=='approve' and verdict['overall']=='request_changes','actual-verdict')
+need(verdict['Linux_Comparator']['executed'] is False and verdict['Linux_Comparator']['passed'] is None,'no-unrun-linux-success')
+need(verdict['required_findings']==['F1','F2'],'findings')
+need(read('INDEPENDENT-ASSESSMENT-BEFORE-PEER.json')['peer_full_referee_findings_received_or_read'] is False,'independence')
+print(json.dumps({'verified':True,'checks':nchecks,'files':len(expected),'source_modules':49,'contracts':29,
+ 'live_original_workspace_checked':args.live,'mathematics':'approve','overall':'request_changes',
+ 'Lean_executed_by_verifier':False,'Linux_Comparator_executed':False}))

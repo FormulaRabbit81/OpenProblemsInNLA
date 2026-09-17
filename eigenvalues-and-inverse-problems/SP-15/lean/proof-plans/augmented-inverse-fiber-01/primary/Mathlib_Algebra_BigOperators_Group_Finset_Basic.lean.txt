@@ -1,0 +1,19 @@
+334: 
+335: @[to_additive]
+336: theorem prod_eq_single_of_mem {s : Finset ι} {f : ι → M} (a : ι) (h : a ∈ s)
+337:     (h₀ : ∀ b ∈ s, b ≠ a → f b = 1) : ∏ x ∈ s, f x = f a := by
+338:   calc
+339:     ∏ x ∈ s, f x = ∏ x ∈ {a}, f x := by
+340:       { refine (prod_subset ?_ ?_).symm
+341:         · intro _ H
+342:           rwa [mem_singleton.1 H]
+343:         · simpa only [mem_singleton] }
+344:     _ = f a := prod_singleton _ _
+345: 
+346: @[to_additive]
+347: theorem prod_eq_single {s : Finset ι} {f : ι → M} (a : ι) (h₀ : ∀ b ∈ s, b ≠ a → f b = 1)
+348:     (h₁ : a ∉ s → f a = 1) : ∏ x ∈ s, f x = f a :=
+349:   haveI := Classical.decEq ι
+350:   by_cases (prod_eq_single_of_mem a · h₀) fun this =>
+351:     (prod_congr rfl fun b hb => h₀ b hb <| by rintro rfl; exact this hb).trans <|
+352:       prod_const_one.trans (h₁ this).symm

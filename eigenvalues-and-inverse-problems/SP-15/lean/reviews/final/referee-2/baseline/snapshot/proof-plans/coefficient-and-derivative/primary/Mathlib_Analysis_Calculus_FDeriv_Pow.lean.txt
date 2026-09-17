@@ -1,0 +1,13 @@
+169:   intro a ha
+170:   congr
+171:   exact add_tsub_cancel_of_le (Nat.le_pred_of_lt <| Finset.mem_range.1 ha)
+172: 
+173: theorem HasStrictFDerivAt.pow (h : HasStrictFDerivAt f f' x) (n : ℕ) :
+174:     HasStrictFDerivAt (fun x ↦ f x ^ n) ((n • f x ^ (n - 1)) • f') x :=
+175:   h.pow' n |>.congr_fderiv <| aux_sum_eq_pow _
+176: 
+177: theorem hasStrictFDerivAt_pow (n : ℕ) {x : 𝔸} :
+178:     HasStrictFDerivAt (𝕜 := 𝕜)
+179:       (fun x : 𝔸 ↦ x ^ n) ((n • x ^ (n - 1)) • ContinuousLinearMap.id 𝕜 𝔸) x :=
+180:   hasStrictFDerivAt_id _ |>.pow n
+181: 

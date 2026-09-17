@@ -1,0 +1,1234 @@
+﻿2026-09-17T13:51:00.9500219Z Current runner version: '2.337.0'
+2026-09-17T13:51:00.9525762Z ##[group]Runner Image Provisioner
+2026-09-17T13:51:00.9526607Z Hosted Compute Agent
+2026-09-17T13:51:00.9527272Z Version: 20260828.587
+2026-09-17T13:51:00.9528368Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-09-17T13:51:00.9529173Z Build Date: 2026-08-28T16:44:25Z
+2026-09-17T13:51:00.9529911Z Worker ID: {84520305-abf6-470f-b1e0-a6bc4fe8d0cd}
+2026-09-17T13:51:00.9530625Z Azure Region: eastus
+2026-09-17T13:51:00.9531539Z ##[endgroup]
+2026-09-17T13:51:00.9533505Z ##[group]Operating System
+2026-09-17T13:51:00.9534182Z Ubuntu
+2026-09-17T13:51:00.9534795Z 24.04.5
+2026-09-17T13:51:00.9535316Z LTS
+2026-09-17T13:51:00.9535860Z ##[endgroup]
+2026-09-17T13:51:00.9536466Z ##[group]Runner Image
+2026-09-17T13:51:00.9537068Z Image: ubuntu-24.04
+2026-09-17T13:51:00.9537679Z Version: 20260907.300.1
+2026-09-17T13:51:00.9539222Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+2026-09-17T13:51:00.9540883Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+2026-09-17T13:51:00.9541839Z ##[endgroup]
+2026-09-17T13:51:00.9543024Z ##[group]GITHUB_TOKEN Permissions
+2026-09-17T13:51:00.9545241Z Contents: read
+2026-09-17T13:51:00.9545996Z Metadata: read
+2026-09-17T13:51:00.9546557Z ##[endgroup]
+2026-09-17T13:51:00.9549159Z Secret source: Actions
+2026-09-17T13:51:00.9550092Z Cache mode: write
+2026-09-17T13:51:00.9551079Z Prepare workflow directory
+2026-09-17T13:51:00.9887467Z Prepare all required actions
+2026-09-17T13:51:00.9935582Z Getting action download info
+2026-09-17T13:51:01.3587425Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-09-17T13:51:01.4725769Z Download action repository 'actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16' (SHA:924ae3a1cded613372ab5595356fb5720e22ba16)
+2026-09-17T13:51:01.6413903Z Download action repository 'leanprover/lean-action@96e06131c0e9943c780388fd166f55d1e2fa0433' (SHA:96e06131c0e9943c780388fd166f55d1e2fa0433)
+2026-09-17T13:51:01.7555410Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-09-17T13:51:01.9913123Z Getting action download info
+2026-09-17T13:51:02.0696164Z Download action repository 'actions/cache@v5' (SHA:caa296126883cff596d87d8935842f9db880ef25)
+2026-09-17T13:51:02.2612157Z Complete job name: verify (SP-15, eigenvalues-and-inverse-problems/SP-15/lean)
+2026-09-17T13:51:02.3646246Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-17T13:51:02.3657350Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-09-17T13:51:02.3658959Z with:
+2026-09-17T13:51:02.3659524Z   persist-credentials: false
+2026-09-17T13:51:02.3660316Z   repository: sgstepaniants/OpenProblemsInNLA
+2026-09-17T13:51:02.3669244Z   token: ***
+2026-09-17T13:51:02.3669793Z   ssh-strict: true
+2026-09-17T13:51:02.3670357Z   ssh-user: git
+2026-09-17T13:51:02.3670887Z   clean: true
+2026-09-17T13:51:02.3671458Z   sparse-checkout-cone-mode: true
+2026-09-17T13:51:02.3672155Z   fetch-depth: 1
+2026-09-17T13:51:02.3672695Z   fetch-tags: false
+2026-09-17T13:51:02.3673261Z   show-progress: true
+2026-09-17T13:51:02.3673872Z   lfs: false
+2026-09-17T13:51:02.3674388Z   submodules: false
+2026-09-17T13:51:02.3674963Z   set-safe-directory: true
+2026-09-17T13:51:02.3675635Z   allow-unsafe-pr-checkout: false
+2026-09-17T13:51:02.3676611Z ##[endgroup]
+2026-09-17T13:51:02.4699597Z Syncing repository: sgstepaniants/OpenProblemsInNLA
+2026-09-17T13:51:02.4703242Z ##[group]Getting Git version info
+2026-09-17T13:51:02.4705387Z Working directory is '/home/runner/work/OpenProblemsInNLA/OpenProblemsInNLA'
+2026-09-17T13:51:02.4708943Z [command]/usr/bin/git version
+2026-09-17T13:51:02.4772707Z git version 2.55.0
+2026-09-17T13:51:02.4801071Z ##[endgroup]
+2026-09-17T13:51:02.4812178Z Temporarily overriding HOME='/home/runner/work/_temp/6ca32212-8c66-4677-9068-711a316ef2f1' before making global git config changes
+2026-09-17T13:51:02.4816255Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-17T13:51:02.4822139Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/OpenProblemsInNLA/OpenProblemsInNLA
+2026-09-17T13:51:02.4885500Z Deleting the contents of '/home/runner/work/OpenProblemsInNLA/OpenProblemsInNLA'
+2026-09-17T13:51:02.4890000Z ##[group]Initializing the repository
+2026-09-17T13:51:02.4894365Z [command]/usr/bin/git init /home/runner/work/OpenProblemsInNLA/OpenProblemsInNLA
+2026-09-17T13:51:02.5054406Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-09-17T13:51:02.5057210Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-09-17T13:51:02.5060135Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-09-17T13:51:02.5062122Z hint: call:
+2026-09-17T13:51:02.5062975Z hint:
+2026-09-17T13:51:02.5064095Z hint: 	git config --global init.defaultBranch <name>
+2026-09-17T13:51:02.5065625Z hint:
+2026-09-17T13:51:02.5067048Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-09-17T13:51:02.5069801Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-09-17T13:51:02.5072050Z hint:
+2026-09-17T13:51:02.5072926Z hint: 	git branch -m <name>
+2026-09-17T13:51:02.5074000Z hint:
+2026-09-17T13:51:02.5075576Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-09-17T13:51:02.5078916Z Initialized empty Git repository in /home/runner/work/OpenProblemsInNLA/OpenProblemsInNLA/.git/
+2026-09-17T13:51:02.5083799Z [command]/usr/bin/git remote add origin https://github.com/sgstepaniants/OpenProblemsInNLA
+2026-09-17T13:51:02.5138467Z ##[endgroup]
+2026-09-17T13:51:02.5140122Z ##[group]Disabling automatic garbage collection
+2026-09-17T13:51:02.5141968Z [command]/usr/bin/git config --local gc.auto 0
+2026-09-17T13:51:02.5175350Z ##[endgroup]
+2026-09-17T13:51:02.5177607Z ##[group]Setting up auth
+2026-09-17T13:51:02.5183131Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-17T13:51:02.5223493Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-17T13:51:02.5630649Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-17T13:51:02.5669152Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-17T13:51:02.5894025Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-17T13:51:02.5932906Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-17T13:51:02.6163970Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-09-17T13:51:02.6202569Z ##[endgroup]
+2026-09-17T13:51:02.6203582Z ##[group]Fetching the repository
+2026-09-17T13:51:02.6213372Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +69938fe5ac20768f7c23c0bead00b6add2516200:refs/remotes/origin/codex/lean-sp15-verification
+2026-09-17T13:51:08.9321451Z From https://github.com/sgstepaniants/OpenProblemsInNLA
+2026-09-17T13:51:08.9323085Z  * [new ref]           69938fe5ac20768f7c23c0bead00b6add2516200 -> origin/codex/lean-sp15-verification
+2026-09-17T13:51:08.9326548Z ##[endgroup]
+2026-09-17T13:51:08.9327328Z ##[group]Determining the checkout info
+2026-09-17T13:51:08.9330249Z ##[endgroup]
+2026-09-17T13:51:08.9336599Z [command]/usr/bin/git sparse-checkout disable
+2026-09-17T13:51:08.9393009Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-09-17T13:51:08.9424888Z ##[group]Checking out the ref
+2026-09-17T13:51:08.9430508Z [command]/usr/bin/git checkout --progress --force -B codex/lean-sp15-verification refs/remotes/origin/codex/lean-sp15-verification
+2026-09-17T13:51:09.9833884Z Updating files:  40% (13523/33050)
+2026-09-17T13:51:10.0053713Z Updating files:  41% (13551/33050)
+2026-09-17T13:51:10.0235138Z Updating files:  42% (13881/33050)
+2026-09-17T13:51:10.0474475Z Updating files:  43% (14212/33050)
+2026-09-17T13:51:10.0681558Z Updating files:  44% (14542/33050)
+2026-09-17T13:51:10.0899863Z Updating files:  45% (14873/33050)
+2026-09-17T13:51:10.1208536Z Updating files:  46% (15203/33050)
+2026-09-17T13:51:10.1468609Z Updating files:  47% (15534/33050)
+2026-09-17T13:51:10.1692241Z Updating files:  48% (15864/33050)
+2026-09-17T13:51:10.1923850Z Updating files:  49% (16195/33050)
+2026-09-17T13:51:10.2148288Z Updating files:  50% (16525/33050)
+2026-09-17T13:51:10.2358826Z Updating files:  51% (16856/33050)
+2026-09-17T13:51:10.2623524Z Updating files:  52% (17186/33050)
+2026-09-17T13:51:10.2906794Z Updating files:  53% (17517/33050)
+2026-09-17T13:51:10.3158304Z Updating files:  54% (17847/33050)
+2026-09-17T13:51:10.3347593Z Updating files:  55% (18178/33050)
+2026-09-17T13:51:10.3560683Z Updating files:  56% (18508/33050)
+2026-09-17T13:51:10.3768316Z Updating files:  57% (18839/33050)
+2026-09-17T13:51:10.4119157Z Updating files:  58% (19169/33050)
+2026-09-17T13:51:10.4330358Z Updating files:  59% (19500/33050)
+2026-09-17T13:51:10.4565783Z Updating files:  60% (19830/33050)
+2026-09-17T13:51:10.4836741Z Updating files:  61% (20161/33050)
+2026-09-17T13:51:10.5021986Z Updating files:  62% (20491/33050)
+2026-09-17T13:51:10.5231584Z Updating files:  63% (20822/33050)
+2026-09-17T13:51:10.5413705Z Updating files:  64% (21152/33050)
+2026-09-17T13:51:10.5635582Z Updating files:  65% (21483/33050)
+2026-09-17T13:51:10.5879054Z Updating files:  66% (21813/33050)
+2026-09-17T13:51:10.6076886Z Updating files:  67% (22144/33050)
+2026-09-17T13:51:10.6253121Z Updating files:  68% (22474/33050)
+2026-09-17T13:51:10.6494675Z Updating files:  69% (22805/33050)
+2026-09-17T13:51:10.6647458Z Updating files:  70% (23135/33050)
+2026-09-17T13:51:10.6882489Z Updating files:  71% (23466/33050)
+2026-09-17T13:51:10.7032958Z Updating files:  72% (23796/33050)
+2026-09-17T13:51:10.7252597Z Updating files:  73% (24127/33050)
+2026-09-17T13:51:10.7515322Z Updating files:  74% (24457/33050)
+2026-09-17T13:51:10.7688885Z Updating files:  75% (24788/33050)
+2026-09-17T13:51:10.7880782Z Updating files:  76% (25118/33050)
+2026-09-17T13:51:10.8133927Z Updating files:  77% (25449/33050)
+2026-09-17T13:51:10.8306273Z Updating files:  78% (25779/33050)
+2026-09-17T13:51:10.8491411Z Updating files:  79% (26110/33050)
+2026-09-17T13:51:10.8732838Z Updating files:  80% (26440/33050)
+2026-09-17T13:51:10.9111961Z Updating files:  81% (26771/33050)
+2026-09-17T13:51:10.9363124Z Updating files:  82% (27101/33050)
+2026-09-17T13:51:10.9666767Z Updating files:  83% (27432/33050)
+2026-09-17T13:51:10.9814357Z Updating files:  84% (27762/33050)
+2026-09-17T13:51:11.1282745Z Updating files:  84% (27822/33050)
+2026-09-17T13:51:11.1672733Z Updating files:  85% (28093/33050)
+2026-09-17T13:51:11.2186564Z Updating files:  86% (28423/33050)
+2026-09-17T13:51:11.3470813Z Updating files:  87% (28754/33050)
+2026-09-17T13:51:11.3905759Z Updating files:  88% (29084/33050)
+2026-09-17T13:51:11.4330395Z Updating files:  89% (29415/33050)
+2026-09-17T13:51:11.5078406Z Updating files:  90% (29745/33050)
+2026-09-17T13:51:11.5786579Z Updating files:  91% (30076/33050)
+2026-09-17T13:51:11.6688836Z Updating files:  92% (30406/33050)
+2026-09-17T13:51:11.7012189Z Updating files:  93% (30737/33050)
+2026-09-17T13:51:11.7225893Z Updating files:  94% (31067/33050)
+2026-09-17T13:51:11.7547304Z Updating files:  95% (31398/33050)
+2026-09-17T13:51:11.7775118Z Updating files:  96% (31728/33050)
+2026-09-17T13:51:11.7997408Z Updating files:  97% (32059/33050)
+2026-09-17T13:51:11.8203522Z Updating files:  98% (32389/33050)
+2026-09-17T13:51:11.8418238Z Updating files:  99% (32720/33050)
+2026-09-17T13:51:11.8419116Z Updating files: 100% (33050/33050)
+2026-09-17T13:51:11.8420013Z Updating files: 100% (33050/33050), done.
+2026-09-17T13:51:11.9014244Z Switched to a new branch 'codex/lean-sp15-verification'
+2026-09-17T13:51:11.9022822Z branch 'codex/lean-sp15-verification' set up to track 'origin/codex/lean-sp15-verification'.
+2026-09-17T13:51:11.9145618Z ##[endgroup]
+2026-09-17T13:51:11.9208670Z [command]/usr/bin/git log -1 --format=%H
+2026-09-17T13:51:11.9259929Z 69938fe5ac20768f7c23c0bead00b6add2516200
+2026-09-17T13:51:11.9261587Z ##[group]Removing auth
+2026-09-17T13:51:11.9262067Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-17T13:51:11.9304411Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-17T13:51:11.9571009Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-17T13:51:11.9603248Z http.https://github.com/.extraheader
+2026-09-17T13:51:11.9612823Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-09-17T13:51:11.9652138Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-17T13:51:11.9913941Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-17T13:51:11.9952046Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-17T13:51:12.0225544Z ##[endgroup]
+2026-09-17T13:51:12.0432308Z ##[group]Run python3 -m pip install -r tools/lean/requirements.txt
+2026-09-17T13:51:12.0432872Z [36;1mpython3 -m pip install -r tools/lean/requirements.txt[0m
+2026-09-17T13:51:12.0433338Z [36;1mpython3 tools/lean/validate_manifest.py "$LEAN_PROJECT"[0m
+2026-09-17T13:51:12.0475272Z shell: /usr/bin/bash -e {0}
+2026-09-17T13:51:12.0475545Z env:
+2026-09-17T13:51:12.0475832Z   LEAN_PROJECT: eigenvalues-and-inverse-problems/SP-15/lean
+2026-09-17T13:51:12.0476180Z ##[endgroup]
+2026-09-17T13:51:13.2274748Z Defaulting to user installation because normal site-packages is not writeable
+2026-09-17T13:51:13.9763484Z Collecting PyYAML==6.0.3 (from -r tools/lean/requirements.txt (line 1))
+2026-09-17T13:51:14.0068466Z   Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2026-09-17T13:51:14.0428887Z Collecting jsonschema==4.26.0 (from -r tools/lean/requirements.txt (line 2))
+2026-09-17T13:51:14.0466586Z   Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+2026-09-17T13:51:14.0638098Z Requirement already satisfied: attrs>=22.2.0 in /usr/lib/python3/dist-packages (from jsonschema==4.26.0->-r tools/lean/requirements.txt (line 2)) (23.2.0)
+2026-09-17T13:51:14.0821610Z Collecting jsonschema-specifications>=2023.03.6 (from jsonschema==4.26.0->-r tools/lean/requirements.txt (line 2))
+2026-09-17T13:51:14.0862363Z   Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+2026-09-17T13:51:14.1239096Z Collecting referencing>=0.28.4 (from jsonschema==4.26.0->-r tools/lean/requirements.txt (line 2))
+2026-09-17T13:51:14.1277118Z   Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+2026-09-17T13:51:14.4453978Z Collecting rpds-py>=0.25.0 (from jsonschema==4.26.0->-r tools/lean/requirements.txt (line 2))
+2026-09-17T13:51:14.4494579Z   Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
+2026-09-17T13:51:14.4832438Z Requirement already satisfied: typing-extensions>=4.4.0 in /usr/lib/python3/dist-packages (from referencing>=0.28.4->jsonschema==4.26.0->-r tools/lean/requirements.txt (line 2)) (4.10.0)
+2026-09-17T13:51:14.4902589Z Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+2026-09-17T13:51:14.5118937Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 41.9 MB/s eta 0:00:00
+2026-09-17T13:51:14.5158746Z Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+2026-09-17T13:51:14.5198475Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 90.6/90.6 kB 36.4 MB/s eta 0:00:00
+2026-09-17T13:51:14.5245084Z Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+2026-09-17T13:51:14.5303841Z Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+2026-09-17T13:51:14.5361249Z Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (366 kB)
+2026-09-17T13:51:14.5438711Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 366.2/366.2 kB 60.2 MB/s eta 0:00:00
+2026-09-17T13:51:14.8394594Z Installing collected packages: rpds-py, PyYAML, referencing, jsonschema-specifications, jsonschema
+2026-09-17T13:51:15.0122449Z Successfully installed PyYAML-6.0.3 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 referencing-0.37.0 rpds-py-2026.6.3
+2026-09-17T13:51:15.2590764Z Manifest schema and comparator coverage: PASS (29 declarations)
+2026-09-17T13:51:15.2819202Z ##[group]Run actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16
+2026-09-17T13:51:15.2819624Z with:
+2026-09-17T13:51:15.2819834Z   go-version: 1.27.1
+2026-09-17T13:51:15.2820060Z   cache: false
+2026-09-17T13:51:15.2820275Z   check-latest: false
+2026-09-17T13:51:15.2822975Z   token: ***
+2026-09-17T13:51:15.2823195Z ##[endgroup]
+2026-09-17T13:51:15.4094683Z Setup go version spec 1.27.1
+2026-09-17T13:51:15.4108284Z Attempting to download 1.27.1...
+2026-09-17T13:51:15.8762817Z matching 1.27.1...
+2026-09-17T13:51:15.8790061Z Acquiring 1.27.1 from https://github.com/actions/go-versions/releases/download/1.27.1-33583469715/go-1.27.1-linux-x64.tar.gz
+2026-09-17T13:51:16.3558421Z Extracting Go...
+2026-09-17T13:51:16.3681744Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/6d3afe5e-a774-46a7-a6c1-c7dcca81a2fc -f /home/runner/work/_temp/376b1c3d-27a1-436b-bc82-0d79cab4496f
+2026-09-17T13:51:18.3512660Z Successfully extracted go to /home/runner/work/_temp/6d3afe5e-a774-46a7-a6c1-c7dcca81a2fc
+2026-09-17T13:51:18.3513504Z Adding to the cache ...
+2026-09-17T13:51:24.4719760Z Successfully cached go to /opt/hostedtoolcache/go/1.27.1/x64
+2026-09-17T13:51:24.4723026Z Added go to the path
+2026-09-17T13:51:24.4725491Z Successfully set up Go version 1.27.1
+2026-09-17T13:51:24.4933614Z go version go1.27.1 linux/amd64
+2026-09-17T13:51:24.4933852Z 
+2026-09-17T13:51:24.4934182Z ##[group]go env
+2026-09-17T13:51:24.6255621Z AR='ar'
+2026-09-17T13:51:24.6256008Z CC='gcc'
+2026-09-17T13:51:24.6256308Z CGO_CFLAGS='-O2 -g'
+2026-09-17T13:51:24.6256637Z CGO_CPPFLAGS=''
+2026-09-17T13:51:24.6256960Z CGO_CXXFLAGS='-O2 -g'
+2026-09-17T13:51:24.6257268Z CGO_ENABLED='1'
+2026-09-17T13:51:24.6257560Z CGO_FFLAGS='-O2 -g'
+2026-09-17T13:51:24.6258142Z CGO_LDFLAGS='-O2 -g'
+2026-09-17T13:51:24.6258506Z CXX='g++'
+2026-09-17T13:51:24.6258761Z GCCGO='gccgo'
+2026-09-17T13:51:24.6259001Z GO111MODULE=''
+2026-09-17T13:51:24.6259239Z GOAMD64='v1'
+2026-09-17T13:51:24.6259492Z GOARCH='amd64'
+2026-09-17T13:51:24.6259783Z GOAUTH='netrc'
+2026-09-17T13:51:24.6260085Z GOBIN='/home/runner/go/bin'
+2026-09-17T13:51:24.6260466Z GOCACHE='/home/runner/.cache/go-build'
+2026-09-17T13:51:24.6260820Z GOCACHEPROG=''
+2026-09-17T13:51:24.6261104Z GODEBUG=''
+2026-09-17T13:51:24.6261392Z GOENV='/home/runner/.config/go/env'
+2026-09-17T13:51:24.6261714Z GOEXE=''
+2026-09-17T13:51:24.6262004Z GOEXPERIMENT=''
+2026-09-17T13:51:24.6262301Z GOFIPS140='off'
+2026-09-17T13:51:24.6262582Z GOFLAGS=''
+2026-09-17T13:51:24.6263312Z GOGCCFLAGS='-fPIC -m64 -pthread -Wl,--no-gc-sections -fmessage-length=0 -ffile-prefix-map=/tmp/go-build761885676=/tmp/go-build -gno-record-gcc-switches'
+2026-09-17T13:51:24.6264290Z GOHOSTARCH='amd64'
+2026-09-17T13:51:24.6264576Z GOHOSTOS='linux'
+2026-09-17T13:51:24.6264870Z GOINSECURE=''
+2026-09-17T13:51:24.6265152Z GOMOD='/dev/null'
+2026-09-17T13:51:24.6265453Z GOMODCACHE='/home/runner/go/pkg/mod'
+2026-09-17T13:51:24.6265790Z GONOPROXY=''
+2026-09-17T13:51:24.6266062Z GONOSUMDB=''
+2026-09-17T13:51:24.6266340Z GOOS='linux'
+2026-09-17T13:51:24.6266637Z GOPACKAGESDRIVER=''
+2026-09-17T13:51:24.6266942Z GOPATH='/home/runner/go'
+2026-09-17T13:51:24.6267246Z GOPRIVATE=''
+2026-09-17T13:51:24.6267572Z GOPROXY='https://proxy.golang.org,direct'
+2026-09-17T13:51:24.6268210Z GOROOT='/opt/hostedtoolcache/go/1.27.1/x64'
+2026-09-17T13:51:24.6268588Z GOSUMDB='sum.golang.org'
+2026-09-17T13:51:24.6268889Z GOTELEMETRY='local'
+2026-09-17T13:51:24.6269236Z GOTELEMETRYDIR='/home/runner/.config/go/telemetry'
+2026-09-17T13:51:24.6269623Z GOTMPDIR=''
+2026-09-17T13:51:24.6269908Z GOTOOLCHAIN='local'
+2026-09-17T13:51:24.6270302Z GOTOOLDIR='/opt/hostedtoolcache/go/1.27.1/x64/pkg/tool/linux_amd64'
+2026-09-17T13:51:24.6270741Z GOVCS=''
+2026-09-17T13:51:24.6271016Z GOVERSION='go1.27.1'
+2026-09-17T13:51:24.6271300Z GOWORK=''
+2026-09-17T13:51:24.6271577Z PKG_CONFIG='pkg-config'
+2026-09-17T13:51:24.6271767Z 
+2026-09-17T13:51:24.6272126Z ##[endgroup]
+2026-09-17T13:51:24.6679456Z ##[group]Run leanprover/lean-action@96e06131c0e9943c780388fd166f55d1e2fa0433
+2026-09-17T13:51:24.6679892Z with:
+2026-09-17T13:51:24.6680234Z   lake-package-directory: eigenvalues-and-inverse-problems/SP-15/lean
+2026-09-17T13:51:24.6680642Z   auto-config: false
+2026-09-17T13:51:24.6680869Z   build: false
+2026-09-17T13:51:24.6681069Z   test: false
+2026-09-17T13:51:24.6681273Z   lint: false
+2026-09-17T13:51:24.6681478Z   use-mathlib-cache: false
+2026-09-17T13:51:24.6681727Z   use-github-cache: false
+2026-09-17T13:51:24.6681968Z   mk_all-check: false
+2026-09-17T13:51:24.6682220Z   check-reservoir-eligibility: false
+2026-09-17T13:51:24.6682500Z   leanchecker: false
+2026-09-17T13:51:24.6682789Z   lean4checker: false
+2026-09-17T13:51:24.6683034Z   nanoda: false
+2026-09-17T13:51:24.6683257Z   nanoda-allow-sorry: true
+2026-09-17T13:51:24.6683491Z   axiom-audit: false
+2026-09-17T13:51:24.6683778Z   axiom-audit-allow: propext,Classical.choice,Quot.sound
+2026-09-17T13:51:24.6684186Z   reinstall-transient-toolchain: false
+2026-09-17T13:51:24.6684457Z env:
+2026-09-17T13:51:24.6684651Z   GOTOOLCHAIN: local
+2026-09-17T13:51:24.6684863Z ##[endgroup]
+2026-09-17T13:51:24.6751176Z ##[start-action display=install elan;id=__leanprover_lean-action.__run]
+2026-09-17T13:51:24.6773561Z ##[group]Run : Install Elan
+2026-09-17T13:51:24.6773842Z [36;1m: Install Elan[0m
+2026-09-17T13:51:24.6774130Z [36;1m${GITHUB_ACTION_PATH}/scripts/install_elan.sh[0m
+2026-09-17T13:51:24.6814112Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-17T13:51:24.6814467Z env:
+2026-09-17T13:51:24.6814689Z   GOTOOLCHAIN: local
+2026-09-17T13:51:24.6814919Z ##[endgroup]
+2026-09-17T13:51:24.6900205Z ##[group]Elan Installation Output
+2026-09-17T13:51:24.7357074Z info: downloading installer
+2026-09-17T13:51:25.2451514Z info: downloading https://releases.lean-lang.org/lean4/v4.33.1/lean-4.33.1-linux.tar.zst
+2026-09-17T13:51:28.1080482Z info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.33.1
+2026-09-17T13:51:35.2154073Z Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+2026-09-17T13:51:35.2564219Z Lake version 5.0.0-src+819816b (Lean version 4.33.1)
+2026-09-17T13:51:35.2568922Z ##[endgroup]
+2026-09-17T13:51:35.2578361Z 
+2026-09-17T13:51:35.2594552Z ##[end-action id=__leanprover_lean-action.__run;outcome=success;conclusion=success;duration_ms=10584]
+2026-09-17T13:51:35.2599705Z ##[start-action display=configure `lean-action`;id=__leanprover_lean-action.config]
+2026-09-17T13:51:35.2615903Z ##[group]Run : Configure Lean Action
+2026-09-17T13:51:35.2616224Z [36;1m: Configure Lean Action[0m
+2026-09-17T13:51:35.2616566Z [36;1m${GITHUB_ACTION_PATH}/scripts/config.sh[0m
+2026-09-17T13:51:35.2653430Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-17T13:51:35.2653803Z env:
+2026-09-17T13:51:35.2654009Z   GOTOOLCHAIN: local
+2026-09-17T13:51:35.2654243Z   AUTO_CONFIG: false
+2026-09-17T13:51:35.2654461Z   BUILD: false
+2026-09-17T13:51:35.2654682Z   TEST: false
+2026-09-17T13:51:35.2654880Z   LINT: false
+2026-09-17T13:51:35.2655076Z ##[endgroup]
+2026-09-17T13:51:35.3131761Z ##[group]Configure lean-action
+2026-09-17T13:51:35.3184327Z ##[end-action id=__leanprover_lean-action.config;outcome=success;conclusion=success;duration_ms=58]
+2026-09-17T13:51:35.3189635Z ##[start-action display=reinstall transient toolchain;id=__leanprover_lean-action.__run_2]
+2026-09-17T13:51:35.3195640Z ##[end-action id=__leanprover_lean-action.__run_2;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-09-17T13:51:35.3198814Z ##[start-action display=ensure all files are imported;id=__leanprover_lean-action.mk_all]
+2026-09-17T13:51:35.3202457Z ##[end-action id=__leanprover_lean-action.mk_all;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-09-17T13:51:35.3204418Z ##[start-action display=Run actions/cache/restore@v5;id=__leanprover_lean-action.__actions_cache]
+2026-09-17T13:51:35.3208442Z ##[end-action id=__leanprover_lean-action.__actions_cache;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-09-17T13:51:35.3210443Z ##[start-action display=detect mathlib;id=__leanprover_lean-action.detect-mathlib]
+2026-09-17T13:51:35.3213927Z ##[end-action id=__leanprover_lean-action.detect-mathlib;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-09-17T13:51:35.3215795Z ##[start-action display=get mathlib cache;id=__leanprover_lean-action.__run_3]
+2026-09-17T13:51:35.3232604Z ##[end-action id=__leanprover_lean-action.__run_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-09-17T13:51:35.3259700Z ##[start-action display=build sgstepaniants/OpenProblemsInNLA;id=__leanprover_lean-action.build]
+2026-09-17T13:51:35.3264280Z ##[end-action id=__leanprover_lean-action.build;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-09-17T13:51:35.3266251Z ##[start-action display=Run actions/cache/save@v5;id=__leanprover_lean-action.__actions_cache_2]
+2026-09-17T13:51:35.3270119Z ##[end-action id=__leanprover_lean-action.__actions_cache_2;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-09-17T13:51:35.3273671Z ##[start-action display=test sgstepaniants/OpenProblemsInNLA;id=__leanprover_lean-action.test]
+2026-09-17T13:51:35.3278493Z ##[end-action id=__leanprover_lean-action.test;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-09-17T13:51:35.3281487Z ##[start-action display=lint sgstepaniants/OpenProblemsInNLA;id=__leanprover_lean-action.lint]
+2026-09-17T13:51:35.3285846Z ##[end-action id=__leanprover_lean-action.lint;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-09-17T13:51:35.3287965Z ##[start-action display=check reservoir eligibility;id=__leanprover_lean-action.__run_4]
+2026-09-17T13:51:35.3291507Z ##[end-action id=__leanprover_lean-action.__run_4;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-09-17T13:51:35.3294145Z ##[start-action display=check environment with leanchecker;id=__leanprover_lean-action.__run_5]
+2026-09-17T13:51:35.3299182Z ##[end-action id=__leanprover_lean-action.__run_5;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-09-17T13:51:35.3301543Z ##[start-action display=check environment with nanoda;id=__leanprover_lean-action.nanoda]
+2026-09-17T13:51:35.3304857Z ##[end-action id=__leanprover_lean-action.nanoda;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-09-17T13:51:35.3307371Z ##[start-action display=audit axioms with axiom-audit;id=__leanprover_lean-action.axiom-audit]
+2026-09-17T13:51:35.3311171Z ##[end-action id=__leanprover_lean-action.axiom-audit;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-09-17T13:51:35.3363244Z ##[group]Run sudo apt-get update
+2026-09-17T13:51:35.3363599Z [36;1msudo apt-get update[0m
+2026-09-17T13:51:35.3363938Z [36;1msudo apt-get install -y bubblewrap dbus-user-session[0m
+2026-09-17T13:51:35.3364390Z [36;1msudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0[0m
+2026-09-17T13:51:35.3364955Z [36;1msudo loginctl enable-linger "$(id -un)"[0m
+2026-09-17T13:51:35.3365308Z [36;1msudo systemctl start "user@$(id -u).service"[0m
+2026-09-17T13:51:35.3365705Z [36;1mecho "XDG_RUNTIME_DIR=/run/user/$(id -u)" >> "$GITHUB_ENV"[0m
+2026-09-17T13:51:35.3366219Z [36;1mecho "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus" >> "$GITHUB_ENV"[0m
+2026-09-17T13:51:35.3403236Z shell: /usr/bin/bash -e {0}
+2026-09-17T13:51:35.3403495Z env:
+2026-09-17T13:51:35.3403707Z   GOTOOLCHAIN: local
+2026-09-17T13:51:35.3403943Z ##[endgroup]
+2026-09-17T13:51:36.1575799Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-09-17T13:51:36.2169405Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-09-17T13:51:36.2170560Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-09-17T13:51:36.2188885Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-09-17T13:51:36.2396531Z Get:7 https://dl.google.com/linux/chrome-stable/deb stable InRelease [2548 B]
+2026-09-17T13:51:36.3009246Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-09-17T13:51:36.3070596Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-09-17T13:51:36.6203096Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [474 kB]
+2026-09-17T13:51:36.6674052Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1264 kB]
+2026-09-17T13:51:36.7739932Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [292 kB]
+2026-09-17T13:51:36.7788997Z Get:22 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [425 kB]
+2026-09-17T13:51:36.8053210Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [181 kB]
+2026-09-17T13:51:36.8099483Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1688 kB]
+2026-09-17T13:51:36.8532559Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [338 kB]
+2026-09-17T13:51:36.8568451Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [388 kB]
+2026-09-17T13:51:36.9137615Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1550 kB]
+2026-09-17T13:51:36.9659802Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [355 kB]
+2026-09-17T13:51:36.9676146Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [45.7 kB]
+2026-09-17T13:51:36.9690740Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [13.1 kB]
+2026-09-17T13:51:37.0039084Z Get:23 https://dl.google.com/linux/chrome-stable/deb stable/main amd64 Packages [1407 B]
+2026-09-17T13:51:37.0132980Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+2026-09-17T13:51:37.0156173Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5776 B]
+2026-09-17T13:51:37.0171481Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [12.6 kB]
+2026-09-17T13:51:37.0368715Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1009 kB]
+2026-09-17T13:51:37.0599057Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [214 kB]
+2026-09-17T13:51:37.0608345Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [46.4 kB]
+2026-09-17T13:51:37.0619152Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1207 kB]
+2026-09-17T13:51:37.0705715Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [242 kB]
+2026-09-17T13:51:37.0739523Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [76.3 kB]
+2026-09-17T13:51:37.0749618Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1449 kB]
+2026-09-17T13:51:37.0849383Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [336 kB]
+2026-09-17T13:51:41.2615940Z Fetched 12.0 MB in 2s (6202 kB/s)
+2026-09-17T13:51:42.0939079Z Reading package lists...
+2026-09-17T13:51:42.1256670Z Reading package lists...
+2026-09-17T13:51:42.3330677Z Building dependency tree...
+2026-09-17T13:51:42.3338711Z Reading state information...
+2026-09-17T13:51:42.4947348Z dbus-user-session is already the newest version (1.14.10-4ubuntu4.1).
+2026-09-17T13:51:42.4949279Z dbus-user-session set to manually installed.
+2026-09-17T13:51:42.4950369Z The following NEW packages will be installed:
+2026-09-17T13:51:42.4955401Z   bubblewrap
+2026-09-17T13:51:42.5130781Z 0 upgraded, 1 newly installed, 0 to remove and 73 not upgraded.
+2026-09-17T13:51:42.5131509Z Need to get 50.2 kB of archives.
+2026-09-17T13:51:42.5132164Z After this operation, 133 kB of additional disk space will be used.
+2026-09-17T13:51:42.5132960Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-09-17T13:51:42.5368277Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 bubblewrap amd64 0.9.0-1ubuntu0.1 [50.2 kB]
+2026-09-17T13:51:42.7869397Z Fetched 50.2 kB in 0s (1413 kB/s)
+2026-09-17T13:51:42.8105549Z Selecting previously unselected package bubblewrap.
+2026-09-17T13:51:42.8425590Z (Reading database ... 
+2026-09-17T13:51:42.8426052Z (Reading database ... 5%
+2026-09-17T13:51:42.8426363Z (Reading database ... 10%
+2026-09-17T13:51:42.8426662Z (Reading database ... 15%
+2026-09-17T13:51:42.8426958Z (Reading database ... 20%
+2026-09-17T13:51:42.8428060Z (Reading database ... 25%
+2026-09-17T13:51:42.8428567Z (Reading database ... 30%
+2026-09-17T13:51:42.8429020Z (Reading database ... 35%
+2026-09-17T13:51:42.8429482Z (Reading database ... 40%
+2026-09-17T13:51:42.8429946Z (Reading database ... 45%
+2026-09-17T13:51:42.8430421Z (Reading database ... 50%
+2026-09-17T13:51:42.8489047Z (Reading database ... 55%
+2026-09-17T13:51:43.0106094Z (Reading database ... 60%
+2026-09-17T13:51:43.1580221Z (Reading database ... 65%
+2026-09-17T13:51:43.3595301Z (Reading database ... 70%
+2026-09-17T13:51:43.5034064Z (Reading database ... 75%
+2026-09-17T13:51:43.6851370Z (Reading database ... 80%
+2026-09-17T13:51:43.8544554Z (Reading database ... 85%
+2026-09-17T13:51:44.0604658Z (Reading database ... 90%
+2026-09-17T13:51:44.2163067Z (Reading database ... 95%
+2026-09-17T13:51:44.2163577Z (Reading database ... 100%
+2026-09-17T13:51:44.2164185Z (Reading database ... 201818 files and directories currently installed.)
+2026-09-17T13:51:44.2207652Z Preparing to unpack .../bubblewrap_0.9.0-1ubuntu0.1_amd64.deb ...
+2026-09-17T13:51:44.2234766Z Unpacking bubblewrap (0.9.0-1ubuntu0.1) ...
+2026-09-17T13:51:44.2673123Z Setting up bubblewrap (0.9.0-1ubuntu0.1) ...
+2026-09-17T13:51:44.2720496Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-09-17T13:51:44.2745105Z Not building database; man-db/auto-update is not 'true'.
+2026-09-17T13:51:44.9267925Z 
+2026-09-17T13:51:44.9268601Z Running kernel seems to be up-to-date.
+2026-09-17T13:51:44.9269299Z 
+2026-09-17T13:51:44.9269574Z No services need to be restarted.
+2026-09-17T13:51:44.9269911Z 
+2026-09-17T13:51:44.9270077Z No containers need to be restarted.
+2026-09-17T13:51:44.9270333Z 
+2026-09-17T13:51:44.9270533Z No user sessions are running outdated binaries.
+2026-09-17T13:51:44.9270839Z 
+2026-09-17T13:51:44.9271159Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-09-17T13:51:45.9562304Z kernel.apparmor_restrict_unprivileged_userns = 0
+2026-09-17T13:51:45.9887589Z ##[group]Run ulimit -n 65536
+2026-09-17T13:51:45.9888262Z [36;1mulimit -n 65536[0m
+2026-09-17T13:51:45.9888597Z [36;1mtools/lean/bootstrap.sh "$RUNNER_TEMP/nla-lean-tools"[0m
+2026-09-17T13:51:45.9889082Z [36;1mtools/lean/verify.sh "$LEAN_PROJECT" "$RUNNER_TEMP/nla-lean-tools"[0m
+2026-09-17T13:51:45.9926154Z shell: /usr/bin/bash -e {0}
+2026-09-17T13:51:45.9926418Z env:
+2026-09-17T13:51:45.9926629Z   GOTOOLCHAIN: local
+2026-09-17T13:51:45.9927049Z   XDG_RUNTIME_DIR: /run/user/1001
+2026-09-17T13:51:45.9927379Z   DBUS_SESSION_BUS_ADDRESS: unix:path=/run/user/1001/bus
+2026-09-17T13:51:45.9928194Z   LEAN_PROJECT: eigenvalues-and-inverse-problems/SP-15/lean
+2026-09-17T13:51:45.9928651Z ##[endgroup]
+2026-09-17T13:51:46.8180520Z Running elan toolchain install leanprover/lean4:v4.33.1
+2026-09-17T13:51:46.8181327Z Log: /home/runner/work/_temp/nla-lean-tools/logs/bootstrap/elan.log
+2026-09-17T13:51:46.8201678Z info: toolchain 'leanprover/lean4:v4.33.1' is already installed
+2026-09-17T13:51:46.9137412Z Running go build -mod=readonly -buildvcs=false -o /home/runner/work/_temp/nla-lean-tools/.tools/bin/landrun ./cmd/landrun
+2026-09-17T13:51:46.9139288Z Log: /home/runner/work/_temp/nla-lean-tools/logs/bootstrap/landrun-build.log
+2026-09-17T13:51:46.9187240Z go: downloading github.com/urfave/cli/v3 v3.6.2
+2026-09-17T13:51:46.9367320Z go: downloading github.com/landlock-lsm/go-landlock v0.9.0
+2026-09-17T13:51:47.0217682Z go: downloading golang.org/x/sys v0.40.0
+2026-09-17T13:51:47.0219340Z go: downloading kernel.org/pub/linux/libs/security/libcap/psx v1.2.77
+2026-09-17T13:51:56.0997339Z Running lake build lean4export comparator
+2026-09-17T13:51:56.0998933Z Log: /home/runner/work/_temp/nla-lean-tools/logs/bootstrap/comparator-build.log
+2026-09-17T13:51:56.6433704Z ✔ [3/20] Built Comparator.Util (427ms)
+2026-09-17T13:51:56.8412530Z ✔ [4/20] Built Comparator.Util:c.o (240ms)
+2026-09-17T13:51:58.2452382Z ✔ [5/20] Built Export.Parse (2.0s)
+2026-09-17T13:51:59.0479417Z ✔ [6/20] Built Comparator.Axioms (796ms)
+2026-09-17T13:51:59.3529517Z ✔ [7/20] Built Export (3.2s)
+2026-09-17T13:51:59.5508962Z ✔ [8/20] Built Comparator.Axioms:c.o (521ms)
+2026-09-17T13:51:59.9569552Z ✔ [9/20] Built Comparator.Compare (964ms)
+2026-09-17T13:52:00.6552770Z ✔ [10/20] Built Comparator.Compare:c.o (651ms)
+2026-09-17T13:52:01.0579276Z ✔ [11/20] Built Main (1.5s)
+2026-09-17T13:52:01.0589091Z ✔ [12/20] Built Comparator (475ms)
+2026-09-17T13:52:01.2569591Z ✔ [13/20] Built Comparator:c.o (105ms)
+2026-09-17T13:52:01.3569081Z ✔ [14/20] Built Main:c.o (360ms)
+2026-09-17T13:52:03.6651767Z ✔ [15/20] Built Main (2.4s)
+2026-09-17T13:52:03.7653081Z ✔ [16/20] Built Export:c.o (4.4s)
+2026-09-17T13:52:03.8654981Z ✔ [17/20] Built Export.Parse:c.o (5.7s)
+2026-09-17T13:52:04.8676492Z ✔ [18/20] Built lean4export:exe (1.1s)
+2026-09-17T13:52:04.8677122Z ✔ [19/20] Built Main:c.o (1.3s)
+2026-09-17T13:52:05.6686185Z ✔ [20/20] Built comparator:exe (721ms)
+2026-09-17T13:52:05.6691541Z Build completed successfully (20 jobs).
+2026-09-17T13:52:05.9594390Z Tools built; isolation and checker controls run during verify. Receipt: /home/runner/work/_temp/nla-lean-tools/bootstrap.json
+2026-09-17T13:52:06.3786189Z Running /usr/bin/timeout --kill-after=5s 45s systemd-run -p RuntimeMaxSec=40 --user --quiet --wait --pipe --collect -p 'RestrictAddressFamilies=~AF_UNIX' --working-directory /home/runner/work/_temp/nla-lean-tools /usr/bin/env -i PATH=/home/runner/.elan/toolchains/leanprover--lean4---v4.33.1/bin:/home/runner/.elan/bin:/home/runner/go/bin:/opt/hostedtoolcache/go/1.27.1/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin HOME=/home/runner LANG=C.UTF-8 XDG_RUNTIME_DIR=/run/user/1001 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus GIT_TERMINAL_PROMPT=0 GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null COMPARATOR_BIN=/home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator COMPARATOR_LEAN4EXPORT=/home/runner/work/_temp/nla-lean-tools/.tools/lean4export/.lake/build/bin/lean4export COMPARATOR_LANDRUN=/home/runner/work/_temp/nla-lean-tools/scripts/strict_landrun.py XDG_CACHE_HOME=/home/runner/work/_temp/nla-lean-tools/.tools/cache TMPDIR=/home/runner/work/_temp/nla-lean-tools/.verification-tmp /usr/bin/true
+2026-09-17T13:52:06.3792126Z Log: /home/runner/work/_temp/nla-lean-tools/logs/verify-20260917T135206Z-4142/user-service.log
+2026-09-17T13:52:06.4186009Z Running python3 /home/runner/work/_temp/nla-lean-tools/reproduction/checks/sandbox_probe_ci.py
+2026-09-17T13:52:06.4187138Z Log: /home/runner/work/_temp/nla-lean-tools/logs/verify-20260917T135206Z-4142/sandbox.log
+2026-09-17T13:52:06.4529991Z START sandbox mode: build
+2026-09-17T13:52:06.5494809Z START sandbox mode: export
+2026-09-17T13:52:06.6374079Z START sandbox negative case: unknown option
+2026-09-17T13:52:06.6768825Z START sandbox negative case: unexpected --rw
+2026-09-17T13:52:06.7169317Z START sandbox negative case: unexpected --rwx
+2026-09-17T13:52:06.7626936Z START sandbox negative case: relative --rwx
+2026-09-17T13:52:06.8069303Z MODE build: exit=0
+2026-09-17T13:52:06.8070373Z Running as unit: run-u2.service; invocation ID: 8d03ee52bdff4a71849ff984b631890a
+2026-09-17T13:52:06.8071595Z PASS outside .lake write-open: denied errno=30
+2026-09-17T13:52:06.8072483Z PASS outside .lake truncate: denied errno=30
+2026-09-17T13:52:06.8073388Z PASS outside .lake read-only truncate-open: denied errno=30
+2026-09-17T13:52:06.8074452Z PASS symlink from .lake to outside write: denied errno=30
+2026-09-17T13:52:06.8075151Z PASS outside .lake creation: denied errno=30
+2026-09-17T13:52:06.8075792Z PASS build .lake write: allowed
+2026-09-17T13:52:06.8076358Z PASS user namespace: private
+2026-09-17T13:52:06.8077083Z PASS pid namespace: private
+2026-09-17T13:52:06.8077702Z PASS mnt namespace: private
+2026-09-17T13:52:06.8078508Z PASS net namespace: private
+2026-09-17T13:52:06.8079024Z PASS ipc namespace: private
+2026-09-17T13:52:06.8079385Z PASS uts namespace: private
+2026-09-17T13:52:06.8079880Z PASS host parent: absent from private /proc
+2026-09-17T13:52:06.8080356Z PASS host parent signal lookup: denied errno=3
+2026-09-17T13:52:06.8080816Z PASS host loopback listener: unreachable errno=13
+2026-09-17T13:52:06.8081332Z PASS AF_UNIX socket creation: denied errno=97
+2026-09-17T13:52:06.8081982Z PASS effective capabilities: none
+2026-09-17T13:52:06.8082415Z PASS no_new_privs: set
+2026-09-17T13:52:06.8082969Z Sandbox UID: 1001
+2026-09-17T13:52:06.8083388Z PASS nested namespace write attempt: rejected exit=1
+2026-09-17T13:52:06.8084041Z bwrap: setting up uid map: Permission denied
+2026-09-17T13:52:06.8084550Z Finished with result: success
+2026-09-17T13:52:06.8085004Z Main processes terminated with: code=exited/status=0
+2026-09-17T13:52:06.8085652Z Service runtime: 74ms
+2026-09-17T13:52:06.8086026Z CPU time consumed: 75ms
+2026-09-17T13:52:06.8086641Z Memory peak: 256.0K
+2026-09-17T13:52:06.8086992Z Memory swap peak: 0B
+2026-09-17T13:52:06.8087162Z 
+2026-09-17T13:52:06.8087399Z MODE export: exit=0
+2026-09-17T13:52:06.8088338Z Running as unit: run-u3.service; invocation ID: 81725e7e3da9415d8cf56e940035e53b
+2026-09-17T13:52:06.8089246Z PASS outside .lake write-open: denied errno=30
+2026-09-17T13:52:06.8089925Z PASS outside .lake truncate: denied errno=30
+2026-09-17T13:52:06.8090503Z PASS outside .lake read-only truncate-open: denied errno=30
+2026-09-17T13:52:06.8091215Z PASS symlink from .lake to outside write: denied errno=30
+2026-09-17T13:52:06.8091887Z PASS outside .lake creation: denied errno=30
+2026-09-17T13:52:06.8092504Z PASS export .lake write-open: denied errno=30
+2026-09-17T13:52:06.8092999Z PASS export .lake truncate: denied errno=30
+2026-09-17T13:52:06.8093630Z PASS user namespace: private
+2026-09-17T13:52:06.8094025Z PASS pid namespace: private
+2026-09-17T13:52:06.8094472Z PASS mnt namespace: private
+2026-09-17T13:52:06.8094827Z PASS net namespace: private
+2026-09-17T13:52:06.8095444Z PASS ipc namespace: private
+2026-09-17T13:52:06.8095847Z PASS uts namespace: private
+2026-09-17T13:52:06.8096272Z PASS host parent: absent from private /proc
+2026-09-17T13:52:06.8096802Z PASS host parent signal lookup: denied errno=3
+2026-09-17T13:52:06.8097262Z PASS host loopback listener: unreachable errno=13
+2026-09-17T13:52:06.8098082Z PASS AF_UNIX socket creation: denied errno=97
+2026-09-17T13:52:06.8098765Z PASS effective capabilities: none
+2026-09-17T13:52:06.8099453Z PASS no_new_privs: set
+2026-09-17T13:52:06.8099717Z Sandbox UID: 1001
+2026-09-17T13:52:06.8100007Z PASS nested namespace write attempt: rejected exit=1
+2026-09-17T13:52:06.8100377Z bwrap: setting up uid map: Permission denied
+2026-09-17T13:52:06.8100700Z Finished with result: success
+2026-09-17T13:52:06.8101011Z Main processes terminated with: code=exited/status=0
+2026-09-17T13:52:06.8101329Z Service runtime: 76ms
+2026-09-17T13:52:06.8101563Z CPU time consumed: 77ms
+2026-09-17T13:52:06.8101800Z Memory peak: 512.0K
+2026-09-17T13:52:06.8102037Z Memory swap peak: 0B
+2026-09-17T13:52:06.8102177Z 
+2026-09-17T13:52:06.8102295Z NEGATIVE unknown option: exit=2
+2026-09-17T13:52:06.8102701Z Running as unit: run-u4.service; invocation ID: b8f59e54a4904205b9e75922145261dc
+2026-09-17T13:52:06.8103317Z strict Comparator sandbox: unsupported Comparator Landrun option: --unrestricted-filesystem
+2026-09-17T13:52:06.8103806Z Finished with result: exit-code
+2026-09-17T13:52:06.8104123Z Main processes terminated with: code=exited/status=2
+2026-09-17T13:52:06.8104451Z Service runtime: 27ms
+2026-09-17T13:52:06.8104686Z CPU time consumed: 27ms
+2026-09-17T13:52:06.8104919Z Memory peak: 256.0K
+2026-09-17T13:52:06.8105137Z Memory swap peak: 0B
+2026-09-17T13:52:06.8105272Z 
+2026-09-17T13:52:06.8105389Z NEGATIVE unexpected --rw: exit=2
+2026-09-17T13:52:06.8105799Z Running as unit: run-u5.service; invocation ID: e2db538fddc243299e011f17fed436e5
+2026-09-17T13:52:06.8106319Z strict Comparator sandbox: only private /dev may be passed with --rw
+2026-09-17T13:52:06.8106715Z Finished with result: exit-code
+2026-09-17T13:52:06.8107022Z Main processes terminated with: code=exited/status=2
+2026-09-17T13:52:06.8107339Z Service runtime: 27ms
+2026-09-17T13:52:06.8107571Z CPU time consumed: 27ms
+2026-09-17T13:52:06.8108085Z Memory peak: 256.0K
+2026-09-17T13:52:06.8108320Z Memory swap peak: 0B
+2026-09-17T13:52:06.8108454Z 
+2026-09-17T13:52:06.8108572Z NEGATIVE unexpected --rwx: exit=2
+2026-09-17T13:52:06.8108984Z Running as unit: run-u6.service; invocation ID: 5f847cdb702246c69ba6fb7496e87233
+2026-09-17T13:52:06.8109537Z strict Comparator sandbox: only this project's existing .lake may be writable
+2026-09-17T13:52:06.8109954Z Finished with result: exit-code
+2026-09-17T13:52:06.8110270Z Main processes terminated with: code=exited/status=2
+2026-09-17T13:52:06.8110586Z Service runtime: 27ms
+2026-09-17T13:52:06.8110817Z CPU time consumed: 26ms
+2026-09-17T13:52:06.8111052Z Memory peak: 256.0K
+2026-09-17T13:52:06.8111268Z Memory swap peak: 0B
+2026-09-17T13:52:06.8111404Z 
+2026-09-17T13:52:06.8111519Z NEGATIVE relative --rwx: exit=2
+2026-09-17T13:52:06.8111911Z Running as unit: run-u7.service; invocation ID: b093d167135c481d9622bd346e615250
+2026-09-17T13:52:06.8112440Z strict Comparator sandbox: only this project's existing .lake may be writable
+2026-09-17T13:52:06.8112850Z Finished with result: exit-code
+2026-09-17T13:52:06.8113158Z Main processes terminated with: code=exited/status=2
+2026-09-17T13:52:06.8113477Z Service runtime: 27ms
+2026-09-17T13:52:06.8113717Z CPU time consumed: 26ms
+2026-09-17T13:52:06.8113951Z Memory peak: 256.0K
+2026-09-17T13:52:06.8114177Z Memory swap peak: 0B
+2026-09-17T13:52:06.8114311Z 
+2026-09-17T13:52:06.8114567Z Outer and export fixture contents unchanged; only designated build fixture written.
+2026-09-17T13:52:06.8137142Z Running bash /home/runner/work/_temp/nla-lean-tools/reproduction/checks/run_replay.sh
+2026-09-17T13:52:06.8138549Z Log: /home/runner/work/_temp/nla-lean-tools/logs/verify-20260917T135206Z-4142/kernel-controls.log
+2026-09-17T13:52:06.8746834Z Replay probe: RestrictAddressFamilies=~AF_UNIX (deny AF_UNIX sockets).
+2026-09-17T13:52:06.9291543Z Lean (version 4.33.1, x86_64-unknown-linux-gnu, Release)
+2026-09-17T13:52:06.9696023Z /home/runner/.elan/toolchains/leanprover--lean4---v4.33.1/lib/lean/Init.olean
+2026-09-17T13:52:06.9697070Z /home/runner/.elan/toolchains/leanprover--lean4---v4.33.1/lib/lean/Init.olean
+2026-09-17T13:52:06.9698356Z /home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/lib/lean/Main.olean
+2026-09-17T13:52:08.3165573Z Trusted base fixture: 11 constants
+2026-09-17T13:52:08.3166193Z BEGIN honest_with_inductives_and_quotients
+2026-09-17T13:52:08.3166749Z Running Lean default kernel on solution.
+2026-09-17T13:52:08.3167286Z Lean default kernel accepts the solution
+2026-09-17T13:52:08.3168172Z RETURN honest_with_inductives_and_quotients: accepted
+2026-09-17T13:52:08.3168760Z BEGIN invalid_raw_proof
+2026-09-17T13:52:08.3169213Z Running Lean default kernel on solution.
+2026-09-17T13:52:08.3169781Z Lean default kernel rejects the solution
+2026-09-17T13:52:08.3170514Z RETURN invalid_raw_proof: rejected: while replaying declaration 'PinnedReplayProbe.invalid':
+2026-09-17T13:52:08.3171368Z (kernel) declaration type mismatch, 'PinnedReplayProbe.invalid' has type
+2026-09-17T13:52:08.3171924Z   True
+2026-09-17T13:52:08.3172228Z but it is expected to have type
+2026-09-17T13:52:08.3172585Z   False
+2026-09-17T13:52:08.3172888Z BEGIN quotient_postcheck_mismatch
+2026-09-17T13:52:08.3173314Z Running Lean default kernel on solution.
+2026-09-17T13:52:08.3173745Z Lean default kernel accepts the solution
+2026-09-17T13:52:08.3174180Z Quotient post-check rejects the solution
+2026-09-17T13:52:08.3174838Z RETURN quotient_postcheck_mismatch: rejected: Quotient constant mismatch on: Quot.lift
+2026-09-17T13:52:08.3175678Z PASS: all three actual Comparator.runBuiltinKernel cases behaved as required
+2026-09-17T13:52:08.4135139Z Running python3 /home/runner/work/_temp/nla-lean-tools/reproduction/checks/comparator_regressions.py
+2026-09-17T13:52:08.4136192Z Log: /home/runner/work/_temp/nla-lean-tools/logs/verify-20260917T135206Z-4142/comparator-controls.log
+2026-09-17T13:52:08.4491416Z Comparator regressions: RestrictAddressFamilies=~AF_UNIX; .tools/env.sh selects the real strict sandbox.
+2026-09-17T13:52:08.4500620Z 
+2026-09-17T13:52:08.4500809Z CASE simple_match
+2026-09-17T13:52:10.5758583Z info: ComparatorRegression: no previous manifest, creating one from scratch
+2026-09-17T13:52:10.5759191Z info: toolchain not updated; already up-to-date
+2026-09-17T13:52:10.5759530Z Building Challenge
+2026-09-17T13:52:10.5760015Z ⚠ [2/3] Built Challenge (244ms)
+2026-09-17T13:52:10.5760365Z warning: Challenge.lean:1:8: declaration uses `sorry`
+2026-09-17T13:52:10.5760727Z Build completed successfully (3 jobs).
+2026-09-17T13:52:10.5762156Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, comm, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+2026-09-17T13:52:10.5763496Z Building Solution
+2026-09-17T13:52:10.5763773Z ✔ [2/3] Built Solution (246ms)
+2026-09-17T13:52:10.5764056Z Build completed successfully (3 jobs).
+2026-09-17T13:52:10.5765432Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, comm, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+2026-09-17T13:52:10.5767674Z Running Lean default kernel on solution.
+2026-09-17T13:52:10.5768940Z Lean default kernel accepts the solution
+2026-09-17T13:52:10.5769457Z Your solution is okay!
+2026-09-17T13:52:10.5770126Z PASS simple_match: exit 0, expected 0; required phase: Your solution is okay!
+2026-09-17T13:52:10.5770680Z 
+2026-09-17T13:52:10.5771132Z CASE simple_mismatch
+2026-09-17T13:52:12.4668942Z info: ComparatorRegression: no previous manifest, creating one from scratch
+2026-09-17T13:52:12.4669803Z info: toolchain not updated; already up-to-date
+2026-09-17T13:52:12.4670280Z Building Challenge
+2026-09-17T13:52:12.4670771Z ⚠ [2/3] Built Challenge (234ms)
+2026-09-17T13:52:12.4671100Z warning: Challenge.lean:1:8: declaration uses `sorry`
+2026-09-17T13:52:12.4671749Z Build completed successfully (3 jobs).
+2026-09-17T13:52:12.4673125Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, comm, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+2026-09-17T13:52:12.4674411Z Building Solution
+2026-09-17T13:52:12.4674694Z ✔ [2/3] Built Solution (223ms)
+2026-09-17T13:52:12.4674988Z Build completed successfully (3 jobs).
+2026-09-17T13:52:12.4676371Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, comm, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+2026-09-17T13:52:12.4678351Z uncaught exception: Challenge and solution constant kind don't match: 'comm'
+2026-09-17T13:52:12.4679501Z PASS simple_mismatch: exit 1, expected 1; required phase: Challenge and solution constant kind don't match: 'comm'
+2026-09-17T13:52:12.4680223Z 
+2026-09-17T13:52:12.4680340Z CASE simple_axiom_issue
+2026-09-17T13:52:14.3721087Z info: ComparatorRegression: no previous manifest, creating one from scratch
+2026-09-17T13:52:14.3721674Z info: toolchain not updated; already up-to-date
+2026-09-17T13:52:14.3722016Z Building Challenge
+2026-09-17T13:52:14.3722525Z ⚠ [2/3] Built Challenge (233ms)
+2026-09-17T13:52:14.3722879Z warning: Challenge.lean:1:8: declaration uses `sorry`
+2026-09-17T13:52:14.3723260Z Build completed successfully (3 jobs).
+2026-09-17T13:52:14.3724727Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, comm, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+2026-09-17T13:52:14.3726127Z Building Solution
+2026-09-17T13:52:14.3726412Z ✔ [2/3] Built Solution (237ms)
+2026-09-17T13:52:14.3726708Z Build completed successfully (3 jobs).
+2026-09-17T13:52:14.3728749Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, comm, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+2026-09-17T13:52:14.3730759Z uncaught exception: Illegal axiom detected: 'helper'
+2026-09-17T13:52:14.3731298Z PASS simple_axiom_issue: exit 1, expected 1; required phase: Illegal axiom detected: 'helper'
+2026-09-17T13:52:14.3731696Z 
+2026-09-17T13:52:14.3731804Z CASE simple_kind_mismatch
+2026-09-17T13:52:16.2498093Z info: ComparatorRegression: no previous manifest, creating one from scratch
+2026-09-17T13:52:16.2499340Z info: toolchain not updated; already up-to-date
+2026-09-17T13:52:16.2499866Z Building Challenge
+2026-09-17T13:52:16.2500820Z ⚠ [2/3] Built Challenge (231ms)
+2026-09-17T13:52:16.2501705Z warning: Challenge.lean:1:8: declaration uses `sorry`
+2026-09-17T13:52:16.2502383Z Build completed successfully (3 jobs).
+2026-09-17T13:52:16.2505190Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, comm, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+2026-09-17T13:52:16.2507570Z Building Solution
+2026-09-17T13:52:16.2508378Z ✔ [2/3] Built Solution (241ms)
+2026-09-17T13:52:16.2508843Z Build completed successfully (3 jobs).
+2026-09-17T13:52:16.2511405Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, comm, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+2026-09-17T13:52:16.2513917Z uncaught exception: Illegal axiom detected: 'helper'
+2026-09-17T13:52:16.2514836Z PASS simple_kind_mismatch: exit 1, expected 1; required phase: Illegal axiom detected: 'helper'
+2026-09-17T13:52:16.2515512Z 
+2026-09-17T13:52:16.2515692Z CASE type_mismatch
+2026-09-17T13:52:18.1343765Z info: ComparatorRegression: no previous manifest, creating one from scratch
+2026-09-17T13:52:18.1344685Z info: toolchain not updated; already up-to-date
+2026-09-17T13:52:18.1345263Z Building Challenge
+2026-09-17T13:52:18.1345978Z ✔ [2/3] Built Challenge (230ms)
+2026-09-17T13:52:18.1346496Z Build completed successfully (3 jobs).
+2026-09-17T13:52:18.1349429Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, checked, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+2026-09-17T13:52:18.1351877Z Building Solution
+2026-09-17T13:52:18.1352423Z ✔ [2/3] Built Solution (228ms)
+2026-09-17T13:52:18.1352933Z Build completed successfully (3 jobs).
+2026-09-17T13:52:18.1355421Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, checked, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+2026-09-17T13:52:18.1358250Z uncaught exception: Challenge and solution theorem statement do not match: 'checked'
+2026-09-17T13:52:18.1359554Z PASS type_mismatch: exit 1, expected 1; required phase: Challenge and solution theorem statement do not match: 'checked'
+2026-09-17T13:52:18.1384850Z PASS: all five Comparator regressions
+2026-09-17T13:52:18.1453558Z Running systemd-run --user --quiet --wait --pipe --collect -p 'RestrictAddressFamilies=~AF_UNIX' --working-directory /home/runner/work/_temp/nla-lean-tools/.verification-tmp/nla-axiom-bb95futq /usr/bin/env -i PATH=/home/runner/.elan/toolchains/leanprover--lean4---v4.33.1/bin:/home/runner/.elan/bin:/home/runner/go/bin:/opt/hostedtoolcache/go/1.27.1/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin HOME=/home/runner LANG=C.UTF-8 XDG_RUNTIME_DIR=/run/user/1001 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus GIT_TERMINAL_PROMPT=0 GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null COMPARATOR_BIN=/home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator COMPARATOR_LEAN4EXPORT=/home/runner/work/_temp/nla-lean-tools/.tools/lean4export/.lake/build/bin/lean4export COMPARATOR_LANDRUN=/home/runner/work/_temp/nla-lean-tools/scripts/strict_landrun.py XDG_CACHE_HOME=/home/runner/work/_temp/nla-lean-tools/.tools/cache TMPDIR=/home/runner/work/_temp/nla-lean-tools/.verification-tmp lake env /home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator comparator.json
+2026-09-17T13:52:18.1458882Z Log: /home/runner/work/_temp/nla-lean-tools/logs/verify-20260917T135206Z-4142/negative-sorry.log
+2026-09-17T13:52:18.1962123Z info: NlaAxiomFixture: no previous manifest, creating one from scratch
+2026-09-17T13:52:18.1962942Z info: toolchain not updated; already up-to-date
+2026-09-17T13:52:18.2682104Z Building Challenge
+2026-09-17T13:52:19.2698432Z ✔ [2/3] Built Challenge (836ms)
+2026-09-17T13:52:19.2702723Z Build completed successfully (3 jobs).
+2026-09-17T13:52:20.2134972Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, checked, Classical.choice, Quot.sound, propext, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+2026-09-17T13:52:20.2137318Z Building Solution
+2026-09-17T13:52:21.2096055Z ⚠ [2/3] Built Solution (836ms)
+2026-09-17T13:52:21.2096997Z warning: Solution.lean:2:8: declaration uses `sorry`
+2026-09-17T13:52:21.2101257Z Build completed successfully (3 jobs).
+2026-09-17T13:52:22.2354070Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, checked, Classical.choice, Quot.sound, propext, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+2026-09-17T13:52:22.2357446Z uncaught exception: Illegal axiom detected: 'sorryAx'
+2026-09-17T13:52:22.2463344Z Running systemd-run --user --quiet --wait --pipe --collect -p 'RestrictAddressFamilies=~AF_UNIX' --working-directory /home/runner/work/_temp/nla-lean-tools/.verification-tmp/nla-axiom-en28gqjf /usr/bin/env -i PATH=/home/runner/.elan/toolchains/leanprover--lean4---v4.33.1/bin:/home/runner/.elan/bin:/home/runner/go/bin:/opt/hostedtoolcache/go/1.27.1/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin HOME=/home/runner LANG=C.UTF-8 XDG_RUNTIME_DIR=/run/user/1001 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus GIT_TERMINAL_PROMPT=0 GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null COMPARATOR_BIN=/home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator COMPARATOR_LEAN4EXPORT=/home/runner/work/_temp/nla-lean-tools/.tools/lean4export/.lake/build/bin/lean4export COMPARATOR_LANDRUN=/home/runner/work/_temp/nla-lean-tools/scripts/strict_landrun.py XDG_CACHE_HOME=/home/runner/work/_temp/nla-lean-tools/.tools/cache TMPDIR=/home/runner/work/_temp/nla-lean-tools/.verification-tmp lake env /home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator comparator.json
+2026-09-17T13:52:22.2469423Z Log: /home/runner/work/_temp/nla-lean-tools/logs/verify-20260917T135206Z-4142/negative-native.log
+2026-09-17T13:52:22.3050325Z info: NlaAxiomFixture: no previous manifest, creating one from scratch
+2026-09-17T13:52:22.3050976Z info: toolchain not updated; already up-to-date
+2026-09-17T13:52:22.3878413Z Building Challenge
+2026-09-17T13:52:23.3928741Z ✔ [2/3] Built Challenge (850ms)
+2026-09-17T13:52:23.3932133Z Build completed successfully (3 jobs).
+2026-09-17T13:52:24.3809418Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, checked, Classical.choice, Quot.sound, propext, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+2026-09-17T13:52:24.3810934Z Building Solution
+2026-09-17T13:52:25.3844996Z ✔ [2/3] Built Solution (852ms)
+2026-09-17T13:52:25.3849748Z Build completed successfully (3 jobs).
+2026-09-17T13:52:26.4231930Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, checked, Classical.choice, Quot.sound, propext, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+2026-09-17T13:52:26.4234176Z uncaught exception: Illegal axiom detected: 'checked._native.native_decide.ax_1_1'
+2026-09-17T13:52:30.4870778Z Running lake env true
+2026-09-17T13:52:30.4871731Z Log: /home/runner/work/_temp/nla-lean-tools/logs/verify-20260917T135206Z-4142/dependencies.log
+2026-09-17T13:52:30.5256075Z info: leancert: cloning https://github.com/alerad/leancert
+2026-09-17T13:52:31.1773018Z info: leancert: checking out revision '621a43d7cf21f87872392a01e874f2f1dbddc926'
+2026-09-17T13:52:31.2127248Z info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git
+2026-09-17T13:53:01.4922272Z info: mathlib: checking out revision '0df444a360eaa60ab8c11dca51a86af692955474'
+2026-09-17T13:53:03.5528710Z info: plausible: cloning https://github.com/leanprover-community/plausible
+2026-09-17T13:53:03.8286712Z info: plausible: checking out revision 'b7eb3304aeae834b12dda98993a37f6a41f6f0bb'
+2026-09-17T13:53:03.8412157Z info: LeanSearchClient: cloning https://github.com/leanprover-community/LeanSearchClient
+2026-09-17T13:53:04.1045501Z info: LeanSearchClient: checking out revision '5f4d51b81cbd3f6b32b156bfad9056621a040404'
+2026-09-17T13:53:04.1168546Z info: importGraph: cloning https://github.com/leanprover-community/import-graph
+2026-09-17T13:53:04.3439143Z info: importGraph: checking out revision '16f02aa7642864af59f1ff0e384a015994db9118'
+2026-09-17T13:53:04.3602649Z info: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4
+2026-09-17T13:53:04.8027581Z info: proofwidgets: checking out revision '4be2e3d5087eeb272cf5a8853b8f9dd025ef5957'
+2026-09-17T13:53:05.4848939Z info: aesop: cloning https://github.com/leanprover-community/aesop
+2026-09-17T13:53:05.9485861Z info: aesop: checking out revision '3448c0bcc5ce01b2d1546e483ec3620e32df3d0e'
+2026-09-17T13:53:05.9670529Z info: Qq: cloning https://github.com/leanprover-community/quote4
+2026-09-17T13:53:06.1931948Z info: Qq: checking out revision '92c15be17b7caf78c2ad767ec40f89052d908d81'
+2026-09-17T13:53:06.2059945Z info: batteries: cloning https://github.com/leanprover-community/batteries
+2026-09-17T13:53:08.3955833Z info: batteries: checking out revision '4488d40d070b9700d4d5a6aa342f0d40c31b2a2d'
+2026-09-17T13:53:08.4215218Z info: Cli: cloning https://github.com/leanprover/lean4-cli
+2026-09-17T13:53:08.6800606Z info: Cli: checking out revision '6130a47896ce867c6a4a55373441e59e565bad0f'
+2026-09-17T13:53:09.2123873Z Running lake exe cache get
+2026-09-17T13:53:09.2124746Z Log: /home/runner/work/_temp/nla-lean-tools/logs/verify-20260917T135206Z-4142/mathlib-cache.log
+2026-09-17T13:53:10.3759130Z ✔ [2/26] Built Cache.Cli (364ms)
+2026-09-17T13:53:10.5820915Z ✔ [5/26] Built Cache.Lean (519ms)
+2026-09-17T13:53:10.6805574Z ✔ [6/26] Built Cache.Cli:c.o (281ms)
+2026-09-17T13:53:10.7811242Z ✔ [7/26] Built Cache.Lean:c.o (241ms)
+2026-09-17T13:53:10.9812989Z ✔ [8/26] Built Cache.Infra (613ms)
+2026-09-17T13:53:11.1815113Z ✔ [9/26] Built Cache.Infra:c.o (227ms)
+2026-09-17T13:53:11.3817440Z ✔ [10/26] Built Batteries.Tactic.OpenPrivate (1.0s)
+2026-09-17T13:53:12.8835598Z ✔ [11/26] Built Batteries.Tactic.OpenPrivate:c.o (1.4s)
+2026-09-17T13:53:12.9837470Z ✔ [12/26] Built Cache.IO (1.5s)
+2026-09-17T13:53:13.7891839Z ✔ [13/26] Built Cache.Hashing (851ms)
+2026-09-17T13:53:14.2898753Z ✔ [14/26] Built Cache.Hashing:c.o (485ms)
+2026-09-17T13:53:14.8913205Z ✔ [15/26] Built Cache.IO:c.o (1.9s)
+2026-09-17T13:53:16.0925591Z ✔ [16/26] Built Cache.Requests (2.3s)
+2026-09-17T13:53:16.6959512Z ✔ [17/26] Built Cache.Marker (614ms)
+2026-09-17T13:53:16.8954924Z ✔ [18/26] Built Cache.Marker:c.o (150ms)
+2026-09-17T13:53:17.4967236Z ✔ [19/26] Built Cache.Query (839ms)
+2026-09-17T13:53:18.0987734Z ✔ [20/26] Built Cache.Query:c.o (523ms)
+2026-09-17T13:53:18.3030634Z ✔ [21/26] Built Cache.Warning (809ms)
+2026-09-17T13:53:18.6042398Z ✔ [22/26] Built Cache.Warning:c.o (298ms)
+2026-09-17T13:53:19.6054025Z ✔ [23/26] Built Cache.Requests:c.o (3.5s)
+2026-09-17T13:53:19.7055868Z ✔ [24/26] Built Cache.Main (1.4s)
+2026-09-17T13:53:20.7069293Z ✔ [25/26] Built Cache.Main:c.o (1.0s)
+2026-09-17T13:53:21.5083660Z ✔ [26/26] Built cache:exe (762ms)
+2026-09-17T13:53:24.3706105Z Current branch: HEAD
+2026-09-17T13:53:24.3706725Z Using cache from origin: (some leanprover-community/mathlib4)
+2026-09-17T13:53:24.3708296Z Attempting to download 8690 file(s) from leanprover-community/mathlib4 cache at https://lakecache.blob.core.windows.net/mathlib4-master
+2026-09-17T13:53:25.6023272Z 
+2026-09-17T13:53:25.7099530Z Downloaded: 1 file(s) [attempted 1/8690 = 0%, 17 KB/s], Decompressed: 0
+2026-09-17T13:53:25.8109606Z Downloaded: 95 file(s) [attempted 95/8690 = 1%, 193 KB/s], Decompressed: 9
+2026-09-17T13:53:25.9106538Z Downloaded: 220 file(s) [attempted 220/8690 = 2%, 797 KB/s], Decompressed: 34
+2026-09-17T13:53:26.0152263Z Downloaded: 346 file(s) [attempted 346/8690 = 3%, 299 KB/s], Decompressed: 34
+2026-09-17T13:53:26.1169488Z Downloaded: 472 file(s) [attempted 472/8690 = 5%, 4145 KB/s], Decompressed: 103
+2026-09-17T13:53:26.2165394Z Downloaded: 601 file(s) [attempted 601/8690 = 6%, 3419 KB/s], Decompressed: 103
+2026-09-17T13:53:26.3182758Z Downloaded: 736 file(s) [attempted 736/8690 = 8%, 1467 KB/s], Decompressed: 103
+2026-09-17T13:53:26.4210377Z Downloaded: 866 file(s) [attempted 866/8690 = 9%, 366 KB/s], Decompressed: 103
+2026-09-17T13:53:26.5285097Z Downloaded: 999 file(s) [attempted 999/8690 = 11%, 6995 KB/s], Decompressed: 103
+2026-09-17T13:53:26.6280843Z Downloaded: 1122 file(s) [attempted 1122/8690 = 12%, 429 KB/s], Decompressed: 103
+2026-09-17T13:53:26.7281557Z Downloaded: 1245 file(s) [attempted 1245/8690 = 14%, 3541 KB/s], Decompressed: 103
+2026-09-17T13:53:26.8329409Z Downloaded: 1383 file(s) [attempted 1383/8690 = 15%, 808 KB/s], Decompressed: 103
+2026-09-17T13:53:26.9339117Z Downloaded: 1518 file(s) [attempted 1518/8690 = 17%, 807 KB/s], Decompressed: 103
+2026-09-17T13:53:27.0354452Z Downloaded: 1655 file(s) [attempted 1655/8690 = 19%, 1820 KB/s], Decompressed: 103
+2026-09-17T13:53:27.1384237Z Downloaded: 1790 file(s) [attempted 1790/8690 = 20%, 338 KB/s], Decompressed: 395
+2026-09-17T13:53:27.2407387Z Downloaded: 1932 file(s) [attempted 1932/8690 = 22%, 3255 KB/s], Decompressed: 395
+2026-09-17T13:53:27.3449329Z Downloaded: 2074 file(s) [attempted 2074/8690 = 23%, 511 KB/s], Decompressed: 395
+2026-09-17T13:53:27.4442189Z Downloaded: 2213 file(s) [attempted 2213/8690 = 25%, 458 KB/s], Decompressed: 395
+2026-09-17T13:53:27.5479050Z Downloaded: 2348 file(s) [attempted 2348/8690 = 27%, 673 KB/s], Decompressed: 395
+2026-09-17T13:53:27.6500021Z Downloaded: 2492 file(s) [attempted 2492/8690 = 28%, 980 KB/s], Decompressed: 395
+2026-09-17T13:53:27.7566892Z Downloaded: 2638 file(s) [attempted 2638/8690 = 30%, 2876 KB/s], Decompressed: 395
+2026-09-17T13:53:27.8583624Z Downloaded: 2778 file(s) [attempted 2778/8690 = 31%, 2157 KB/s], Decompressed: 395
+2026-09-17T13:53:27.9644901Z Downloaded: 2915 file(s) [attempted 2915/8690 = 33%, 1542 KB/s], Decompressed: 395
+2026-09-17T13:53:28.0616900Z Downloaded: 3059 file(s) [attempted 3059/8690 = 35%, 3099 KB/s], Decompressed: 395
+2026-09-17T13:53:28.1615395Z Downloaded: 3203 file(s) [attempted 3203/8690 = 36%, 989 KB/s], Decompressed: 395
+2026-09-17T13:53:28.2626796Z Downloaded: 3343 file(s) [attempted 3343/8690 = 38%, 4133 KB/s], Decompressed: 395
+2026-09-17T13:53:28.3614237Z Downloaded: 3489 file(s) [attempted 3489/8690 = 40%, 1032 KB/s], Decompressed: 395
+2026-09-17T13:53:28.4669445Z Downloaded: 3622 file(s) [attempted 3622/8690 = 41%, 922 KB/s], Decompressed: 395
+2026-09-17T13:53:28.5736199Z Downloaded: 3770 file(s) [attempted 3770/8690 = 43%, 742 KB/s], Decompressed: 395
+2026-09-17T13:53:28.6753066Z Downloaded: 3907 file(s) [attempted 3907/8690 = 44%, 1454 KB/s], Decompressed: 395
+2026-09-17T13:53:28.7765040Z Downloaded: 4063 file(s) [attempted 4063/8690 = 46%, 2391 KB/s], Decompressed: 395
+2026-09-17T13:53:28.8760867Z Downloaded: 4180 file(s) [attempted 4180/8690 = 48%, 5494 KB/s], Decompressed: 395
+2026-09-17T13:53:28.9771062Z Downloaded: 4312 file(s) [attempted 4312/8690 = 49%, 755 KB/s], Decompressed: 395
+2026-09-17T13:53:29.0828891Z Downloaded: 4461 file(s) [attempted 4461/8690 = 51%, 333 KB/s], Decompressed: 395
+2026-09-17T13:53:29.1839187Z Downloaded: 4577 file(s) [attempted 4577/8690 = 52%, 438 KB/s], Decompressed: 395
+2026-09-17T13:53:29.2870297Z Downloaded: 4715 file(s) [attempted 4715/8690 = 54%, 788 KB/s], Decompressed: 395
+2026-09-17T13:53:29.3866556Z Downloaded: 4861 file(s) [attempted 4861/8690 = 55%, 1423 KB/s], Decompressed: 395
+2026-09-17T13:53:29.4865639Z Downloaded: 5006 file(s) [attempted 5006/8690 = 57%, 333 KB/s], Decompressed: 395
+2026-09-17T13:53:29.5879151Z Downloaded: 5138 file(s) [attempted 5138/8690 = 59%, 896 KB/s], Decompressed: 395
+2026-09-17T13:53:29.6918847Z Downloaded: 5279 file(s) [attempted 5279/8690 = 60%, 3015 KB/s], Decompressed: 395
+2026-09-17T13:53:29.7941685Z Downloaded: 5428 file(s) [attempted 5428/8690 = 62%, 289 KB/s], Decompressed: 395
+2026-09-17T13:53:29.8989394Z Downloaded: 5545 file(s) [attempted 5545/8690 = 63%, 262 KB/s], Decompressed: 395
+2026-09-17T13:53:30.0000775Z Downloaded: 5686 file(s) [attempted 5686/8690 = 65%, 848 KB/s], Decompressed: 395
+2026-09-17T13:53:30.1025531Z Downloaded: 5837 file(s) [attempted 5837/8690 = 67%, 1244 KB/s], Decompressed: 395
+2026-09-17T13:53:30.2002216Z Downloaded: 5967 file(s) [attempted 5967/8690 = 68%, 4309 KB/s], Decompressed: 395
+2026-09-17T13:53:30.3039459Z Downloaded: 6102 file(s) [attempted 6102/8690 = 70%, 4038 KB/s], Decompressed: 395
+2026-09-17T13:53:30.4022268Z Downloaded: 6235 file(s) [attempted 6235/8690 = 71%, 831 KB/s], Decompressed: 395
+2026-09-17T13:53:30.5040444Z Downloaded: 6366 file(s) [attempted 6366/8690 = 73%, 382 KB/s], Decompressed: 395
+2026-09-17T13:53:30.6053276Z Downloaded: 6498 file(s) [attempted 6498/8690 = 74%, 499 KB/s], Decompressed: 395
+2026-09-17T13:53:30.7078503Z Downloaded: 6638 file(s) [attempted 6638/8690 = 76%, 1078 KB/s], Decompressed: 395
+2026-09-17T13:53:30.8080811Z Downloaded: 6786 file(s) [attempted 6786/8690 = 78%, 310 KB/s], Decompressed: 395
+2026-09-17T13:53:30.9086622Z Downloaded: 6919 file(s) [attempted 6919/8690 = 79%, 998 KB/s], Decompressed: 395
+2026-09-17T13:53:31.0073310Z Downloaded: 7031 file(s) [attempted 7031/8690 = 80%, 1095 KB/s], Decompressed: 395
+2026-09-17T13:53:31.1113758Z Downloaded: 7158 file(s) [attempted 7158/8690 = 82%, 348 KB/s], Decompressed: 395
+2026-09-17T13:53:31.2120505Z Downloaded: 7276 file(s) [attempted 7276/8690 = 83%, 2248 KB/s], Decompressed: 395
+2026-09-17T13:53:31.3094587Z Downloaded: 7404 file(s) [attempted 7404/8690 = 85%, 111 KB/s], Decompressed: 395
+2026-09-17T13:53:31.4102649Z Downloaded: 7552 file(s) [attempted 7552/8690 = 86%, 1185 KB/s], Decompressed: 395
+2026-09-17T13:53:31.5119410Z Downloaded: 7687 file(s) [attempted 7687/8690 = 88%, 344 KB/s], Decompressed: 395
+2026-09-17T13:53:31.6119282Z Downloaded: 7832 file(s) [attempted 7832/8690 = 90%, 1501 KB/s], Decompressed: 395
+2026-09-17T13:53:31.7108994Z Downloaded: 7955 file(s) [attempted 7955/8690 = 91%, 513 KB/s], Decompressed: 395
+2026-09-17T13:53:31.8139603Z Downloaded: 8014 file(s) [attempted 8014/8690 = 92%, 368 KB/s], Decompressed: 395
+2026-09-17T13:53:31.9139373Z Downloaded: 8124 file(s) [attempted 8124/8690 = 93%, 1695 KB/s], Decompressed: 395
+2026-09-17T13:53:32.0125938Z Downloaded: 8204 file(s) [attempted 8204/8690 = 94%, 3826 KB/s], Decompressed: 395
+2026-09-17T13:53:32.1152919Z Downloaded: 8300 file(s) [attempted 8300/8690 = 95%, 120 KB/s], Decompressed: 395
+2026-09-17T13:53:32.2209466Z Downloaded: 8389 file(s) [attempted 8389/8690 = 96%, 571 KB/s], Decompressed: 1744
+2026-09-17T13:53:32.3382715Z Downloaded: 8495 file(s) [attempted 8495/8690 = 97%, 2210 KB/s], Decompressed: 1744
+2026-09-17T13:53:32.4660975Z Downloaded: 8549 file(s) [attempted 8549/8690 = 98%, 1670 KB/s], Decompressed: 1744
+2026-09-17T13:53:32.5735003Z Downloaded: 8668 file(s) [attempted 8668/8690 = 99%, 329 KB/s], Decompressed: 1744
+2026-09-17T13:53:32.5787620Z Downloaded: 8689 file(s) [attempted 8689/8690 = 99%, 453 KB/s], Decompressed: 1744
+2026-09-17T13:53:32.5798684Z Downloaded: 8690 file(s) [attempted 8690/8690 = 100%, 453 KB/s], Decompressed: 1744
+2026-09-17T13:53:55.4999431Z Decompressed 8690 file(s)
+2026-09-17T13:53:55.5000092Z Already decompressed 8690 file(s)
+2026-09-17T13:53:55.9804585Z Running systemd-run --user --quiet --wait --pipe --collect -p 'RestrictAddressFamilies=~AF_UNIX' --working-directory /home/runner/work/_temp/nla-lean-tools/.verification-tmp/nla-fresh-proof-s83se87v/project /usr/bin/env -i PATH=/home/runner/.elan/toolchains/leanprover--lean4---v4.33.1/bin:/home/runner/.elan/bin:/home/runner/go/bin:/opt/hostedtoolcache/go/1.27.1/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin HOME=/home/runner LANG=C.UTF-8 XDG_RUNTIME_DIR=/run/user/1001 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus GIT_TERMINAL_PROMPT=0 GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null COMPARATOR_BIN=/home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator COMPARATOR_LEAN4EXPORT=/home/runner/work/_temp/nla-lean-tools/.tools/lean4export/.lake/build/bin/lean4export COMPARATOR_LANDRUN=/home/runner/work/_temp/nla-lean-tools/scripts/strict_landrun.py XDG_CACHE_HOME=/home/runner/work/_temp/nla-lean-tools/.tools/cache TMPDIR=/home/runner/work/_temp/nla-lean-tools/.verification-tmp lake env /home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator comparator.json
+2026-09-17T13:53:55.9811871Z Log: /home/runner/work/_temp/nla-lean-tools/logs/verify-20260917T135206Z-4142/comparator.log
+2026-09-17T13:53:56.8345271Z Building Challenge
+2026-09-17T13:54:02.0562845Z ✔ [2722/2724] Built NLA.SP15.Definitions (3.2s)
+2026-09-17T13:54:04.2590485Z ⚠ [2723/2724] Built Challenge (2.2s)
+2026-09-17T13:54:04.2591422Z warning: Challenge.lean:18:8: declaration uses `sorry`
+2026-09-17T13:54:04.2592333Z warning: Challenge.lean:24:8: declaration uses `sorry`
+2026-09-17T13:54:04.2593217Z warning: Challenge.lean:27:8: declaration uses `sorry`
+2026-09-17T13:54:04.2594066Z warning: Challenge.lean:33:8: declaration uses `sorry`
+2026-09-17T13:54:04.2594941Z warning: Challenge.lean:38:8: declaration uses `sorry`
+2026-09-17T13:54:04.2595812Z warning: Challenge.lean:42:8: declaration uses `sorry`
+2026-09-17T13:54:04.2596570Z warning: Challenge.lean:48:8: declaration uses `sorry`
+2026-09-17T13:54:04.2597261Z warning: Challenge.lean:53:8: declaration uses `sorry`
+2026-09-17T13:54:04.2598193Z warning: Challenge.lean:56:8: declaration uses `sorry`
+2026-09-17T13:54:04.2598956Z warning: Challenge.lean:60:8: declaration uses `sorry`
+2026-09-17T13:54:04.2599581Z warning: Challenge.lean:69:8: declaration uses `sorry`
+2026-09-17T13:54:04.2600131Z warning: Challenge.lean:72:8: declaration uses `sorry`
+2026-09-17T13:54:04.2608667Z warning: Challenge.lean:76:8: declaration uses `sorry`
+2026-09-17T13:54:04.2609241Z warning: Challenge.lean:81:8: declaration uses `sorry`
+2026-09-17T13:54:04.2609745Z warning: Challenge.lean:88:8: declaration uses `sorry`
+2026-09-17T13:54:04.2610351Z warning: Challenge.lean:94:8: declaration uses `sorry`
+2026-09-17T13:54:04.2610873Z warning: Challenge.lean:100:8: declaration uses `sorry`
+2026-09-17T13:54:04.2611367Z warning: Challenge.lean:107:8: declaration uses `sorry`
+2026-09-17T13:54:04.2611850Z warning: Challenge.lean:114:8: declaration uses `sorry`
+2026-09-17T13:54:04.2612331Z warning: Challenge.lean:121:8: declaration uses `sorry`
+2026-09-17T13:54:04.2612813Z warning: Challenge.lean:126:8: declaration uses `sorry`
+2026-09-17T13:54:04.2613299Z warning: Challenge.lean:132:8: declaration uses `sorry`
+2026-09-17T13:54:04.2613781Z warning: Challenge.lean:142:8: declaration uses `sorry`
+2026-09-17T13:54:04.2614613Z warning: Challenge.lean:153:8: declaration uses `sorry`
+2026-09-17T13:54:04.2615119Z warning: Challenge.lean:161:8: declaration uses `sorry`
+2026-09-17T13:54:04.2615612Z warning: Challenge.lean:168:8: declaration uses `sorry`
+2026-09-17T13:54:04.2616108Z warning: Challenge.lean:173:8: declaration uses `sorry`
+2026-09-17T13:54:04.2616591Z warning: Challenge.lean:178:8: declaration uses `sorry`
+2026-09-17T13:54:04.2617267Z warning: Challenge.lean:185:8: declaration uses `sorry`
+2026-09-17T13:54:04.2703833Z Build completed successfully (2724 jobs).
+2026-09-17T13:54:18.8579754Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.SP15.box_scalar_certificate, NLA.SP15.parameter_box_geometry, NLA.SP15.parameter_box_bounds, NLA.SP15.p_intervals_separate, NLA.SP15.parameter_matrices_positive, NLA.SP15.square_root_semantics, NLA.SP15.coefficient_determinant_identity, NLA.SP15.coefficient_base_value, NLA.SP15.coefficient_strict_derivative, NLA.SP15.jacobian_lu_certificate, NLA.SP15.jacobian_minor_nonsingular, NLA.SP15.augmented_strict_derivative, NLA.SP15.augmented_derivative_equivalence, NLA.SP15.local_augmented_inverse, NLA.SP15.local_coefficient_fiber, NLA.SP15.regularized_gram_blocks, NLA.SP15.schur_positive_blocks, NLA.SP15.shifted_gram_determinant, NLA.SP15.equal_coefficients_gram_charpoly, NLA.SP15.gram_charpoly_singular_values, NLA.SP15.equal_coefficients_shifted_singular_values, NLA.SP15.constructed_kernel_flag, NLA.SP15.unitary_intertwiner_blocks, NLA.SP15.middle_block_conjugacy, NLA.SP15.parameter_slice_rigidity, NLA.SP15.constructed_unitary_injectivity, NLA.SP15.finite_fiber_selection, NLA.SP15.arbitrary_finite_counterfamilies, NLA.SP15.canonical_finiteness_false, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+2026-09-17T13:54:18.8585719Z Building Solution
+2026-09-17T13:54:25.4123321Z ✔ [3021/3054] Built LeanCert.Core.Interval (4.6s)
+2026-09-17T13:54:25.9161749Z ✔ [3022/3054] Built LeanCert.Core.DerivativeIntervals (5.1s)
+2026-09-17T13:54:27.9197035Z ✔ [3023/3061] Built LeanCert.Contrib.Sinc (7.1s)
+2026-09-17T13:54:28.8200950Z ✔ [3024/3061] Built LeanCert.Core.Expr (8.0s)
+2026-09-17T13:54:35.0325019Z ✔ [3025/3065] Built LeanCert.Core.Dyadic (7.1s)
+2026-09-17T13:54:36.5343679Z ✔ [3026/3065] Built LeanCert.Tactic.Verification (7.7s)
+2026-09-17T13:54:38.4353242Z ✔ [3027/3065] Built LeanCert.Core.Taylor (12s)
+2026-09-17T13:54:39.0367120Z ✔ [3028/3066] Built LeanCert.Core.IntervalRat.Basic (13s)
+2026-09-17T13:54:41.5403191Z ✔ [3029/3066] Built LeanCert.Core.Support (5.1s)
+2026-09-17T13:54:42.4406104Z ✔ [3030/3066] Built LeanCert.Core.IntervalRat.LogReduction (7.4s)
+2026-09-17T13:54:42.6413362Z ✔ [3031/3066] Built LeanCert.Tactic.LeanCert.Bridge.Environment (3.6s)
+2026-09-17T13:54:43.3451152Z ✔ [3032/3066] Built LeanCert.Meta.Numeral (4.9s)
+2026-09-17T13:54:45.0499261Z ✔ [3033/3066] Built LeanCert.Engine.Eval.Result (3.5s)
+2026-09-17T13:54:45.9529739Z ✔ [3034/3066] Built LeanCert.Tactic.NumericalRefinement (868ms)
+2026-09-17T13:54:46.2542533Z ✔ [3035/3066] Built LeanCert.Core.TrigReduction (3.9s)
+2026-09-17T13:54:48.4629965Z ✔ [3036/3066] Built LeanCert.Tactic.IntervalAuto.Types (5.1s)
+2026-09-17T13:54:48.7623588Z ✔ [3037/3066] Built LeanCert.Core.IntervalRat.Transcendental (6.2s)
+2026-09-17T13:54:50.7683420Z ✔ [3038/3127] Built LeanCert.Tactic.IntervalAuto.Extract (4.5s)
+2026-09-17T13:54:56.0858065Z ✔ [3090/3171] Built LeanCert.Tactic.IntervalAuto.Norm (7.3s)
+2026-09-17T13:54:57.4875116Z ✔ [3092/3175] Built LeanCert.Tactic.VecUtil (6.7s)
+2026-09-17T13:54:57.7976562Z ✔ [3093/3175] Built LeanCert.Meta.ToExpr (9.3s)
+2026-09-17T13:55:01.4117028Z ✔ [3094/3175] Built LeanCert.Tactic.BridgeNative (3.6s)
+2026-09-17T13:55:01.8151773Z ✔ [3095/3175] Built LeanCert.Tactic.FinSumExpand (4.4s)
+2026-09-17T13:55:02.8156435Z ✔ [3096/3239] Built LeanCert.Tactic.FinsetParse (6.7s)
+2026-09-17T13:55:07.4362160Z ✔ [3615/3697] Built LeanCert.Tactic.LeanCert.Normalize (5.6s)
+2026-09-17T13:55:07.8369468Z ✔ [3616/3701] Built LeanCert.Validity.Eventual (4.3s)
+2026-09-17T13:55:08.8383727Z ✔ [3617/3703] Built LeanCert.Tactic.IntervalAuto.Parse (7.5s)
+2026-09-17T13:55:09.4475103Z ✔ [3618/3704] Built LeanCert.Tactic.LeanCert.Semantic.Domain (1.0s)
+2026-09-17T13:55:12.0588419Z ✔ [3619/3704] Built LeanCert.Tactic.LeanCert.Semantic.Goal (2.7s)
+2026-09-17T13:55:12.5594756Z ✔ [3620/3704] Built LeanCert.Tactic.IntervalAuto.Diagnostic (3.8s)
+2026-09-17T13:55:12.7623563Z ✔ [3621/3706] Built LeanCert.Core.IntervalRat.Taylor (26s)
+2026-09-17T13:55:13.9641261Z ✔ [3622/3706] Built LeanCert.Tactic.EventualBound (6.1s)
+2026-09-17T13:55:14.1651427Z ✔ [3623/3708] Built LeanCert.Tactic.VecSimp (2.1s)
+2026-09-17T13:55:14.6656742Z ✔ [3624/3709] Built LeanCert.Tactic.LeanCert.Semantic.Parse.Comparison (2.0s)
+2026-09-17T13:55:15.7675177Z ✔ [3625/3709] Built LeanCert.Core.IntervalReal (2.0s)
+2026-09-17T13:55:17.4698970Z ✔ [3626/3712] Built LeanCert.Core.IntervalRat.TrigReduced (3.5s)
+2026-09-17T13:55:17.6700880Z ✔ [3627/3712] Built LeanCert.Tactic.Extension.Protocol (3.5s)
+2026-09-17T13:55:18.6734452Z ✔ [3628/3712] Built LeanCert.Tactic.LeanCert.Semantic.Parse.Bound (4.0s)
+2026-09-17T13:55:19.6751830Z ✔ [3629/3712] Built LeanCert.Tactic.LeanCert.Diagnostic.Evidence (3.9s)
+2026-09-17T13:55:22.7875618Z ✔ [3630/3712] Built LeanCert.Tactic.LeanCert.Config (3.2s)
+2026-09-17T13:55:26.4090815Z ✔ [3631/3712] Built LeanCert.Core.IntervalRealEndpoints (7.7s)
+2026-09-17T13:55:27.6095130Z ✔ [3632/3716] Built LeanCert.Engine.Affine.Basic (10s)
+2026-09-17T13:55:29.4146748Z ✔ [3633/3717] Built LeanCert.Core.IntervalDyadic (11s)
+2026-09-17T13:55:29.6148635Z ✔ [3635/3717] Built LeanCert.Tactic.Extension.Registry (6.8s)
+2026-09-17T13:55:36.6369339Z ✔ [3636/3725] Built LeanCert.Engine.Affine.Nonlinear (9.0s)
+2026-09-17T13:55:37.5366653Z ✔ [3637/3727] Built LeanCert.Core.DyadicCell (8.2s)
+2026-09-17T13:55:37.6370812Z ✔ [3638/3732] Built LeanCert.Engine.Algebra.QPoly (7.0s)
+2026-09-17T13:55:38.3362697Z ✔ [3639/3734] Built LeanCert.Engine.Eval.Core (11s)
+2026-09-17T13:55:40.0388776Z ✔ [3640/3734] Built LeanCert.Engine.FloatEval (3.4s)
+2026-09-17T13:55:40.6420910Z ✔ [3641/3736] Built LeanCert.Tactic.Extension.Command (3.0s)
+2026-09-17T13:55:41.0424791Z ✔ [3642/3745] Built LeanCert.Core.DyadicFrontier (3.5s)
+2026-09-17T13:55:42.1474562Z ✔ [3645/3778] Built LeanCert.Engine.Algebra.QPolyIntegral (3.8s)
+2026-09-17T13:55:43.3518575Z ✔ [3646/3778] Built LeanCert.Tactic.Extension (2.7s)
+2026-09-17T13:55:43.9527679Z ✔ [3647/3778] Built LeanCert.Engine.Eval.Extended (3.9s)
+2026-09-17T13:55:46.1557695Z ✔ [3648/3778] Built LeanCert.Engine.Bounds.Lemmas (2.2s)
+2026-09-17T13:55:48.1570952Z ✔ [3649/3778] Built LeanCert.Engine.IntervalEval (2.0s)
+2026-09-17T13:55:51.6669396Z ✔ [3650/3778] Built LeanCert.Validity.Bounds.Checked (3.5s)
+2026-09-17T13:55:51.8671093Z ✔ [3651/3778] Built LeanCert.Validity.Bounds.Core (3.7s)
+2026-09-17T13:55:53.9781284Z ✔ [3652/3778] Built LeanCert.Engine.Affine.Transcendental (5.9s)
+2026-09-17T13:55:57.2915561Z ✔ [3653/3778] Built LeanCert.Engine.Optimization.Box (5.5s)
+2026-09-17T13:55:57.7946674Z ✔ [3654/3778] Built LeanCert.Engine.IntervalEvalDyadic (9.7s)
+2026-09-17T13:55:59.2031044Z ✔ [3655/3778] Built LeanCert.Engine.RootFinding.Basic (7.6s)
+2026-09-17T13:56:01.7221122Z ✔ [3656/3778] Built LeanCert.Engine.AD.Basic (3.0s)
+2026-09-17T13:56:04.2258912Z ✔ [3657/3778] Built LeanCert.Engine.Integrate (10s)
+2026-09-17T13:56:07.1348070Z ✔ [3658/3778] Built LeanCert.Engine.Search.Heuristic (5.4s)
+2026-09-17T13:56:07.9346963Z ✔ [3659/3778] Built LeanCert.Engine.IntervalEvalAffine (8.7s)
+2026-09-17T13:56:10.5444042Z ✔ [3660/3778] Built LeanCert.Engine.TaylorModel.Core (13s)
+2026-09-17T13:56:11.5475586Z ✔ [3661/3778] Built LeanCert.Engine.FinSumDyadic (7.3s)
+2026-09-17T13:56:11.9512902Z ✔ [3662/3778] Built LeanCert.Validity.DyadicBounds (4.8s)
+2026-09-17T13:56:15.2561994Z ✔ [3663/3778] Built LeanCert.Engine.RootFinding.Bisection (7.4s)
+2026-09-17T13:56:16.7620872Z ✔ [3664/3778] Built LeanCert.Engine.TaylorModel.Integral (4.9s)
+2026-09-17T13:56:16.7626438Z ✔ [3665/3778] Built LeanCert.Engine.Affine.Environment (5.2s)
+2026-09-17T13:56:16.8615022Z ✔ [3666/3778] Built LeanCert.Engine.AD.Transcendental (6.4s)
+2026-09-17T13:56:18.8655117Z ✔ [3667/3778] Built LeanCert.Engine.TaylorModel.Special (3.6s)
+2026-09-17T13:56:27.4944894Z ✔ [3668/3778] Built LeanCert.Engine.WitnessSum (8.6s)
+2026-09-17T13:56:29.6956105Z ✔ [3669/3778] Built LeanCert.Engine.TaylorModel.ExpLog (12s)
+2026-09-17T13:56:31.6962461Z ✔ [3670/3778] Built LeanCert.Engine.AD.Eval (4.2s)
+2026-09-17T13:56:32.4031653Z ✔ [3671/3778] Built LeanCert.Engine.TaylorModel.Trig (15s)
+2026-09-17T13:56:33.9058946Z ✔ [3672/3778] Built LeanCert.Engine.TaylorModel.Hyperbolic (17s)
+2026-09-17T13:56:35.0091512Z ✔ [3673/3778] Built LeanCert.Engine.AD.Correctness (3.3s)
+2026-09-17T13:56:36.7115683Z ✔ [3674/3778] Built LeanCert.Engine.TaylorModel.Functions (2.8s)
+2026-09-17T13:56:39.2235492Z ✔ [3675/3778] Built LeanCert.Engine.AD.Computable (4.2s)
+2026-09-17T13:56:42.2318594Z ✔ [3676/3778] Built LeanCert.Engine.AD.PartialCorrectness (7.2s)
+2026-09-17T13:56:42.9357397Z ✔ [3677/3778] Built LeanCert.Engine.TaylorModel.Expr (6.2s)
+2026-09-17T13:56:43.4353805Z ✔ [3678/3778] Built LeanCert.Engine.AD.DomainChecked (4.2s)
+2026-09-17T13:56:44.9375729Z ✔ [3679/3778] Built LeanCert.Engine.TaylorModel (2.0s)
+2026-09-17T13:56:46.7412796Z ✔ [3680/3778] Built LeanCert.Engine.AD.Dyadic (3.3s)
+2026-09-17T13:56:48.6459684Z ✔ [3681/3778] Built LeanCert.Engine.AD (1.9s)
+2026-09-17T13:56:53.1785728Z ✔ [3682/3778] Built LeanCert.Validity.Bounds.Smart (4.5s)
+2026-09-17T13:56:53.8798882Z ✔ [3683/3778] Built LeanCert.Engine.IntervalEvalRefined (5.2s)
+2026-09-17T13:56:53.9797273Z ✔ [3684/3778] Built LeanCert.Meta.ProveSupported (5.3s)
+2026-09-17T13:56:57.2863893Z ✔ [3685/3778] Built LeanCert.Engine.Optimize (8.6s)
+2026-09-17T13:56:57.4864924Z ✔ [3686/3778] Built LeanCert.Validity.Bounds.Bridge (4.3s)
+2026-09-17T13:57:00.1018168Z ✔ [3687/3778] Built LeanCert.Meta.ProveContinuous (6.1s)
+2026-09-17T13:57:02.0053831Z ✔ [3688/3778] Built LeanCert.Tactic.IntervalAuto.ProveCommon (8.1s)
+2026-09-17T13:57:04.3247422Z ✔ [3689/3778] Built LeanCert.Validity.Bounds.Basic (4.2s)
+2026-09-17T13:57:04.4246318Z ✔ [3690/3778] Built LeanCert.Engine.RootFinding.Newton (6.9s)
+2026-09-17T13:57:05.8263902Z ✔ [3691/3778] Built LeanCert.Engine.Optimization.Gradient (8.5s)
+2026-09-17T13:57:08.2319062Z ✔ [3692/3778] Built LeanCert.Tactic.IntervalAuto.Basic (3.8s)
+2026-09-17T13:57:08.8366960Z ✔ [3693/3778] Built LeanCert.Tactic.LeanCert.Bridge.ReifiedFunction (4.5s)
+2026-09-17T13:57:10.1435686Z ✔ [3694/3778] Built LeanCert.Validity.Integration (8.1s)
+2026-09-17T13:57:19.2791510Z ✔ [3695/3778] Built LeanCert.Engine.RootFinding.MVTBounds (13s)
+2026-09-17T13:57:20.1845370Z ✔ [3696/3778] Built LeanCert.Tactic.LeanCert.Semantic.Prepare (10s)
+2026-09-17T13:57:21.1891612Z ✔ [3697/3778] Built LeanCert.Engine.RootFinding.Krawczyk (12s)
+2026-09-17T13:57:31.6156442Z ✔ [3698/3778] Built LeanCert.Engine.RootFinding.Contraction (11s)
+2026-09-17T13:57:32.0160748Z ✔ [3699/3778] Built LeanCert.Tactic.LeanCert.Integral (12s)
+2026-09-17T13:57:33.6181161Z ✔ [3700/3778] Built LeanCert.Tactic.Extension.Execute (12s)
+2026-09-17T13:57:36.9314813Z ✔ [3701/3778] Built LeanCert.Engine.RootFinding.KrawczykCandidate (4.9s)
+2026-09-17T13:57:37.6323807Z ✔ [3702/3778] Built LeanCert.Validity.Krawczyk (4.0s)
+2026-09-17T13:57:39.0341411Z ✔ [3703/3778] Built LeanCert.Tactic.LeanCert.Solver.Protocol (7.4s)
+2026-09-17T13:57:40.4378361Z ✔ [3704/3778] Built LeanCert.Engine.RootFinding.Main (3.5s)
+2026-09-17T13:57:42.0425124Z ✔ [3705/3778] Built LeanCert.Tactic.Enclosure (4.5s)
+2026-09-17T13:57:42.3449517Z ✔ [3706/3778] Built LeanCert.Engine.Optimization.Global (34s)
+2026-09-17T13:57:42.8531768Z ✔ [3707/3778] Built LeanCert.Tactic.LeanCert.Diagnostic.Render (3.9s)
+2026-09-17T13:57:45.9582920Z ✔ [3708/3778] Built LeanCert.Engine.Search.CounterExample (3.6s)
+2026-09-17T13:57:46.0745680Z ✔ [3709/3778] Built LeanCert.Validity.Types (3.7s)
+2026-09-17T13:57:47.2831514Z ✔ [3710/3778] Built LeanCert.Engine.Optimization.BoundVerify (4.4s)
+2026-09-17T13:57:49.2893724Z ✔ [3711/3778] Built LeanCert.Engine.Optimization.Guided (3.4s)
+2026-09-17T13:57:49.6889602Z ✔ [3712/3778] Built LeanCert.Validity.Bounds (7.3s)
+2026-09-17T13:57:53.8981467Z ✔ [3713/3778] Built LeanCert.Discovery.Find (4.2s)
+2026-09-17T13:57:54.5019775Z ✔ [3714/3778] Built LeanCert.Tactic.IntervalAuto.OptBound (4.8s)
+2026-09-17T13:57:54.5021202Z ✔ [3715/3778] Built LeanCert.Tactic.IntervalAuto.RootBound (4.8s)
+2026-09-17T13:57:56.3033242Z ✔ [3716/3778] Built LeanCert.Tactic.IntervalAuto.Multivariate (6.7s)
+2026-09-17T13:58:10.2196557Z ✔ [3717/3778] Built LeanCert.Tactic.IntervalAuto.Bound (16s)
+2026-09-17T13:58:14.9287065Z ✔ [3718/3778] Built LeanCert.Tactic.IntervalAuto.Subdiv (4.7s)
+2026-09-17T13:58:18.3346409Z ✔ [3719/3778] Built LeanCert.Tactic.IntervalAuto.Adaptive (8.1s)
+2026-09-17T13:58:20.7369025Z ✔ [3720/3778] Built LeanCert.Tactic.IntervalAuto.PointIneq (10s)
+2026-09-17T13:58:23.2459576Z ✔ [3721/3778] Built LeanCert.Tactic.IntervalAuto (2.5s)
+2026-09-17T13:58:26.5574049Z ✔ [3722/3778] Built LeanCert.Tactic.Refute (3.3s)
+2026-09-17T13:58:29.2630930Z ✔ [3723/3778] Built LeanCert.Tactic.FinSumWitness (6.0s)
+2026-09-17T13:58:33.9687210Z ✔ [3724/3778] Built LeanCert.Tactic.FinSumBound (4.7s)
+2026-09-17T13:58:37.3730316Z ✔ [3725/3778] Built LeanCert.Tactic.LeanCert.Semantic.Parse (3.4s)
+2026-09-17T13:58:38.5736376Z ✔ [3726/3778] Built LeanCert.Tactic.Discovery (15s)
+2026-09-17T13:58:40.8755268Z ✔ [3727/3778] Built LeanCert.Tactic.Krawczyk (3.5s)
+2026-09-17T13:58:49.0878794Z ✔ [3728/3778] Built LeanCert.Tactic.LeanCert.Router (8.3s)
+2026-09-17T13:58:51.6915105Z ✔ [3729/3778] Built LeanCert.Tactic.LeanCert (2.6s)
+2026-09-17T13:58:54.2950801Z ✔ [3730/3778] Built LeanCert.Tactic (2.6s)
+2026-09-17T13:58:57.3999636Z ⚠ [3731/3778] Built NLA.SP15.Numerical (3.1s)
+2026-09-17T13:58:57.4000930Z warning: NLA/SP15/Numerical.lean:26:4: `Set.mem_setOf` has been deprecated: Use `Set.mem_ofPred` instead
+2026-09-17T13:58:57.4002553Z warning: NLA/SP15/Numerical.lean:27:4: `Set.mem_setOf` has been deprecated: Use `Set.mem_ofPred` instead
+2026-09-17T13:58:57.4003990Z warning: NLA/SP15/Numerical.lean:28:4: `Set.mem_setOf` has been deprecated: Use `Set.mem_ofPred` instead
+2026-09-17T13:58:57.4005565Z info: NLA/SP15/Numerical.lean:31:0: 'NLA.SP15.box_scalar_certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:03.8129930Z ℹ [3732/3778] Built NLA.SP15.GramSemantics (6.4s)
+2026-09-17T13:59:03.8131863Z info: NLA/SP15/GramSemantics.lean:54:0: 'NLA.SP15.gram_charpoly_singular_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:04.3128194Z ℹ [3733/3778] Built NLA.SP15.BoxGeometry (6.9s)
+2026-09-17T13:59:04.3130153Z info: NLA/SP15/BoxGeometry.lean:112:0: 'NLA.SP15.parameter_box_geometry' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:04.3131859Z info: NLA/SP15/BoxGeometry.lean:114:0: 'NLA.SP15.parameter_box_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:04.3133431Z info: NLA/SP15/BoxGeometry.lean:116:0: 'NLA.SP15.p_intervals_separate' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:04.4125000Z ℹ [3734/3778] Built NLA.SP15.JacobianRows.Row8 (7.0s)
+2026-09-17T13:59:04.4127042Z info: NLA/SP15/JacobianRows/Row8.lean:62:0: 'NLA.SP15.jacobian_lu_row_8' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:04.6130302Z ℹ [3735/3778] Built NLA.SP15.CoefficientIdentity (7.2s)
+2026-09-17T13:59:04.6132274Z info: NLA/SP15/CoefficientIdentity.lean:119:0: 'NLA.SP15.coefficient_determinant_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:08.9176111Z ℹ [3736/3778] Built NLA.SP15.TripleBlocks (4.6s)
+2026-09-17T13:59:08.9178357Z info: NLA/SP15/TripleBlocks.lean:86:0: 'NLA.SP15.triple_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:09.9266808Z ℹ [3737/3778] Built NLA.SP15.JacobianRows.Row7 (6.2s)
+2026-09-17T13:59:09.9269142Z info: NLA/SP15/JacobianRows/Row7.lean:62:0: 'NLA.SP15.jacobian_lu_row_7' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:10.4363566Z ℹ [3738/3778] Built NLA.SP15.JacobianRows.Row6 (6.0s)
+2026-09-17T13:59:10.4365519Z info: NLA/SP15/JacobianRows/Row6.lean:62:0: 'NLA.SP15.jacobian_lu_row_6' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:10.6367101Z ℹ [3739/3778] Built NLA.SP15.JacobianRows.Row5 (6.0s)
+2026-09-17T13:59:10.6369237Z info: NLA/SP15/JacobianRows/Row5.lean:62:0: 'NLA.SP15.jacobian_lu_row_5' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:14.8422402Z ℹ [3740/3778] Built NLA.SP15.JacobianRows.Row4 (5.9s)
+2026-09-17T13:59:14.8424628Z info: NLA/SP15/JacobianRows/Row4.lean:62:0: 'NLA.SP15.jacobian_lu_row_4' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:15.8462667Z ℹ [3741/3778] Built NLA.SP15.JacobianRows.Row3 (5.9s)
+2026-09-17T13:59:15.8464525Z info: NLA/SP15/JacobianRows/Row3.lean:62:0: 'NLA.SP15.jacobian_lu_row_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:16.1472523Z ℹ [3742/3778] Built NLA.SP15.JacobianRows.Row2 (5.8s)
+2026-09-17T13:59:16.1474426Z info: NLA/SP15/JacobianRows/Row2.lean:62:0: 'NLA.SP15.jacobian_lu_row_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:16.3471367Z ℹ [3743/3778] Built NLA.SP15.JacobianRows.Row1 (5.7s)
+2026-09-17T13:59:16.3473327Z info: NLA/SP15/JacobianRows/Row1.lean:62:0: 'NLA.SP15.jacobian_lu_row_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:20.6563579Z ℹ [3744/3778] Built NLA.SP15.DerivativeRows.Basic (4.3s)
+2026-09-17T13:59:20.6565943Z info: NLA/SP15/DerivativeRows/Basic.lean:27:0: 'NLA.SP15.coefficient_derivative_row_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:20.7566085Z ℹ [3745/3778] Built NLA.SP15.JacobianRows.Row0 (5.9s)
+2026-09-17T13:59:20.7568541Z info: NLA/SP15/JacobianRows/Row0.lean:62:0: 'NLA.SP15.jacobian_lu_row_0' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:21.9584408Z ℹ [3746/3778] Built NLA.SP15.CoefficientValue (5.8s)
+2026-09-17T13:59:21.9591030Z info: NLA/SP15/CoefficientValue.lean:48:0: 'NLA.SP15.coefficient_base_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:21.9599400Z ℹ [3747/3778] Built NLA.SP15.JacobianTriangular (6.1s)
+2026-09-17T13:59:21.9609111Z info: NLA/SP15/JacobianTriangular.lean:66:0: 'NLA.SP15.jacobian_lower_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:21.9614943Z info: NLA/SP15/JacobianTriangular.lean:69:0: 'NLA.SP15.jacobian_lower_diag' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:21.9616942Z info: NLA/SP15/JacobianTriangular.lean:72:0: 'NLA.SP15.jacobian_upper_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:21.9619318Z info: NLA/SP15/JacobianTriangular.lean:75:0: 'NLA.SP15.jacobian_upper_diag_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:21.9621277Z info: NLA/SP15/JacobianTriangular.lean:78:0: 'NLA.SP15.jacobian_upper_diag_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:25.6706701Z ℹ [3748/3778] Built NLA.SP15.ParameterPositivity (4.0s)
+2026-09-17T13:59:25.6709038Z info: NLA/SP15/ParameterPositivity.lean:65:0: 'NLA.SP15.parameter_matrices_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:26.0713709Z ℹ [3749/3778] Built NLA.SP15.SliceRigidity (5.5s)
+2026-09-17T13:59:26.0715684Z info: NLA/SP15/SliceRigidity.lean:136:0: 'NLA.SP15.parameter_slice_rigidity' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:27.2718919Z ℹ [3750/3778] Built NLA.SP15.DerivativeRows.Row7 (5.3s)
+2026-09-17T13:59:27.2721388Z info: NLA/SP15/DerivativeRows/Row7.lean:47:0: 'NLA.SP15.coefficient_strict_derivative_row_7' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:27.4717360Z ℹ [3751/3778] Built NLA.SP15.DerivativeRows.Row8 (5.5s)
+2026-09-17T13:59:27.4719751Z info: NLA/SP15/DerivativeRows/Row8.lean:49:0: 'NLA.SP15.coefficient_strict_derivative_row_8' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:30.3742495Z ℹ [3752/3778] Built NLA.SP15.DerivativeRows.Row6 (4.7s)
+2026-09-17T13:59:30.3744925Z info: NLA/SP15/DerivativeRows/Row6.lean:30:0: 'NLA.SP15.coefficient_strict_derivative_row_6' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:31.9772456Z ℹ [3753/3778] Built NLA.SP15.DerivativeRows.Row5 (5.9s)
+2026-09-17T13:59:31.9774603Z info: NLA/SP15/DerivativeRows/Row5.lean:64:0: 'NLA.SP15.coefficient_strict_derivative_row_5' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:32.1775232Z ℹ [3754/3778] Built NLA.SP15.DerivativeRows.Row3 (4.7s)
+2026-09-17T13:59:32.1777363Z info: NLA/SP15/DerivativeRows/Row3.lean:30:0: 'NLA.SP15.coefficient_strict_derivative_row_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:32.7794286Z ℹ [3755/3778] Built NLA.SP15.DerivativeRows.Row4 (5.5s)
+2026-09-17T13:59:32.7796394Z info: NLA/SP15/DerivativeRows/Row4.lean:60:0: 'NLA.SP15.coefficient_strict_derivative_row_4' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:36.4879420Z ℹ [3756/3778] Built NLA.SP15.DerivativeRows.Row2 (6.1s)
+2026-09-17T13:59:36.4881253Z info: NLA/SP15/DerivativeRows/Row2.lean:67:0: 'NLA.SP15.coefficient_strict_derivative_row_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:37.0904696Z ℹ [3757/3778] Built NLA.SP15.JacobianCertificate (4.3s)
+2026-09-17T13:59:37.0906228Z info: NLA/SP15/JacobianCertificate.lean:64:0: 'NLA.SP15.jacobian_lu_certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:37.0908701Z info: NLA/SP15/JacobianCertificate.lean:66:0: 'NLA.SP15.jacobian_minor_nonsingular' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:37.2909419Z ℹ [3758/3778] Built NLA.SP15.DerivativeRows.Row1 (5.3s)
+2026-09-17T13:59:37.2910908Z info: NLA/SP15/DerivativeRows/Row1.lean:49:0: 'NLA.SP15.coefficient_strict_derivative_row_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:37.8908375Z ℹ [3759/3778] Built NLA.SP15.DerivativeRows.Row0 (5.7s)
+2026-09-17T13:59:37.8909754Z info: NLA/SP15/DerivativeRows/Row0.lean:53:0: 'NLA.SP15.coefficient_strict_derivative_row_0' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:39.9925075Z ℹ [3760/3778] Built NLA.SP15.SquareRoots (3.4s)
+2026-09-17T13:59:39.9926240Z info: NLA/SP15/SquareRoots.lean:46:0: 'NLA.SP15.square_root_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:41.2935589Z ℹ [3761/3778] Built NLA.SP15.CoefficientDerivative (3.4s)
+2026-09-17T13:59:41.2936986Z info: NLA/SP15/CoefficientDerivative.lean:40:0: 'NLA.SP15.coefficient_strict_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:44.4009414Z ℹ [3762/3778] Built NLA.SP15.SchurPositivity (4.4s)
+2026-09-17T13:59:44.4011076Z info: NLA/SP15/SchurPositivity.lean:31:0: 'NLA.SP15.schur_positive_blocks' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:45.0014276Z ⚠ [3763/3778] Built NLA.SP15.UnitaryBlocks (5.1s)
+2026-09-17T13:59:45.0015668Z warning: NLA/SP15/UnitaryBlocks.lean:23:29: Variable name `hy` is not explicitly referenced.
+2026-09-17T13:59:45.0016510Z 
+2026-09-17T13:59:45.0017346Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-09-17T13:59:45.0018781Z   [apply] _hy
+2026-09-17T13:59:45.0019110Z 
+2026-09-17T13:59:45.0019633Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-09-17T13:59:45.0021087Z info: NLA/SP15/UnitaryBlocks.lean:106:0: 'NLA.SP15.unitary_intertwiner_blocks' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:45.3023086Z ℹ [3764/3778] Built NLA.SP15.BlockGram (5.4s)
+2026-09-17T13:59:45.3024854Z info: NLA/SP15/BlockGram.lean:74:0: 'NLA.SP15.regularized_gram_blocks' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:45.9029380Z ℹ [3765/3778] Built NLA.SP15.KernelFlag (4.6s)
+2026-09-17T13:59:45.9031361Z info: NLA/SP15/KernelFlag.lean:83:0: 'NLA.SP15.constructed_kernel_flag' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:47.9042944Z ℹ [3766/3778] Built NLA.SP15.AugmentedDerivative (3.5s)
+2026-09-17T13:59:47.9044300Z info: NLA/SP15/AugmentedDerivative.lean:66:0: 'NLA.SP15.augmented_strict_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:49.4083350Z ℹ [3767/3778] Built NLA.SP15.MiddleConjugacy (4.1s)
+2026-09-17T13:59:49.4084679Z info: NLA/SP15/MiddleConjugacy.lean:60:0: 'NLA.SP15.middle_block_conjugacy' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:49.6092839Z ℹ [3768/3778] Built NLA.SP15.SchurAlgebra (4.5s)
+2026-09-17T13:59:49.6094477Z info: NLA/SP15/SchurAlgebra.lean:80:0: 'NLA.SP15.determinant_lower_commuting' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:49.6096338Z info: NLA/SP15/SchurAlgebra.lean:82:0: 'NLA.SP15.final_schur_matrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:52.0122691Z ℹ [3769/3778] Built NLA.SP15.AugmentedEquivalence (4.1s)
+2026-09-17T13:59:52.0124446Z info: NLA/SP15/AugmentedEquivalence.lean:59:0: 'NLA.SP15.augmented_derivative_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:52.5149977Z ℹ [3770/3778] Built NLA.SP15.UnitaryInjectivity (3.0s)
+2026-09-17T13:59:52.5151373Z info: NLA/SP15/UnitaryInjectivity.lean:22:0: 'NLA.SP15.constructed_unitary_injectivity' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:53.6162456Z ℹ [3771/3778] Built NLA.SP15.ShiftedDeterminant (4.1s)
+2026-09-17T13:59:53.6163753Z info: NLA/SP15/ShiftedDeterminant.lean:112:0: 'NLA.SP15.shifted_gram_determinant' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:55.2188510Z ℹ [3772/3778] Built NLA.SP15.LocalFiber (3.2s)
+2026-09-17T13:59:55.2189674Z info: NLA/SP15/LocalFiber.lean:80:0: 'NLA.SP15.local_augmented_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:55.2191194Z info: NLA/SP15/LocalFiber.lean:82:0: 'NLA.SP15.local_coefficient_fiber' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:56.5204158Z ℹ [3773/3778] Built NLA.SP15.GramPolynomial (2.9s)
+2026-09-17T13:59:56.5205157Z info: NLA/SP15/GramPolynomial.lean:57:0: 'NLA.SP15.equal_coefficients_gram_charpoly' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:58.2229463Z ℹ [3774/3778] Built NLA.SP15.FiniteFiber (3.0s)
+2026-09-17T13:59:58.2230438Z info: NLA/SP15/FiniteFiber.lean:53:0: 'NLA.SP15.finite_fiber_selection' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T13:59:59.3241635Z ℹ [3775/3778] Built NLA.SP15.ShiftedSpectrum (2.8s)
+2026-09-17T13:59:59.3242981Z info: NLA/SP15/ShiftedSpectrum.lean:26:0: 'NLA.SP15.equal_coefficients_shifted_singular_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:02.1280819Z ℹ [3776/3778] Built NLA.SP15.Counterfamilies (2.8s)
+2026-09-17T14:00:02.1282205Z info: NLA/SP15/Counterfamilies.lean:41:0: 'NLA.SP15.arbitrary_finite_counterfamilies' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:02.1283968Z info: NLA/SP15/Counterfamilies.lean:43:0: 'NLA.SP15.canonical_finiteness_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9314081Z ℹ [3777/3778] Built Solution (2.7s)
+2026-09-17T14:00:04.9315559Z info: Solution.lean:19:0: 'NLA.SP15.box_scalar_certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9317298Z info: Solution.lean:21:0: 'NLA.SP15.parameter_box_geometry' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9319211Z info: Solution.lean:23:0: 'NLA.SP15.parameter_box_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9320588Z info: Solution.lean:25:0: 'NLA.SP15.p_intervals_separate' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9321928Z info: Solution.lean:27:0: 'NLA.SP15.parameter_matrices_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9323295Z info: Solution.lean:29:0: 'NLA.SP15.square_root_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9324416Z info: Solution.lean:31:0: 'NLA.SP15.coefficient_determinant_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9325716Z info: Solution.lean:33:0: 'NLA.SP15.coefficient_base_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9327146Z info: Solution.lean:35:0: 'NLA.SP15.coefficient_strict_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9328657Z info: Solution.lean:37:0: 'NLA.SP15.jacobian_lu_certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9329989Z info: Solution.lean:39:0: 'NLA.SP15.jacobian_minor_nonsingular' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9331124Z info: Solution.lean:41:0: 'NLA.SP15.augmented_strict_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9332278Z info: Solution.lean:43:0: 'NLA.SP15.augmented_derivative_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9333433Z info: Solution.lean:45:0: 'NLA.SP15.local_augmented_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9334502Z info: Solution.lean:47:0: 'NLA.SP15.local_coefficient_fiber' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9335599Z info: Solution.lean:49:0: 'NLA.SP15.regularized_gram_blocks' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9336643Z info: Solution.lean:51:0: 'NLA.SP15.schur_positive_blocks' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9337688Z info: Solution.lean:53:0: 'NLA.SP15.shifted_gram_determinant' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9342401Z info: Solution.lean:55:0: 'NLA.SP15.equal_coefficients_gram_charpoly' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9343555Z info: Solution.lean:57:0: 'NLA.SP15.gram_charpoly_singular_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9344720Z info: Solution.lean:59:0: 'NLA.SP15.equal_coefficients_shifted_singular_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9345862Z info: Solution.lean:61:0: 'NLA.SP15.constructed_kernel_flag' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9346940Z info: Solution.lean:63:0: 'NLA.SP15.unitary_intertwiner_blocks' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9348206Z info: Solution.lean:65:0: 'NLA.SP15.middle_block_conjugacy' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9349257Z info: Solution.lean:67:0: 'NLA.SP15.parameter_slice_rigidity' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9350354Z info: Solution.lean:69:0: 'NLA.SP15.constructed_unitary_injectivity' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9351441Z info: Solution.lean:71:0: 'NLA.SP15.finite_fiber_selection' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9352529Z info: Solution.lean:73:0: 'NLA.SP15.arbitrary_finite_counterfamilies' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9353641Z info: Solution.lean:75:0: 'NLA.SP15.canonical_finiteness_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-09-17T14:00:04.9467680Z Build completed successfully (3778 jobs).
+2026-09-17T14:02:15.2903529Z Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.SP15.box_scalar_certificate, NLA.SP15.parameter_box_geometry, NLA.SP15.parameter_box_bounds, NLA.SP15.p_intervals_separate, NLA.SP15.parameter_matrices_positive, NLA.SP15.square_root_semantics, NLA.SP15.coefficient_determinant_identity, NLA.SP15.coefficient_base_value, NLA.SP15.coefficient_strict_derivative, NLA.SP15.jacobian_lu_certificate, NLA.SP15.jacobian_minor_nonsingular, NLA.SP15.augmented_strict_derivative, NLA.SP15.augmented_derivative_equivalence, NLA.SP15.local_augmented_inverse, NLA.SP15.local_coefficient_fiber, NLA.SP15.regularized_gram_blocks, NLA.SP15.schur_positive_blocks, NLA.SP15.shifted_gram_determinant, NLA.SP15.equal_coefficients_gram_charpoly, NLA.SP15.gram_charpoly_singular_values, NLA.SP15.equal_coefficients_shifted_singular_values, NLA.SP15.constructed_kernel_flag, NLA.SP15.unitary_intertwiner_blocks, NLA.SP15.middle_block_conjugacy, NLA.SP15.parameter_slice_rigidity, NLA.SP15.constructed_unitary_injectivity, NLA.SP15.finite_fiber_selection, NLA.SP15.arbitrary_finite_counterfamilies, NLA.SP15.canonical_finiteness_false, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+2026-09-17T14:02:15.2911075Z Running Lean default kernel on solution.
+2026-09-17T14:02:15.2911498Z Lean default kernel accepts the solution
+2026-09-17T14:02:15.2911854Z Your solution is okay!
+2026-09-17T14:02:21.6857017Z PASS: fresh Comparator run and all controls. Evidence: /home/runner/work/_temp/nla-lean-tools/logs/verify-20260917T135206Z-4142
+2026-09-17T14:02:21.7054535Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-17T14:02:21.7055952Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-09-17T14:02:21.7056343Z with:
+2026-09-17T14:02:21.7056547Z   name: lean-SP-15
+2026-09-17T14:02:21.7056815Z   path: /home/runner/work/_temp/nla-lean-tools/logs/
+2026-09-17T14:02:21.7057147Z   if-no-files-found: warn
+2026-09-17T14:02:21.7057389Z   compression-level: 6
+2026-09-17T14:02:21.7057620Z   overwrite: false
+2026-09-17T14:02:21.7058155Z   include-hidden-files: false
+2026-09-17T14:02:21.7058403Z env:
+2026-09-17T14:02:21.7058592Z   GOTOOLCHAIN: local
+2026-09-17T14:02:21.7058816Z   XDG_RUNTIME_DIR: /run/user/1001
+2026-09-17T14:02:21.7059155Z   DBUS_SESSION_BUS_ADDRESS: unix:path=/run/user/1001/bus
+2026-09-17T14:02:21.7059469Z ##[endgroup]
+2026-09-17T14:02:22.0426351Z (node:9835) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-09-17T14:02:22.0428133Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-09-17T14:02:22.0552447Z With the provided path, there will be 13 files uploaded
+2026-09-17T14:02:22.0558827Z Artifact name is valid!
+2026-09-17T14:02:22.0559669Z Root directory input is valid!
+2026-09-17T14:02:22.3098891Z Beginning upload of artifact content to blob storage
+2026-09-17T14:02:22.3751093Z (node:9835) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-09-17T14:02:22.4270896Z Uploaded bytes 97072
+2026-09-17T14:02:22.4455699Z Finished uploading artifact content to blob storage!
+2026-09-17T14:02:22.4456973Z SHA256 digest of uploaded artifact zip is 290e99b390e87984660f5c89ff7601931229cf474d87d3b146c9848e2990b835
+2026-09-17T14:02:22.4458310Z Finalizing artifact upload
+2026-09-17T14:02:22.6736292Z Artifact lean-SP-15.zip successfully finalized. Artifact ID 10500674662
+2026-09-17T14:02:22.6738307Z Artifact lean-SP-15 has been successfully uploaded! Final size is 97072 bytes. Artifact ID is 10500674662
+2026-09-17T14:02:22.6746143Z Artifact download URL: https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35229660506/artifacts/10500674662
+2026-09-17T14:02:22.6930247Z Post job cleanup.
+2026-09-17T14:02:22.8347042Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-17T14:02:22.8348833Z Post job cleanup.
+2026-09-17T14:02:22.9270182Z [command]/usr/bin/git version
+2026-09-17T14:02:22.9320004Z git version 2.55.0
+2026-09-17T14:02:22.9362162Z Temporarily overriding HOME='/home/runner/work/_temp/a203418e-ff2b-4463-a5ba-7287f42c5a9c' before making global git config changes
+2026-09-17T14:02:22.9363855Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-17T14:02:22.9368551Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/OpenProblemsInNLA/OpenProblemsInNLA
+2026-09-17T14:02:22.9414073Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-17T14:02:22.9461841Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-17T14:02:22.9859231Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-17T14:02:22.9918851Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-17T14:02:23.0227343Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-17T14:02:23.0290018Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-17T14:02:23.0724555Z Cleaning up orphan processes
+2026-09-17T14:02:23.1176696Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

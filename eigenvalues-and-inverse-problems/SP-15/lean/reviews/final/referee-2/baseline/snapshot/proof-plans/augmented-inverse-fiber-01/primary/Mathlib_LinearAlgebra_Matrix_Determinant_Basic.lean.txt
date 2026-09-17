@@ -1,0 +1,16 @@
+770: /-- Laplacian expansion of the determinant of an `n+1 × n+1` matrix along row `i`. -/
+771: theorem det_succ_row {n : ℕ} (A : Matrix (Fin n.succ) (Fin n.succ) R) (i : Fin n.succ) :
+772:     det A =
+773:       ∑ j : Fin n.succ, (-1) ^ (i + j : ℕ) * A i j * det (A.submatrix i.succAbove j.succAbove) := by
+774:   simp_rw [pow_add, mul_assoc, ← mul_sum]
+775:   have : det A = (-1 : R) ^ (i : ℕ) * (Perm.sign i.cycleRange⁻¹) * det A := by
+776:     calc
+777:       det A = ↑((-1 : ℤˣ) ^ (i : ℕ) * (-1 : ℤˣ) ^ (i : ℕ) : ℤˣ) * det A := by simp
+778:       _ = (-1 : R) ^ (i : ℕ) * (Perm.sign i.cycleRange⁻¹) * det A := by simp [-Int.units_mul_self]
+779:   rw [this, mul_assoc]
+780:   congr
+781:   rw [← det_permute, det_succ_row_zero]
+782:   refine Finset.sum_congr rfl fun j _ => ?_
+783:   rw [mul_assoc, Matrix.submatrix_apply, submatrix_submatrix, id_comp, Function.comp_def, id]
+784:   simp
+785: 

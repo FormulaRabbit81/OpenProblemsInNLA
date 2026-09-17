@@ -1,0 +1,55 @@
+--- before/NLA/SP15/BoxGeometry.lean
++++ after/NLA/SP15/BoxGeometry.lean
+@@ -29,8 +29,10 @@
+     rw [Set.ofPred_forall]
+     apply isOpen_iInter_of_finite
+     intro i
++    have hcoord : Continuous (fun x : Parameters => x i - basePoint i) :=
++      (continuous_apply i).sub continuous_const
+     simpa only [Real.norm_eq_abs] using
+-      (isOpen_lt ((continuous_apply i).sub continuous_const).norm continuous_const)
++      (isOpen_lt hcoord.norm continuous_const)
+   · intro i
+     simpa using box_scalar_certificate.1
+ 
+@@ -47,18 +49,24 @@
+     rw [hi] at h
+     have hpos : 0 < x i := lt_trans hsmall h.1
+     exact ⟨hpos, by simpa only [abs_of_pos hpos] using h.2⟩
+-  have h6 := hone 6 (by norm_num [basePoint])
+-  have h7 := hone 7 (by norm_num [basePoint])
+-  have h8 := hone 8 (by norm_num [basePoint])
+-  have h9 := hone 9 (by norm_num [basePoint])
++  have h6 := hone 6 (by rfl)
++  have h7 := hone 7 (by rfl)
++  have h8 := hone 8 (by rfl)
++  have h9 := hone 9 (by rfl)
+   have hp0 := coordinate_bounds x hx 0
+   have hp1 := coordinate_bounds x hx 1
+   have hp2 := coordinate_bounds x hx 2
+-  norm_num [basePoint] at hp0 hp1 hp2
++  -- Reduce the fixed center vector before any real linear arithmetic.
++  dsimp only [basePoint, Matrix.cons_val] at hp0 hp1 hp2
+   have hp : ∀ i : Fin 3, 0 < pCoordinates x i := by
+     intro i
+-    fin_cases i <;> simp only [pCoordinates, Matrix.cons_val_zero,
+-      Matrix.cons_val_one, Matrix.cons_val_two] <;> linarith
++    fin_cases i
++    · change 0 < x 0
++      linarith [hp0.1]
++    · change 0 < x 1
++      linarith [hp1.1]
++    · change 0 < x 2
++      linarith [hp2.1]
+   have hplus : ‖(x 8 : ℂ) + Complex.I * (x 9 : ℂ)‖ < 2 * (1 + boxRadius) := by
+     have h : ‖(x 8 : ℂ) + Complex.I * (x 9 : ℂ)‖ ≤ |x 8| + |x 9| := by
+       simpa using Complex.norm_le_abs_re_add_abs_im ((x 8 : ℂ) + Complex.I * (x 9 : ℂ))
+@@ -95,7 +103,7 @@
+   have hy0 := coordinate_bounds y hy 0
+   have hy1 := coordinate_bounds y hy 1
+   have hy2 := coordinate_bounds y hy 2
+-  norm_num [basePoint] at hx0 hx1 hx2 hy0 hy1 hy2
++  dsimp only [basePoint, Matrix.cons_val] at hx0 hx1 hx2 hy0 hy1 hy2
+   intro h
+   fin_cases i <;> fin_cases j <;> simp [pCoordinates] at h hij <;> linarith
+ 

@@ -1,0 +1,11 @@
+46:   ⟨fun h => ⟨⟨0, h⟩⟩, fun ⟨i⟩ => i.pos⟩
+47: 
+48: /-! ### coercions and constructions -/
+49: 
+50: @[simp] protected theorem eta (a : Fin n) (h : a < n) : (⟨a, h⟩ : Fin n) = a := rfl
+51: 
+52: @[ext, grind ext]
+53: protected theorem ext {a b : Fin n} (h : (a : Nat) = b) : a = b := eq_of_val_eq h
+54: 
+55: theorem val_ne_iff {a b : Fin n} : a.1 ≠ b.1 ↔ a ≠ b := not_congr val_inj
+56: 

@@ -1,0 +1,10 @@
+--- actual108/BlockGram.lean
++++ candidate/BlockGram.lean
+@@ -56,7 +56,6 @@
+   rcases i with i | (i | i) <;> rcases j with j | (j | j) <;>
+     simp [regularizedGramBlocks, blockMatrix, shiftScalar, Matrix.conjTranspose_apply,
+       Matrix.one_apply, sub_eq_add_neg]
+-  all_goals ring
+ 
+ theorem regularized_gram_blocks (x : Parameters) (hx : x ∈ parameterBox)
+     (z : ℂ) (t : ℝ) :

@@ -36,6 +36,6 @@
 | [SP-11](SP-11/README.md) | The delta conjecture for minimum symmetric rank | **✅ SOLVED** | extreme | interesting to the community | [PDF](SP-11/problem.pdf) · [TeX](SP-11/problem.tex) |
 | [SP-12](SP-12/README.md) | A chromatic lower bound for positive-semidefinite nullity with SAP | **✅ SOLVED** | challenging | interesting to specialist | [PDF](SP-12/problem.pdf) · [TeX](SP-12/problem.tex) |
 | [SP-13](SP-13/README.md) | Trace-norm-small perturbations preserve Hermitian spectral distributions | **✅ SOLVED** | challenging | interesting to the community | [PDF](SP-13/problem.pdf) · [TeX](SP-13/problem.tex) |
-| [SP-15](SP-15/README.md) | Finitely many unitary classes with prescribed shifted singular values | **✅ SOLVED** | challenging | interesting to the community | [PDF](SP-15/problem.pdf) · [TeX](SP-15/problem.tex) |
+| [SP-15](SP-15/README.md) | Finitely many unitary classes with prescribed shifted singular values | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](SP-15/problem.pdf) · [TeX](SP-15/problem.tex) |
 
 Ratings are editorial; each entry explains both ratings and the scope of its status evidence. [Definitions](../README.md#problem-status).

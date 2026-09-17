@@ -1,0 +1,29 @@
+885: 
+886: theorem infinite_image_iff {s : Set α} {f : α → β} (hi : InjOn f s) :
+887:     (f '' s).Infinite ↔ s.Infinite :=
+888:   not_congr <| finite_image_iff hi
+889: 
+890: theorem infinite_range_iff {f : α → β} (hf : Injective f) : (range f).Infinite ↔ Infinite α := by
+891:   simpa using (finite_range_iff hf).not
+892: 
+893: protected alias ⟨_, Infinite.image⟩ := infinite_image_iff
+894: 
+895: theorem infinite_of_injOn_mapsTo {s : Set α} {t : Set β} {f : α → β} (hi : InjOn f s)
+896:     (hm : MapsTo f s t) (hs : s.Infinite) : t.Infinite :=
+897:   ((infinite_image_iff hi).2 hs).mono (mapsTo_iff_image_subset.mp hm)
+898: 
+899: theorem Infinite.exists_ne_map_eq_of_mapsTo {s : Set α} {t : Set β} {f : α → β} (hs : s.Infinite)
+900:     (hf : MapsTo f s t) (ht : t.Finite) : ∃ x ∈ s, ∃ y ∈ s, x ≠ y ∧ f x = f y := by
+901:   contrapose! ht
+902:   exact infinite_of_injOn_mapsTo (fun x hx y hy => not_imp_not.1 (ht x hx y hy)) hf hs
+903: 
+904: theorem infinite_range_of_injective [Infinite α] {f : α → β} (hi : Injective f) :
+905:     (range f).Infinite := by
+906:   rw [← image_univ, infinite_image_iff hi.injOn]
+907:   exact infinite_univ
+908: 
+909: theorem infinite_of_injective_forall_mem [Infinite α] {s : Set β} {f : α → β} (hi : Injective f)
+910:     (hf : ∀ x : α, f x ∈ s) : s.Infinite := by
+911:   rw [← range_subset_iff] at hf
+912:   exact (infinite_range_of_injective hi).mono hf
+913: 

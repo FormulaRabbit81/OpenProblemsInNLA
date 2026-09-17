@@ -1,0 +1,127 @@
+#!/usr/bin/env python3
+"""Read-only source/evidence audit; no Lean, Lake, network, or Git invocation."""
+from pathlib import Path
+import datetime
+import hashlib
+import json
+import shutil
+
+R = Path(__file__).resolve().parent
+P = R.parents[1]
+B = P.parents[1]
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+M = L / '.lake/packages/mathlib'
+T = Path('/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1')
+sha = lambda f: hashlib.sha256(Path(f).read_bytes()).hexdigest()
+
+freeze = B / 'SP15-ROOT-FREEZE-ACCEPTANCE.json'
+assert sha(freeze) == '46318471938f7d105a113af3e449856e3a8f52154714dc434f5cb905d76db4ca'
+protected = json.loads(freeze.read_text())['protected_files']
+assert all(sha(P / rel) == digest for rel, digest in protected.items())
+names = {'NLA.SP15.' + n for n in ['augmented_strict_derivative',
+         'augmented_derivative_equivalence', 'local_augmented_inverse', 'local_coefficient_fiber']}
+headers = [h for h in json.loads((P / 'STATEMENT-HEADERS.json').read_text())['contracts']
+           if h['name'] in names]
+assert len(headers) == 4
+(R / 'EXACT-HEADERS.json').write_text(json.dumps(headers, indent=2) + '\n')
+
+primary = {
+    'Mathlib/Analysis/Calculus/FDeriv/Prod.lean': [(357, 375)],
+    'Mathlib/Analysis/Calculus/FDeriv/Congr.lean': [(108, 120)],
+    'Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean': [(106, 137), (143, 175)],
+    'Mathlib/Topology/Algebra/Module/FiniteDimension.lean': [(321, 329), (468, 489)],
+    'Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean': [(770, 785)],
+    'Mathlib/LinearAlgebra/Determinant.lean': [(214, 230)],
+    'Mathlib/LinearAlgebra/Matrix/ToLin.lean': [(282, 295), (382, 392)],
+    'Mathlib/Data/Matrix/Mul.lean': [(698, 715)],
+    'Mathlib/Data/Fin/SuccPred.lean': [(624, 632)],
+    'Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean': [(334, 352)],
+    'Mathlib/Topology/Constructions.lean': [(759, 775)],
+    'Mathlib/Topology/Continuous.lean': [(72, 82)],
+    'Mathlib/Topology/Neighborhoods.lean': [(88, 103)],
+    'Mathlib/Topology/MetricSpace/Pseudo/Defs.lean': [(776, 789), (1128, 1134)],
+    'Mathlib/Order/Filter/Tendsto.lean': [(33, 48)],
+    'Mathlib/Topology/Algebra/Module/ContinuousLinearMap/PiProd.lean': [(213, 242)],
+}
+api = {}
+for rel, ranges in primary.items():
+    f = M / rel
+    lines = f.read_text().splitlines()
+    excerpt = '\n\n'.join('\n'.join(f'{i}: {lines[i-1]}' for i in range(a, b+1))
+                            for a, b in ranges) + '\n'
+    dest = R / 'primary' / (rel.replace('/', '_') + '.txt')
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(excerpt)
+    olean = M / '.lake/build/lib/lean' / Path(rel).with_suffix('.olean')
+    assert olean.is_file(), olean
+    api[rel] = {'source_sha256': sha(f), 'line_ranges': ranges,
+                'excerpt': str(dest.relative_to(R)), 'excerpt_sha256': sha(dest),
+                'pinned_cached_olean_present': True}
+core = T / 'src/lean/Init/Data/Fin/Lemmas.lean'
+lines = core.read_text().splitlines()
+dest = R / 'primary/Lean_Init_Data_Fin_Lemmas.lean.txt'
+dest.write_text('\n'.join(f'{i}: {lines[i-1]}' for i in range(1043, 1055)) + '\n')
+api['Lean/Init/Data/Fin/Lemmas.lean'] = {'source_path': str(core), 'source_sha256': sha(core),
+    'line_ranges': [[1043, 1054]], 'excerpt': str(dest.relative_to(R)),
+    'excerpt_sha256': sha(dest),
+    'pinned_cached_olean_present': (T / 'lib/lean/Init/Data/Fin/Lemmas.olean').is_file()}
+assert api['Lean/Init/Data/Fin/Lemmas.lean']['pinned_cached_olean_present']
+(R / 'API-BINDINGS.json').write_text(json.dumps(api, indent=2) + '\n')
+
+runtime = []
+for run, modules in [
+    (79, ['NLA.SP15.BoxGeometry']),
+    (84, ['NLA.SP15.JacobianCertificate']),
+    (92, ['NLA.SP15.DerivativeRows.Row' + str(i) for i in [0, 1, 2, 4, 5, 7, 8]]
+         + ['NLA.SP15.CoefficientDerivative'])]:
+    actual = L / f'runs/development-{run}'
+    receipt = json.loads((actual / 'RECEIPT.json').read_text())
+    out = R / f'actual{run}'
+    out.mkdir(exist_ok=True)
+    shutil.copy2(actual / 'RECEIPT.json', out / 'RECEIPT.json')
+    checked = []
+    for module in modules:
+        c = next(c for c in receipt['commands'] if c['module'] == module)
+        assert c['exit_code'] == 0
+        rel = Path(module.replace('.', '/')).with_suffix('.lean')
+        assert sha(P / rel) == c['source_sha256']
+        log = actual / (module + '.log')
+        assert sha(log) == c['log_sha256']
+        text = log.read_text()
+        assert 'sorryAx' not in text and 'error:' not in text
+        shutil.copy2(log, out / log.name)
+        checked.append({'module': module, 'source_sha256': c['source_sha256'],
+                        'log_sha256': c['log_sha256'], 'exit_code': 0,
+                        'elapsed_seconds': c['elapsed_seconds']})
+    runtime.append({'run': run, 'receipt_sha256': sha(actual / 'RECEIPT.json'),
+                    'scope': 'Only listed completed modules; run79 retains its separate failed old Jacobian attempt',
+                    'checked': checked})
+
+active = {}
+for rel in ['NLA/SP15/Definitions.lean', 'NLA/SP15/Numerical.lean',
+            'NLA/SP15/BoxGeometry.lean', 'NLA/SP15/JacobianCertificate.lean',
+            'NLA/SP15/CoefficientDerivative.lean']:
+    active[rel] = sha(P / rel)
+for rel in sorted((P / 'NLA/SP15/DerivativeRows').glob('*.lean')):
+    active[str(rel.relative_to(P))] = sha(rel)
+
+# These are exact scalar planning observations, not a substitute for the Lean matrix proof.
+assert (-1) ** (9 + 9) == 1 and -1088 != 0
+numerical = {'matrix_dimensions': [10, 10], 'minor_dimensions': [9, 9],
+    'last_row_nonzero_column': 9, 'last_row_nonzero_value': 1,
+    'laplace_sign_exponent': 18, 'laplace_sign': 1, 'reused_minor_determinant': -1088,
+    'base_free_coordinate': 1, 'fixed_parameter_box_radius': '1/16',
+    'free_parameter_interval_radius': 'Existential positive epsilon from genuine local inverse; not asserted to equal1/16',
+    'new_interval_evaluation_required': False, 'new_large_determinant_expansion_required': False,
+    'fresh_Lean_execution_by_author': False}
+(R / 'NUMERICAL-OBLIGATIONS.json').write_text(json.dumps(numerical, indent=2) + '\n')
+(R / 'PLAN-CHECKS.json').write_text(json.dumps({'time': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'scope': 'Source-bound pre-code planning for frozen contracts12–15 only',
+    'freeze_acceptance_sha256': sha(freeze), 'protected_files_checked': protected,
+    'exact_headers_checked': len(headers), 'primary_source_files': len(api),
+    'current_dependency_sources': active, 'actual_dependency_evidence_audited': runtime,
+    'implementation_written': False, 'coordinator_acceptance_required': True,
+    'compiler_executed_by_author': False, 'new_Comparator_run': False, 'count_change': 0}, indent=2) + '\n')
+print(json.dumps({'protected_files_checked': len(protected), 'headers': len(headers),
+                  'primary_files': len(api), 'actual_successful_dependency_modules_audited':
+                  sum(len(r['checked']) for r in runtime), 'compiler_executed': False}, indent=2))

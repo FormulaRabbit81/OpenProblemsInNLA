@@ -1,0 +1,58 @@
+132:           Fintype.prod_equiv (swap i j) _ _ (by simp [apply_swap_eq_self hpij])
+133:         simp [this, sign_swap hij, -sign_swap', prod_mul_distrib])
+134:       (fun σ _ _ => (not_congr mul_swap_eq_iff).mpr hij) (fun _ _ => mem_univ _) fun σ _ =>
+135:       mul_swap_involutive i j σ
+136: 
+137: @[simp]
+138: theorem det_mul (M N : Matrix n n R) : det (M * N) = det M * det N :=
+139:   calc
+140:     det (M * N) = ∑ p : n → n, ∑ σ : Perm n, ε σ * ∏ i, M (σ i) (p i) * N (p i) i := by
+141:       simp only [det_apply', mul_apply, prod_univ_sum, mul_sum, Fintype.piFinset_univ]
+142:       rw [Finset.sum_comm]
+
+245:   rw [Matrix.det_submatrix_equiv_self, Matrix.det_permute', abs_mul, abs_unit_intCast, one_mul]
+246: 
+247: /-- Reindexing both indices along the same equivalence preserves the determinant.
+248: 
+249: For the `simp` version of this lemma, see `det_submatrix_equiv_self`; this one is unsuitable because
+250: `Matrix.reindex_apply` unfolds `reindex` first.
+251: -/
+252: theorem det_reindex_self (e : m ≃ n) (A : Matrix m m R) : det (reindex e e A) = det A :=
+253:   det_submatrix_equiv_self e.symm A
+254: 
+255: lemma det_reindex (e e' : m ≃ n) (M : Matrix m m R) :
+256:     (M.reindex e e').det = sign (e'.trans e.symm) * M.det := by
+257:   trans ((M.reindex (e.trans e'.symm) (.refl _)).reindex e' e').det
+258:   · congr 1; ext; simp
+259:   · simp_rw [det_reindex_self, reindex_apply, Equiv.refl_symm, Equiv.coe_refl, det_permute]
+260:     rfl
+261: 
+262: /-- Reindexing both indices along equivalences preserves the absolute of the determinant.
+263: 
+264: For the `simp` version of this lemma, see `abs_det_submatrix_equiv_equiv`;
+265: this one is unsuitable because `Matrix.reindex_apply` unfolds `reindex` first.
+266: -/
+267: theorem abs_det_reindex {R : Type*} [CommRing R] [LinearOrder R] [IsStrictOrderedRing R]
+268:     (e₁ e₂ : m ≃ n) (A : Matrix m m R) :
+269:     |det (reindex e₁ e₂ A)| = |det A| :=
+270:   abs_det_submatrix_equiv_equiv e₁.symm e₂.symm A
+271: 
+272: theorem det_smul (A : Matrix n n R) (c : R) : det (c • A) = c ^ Fintype.card n * det A :=
+273:   calc
+274:     det (c • A) = det ((diagonal fun _ => c) * A) := by rw [smul_eq_diagonal_mul]
+275:     _ = det (diagonal fun _ => c) * det A := det_mul _ _
+276:     _ = c ^ Fintype.card n * det A := by simp
+277: 
+278: @[simp]
+279: theorem det_smul_of_tower {α} [Monoid α] [MulAction α R] [IsScalarTower α R R]
+280:     [SMulCommClass α R R] (c : α) (A : Matrix n n R) :
+281:     det (c • A) = c ^ Fintype.card n • det A := by
+282:   rw [← smul_one_smul R c A, det_smul, smul_pow, one_pow, smul_mul_assoc, one_mul]
+283: 
+284: theorem det_neg (A : Matrix n n R) : det (-A) = (-1) ^ Fintype.card n * det A := by
+285:   rw [← det_smul, neg_one_smul]
+286: 
+287: /-- A variant of `Matrix.det_neg` with scalar multiplication by `Units ℤ` instead of multiplication
+288: by `R`. -/
+289: theorem det_neg_eq_smul (A : Matrix n n R) :
+290:     det (-A) = (-1 : Units ℤ) ^ Fintype.card n • det A := by
