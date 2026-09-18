@@ -2,7 +2,7 @@
 
 **112 problems with open targets:** 42 open and 70 partially resolved. **105 other retained entries**, excluded from the open count.
 
-**Resolution evidence:** 53 solved (published or independently audited); 52 solved with Lean verification.
+**Resolution evidence:** 52 solved (published or independently audited); 53 solved with Lean verification.
 
 Each entry records its own literature-check date. Literature checks are bounded; ratings are editorial. “Impact” uses the canonical `Importance` field.
 
@@ -105,7 +105,7 @@ Retained entries outside the open count:
 | --- | --- | --- | --- | --- | --- |
 | [MF-02](matrix-functions-and-stability/MF-02/README.md) | Multiplication overhead of cubic sign compositions | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-02/problem.pdf) · [TeX](matrix-functions-and-stability/MF-02/problem.tex) |
 | [MF-03](matrix-functions-and-stability/MF-03/README.md) | A uniform disk bound for wave-kernel Padé approximants | **✅ SOLVED** | hard | interesting to specialist | [PDF](matrix-functions-and-stability/MF-03/problem.pdf) · [TeX](matrix-functions-and-stability/MF-03/problem.tex) |
-| [MF-05](matrix-functions-and-stability/MF-05/README.md) | Local Hölder continuity of the joint spectral radius | **✅ SOLVED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-05/problem.pdf) · [TeX](matrix-functions-and-stability/MF-05/problem.tex) |
+| [MF-05](matrix-functions-and-stability/MF-05/README.md) | Local Hölder continuity of the joint spectral radius | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-05/problem.pdf) · [TeX](matrix-functions-and-stability/MF-05/problem.tex) |
 | [MF-06](matrix-functions-and-stability/MF-06/README.md) | A pointwise Lipschitz lower bound for the joint spectral radius | **✅ SOLVED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-06/problem.pdf) · [TeX](matrix-functions-and-stability/MF-06/problem.tex) |
 | [MF-07](matrix-functions-and-stability/MF-07/README.md) | Uniform polynomial bounds for products at joint spectral radius one | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-07/problem.pdf) · [TeX](matrix-functions-and-stability/MF-07/problem.tex) |
 | [MF-12](matrix-functions-and-stability/MF-12/README.md) | Realizing arbitrary polynomial growth exponents by finite matrix families | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-12/problem.pdf) · [TeX](matrix-functions-and-stability/MF-12/problem.tex) |

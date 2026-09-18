@@ -1,0 +1,101 @@
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:151:theorem continuousAt_const_rpow {a b : ℝ} (h : a ≠ 0) : ContinuousAt (a ^ ·) b := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:157:theorem continuousAt_const_rpow' {a b : ℝ} (h : b ≠ 0) : ContinuousAt (a ^ ·) b := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:179:theorem continuousAt_rpow_of_ne (p : ℝ × ℝ) (hp : p.1 ≠ 0) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:184:    rw [continuousAt_congr (rpow_eq_nhds_of_neg hp)]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:189:    rw [continuousAt_congr (rpow_eq_nhds_of_pos hp)]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:194:theorem continuousAt_rpow_of_pos (p : ℝ × ℝ) (hp : 0 < p.2) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:199:  · exact continuousAt_rpow_of_ne (x, y) hx
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:211:theorem continuousAt_rpow (p : ℝ × ℝ) (h : p.1 ≠ 0 ∨ 0 < p.2) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:213:  h.elim (fun h => continuousAt_rpow_of_ne p h) fun h => continuousAt_rpow_of_pos p h
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:216:theorem continuousAt_rpow_const (x : ℝ) (q : ℝ) (h : x ≠ 0 ∨ 0 ≤ q) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:220:  · exact (continuousAt_rpow (x, q) h).comp₂ continuousAt_id continuousAt_const
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:224:theorem continuous_rpow_const {q : ℝ} (h : 0 ≤ q) : Continuous (fun x : ℝ => x ^ q) :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:225:  continuous_iff_continuousAt.mpr fun x ↦ continuousAt_rpow_const x q (.inr h)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:228:lemma continuous_const_rpow {a : ℝ} (h : a ≠ 0) : Continuous (fun x : ℝ ↦ a ^ x) :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:229:  continuous_iff_continuousAt.mpr fun _ ↦ continuousAt_const_rpow h
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:239:  (Real.continuousAt_rpow (x, y) h).tendsto.comp (hf.prodMk_nhds hg)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:268:  continuous_iff_continuousAt.2 fun x => hf.continuousAt.rpow hg.continuousAt (h x)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:283:  continuous_iff_continuousAt.2 fun x => hf.continuousAt.rpow_const (h x)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:308:    (continuous_fst.norm.tendsto ((0 : ℂ), z)).rpow ((continuous_re.comp continuous_snd).tendsto _)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:382:theorem continuousAt_rpow {x : ℝ≥0} {y : ℝ} (h : x ≠ 0 ∨ 0 < y) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:392:  · apply Real.continuousAt_rpow
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:412:  Tendsto.comp (NNReal.continuousAt_rpow h) (hx.prodMk_nhds hy)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:416:theorem continuousAt_rpow_const {x : ℝ≥0} {y : ℝ} (h : x ≠ 0 ∨ 0 ≤ y) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:418:  h.elim (fun h => tendsto_id.nnrpow tendsto_const_nhds (Or.inl h)) fun h =>
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:420:      tendsto_id.nnrpow tendsto_const_nhds (Or.inr h)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:423:theorem continuous_rpow_const {y : ℝ} (h : 0 ≤ y) : Continuous fun x : ℝ≥0 => x ^ y :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:424:  continuous_iff_continuousAt.2 fun _ => continuousAt_rpow_const (Or.inr h)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:427:theorem continuousOn_rpow_const_compl_zero {r : ℝ} :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:429:  fun _ h => ContinuousAt.continuousWithinAt <| NNReal.continuousAt_rpow_const (.inl h)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:434:theorem continuousOn_rpow_const {r : ℝ} {s : Set ℝ≥0}
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:437:    (NNReal.continuous_rpow_const · |>.continuousOn)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:456:private theorem continuousAt_rpow_const_of_pos {x : ℝ≥0∞} {y : ℝ} (h : 0 < y) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:460:    convert! ENNReal.tendsto_rpow_at_top h
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:464:  convert! continuous_coe.continuousAt.comp (NNReal.continuousAt_rpow_const (Or.inr h.le)) using 1
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:469:theorem continuous_rpow_const {y : ℝ} : Continuous fun a : ℝ≥0∞ => a ^ y := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:472:  · exact continuousAt_rpow_const_of_pos hy
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:478:    exact continuous_inv.continuousAt.comp (continuousAt_rpow_const_of_pos z_pos)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:480:theorem tendsto_const_mul_rpow_nhds_zero_of_pos {c : ℝ≥0∞} (hc : c ≠ ∞) {y : ℝ} (hy : 0 < y) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:482:  convert! ENNReal.Tendsto.const_mul (ENNReal.continuous_rpow_const.tendsto 0) _
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Continuity.lean:490:  (ENNReal.continuous_rpow_const.tendsto a).comp hm
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:414:theorem rpow_mul {x : ℝ} (hx : 0 ≤ x) (y z : ℝ) : x ^ (y * z) = (x ^ y) ^ z := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:421:  simp_rw [← rpow_natCast, ← rpow_mul hx, mul_comm y]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:424:  simp_rw [← rpow_intCast, ← rpow_mul hx, mul_comm y]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:478:theorem mul_rpow (hx : 0 ≤ x) (hy : 0 ≤ y) : (x * y) ^ z = x ^ z * y ^ z := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:486:theorem div_rpow (hx : 0 ≤ x) (hy : 0 ≤ y) (z : ℝ) : (x / y) ^ z = x ^ z / y ^ z := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:487:  simp only [div_eq_mul_inv, mul_rpow hx (inv_nonneg.2 hy), inv_rpow hy]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:502:  rw [← rpow_mul hx, mul_inv_cancel₀ hy, rpow_one]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:505:  rw [← rpow_mul hx, inv_mul_cancel₀ hy, rpow_one]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:509:  rw [← rpow_natCast, ← rpow_mul hx, mul_inv_cancel₀ hn0, rpow_one]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:511:theorem rpow_inv_natCast_pow (hx : 0 ≤ x) (hn : n ≠ 0) : (x ^ (n⁻¹ : ℝ)) ^ n = x := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:513:  rw [← rpow_natCast, ← rpow_mul hx, inv_mul_cancel₀ hn0, rpow_one]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:515:lemma rpow_natCast_mul (hx : 0 ≤ x) (n : ℕ) (z : ℝ) : x ^ (n * z) = (x ^ n) ^ z := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:516:  rw [rpow_mul hx, rpow_natCast]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:518:lemma rpow_mul_natCast (hx : 0 ≤ x) (y : ℝ) (n : ℕ) : x ^ (y * n) = (x ^ y) ^ n := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:519:  rw [rpow_mul hx, rpow_natCast]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:522:  rw [rpow_mul hx, rpow_intCast]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:524:lemma rpow_mul_intCast (hx : 0 ≤ x) (y : ℝ) (n : ℤ) : x ^ (y * n) = (x ^ y) ^ n := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:525:  rw [rpow_mul hx, rpow_intCast]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:548:theorem rpow_le_rpow {x y z : ℝ} (h : 0 ≤ x) (h₁ : x ≤ y) (h₂ : 0 ≤ z) : x ^ z ≤ y ^ z := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:555:  fun _ ha _ _ hab => rpow_le_rpow ha hab hr
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:563:lemma rpow_le_rpow_of_nonpos (hx : 0 < x) (hxy : x ≤ y) (hz : z ≤ 0) : y ^ z ≤ x ^ z := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:566:  on_goal 1 => refine rpow_le_rpow ?_ hxy (neg_nonneg.2 hz)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:572:theorem rpow_le_rpow_iff (hx : 0 ≤ x) (hy : 0 ≤ y) (hz : 0 < z) : x ^ z ≤ y ^ z ↔ x ≤ y :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:576:  ⟨lt_imp_lt_of_le_imp_le fun h ↦ rpow_le_rpow_of_nonpos hx h hz.le,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:579:lemma rpow_le_rpow_iff_of_neg (hx : 0 < x) (hy : 0 < y) (hz : z < 0) : x ^ z ≤ y ^ z ↔ y ≤ x :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:583:  rw [← rpow_le_rpow_iff hx _ hz, rpow_inv_rpow] <;> positivity
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:586:  rw [← rpow_le_rpow_iff _ hy hz, rpow_inv_rpow] <;> positivity
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:596:  rw [← rpow_le_rpow_iff_of_neg _ hx hz, rpow_inv_rpow _ hz.ne] <;> positivity
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:608:  rw [← rpow_le_rpow_iff_of_neg hy _ hz, rpow_inv_rpow _ hz.ne] <;> positivity
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:615:theorem rpow_le_rpow_of_exponent_le (hx : 1 ≤ x) (hyz : y ≤ z) : x ^ y ≤ x ^ z := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:625:  fun _ ha _ _ hab => rpow_le_rpow_of_nonpos ha hab hr
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:628:theorem rpow_le_rpow_left_iff (hx : 1 < x) : x ^ y ≤ x ^ z ↔ y ≤ z := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:635:  rw [lt_iff_not_ge, rpow_le_rpow_left_iff hx, lt_iff_not_ge]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:641:theorem rpow_le_rpow_of_exponent_ge (hx0 : 0 < x) (hx1 : x ≤ 1) (hyz : z ≤ y) : x ^ y ≤ x ^ z := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:646:theorem rpow_le_rpow_left_iff_of_base_lt_one (hx0 : 0 < x) (hx1 : x < 1) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:654:  rw [lt_iff_not_ge, rpow_le_rpow_left_iff_of_base_lt_one hx0 hx1, lt_iff_not_ge]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:669:  convert! rpow_le_rpow_of_exponent_le hx hz
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:687:  convert! rpow_le_rpow_of_exponent_ge hx1 hx2 hz
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:711:/-- This is a more general but less convenient version of `rpow_le_rpow_of_exponent_ge`.
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:713:theorem rpow_le_rpow_of_exponent_ge_of_imp (hx0 : 0 ≤ x) (hx1 : x ≤ 1) (hyz : z ≤ y)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:721:  · exact rpow_le_rpow_of_exponent_ge hx0' hx1 hyz
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:723:/-- This version of `rpow_le_rpow_of_exponent_ge` allows `x = 0` but requires `0 ≤ z`.
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:724:See also `rpow_le_rpow_of_exponent_ge_of_imp` for the most general version. -/
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:725:theorem rpow_le_rpow_of_exponent_ge' (hx0 : 0 ≤ x) (hx1 : x ≤ 1) (hz : 0 ≤ z) (hyz : z ≤ y) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:727:  rpow_le_rpow_of_exponent_ge_of_imp hx0 hx1 hyz fun _ hy ↦ le_antisymm (hyz.trans_eq hy) hz
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:737:    using rpow_le_rpow_of_exponent_ge_of_imp h₁ h₂ h₃ fun _ ↦ (absurd · one_ne_zero)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:740:  simpa only [rpow_one] using rpow_le_rpow_of_exponent_le h₁ h₂
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:744:    using rpow_le_rpow_of_exponent_ge_of_imp h₁ h₂ h₃ fun _ ↦ (absurd · (one_pos.trans_le h₃).ne')
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:747:  simpa only [rpow_one] using rpow_le_rpow_of_exponent_le h₁ h₂
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:763:  rw [← rpow_one y, ← rpow_one z, ← mul_inv_cancel₀ hx, rpow_mul hy, rpow_mul hz, hyz]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:926:@[bound] lemma rpow_le_rpow_of_exponent_le_or_ge {x y z : ℝ}
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:929:  · exact Real.rpow_le_rpow_of_exponent_le x1 yz
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:930:  · exact Real.rpow_le_rpow_of_exponent_ge x0 x1 zy
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:939:  refine (Real.rpow_le_rpow_of_nonpos zero_lt_two (Nat.cast_le.mpr p.prop.two_le) <|
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:942:  exact Real.rpow_le_rpow_of_exponent_le one_le_two <| (neg_lt_neg hs).le
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:956:  exact Real.rpow_le_rpow_of_exponent_le (by exact_mod_cast hn) h
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:961:    Real.rpow_le_rpow_left_iff (Nat.one_lt_cast.mpr hn)]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:987:      ← rpow_natCast, ← rpow_mul h]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:993:  rw [sqrt_eq_rpow, ← rpow_mul hx]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:1066:  rw [hb.to_eq rfl rfl, div_eq_mul_inv, Real.rpow_natCast_mul, ← Nat.cast_pow, hm, ← hkl, ← hr,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/SpecialFunctions/Pow/Real.lean:1073:    simpa [ha.to_eq, Real.div_rpow, hnum.1, hden.1]
