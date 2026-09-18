@@ -37,7 +37,7 @@
 | [MI-21](MI-21/README.md) | Freewan–Hayajneh inequality for sums of weighted geometric means | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](MI-21/problem.pdf) · [TeX](MI-21/problem.tex) |
 | [MI-22](MI-22/README.md) | Lemos–Soares singular-value log-majorization | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](MI-22/problem.pdf) · [TeX](MI-22/problem.tex) |
 | [MI-23](MI-23/README.md) | Corrected generalized geometric-mean product conjecture | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](MI-23/problem.pdf) · [TeX](MI-23/problem.tex) |
-| [MI-24](MI-24/README.md) | Schatten norm complement involving Lin's positive definite quantity | **✅ SOLVED** | challenging | interesting to specialist | [PDF](MI-24/problem.pdf) · [TeX](MI-24/problem.tex) |
+| [MI-24](MI-24/README.md) | Schatten norm complement involving Lin's positive definite quantity | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](MI-24/problem.pdf) · [TeX](MI-24/problem.tex) |
 | [MI-26](MI-26/README.md) | Concave unitary-orbit subadditivity without monotonicity | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](MI-26/problem.pdf) · [TeX](MI-26/problem.tex) |
 | [MI-27](MI-27/README.md) | Constant one in the logarithmic commutator inequality | **✅ SOLVED** | challenging | broadly interesting | [PDF](MI-27/problem.pdf) · [TeX](MI-27/problem.tex) |
 | [MI-28](MI-28/README.md) | Ghabries's determinant comparison for arbitrary nonnegative base powers | **✅ SOLVED** | challenging | interesting to specialist | [PDF](MI-28/problem.pdf) · [TeX](MI-28/problem.tex) |

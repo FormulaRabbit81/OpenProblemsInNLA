@@ -34,7 +34,7 @@ quantity},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}MI-24}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-11}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Verification check: 2026-09-18}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -51,7 +51,7 @@ norm complement involving Lin's positive definite quantity\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to specialist\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
@@ -76,26 +76,86 @@ TeX}.
 
 The complete argument and its precise published input passed a
 \href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/stepaniants-mi24-2026-09-11/verification/reviews/MI-24-review.md}{separate
-Codex-agent review}. It was developed with ChatGPT/Codex; the
-verification is independent agent review, not external human peer review
-or formal certification.
+Codex-agent review}. It was developed with ChatGPT/Codex; that September
+11 verification was independent agent review. The later Lean
+verification is recorded below; no external human peer review is
+claimed.
 \href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/stepaniants-mi24-2026-09-11/README.md}{Authorship,
 source checks, reproduction and public-branch audit}. The contribution
 is the convexity deduction from existing comparisons. The original ID,
 path, statement, historical ratings and earlier status check below
 remain intact.
 
+\subsection{Lean proof and verification
+evidence}\label{lean-proof-and-verification-evidence}
+
+\textbf{The complete original target is Lean verified, 2026-09-18
+(UTC).} The
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/97ff57c89775783bb7ebe952315840be86733417/matrix-inequalities-and-norms/MI-24/lean/Solution.lean}{immutable
+proof} at revision \textit{97ff57c89775783bb7ebe952315840be86733417}
+passed
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35310937025/job/105492723099}{non-root
+Linux run 35310937025}. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-inequalities-and-norms/MI-24/lean/verification/linux-2026-09-18/README.md}{retained
+execution evidence} binds all 212 submitted project inputs and 22
+exported statements. Real Comparator, default-kernel replay, standard
+transitive axioms, sandbox checks and rejection controls passed.
+Subsequent publication and PR merge checkouts are checked separately.
+
+The main declaration \textit{NLA.MI24.schattenComplementConjecture}
+proves the unchanged inequality for every complex positive definite
+pair, every positive dimension, every real finite Schatten exponent at
+least one, and the infinity endpoint. The original ordered formulas for
+both matrix means are retained; no symmetry of Lin's quantity or
+commutativity is assumed. The finite and infinity semantics theorems
+establish the actual Schatten definitions. The needed Heron and Furuta
+comparisons are proved internally. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-inequalities-and-norms/MI-24/lean/Challenge.lean}{22
+exact contracts} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-inequalities-and-norms/MI-24/lean/IMPLEMENTATION-MAP.json}{implementation
+map} identify the definitions, assumptions and proofs.
+
+Convexity deduction and formalization: \textbf{George Stepaniants},
+Department of Computing and Mathematical Sciences, California Institute
+of Technology. The original conjecture remains attributed to Ghabries,
+Abbas, Mourad and Assi; the Heron comparison to Dinh, Dumitru and
+Franco; and the Furuta inequality and proof route to Furuta and Fujii.
+Two independent statement reviews preceded implementation. Two
+independent nonauthor final reviews approved the complete 34-module
+source closure.
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-inequalities-and-norms/MI-24/lean/reviews/README.md}{Review
+records} disclose substantial OpenAI Codex assistance and distinguish
+source review from executed verification.
+
+The project pins Lean 4.33.1,
+\href{https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474}{Mathlib}
+and
+\href{https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926}{LeanCert}.
+The proof consumes two kernel-mode LeanCert scalar bounds on one
+interval of width one half; no matrix sampling or interval subdivision
+is used. Every export has only \textit{propext},
+\textit{Classical.choice} and \textit{Quot.sound} as transitive axioms.
+Run \textit{lake build Solution} in
+\textit{matrix-inequalities-and-norms/MI-24/lean};
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-inequalities-and-norms/MI-24/lean/README.md}{reproduction
+instructions} separately explain the actual local checks and the Linux
+checker.
+
 \subsection{Problem statement}\label{problem-statement}
 
-For positive definite \(A,B\in\mathbb C^{n\times n}\), set \[
-G=A^{1/2}(A^{-1/2}BA^{-1/2})^{1/2}A^{1/2},\qquad
-L=A^{1/2}(B^{1/2}A^{-1}B^{1/2})^{1/2}A^{1/2}.
-\] Here \(G=A\#B\), while \(L\) is the explicitly defined quantity used
-by Lin; no symmetry of \(L(A,B)\) is assumed. Determine whether, for all
+For positive definite \(A,B\in\mathbb C^{n\times n}\), set
+
+\[G=A^{1/2}(A^{-1/2}BA^{-1/2})^{1/2}A^{1/2},\qquad
+L=A^{1/2}(B^{1/2}A^{-1}B^{1/2})^{1/2}A^{1/2}.\]
+
+Here \(G=A\#B\), while \(L\) is the explicitly defined quantity used by
+Lin; no symmetry of \(L(A,B)\) is assumed. Determine whether, for all
 \(n\ge1\), all positive definite \(A,B\), and all \(1\le p\le\infty\),
-\[
-\|A+B+G+L\|_p\le\|A+B+2L\|_p.
-\] For \(p<\infty\), \(\|X\|_p=(\operatorname{tr}|X|^p)^{1/p}\), where
+
+\[\|A+B+G+L\|_p\le\|A+B+2L\|_p.\]
+
+For \(p<\infty\),
+\(\|X\|_p=(\mathop{\mathrm{tr}}\nolimits|X|^p)^{1/p}\), where
 \(|X|=(X^*X)^{1/2}\); for \(p=\infty\), use the largest singular value.
 
 Matrix means are central to interpolation of positive definite data. The

@@ -1,0 +1,136 @@
+"""Authenticate a completed serial local run. This does not execute Lean or Comparator."""
+from pathlib import Path
+import datetime
+import hashlib
+import json
+import re
+import sys
+
+B = Path(__file__).resolve().parent
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+tag, run_number, entrypoint = sys.argv[1:]
+P = B / 'next-proofs' / tag
+assert tag in {'MI-24', 'MF-18'}, 'Capture only the current standalone full-target candidates'
+prefix = tag.replace('-', '')
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+read = lambda p: json.loads(Path(p).read_text())
+receipt_path = L / 'runs' / f'development-{run_number}' / 'RECEIPT.json'
+receipt = read(receipt_path)
+assert receipt.get('end') and not receipt['failed_modules'] and not receipt['blocked_modules']
+assembly_path = L / f'ASSEMBLY-{run_number}.json'
+assembly = read(assembly_path)
+assert sha(assembly_path) == receipt['assembly_sha256']
+assert sha(L / 'serial_compile_v3.py') == receipt['runner_sha256']
+local_sources = assembly['sources']
+imports = {}
+closures = {}
+
+def closure(module):
+    if module not in closures:
+        rel = module.replace('.', '/') + '.lean'
+        imports[module] = [d for d in re.findall(r'^import\s+(\S+)', (L / rel).read_text(), re.M)
+                           if d.startswith('NLA.')]
+        closures[module] = {module}
+        for dep in imports[module]:
+            closures[module] |= closure(dep)
+    return closures[module]
+
+modules = closure(entrypoint)
+canonical = lambda m: 'Solution.lean' if m == entrypoint else m.replace('.', '/') + '.lean'
+source_hashes = {}
+for module in modules:
+    rel = module.replace('.', '/') + '.lean'
+    h = local_sources[rel]['sha256']
+    assert sha(L / rel) == sha(P / canonical(module)) == h
+    source_hashes[canonical(module)] = h
+
+cfg = read(P / 'comparator.json')
+names = cfg['theorem_names']
+permitted = {'propext', 'Classical.choice', 'Quot.sound'}
+assert set(cfg['permitted_axioms']) == permitted and cfg.get('definition_names', []) == []
+texts = {rel: (P / rel).read_text() for rel in source_hashes}
+challenge = (P / 'Challenge.lean').read_text()
+for name in names:
+    pattern = r'^theorem\s+' + re.escape(name.split('.')[-1]) + r'\b[\s\S]*?(?=\s*:=\s*by)'
+    expected = re.search(pattern, challenge, re.M)
+    found = [m.group().rstrip() for text in texts.values() if (m := re.search(pattern, text, re.M))]
+    assert expected and found == [expected.group().rstrip()], name
+
+origins = []
+bindings = {}
+for module in sorted(modules):
+    rel = module.replace('.', '/') + '.lean'
+    path = receipt_path
+    chain = []
+    latest = next(c for c in receipt['commands'] if c['module'] == module)
+    output = L / '.lake/build/lib/lean' / (module.replace('.', '/') + '.olean')
+    assert sha(output) == latest['output_sha256']
+    while True:
+        node = read(path)
+        assert node.get('end') and node['platform'] == 'darwin'
+        assert node['threads'] == 1 and 0 < node['memory_cap_mib'] <= 4096
+        assert node['max_compiler_processes'] == 1
+        command = next(c for c in node['commands'] if c['module'] == module)
+        assert command['source_sha256'] == source_hashes[canonical(module)]
+        assert command['output_sha256'] == latest['output_sha256']
+        for dep in closure(module):
+            dep_rel = dep.replace('.', '/') + '.lean'
+            assert node['source_inputs'][dep_rel] == source_hashes[canonical(dep)]
+        bindings[str(path)] = sha(path)
+        chain.append({'receipt': str(path), 'sha256': sha(path)})
+        if command.get('status') != 'reused_exact_successful_local_output':
+            assert command['exit_code'] == 0
+            assert '--threads=1' in command['argv']
+            assert sum(arg.startswith('--memory=') for arg in command['argv']) == 1
+            assert 0 < int(next(arg.split('=')[1] for arg in command['argv'] if arg.startswith('--memory='))) <= 4096
+            log = path.parent / (module + '.log')
+            assert sha(log) == command['log_sha256'] and 'error:' not in log.read_text()
+            bindings[str(log)] = sha(log)
+            origins.append({'module': module, 'canonical_source_path': canonical(module),
+                            'source_sha256': command['source_sha256'],
+                            'success_origin_receipt': str(path), 'receipt_sha256': sha(path),
+                            'command': command, 'reuse_chain': chain,
+                            'historical_reuse_hops_authenticated': len(chain)-1})
+            break
+        if 'prior_receipt' in command:
+            path = Path(command['prior_receipt'])
+            assert sha(path) == command['prior_receipt_sha256']
+        else:
+            # The run02 schema embeds its full prior command, not a receipt path.
+            # Require one actual retained origin with exactly that command.
+            wanted = command['prior_command']
+            matches = [p for p in (L / 'runs').glob('development-*/RECEIPT.json')
+                       if any(c == wanted for c in read(p)['commands'])]
+            assert len(matches) == 1, ('ambiguous legacy command provenance', module, matches)
+            path = matches[0]
+
+
+entry_log = receipt_path.parent / (entrypoint + '.log')
+assert next(c for c in receipt['commands'] if c['module'] == entrypoint).get('exit_code') == 0
+observed = re.findall(r"^'([^']+)' depends on axioms: \[([^]]*)\]$", entry_log.read_text(), re.M)
+assert [name for name, axioms in observed] == names
+axioms = {name: [a.strip() for a in value.split(',')] for name, value in observed}
+assert all(set(value) <= permitted for value in axioms.values())
+assert len(re.findall(r'^#assert_trust kernel ', texts['Solution.lean'], re.M)) == len(names)
+record = {
+    'time': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'scope': 'Complete actual macOS serial local Lean proof check; not Linux Comparator, publication or campaign count acceptance',
+    'receipt': str(receipt_path), 'receipt_sha256': sha(receipt_path),
+    'assembly': str(assembly_path), 'assembly_sha256': sha(assembly_path),
+    'actual_local_closure_modules': len(modules), 'exact_contracts': len(names),
+    'sources': source_hashes, 'observed_axioms': axioms,
+    'source_filename_mapping': {'local': entrypoint.replace('.', '/')+'.lean', 'canonical': 'Solution.lean',
+                                'sha256': source_hashes['Solution.lean']},
+    'all_current_sources_match': True,
+    'commands_and_successful_origins': origins, 'retained_original_evidence': bindings,
+    'full_independent_reviews': 'Original reports and later source-bound cleanup continuations are separate gates',
+    'GitHubComparator': 'not yet run for these problem sources', 'count_change': 0,
+    'audit_script_sha256': sha(__file__),
+}
+destination = B / f'{prefix}-LOCAL-COMPLETE-{run_number}.json'
+assert not destination.exists()
+destination.write_text(json.dumps(record, indent=2) + '\n')
+print(json.dumps({'record': str(destination), 'sha256': sha(destination),
+                  'modules': len(modules), 'contracts': len(names),
+                  'fresh_modules': sum(c.get('exit_code') == 0 and c['module'] in modules for c in receipt['commands']),
+                  'evidence_files': len(bindings), 'Comparator': 'not run'}, indent=2))

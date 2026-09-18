@@ -6,8 +6,8 @@
 
 **Difficulty:** challenging  
 **Importance:** interesting to specialist  
-**Status:** Solved  
-**Last checked:** 2026-09-11
+**Status:** Lean verified  
+**Last checked:** 2026-09-18
 
 **Rating rationale (historical):** Extending the proved trace and Frobenius cases to all Schatten norms is challenging; the comparison of these particular means has specialist importance.
 
@@ -15,7 +15,17 @@
 
 **Solved (affirmative).** George Stepaniants's [complete proof](solution.md), **Theorem 1**, proves the displayed inequality for every dimension, every complex positive definite pair and every $`1\le p\le\infty`$. The published Heron norm inequality and a positive matrix comparison give $`\|A+B+2G\|_p\le\|A+B+G+L\|_p`$. Since $`2(A+B+G+L)=(A+B+2G)+(A+B+2L)`$, the triangle inequality then proves the desired comparison. [Proof PDF](solution.pdf) · [Standalone TeX](solution.tex).
 
-The complete argument and its precise published input passed a [separate Codex-agent review](../../references/stepaniants-mi24-2026-09-11/verification/reviews/MI-24-review.md). It was developed with ChatGPT/Codex; the verification is independent agent review, not external human peer review or formal certification. [Authorship, source checks, reproduction and public-branch audit](../../references/stepaniants-mi24-2026-09-11/README.md). The contribution is the convexity deduction from existing comparisons. The original ID, path, statement, historical ratings and earlier status check below remain intact.
+The complete argument and its precise published input passed a [separate Codex-agent review](../../references/stepaniants-mi24-2026-09-11/verification/reviews/MI-24-review.md). It was developed with ChatGPT/Codex; that September 11 verification was independent agent review. The later Lean verification is recorded below; no external human peer review is claimed. [Authorship, source checks, reproduction and public-branch audit](../../references/stepaniants-mi24-2026-09-11/README.md). The contribution is the convexity deduction from existing comparisons. The original ID, path, statement, historical ratings and earlier status check below remain intact.
+
+## Lean proof and verification evidence
+
+**The complete original target is Lean verified, 2026-09-18 (UTC).** The [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/97ff57c89775783bb7ebe952315840be86733417/matrix-inequalities-and-norms/MI-24/lean/Solution.lean) at revision `97ff57c89775783bb7ebe952315840be86733417` passed [non-root Linux run 35310937025](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35310937025/job/105492723099). The [retained execution evidence](lean/verification/linux-2026-09-18/README.md) binds all 212 submitted project inputs and 22 exported statements. Real Comparator, default-kernel replay, standard transitive axioms, sandbox checks and rejection controls passed. Subsequent publication and PR merge checkouts are checked separately.
+
+The main declaration `NLA.MI24.schattenComplementConjecture` proves the unchanged inequality for every complex positive definite pair, every positive dimension, every real finite Schatten exponent at least one, and the infinity endpoint. The original ordered formulas for both matrix means are retained; no symmetry of Lin's quantity or commutativity is assumed. The finite and infinity semantics theorems establish the actual Schatten definitions. The needed Heron and Furuta comparisons are proved internally. The [22 exact contracts](lean/Challenge.lean) and [implementation map](lean/IMPLEMENTATION-MAP.json) identify the definitions, assumptions and proofs.
+
+Convexity deduction and formalization: **George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. The original conjecture remains attributed to Ghabries, Abbas, Mourad and Assi; the Heron comparison to Dinh, Dumitru and Franco; and the Furuta inequality and proof route to Furuta and Fujii. Two independent statement reviews preceded implementation. Two independent nonauthor final reviews approved the complete 34-module source closure. [Review records](lean/reviews/README.md) disclose substantial OpenAI Codex assistance and distinguish source review from executed verification.
+
+The project pins Lean 4.33.1, [Mathlib](https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474) and [LeanCert](https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926). The proof consumes two kernel-mode LeanCert scalar bounds on one interval of width one half; no matrix sampling or interval subdivision is used. Every export has only `propext`, `Classical.choice` and `Quot.sound` as transitive axioms. Run `lake build Solution` in `matrix-inequalities-and-norms/MI-24/lean`; [reproduction instructions](lean/README.md) separately explain the actual local checks and the Linux checker.
 
 ## Problem statement
 

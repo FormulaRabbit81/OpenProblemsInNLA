@@ -1,0 +1,130 @@
+"""Read-only coordinator package check; no Lean or Comparator invocation."""
+from pathlib import Path, PurePosixPath
+import datetime, gzip, hashlib, importlib.util, io, json, os, re, subprocess, tarfile
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+P = B / 'MI24-canonical-package-local332'
+W = Path('/private/tmp/nla-lean-next-mf06-worktree')
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+load = lambda p: json.loads(Path(p).read_text())
+checks = 0
+
+def ck(ok, label):
+    global checks
+    checks += 1
+    if not ok:
+        raise AssertionError(label)
+
+manifest = load(P / 'PACKAGE-MANIFEST.json')
+ck(sha(P / 'PACKAGE-MANIFEST.json') == '4731aef13f1fac2b0efab14600dd2f85a9764e85e69155f7da8056d89fa10f0b', 'expected package')
+files = {str(f.relative_to(P)): f for f in P.rglob('*') if f.is_file() and f != P / 'PACKAGE-MANIFEST.json'}
+ck(set(files) == set(manifest['files']), 'complete inventory')
+for rel, f in files.items():
+    ck(not f.is_symlink() and sha(f) == manifest['files'][rel], 'package hash ' + rel)
+    ck(not any(s in rel.split('/') for s in ['.lake', '.git', '__pycache__']), 'no cache files')
+    ck(f.suffix not in {'.pdf', '.olean', '.ilean', '.o', '.so', '.a'}, 'no bulk copyrighted or compiled payload')
+email = re.compile(r'(?i)(?:george|g?stepaniants|sgstepaniants)[^\s@<>]{0,40}@[\w.-]+\.[A-Za-z]{2,}')
+archive_files = 0
+
+def privacy(data, name):
+    global archive_files
+    if name.endswith('.tar.gz'):
+        with tarfile.open(fileobj=io.BytesIO(data), mode='r:gz') as tar:
+            for m in tar.getmembers():
+                ck(m.isfile() and not PurePosixPath(m.name).is_absolute() and '..' not in PurePosixPath(m.name).parts, 'safe archived member')
+                archive_files += 1
+                privacy(tar.extractfile(m).read(), m.name)
+    elif name.endswith('.gz'):
+        privacy(gzip.decompress(data), name[:-3])
+    else:
+        ck(email.search(data.decode('utf8', errors='ignore')) is None, 'George email absent: ' + name)
+
+for rel, f in files.items():
+    privacy(f.read_bytes(), rel)
+local = load(P / 'verification/local332/LOCAL-COMPLETE.json')
+ck(len(local['sources']) == 34 and local['exact_contracts'] == 22, 'full closure')
+for rel, h in local['sources'].items():
+    ck(sha(P / rel) == h, 'exact compiled proof ' + rel)
+ck({str(f.relative_to(P)) for f in P.rglob('*.lean')} == set(local['sources']) | {'Challenge.lean'}, 'only active proof and challenge')
+freeze = load(P / 'STATEMENT-FREEZE.json')
+for rel, h in freeze['frozen_files'].items():
+    ck(sha(P / rel) == h, 'frozen statement ' + rel)
+ck(len(freeze['reviewers']) == 2 and not freeze['proof_implementation_started_before_gate'], 'statement-first approval')
+cfg = load(P / 'comparator.json')
+ck(cfg['theorem_names'] == freeze['contract_names'] and len(cfg['theorem_names']) == 22 and cfg['definition_names'] == [], 'exact contracts')
+proof = (P / 'Solution.lean').read_text()
+for name in cfg['theorem_names']:
+    ck('#print axioms ' + name in proof and '#assert_trust kernel ' + name in proof, 'kernel assertions ' + name)
+imports = {}
+for rel in local['sources']:
+    imports[rel] = []
+    for line in re.findall(r'^import\s+([^\n]+)', (P / rel).read_text(), re.M):
+        for name in line.split():
+            if name.startswith('NLA.'):
+                dep = name.replace('.', '/') + '.lean'
+                ck(dep in local['sources'], 'standalone import ' + dep)
+                imports[rel].append(dep)
+            else:
+                ck(name.startswith(('Mathlib.', 'LeanCert.')), 'pinned external import ' + name)
+seen = set()
+
+def visit(rel):
+    if rel not in seen:
+        seen.add(rel)
+        for dep in imports[rel]:
+            visit(dep)
+
+visit('Solution.lean')
+ck(seen == set(local['sources']), 'complete proof closure')
+retained = load(P / 'verification/RETAINED-PATHS.json')
+for item in retained:
+    dst = P / item['destination']
+    ck(sha(dst) == item['sha256'], 'retained encoded bytes')
+    data = gzip.decompress(dst.read_bytes()) if item['encoding'] == 'gzip' else dst.read_bytes()
+    ck(hashlib.sha256(data).hexdigest() == item['decoded_sha256'], 'retained original bytes')
+reviews = load(P / 'reviews/INDEX.json')
+ck(len(reviews) == 6, 'two statement, two baseline, two final packets')
+ck(sum(x['stage'] == 'final-source-approval' for x in reviews) == 2, 'two final independent approvals')
+for item in reviews + load(P / 'verification/history/INDEX.json'):
+    ck(sha(P / item['archive']) == item['archive_sha256'], 'archive identity')
+    with tarfile.open(P / item['archive'], 'r:gz') as tar:
+        entries = {m.name: hashlib.sha256(tar.extractfile(m).read()).hexdigest() for m in tar.getmembers()}
+    ck(entries == item['payload_sha256'], 'complete exact archived payload')
+meta = load(P / 'formalization.yaml')
+ck(meta['status']['whole_problem_verified'] is False and meta['status']['completed_original_targets'] == 0, 'no early count')
+ck(meta['verification']['GitHub_Comparator']['status'] == 'not run for MI24', 'Linux truthfulness')
+ck(meta['verification']['independent_reviews']['final'] == 2, 'source approval count')
+ck(meta['project']['authors'] == ['George Stepaniants'], 'author')
+ck(meta['project']['affiliation'] == 'Department of Computing and Mathematical Sciences, California Institute of Technology', 'affiliation')
+ck([x['declaration'] for x in meta['status']['main_results']] == cfg['theorem_names'], 'all exports in metadata')
+for row in meta['status']['main_results']:
+    ck(sha(P / row['file']) == row['source_sha256'] and row['axioms'] == local['observed_axioms'][row['declaration']], 'actual source and axioms')
+for name in ['README.md', 'solution.md']:
+    original = subprocess.check_output(['git', 'show', 'e7519c46fd249a6a033bfe5d11c66bf47f7f8885:matrix-inequalities-and-norms/MI-24/' + name], cwd=W)
+    ck((P / 'source-inputs/canonical' / name).read_bytes() == original, 'unchanged canonical source')
+ck(not subprocess.check_output(['git', 'diff', 'ff6abf718126ceb23f933cf4f627f95104461fe8', 'HEAD', '--', 'tools/lean', '.github/workflows/lean-verification.yml'], cwd=W), 'accepted checker unchanged')
+ck(sha(W / 'tools/lean/source-lock.json') == 'b3833b07916e5db77579b9cc53ca582282f6a841f36d6a60d693e5b02d342b6b', 'checker lock')
+spec = importlib.util.spec_from_file_location('mi24_preflight_harness', W / 'tools/lean/harness.py')
+harness = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(harness)
+ck(harness.validate_project(P) == cfg, 'actual harness validation, not execution')
+ck((P / 'lean-toolchain').read_text().strip() == harness.load_lock()['lean_toolchain'], 'toolchain')
+lake = (P / 'lakefile.toml').read_text()
+ck('defaultTargets = ["Solution"]' in lake and 'name = "Solution"' in lake and 'name = "Challenge"' in lake, 'Lake targets')
+packages = load(P / 'lake-manifest.json')['packages']
+ck(packages == load(B / 'next-proofs/MI-24/lake-manifest.json')['packages'], 'unchanged dependencies')
+argv = ['/Users/georgestepaniants/miniforge3/bin/python3', str(W / 'tools/lean/validate_manifest.py'), str(P)]
+r = subprocess.run(argv, env=dict(os.environ, PYTHONDONTWRITEBYTECODE='1', PYTHONPATH='/tmp/nla-publication-python-20260917'), capture_output=True, text=True)
+ck(r.returncode == 0, 'actual schema validation: ' + r.stderr)
+record = {'time': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'reviewer': '/root',
+    'scope': 'Coordinator package integrity, metadata, source, privacy and checker-configuration validation; not an independent source review or Lean/Comparator run',
+    'package_manifest_sha256': sha(P / 'PACKAGE-MANIFEST.json'), 'checks': checks,
+    'payload_files': len(files), 'archived_files_privacy_checked': archive_files,
+    'all34_proof_sources_exact332': True, 'all22_contracts_unchanged': True,
+    'two_independent_full_source_approvals': True,
+    'schema': {'argv': argv, 'exit_code': r.returncode, 'stdout': r.stdout, 'stderr': r.stderr},
+    'Linux_Comparator': 'not run', 'count_change': 0}
+out = B / 'MI24-ROOT-PACKAGE-PREFLIGHT.json'
+ck(not out.exists(), 'new record')
+out.write_text(json.dumps(record, indent=2) + '\n')
+print(json.dumps(record, indent=2))

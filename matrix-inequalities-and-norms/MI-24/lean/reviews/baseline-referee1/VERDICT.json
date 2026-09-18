@@ -1,0 +1,89 @@
+{
+  "reviewer": "/root/mi24_full_referee1",
+  "role": "Independent nonauthor full-source Codex-agent referee, not blind to root execution claim",
+  "review_utc": "2026-09-18T04:53:26.973211+00:00",
+  "problem_id": "MI-24",
+  "snapshot_manifest_sha256": "68d81b42a0cd7fe090b31e53b4079cfdb3ca60f143eb82f09b78bbaa2d1969b5",
+  "complete_record_sha256": "499beaeef51d1abc09537258d14442085443ffe50f4f649205d6eb9846981ada",
+  "overall": "request_changes",
+  "mathematical_source_verdict": "approve",
+  "semantic_blockers_found": [],
+  "rubrics": {
+    "correctness": "approve_source_scope",
+    "generality": "approve_original_target_scope",
+    "proof-quality": "request_changes",
+    "reuse": "request_changes",
+    "attribution": "approve_source_scope"
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "rubric": "reuse",
+      "severity": "request_changes",
+      "path": "candidate/NLA/MI24/DiagonalPowers.lean",
+      "lines": [
+        27,
+        38
+      ],
+      "description": "Reuse Continuous.matrix_diagonal instead of reproving diagonal continuity coordinatewise.",
+      "replacement": "Mathlib/Topology/Instances/Matrix.lean:142, Continuous.matrix_diagonal; instantiate with continuous_id after an explicit bridge."
+    },
+    {
+      "id": "R2",
+      "rubric": "reuse",
+      "severity": "request_changes",
+      "path": "candidate/NLA/MI24/CompoundSpectral.lean",
+      "lines": [
+        23,
+        24
+      ],
+      "description": "Remove compoundMatrix_conjTranspose compatibility alias and use existing compoundMatrix_star at its sole consumer.",
+      "replacement": "candidate/NLA/MI24/CompoundAlgebra.lean:99; consumer at CompoundSpectral.lean:89."
+    },
+    {
+      "id": "Q1",
+      "rubric": "proof-quality",
+      "severity": "request_changes",
+      "description": "Document or replace the exact change/show sites enumerated in BINDINGS.json; no semantic unsoundness asserted.",
+      "site_count": 61
+    },
+    {
+      "id": "E1",
+      "rubric": "evidence_metadata",
+      "severity": "nonblocking_note",
+      "description": "Display-only source_filename_mapping.local uses dots instead of directory separators; real command and assembly prove the correct source mapping. Correct successor capture script, preserve325."
+    }
+  ],
+  "full_source_closure_modules_read": 34,
+  "frozen_contracts_read": 22,
+  "statement_header_comparison": "Exact source headers verified; elaborated-type comparison remains a separate gate.",
+  "independent_of_authors": [
+    "/root/nm04_final_referee1",
+    "/root"
+  ],
+  "other_full_proof_review_read": false,
+  "prior_statement_manifests_authenticated": 2,
+  "root_local_evidence_verified": true,
+  "root_local_scope": "macOS serial runs, 34 modules via exact successful origins; final all22 Solution log at325; Numerical origin293; permitted axioms only and kernel trust assertions.",
+  "own_Lean_executions": 0,
+  "own_Lake_executions": 0,
+  "own_Comparator_executions": 0,
+  "official_TauCeti_engine_executed": false,
+  "external_human_review": false,
+  "proof_source_edited": false,
+  "Git_mutated": false,
+  "published": false,
+  "publication_approval": false,
+  "count_changes": {
+    "mathematical_resolutions": 0,
+    "complete_Lean_verifications": 0
+  },
+  "pending_gates": [
+    "Successor source cleanup and bound independent continuation",
+    "Actual elaborated-type comparison",
+    "Final non-root Linux GitHub Comparator/kernel/sandbox checks",
+    "Truthful final formalization.yaml and final package/defaultTarget review",
+    "Separate publication/count acceptance"
+  ],
+  "checker_receipt_outside_sealed_manifest": "/private/tmp/nla-lean-next-20260915/reviews/MI24-final-referee1-local325-CHECK.json"
+}

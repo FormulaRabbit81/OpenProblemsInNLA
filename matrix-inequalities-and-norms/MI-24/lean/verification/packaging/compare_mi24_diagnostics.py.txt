@@ -1,0 +1,93 @@
+"""Authenticate local expression diagnostics; this does not run Comparator."""
+from pathlib import Path
+from collections import deque
+import datetime, hashlib, json, sys
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+proof_run, diagnostic_run = map(int, sys.argv[1:])
+D = B / f'MI24-type-diagnostics-{diagnostic_run}'
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+load = lambda p: json.loads(p.read_text())
+complete_path = B / f'MI24-LOCAL-COMPLETE-{proof_run}.json'
+complete = load(complete_path)
+receipt_path = L / f'runs/development-{diagnostic_run}/RECEIPT.json'
+receipt = load(receipt_path)
+assert receipt.get('end') and not receipt['failed_modules'] and not receipt['blocked_modules']
+assembly_path = L / f'ASSEMBLY-{diagnostic_run}.json'
+assembly = load(assembly_path)
+assert receipt['assembly_sha256'] == sha(assembly_path)
+for rel, h in complete['sources'].items():
+    local_rel = 'NLA/MI24/Solution.lean' if rel == 'Solution.lean' else rel
+    assert assembly['sources'][local_rel]['sha256'] == h, rel
+    assert receipt['source_inputs'][local_rel] == h, rel
+    assert sha(L / local_rel) == h, rel
+commands = []
+for label in ['Challenge', 'Solution']:
+    name = f'NLA.MI24Diagnostics.{label}Types{diagnostic_run}'
+    command = next(c for c in receipt['commands'] if c['module'] == name)
+    assert command.get('exit_code') == 0
+    assert '--threads=1' in command['argv'] and '--memory=4096' in command['argv']
+    assert sha(receipt_path.parent / (name + '.log')) == command['log_sha256']
+    source = L / (name.replace('.', '/') + '.lean')
+    assert sha(source) == command['source_sha256']
+    assert sha(Path(command['argv'][command['argv'].index('-o') + 1])) == command['output_sha256']
+    commands.append(command)
+challenge_path, solution_path = D / 'challenge-types.json', D / 'solution-types.json'
+challenge, solution = load(challenge_path), load(solution_path)
+names = load(B / 'next-proofs/MI-24/comparator.json')['theorem_names']
+assert len(names) == 22
+assert [r['name'] for r in challenge] == [r['name'] for r in solution] == names
+results = [{'name': c['name'], 'same_universes': c['levelParams'] == s['levelParams'],
+            'same_binder_normalized_type': c['binderNormalizedType'] == s['binderNormalizedType']}
+           for c, s in zip(challenge, solution)]
+graph_path = D / 'certificate-body-route.json'
+rows = load(graph_path)
+graph = {r['name']: r for r in rows}
+assert len(graph) == len(rows)
+def path_between(start, target):
+    todo = deque([[start]])
+    seen = set()
+    while todo:
+        path = todo.popleft()
+        last = path[-1]
+        if last == target:
+            return path
+        if last in seen:
+            continue
+        seen.add(last)
+        row = graph.get(last)
+        if row:
+            assert row['hasBody'], last
+            todo.extend(path + [n] for n in row['bodyConstants'] if n not in seen)
+    raise AssertionError(('no actual elaborated-body path', start, target))
+final = 'NLA.MI24.schattenComplementConjecture'
+interval = 'NLA.MI24.young_weight_interval'
+routes = {'final_to_frozen_certificate': path_between(final, interval)}
+for direction in ['lower', 'upper']:
+    cert = f'_private.NLA.MI24.Numerical.0.NLA.MI24.young_complement_{direction}_box'
+    checked = f'LeanCert.Validity.verify_{direction}_bound_dyadic_checked'
+    routes[f'final_to_{direction}_kernel_checked_bound'] = path_between(final, checked)
+    assert cert in routes[f'final_to_{direction}_kernel_checked_bound']
+record = {
+    'time': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'scope': 'Actual local Lean elaborated-type comparison with binder-name erasure only, and actual proof-body dependency traversal; not Comparator or Linux execution',
+    'source_complete_record': str(complete_path), 'source_complete_record_sha256': sha(complete_path),
+    'receipt': str(receipt_path), 'receipt_sha256': sha(receipt_path),
+    'assembly_sha256': sha(assembly_path),
+    'challenge_dump_sha256': sha(challenge_path), 'solution_dump_sha256': sha(solution_path),
+    'body_graph_sha256': sha(graph_path), 'body_graph_nodes': len(rows),
+    'results': results,
+    'all22_match': all(r['same_universes'] and r['same_binder_normalized_type'] for r in results),
+    'actual_elaborated_body_routes': routes,
+    'diagnostic_commands': commands,
+    'comparison_script_sha256': sha(Path(__file__)), 'count_change': 0,
+    'Comparator_executed': False,
+}
+destination = D / 'COMPARISON.json'
+assert not destination.exists()
+destination.write_text(json.dumps(record, indent=2) + '\n')
+print(json.dumps({'all22_match': record['all22_match'], 'record_sha256': sha(destination),
+                  'differences': [r for r in results if not r['same_universes'] or not r['same_binder_normalized_type']],
+                  'actual_body_routes': routes, 'Comparator_executed': False}, indent=2))
+assert record['all22_match'], 'Local statement mismatch remains; do not publish this candidate'

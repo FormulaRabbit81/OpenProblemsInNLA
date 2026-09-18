@@ -1,0 +1,47 @@
+import NLA.MI24.Solution
+import Lean
+
+private def diagnosticEraseBinderNames : Lean.Expr → Lean.Expr
+  | .forallE _ t b info => .forallE .anonymous (diagnosticEraseBinderNames t) (diagnosticEraseBinderNames b) info
+  | .lam _ t b info => .lam .anonymous (diagnosticEraseBinderNames t) (diagnosticEraseBinderNames b) info
+  | .letE _ t v b nd => .letE .anonymous (diagnosticEraseBinderNames t) (diagnosticEraseBinderNames v) (diagnosticEraseBinderNames b) nd
+  | .app f a => .app (diagnosticEraseBinderNames f) (diagnosticEraseBinderNames a)
+  | .mdata m b => .mdata m (diagnosticEraseBinderNames b)
+  | .proj n i b => .proj n i (diagnosticEraseBinderNames b)
+  | e => e
+open Lean in
+run_cmd do
+  let mut rows : Array Json := #[]
+  for name in #[`NLA.MI24.young_weight_interval, `NLA.MI24.spectral_power_inverse, `NLA.MI24.geometric_congruence, `NLA.MI24.matrix_means_posdef, `NLA.MI24.power_half_fixed_point, `NLA.MI24.power_half_sqrt_q, `NLA.MI24.furuta_half_power, `NLA.MI24.weighted_geometric_trace, `NLA.MI24.trace_young_half, `NLA.MI24.heron_trace_comparison, `NLA.MI24.positive_schatten_monotone, `NLA.MI24.positive_schatten_triangle, `NLA.MI24.positive_schatten_smul, `NLA.MI24.positive_infinity_monotone, `NLA.MI24.finite_schatten_semantics, `NLA.MI24.infinity_schatten_semantics, `NLA.MI24.heron_comparison_finite, `NLA.MI24.heron_comparison_infinity, `NLA.MI24.lin_comparison, `NLA.MI24.schatten_complement_finite, `NLA.MI24.schatten_complement_infinity, `NLA.MI24.schattenComplementConjecture] do
+    let ci ← getConstInfo name
+    rows := rows.push <| Json.mkObj [
+      ("name", toJson name.toString),
+      ("levelParams", toJson (ci.levelParams.map Name.toString)),
+      ("type", toJson (reprStr ci.type)),
+      ("binderNormalizedType", toJson (reprStr (diagnosticEraseBinderNames ci.type)))]
+  IO.FS.writeFile "/private/tmp/nla-lean-next-20260915/MI24-type-diagnostics-333/solution-types.json" (Json.compress (toJson rows))
+
+open Lean in
+run_cmd do
+  let mut rows : Array Json := #[]
+  let mut pending : Array Name := #[`NLA.MI24.young_weight_interval, `NLA.MI24.spectral_power_inverse, `NLA.MI24.geometric_congruence, `NLA.MI24.matrix_means_posdef, `NLA.MI24.power_half_fixed_point, `NLA.MI24.power_half_sqrt_q, `NLA.MI24.furuta_half_power, `NLA.MI24.weighted_geometric_trace, `NLA.MI24.trace_young_half, `NLA.MI24.heron_trace_comparison, `NLA.MI24.positive_schatten_monotone, `NLA.MI24.positive_schatten_triangle, `NLA.MI24.positive_schatten_smul, `NLA.MI24.positive_infinity_monotone, `NLA.MI24.finite_schatten_semantics, `NLA.MI24.infinity_schatten_semantics, `NLA.MI24.heron_comparison_finite, `NLA.MI24.heron_comparison_infinity, `NLA.MI24.lin_comparison, `NLA.MI24.schatten_complement_finite, `NLA.MI24.schatten_complement_infinity, `NLA.MI24.schattenComplementConjecture]
+  let mut seen : Array Name := #[]
+  while !pending.isEmpty do
+    let name := pending.back!
+    pending := pending.pop
+    if seen.contains name then continue
+    seen := seen.push name
+    let ci ← getConstInfo name
+    match ci.value? (allowOpaque := true) with
+    | none => rows := rows.push <| Json.mkObj [
+        ("name", toJson name.toString), ("hasBody", toJson false),
+        ("bodyConstants", toJson (#[] : Array String))]
+    | some body =>
+      let cs := body.getUsedConstants
+      rows := rows.push <| Json.mkObj [
+        ("name", toJson name.toString), ("hasBody", toJson true),
+        ("bodyConstants", toJson (cs.map Name.toString))]
+      for c in cs do
+        if c.toString.startsWith "NLA.MI24." || c.toString.startsWith "_private.NLA.MI24." then
+          if !seen.contains c then pending := pending.push c
+  IO.FS.writeFile "/private/tmp/nla-lean-next-20260915/MI24-type-diagnostics-333/certificate-body-route.json" (Json.compress (toJson rows))

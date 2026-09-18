@@ -1,0 +1,37 @@
+# Independent root review of the complete MI-24 statement boundary
+
+Reviewer: /root; draft author: /root/nm04_final_referee1. I did not author or edit the MI-24 definitions or 22 contracts. This is an independent mathematical assessment of the author's statements. It is not a blind review: the separate mf06 semantic assessment was available, and my conclusions below are based on my own reading of the complete canonical problem, full solution, exact Lean definitions/headers, and dependency plan. No proof bodies are present to approve.
+
+Verdict: APPROVE the exact full statement boundary actually elaborated in local289. There are 22 deliberate Challenge placeholders. No assertion that any contract has been proved, that the complete problem has been verified, or that Comparator has run.
+
+## Original target and definitions
+
+The original target is the inequality between H+G+L and H+2L for arbitrary complex positive definite A,B, every positive dimension, every finite real exponent at least one, and infinity. I checked the factor order in both square-root formulas against the canonical statement. In particular L has B square roots around A inverse inside, and A square roots outside. The statement does not assert symmetry of L.
+
+The concrete finite function is the real part of tr |X|^p raised to 1/p. Its modulus is CFC.abs, not an entrywise absolute value. Its positive trace is known mathematically to be real; C15 is the explicit obligation to prove singular-value semantics for every complex matrix, including singular and nonnormal matrices. Infinity is the Euclidean continuous-linear-map operator norm, with C16 linking the zeroth sorted singular value. Neither an unspecified norm structure nor a comparison axiom is a hidden premise of C20-C22. The final predicate is precisely the finite universal statement conjoined with the infinity universal statement.
+
+## All contracts and boundary checks
+
+C01 is the exact affine interval [0,1/2]; both endpoints satisfy the bounds. Its planned use is a nonnegative complementary Young weight, not an unrelated imported certificate. C02 is the inverse identity on the strictly positive spectrum. C03 is invertible congruence in the S A S* orientation; polar/square-root uniqueness proves it without commuting S through A. These premises preserve arbitrary complex inputs.
+
+C04 follows from positive definite congruences and sums; H+K is (sqrt A+sqrt B)^2 and is strictly positive, not just semidefinite. C05 can be independently checked after normalizing A to I: for S=sqrt C and T=(I+S)/2, the three normalized terms are T^2, T and TS, and (T+TS)/2=T^2. C06 is positive square-root uniqueness applied to the sum of positive square roots. No general power-mean existence theorem is smuggled in.
+
+C07 is a valid bounded Furuta inequality. At r=0 it reduces to sqrt(Y^2)=Y<=X; at r=1 it is the nontrivial sandwich statement covered by the bounded extension in the plan. For the base exponent a=(1+t)/(s+t), a-1 is in [-1,0], so conjugation and the inverse-order version of Lowner-Heinz give the required order. The extension A1=A^2, B1=(sqrt(A) B^2 sqrt(A))^(2/3), s=3/2, t=(R-1)/2 gives (1+R)/(2+R). Applying power (2+R)/(2(1+R)) is legitimate in [0,1] and gives the required half power. This derivation remains a proof obligation in Lean.
+
+C08's exponents are consistent: r=1/(2p-1), X=P^(1/2-p) give X^r=P^(-1/2), X^(1+r)=P^(-p). The normalization has positive divisor because T is positive definite in positive dimension. I specifically checked that all compound partial products, not just the largest eigenvalue, are required before summing eigenvalues. The plan exposes this as substantive work. C09 uses doubly stochastic overlap weights of two orthonormal eigenbases and scalar Young with theta=1/(2p). At p=1 theta=1/2; no singular denominator appears. C10 follows by summing the two weighted comparisons in the fixed-point equation, using C06, and cancelling positive theta.
+
+C11-C13 are assertions about the same concrete Schatten formula on all PSD matrices. Their restricted matrix domain suffices because C04 proves positivity of the later sums. Zero matrices, repeated eigenvalues and zero scalar in C13 are retained. For p>1 the trace Holder derivation gives both monotonicity and triangle after separating zero normalizers; p=1 is trace positivity/additivity. It would be incorrect to substitute operator monotonicity of x^p for p>1, and the plan does not do that. C14 is largest-eigenvalue monotonicity on PSD matrices for the actual Euclidean operator norm.
+
+C15-C16 have arbitrary complex matrices, the correct singular-value multiplicities and the full positive dimension range. C17 is the complete finite Heron input as an unconditional conclusion, not an assumed external theorem. C18 retains infinity and can use positive integer moments: if the positive largest-eigenvalue ratio exceeded one, its integer powers could not all be at most n. This avoids a new continuously varying exponent limit theorem without weakening the conclusion.
+
+For C19, I independently expanded (U-I)|R|(U*-I) = U|R|U*+|R|-R-R* for R=U|R|. With R=A^(-1/2)B^(1/2), congruence by sqrt A gives exactly G+L-K. All inverses in this argument have positive definite, hence invertible, bases. C20-C21 use X=H+2G, Y=H+G+L, Z=H+2L: Heron and monotonicity give norm X<=norm Y, while X+Z=2Y and triangle/homogeneity give 2 norm Y<=norm X+norm Z. Cancelling proves the original target. C22 packages these without additional premises.
+
+Scalar inputs and A=B give equality and respect the ordered definitions. The statements impose no commutation, real-entry, rational-exponent, finite-exponent-list, spectral-gap or conditioning assumption. Arbitrarily small positive input eigenvalues are retained. Auxiliary singular PSD matrices are covered where claimed; the original inputs remain strictly positive, as required by the canonical problem.
+
+## Numerical scope, standards and execution
+
+The only planned LeanCert computation is the affine C01 on one exact dyadic box. There is no matrix interval search or approximation of all real p. Kernel-mode proof-term consumption by C09 must be demonstrated in the final dependency audit; nothing here claims it already happened. The pinned Tau Ceti standards are applied at statement scope: faithfulness, boundary cases, explicit external mathematical obligations, reuse of actual CFC/spectral definitions, and truthful attribution. A full implementation still needs the Furuta, compound-spectral, weak-log-majorization, polar and PSD norm foundations.
+
+I read the exact local289 receipt and logs: the definitions and Challenge elaborated successfully, unchanged from the sealed author draft. Root independently reran the packet integrity/schema/audit verifier with the explicit miniforge interpreter (tool afaf14, PASS1203). That Python check is not a mathematical proof or Lean rerun. Successful statement elaboration allows deliberate Challenge placeholders and is not completed verification.
+
+Preserve George Stepaniants's name, department and Caltech affiliation, the original problem authors and published Heron attribution, and the AI-assistance disclosure. No email should be published. Two independent final nonauthor proof reviews, default kernel and axiom checks, actual Linux Comparator and controls, truthful formalization.yaml and exact published-commit evidence remain required. No count change is authorized by this statement review.

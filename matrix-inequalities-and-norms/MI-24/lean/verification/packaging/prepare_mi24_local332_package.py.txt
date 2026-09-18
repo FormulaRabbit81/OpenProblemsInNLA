@@ -1,0 +1,224 @@
+"""Assemble reviewed MI24 sources and authentic local evidence; no Linux claim."""
+from pathlib import Path
+import datetime, gzip, hashlib, io, json, re, shutil, tarfile
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+S = B / 'MI24-local332-source-snapshot'
+N = S / 'candidate'
+D = B / 'MI24-publication-docs-draft'
+P = B / 'MI24-canonical-package-local332'
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+load = lambda p: json.loads(Path(p).read_text())
+assert not P.exists()
+assert sha(S / 'MANIFEST.json') == 'eb766a3dee52c2a694b0bb9d006619295fee4271ee7aa925dc9895e4998562f3'
+assert sha(D / 'MANIFEST.json') == 'c0eabde5d61f700c327efbd4f798084c3a47ff04434ee85b80aa319891bc26d6'
+local = load(B / 'MI24-LOCAL-COMPLETE-332.json')
+assert sha(B / 'MI24-LOCAL-COMPLETE-332.json') == 'a1f478c2918460ddcde421bedf6139f6a4693b59ccca6d5f1148530b67ff4e24'
+P.mkdir()
+retained = {}
+
+def copy(src, rel, compress=False):
+    src = Path(src)
+    assert src.is_file() and not src.is_symlink(), src
+    data = src.read_bytes()
+    raw_sha = hashlib.sha256(data).hexdigest()
+    encoding = 'identity'
+    if compress and len(data) > 50000:
+        rel += '.gz'
+        data = gzip.compress(data, mtime=0)
+        encoding = 'gzip'
+    dst = P / rel
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    if dst.exists():
+        assert dst.read_bytes() == data, dst
+    else:
+        dst.write_bytes(data)
+    retained[str(src)] = {'source': str(src), 'destination': rel,
+        'sha256': sha(dst), 'encoding': encoding, 'decoded_sha256': raw_sha}
+    return rel
+
+def write(rel, obj):
+    dst = P / rel
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    dst.write_text(json.dumps(obj, indent=2) + '\n')
+
+def archive(src, rel):
+    src = Path(src)
+    dst = P / rel
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    inventory = {}
+    with dst.open('wb') as raw, gzip.GzipFile(fileobj=raw, mode='wb', mtime=0) as gz, tarfile.open(fileobj=gz, mode='w') as tar:
+        for f in sorted(src.rglob('*')):
+            assert not f.is_symlink(), f
+            if not f.is_file():
+                continue
+            assert f.suffix not in {'.pdf', '.olean', '.ilean', '.o', '.so', '.a', '.zip'}, f
+            data = f.read_bytes()
+            name = str(f.relative_to(src))
+            info = tarfile.TarInfo(name)
+            info.size, info.mode = len(data), 0o644
+            tar.addfile(info, io.BytesIO(data))
+            inventory[name] = hashlib.sha256(data).hexdigest()
+    return {'source_directory': str(src), 'archive': rel, 'archive_sha256': sha(dst),
+        'payload_sha256': inventory}
+
+for rel, h in local['sources'].items():
+    assert sha(N / rel) == h
+    copy(N / rel, rel)
+freeze = load(B / 'MI24-STATEMENT-FREEZE-local289.json')
+for rel, h in freeze['frozen_files'].items():
+    assert sha(N / rel) == h
+    copy(N / rel, rel)
+for name in ['lean-toolchain', 'LICENSE']:
+    copy(N / name, name)
+for name in ['lakefile.toml', 'lake-manifest.json', 'NUMERICAL_TARGETS.md',
+             'PROOF-REVIEWER-MAP.md', 'IMPLEMENTATION-MAP.json',
+             'SOURCE-ATTRIBUTION.json', 'PACKAGING-CHANGES.json']:
+    copy(D / name, name)
+for f in sorted((D / 'source-inputs').rglob('*')):
+    if f.is_file():
+        copy(f, str(f.relative_to(D)))
+copy(B / 'MI24-STATEMENT-FREEZE-local289.json', 'STATEMENT-FREEZE.json')
+copy(B / 'MI24-LOCAL-COMPLETE-332.json', 'verification/local332/LOCAL-COMPLETE.json')
+
+# Keep original successful receipts, commands, logs and source-matched reuse DAG.
+receipts = set()
+for src, h in local['retained_original_evidence'].items():
+    assert sha(src) == h
+    copy(src, 'verification/local-development/' + str(Path(src).relative_to(L)), True)
+    if Path(src).name == 'RECEIPT.json':
+        receipts.add(Path(src))
+for receipt in sorted(receipts):
+    n = receipt.parent.name.removeprefix('development-')
+    copy(L / f'ASSEMBLY-{n}.json', f'verification/local-development/ASSEMBLY-{n}.json', True)
+for name in ['LOCAL-ENVIRONMENT.json', 'serial_compile_v3.py']:
+    copy(L / name, 'verification/local-development/' + name + ('.txt' if name.endswith('.py') else ''), True)
+
+diag = B / 'MI24-type-diagnostics-333'
+assert sha(diag / 'COMPARISON.json') == 'e3c76907ad179ae3dba0258b9a20baf6fb74f2dcea2347667bdf4087f0da10f3'
+comparison = load(diag / 'COMPARISON.json')
+assert comparison['all22_match'] and not comparison['Comparator_executed']
+for f in sorted(diag.rglob('*')):
+    if f.is_file():
+        rel = str(f.relative_to(diag))
+        copy(f, 'verification/type-diagnostics-333/' + rel + ('.txt' if f.suffix == '.lean' else ''), True)
+copy(L / 'ASSEMBLY-333.json', 'verification/local-development/ASSEMBLY-333.json', True)
+copy(L / 'runs/development-333/RECEIPT.json', 'verification/local-development/runs/development-333/RECEIPT.json', True)
+for cmd in comparison['diagnostic_commands']:
+    f = L / 'runs/development-333' / (cmd['module'] + '.log')
+    assert sha(f) == cmd['log_sha256']
+    copy(f, 'verification/local-development/runs/development-333/' + f.name, True)
+for name in ['capture_full_local_completion_v2.py', 'diagnose_mi24_types_v2.py',
+             'compare_mi24_diagnostics.py', 'prepare_mi24_local332_package.py']:
+    copy(B / name, 'verification/packaging/' + name + '.txt')
+
+reviews = []
+review_specs = [(Path(x['manifest']).parent, 'statement-referee-' + str(i), 'statement', x['manifest_sha256'])
+                for i, x in enumerate(freeze['reviewers'], 1)]
+review_specs += [
+    (B / 'reviews/MI24-final-referee1-local325', 'baseline-referee1', 'baseline-request-changes', 'aef78d73b98b6762ec52585f8b00bf5d3d3adfe2f0023e7f3e3945d738182bef'),
+    (B / 'reviews/MI24-final-referee2-local325', 'baseline-referee2', 'baseline-request-changes', '959eee03b62397d1d176b1b9f695bf93206a8ff3ec7b0b22ecad2e3768182af9'),
+    (B / 'reviews/MI24-final-referee1-successor332', 'final-referee1', 'final-source-approval', 'be234edc6ea4a79a49d1251356e699491ef7ba21ed4f6f323fce9a24a54a60e8'),
+    (B / 'reviews/MI24-final-referee2-local332', 'final-referee2', 'final-source-approval', '7c7fbe9c6ef73b3bf3a0cc00491bc1a1d9881136e7ccfd4a64f54255bc33c8e8')]
+for src, label, stage, h in review_specs:
+    assert sha(src / 'MANIFEST.json') == h
+    item = archive(src, 'reviews/' + label + '-packet.tar.gz')
+    item.update(label=label, stage=stage, manifest_sha256=h)
+    for name in ['REVIEW.md', 'VERDICT.json', 'MANIFEST.json']:
+        if (src / name).exists():
+            copy(src / name, 'reviews/' + label + '/' + name)
+    for suffix in ['-CHECK.json', '-EXECUTION.json', '-ROOT-REPLAY.json']:
+        f = src.with_name(src.name + suffix)
+        if f.exists():
+            copy(f, 'reviews/' + label + '/' + suffix.lstrip('-'))
+    reviews.append(item)
+write('reviews/INDEX.json', reviews)
+history = []
+for src, label in [(S, 'accepted-local332-snapshot'),
+                   (B / 'MI24-local325-source-snapshot', 'baseline-local325-snapshot'),
+                   (B / 'MI24-full-statements-local289', 'statements-local289'),
+                   (B / 'MI24-source-history/referee-cleanup-local330', 'cleanup-and-failed-local330'),
+                   (D, 'publication-docs-original-draft')]:
+    history.append(archive(src, 'verification/history/' + label + '.tar.gz'))
+write('verification/history/INDEX.json', history)
+copy(B / 'MI24-publication-docs-draft-ROOT-REPLAY.json', 'verification/history/docs-root-integrity-replay.json')
+for name in ['AUDIT.json', 'REPOSITORIES.json', 'FRESH-BRANCH-HEADS.json']:
+    copy(B / 'MI24-MF18-current-public-audit-v2-20260918' / name, 'verification/public-scope/' + name, True)
+copy(B / 'MI24-MF18-PR-REFRESH-20260918.json', 'verification/public-scope/PR-REFRESH.json')
+
+# Current metadata supersedes only the historical draft's pending-review wording.
+state = load(D / 'STATE.json')
+state['prepared_at'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+state['document_status'] = 'Complete reviewed local proof; standalone package and final Linux checks pending'
+state['review']['final_current_source_status'] = 'Two independent nonauthor source approvals, authenticated and replayed by root'
+state['review']['baseline_local325'] = 'Both complete baseline reviews retained unchanged; mathematical approval with code-quality requests, resolved by the exact local332 successor approvals.'
+state['review']['final_reviews'] = [x for x in reviews if x['stage'] == 'final-source-approval']
+state['review']['record'] = 'reviews/INDEX.json'
+state['public_duplicate_scope']['PR_search'] = {'record': 'verification/public-scope/PR-REFRESH.json',
+    'scope': 'Authenticated upstream all-state PR title/body search by MI-24 and MF-18; old merged mathematical solutions and unrelated mentioning PRs, no new MI24 formalization match. Not an exhaustive semantic search.'}
+write('STATE.json', state)
+meta = load(D / 'formalization.yaml')
+meta['project']['affiliation'] = 'Department of Computing and Mathematical Sciences, California Institute of Technology'
+meta['status']['scope'] = 'All 22 full-target contracts locally proved and type matched, with two independent final nonauthor source approvals; standalone package and real Linux Comparator gates pending.'
+meta['status']['whole_problem_verified'] = False
+meta['status']['completed_original_targets'] = 0
+for result in meta['status']['main_results']:
+    result['verification_status'] = 'actual local332 and local333 passed; two independent source approvals; real Linux Comparator pending'
+meta['review'] = {'status': 'Two independent statement and two independent final source approvals',
+    'reviewers': ['/root/mi24_full_referee1', '/root/mi13_full_referee2'],
+    'record': 'reviews/INDEX.json',
+    'notes': 'Nonauthor agent source reviews under pinned Tau Ceti rubrics. Historical request-changes reports and their resolving continuations are retained. Reviewer integrity replays did not invoke Lean or Comparator. No external human review or official Tau Ceti service claim.'}
+meta['verification'] = {'local_Lean': state['local_proof'], 'local_diagnostic': state['local_type_diagnostic'],
+    'independent_reviews': {'statement': 2, 'final': 2, 'record': 'reviews/INDEX.json'},
+    'GitHub_Comparator': {'status': 'not run for MI24'}, 'count_change': 0}
+write('formalization.yaml', meta)
+readme = (D / 'README.md').read_text()
+readme = readme.replace('The cleanup passes local332; two exact-source continuation approvals are still pending in this draft.',
+    'The cleanup passes local332, and both independent exact-source continuation reviews approve. All four historical/current reports are retained in [the review index](reviews/INDEX.json).')
+readme = readme.replace('source-bound nonauthor approvals, standalone package validation and a real\nLinux run on the exact published commit.',
+    'standalone package validation and a real Linux run on the exact published\ncommit. The two source-bound nonauthor approvals are complete.')
+readme = readme.replace('\\[\n', '```math\n').replace('\\]\n', '```\n')
+(P / 'README.md').write_text(readme)
+(P / 'reviews/README.md').write_text('''# Independent review evidence
+
+The [index](INDEX.json) retains two statement approvals before proof implementation,
+both baseline full reviews and both exact-source continuation approvals. Historical
+requested changes remain visible. The final two referees did not author the proof.
+Their source assessments and read-only integrity replays are distinct from actual
+Lean runs and the pending Linux Comparator. Review archives retain exact bytes;
+original absolute paths describe the campaign environment, not portable commands.
+''')
+write('ACTIVE-SOURCE-MANIFEST.json', {'source_sha256': local['sources'], 'local_run': 332,
+    'contracts': 22, 'frozen_boundary_sha256': sha(P / 'STATEMENT-FREEZE.json'), 'Linux_Comparator': 'not run'})
+write('verification/RETAINED-PATHS.json', list(retained.values()))
+(P / 'verification/README.md').write_text('''# Retained execution evidence
+
+`local332/LOCAL-COMPLETE.json` identifies all 34 exact proof sources, actual commands,
+successful output hashes and reuse chains. `local-development` retains their original
+receipts, source assemblies and successful logs. The global332 receipt also includes
+38 MF18 modules outside this package; only the MI24 closure supports this submission.
+
+`type-diagnostics-333` retains the separately elaborated 22 statement pairs and proof
+body graph. These are actual macOS diagnostics, not the Linux Comparator. Large JSON
+files are gzip-compressed without changing their decoded bytes; `RETAINED-PATHS.json`
+maps every original path to its retained file and both hashes. Python `gzip` or
+`gzip -dc FILE.gz` reads them. Historical failed330 evidence is in the history archive.
+The original scripts record environment-specific paths and are provenance records,
+not standalone public checker commands. Use the root README reproduction commands.
+
+Final real Linux Comparator, kernel replay, sandbox and control evidence remains
+pending. No compiled caches, raw recursive Git trees or full third-party papers are
+included. Source reviews, metadata checks and hash replays are not independent builds.
+''')
+assert len(list(P.rglob('*.lean'))) == 35
+for f in P.rglob('*'):
+    if f.is_file() and f.suffix != '.gz':
+        assert not re.search(r'(?i)(?:george|g?stepaniants|sgstepaniants)[^\s@<>]{0,40}@[\w.-]+\.[A-Za-z]{2,}', f.read_text(errors='ignore')), f
+manifest = {'stage': state['document_status'], 'files': {str(f.relative_to(P)): sha(f)
+    for f in sorted(P.rglob('*')) if f.is_file() and f != P / 'PACKAGE-MANIFEST.json'}}
+write('PACKAGE-MANIFEST.json', manifest)
+print(json.dumps({'package': str(P), 'manifest_sha256': sha(P / 'PACKAGE-MANIFEST.json'),
+    'payload_files': len(manifest['files']), 'bytes': sum(f.stat().st_size for f in P.rglob('*') if f.is_file()),
+    'local_complete': True, 'independent_final_source_approvals': 2,
+    'Linux_Comparator': 'not run', 'count_change': 0}, indent=2))
