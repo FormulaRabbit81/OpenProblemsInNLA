@@ -1,0 +1,72 @@
+"""Attach exact-source package and actual runtime reviews; no proof execution."""
+from pathlib import Path
+import datetime, gzip, hashlib, io, json, re, shutil, tarfile
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+W = Path('/private/tmp/nla-lean-next-nm04-worktree')
+P = W / 'nonnegative-and-positive-factorizations/NM-04/lean'
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+load = lambda p: json.loads(p.read_text())
+def write(p, data): p.write_text(json.dumps(data, indent=2) + '\n')
+
+protected = load(B / 'NM04-PUBLICATION-DOCS-TRANSITION.json')['protected_inputs']
+for rel, digest in protected.items(): assert sha(P / rel) == digest, rel
+index = load(P / 'reviews/INDEX.json')
+specs = [
+    ('package-local204', 'NM04-package-preflight-referee1-local204-20260917',
+     '44c51002316413a4786bfebf26d9a64e9e59ae7094be6af5e0535c0eba5e019f',
+     'NM04-ROOT-PACKAGE-PREFLIGHT-ACCEPTANCE204.json',
+     'Pre-push package audit of exact local204; not a runtime check.'),
+    ('runtime-35276203784', 'NM04-runtime-referee1-35276203784',
+     '00033569477aa56252d663f0a9816b3bc3995997e3185a4813e2f2ce1758d13a',
+     'NM04-ROOT-INDEPENDENT-RUNTIME-ACCEPTANCE.json',
+     'Independent read-only audit of actual Linux35276203784 at proof commit21ed3545; not a second compiler run.')]
+for label, packet, digest, acceptance, scope in specs:
+    folder = B / 'reviews' / packet
+    assert sha(folder / 'MANIFEST.json') == digest
+    assert not any(item['label'] == label for item in index)
+    files = load(folder / 'MANIFEST.json')['files']
+    for rel, value in files.items():
+        expected = value['sha256'] if isinstance(value, dict) else value
+        assert sha(folder / rel) == expected, rel
+    for source, suffix in [('REVIEW.md','.md'),('VERDICT.json','-verdict.json'),('MANIFEST.json','-manifest.json')]:
+        shutil.copy2(folder / source, P / 'reviews' / (label + suffix))
+    archive = P / 'reviews' / (label + '-packet.tar.gz')
+    with archive.open('wb') as raw, gzip.GzipFile(fileobj=raw, mode='wb', mtime=0) as gz, tarfile.open(fileobj=gz, mode='w') as tar:
+        for f in sorted(folder.rglob('*')):
+            assert not f.is_symlink()
+            if not f.is_file(): continue
+            data = f.read_bytes()
+            assert not re.search(r'(?i)(?:george|g?stepaniants|sgstepaniants)[^\s@<>]{0,40}@[\w.-]+\.[A-Za-z]{2,}', data.decode('utf-8', errors='ignore')), f
+            info = tarfile.TarInfo(folder.name + '/' + str(f.relative_to(folder)))
+            info.size, info.mode = len(data), 0o644
+            tar.addfile(info, io.BytesIO(data))
+    index.append({'label':label,'original_packet':packet,'report':label+'.md','verdict':label+'-verdict.json',
+                  'manifest':label+'-manifest.json','manifest_sha256':digest,'archive':archive.name,
+                  'archive_sha256':sha(archive),'archive_bytes':archive.stat().st_size,'scope':scope})
+    shutil.copy2(B / acceptance, P / 'verification' / acceptance)
+write(P / 'reviews/INDEX.json', index)
+with (P / 'reviews/README.md').open('a') as f:
+    f.write('\nThe [exact204 package preflight](package-local204.md) and [independent actual Linux audit](runtime-35276203784.md) close their respective gates. The latter authenticates all 380 project inputs and 35 exports at immutable proof commit `21ed3545a8b4784303e9cc0473879eb33ef4d813`; it is evidence inspection, not a second kernel execution. Later publication-commit and upstream merge checks remain separate.\n')
+with (P / 'README.md').open('a') as f:
+    f.write('\nThe repaired local204 package subsequently passed its own [preflight](reviews/package-local204.md). The successful proof-commit Linux execution also passed an [independent evidence audit](reviews/runtime-35276203784.md); its retained verifier checks exact Git inputs, artifact identity, all 35 exports and actual controls without claiming another compiler run.\n')
+metadata = load(P / 'formalization.yaml')
+metadata['verification']['GitHub_Comparator']['independent_runtime_review'] = 'reviews/runtime-35276203784.md'
+metadata['verification']['GitHub_Comparator']['independent_runtime_review_manifest_sha256'] = specs[1][2]
+metadata['verification']['publication_status'] = 'Immutable proof and independent runtime audit complete; final publication package review, published-commit checks and upstream PR pending.'
+write(P / 'formalization.yaml', metadata)
+state = load(P / 'STATE.json')
+state.update(time=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+             stage=metadata['verification']['publication_status'],
+             remaining=['Final publication-document review', 'Exact final published-commit checks', 'Upstream PR and merge-checkout checks'],
+             independent_runtime_review='reviews/runtime-35276203784.md')
+write(P / 'STATE.json', state)
+for name in ['NM04-PDF-REVIEW-20260917.json','NM04-DOCUMENT-REQUIRED-CHECKS-20260917.json']:
+    shutil.copy2(B / name, P / 'verification/packaging' / name)
+shutil.copy2(Path(__file__), P / 'verification/packaging/integrate_nm04_runtime_reviews.py.txt')
+for rel, digest in protected.items(): assert sha(P / rel) == digest, rel
+write(P / 'PACKAGE-MANIFEST.json', {
+    'stage':state['stage'], 'proof_commit':'21ed3545a8b4784303e9cc0473879eb33ef4d813', 'proof_run':35276203784,
+    'files':{str(f.relative_to(P)):sha(f) for f in sorted(P.rglob('*')) if f.is_file() and f != P / 'PACKAGE-MANIFEST.json'}})
+print(json.dumps({'manifest_sha256':sha(P/'PACKAGE-MANIFEST.json'),'files':len(load(P/'PACKAGE-MANIFEST.json')['files'])+1,
+                  'all_proof_and_frozen_sources_unchanged':True,'final_publication_review':'pending'},indent=2))

@@ -1,0 +1,218 @@
+{
+  "stage": "unreviewed_unelaborated_statement_draft",
+  "source": "Challenge.lean",
+  "source_sha256": "2e47866aef26d75e14fecc6f569f8c1c7a2812f2bfbd0e47b0c8277ecffc81cc",
+  "theorem_count": 35,
+  "headers": [
+    {
+      "name": "NLA.NM04.coercivity_half_certificate",
+      "line": 24,
+      "header": "theorem coercivity_half_certificate :\n    (0 : ℝ) < 1 / 2 ∧ (1 / 2 : ℝ) < 1",
+      "header_sha256": "dec2223c15f5603e18945153270e30e38bcdd9a08d7d243dd3016eee26c01515"
+    },
+    {
+      "name": "NLA.NM04.row_partition_positive",
+      "line": 28,
+      "header": "theorem row_partition_positive {m n : ℕ} (hn : 1 ≤ n)\n    (A : Rect m n) (hA : Positive A) (t : Fin n → ℝ) (i : Fin m) :\n    0 < rowPartition A t i",
+      "header_sha256": "365a91d5dc38fc79776f93dd948f070467c0f7f30abcba1055f19149f82ecb69"
+    },
+    {
+      "name": "NLA.NM04.potential_continuous",
+      "line": 33,
+      "header": "theorem potential_continuous {m n : ℕ} (hn : 1 ≤ n)\n    (A : Rect m n) (hA : Positive A) : Continuous (potential A)",
+      "header_sha256": "0e4762177326734a805283791150b69e6a8ad297d3302a6c0cf9b7391ff7f98b"
+    },
+    {
+      "name": "NLA.NM04.potential_line_derivative",
+      "line": 38,
+      "header": "theorem potential_line_derivative {m n : ℕ} (hn : 1 ≤ n)\n    (A : Rect m n) (hA : Positive A) (t d : Fin n → ℝ) :\n    HasDerivAt (fun s : ℝ => potential A (t + s • d))\n      (∑ j, d j * columnImbalance A t j) 0",
+      "header_sha256": "0faa9613aa77be464daa960330853ec788a5889b1b8b37c930559e741e356591"
+    },
+    {
+      "name": "NLA.NM04.zero_mean_coercivity",
+      "line": 45,
+      "header": "theorem zero_mean_coercivity {m n : ℕ} (hn : 1 ≤ n)\n    (A : Rect m n) (a : ℝ) (ha : 0 < a)\n    (haA : ∀ i j, a ≤ A i j) (t : Fin n → ℝ) (ht : t ∈ meanZero n) :\n    (1 / 2 : ℝ) * ((m : ℝ) / (n : ℝ)) * ‖t‖ + (m : ℝ) * Real.log a ≤\n      potential A t",
+      "header_sha256": "b2b4962bdefea4dca2b1e5dece287a8a5758368ec292aa32c6a7fca048a9cff6"
+    },
+    {
+      "name": "NLA.NM04.potential_attains_minimum",
+      "line": 52,
+      "header": "theorem potential_attains_minimum {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (A : Rect m n) (hA : Positive A) :\n    ∃ t₀ : Fin n → ℝ, t₀ ∈ meanZero n ∧\n      ∀ t : Fin n → ℝ, t ∈ meanZero n → potential A t₀ ≤ potential A t",
+      "header_sha256": "b4be3c276164ee287ed23c80e2c18e18074474d32bfd72639fc3f0d3e3afe60f"
+    },
+    {
+      "name": "NLA.NM04.potential_minimum_has_margins",
+      "line": 58,
+      "header": "theorem potential_minimum_has_margins {m n : ℕ} (hn : 1 ≤ n)\n    (A : Rect m n) (hA : Positive A) (t₀ : Fin n → ℝ) (ht₀ : t₀ ∈ meanZero n)\n    (hmin : ∀ t : Fin n → ℝ, t ∈ meanZero n → potential A t₀ ≤ potential A t) :\n    ∀ j : Fin n, columnImbalance A t₀ j = 0",
+      "header_sha256": "ea9ad5bcb5e13cfa42d83b4efe6071663b9322a536549665db7971480dd4e259"
+    },
+    {
+      "name": "NLA.NM04.positive_balanced_scaling_exists",
+      "line": 65,
+      "header": "theorem positive_balanced_scaling_exists {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (A : Rect m n) (hA : Positive A) : ∃ S : Rect m n, ScaledBalanced A S",
+      "header_sha256": "44d56cb36b7bdfb08fac8b37e124ceb319be5de7145b1e007a50efe66e857893"
+    },
+    {
+      "name": "NLA.NM04.positive_balanced_scaling_unique",
+      "line": 70,
+      "header": "theorem positive_balanced_scaling_unique {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (A : Rect m n) (hA : Positive A) (S T : Rect m n)\n    (hS : ScaledBalanced A S) (hT : ScaledBalanced A T) : S = T",
+      "header_sha256": "c2457051d9abab0c27dd06f372d3d14ae3eaeeded4daa7316f64a2a1bd1998c2"
+    },
+    {
+      "name": "NLA.NM04.sinkhorn_semantics",
+      "line": 76,
+      "header": "theorem sinkhorn_semantics {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (A : Rect m n) (hA : Positive A) :\n    ScaledBalanced A (sinkhorn A) ∧ Positive (sinkhorn A) ∧\n      ∀ S : Rect m n, ScaledBalanced A S → S = sinkhorn A",
+      "header_sha256": "5d78fca25ff1ccb8528797be7954efa5736eb111a598485bbb222adc8d14c091"
+    },
+    {
+      "name": "NLA.NM04.position_sorted_semantics",
+      "line": 82,
+      "header": "theorem position_sorted_semantics {α : Type u} [LinearOrder α]\n    (U : Finset α) (i : Fin U.card) :\n    position (U.orderEmbOfFin rfl i) U = i.val + 1",
+      "header_sha256": "7f7224a63ee9153d86273c5cdafbac92b871c590b0f1e46df5684cd5b41c0da1"
+    },
+    {
+      "name": "NLA.NM04.empty_minor_values",
+      "line": 87,
+      "header": "theorem empty_minor_values {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (A : Rect m n) :\n    minor (tailMatrix A) (emptyIndex (Tail m) (Tail n)) = 1 ∧\n    delta A hm hn (emptyIndex (Tail m) (Tail n)) = A (firstIndex hm) (firstIndex hn) ∧\n    gamma A hm hn (emptyIndex (Tail m) (Tail n)) = A (firstIndex hm) (firstIndex hn)",
+      "header_sha256": "8e0780e0187868fed897ec6d67abccfcecf212ec71e92c4ab2b3f46cb56854c3"
+    },
+    {
+      "name": "NLA.NM04.H_diagonal",
+      "line": 94,
+      "header": "theorem H_diagonal (m n : ℕ) (I : Index m n) :\n    H m n I I = (I.1.1.card : ℤ) * ((m : ℤ) + (n : ℤ)) - (m : ℤ) * (n : ℤ)",
+      "header_sha256": "ec4c876af6b3c0d5b386c90b6c9d24e476211f961ae64ba592b4a0de0b1c8616"
+    },
+    {
+      "name": "NLA.NM04.H_raising",
+      "line": 98,
+      "header": "theorem H_raising (m n : ℕ) (I J : Index m n) (hIJ : I ≠ J)\n    (s : Tail m) (t : Tail n) (h : RaisingSupport I J s t) :\n    H m n I J = (-1 : ℤ) ^ (position s J.1.1 + position t J.1.2) * (m : ℤ)",
+      "header_sha256": "512621a20e8873b75aaff9d1745a7e3dc0b856a4f23e504c5184da3135928f7f"
+    },
+    {
+      "name": "NLA.NM04.H_lowering",
+      "line": 103,
+      "header": "theorem H_lowering (m n : ℕ) (I J : Index m n) (hIJ : I ≠ J)\n    (s : Tail m) (t : Tail n) (h : LoweringSupport I J s t) :\n    H m n I J = (-1 : ℤ) ^ (position s I.1.1 + position t I.1.2 + 1) * (n : ℤ)",
+      "header_sha256": "b99de5f5f06363b6fdb65825c0dd2aeba2219bc670072c539f02617ca6219e0e"
+    },
+    {
+      "name": "NLA.NM04.H_column_exchange",
+      "line": 108,
+      "header": "theorem H_column_exchange (m n : ℕ) (I J : Index m n) (hIJ : I ≠ J)\n    (s t : Tail n) (h : ColumnExchangeSupport I J s t) :\n    H m n I J = (-1 : ℤ) ^ (position s I.1.2 + position t J.1.2) * (m : ℤ)",
+      "header_sha256": "40c0b27bf4128517fb9d3ceea76a1b3538ad1cf9c796906277b00e779dc70eb9"
+    },
+    {
+      "name": "NLA.NM04.H_row_exchange",
+      "line": 113,
+      "header": "theorem H_row_exchange (m n : ℕ) (I J : Index m n) (hIJ : I ≠ J)\n    (s t : Tail m) (h : RowExchangeSupport I J s t) :\n    H m n I J = (-1 : ℤ) ^ (position s I.1.1 + position t J.1.1) * (n : ℤ)",
+      "header_sha256": "7a774bc080c896fc4a7376d870e50e8a6b3c4e05dfe3f3674bef3c026e3a91b9"
+    },
+    {
+      "name": "NLA.NM04.H_other",
+      "line": 118,
+      "header": "theorem H_other (m n : ℕ) (I J : Index m n) (hIJ : I ≠ J)\n    (hU : ¬ ∃ (s : Tail m) (t : Tail n), RaisingSupport I J s t)\n    (hL : ¬ ∃ (s : Tail m) (t : Tail n), LoweringSupport I J s t)\n    (hC : ¬ ∃ s t : Tail n, ColumnExchangeSupport I J s t)\n    (hR : ¬ ∃ s t : Tail m, RowExchangeSupport I J s t) : H m n I J = 0",
+      "header_sha256": "81960f70b94018a184ce48d63d24533aba1ad9643f4da1b1b1d269ec7fdbe7ab"
+    },
+    {
+      "name": "NLA.NM04.weighted_principal_minor_expansion",
+      "line": 126,
+      "header": "theorem weighted_principal_minor_expansion {D : Type u} [Fintype D] [DecidableEq D]\n    {𝕜 : Type w} [CommRing 𝕜] (M : Matrix D D 𝕜) (γ δ : D → 𝕜) (z : 𝕜) :\n    (Matrix.diagonal γ + z • (M * Matrix.diagonal δ)).det =\n      ∑ E : Finset D,\n        (M.submatrix (Subtype.val : E → D) (Subtype.val : E → D)).det *\n          (∏ i ∈ E, δ i) * (∏ i ∈ (Finset.univ \\ E), γ i) * z ^ E.card",
+      "header_sha256": "915e637d8a7807b30208a0acbfcb78b5f4f6d154d4b834a12520c8575b6a6eff"
+    },
+    {
+      "name": "NLA.NM04.cofactor_signed_minor_formula",
+      "line": 134,
+      "header": "theorem cofactor_signed_minor_formula {α : Type u} {β : Type v} {𝕜 : Type w}\n    [LinearOrder α] [LinearOrder β] [CommRing 𝕜]\n    (T Z : Matrix α β 𝕜) (I : MinorIndex α β) :\n    cofactorForm T I Z =\n      ∑ s : I.1.1, ∑ t : I.1.2,\n        (-1 : 𝕜) ^ (position (s : α) I.1.1 + position (t : β) I.1.2) *\n          Z s t * minor T (erasedIndex I s t)",
+      "header_sha256": "52045117b6f8044f388b52ac0bbd4ff20b47c5ab296f2b562a192477b9e924d5"
+    },
+    {
+      "name": "NLA.NM04.universal_rank_one_update",
+      "line": 144,
+      "header": "theorem universal_rank_one_update {α : Type u} {β : Type v} {𝕜 : Type w}\n    [LinearOrder α] [LinearOrder β] [CommRing 𝕜]\n    (T : Matrix α β 𝕜) (u : α → 𝕜) (v : β → 𝕜) (z : 𝕜) (I : MinorIndex α β) :\n    minor (T + z • Matrix.vecMulVec u v) I =\n      minor T I + z * cofactorForm T I (Matrix.vecMulVec u v)",
+      "header_sha256": "7e03906623b6a1a03d4b5d9602c73a215eedb22767224b7d34643f3d89456cdc"
+    },
+    {
+      "name": "NLA.NM04.universal_bordered_determinant",
+      "line": 151,
+      "header": "theorem universal_bordered_determinant {𝕜 : Type w} [CommRing 𝕜] {k : ℕ}\n    (V : Matrix (Fin k) (Fin k) 𝕜) (a b : Fin k → 𝕜) (d : 𝕜) :\n    (∑ i : Fin k, a i * (V.adjugate.mulVec b) i) =\n      d * V.det - (borderedMatrix V a b d).det",
+      "header_sha256": "651ed0ba04bb8a1d7f8737fda541ef31ebf3b02b4dde36f6b5e4c86dac48c8c1"
+    },
+    {
+      "name": "NLA.NM04.minor_lowering_identity",
+      "line": 157,
+      "header": "theorem minor_lowering_identity {α : Type u} {β : Type v} {𝕜 : Type w}\n    [Fintype α] [Fintype β] [LinearOrder α] [LinearOrder β] [CommRing 𝕜]\n    (T : Matrix α β 𝕜) (I : MinorIndex α β) :\n    cofactorForm T I (fun _ _ => 1) = lowering (minor T) I",
+      "header_sha256": "6edd163941bcaa84d82094a039ead784f2f3bf5ed4d183da0736e83ce0b70c38"
+    },
+    {
+      "name": "NLA.NM04.minor_column_exchange_identity",
+      "line": 163,
+      "header": "theorem minor_column_exchange_identity {α : Type u} {β : Type v} {𝕜 : Type w}\n    [Fintype α] [Fintype β] [LinearOrder α] [LinearOrder β] [CommRing 𝕜]\n    (T : Matrix α β 𝕜) (I : MinorIndex α β) :\n    cofactorForm T I (Matrix.vecMulVec (fun i => ∑ j, T i j) (fun _ => 1)) =\n      (I.1.1.card : 𝕜) * minor T I + columnExchange (minor T) I",
+      "header_sha256": "378d95a58d558709e536074f5010cdc8c0d452375939917b4e242271182241fe"
+    },
+    {
+      "name": "NLA.NM04.minor_row_exchange_identity",
+      "line": 170,
+      "header": "theorem minor_row_exchange_identity {α : Type u} {β : Type v} {𝕜 : Type w}\n    [Fintype α] [Fintype β] [LinearOrder α] [LinearOrder β] [CommRing 𝕜]\n    (T : Matrix α β 𝕜) (I : MinorIndex α β) :\n    cofactorForm T I (Matrix.vecMulVec (fun _ => 1) (fun j => ∑ i, T i j)) =\n      (I.1.1.card : 𝕜) * minor T I + rowExchange (minor T) I",
+      "header_sha256": "5368686cc52127e1920325c3eaa15a915b96b9115af0243216830a1be93c86dc"
+    },
+    {
+      "name": "NLA.NM04.minor_raising_identity",
+      "line": 177,
+      "header": "theorem minor_raising_identity {α : Type u} {β : Type v} {𝕜 : Type w}\n    [Fintype α] [Fintype β] [LinearOrder α] [LinearOrder β] [CommRing 𝕜]\n    (T : Matrix α β 𝕜) (I : MinorIndex α β) :\n    cofactorForm T I\n        (Matrix.vecMulVec (fun i => ∑ j, T i j) (fun j => ∑ i, T i j)) =\n      (∑ i, ∑ j, T i j) * minor T I - raising (minor T) I",
+      "header_sha256": "347a19abee769e5568c76360971b9fa2e14cecebebcc0404136f6ff1fd932c2c"
+    },
+    {
+      "name": "NLA.NM04.schur_margin_identities",
+      "line": 185,
+      "header": "theorem schur_margin_identities {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (S : Rect m n) (hS : Positive S) (hB : Balanced S) :\n    (∀ i : Tail m, (∑ j : Tail n, schurTail S hm hn i j) =\n      1 - S i.val (firstIndex hn) / S (firstIndex hm) (firstIndex hn)) ∧\n    (∀ j : Tail n, (∑ i : Tail m, schurTail S hm hn i j) =\n      ((m : ℝ) / (n : ℝ)) *\n        (1 - S (firstIndex hm) j.val / S (firstIndex hm) (firstIndex hn))) ∧\n    (∑ i : Tail m, ∑ j : Tail n, schurTail S hm hn i j) =\n      (m : ℝ) - ((m : ℝ) / (n : ℝ)) / S (firstIndex hm) (firstIndex hn)",
+      "header_sha256": "fdc9b9e40227ef777ccf780ad61541f6c1517bb53bdc5729d2718f80424d815e"
+    },
+    {
+      "name": "NLA.NM04.schur_bordered_minor",
+      "line": 196,
+      "header": "theorem schur_bordered_minor {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (S : Rect m n) (hx : S (firstIndex hm) (firstIndex hn) ≠ 0) (I : Index m n) :\n    delta S hm hn I = S (firstIndex hm) (firstIndex hn) * minor (schurTail S hm hn) I",
+      "header_sha256": "fd6a3579cdc74c1f417a077488d11d42192d067cf9902f0ca4680a230d1f39d7"
+    },
+    {
+      "name": "NLA.NM04.balanced_minor_relation",
+      "line": 201,
+      "header": "theorem balanced_minor_relation {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (S : Rect m n) (hS : Positive S) (hB : Balanced S) (I : Index m n) :\n    (m : ℝ) * minor (tailMatrix S) I +\n      ((I.1.1.card : ℝ) * ((m : ℝ) + (n : ℝ)) - (m : ℝ) * (n : ℝ)) * delta S hm hn I +\n      (n : ℝ) * raising (delta S hm hn) I - (m : ℝ) * lowering (delta S hm hn) I +\n      (m : ℝ) * columnExchange (delta S hm hn) I +\n      (n : ℝ) * rowExchange (delta S hm hn) I = 0",
+      "header_sha256": "6533f480708d6423436ceaf5c7f2a7c06192d7a6f7be267d446b5a17a6bcca97"
+    },
+    {
+      "name": "NLA.NM04.weighted_transition_action",
+      "line": 210,
+      "header": "theorem weighted_transition_action {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (f : Index m n → ℝ) (I : Index m n) :\n    (HReal m n * Matrix.diagonal f).mulVec (weight m n) I =\n      weight m n I *\n        (((I.1.1.card : ℝ) * ((m : ℝ) + (n : ℝ)) - (m : ℝ) * (n : ℝ)) * f I +\n          (n : ℝ) * raising f I - (m : ℝ) * lowering f I +\n          (m : ℝ) * columnExchange f I + (n : ℝ) * rowExchange f I)",
+      "header_sha256": "12b6721a9bea98d8bb901b74ec816de12b18dba6553325dd52b577ef12f17eca"
+    },
+    {
+      "name": "NLA.NM04.balanced_null_vector",
+      "line": 219,
+      "header": "theorem balanced_null_vector {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (S : Rect m n) (hS : Positive S) (hB : Balanced S) :\n    (pencil S hm hn (S (firstIndex hm) (firstIndex hn))).mulVec (weight m n) = 0 ∧\n    weight m n (emptyIndex (Tail m) (Tail n)) = 1 ∧ weight m n ≠ 0",
+      "header_sha256": "85af317edbc2320e9529d020ae5ba0c170ffc1fbddc524b760fdcb34c29df2ab"
+    },
+    {
+      "name": "NLA.NM04.diagonal_minor_covariance",
+      "line": 225,
+      "header": "theorem diagonal_minor_covariance {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (A : Rect m n) (a : Fin m → ℝ) (b : Fin n → ℝ) (I : Index m n) :\n    delta (diagonalScale A a b) hm hn I = covarianceFactor a b hm hn I * delta A hm hn I ∧\n    gamma (diagonalScale A a b) hm hn I = covarianceFactor a b hm hn I * gamma A hm hn I",
+      "header_sha256": "c3257545cad56b63ce957838c682df96f75f2f6f8e37a815309405d8b6888141"
+    },
+    {
+      "name": "NLA.NM04.diagonal_pencil_covariance",
+      "line": 231,
+      "header": "theorem diagonal_pencil_covariance {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (A : Rect m n) (a : Fin m → ℝ) (b : Fin n → ℝ) (z : ℝ) :\n    pencil (diagonalScale A a b) hm hn z =\n      pencil A hm hn z * Matrix.diagonal (covarianceFactor a b hm hn)",
+      "header_sha256": "b16fe4ffbaa14a44be41bc0d99990789c57b6878b19220a9be2b303e16dff33b"
+    },
+    {
+      "name": "NLA.NM04.sinkhorn_pencil_singular",
+      "line": 237,
+      "header": "theorem sinkhorn_pencil_singular {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (A : Rect m n) (hA : Positive A) :\n    ∃ v : Index m n → ℝ, 0 < v (emptyIndex (Tail m) (Tail n)) ∧\n      (pencil A hm hn ((sinkhorn A) (firstIndex hm) (firstIndex hn))).mulVec v = 0",
+      "header_sha256": "adc0716f4c624e5eef34b3219f71412b343c8a97978377023e73d7a3f0e9c903"
+    },
+    {
+      "name": "NLA.NM04.rowland_wu_identity",
+      "line": 244,
+      "header": "theorem rowland_wu_identity {m n : ℕ} (hm : 1 ≤ m) (hn : 1 ≤ n)\n    (A : Rect m n) (hA : Positive A) :\n    (∑ E : Finset (Index m n),\n      ((m : ℝ)⁻¹ • (HReal m n).submatrix\n        (Subtype.val : E → Index m n) (Subtype.val : E → Index m n)).det *\n      (∏ I ∈ E, delta A hm hn I) * (∏ I ∈ (Finset.univ \\ E), gamma A hm hn I) *\n      ((sinkhorn A) (firstIndex hm) (firstIndex hn)) ^ E.card) = 0",
+      "header_sha256": "8ed80c76d2591ac713fdca74487661e41da29416078a36d48921f37cad3e09b2"
+    }
+  ]
+}

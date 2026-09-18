@@ -1,0 +1,61 @@
+{
+  "time": "2026-09-17T21:45:36.027250+00:00",
+  "worktree": "/private/tmp/nla-lean-next-nm04-worktree",
+  "scope": "Actual local non-Lean publication checks; each command executed separately and output observed",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "tools/validate_problem_ids.py",
+        "--base-ref",
+        "origin/main"
+      ],
+      "exit_code": 0,
+      "result": "217 permanent IDs validated",
+      "tool_chunk": "93d177"
+    },
+    {
+      "argv": [
+        "python3",
+        "tools/update_catalog.py",
+        "--base-ref",
+        "origin/main"
+      ],
+      "exit_code": 0,
+      "result": "217 indexed; Lean verified52 Open42 Partially resolved70 Solved53",
+      "tool_chunk": "31d199"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_problem_ids.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "result": "17 tests OK",
+      "tool_chunk": "44b52e"
+    },
+    {
+      "argv": [
+        "/Users/georgestepaniants/miniforge3/bin/python",
+        "tools/lean/validate_manifest.py",
+        "nonnegative-and-positive-factorizations/NM-04/lean"
+      ],
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/tmp/nla-publication-python-20260917"
+      },
+      "exit_code": 0,
+      "result": "schema and comparator coverage PASS35",
+      "tool_chunk": "e97804"
+    }
+  ],
+  "not_Lean_or_Comparator_execution": true,
+  "canonical_count_is_not_campaign_count": true
+}

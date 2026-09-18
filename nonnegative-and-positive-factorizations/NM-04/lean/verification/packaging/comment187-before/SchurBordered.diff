@@ -1,0 +1,42 @@
+--- local184/SchurBordered.lean
++++ local187/SchurBordered.lean
+@@ -34,11 +34,13 @@
+     invOf_mul_self := by
+       ext i j
+       have hij : i = j := Subsingleton.elim _ _
++      -- Expand the singleton matrix product and identity to scalar entries.
+       change (∑ l : Fin 1, pinv i l * P l j) = if i = j then 1 else 0
+       simp [P, pinv, hij, x, hx]
+     mul_invOf_self := by
+       ext i j
+       have hij : i = j := Subsingleton.elim _ _
++      -- The reverse product has the same one-entry identity convention.
+       change (∑ l : Fin 1, P i l * pinv l j) = if i = j then 1 else 0
+       simp [P, pinv, hij, x, hx] }
+   let e : Fin 1 ⊕ Fin k ≃ Fin (k + 1) :=
+@@ -49,6 +51,7 @@
+     rfl
+   have hes (i : Fin k) : e (Sum.inr i) = i.succ := by
+     apply Fin.ext
++    -- The sum-index equivalence adds one on the left; Fin.succ adds it on the right.
+     change 1 + i.val = i.val + 1
+     omega
+   let A := S.submatrix (Fin.cons (firstIndex hm) rows) (Fin.cons (firstIndex hn) cols)
+@@ -65,6 +68,8 @@
+       rfl
+   have hschur : D - C * ⅟P * B = minorMatrix (schurTail S hm hn) I := by
+     ext i j
++    -- Expand the block products and selected Schur entries, using the declared
++    -- inverse of the singleton pivot P. No tail-minor inverse is involved.
+     change S (rows i) (cols j) -
+       (∑ l : Fin 1, (∑ t : Fin 1, C i t * pinv t l) * B l j) =
+       S (rows i) (cols j) - S (rows i) (firstIndex hn) *
+@@ -74,6 +79,8 @@
+     ring
+   have hdetP : P.det = x := by
+     exact Matrix.det_fin_one P
++  -- Delta is the determinant with the distinguished row and column prepended;
++  -- minor is the determinant of the same sorted tail selection in the Schur matrix.
+   change A.det = x * (minorMatrix (schurTail S hm hn) I).det
+   calc
+     A.det = (A.submatrix e e).det := (Matrix.det_submatrix_equiv_self e A).symm

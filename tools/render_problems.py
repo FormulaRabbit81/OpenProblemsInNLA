@@ -33,7 +33,7 @@ def restore_pdf_layout(identifier, body):
         # Keep the complete retained question together after verification notices.
         heading = "## Original problem statement\n"
         body = body.replace(heading, "\\newpage\n\n" + heading, 1)
-    if identifier in {"SP-05", "MF-14"}:
+    if identifier in {"SP-05", "MF-14", "NM-04"}:
         # Keep the complete original target together after its verification notice.
         body = body.replace("## Problem statement\n", "\\newpage\n\n## Problem statement\n", 1)
     if identifier in {"IE-14", "MF-02", "MF-12", "MF-24"}:
@@ -104,7 +104,7 @@ def render(source):
             input=body.strip(), text=True, capture_output=True, check=True,
         )
         tex = result.stdout
-        if identifier in {"IE-02", "IE-04", "IE-14", "IV-03", "KE-05", "MF-05", "MF-12", "MF-22", "SP-04", "SP-05", "SP-15"}:
+        if identifier in {"IE-02", "IE-04", "IE-14", "IV-03", "KE-05", "MF-05", "MF-12", "MF-22", "NM-04", "SP-04", "SP-05", "SP-15"}:
             # These publication dates record formal verification, not a literature search.
             tex = tex.replace("Literature check:", "Verification check:")
         # The code spans in this catalog are literal search phrases. Set them
@@ -120,7 +120,7 @@ def render(source):
             'IE-24', 'IE-25', 'IE-26', 'IS-02', 'IS-03', 'IS-05', 'IV-02', 'IV-03', 'IV-04',
             'IV-05', 'IV-06', 'KE-03', 'KE-04', 'MD-06', 'MF-15',
             'MF-16', 'MF-17', 'MI-03', 'MI-04', 'MI-06', 'MI-07', 'MI-08',
-            'MI-09', 'MI-19', 'MI-23', 'MI-27', 'MI-28', 'MI-29', 'NM-03', 'PF-05',
+            'MI-09', 'MI-19', 'MI-23', 'MI-27', 'MI-28', 'MI-29', 'NM-03', 'NM-04', 'PF-05',
             'RA-02', 'RA-06', 'RA-08', 'RA-09', 'RA-10', 'RA-12',
             'RA-15', 'RE-01', 'RE-02', 'RE-06', 'SP-04',
             'SP-05', 'SP-06', 'SP-09', 'SP-12', 'TR-11', 'TR-20', 'TR-21',

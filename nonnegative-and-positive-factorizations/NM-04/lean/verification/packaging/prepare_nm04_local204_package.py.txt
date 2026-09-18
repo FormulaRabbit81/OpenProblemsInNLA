@@ -1,0 +1,165 @@
+"""Package the locally checked NM04 instance-selection repair, before publication.
+
+Preserves failed Linux evidence and prior review scopes. No Linux acceptance.
+"""
+from pathlib import Path
+import datetime, gzip, hashlib, io, json, re, shutil, subprocess, tarfile
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+W = Path('/private/tmp/nla-lean-next-nm04-worktree')
+OLD = W / 'nonnegative-and-positive-factorizations/NM-04/lean'
+N = B / 'next-proofs/NM-04'
+P = B / 'NM04-canonical-package-local204'
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+load = lambda p: json.loads(p.read_text())
+now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+assert subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=W).strip() == b'34a8bc2dd1330f2c51e496329341804eb5859d67'
+assert not subprocess.check_output(['git', 'status', '--porcelain'], cwd=W).strip()
+assert not P.exists()
+manifest = load(OLD / 'PACKAGE-MANIFEST.json')
+assert set(manifest['files']) | {'PACKAGE-MANIFEST.json'} == {str(p.relative_to(OLD)) for p in OLD.rglob('*') if p.is_file()}
+for rel, h in manifest['files'].items():
+    assert sha(OLD / rel) == h, rel
+local_path = B / 'NM04-LOCAL-COMPLETE-204.json'
+local = load(local_path)
+assert sha(local_path) == '4063492a265402d4c9cf50d6019911f00d939d294d44702f966975119a7c3e6d'
+diagnostic = B / 'NM04-type-diagnostics-205'
+assert sha(diagnostic / 'COMPARISON.json') == '220012b2101b1167db78d3bb0e07ae90ede3b3f2021d1b57535e5ce3ceb4fa2f'
+assert load(diagnostic / 'COMPARISON.json')['all35_match']
+old_sources = load(OLD / 'ACTIVE-SOURCE-MANIFEST.json')['source_sha256']
+assert set(old_sources) == set(local['sources'])
+assert [r for r in old_sources if old_sources[r] != local['sources'][r]] == ['NLA/NM04/AnalyticBasics.lean']
+for rel, h in load(N / 'STATEMENT-FREEZE.json')['source_sha256'].items():
+    assert sha(N / rel) == sha(OLD / rel) == h, rel
+shutil.copytree(OLD, P)
+records = {r['destination']: r for r in load(P / 'verification/RETAINED-PATHS.json')}
+
+def copy(src, rel):
+    src = Path(src)
+    dest = P / rel
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(src, dest)
+    assert sha(src) == sha(dest)
+    records[rel] = {'source': str(src), 'destination': rel, 'sha256': sha(src)}
+
+for rel in ['PACKAGE-MANIFEST.json', 'README.md', 'formalization.yaml', 'STATE.json',
+            'ACTIVE-SOURCE-MANIFEST.json', 'IMPLEMENTATION-MAP.json', 'verification/RETAINED-PATHS.json']:
+    copy(OLD / rel, 'verification/packaging/published34a8bc2d/' + rel)
+copy(OLD / 'NLA/NM04/AnalyticBasics.lean', 'verification/packaging/published34a8bc2d/AnalyticBasics.lean.txt')
+for rel, h in local['sources'].items():
+    src = B / 'NM04-local204-source-snapshot' / rel
+    assert sha(src) == sha(N / rel) == h, rel
+    copy(src, rel)
+for name in ['LOCAL-COMPLETE.json', 'LOCAL-COMPLETE-204.json']:
+    copy(local_path, 'verification/' + name)
+for original, h in local['retained_original_evidence'].items():
+    src = Path(original)
+    assert sha(src) == h, original
+    copy(src, 'verification/local-development/' + str(src.relative_to(L)))
+for n in [204, 205]:
+    copy(L / f'ASSEMBLY-{n}.json', f'verification/local-development/ASSEMBLY-{n}.json')
+copy(L / 'runs/development-205/RECEIPT.json', 'verification/local-development/runs/development-205/RECEIPT.json')
+for f in (L / 'runs/development-205').glob('*.log'):
+    copy(f, 'verification/local-development/runs/development-205/' + f.name)
+for f in diagnostic.rglob('*'):
+    if f.is_file():
+        suffix = '.txt' if f.suffix == '.lean' else ''
+        copy(f, 'verification/type-diagnostics-205/' + str(f.relative_to(diagnostic)) + suffix)
+for name in ['diagnose_nm04_types.py', 'compare_nm04_diagnostics.py', 'prepare_nm04_local204_package.py']:
+    copy(B / name, 'verification/packaging/' + name + '.txt')
+
+def add_review(src, label):
+    src = Path(src)
+    for rel, h in load(src / 'MANIFEST.json')['files'].items():
+        if isinstance(h, dict):
+            h = h['sha256']
+        assert sha(src / rel) == h, (src.name, rel)
+    for filename, suffix in [('REVIEW.md', '.md'), ('VERDICT.json', '-verdict.json'), ('MANIFEST.json', '-manifest.json')]:
+        copy(src / filename, 'reviews/' + label + suffix)
+    dest = P / 'reviews' / (label + '-packet.tar.gz')
+    with dest.open('wb') as raw, gzip.GzipFile(fileobj=raw, mode='wb', mtime=0) as gz, tarfile.open(fileobj=gz, mode='w') as tar:
+        for f in sorted(src.rglob('*')):
+            assert not f.is_symlink(), f
+            if f.is_file():
+                data = f.read_bytes()
+                assert not re.search(r'(?i)(?:george|g?stepaniants|sgstepaniants)[^\s@<>]{0,40}@[\w.-]+\.[A-Za-z]{2,}', data.decode('utf-8', errors='ignore')), f
+                info = tarfile.TarInfo(src.name + '/' + str(f.relative_to(src)))
+                info.size, info.mode = len(data), 0o644
+                tar.addfile(info, io.BytesIO(data))
+    return {'label': label, 'original_packet': src.name, 'report': label + '.md',
+            'verdict': label + '-verdict.json', 'manifest': label + '-manifest.json',
+            'manifest_sha256': sha(src / 'MANIFEST.json'), 'archive': dest.name,
+            'archive_sha256': sha(dest), 'archive_bytes': dest.stat().st_size}
+
+index = load(P / 'reviews/INDEX.json')
+index.append(add_review(B / 'reviews/NM04-runtime-failure-referee2-20260917', 'failed-runtime-diagnosis'))
+index.append(add_review(B / 'reviews/NM04-referee2-local201-held-20260917', 'unsuccessful-local201'))
+(P / 'reviews/INDEX.json').write_text(json.dumps(index, indent=2) + '\n')
+failure = {
+    'run_id': 35269165327, 'job_id': 105364154708,
+    'commit': '34a8bc2dd1330f2c51e496329341804eb5859d67', 'conclusion': 'failure',
+    'url': 'https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35269165327',
+    'failure': 'C04 potential_line_derivative elaborated statement mismatch; candidate kernel replay not reached',
+    'review': 'reviews/failed-runtime-diagnosis.md', 'review_packet': 'reviews/failed-runtime-diagnosis-packet.tar.gz',
+    'current_repaired_source_accepted': False,
+}
+(P / 'verification/FAILED-LINUX-35269165327.json').write_text(json.dumps(failure, indent=2) + '\n')
+metadata = load(P / 'formalization.yaml')
+assert metadata['status']['whole_problem_verified'] is False
+for r in metadata['status']['main_results']:
+    f = P / r['file']
+    name = r['declaration'].rsplit('.', 1)[1]
+    r['line'] = next(i for i, line in enumerate(f.read_text().splitlines(), 1) if re.match(r'^theorem\s+' + re.escape(name) + r'\b', line))
+    r['file_sha256'] = sha(f)
+    r['verification_status'] = 'PASS: actual source-bound local Lean204 and kernel trust assertion; local205 exact elaborated-type diagnostics pass. Current-source review continuations and real Linux Comparator pending.'
+metadata['automation']['notes'] = 'Two independent statement approvals preceded implementation. Actual local204 exports all35 contracts through38 modules, with eight fresh commands and30 exact successful reuses; one compiler process, one thread,4096 MiB. Two nonauthor full187 reviews are preserved; exact204 continuation approvals are pending. Local205 diagnostics match all35 elaborated statements. A new real Linux Comparator run remains pending; no official Tau Ceti service or human peer review is claimed.'
+metadata['review']['status'] = 'Two independent statement approvals and two original nonauthor full187 source approvals; exact local204 continuation approvals pending.'
+metadata['alignment']['status'] = 'Two independent statement approvals before implementation; two original whole-target local187 reviews retained. Exact local204 continuation reviews pending.'
+v = metadata['verification']
+v['local_Lean'].update(run=204, record='verification/LOCAL-COMPLETE.json')
+v['local_elaborated_type_diagnostics'] = {'status': 'pass', 'run': 205, 'statements': 35,
+    'record': 'verification/type-diagnostics-205/COMPARISON.json', 'scope': 'Local diagnostic only, not real Comparator'}
+v['GitHub_Comparator'] = {'status': 'pending for repaired source', 'previous_failed_run': failure}
+v['independent_reviews'] = {'statement': 2, 'final': 'current204 continuations pending',
+    'historical_full187_approvals': 2, 'record': 'reviews/INDEX.json'}
+v['publication_status'] = 'Local204 repair compiles and local205 types match; final review continuations and new Linux run pending; canonical remains Solved'
+v['package_preflight']['scope'] += '; historical local187 package only, not current204 repair approval'
+(P / 'formalization.yaml').write_text(json.dumps(metadata, indent=2) + '\n')
+(P / 'IMPLEMENTATION-MAP.json').write_text(json.dumps({'results': metadata['status']['main_results']}, indent=2) + '\n')
+active = load(P / 'ACTIVE-SOURCE-MANIFEST.json')
+active.update(source_sha256=local['sources'], local_run=204, Linux_Comparator='pending repaired source; previous run failed')
+(P / 'ACTIVE-SOURCE-MANIFEST.json').write_text(json.dumps(active, indent=2) + '\n')
+state = {'time': now, 'stage': v['publication_status'], 'local_run': 204, 'contracts': 35,
+    'local_Lean_passed': True, 'local_type_diagnostic_run': 205, 'all35_local_types_match': True,
+    'GitHub_Comparator_run_for_current_source': False, 'previous_failed_run': 35269165327,
+    'count_change': 0, 'current_source_review_continuations': 'pending', 'final_source_review_record': 'reviews/INDEX.json'}
+(P / 'STATE.json').write_text(json.dumps(state, indent=2) + '\n')
+readme = (P / 'README.md').read_text()
+start = readme.index('**All 35 frozen statements')
+end = readme.index('\n\nStart with', start)
+readme = readme[:start] + '''**All 35 frozen statements pass actual local Lean204, and local205 finds all 35 elaborated types match the unchanged specifications. The repaired source still requires independent review continuations and a new real Linux Comparator run.** The first [Linux attempt](verification/FAILED-LINUX-35269165327.json) failed at one implicit continuity witness before candidate kernel replay. Its failure and the first unsuccessful local adjustment are retained in the [review index](reviews/INDEX.json). The current repair only selects the original existing continuity instance within C04's local section; theorem headers, bodies, frozen definitions and checker are unchanged. The [local record](verification/LOCAL-COMPLETE.json) binds all 38 proof modules, actual commands and logs, and source/dependency/output provenance. Every exported theorem uses only `propext`, `Classical.choice`, and `Quot.sound` and passes its kernel trust assertion. No canonical status promotion or completed-target increase is claimed.''' + readme[end:]
+readme = readme.replace('The final readability adjustment adds only explanatory comments.', 'The earlier local187 readability adjustment added only explanatory comments.')
+readme = readme.replace('approved this source and local evidence for final Linux verification.', 'approved the previous local187 source and local evidence for final Linux verification; it does not approve the later local204 repair.')
+(P / 'README.md').write_text(readme)
+(P / 'reviews/README.md').write_text('''# Independent review evidence
+
+Two statement approvals preceded implementation. Original whole-target reviews
+approved local187. The later failed Linux run and unsuccessful local201 repair
+retain their actual scopes and do not count as acceptance. Exact local204
+continuation approvals are pending. These are AI-agent source/evidence reviews,
+not external human review, an official Tau Ceti service, or reviewer compiler runs.
+
+[INDEX.json](INDEX.json) binds the complete packets and readable reports.
+Historical machine paths record provenance and are not rebuild requirements.
+''')
+generated = ['README.md', 'formalization.yaml', 'STATE.json', 'ACTIVE-SOURCE-MANIFEST.json', 'IMPLEMENTATION-MAP.json', 'reviews/INDEX.json', 'reviews/README.md']
+for rel in generated:
+    records.pop(rel, None)
+(P / 'verification/RETAINED-PATHS.json').write_text(json.dumps(list(records.values()), indent=2) + '\n')
+for r in records.values():
+    assert sha(P / r['destination']) == r['sha256'], r['destination']
+assert len(list(P.rglob('*.lean'))) == 39
+manifest = {'stage': state['stage'], 'files': {str(f.relative_to(P)): sha(f) for f in sorted(P.rglob('*')) if f.is_file() and f != P / 'PACKAGE-MANIFEST.json'}}
+(P / 'PACKAGE-MANIFEST.json').write_text(json.dumps(manifest, indent=2) + '\n')
+print(json.dumps({'package': str(P), 'manifest_sha256': sha(P / 'PACKAGE-MANIFEST.json'), 'files': len(manifest['files']), 'reviews_pending': True, 'Linux_acceptance': False}, indent=2))
