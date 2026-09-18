@@ -13,8 +13,8 @@ Neither final referee authored MF-06 proof code or frozen definitions. Both
 reports and exact source/evidence bindings were saved before an account usage
 limit stopped the agents. Root actually replayed both read-only evidence
 verifiers. This does not claim a new reviewer Lean/Comparator run, external human
-peer review, or an official Tau Ceti service run. The final Linux runtime check
-is still pending. Whole publication-package review is distinct from these
+peer review, or an official Tau Ceti service run. The successful immutable proof-commit Linux runtime check is recorded in
+[verification evidence](../verification/linux-2026-09-18/README.md). Whole publication-package review is distinct from these
 complete mathematical/source approvals.
 
 The [index](INDEX.json) binds full preserved packets. Some historical scripts

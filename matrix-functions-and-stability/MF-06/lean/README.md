@@ -7,13 +7,7 @@ George Stepaniants contributes the mathematical solution and this formalization,
 with substantial OpenAI Codex assistance. Epperlein and Wirth retain attribution
 for the question; reused MF05/MF07 mathematics retain Matthew J. Colbrook's credit.
 
-**All 38 frozen contracts pass actual local Lean268 through 119 modules. Two
-independent final source reviews approved the complete proof. Real Linux
-Comparator checks remain pending.**
-The [local record](verification/LOCAL-COMPLETE.json) binds every source, actual
-command, complete output log and chain of successful source-matched reuse.
-Every export passes its kernel trust assertion with only `propext`,
-`Classical.choice` and `Quot.sound`. No canonical status promotion is claimed.
+**Complete immutable proof verification passed.** All 38 frozen contracts passed actual local Lean268, two independent full-source reviews, and [non-root Linux run 35291765215](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35291765215/job/105435999248) at proof commit `eae51c5c054eaa4b27b542488fab5ceef497dabb`. Comparator, default-kernel replay, standard transitive axioms, sandbox checks and negative/regression controls passed. The [Linux evidence](verification/linux-2026-09-18/README.md) retains the original artifact and logs; the [local record](verification/LOCAL-COMPLETE.json) separately binds all 119 proof modules and successful compiler origins. Later publication and PR merge checkouts have separate checks.
 
 Read [CanonicalLower](NLA/MF06/CanonicalLower.lean) for the final theorem,
 [CriticalCompound](NLA/MF06/CriticalCompound.lean) for the exterior-power reduction,
@@ -50,10 +44,9 @@ tools/lean/verify.sh matrix-functions-and-stability/MF-06/lean /tmp/nla-mf06-too
 ```
 
 That separate harness runs the real Comparator, default-kernel replay, standard
-axiom checks, sandbox checks and negative controls. No Linux success is claimed
-in this local-stage package.
+axiom checks, sandbox checks and negative controls. The actual successful proof-commit execution is recorded above; this command reproduces that class of check.
 
-The [current public audit](verification/public-scope/AUDIT.json) checked target-named
+The [prepublication public audit](verification/public-scope/AUDIT.json) checked target-named
 formalization paths in 268 public branch heads across 15 repositories and 222
 distinct commits; it found none. This is a path-based duplicate check, not a
 semantic search of unrelated filenames or private/unpublished work. Immutable
@@ -68,4 +61,4 @@ their attribution. No email for George Stepaniants is published. Agent review
 does not constitute external human peer review or official Tau Ceti endorsement.
 [License](LICENSE).
 
-The [coordinator publication preflight](verification/MF06-ROOT-PACKAGE-PREFLIGHT.json) checks the complete package, current upstream source correspondence, dependency pins and privacy. It is separate from the two independent full mathematical/source reviews and does not claim Linux execution.
+The [coordinator publication preflight](verification/MF06-ROOT-PACKAGE-PREFLIGHT.json) checks the complete package, current upstream source correspondence, dependency pins and privacy. It preceded the successful Linux execution and is separate from the two independent full mathematical/source reviews.
