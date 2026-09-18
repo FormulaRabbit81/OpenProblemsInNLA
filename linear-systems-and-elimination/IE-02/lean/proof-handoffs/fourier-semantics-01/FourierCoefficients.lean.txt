@@ -1,0 +1,64 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original mathematical and library attribution
+is retained in Definitions.lean and SourceCorrespondence.md.
+
+Exact finite Fourier coefficients with the frozen frequency convention u-v.
+The empty family and the constant-polynomial bound are included.
+-/
+import NLA.IE02.Definitions
+import Mathlib.Data.Complex.BigOperators
+import LeanCert.Tactic
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+open scoped BigOperators
+
+theorem fourier_conjugate_symmetry {l : ℕ} (m : ℕ) (q : Fin l → Poly) (r : ℤ) :
+    fourierCoeff m q (-r) = star (fourierCoeff m q r) := by
+  classical
+  simp only [fourierCoeff, star_sum, star_ite, star_mul, star_star, star_zero]
+  apply Finset.sum_congr rfl
+  intro j _hj
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro u _hu
+  apply Finset.sum_congr rfl
+  intro v _hv
+  have hfreq : (v.val : ℤ) - (u.val : ℤ) = -r ↔
+      (u.val : ℤ) - (v.val : ℤ) = r := by omega
+  simp only [hfreq]
+
+theorem fourier_zero_coefficient {l : ℕ} (m : ℕ) (q : Fin l → Poly) :
+    fourierCoeff m q 0 =
+      ((∑ j, ∑ i : Fin (m + 1), ‖(q j).coeff i.val‖ ^ 2 : ℝ) : ℂ) := by
+  classical
+  simp only [fourierCoeff, Complex.ofReal_sum]
+  apply Finset.sum_congr rfl
+  intro j _hj
+  apply Finset.sum_congr rfl
+  intro u _hu
+  have hfreq (v : Fin (m + 1)) :
+      (u.val : ℤ) - (v.val : ℤ) = 0 ↔ v = u := by
+    constructor
+    · intro h
+      apply Fin.ext
+      omega
+    · intro h
+      subst v
+      omega
+  simp only [hfreq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  rw [← Complex.normSq_eq_norm_sq]
+  exact Complex.mul_conj _
+
+#print axioms fourier_conjugate_symmetry
+#assert_trust kernel fourier_conjugate_symmetry
+#print axioms fourier_zero_coefficient
+#assert_trust kernel fourier_zero_coefficient
+
+end
+end NLA.IE02

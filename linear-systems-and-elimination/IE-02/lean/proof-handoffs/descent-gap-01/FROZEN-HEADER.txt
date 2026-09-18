@@ -1,0 +1,6 @@
+theorem descent_complement_gap {n : ℕ} (hn : 1 ≤ n) (T D : Square n)
+    (hne : T ≠ 0) (γ : ℝ) (hγ : 0 < γ)
+    (hpos : ∀ x ∈ unitMaximal T, γ ≤ descentForm T D x)
+    (hK : (descentComplement T D γ).Nonempty) :
+    ∃ β : ℝ, 0 < β ∧ ∀ x ∈ descentComplement T D γ,
+      ‖euclideanLin T x‖ ^ 2 ≤ operatorNorm T ^ 2 - β := by

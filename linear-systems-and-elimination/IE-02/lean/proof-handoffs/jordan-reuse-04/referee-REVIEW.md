@@ -1,0 +1,56 @@
+# IE-02: four-contract independent proof review
+
+Reviewer: `/root/sf_ra_runtime_referee`, 17 September 2026. **Mathematical fidelity and the selected local evidence pass. Overall approval is withheld for two direct library duplicates, R1 and R2 below.** This is the pinned Tau Ceti reuse rubric's `block` category, not a mathematical counterexample or a failed local proof. The coordinator will preserve this exact-source packet, make the bounded reuse changes, run the affected closure locally, and request a separate continuation.
+
+I authored none of these four IE-02 sources. The coordinator authored JordanReversal, JordanTransport and RealSeparator; `/root/ie02_foundation_preflight` authored WeightedCoefficients. My separate SP-15 author role does not supply independent approval of any SP-15 proof. This review does not approve the full IE-02 target, a publication, or a count increase.
+
+## Exact scope and open findings
+
+The complete current four modules, their private helpers, all concrete Definitions, and their relevant local dependency sources were read. The four public headers match frozen contracts 29, 32, 45 and 48 byte for byte. All thirteen frozen files match `STATEMENT-FREEZE.json`; the coordinator's separate freeze acceptance remains authenticated. `EXACT-HEADERS.json` and `AUDIT.json` give the literal statements and complete source hashes.
+
+| Module | Source SHA-256 | Successful local origin |
+|---|---|---|
+| WeightedCoefficients | `6ca298679b9e426c5d4b987372f011aad6d5d0e5d9c0fe3ac70e790d687057e4` | 75 |
+| RealSeparator | `7c8e6672c19cc6405acab904920ec1fa9feae3cc66417163a866751123c6b98f` | 82 |
+| JordanReversal | `ea30a3ea9bacfb4b66641d9ab21bd95738115818390e123a523ca1095b33b476` | 90 |
+| JordanTransport | `e8a1c0db3cc5105d4d296422ecd458ff7caaa4f0640c9c4eec9c79a5b9f8f580` | 90 |
+
+**R1 — JordanReversal.lean:22–25.** Delete the private `rev_index_symm` proof. Pinned `Mathlib/Data/Fin/Rev.lean:55`, `Fin.rev_eq_iff`, already proves `j.rev = i ↔ j = i.rev`; symmetry of the first equality gives precisely the private statement. Its two simplifier consumers can use `Fin.rev_eq_iff` with the required orientation and `eq_comm` directly. Do not retain an unnecessary compatibility alias. The current proof is correct, including empty `Fin 0`; this is a direct reuse finding.
+
+**R2 — JordanTransport.lean:19–29.** Delete the private power induction `powers_intertwine`. Pinned `Mathlib/Algebra/Group/Semiconj/Defs.lean:114`, `SemiconjBy.pow_right`, applies to `h.symm : SemiconjBy R B A`. At the single polynomial-monomial consumer its equality, reversed, is the required `A ^ k * R = R * B ^ k`. The concrete proposed expression is `(SemiconjBy.pow_right (a := R) (x := B) (y := A) h.symm k).eq.symm`. This expression has been checked against the actual primary signature, not compiled by me. No assumption that the matrices commute, are invertible, or have positive dimension may be added.
+
+Those are the only open findings. Exact changes and a source-matched successful local rebuild of both Jordan modules are needed to close them. Preserve the public statements and all frozen definitions/pins.
+
+## Mathematical review
+
+**Weighted coefficients.** The supplied polynomial identity is exactly the frozen premise; existence of its factor is outside this contract and is not smuggled into a new typeclass. The private pairing lemma sets `s = conjReflect d f * r * b`, uses the already proved fixed-bound `reflection_product`, and extracts coefficient `d+m`. The degree cast is the actual `Nat.cast_add` in `WithBot ℕ`. Multiplication is reassociated only in the commutative complex polynomial ring. `coefficient_inner_product` conjugates the first vector, so the complex pairing orientation is correct. The norm branch alone takes real parts and specializes `norm_sq_eq_re_inner` to the actual complex Euclidean space. The direction branch retains the full complex equality and uses `toeplitz_action` plus `coeffVector_mul_truncate`; there is no degree bound on any direction polynomial. All real weights, including signed weights, are allowed under the exact factor identity. Empty polynomial/direction families, zero polynomials, zero weights, constants, slack degree bounds and `d=m=0` are retained. The coefficient dimension is `d+m+1`, necessarily positive; this theorem makes no separate zero-dimensional claim.
+
+**Real separator.** `ell` remains a continuous real-linear functional, with no complex-linearity assumption. Coordinate projection transports the finite vector sum correctly through `WithLp`. The decomposition is `Re(z_j)e_j + Im(z_j)(I e_j)`. Real linearity then produces `Re(z_j)ell(e_j)+Im(z_j)ell(I e_j)`, which is exactly the real part of `(ell(e_j)-I ell(I e_j))*z_j`. This checks the sign and complex casts of the frozen `separatorCoefficients`. The same finite-sum proof includes `k=0` and the zero functional. No separation theorem, positivity premise, approximation or numerical certificate is needed for this representation identity.
+
+**Jordan reversal.** Multiplication selects the unique reversal entry on each side. The adjoint and square identities use a real zero/one permutation matrix. Reversing the upper shift gives the actual lower Toeplitz shift: the adjacent-index equivalence uses the true `Fin` bounds before natural-subtraction reasoning. Adding `lam • 1` preserves the exact conjugacy for every complex `lam`, including zero. `LinearIsometryEquiv.piLpCongrLeft` on `Fin.revPerm` supplies genuine exponent-two norm preservation. The vector action is on `EuclideanSpace ℂ (Fin n)`, and involutivity uses `Fin.rev_rev`. No nonempty-space instance appears: `n=0` and `n=1` remain valid.
+
+**Polynomial transport.** The proof derives `J R = R L` from `R J R = L` and `R²=1` without commuting arbitrary matrices. Polynomial monomial/addition induction preserves factor order; scalar algebra-map coefficients are central through the actual matrix scalar APIs. The vector intertwining follows from named `Matrix.toLpLin_mul_same` and the actual reversal action. Both norm inequalities use the actual continuous operator norm, reversal's genuine norm preservation and involution. They need neither a norm-attaining vector nor a nonempty domain. Arbitrary complex polynomials, the zero polynomial and constants are retained. R2 concerns only the duplicated power subproof.
+
+These results are faithful pieces of the original upper-Jordan GMRES target. They do not themselves establish finite Schur existence, weighted factor existence, gradient convexity, separation/descent completion, attained affine minimax or the canonical GMRES equality. Those obligations remain in the unchanged fifty-contract boundary.
+
+## Reuse, quality and attribution
+
+I reapplied the hash-bound Tau Ceti correctness, generality, proof-quality, reuse and attribution guidance at commit `afb424eda89e8ac96d9eb69f6a88972055a4cd1b`. This is an agent review using that guidance, not an official Tau Ceti service result. The local searches and primary excerpts are retained. The available Tau Ceti corpus contains review guidance, not a complete mathematical source checkout; no fresh network or exhaustive public duplicate search is claimed.
+
+The polynomial semiconjugacy search found no direct pinned replacement for the polynomial bridge. The operator-norm composition lemmas and real-dual `extendRCLike` APIs were also considered. They do not directly replace these frozen coordinate/action interfaces: the present proofs reuse basic norm bounds and finite projection/linearity APIs to establish those interfaces. Their presence is not a further blocking finding. The two explicit representation `change` steps are documented and retain the actual Euclidean maps. Reflection multiplicativity, coefficient extraction, truncation, scalar casts and squared-norm conversion reuse their established APIs. No new interval computation is needed in these algebraic contracts; the separate descent half certificate is not given a fake dependency here.
+
+Coefficients and Toeplitz were already approved in my own scoped packets. I reauthenticated all 110 and 127 payloads respectively and matched the reused source/output bytes, without rerunning their older audit scripts or claiming their entire scopes anew. Their current complete source was reread. Reflection was read directly here, including its fixed-degree product law and actual local62 origin; its other public theorems are dependency context, not three additional newly accepted contracts.
+
+The original target, George Stepaniants's Department of Computing and Mathematical Sciences, California Institute of Technology contribution, original mathematical background and central library credits remain intact. No email or external human peer-review claim appears in this report.
+
+## Actual evidence and limits
+
+The private Python audit actually passed 783 checks and authenticated 406 external bindings. The four selected full raw logs contain exactly their expected declaration with `[propext, Classical.choice, Quot.sound]` and no warning. The source includes matching `#assert_trust kernel` commands. The runner, compiler binary, receipt commands, source hashes, assembly hashes, output hashes, closure imports, direct dependency outputs and closed timings agree. The actual commands use one thread and a 4096 MiB cap on macOS. The environment's old prose still says 2048 MiB; its historical text is retained, while the actual runner/argv/receipt/assembly all record 4096 MiB.
+
+The complete relevant closure is eight modules. Reused outputs are matched to their actual successful current-source origins: Definitions42, Coefficients54, Toeplitz55 and Reflection62. Immediate prior receipt links and complete transitive project-source hashes are also checked. Older redundant reuse hops are not replayed or duplicated. The root summary records agree with the selected commands; unrelated SchurEndpoint work in run90 is outside this review. Dependency logs retain the intentional frozen `hp` warning in Coefficients54 and `hq` warning in Reflection62; this report does not call the entire dependency history warning-free.
+
+Failed WeightedCoefficients73, RealSeparator80/81 and JordanReversal87 sources and full logs remain authenticated and excluded. Their kernel trust assertions rejected `sorryAx`; no failed output is accepted. The successful Jordan88 sources/logs and warning cleanup to90 are retained; run88 as a whole was mixed and is not relabelled successful. Plan-before-code records and the actual observed repair diffs were read and authenticated.
+
+No Lean/Lake/compiler/cache/Git/network command, proof edit, or shared metadata edit was performed by this reviewer. Hashes of binary outputs were read; no compiled artifact is copied into this packet. This is evidence review of the coordinator's local runs, not fresh compilation, Linux Comparator, independent kernel replay, sandbox enforcement or final-target acceptance.
+
+`python3 verify.py --sources` checks this seal and the bound original paths. After an authorized source/output change, use `python3 verify.py` for this historical packet and a separate continuation for new bytes; the old current-path verification must not be silently relabelled.

@@ -1,0 +1,22 @@
+NLA/IE02/SchurEndpoint.lean:33:82: error: unsolved goals
+n : ℕ
+hn : 1 ≤ n
+p : Poly
+hU : operatorNorm (toeplitz n p) = 1
+hc : ‖coeff p 0‖ = 1
+i0 : Fin n := ⟨0, hn⟩
+e : H n := PiLp.single 2 i0 1
+he : ‖e‖ = 1
+i : Fin n
+⊢ i < ⟨0, hn⟩ → 0 = coeff p ↑i
+NLA/IE02/SchurEndpoint.lean:54:4: error: Type mismatch: After simplification, term
+  Finset.add_sum_erase Finset.univ (fun i => ‖coeff p ↑i‖ ^ 2) (Finset.mem_univ i0)
+ has type
+  1 ^ 2 + ∑ x ∈ Finset.univ.erase ⟨0, hn⟩, ‖coeff p ↑x‖ ^ 2 = ∑ x, ‖coeff p ↑x‖ ^ 2
+but is expected to have type
+  1 + ∑ i ∈ Finset.univ.erase ⟨0, hn⟩, ‖coeff p ↑i‖ ^ 2 = ∑ i, ‖coeff p ↑i‖ ^ 2
+NLA/IE02/SchurEndpoint.lean:131:14: error(lean.unknownIdentifier): Unknown constant `Module.finrank_top`
+'NLA.IE02.schur_scalar_endpoint' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/SchurEndpoint.lean:134:21: error: #assert_trust: 'NLA.IE02.schur_scalar_endpoint' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

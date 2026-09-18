@@ -1,0 +1,3 @@
+# IE-02 Jordan directions: pre-code plan
+
+Prove the frozen jordan_direction_toeplitz for every n,k, every complex lam, including all zero/empty cases. Identity is toeplitz n 1 by the existing proved toeplitz_one. The lower Jordan matrix is the image of C lam + X under the already-proved toeplitzAlgHom. Hence its j+1 power is the image of (C lam+X)^(j+1) by map_pow, furnishing the actual polynomial witness. No invertibility or nonzero-lambda condition, spectral argument, numerical certificate, or approximate norm is used. Reuse current Toeplitz module and standard algebra-hom power theorem. No frozen changes.

@@ -1,0 +1,146 @@
+#!/usr/bin/env python3
+"""Authenticate a retained IE-02 review packet; never execute Lean or Comparator.
+
+Default mode checks immutable snapshots/receipts/logs. --live-original also
+checks the still-original project sources, compiler and local .olean files;
+it is expected to fail once the requested source correction replaces them.
+"""
+from pathlib import Path
+import argparse
+import hashlib
+import json
+import re
+
+D = Path(__file__).resolve().parent
+
+
+def sha(p):
+    return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+
+
+def read(p):
+    return json.loads(Path(p).read_text())
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--live-original', action='store_true')
+args = parser.parse_args()
+checks = 0
+
+
+def require(value, label):
+    global checks
+    if not value:
+        raise AssertionError(label)
+    checks += 1
+
+
+manifest = D/'MANIFEST.json'
+if manifest.exists():
+    mf = read(manifest)
+    actual = {str(p.relative_to(D)) for p in D.rglob('*') if p.is_file() and p != manifest}
+    require(actual == set(mf['files']), 'exact packet inventory')
+    for rel, h in mf['files'].items():
+        require(sha(D/rel) == h, 'manifest '+rel)
+
+S = D/'snapshots/project'
+root_path = D/'snapshots/IE02-LOCAL-COMPLETE-121.json'
+require(sha(root_path) == 'b21664f7c95422443f409dea6ac42bd69195574ffd27d7ea142219f8ef652ddc', 'original root report anchor')
+root = read(root_path)
+static = read(D/'STATIC-COVERAGE-AUDIT.json')
+audit = read(D/'LOCAL-EVIDENCE-AUDIT-121.json')
+headers = read(S/'STATEMENT-HEADERS.json')['headers']
+comp = read(S/'comparator.json')
+freeze = read(S/'STATEMENT-FREEZE.json')
+require(len(root['commands_and_successful_origins']) == 56, '56 original modules')
+require(len(headers) == 50, '50 exact contracts')
+require([h['name'] for h in headers] == comp['theorem_names'], 'exact Comparator list')
+require(set(comp['permitted_axioms']) == {'propext','Classical.choice','Quot.sound'}, 'allowed axioms')
+require(comp['definition_names'] == [], 'no definition holes')
+require(len(freeze['frozen_files']) == 13, '13 frozen inputs')
+for p,h in freeze['frozen_files'].items():
+    require(sha(S/p) == h, 'frozen '+p)
+for p,h in static['source_hashes'].items():
+    require(sha(S/p) == h, 'source '+p)
+require(set(static['source_hashes']) == {m['canonical_source_path'] for m in root['commands_and_successful_origins']}, 'complete source inventory')
+for h in headers:
+    require(hashlib.sha256(h['header'].encode()).hexdigest() == h['header_sha256'], 'header hash '+h['name'])
+    hits = [(p,(S/p).read_text().count(h['header'])) for p in static['source_hashes']]
+    require(sum(n for p,n in hits) == 1, 'unique exact header '+h['name'])
+    require((S/'Challenge.lean').read_text().count(h['header']) == 1, 'Challenge header '+h['name'])
+
+byname = {m['module']:m for m in root['commands_and_successful_origins']}
+audits = {m['module']:m for m in audit['modules']}
+live_project = Path('/private/tmp/nla-lean-next-20260915/next-proofs/IE-02')
+origins = set()
+warnings = 0
+for m in root['commands_and_successful_origins']:
+    name = m['module']
+    origins.add(m['success_origin_receipt'])
+    receipt_name = Path(m['success_origin_receipt']).parent.name
+    rp = D/'evidence'/receipt_name/'RECEIPT.json'
+    require(sha(rp) == m['receipt_sha256'], 'origin receipt '+name)
+    r = read(rp)
+    cmd = [c for c in r['commands'] if c['module'] == name]
+    require(len(cmd) == 1 and cmd[0] == m['command'], 'actual command '+name)
+    c = cmd[0]
+    require(c['exit_code'] == 0, 'successful source origin '+name)
+    require(c['source_sha256'] == m['source_sha256'] == sha(S/m['canonical_source_path']), 'source command binding '+name)
+    require('--threads=1' in c['argv'] and '--memory=4096' in c['argv'], 'bounded argv '+name)
+    require(r['threads'] == 1 and r['memory_cap_mib'] == 4096 and r['max_compiler_processes'] == 1, 'bounded receipt '+name)
+    lp = D/'evidence'/receipt_name/(name+'.log')
+    require(sha(lp) == c['log_sha256'] == audits[name]['log_sha256'], 'full log '+name)
+    lines = re.findall(r'^.*\.lean:\d+:\d+: warning:.*$', lp.read_text(), re.M)
+    warnings += len(lines)
+    require(audits[name]['warnings'] == len(lines), 'actual warning count '+name)
+    require(audits[name]['compiler_sha256_actual'] == r['compiler_sha256'], 'observed compiler binding '+name)
+    require(audits[name]['output_sha256'] == c['output_sha256'], 'observed output binding '+name)
+    for dep,h in c['dependency_olean_sha256'].items():
+        require(dep in byname and byname[dep]['command']['output_sha256'] == h, 'dependency origin '+name+' -> '+dep)
+    if args.live_original:
+        require(sha(live_project/m['canonical_source_path']) == m['source_sha256'], 'live original source '+name)
+        require(sha(c['argv'][0]) == r['compiler_sha256'], 'live compiler '+name)
+        out = Path(c['argv'][c['argv'].index('-o')+1])
+        require(sha(out) == c['output_sha256'], 'live original output '+name)
+        local_source = Path(c['cwd'])/c['argv'][-1]
+        require(sha(local_source) == m['source_sha256'], 'live local source '+name)
+require(len(origins) == 33, '33 successful origins')
+require(warnings == 11 == audit['actual_warning_count'], '11 actual diagnostics')
+require(sha(D/'evidence/development-121/RECEIPT.json') == 'c5ee2e77958e5b2f14b9fd27324323d35a8925a020e576318f469d2c70131be2', 'local121 anchor')
+final = read(D/'evidence/development-121/RECEIPT.json')
+require(final['completed_modules'] == 56 and not final['failed_modules'] and not final['blocked_modules'], 'complete actual121 selection')
+log = (D/'evidence/development-121/IE02Solution.log').read_text()
+reports = re.findall(r"^'([^']+)' depends on axioms: \[([^\]]*)\]$",log,re.M)
+require([name for name,_ in reports] == comp['theorem_names'], '50 actual ordered reports')
+for name, ax in reports:
+    require(set(x.strip() for x in ax.split(',')) == set(comp['permitted_axioms']), 'actual permitted axioms '+name)
+entry = (S/'Solution.lean').read_text()
+for name in comp['theorem_names']:
+    require('#print axioms '+name in entry and '#assert_trust kernel '+name in entry, 'actual entrypoint commands '+name)
+require(sha(S/'Solution.lean') == root['source_filename_mapping']['sha256'], 'canonical entrypoint mapping')
+
+for b in read(D/'PRIMARY-SOURCE-AUTHENTICATION.json')['sources']:
+    require(sha(D/b['snapshot']) == b['sha256'], 'primary snapshot '+b['snapshot'])
+    if args.live_original:
+        require(sha(b['source']) == b['sha256'], 'live primary '+b['source'])
+for b in read(S/'STANDARD-BINDINGS.json')['standards']:
+    require(sha(S/b['upstream']['packet_path']) == b['sha256'], 'standard '+b['upstream']['packet_path'])
+for q in read(D/'REUSE-SEARCH.json')['searches']:
+    require(sha(D/q['stdout']) == q['stdout_sha256'] and q['exit_code'] in [0,1] and not q['stderr'], 'actual reuse query '+q['name'])
+require('private theorem euclidean_mul_apply' in (S/'NLA/IE02/JordanTransport.lean').read_text(), 'R1 original duplicate retained')
+require('theorem euclideanLin_mul_apply' in (S/'NLA/IE02/SchurEnergy.lean').read_text(), 'R1 public replacement retained')
+require(read(D/'FINDINGS.json')['verdict'] == 'REQUEST_CHANGES_REUSE_ONLY', 'honest original verdict')
+print(json.dumps({
+    'status':'PASS_PACKET_AUTHENTICATION_ONLY',
+    'checks':checks,
+    'mode':'live-original-sources-and-existing-outputs' if args.live_original else 'immutable-packet',
+    'core_modules':56,
+    'frozen_contracts':50,
+    'successful_origin_receipts':33,
+    'actual_warning_diagnostics':11,
+    'Lean_invoked':False,
+    'Comparator_invoked':False,
+    'review_verdict':'REQUEST_CHANGES_REUSE_ONLY',
+    'remaining_source_finding':'R1',
+    'whole_problem_count_change':0
+},indent=2))

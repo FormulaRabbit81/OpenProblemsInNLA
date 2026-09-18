@@ -1,0 +1,57 @@
+NLA/IE02/DescentConclusions.lean:107:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  operatorNorm (T - ↑(emptyStep D γ) • D)
+in the target expression
+  ‖euclideanCLM (T - ↑(emptyStep D γ) • D)‖ ^ 2 < ‖euclideanCLM T‖ ^ 2
+
+n : ℕ
+hn : 1 ≤ n
+T D : Square n
+hne : T ≠ 0
+γ : ℝ
+hγ : 0 < γ
+hK : descentComplement T D γ = ∅
+hs :
+  0 < emptyStep D γ ∧
+    emptyStep D γ ≤ 1 ∧
+      emptyStep D γ ≤ γ / (2 * (descentL D + 1)) ∧
+        0 < gapStep T D γ 1 ∧
+          gapStep T D γ 1 ≤ 1 ∧
+            gapStep T D γ 1 ≤ γ / (2 * (descentL D + 1)) ∧ gapStep T D γ 1 ≤ 1 / (2 * (descentC T D + 1))
+x : H n
+hx : x ∈ unitSphere n
+hat : ‖(euclideanLin (T - ↑(emptyStep D γ) • D)) x‖ = operatorNorm (T - ↑(emptyStep D γ) • D)
+hform : γ / 2 < descentForm T D x
+⊢ ‖euclideanCLM (T - ↑(emptyStep D γ) • D)‖ ^ 2 < ‖euclideanCLM T‖ ^ 2
+NLA/IE02/DescentConclusions.lean:121:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  operatorNorm (T - ↑(gapStep T D γ β) • D)
+in the target expression
+  ‖euclideanCLM (T - ↑(gapStep T D γ β) • D)‖ ^ 2 < ‖euclideanCLM T‖ ^ 2
+
+n : ℕ
+hn : 1 ≤ n
+T D : Square n
+hne : T ≠ 0
+γ β : ℝ
+hγ : 0 < γ
+hβ : 0 < β
+hK : (descentComplement T D γ).Nonempty
+hgap : ∀ x ∈ descentComplement T D γ, ‖(euclideanLin T) x‖ ^ 2 ≤ operatorNorm T ^ 2 - β
+hs :
+  0 < gapStep T D γ β ∧
+    gapStep T D γ β ≤ 1 ∧ gapStep T D γ β ≤ γ / (2 * (descentL D + 1)) ∧ gapStep T D γ β ≤ β / (2 * (descentC T D + 1))
+x : H n
+hx : x ∈ unitSphere n
+hat : ‖(euclideanLin (T - ↑(gapStep T D γ β) • D)) x‖ = operatorNorm (T - ↑(gapStep T D γ β) • D)
+⊢ ‖euclideanCLM (T - ↑(gapStep T D γ β) • D)‖ ^ 2 < ‖euclideanCLM T‖ ^ 2
+'NLA.IE02.descent_empty_complement' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/DescentConclusions.lean:142:21: error: #assert_trust: 'NLA.IE02.descent_empty_complement' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
+'NLA.IE02.descent_nonempty_complement' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/DescentConclusions.lean:144:21: error: #assert_trust: 'NLA.IE02.descent_nonempty_complement' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
+'NLA.IE02.positive_gradient_descent' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/DescentConclusions.lean:146:21: error: #assert_trust: 'NLA.IE02.positive_gradient_descent' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

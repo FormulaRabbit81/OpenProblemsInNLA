@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+"""Read-only, source-only cleanup checks. This does not invoke Lean."""
+import difflib
+import hashlib
+import json
+import re
+from pathlib import Path
+H = Path(__file__).resolve().parent
+W = H.parent.parent
+OLD = H.parent / 'coefficients-01'
+def digest(p):
+    return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def read(p):
+    return json.loads(Path(p).read_text())
+def require(condition, message):
+    if not condition:
+        raise AssertionError(message)
+m = read(H / 'MANIFEST.json')
+files = {str(p.relative_to(H)) for p in H.rglob('*') if p.is_file() and p.name != 'MANIFEST.json'}
+require(files == set(m['files']), 'exact inventory')
+for rel, sha in m['files'].items():
+    require(digest(H / rel) == sha, 'payload: ' + rel)
+bindings = read(H / 'PRE-EDIT-BINDINGS.json')
+require(digest(OLD / 'MANIFEST.json') == bindings['prior_handoff_manifest_sha256'], 'prior manifest unchanged')
+for rel, sha in bindings['prior_handoff_files'].items():
+    require(digest(OLD / rel) == sha, 'prior payload unchanged: ' + rel)
+require(digest(W / 'STATEMENT-FREEZE.json') == bindings['freeze_sha256'], 'freeze unchanged')
+require(len(bindings['frozen_files']) == 13, 'thirteen frozen files')
+for rel, sha in bindings['frozen_files'].items():
+    require(digest(W / rel) == sha, 'frozen: ' + rel)
+before = (H / 'sources/Coefficients.before.lean.txt').read_text()
+after = (H / 'sources/Coefficients.after.lean.txt').read_text()
+anchor = '      inner ℂ (coeffVector (N + 1) p) (coeffVector (N + 1) q) := by\n'
+simp_before = '        simp only [PiLp.inner_apply, coeffVector, PiLp.toLp_apply,\n'
+require(before.count(anchor) == before.count(simp_before) == 1, 'unique edit sites')
+expected = before.replace(anchor, anchor + '  clear hp\n').replace(simp_before, '        simp only [PiLp.inner_apply, coeffVector,\n')
+require(after == expected, 'exact two authorized edits')
+require((W / 'NLA/IE02/Coefficients.lean').read_text() == after, 'active source matches candidate')
+require(digest(H / 'sources/Coefficients.before.lean.txt') == bindings['source_before_sha256'], 'before source binding')
+expected_diff = ''.join(difflib.unified_diff(before.splitlines(True), after.splitlines(True), fromfile='coefficients-01/Coefficients.lean', tofile='coefficients-02/Coefficients.lean'))
+require((H / 'SOURCE-DIFF.patch').read_text() == expected_diff, 'exact diff')
+headers = read(H / 'EXACT-HEADERS.json')
+frozen = read(W / 'STATEMENT-HEADERS.json')['headers']
+for name, entry in headers.items():
+    for text in [before, after]:
+        match = re.search(r'^theorem ' + name + r'\b[\s\S]*? := by', text, re.M)
+        require(match is not None and match.group() == entry['header'], 'exact header: ' + name)
+        require('#print axioms ' + name in text and '#assert_trust kernel ' + name in text, 'trust commands retained')
+    require(hashlib.sha256(entry['header'].encode()).hexdigest() == entry['sha256'], 'header digest')
+    contract = next(item for item in frozen if item['name'] == 'NLA.IE02.' + name)
+    require(entry['header'] == contract['header'] + ' := by', 'frozen header: ' + name)
+record = read(H / 'ACTUAL53-AND-CANDIDATE.json')
+receipt = read(H / 'local53/RECEIPT.json')
+require(digest(H / 'local53/RECEIPT.json') == record['actual_receipt_sha256'], 'actual53 receipt')
+require(digest(H / 'local53/NLA.IE02.Coefficients.log') == record['actual_log_sha256'], 'actual53 log')
+actual = next(c for c in receipt['commands'] if c['module'] == 'NLA.IE02.Coefficients')
+require(actual == record['actual_command'] and actual['exit_code'] == 0, 'actual53 successful command')
+require(actual['source_sha256'] == record['before_sha256'] == bindings['source_before_sha256'], 'local53 BEFORE source only')
+require(record['after_sha256'] == digest(H / 'sources/Coefficients.after.lean.txt'), 'after source digest')
+require((receipt['max_compiler_processes'], receipt['threads'], receipt['memory_cap_mib']) == (1, 1, 4096), 'recorded serial resources')
+log = (H / 'local53/NLA.IE02.Coefficients.log').read_text()
+require(len(re.findall(r'^NLA/IE02/Coefficients\.lean:\d+:\d+: warning:', log, re.M)) == 2, 'two actual53 warning diagnostics')
+for name in headers:
+    require("'NLA.IE02." + name + "' depends on axioms: [propext, Classical.choice, Quot.sound]" in log, 'actual53 standard axioms')
+require(record['cleanup_Lean_execution'].startswith('UNRUN') and not record['Comparator_execution'] and not record['whole_problem_complete'], 'unrun scoped cleanup')
+print(json.dumps({'status': 'PASS', 'payloads': len(files), 'frozen_inputs': 13, 'exact_headers': len(headers), 'authorized_edits': 2, 'prior_handoff_payloads_unchanged': len(bindings['prior_handoff_files']), 'actual_local53_before_source_authenticated': True, 'cleanup_Lean_executed': False, 'Comparator_executed': False}, indent=2))

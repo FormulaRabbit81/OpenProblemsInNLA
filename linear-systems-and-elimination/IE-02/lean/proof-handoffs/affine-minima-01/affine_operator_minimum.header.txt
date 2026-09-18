@@ -1,0 +1,3 @@
+theorem affine_operator_minimum {n k : ℕ} (Y : Square n) (R : Fin k → Square n) :
+    ∃ c : Fin k → ℂ, operatorNorm (affineResidual Y R c) = affineIdeal Y R ∧
+      ∀ d : Fin k → ℂ, operatorNorm (affineResidual Y R c) ≤ operatorNorm (affineResidual Y R d) := by

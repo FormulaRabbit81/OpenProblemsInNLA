@@ -1,0 +1,104 @@
+--- IE-02/NLA/IE02/Definitions.lean
++++ IE-02-elaboration-01/NLA/IE02/Definitions.lean
+@@ -150,13 +150,13 @@
+ 
+ def upperShift (n : ℕ) : Square n :=
+   fun i j => if j.val = i.val + 1 then 1 else 0
+-def jordan (n : ℕ) (λ : ℂ) : Square n := λ • 1 + upperShift n
+-def lowerJordan (n : ℕ) (λ : ℂ) : Square n := λ • 1 + shift n
++def jordan (n : ℕ) (lam : ℂ) : Square n := lam • 1 + upperShift n
++def lowerJordan (n : ℕ) (lam : ℂ) : Square n := lam • 1 + shift n
+ def reversal (n : ℕ) : Square n := fun i j => if j = i.rev then 1 else 0
+ def reverseVector {n : ℕ} (x : H n) : H n := WithLp.toLp 2 (fun i => x i.rev)
+ def polyEval {n : ℕ} (p : Poly) (A : Square n) : Square n := Polynomial.aeval A p
+-def jordanDirections (n k : ℕ) (λ : ℂ) (j : Fin k) : Square n :=
+-  lowerJordan n λ ^ (j.val + 1)
++def jordanDirections (n k : ℕ) (lam : ℂ) (j : Fin k) : Square n :=
++  lowerJordan n lam ^ (j.val + 1)
+ def Admissible (k : ℕ) (p : Poly) : Prop := DegreeLE p k ∧ p.eval 0 = 1
+ 
+ def gmresInner {n : ℕ} (A : Square n) (k : ℕ) (x : H n) : ℝ :=
+--- IE-02/Challenge.lean
++++ IE-02-elaboration-01/Challenge.lean
+@@ -350,29 +350,29 @@
+       (∀ z ∈ unitSphere n, affineInner Y R z ≤ affineInner Y R x) := by
+   sorry
+ 
+-theorem jordan_reversal (n : ℕ) (λ : ℂ) :
++theorem jordan_reversal (n : ℕ) (lam : ℂ) :
+     (reversal n).conjTranspose = reversal n ∧ reversal n * reversal n = 1 ∧
+-    reversal n * jordan n λ * (reversal n).conjTranspose = lowerJordan n λ ∧
++    reversal n * jordan n lam * (reversal n).conjTranspose = lowerJordan n lam ∧
+     (∀ x : H n, euclideanLin (reversal n) x = reverseVector x ∧ ‖reverseVector x‖ = ‖x‖ ∧
+       reverseVector (reverseVector x) = x) := by
+   sorry
+ 
+-theorem jordan_direction_toeplitz (n k : ℕ) (λ : ℂ) :
+-    IsToeplitz (1 : Square n) ∧ ∀ j, IsToeplitz (jordanDirections n k λ j) := by
+-  sorry
+-
+-theorem normalized_polynomial_residuals (n k : ℕ) (λ : ℂ) :
++theorem jordan_direction_toeplitz (n k : ℕ) (lam : ℂ) :
++    IsToeplitz (1 : Square n) ∧ ∀ j, IsToeplitz (jordanDirections n k lam j) := by
++  sorry
++
++theorem normalized_polynomial_residuals (n k : ℕ) (lam : ℂ) :
+     (∀ p : Poly, Admissible k p → ∃ c : Fin k → ℂ,
+-      polyEval p (lowerJordan n λ) = affineResidual 1 (jordanDirections n k λ) c) ∧
++      polyEval p (lowerJordan n lam) = affineResidual 1 (jordanDirections n k lam) c) ∧
+     (∀ c : Fin k → ℂ, ∃ p : Poly, Admissible k p ∧
+-      polyEval p (lowerJordan n λ) = affineResidual 1 (jordanDirections n k λ) c) := by
+-  sorry
+-
+-theorem jordan_polynomial_transport (n : ℕ) (λ : ℂ) (p : Poly) :
+-    polyEval p (jordan n λ) * reversal n = reversal n * polyEval p (lowerJordan n λ) ∧
+-    operatorNorm (polyEval p (jordan n λ)) = operatorNorm (polyEval p (lowerJordan n λ)) ∧
+-    (∀ x : H n, euclideanLin (polyEval p (jordan n λ)) (reverseVector x) =
+-      reverseVector (euclideanLin (polyEval p (lowerJordan n λ)) x)) := by
++      polyEval p (lowerJordan n lam) = affineResidual 1 (jordanDirections n k lam) c) := by
++  sorry
++
++theorem jordan_polynomial_transport (n : ℕ) (lam : ℂ) (p : Poly) :
++    polyEval p (jordan n lam) * reversal n = reversal n * polyEval p (lowerJordan n lam) ∧
++    operatorNorm (polyEval p (jordan n lam)) = operatorNorm (polyEval p (lowerJordan n lam)) ∧
++    (∀ x : H n, euclideanLin (polyEval p (jordan n lam)) (reverseVector x) =
++      reverseVector (euclideanLin (polyEval p (lowerJordan n lam)) x)) := by
+   sorry
+ 
+ theorem gmres_extrema_semantics {n : ℕ} (A : Square n) (k : ℕ) :
+@@ -385,22 +385,22 @@
+     (∀ x ∈ unitSphere n, 0 ≤ gmresInner A k x ∧ gmresInner A k x ≤ idealGMRES A k) := by
+   sorry
+ 
+-theorem canonical_jordan_minimax (n k : ℕ) (λ : ℂ)
+-    (hn : 2 ≤ n) (hλ : λ ≠ 0) (hk : 1 ≤ k) (hkn : k < n) :
+-    worstGMRES (jordan n λ) k = idealGMRES (jordan n λ) k ∧
++theorem canonical_jordan_minimax (n k : ℕ) (lam : ℂ)
++    (hn : 2 ≤ n) (hlam : lam ≠ 0) (hk : 1 ≤ k) (hkn : k < n) :
++    worstGMRES (jordan n lam) k = idealGMRES (jordan n lam) k ∧
+     (∀ x ∈ unitSphere n, ∃ p : Poly, Admissible k p ∧
+-      ‖euclideanLin (polyEval p (jordan n λ)) x‖ = gmresInner (jordan n λ) k x ∧
+-      ∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p (jordan n λ)) x‖ ≤
+-        ‖euclideanLin (polyEval q (jordan n λ)) x‖) ∧
++      ‖euclideanLin (polyEval p (jordan n lam)) x‖ = gmresInner (jordan n lam) k x ∧
++      ∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p (jordan n lam)) x‖ ≤
++        ‖euclideanLin (polyEval q (jordan n lam)) x‖) ∧
+     ∃ (p : Poly) (x : H n), Admissible k p ∧ x ∈ unitSphere n ∧
+-      operatorNorm (polyEval p (jordan n λ)) = idealGMRES (jordan n λ) k ∧
+-      ‖euclideanLin (polyEval p (jordan n λ)) x‖ = operatorNorm (polyEval p (jordan n λ)) ∧
+-      gmresInner (jordan n λ) k x = worstGMRES (jordan n λ) k ∧
++      operatorNorm (polyEval p (jordan n lam)) = idealGMRES (jordan n lam) k ∧
++      ‖euclideanLin (polyEval p (jordan n lam)) x‖ = operatorNorm (polyEval p (jordan n lam)) ∧
++      gmresInner (jordan n lam) k x = worstGMRES (jordan n lam) k ∧
+       (∀ q : Poly, Admissible k q →
+-        operatorNorm (polyEval p (jordan n λ)) ≤ operatorNorm (polyEval q (jordan n λ))) ∧
+-      (∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p (jordan n λ)) x‖ ≤
+-        ‖euclideanLin (polyEval q (jordan n λ)) x‖) ∧
+-      (∀ z ∈ unitSphere n, gmresInner (jordan n λ) k z ≤ gmresInner (jordan n λ) k x) := by
++        operatorNorm (polyEval p (jordan n lam)) ≤ operatorNorm (polyEval q (jordan n lam))) ∧
++      (∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p (jordan n lam)) x‖ ≤
++        ‖euclideanLin (polyEval q (jordan n lam)) x‖) ∧
++      (∀ z ∈ unitSphere n, gmresInner (jordan n lam) k z ≤ gmresInner (jordan n lam) k x) := by
+   sorry
+ 
+ end

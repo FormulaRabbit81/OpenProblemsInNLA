@@ -1,0 +1,31 @@
+--- before
++++ after
+@@ -19,18 +19,13 @@
+ open scoped BigOperators Matrix
+ open Polynomial
+ 
+-private theorem rev_index_symm {n : ℕ} (i j : Fin n) :
+-    i = j.rev ↔ j = i.rev := by
+-  constructor <;> intro h <;>
+-    simpa only [Fin.rev_rev] using (congrArg Fin.rev h).symm
+-
+ theorem reversal_mul_apply {n : ℕ} (A : Square n) (i j : Fin n) :
+     (reversal n * A) i j = A i.rev j := by
+   simp [Matrix.mul_apply, reversal]
+ 
+ theorem mul_reversal_apply {n : ℕ} (A : Square n) (i j : Fin n) :
+     (A * reversal n) i j = A i j.rev := by
+-  simp [Matrix.mul_apply, reversal, rev_index_symm j]
++  simp [Matrix.mul_apply, reversal, ← Fin.rev_eq_iff]
+ 
+ theorem reversal_action {n : ℕ} (x : H n) :
+     euclideanLin (reversal n) x = reverseVector x := by
+@@ -62,7 +57,7 @@
+       reverseVector (reverseVector x) = x) := by
+   have hstar : (reversal n).conjTranspose = reversal n := by
+     ext i j
+-    simp [Matrix.conjTranspose_apply, reversal, rev_index_symm i j]
++    simp [Matrix.conjTranspose_apply, reversal, ← Fin.rev_eq_iff, eq_comm]
+   have hsquare : reversal n * reversal n = (1 : Square n) := by
+     ext i j
+     rw [reversal_mul_apply]

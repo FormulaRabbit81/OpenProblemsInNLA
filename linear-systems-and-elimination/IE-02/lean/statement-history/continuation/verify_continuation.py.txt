@@ -1,0 +1,75 @@
+"""Read-only continuation/original guard; does not invoke a compiler."""
+from pathlib import Path
+import hashlib
+import json
+import re
+import runpy
+
+ROOT = Path(__file__).resolve().parent
+ORIGINAL = ROOT.parent / 'IE-02'
+
+
+def digest(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+record = json.loads((ROOT / 'CONTINUATION.json').read_text())
+assert digest(ORIGINAL / 'MANIFEST.json') == record['original_draft']['manifest_sha256']
+old_manifest = json.loads((ORIGINAL / 'MANIFEST.json').read_text())
+old_files = {str(p.relative_to(ORIGINAL)) for p in ORIGINAL.rglob('*') if p.is_file()}
+assert old_files == set(old_manifest['files']) | {'MANIFEST.json'}
+for rel, sha in old_manifest['files'].items():
+    assert digest(ORIGINAL / rel) == sha, rel
+
+for rel in ['NLA/IE02/Definitions.lean', 'Challenge.lean']:
+    old = (ORIGINAL / rel).read_text()
+    new = (ROOT / rel).read_text()
+    assert old.replace('λ', 'lam') == new, rel
+    assert 'λ' not in new
+
+for rel in record['unchanged_copied_payloads']:
+    assert (ORIGINAL / rel).read_bytes() == (ROOT / rel).read_bytes(), rel
+
+old_headers = json.loads((ORIGINAL / 'STATEMENT-HEADERS.json').read_text())['headers']
+new_headers = json.loads((ROOT / 'STATEMENT-HEADERS.json').read_text())['headers']
+assert len(old_headers) == len(new_headers) == 50
+changed = []
+for old, new in zip(old_headers, new_headers):
+    assert old['name'] == new['name']
+    assert old['header'].replace('λ', 'lam') == new['header']
+    if old['header'] != new['header']:
+        changed.append(new['name'])
+assert changed == record['changed_headers'] and len(changed) == 5
+
+for item in record['external_bindings']:
+    assert digest(item['path']) == item['sha256'], item['path']
+for rel, sha in record['failed_local35']['copies'].items():
+    assert digest(ROOT / rel) == sha, rel
+receipt = json.loads((ROOT / 'evidence/local35/RECEIPT.json').read_text())
+assert receipt['commands'][0]['module'] == 'NLA.IE02.Definitions'
+assert receipt['commands'][0]['exit_code'] == 1
+assert receipt['commands'][0]['source_sha256'] == digest(ORIGINAL / 'NLA/IE02/Definitions.lean')
+assert receipt['commands'][1]['module'] == 'NLA.IE02.Challenge'
+assert receipt['commands'][1]['status'] == 'not_run'
+assert receipt['source_inputs']['NLA/IE02/Challenge.lean'] == digest(ORIGINAL / 'Challenge.lean')
+assert receipt['threads'] == 1 and receipt['memory_cap_mib'] == 4096
+assert receipt['max_compiler_processes'] == 1
+log = ROOT / 'evidence/local35/NLA.IE02.Definitions.log'
+assert digest(log) == receipt['commands'][0]['log_sha256']
+assert re.findall(r'Definitions\.lean:(\d+):', log.read_text()) == ['153', '154', '158']
+
+assert not (ROOT / 'Solution.lean').exists()
+assert not (ROOT / 'STATEMENT-FREEZE.json').exists()
+assert record['retry_run'] is False
+assert record['bounded_diff_approvals'] == []
+runpy.run_path(str(ROOT / 'verify_draft.py'), run_name='__main__')
+if (ROOT / 'MANIFEST.json').exists():
+    seal = json.loads((ROOT / 'MANIFEST.json').read_text())
+    files = {str(p.relative_to(ROOT)) for p in ROOT.rglob('*')
+             if p.is_file() and p.name != 'MANIFEST.json'}
+    assert files == set(seal['files'])
+    for rel, sha in seal['files'].items():
+        assert digest(ROOT / rel) == sha, rel
+print('PASS: complete original guard; sole λ-to-lam source substitution; '
+      '5 changed/45 identical headers; original reviews and failed local35 bound; '
+      'continuation retry UNRUN; no proof code or freeze.')

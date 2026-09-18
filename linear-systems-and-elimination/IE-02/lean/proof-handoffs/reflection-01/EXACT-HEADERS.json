@@ -1,0 +1,20 @@
+[
+  {
+    "name": "reflection_algebra",
+    "ordinal": 17,
+    "header": "theorem reflection_algebra (m : ℕ) (p q : Poly) (c : ℂ)\n    (hp : DegreeLE p m) (hq : DegreeLE q m) :\n    DegreeLE (conjReflect m p) m ∧ conjReflect m (conjReflect m p) = p ∧\n    conjReflect m (p + q) = conjReflect m p + conjReflect m q ∧\n    conjReflect m (C c * p) = C (star c) * conjReflect m p ∧\n    (conjReflect m p).coeff m = star (p.coeff 0) := by",
+    "header_sha256": "a61a0e9e903a8b0eee7a43ab4293078f78abdabfac39c2efa64453cf807b20f9"
+  },
+  {
+    "name": "reflection_product",
+    "ordinal": 18,
+    "header": "theorem reflection_product (d m : ℕ) (p q : Poly)\n    (hp : DegreeLE p d) (hq : DegreeLE q m) :\n    conjReflect (d + m) (p * q) = conjReflect d p * conjReflect m q := by",
+    "header_sha256": "a6981d01cbcae104d2e5c479dac76851a71800e84a2ce0baf02cd148567c8abe"
+  },
+  {
+    "name": "reflection_evaluation",
+    "ordinal": 19,
+    "header": "theorem reflection_evaluation (m : ℕ) (p : Poly) (hp : DegreeLE p m)\n    (z : ℂ) (hz : z ≠ 0) :\n    (conjReflect m p).eval z = z ^ m * star (p.eval ((star z)⁻¹)) ∧\n    (‖z‖ = 1 → (conjReflect m p).eval z = z ^ m * star (p.eval z)) := by",
+    "header_sha256": "51f8c43e34b526f37db158df73a3b220fe42e5a4bfa3c724aefc20d727a75958"
+  }
+]

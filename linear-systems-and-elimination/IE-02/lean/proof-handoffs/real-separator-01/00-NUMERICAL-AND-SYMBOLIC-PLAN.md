@@ -1,0 +1,7 @@
+# Real separator as a full complex coefficient form: pre-code plan
+
+Exact frozen contract real_separator_complex_form for every natural k, every continuous real-linear functional ell on the complex Euclidean H k, and every vector z. Coefficients remain the frozen ell(e_j) - I*ell(I*e_j), not a newly chosen or assumed complex-linear functional. Empty dimension is included.
+
+Decompose z as the finite sum of (Re z_j) real-scaled e_j plus (Im z_j) real-scaled (I*e_j). Prove the vector equality coordinatewise using the actual WithLp/Euclidean coordinates and Kronecker basisVector definition; Complex.re_add_im gives each coordinate. Real linearity of ell transports the sum and real scalars. Complex multiplication then identifies each real scalar term with the real part of the frozen coefficient times z_j. Commute Complex.re with the finite sum.
+
+No norms, approximation, sampling, eigenvalues, division, numerical certificates or growing interval computation are involved. This is the real dual representation of complex coordinates; never assert ell is complex-linear. k=0 reduces to zero vector and empty sum by the same identities. Use pinned Mathlib PiLp.proj_l/PiLp.ext (actual name projₗ), map_sum/map_add/map_smul, Complex.re_add_im, Complex.re_sum and real/imaginary multiplication laws. Preserve exact headers, all13 frozen files, attribution and kernel trust. The root writes proof only after this fixed plan; local compiler and independent proof reviews remain unrun for this module.

@@ -1,0 +1,14 @@
+{
+  "time": "2026-09-17T09:00:49.866374+00:00",
+  "header": "theorem fourier_semantics {l : \u2115} (m : \u2115) (q : Fin l \u2192 Poly)\n    (hq : \u2200 j, DegreeLE (q j) m) :\n    (\u2200 r : \u2124, fourierCoeff m q (-r) = star (fourierCoeff m q r)) \u2227\n    fourierCoeff m q 0 = ((\u2211 j, \u2211 i : Fin (m + 1), \u2016(q j).coeff i.val\u2016 ^ 2 : \u211d) : \u2102) \u2227\n    (\u2200 z : \u2102, \u2016z\u2016 = 1 \u2192 (sumSquares q z : \u2102) =\n      \u2211 r : Fin (2 * m + 1),\n        fourierCoeff m q ((r.val : \u2124) - (m : \u2124)) * z ^ ((r.val : \u2124) - (m : \u2124)))",
+  "bindings": {
+    "/private/tmp/nla-lean-next-20260915/next-proofs/IE-02/Challenge.lean": "a09907c4074776caeddf729da4ef9461433f105da5dff60396103121178288f9",
+    "/private/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/Definitions.lean": "ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a",
+    "/Users/georgestepaniants/Research/project/lean-verification/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Eval/Degree.lean": "c8f2a18a41780436d885fa0c0911b0a334fc5da87a3206c150eff90b39f3c808",
+    "/Users/georgestepaniants/Research/project/lean-verification/.lake/packages/mathlib/Mathlib/Analysis/Complex/Basic.lean": "a3bcb36c68213d371e7a48bc84c2b70b6595fdf7de424fe1f84b98c95e2f39db",
+    "/Users/georgestepaniants/Research/project/lean-verification/.lake/packages/mathlib/Mathlib/Analysis/Complex/Norm.lean": "815efa05d2282b0b234139eac16d614f1128d69e39cf02249df887934ccc9741"
+  },
+  "plan_sha256": "8d8849538ff858523080b72c38e05264065e94aa64c8e5aa57aa36105ac20d64",
+  "proof_module_exists": false,
+  "status": "PLAN ONLY; no implementation or compiler claim"
+}

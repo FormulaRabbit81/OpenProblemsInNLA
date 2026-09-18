@@ -1,0 +1,26 @@
+--- before
++++ after
+@@ -28,9 +28,10 @@
+         simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib]
+       map_smul' := by
+         intro a c
+-        simp only [Pi.smul_apply, smul_eq_mul, Finset.smul_sum, smul_smul] }
++        simp only [Pi.smul_apply, smul_eq_mul, Finset.smul_sum, smul_smul]
++        rfl }
+   let S := LinearMap.range L
+-  letI : ProperSpace E := FiniteDimensional.proper ℂ E
++  let : ProperSpace E := FiniteDimensional.proper ℂ E
+   have hclosed : IsClosed (S : Set E) := S.closed_of_finiteDimensional
+   obtain ⟨z, hz, hdist⟩ := hclosed.exists_infDist_eq_dist ⟨0, S.zero_mem⟩ y
+   obtain ⟨c, rfl⟩ := hz
+@@ -65,8 +66,8 @@
+     -- The continuous extension has exactly the original Euclidean linear action.
+     change euclideanCLM (affineResidual Y R c) x = _
+     rw [affine_operator_action]
+-    simp only [ContinuousLinearMap.sub_apply, ContinuousLinearMap.sum_apply,
+-      ContinuousLinearMap.smul_apply]
++    simp only [_root_.sub_apply, _root_.sum_apply,
++      _root_.smul_apply]
+     rfl
+   simpa only [affineInner, haction] using
+     finite_combination_minimum (euclideanLin Y x) (fun j => euclideanLin (R j) x)

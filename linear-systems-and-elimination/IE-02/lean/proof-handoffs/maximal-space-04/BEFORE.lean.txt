@@ -1,0 +1,83 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original IE-02 attribution is retained in
+Definitions.lean and SourceCorrespondence.md. Reuses Mathlib's adjoint identities
+and the Rayleigh-quotient development of Heather Macbeth and Frédéric Dupuis.
+-/
+import NLA.IE02.Definitions
+import Mathlib.Analysis.InnerProductSpace.Rayleigh
+import Mathlib.Topology.Algebra.Module.FiniteDimension
+import LeanCert.Tactic
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+
+theorem maximal_space_norm {n : ℕ} (A : Square n) :
+    IsClosed (maximalSpace A : Set (H n)) ∧
+    ∀ x : H n, x ∈ maximalSpace A ↔
+      ‖euclideanLin A x‖ = operatorNorm A * ‖x‖ := by
+  refine ⟨(maximalSpace A).closed_of_finiteDimensional, ?_⟩
+  let L := euclideanLin A
+  let G := L.adjoint ∘ₗ L
+  let T := G.toContinuousLinearMap
+  have henergy (y : H n) : T.reApplyInnerSelf y = ‖L y‖ ^ 2 := by
+    rw [ContinuousLinearMap.reApplyInnerSelf_apply]
+    -- Expose the continuous extension as the underlying Gram action.
+    change (inner ℂ (G y) y).re = ‖L y‖ ^ 2
+    simp only [G, LinearMap.comp_apply, LinearMap.adjoint_inner_left]
+    exact (norm_sq_eq_re_inner (𝕜 := ℂ) (L y)).symm
+  have hmem (y : H n) : y ∈ maximalSpace A ↔
+      G y = ((operatorNorm A ^ 2 : ℝ) : ℂ) • y := by
+    -- Expand the frozen kernel and the action of its scalar identity map.
+    change (G y - ((operatorNorm A ^ 2 : ℝ) : ℂ) • y = 0) ↔ _
+    exact sub_eq_zero
+  intro x
+  rw [hmem x]
+  constructor
+  · intro hx
+    -- The eigen equation gives equality of squared nonnegative norms.
+    have hsquared : ‖L x‖ ^ 2 = (operatorNorm A * ‖x‖) ^ 2 := by
+      rw [← henergy x, ContinuousLinearMap.reApplyInnerSelf_apply]
+      -- Expose the same Gram action before substituting its eigen equation.
+      change (inner ℂ (G x) x).re = (operatorNorm A * ‖x‖) ^ 2
+      rw [hx, inner_smul_left, Complex.conj_ofReal, Complex.re_ofReal_mul,
+        ← norm_sq_eq_re_inner, mul_pow]
+    exact (sq_eq_sq₀ (norm_nonneg (L x))
+      (mul_nonneg (norm_nonneg (euclideanCLM A)) (norm_nonneg x))).mp hsquared
+  · intro hx
+    have hxL : ‖L x‖ = operatorNorm A * ‖x‖ := hx
+    by_cases hx0 : x = 0
+    · subst x
+      simp
+    · have hT : IsSelfAdjoint T := by
+        apply ContinuousLinearMap.isSelfAdjoint_iff_isSymmetric.mpr
+        exact L.isSymmetric_adjoint_comp_self
+      -- Norm saturation makes x a global energy maximum on its own sphere.
+      have hmax : IsMaxOn T.reApplyInnerSelf
+          (Metric.sphere (0 : H n) ‖x‖) x := by
+        intro y hy
+        have hny : ‖y‖ = ‖x‖ := by
+          simpa only [Metric.mem_sphere, dist_zero_right] using hy
+        -- Expose the reducible set-membership predicate in IsMaxOn as its inequality.
+        change T.reApplyInnerSelf y ≤ T.reApplyInnerSelf x
+        rw [henergy y, henergy x]
+        have hop : ‖L y‖ ≤ operatorNorm A * ‖y‖ := (euclideanCLM A).le_opNorm y
+        rw [hny, ← hxL] at hop
+        exact (sq_le_sq₀ (norm_nonneg (L y)) (norm_nonneg (L x))).mpr hop
+      -- Division is used only after the zero vector has been excluded.
+      have hquot : T.rayleighQuotient x = operatorNorm A ^ 2 := by
+        rw [ContinuousLinearMap.rayleighQuotient, henergy x, hxL, mul_pow]
+        exact mul_div_cancel_right₀ _ (pow_ne_zero 2 (norm_ne_zero_iff.mpr hx0))
+      have heigen := hT.eq_smul_self_of_isLocalExtrOn (Or.inr hmax.localize)
+      rw [hquot] at heigen
+      exact heigen
+
+#print axioms maximal_space_norm
+#assert_trust kernel maximal_space_norm
+
+end
+end NLA.IE02

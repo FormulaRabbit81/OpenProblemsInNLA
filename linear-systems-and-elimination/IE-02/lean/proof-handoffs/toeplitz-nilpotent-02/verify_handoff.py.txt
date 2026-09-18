@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+"""Read-only bounded repair checks; no Lean, cache, or Git operations."""
+import hashlib
+import json
+import re
+import difflib
+from pathlib import Path
+H = Path(__file__).resolve().parent
+W = H.parent.parent
+OLD = H.parent / 'toeplitz-nilpotent-01'
+def digest(p):
+    return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def read(p):
+    return json.loads(Path(p).read_text())
+def require(condition, message):
+    if not condition:
+        raise AssertionError(message)
+m = read(H / 'MANIFEST.json')
+files = {str(p.relative_to(H)) for p in H.rglob('*') if p.is_file() and p.name != 'MANIFEST.json'}
+require(files == set(m['files']), 'manifest inventory')
+for rel, sha in m['files'].items():
+    require(digest(H / rel) == sha, 'payload: ' + rel)
+b = read(H / 'PRE-EDIT-BINDINGS.json')
+require(digest(OLD / 'MANIFEST.json') == b['prior_manifest_sha256'], 'prior manifest unchanged')
+for rel, sha in b['prior_handoff_files'].items():
+    require(digest(OLD / rel) == sha, 'prior payload: ' + rel)
+require(digest(W / 'STATEMENT-FREEZE.json') == b['freeze_sha256'], 'freeze unchanged')
+require(len(b['frozen_files']) == 13, 'thirteen frozen inputs')
+for rel, sha in b['frozen_files'].items():
+    require(digest(W / rel) == sha, 'frozen input: ' + rel)
+for rel, sha in b['unchanged_existing_proofs'].items():
+    require(digest(W / rel) == sha, 'other proof unchanged: ' + rel)
+before = (H / 'sources/NilpotentInverse.before.lean.txt').read_text()
+after = (H / 'sources/NilpotentInverse.after.lean.txt').read_text()
+expected = before.replace('    rw [smul_pow, hK, smul_zero]\n', '    rw [_root_.smul_pow, hK, smul_zero]\n').replace('    simp [N, smul_sub, smul_smul, hα]\n', '    simp [N, smul_smul, hα]\n').replace('    simp only [map_smul, map_sum, map_pow]\n', '    simp only [map_smul, map_sum, map_pow]\n    -- The remaining algebra-hom coercion has toFun = toeplitz n.\n    rfl\n')
+require(after == expected, 'exact body-only repairs')
+require((W / 'NLA/IE02/NilpotentInverse.lean').read_text() == after, 'active source matches')
+require(digest(H / 'sources/NilpotentInverse.before.lean.txt') == b['source_before_sha256'], 'before source')
+diff = ''.join(difflib.unified_diff(before.splitlines(True), after.splitlines(True), fromfile='toeplitz-nilpotent-01/NilpotentInverse.lean', tofile='toeplitz-nilpotent-02/NilpotentInverse.lean'))
+require((H / 'SOURCE-DIFF.patch').read_text() == diff, 'exact diff')
+e = read(H / 'EXACT-HEADER.json')
+for source in [before, after]:
+    match = re.search(r'^theorem nilpotent_inverse\b[\s\S]*? := by', source, re.M)
+    require(match is not None and match.group() == e['header'], 'header unchanged')
+    require('#assert_trust kernel nilpotent_inverse' in source and '#print axioms nilpotent_inverse' in source, 'trust commands retained')
+f = read(W / 'STATEMENT-HEADERS.json')['headers'][e['frozen_ordinal'] - 1]
+require(e['header'] == f['header'] + ' := by', 'exact frozen header')
+s = read(H / 'RUNTIME-AND-STATUS.json')
+r = read(H / 'local55/RECEIPT.json')
+require(digest(H / 'local55/RECEIPT.json') == s['actual_receipt_sha256'], 'actual55 receipt')
+for key in ['Toeplitz_actual_success', 'NilpotentInverse_actual_failure']:
+    c = s[key]
+    require(c == next(x for x in r['commands'] if x['module'] == c['module']), 'actual command')
+    require(digest(H / 'local55' / (c['module'] + '.log')) == c['log_sha256'], 'actual log')
+require(s['Toeplitz_actual_success']['exit_code'] == 0, 'Toeplitz actual success')
+require(s['NilpotentInverse_actual_failure']['exit_code'] == 1 and s['NilpotentInverse_actual_failure']['output_sha256'] is None, 'rejected inverse candidate')
+require(s['NilpotentInverse_actual_failure']['source_sha256'] == b['source_before_sha256'], 'failed source binding')
+require(s['repair_after_source_sha256'] == digest(H / 'sources/NilpotentInverse.after.lean.txt'), 'repair source binding')
+require(s['repair_Lean_execution'] == s['repair_trust_execution'] == 'UNRUN' and not s['Comparator_execution'] and not s['whole_IE02_verified'], 'unrun repair scope')
+print(json.dumps({'status': 'PASS', 'payloads': len(files), 'frozen_inputs': 13, 'exact_header': 'nilpotent_inverse', 'prior_payloads_unchanged': len(b['prior_handoff_files']), 'other_proofs_unchanged': len(b['unchanged_existing_proofs']), 'actual55_failure_preserved': True, 'repair_compiled': False, 'Comparator_executed': False}, indent=2))

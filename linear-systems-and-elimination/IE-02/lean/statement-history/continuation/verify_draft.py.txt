@@ -1,0 +1,91 @@
+"""Read-only static packet audit. This never invokes Lean, Lake, or a compiler."""
+from pathlib import Path
+import hashlib
+import json
+import re
+
+import jsonschema
+
+ROOT = Path(__file__).resolve().parent
+
+
+def digest(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def without_comments(text):
+    return re.sub(r"/-.*?-/", "", text, flags=re.S)
+
+
+numerical = json.loads((ROOT / "NUMERICAL-FIRST.json").read_text())
+assert numerical["before_Lean_statement_code"] is True
+assert numerical["numerical_target_sha256"] == digest(ROOT / "NUMERICAL_TARGETS.md")
+assert numerical["definition_contract_plan_sha256"] == digest(ROOT / "DEFINITION-AND-CONTRACT-PLAN.md")
+
+definitions = without_comments((ROOT / "NLA/IE02/Definitions.lean").read_text())
+challenge = without_comments((ROOT / "Challenge.lean").read_text())
+assert not re.search(r"\b(sorry|admit|axiom|unsafe|native_decide)\b", definitions)
+assert not re.search(r"^theorem\b", definitions, re.M)
+assert not re.search(r"\b(admit|axiom|unsafe|native_decide)\b", challenge)
+assert len(re.findall(r"^  sorry$", challenge, re.M)) == 50
+assert not (ROOT / "Solution.lean").exists()
+assert not (ROOT / "STATEMENT-FREEZE.json").exists()
+assert sorted(str(p.relative_to(ROOT)) for p in ROOT.rglob("*.lean")) == [
+    "Challenge.lean", "NLA/IE02/Definitions.lean"
+]
+
+headers = []
+for match in re.finditer(r"^theorem ([a-zA-Z0-9_]+)\b(.*?):= by\n  sorry", challenge, re.M | re.S):
+    header = match.group(0).split(":= by")[0].rstrip()
+    headers.append({"name": "NLA.IE02." + match.group(1), "header": header,
+                    "header_sha256": hashlib.sha256(header.encode()).hexdigest()})
+assert len(headers) == 50
+assert [h["name"].split(".")[-1] for h in headers] == numerical["planned_contracts"]
+assert headers == json.loads((ROOT / "STATEMENT-HEADERS.json").read_text())["headers"]
+comparator = json.loads((ROOT / "comparator.json").read_text())
+assert comparator["theorem_names"] == [h["name"] for h in headers]
+assert comparator["definition_names"] == []
+assert comparator["permitted_axioms"] == ["propext", "Quot.sound", "Classical.choice"]
+assert comparator["challenge_module"] == "Challenge"
+assert comparator["solution_module"] == "Solution"
+
+lock = json.loads((ROOT / "lake-manifest.json").read_text())
+pins = {p["name"]: p["rev"] for p in lock["packages"]}
+assert pins["mathlib"] == "0df444a360eaa60ab8c11dca51a86af692955474"
+assert pins["leancert"] == "621a43d7cf21f87872392a01e874f2f1dbddc926"
+assert (ROOT / "lean-toolchain").read_text().strip() == "leanprover/lean4:v4.33.1"
+
+provenance = json.loads((ROOT / "SOURCE-PROVENANCE.json").read_text())
+for source in provenance["inputs"]:
+    assert digest(source["path"]) == source["sha256"], source["path"]
+api = json.loads((ROOT / "PINNED-API-BINDINGS.json").read_text())
+for source in api["sources"]:
+    assert digest(source["local_source"]) == source["sha256"], source["path"]
+assert digest(api["leancert_source"]["path"]) == api["leancert_source"]["sha256"]
+standards = json.loads((ROOT / "STANDARD-BINDINGS.json").read_text())
+for source in standards["standards"]:
+    assert digest(source["path"]) == source["sha256"], source["path"]
+source = standards["checker_source_lock"]
+assert digest(source["path"]) == source["sha256"]
+
+metadata_text = (ROOT / "formalization.yaml").read_text()
+metadata = json.loads("\n".join(line for line in metadata_text.splitlines() if not line.startswith("#")))
+jsonschema.validate(metadata, json.loads((ROOT / "sources/standards/v0.4.schema.json").read_text()))
+assert metadata["status"]["main_results"] == []
+assert "Unrun" in metadata["status"]["scope"]
+
+seal = ROOT / "MANIFEST.json"
+if seal.exists():
+    for path, expected in json.loads(seal.read_text())["files"].items():
+        assert digest(ROOT / path) == expected, path
+
+print(json.dumps({
+    "status": "PASS: static packet consistency only",
+    "headers": len(headers), "intentional_Challenge_holes": 50, "definition_holes": 0,
+    "external_source_bindings": len(provenance["inputs"]),
+    "pinned_mathlib_sources_reauthenticated": len(api["sources"]),
+    "metadata_schema": "v0.4 PASS",
+    "actual_Lean_elaboration": "UNRUN", "proof_implementation": "NONE",
+    "LeanCert_Comparator_kernel_sandbox": "UNRUN",
+    "complete_original_target_count_delta": 0,
+}, indent=2))

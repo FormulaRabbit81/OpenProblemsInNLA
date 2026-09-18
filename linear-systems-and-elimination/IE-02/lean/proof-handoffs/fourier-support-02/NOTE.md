@@ -1,0 +1,1 @@
+Actual98 first3 helpers elaborated, but full module failed because unannotated filter binder inferred integers. Explicitly type finite index set and lambda as naturals; theorem and all exact mathematics unchanged. No failed module reuse. Await99.

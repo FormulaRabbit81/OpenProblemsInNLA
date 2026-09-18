@@ -1,0 +1,19 @@
+--- coefficients-01/Coefficients.lean
++++ coefficients-02/Coefficients.lean
+@@ -61,6 +61,7 @@
+     ‖coeffVector n p‖ ^ 2 = ∑ i : Fin n, ‖p.coeff i.val‖ ^ 2 ∧
+     (conjReflect N p * q).coeff N =
+       inner ℂ (coeffVector (N + 1) p) (coeffVector (N + 1) q) := by
++  clear hp
+   constructor
+   · simpa only [coeffVector, PiLp.toLp_apply] using
+       EuclideanSpace.norm_sq_eq (coeffVector n p)
+@@ -86,7 +87,7 @@
+           Nat.sub_sub_self (Nat.le_of_lt_succ i.is_lt), Polynomial.coeff_map]
+         rfl
+       _ = inner ℂ (coeffVector (N + 1) p) (coeffVector (N + 1) q) := by
+-        simp only [PiLp.inner_apply, coeffVector, PiLp.toLp_apply,
++        simp only [PiLp.inner_apply, coeffVector,
+           RCLike.inner_apply', starRingEnd_apply]
+ 
+ #print axioms coefficient_roundtrip

@@ -1,0 +1,86 @@
+{
+  "time_utc": "2026-09-17T08:50:13.924326+00:00",
+  "author": "/root/ie02_foundation_preflight",
+  "scope": "Observed elaboration-only repairs for exact frozen IE02 contracts 9 and 13",
+  "prior_packet_manifest_sha256": "e01fa3546e64591ec2851a129d5fe5739e3ba879fb5c5707af9ba546ac00807f",
+  "sources": {
+    "SchurEndpoint": {
+      "source": "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/SchurEndpoint.lean",
+      "before_sha256": "54e82e982d5b131eac809688a5d917b7f770b150e542c99a5f6fb06361ff1505",
+      "after_sha256": "7cc15fd20d8b41a76414d1edb585da87deea3d52f0409e131db83642b94b3fa9"
+    },
+    "SchurActiveBlock": {
+      "source": "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/SchurActiveBlock.lean",
+      "before_sha256": "218edd1ae28c177326f02882693f2d0f9fe03b6b8fe8ddf6d4fd7acc59d5882f",
+      "after_sha256": "51e8b22e91073eb638ec533ac1aa55651a824ed738424fc6630c2e36e6839053"
+    }
+  },
+  "frozen_headers": [
+    {
+      "name": "NLA.IE02.schur_scalar_endpoint",
+      "header": "theorem schur_scalar_endpoint {n : ℕ} (hn : 1 ≤ n) (p : Poly)\n    (hU : operatorNorm (toeplitz n p) = 1) (hc : ‖p.coeff 0‖ = 1) :\n    toeplitz n p = p.coeff 0 • 1 ∧\n    SchurPair n (toeplitz n p) 0 (C (p.coeff 0)) 1",
+      "header_sha256": "89e7628f7f0525cf766a59e9e72971e6ec50098d536c2345d222943ca0a312eb",
+      "ordinal": 9
+    },
+    {
+      "name": "NLA.IE02.schur_active_block",
+      "header": "theorem schur_active_block {n : ℕ} (Z : Square (n + 1)) (hZ : IsToeplitz Z)\n    (hdiag : ∀ i, Z i i = 0) (hcon : operatorNorm Z ≤ 1) :\n    IsToeplitz (activeBlock Z) ∧ operatorNorm Z = operatorNorm (activeBlock Z) ∧\n    ∀ (g : H n) (η : ℂ),\n      euclideanLin Z (appendVector g η) = prependZero (euclideanLin (activeBlock Z) g) ∧\n      ‖appendVector g η‖ ^ 2 = ‖g‖ ^ 2 + ‖η‖ ^ 2 ∧\n      (‖euclideanLin Z (appendVector g η)‖ = ‖appendVector g η‖ ↔\n        η = 0 ∧ ‖euclideanLin (activeBlock Z) g‖ = ‖g‖)",
+      "header_sha256": "05e880da942019cc0207bdf1bd5be0371e0465eb315641aab3726e70bf9e1554",
+      "ordinal": 13
+    }
+  ],
+  "all_13_frozen_inputs_unchanged": true,
+  "imports_unchanged": true,
+  "prior_packet_payloads_rehashed_unchanged": true,
+  "actual_local86_receipt_sha256": "24662423683296733363e9adbbf6e8d732074df7ce8cc3fb6e78e03a3ae42e1e",
+  "actual_local86": [
+    {
+      "module": "NLA.IE02.SchurEndpoint",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/IE02/SchurEndpoint.olean",
+        "NLA/IE02/SchurEndpoint.lean"
+      ],
+      "source_sha256": "54e82e982d5b131eac809688a5d917b7f770b150e542c99a5f6fb06361ff1505",
+      "exit_code": 1,
+      "elapsed_seconds": 24.45778983295895,
+      "log_sha256": "67462017daac0f885546c0281e5316658186f55e5ce1e935e133ad238986f427",
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.IE02.SchurActiveBlock",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/IE02/SchurActiveBlock.olean",
+        "NLA/IE02/SchurActiveBlock.lean"
+      ],
+      "source_sha256": "218edd1ae28c177326f02882693f2d0f9fe03b6b8fe8ddf6d4fd7acc59d5882f",
+      "exit_code": 1,
+      "elapsed_seconds": 6.114630416966975,
+      "log_sha256": "af2c719ba8eae401f4c59776a846ef78ce6b63e9687535f803b29cdeca5002e1",
+      "output_sha256": null
+    }
+  ],
+  "primary_bindings": {
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Dimension/Finrank.lean": "4ab91c2b2e2d56f24c0260f25d55a31042cac8112a943a7c877594528c363e21",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Fin/Tuple/Basic.lean": "c9a91f26403ddab92eb0599176545bc834f6b1e242e420875c3401bbdd9db0b7",
+    "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/src/lean/Init/Prelude.lean": "56de5780adc4358372fa9cfac270a70f2d03fd4f213a373aea4365483b31a544"
+  },
+  "primary_locations": {
+    "finrank_top": "Mathlib/LinearAlgebra/Dimension/Finrank.lean:139, global namespace",
+    "Fin.snoc": "Mathlib/Data/Fin/Tuple/Basic.lean:503-516, implicit dependent family α",
+    "Fin.snoc_init_self": "Mathlib/Data/Fin/Tuple/Basic.lean:602",
+    "Nat.not_lt_zero": "Lean Init/Prelude.lean:1929"
+  },
+  "retry": "UNRUN; root serial compiler only",
+  "independent_proof_review": "PENDING",
+  "GitHub_Comparator": "UNRUN",
+  "whole_target_complete": false,
+  "count_change": 0
+}

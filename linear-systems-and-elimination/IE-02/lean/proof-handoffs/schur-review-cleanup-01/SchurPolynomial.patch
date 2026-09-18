@@ -1,0 +1,11 @@
+--- before/SchurPolynomial.lean
++++ after/SchurPolynomial.lean
+@@ -22,7 +22,7 @@
+ theorem schur_alpha_pos (c : ℂ) (hc : ‖c‖ < 1) : 0 < 1 - ‖c‖ ^ 2 := by
+   apply sub_pos.mpr
+   simpa only [one_pow] using
+-    (sq_lt_sq₀ (norm_nonneg c) (show (0 : ℝ) ≤ 1 by norm_num)).mpr hc
++    (sq_lt_sq₀ (norm_nonneg c) (zero_le_one : (0 : ℝ) ≤ 1)).mpr hc
+ 
+ theorem schur_degree_C_mul_le (c : ℂ) (p : Poly) :
+     (C c * p).degree ≤ p.degree := by

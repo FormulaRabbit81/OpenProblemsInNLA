@@ -11,7 +11,23 @@
 **Status:** Solved
 
 
-## Resolution — negative, 17 September 2026
+## Resolution — exact maximum 47, 17 September 2026
+
+**Author:** Marcus Webb, The University of Manchester. Developed with substantial ChatGPT/Codex assistance. Separate Codex agents reviewed the mathematics, and an independently implemented exact verifier reconstructed the full polynomial and its derivatives. This is informal AI-agent review, not external human peer review or formal verification.
+
+[Theorem 1 of the complete proof](../../references/webb-mf14-degree47-2026-09-17/proof.pdf) determines the exact maximum in the retained question:
+
+```math
+d_7=47.
+```
+
+Every complex polynomial of degree at most 47 belongs to the Zariski closure of seven-product outputs in the full coefficient space through degree 128. An explicit seven-product family has a rigorously certified order-47 contact with an invertible 48-by-48 coefficient Jacobian. Exact Gaussian-rational contraction bounds prove the contact exists; the inverse function theorem and a weighted input/output limit give the universal coverage statement, with every higher coefficient tending to zero.
+
+A self-contained available-space dimension count gives $`\dim\overline{\mathcal P_7}^{\,Z}\le49`$. Irreducibility and the seven-product polynomial $`x^{128}`$ then exclude coverage of the entire degree-at-most-48 space. The new proof does not depend on the earlier border construction or on an external dimension theorem. Exact representation of every degree-47 polynomial and numerically stable coefficient recovery are not asserted.
+
+[Standalone proof source](../../references/webb-mf14-degree47-2026-09-17/proof.tex) · [Exact certificates and reproduction](../../references/webb-mf14-degree47-2026-09-17/README.md) · [Independent review](../../references/webb-mf14-degree47-2026-09-17/verification/packaging-review.md). The original equality $`d_7=42`$, permanent ID and canonical path remain unchanged. The earlier degree-42 and degree-44 results below retain their attribution and archived evidence.
+
+## Earlier negative resolution — degree 44, 17 September 2026
 
 **Author:** Marcus Webb, The University of Manchester. Developed with substantial ChatGPT assistance; two separate Codex agents independently reviewed the proof and recomputed its exact certificates. This is informal AI-agent review, not external human peer review or formal verification.
 
@@ -23,7 +39,7 @@ The conjectured equality is false. [Theorem 1 of the complete proof](../../refer
 
 The construction first retains a suitable quadruple of polynomials in the joint closure of four-product computations (Lemma 2). Three more products give a 45-parameter coefficient map whose exact Jacobian determinant is 256. The argument uses the original complex field and all coefficients through degree 128; high-degree coefficients vanish in the limit rather than being discarded.
 
-Corollary 3, using Jarlebring–Lorentzon's dimension theorem, gives $`44\le d_7\le47`$ for the maximum in the retained question. Its exact new value remains undetermined, but this does not prevent a complete negative answer to the specific equality $`d_7=42`$. No exact representation of every degree-44 polynomial, real Euclidean density, or numerical stability is asserted.
+Corollary 3, using Jarlebring–Lorentzon's dimension theorem, gives $`44\le d_7\le47`$ for the maximum in the retained question. That contribution left the exact maximum undetermined while giving a complete negative answer to the specific equality $`d_7=42`$; the new theorem above now determines it as 47. No exact representation of every degree-44 polynomial, real Euclidean density, or numerical stability is asserted.
 
 [Proof source](../../references/webb-mf14-degree44-2026-09-17/proof.tex) · [Independent reviews and reproduction](../../references/webb-mf14-degree44-2026-09-17/README.md) · [Source conversation and attribution](../../references/webb-mf14-degree44-2026-09-17/README.md#source-and-attribution). The permanent ID, canonical path and original mathematical target are retained. The degree-42 result below retains its separate credit.
 

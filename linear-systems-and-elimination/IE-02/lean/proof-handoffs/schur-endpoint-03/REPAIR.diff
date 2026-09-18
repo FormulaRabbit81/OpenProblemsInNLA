@@ -1,0 +1,20 @@
+--- SchurEndpoint-before.lean
++++ SchurEndpoint-after.lean
+@@ -58,9 +58,14 @@
+       change ‖p.coeff 0‖ ^ 2 = 1
+       rw [hc]
+       norm_num
+-    simpa only [hfirst] using
+-      Finset.add_sum_erase (Finset.univ : Finset (Fin n))
+-        (fun i => ‖p.coeff i.val‖ ^ 2) (Finset.mem_univ i0)
++    calc
++      1 + (∑ i ∈ (Finset.univ : Finset (Fin n)).erase i0, ‖p.coeff i.val‖ ^ 2) =
++          ‖p.coeff i0.val‖ ^ 2 +
++            (∑ i ∈ (Finset.univ : Finset (Fin n)).erase i0, ‖p.coeff i.val‖ ^ 2) := by
++        rw [hfirst]
++      _ = ∑ i : Fin n, ‖p.coeff i.val‖ ^ 2 :=
++        Finset.add_sum_erase (Finset.univ : Finset (Fin n))
++          (fun i => ‖p.coeff i.val‖ ^ 2) (Finset.mem_univ i0)
+   have hnonneg :
+       0 ≤ ∑ i ∈ (Finset.univ : Finset (Fin n)).erase i0, ‖p.coeff i.val‖ ^ 2 :=
+     Finset.sum_nonneg fun i _ => sq_nonneg ‖p.coeff i.val‖

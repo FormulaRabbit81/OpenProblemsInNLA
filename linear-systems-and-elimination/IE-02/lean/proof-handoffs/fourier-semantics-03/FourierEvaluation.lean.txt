@@ -1,0 +1,83 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Prior mathematical and library attribution
+is retained in Definitions.lean and SourceCorrespondence.md.
+
+Exact finite coefficient expansion on the complex unit circle. The frequency
+index is constructed once per coefficient pair, with no interval computation.
+-/
+import NLA.IE02.FourierCoefficients
+import Mathlib.Algebra.Polynomial.Eval.Degree
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+open scoped BigOperators
+
+theorem polynomial_norm_square_terms (m : ℕ) (p : Poly) (hp : DegreeLE p m)
+    (z : ℂ) (hz : ‖z‖ = 1) :
+    ((‖p.eval z‖ ^ 2 : ℝ) : ℂ) =
+      ∑ u : Fin (m + 1), ∑ v : Fin (m + 1),
+        p.coeff u.val * star (p.coeff v.val) * z ^ ((u.val : ℤ) - (v.val : ℤ)) := by
+  have hz0 : z ≠ 0 := by
+    intro h
+    simpa only [h, norm_zero, zero_ne_one] using hz
+  have heval : p.eval z = ∑ i : Fin (m + 1), p.coeff i.val * z ^ i.val := by
+    simpa only [Fin.sum_univ_eq_sum_range] using
+      Polynomial.eval_eq_sum_range'
+        (Nat.lt_succ_of_le (Polynomial.natDegree_le_of_degree_le hp)) z
+  have hpower (u v : Fin (m + 1)) :
+      z ^ u.val * star (z ^ v.val) = z ^ ((u.val : ℤ) - (v.val : ℤ)) := by
+    rw [star_pow, ← Complex.inv_eq_conj hz, inv_pow,
+      zpow_natCast_sub_natCast₀ hz0, div_eq_mul_inv]
+  calc
+    ((‖p.eval z‖ ^ 2 : ℝ) : ℂ) = p.eval z * star (p.eval z) := by
+      rw [← Complex.normSq_eq_norm_sq]
+      exact (Complex.mul_conj _).symm
+    _ = _ := by
+      rw [heval, star_sum]
+      simp only [Finset.sum_mul, Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro u _hu
+      apply Finset.sum_congr rfl
+      intro v _hv
+      calc
+        (p.coeff u.val * z ^ u.val) * star (p.coeff v.val * z ^ v.val) =
+            (p.coeff u.val * star (p.coeff v.val)) * (z ^ u.val * star (z ^ v.val)) := by
+          rw [star_mul]
+          ring
+        _ = _ := by rw [hpower]
+
+theorem fourier_frequency_select (m : ℕ) (u v : Fin (m + 1)) (a z : ℂ) :
+    a * z ^ ((u.val : ℤ) - (v.val : ℤ)) =
+      ∑ r : Fin (2 * m + 1),
+        (if (u.val : ℤ) - (v.val : ℤ) = (r.val : ℤ) - (m : ℤ) then a else 0) *
+          z ^ ((r.val : ℤ) - (m : ℤ)) := by
+  classical
+  let k : Fin (2 * m + 1) := ⟨u.val + m - v.val, by omega⟩
+  have hk : (k.val : ℤ) - (m : ℤ) = (u.val : ℤ) - (v.val : ℤ) := by
+    dsimp only [k]
+    omega
+  rw [Finset.sum_eq_single k]
+  · rw [hk]
+    simp only [if_true]
+  · intro b _hb hbk
+    have hne : (u.val : ℤ) - (v.val : ℤ) ≠ (b.val : ℤ) - (m : ℤ) := by
+      intro heq
+      apply hbk
+      apply Fin.ext
+      omega
+    simp only [hne, if_false, zero_mul]
+  · intro hknot
+    exact False.elim (hknot (Finset.mem_univ k))
+
+#print axioms polynomial_norm_square_terms
+#assert_trust kernel polynomial_norm_square_terms
+#print axioms fourier_frequency_select
+#assert_trust kernel fourier_frequency_select
+
+end
+end NLA.IE02

@@ -1,0 +1,22 @@
+--- before
++++ after
+@@ -21,7 +21,7 @@
+ theorem fourier_conjugate_symmetry {l : ℕ} (m : ℕ) (q : Fin l → Poly) (r : ℤ) :
+     fourierCoeff m q (-r) = star (fourierCoeff m q r) := by
+   classical
+-  simp only [fourierCoeff, star_sum, star_ite, star_mul, star_star, star_zero]
++  simp only [fourierCoeff, star_sum]
+   apply Finset.sum_congr rfl
+   intro j _hj
+   rw [Finset.sum_comm]
+@@ -31,7 +31,9 @@
+   intro v _hv
+   have hfreq : (v.val : ℤ) - (u.val : ℤ) = -r ↔
+       (u.val : ℤ) - (v.val : ℤ) = r := by omega
+-  simp only [hfreq]
++  by_cases h : (u.val : ℤ) - (v.val : ℤ) = r
++  · simp only [hfreq, h, if_true, star_mul, star_star]
++  · simp only [hfreq, h, if_false, star_zero]
+ 
+ theorem fourier_zero_coefficient {l : ℕ} (m : ℕ) (q : Fin l → Poly) :
+     fourierCoeff m q 0 =

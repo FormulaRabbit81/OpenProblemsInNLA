@@ -1,0 +1,38 @@
+--- before
++++ after
+@@ -22,26 +22,26 @@
+     ((‖p.eval z‖ ^ 2 : ℝ) : ℂ) =
+       ∑ u : Fin (m + 1), ∑ v : Fin (m + 1),
+         p.coeff u.val * star (p.coeff v.val) * z ^ ((u.val : ℤ) - (v.val : ℤ)) := by
+-  have hz0 : z ≠ 0 := by
+-    intro h
+-    simpa only [h, norm_zero, zero_ne_one] using hz
++  have hz0 : z ≠ 0 := norm_ne_zero_iff.mp (by rw [hz]; exact one_ne_zero)
++  have hstar : star z = z⁻¹ := by
++    simpa only [starRingEnd_apply] using (Complex.inv_eq_conj hz).symm
+   have heval : p.eval z = ∑ i : Fin (m + 1), p.coeff i.val * z ^ i.val := by
+-    simpa only [Fin.sum_univ_eq_sum_range] using
+-      Polynomial.eval_eq_sum_range'
+-        (Nat.lt_succ_of_le (Polynomial.natDegree_le_of_degree_le hp)) z
++    rw [Polynomial.eval_eq_sum_range'
++      (Nat.lt_succ_of_le (Polynomial.natDegree_le_of_degree_le hp)),
++      ← Fin.sum_univ_eq_sum_range]
+   have hpower (u v : Fin (m + 1)) :
+       z ^ u.val * star (z ^ v.val) = z ^ ((u.val : ℤ) - (v.val : ℤ)) := by
+-    rw [star_pow, ← Complex.inv_eq_conj hz, inv_pow,
++    rw [star_pow, hstar, inv_pow,
+       zpow_natCast_sub_natCast₀ hz0, div_eq_mul_inv]
+   calc
+     ((‖p.eval z‖ ^ 2 : ℝ) : ℂ) = p.eval z * star (p.eval z) := by
+       rw [← Complex.normSq_eq_norm_sq]
+       exact (Complex.mul_conj _).symm
+     _ = _ := by
+-      rw [heval, star_sum]
+-      simp only [Finset.sum_mul, Finset.mul_sum]
++      rw [heval, star_sum, Finset.sum_mul]
+       apply Finset.sum_congr rfl
+       intro u _hu
++      rw [Finset.mul_sum]
+       apply Finset.sum_congr rfl
+       intro v _hv
+       calc

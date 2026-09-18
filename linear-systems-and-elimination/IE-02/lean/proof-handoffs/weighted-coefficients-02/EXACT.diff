@@ -1,0 +1,23 @@
+--- weighted-coefficients-01/WeightedCoefficients.lean
++++ weighted-coefficients-02/WeightedCoefficients.lean
+@@ -32,7 +32,7 @@
+         (coeffVector (d + m + 1) (r * (b * q j))) := by
+   let s : Poly := conjReflect d f * r * b
+   have hdegree (g : Poly) (hg : DegreeLE g m) : DegreeLE (f * g) (d + m) := by
+-    simpa only [DegreeLE, WithBot.coe_add] using Polynomial.degree_mul_le_of_le hf hg
++    simpa only [DegreeLE, Nat.cast_add] using Polynomial.degree_mul_le_of_le hf hg
+   have hcoeff (g : Poly) (hg : DegreeLE g m) :
+       inner ℂ (coeffVector (d + m + 1) (f * g))
+           (coeffVector (d + m + 1) (r * (b * g))) =
+@@ -76,8 +76,9 @@
+     have hnorm := weighted_polynomial_pairing d m b b h 1 q w hb hh hq hfactor
+     simp only [one_mul] at hnorm
+     have hreal := congrArg Complex.re hnorm
+-    simpa only [Complex.re_sum, Complex.re_ofReal_mul,
+-      ← norm_sq_eq_re_inner (𝕜 := ℂ)] using hreal
++    have hself (x : H (d + m + 1)) : (inner ℂ x x).re = ‖x‖ ^ 2 :=
++      (norm_sq_eq_re_inner (𝕜 := ℂ) x).symm
++    simpa only [Complex.re_sum, Complex.re_ofReal_mul, hself] using hreal
+   · intro i
+     -- The existing truncation bridge retains arbitrary degrees of r i.
+     simp_rw [toeplitz_action, coeffVector_mul_truncate]
