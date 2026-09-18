@@ -1,0 +1,11 @@
+--- reflection-01
++++ reflection-style-02
+@@ -60,7 +60,7 @@
+     (z : ℂ) (hz : z ≠ 0) :
+     (conjReflect m p).eval z = z ^ m * star (p.eval ((star z)⁻¹)) ∧
+     (‖z‖ = 1 → (conjReflect m p).eval z = z ^ m * star (p.eval z)) := by
+-  letI : Invertible (z⁻¹) := invertibleOfNonzero (inv_ne_zero hz)
++  let : Invertible (z⁻¹) := invertibleOfNonzero (inv_ne_zero hz)
+   -- Evaluate the library reflection identity at the inverse point, then
+   -- cancel its nonzero power. No coefficient expansion is needed here.
+   have hmul : (conjReflect m p).eval z * (z⁻¹) ^ m =

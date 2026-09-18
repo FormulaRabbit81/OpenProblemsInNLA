@@ -1,0 +1,16 @@
+--- successful88-with-warnings
++++ unused-simp-cleanup
+@@ -76,11 +76,9 @@
+     unfold upperShift shift toeplitz
+     simp only [hrev]
+     by_cases hij : i.val = j.val + 1
+-    · have hji : j.val ≤ i.val := by omega
+-      have hsub : i.val - j.val = 1 := by omega
+-      simp [hij, hji, hsub]
++    · simp [hij]
+     · have hsub : i.val - j.val ≠ 1 := by omega
+-      simp [hij, Polynomial.coeff_X, hsub, Ne.symm hsub]
++      simp [hij, Polynomial.coeff_X, Ne.symm hsub]
+   refine ⟨hstar, hsquare, ?_, fun x =>
+     ⟨reversal_action x, reverseVector_norm x, reverseVector_involutive x⟩⟩
+   rw [hstar]

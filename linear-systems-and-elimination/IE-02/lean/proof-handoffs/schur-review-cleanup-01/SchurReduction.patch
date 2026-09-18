@@ -1,0 +1,19 @@
+--- before/SchurReduction.lean
++++ after/SchurReduction.lean
+@@ -86,7 +86,7 @@
+   have hc' : ‖c‖ < 1 := hc
+   have hαpos : 0 < α := by
+     apply sub_pos.mpr
+-    simpa only [one_pow] using (sq_lt_sq₀ (norm_nonneg c) (show (0 : ℝ) ≤ 1 by norm_num)).mpr hc'
++    simpa only [one_pow] using (sq_lt_sq₀ (norm_nonneg c) (zero_le_one : (0 : ℝ) ≤ 1)).mpr hc'
+   have hαne : (α : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (ne_of_gt hαpos)
+   have hcnorm : ((‖c‖ ^ 2 : ℝ) : ℂ) = c * star c := by
+     rw [Complex.sq_norm]
+@@ -115,6 +115,7 @@
+   let Z := schurZ U c B
+   have hWform : U - c • 1 = toeplitz (n + 2) (p - Polynomial.C c) := by
+     simp only [toeplitz_sub, toeplitz_C, U]
++  -- The explicit polynomial witness from hWform proves the first factor is Toeplitz.
+   have hZtoep : IsToeplitz Z :=
+     (show IsToeplitz (U - c • 1) from ⟨p - Polynomial.C c, hWform⟩).mul hBtoep
+   obtain ⟨q, hq⟩ := hBtoep

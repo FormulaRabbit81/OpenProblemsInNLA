@@ -1,0 +1,7 @@
+# IE-02 descent complement gap: pre-code plan
+
+Prove exactly the frozen descent_complement_gap contract. The complement K is the intersection of the Euclidean unit sphere with descentForm≤gamma/2. The form is continuous because both actual matrix linear maps are continuous and the complex inner product/real part are continuous. K is compact, and the stated nonemptiness gives a point attaining the maximum of the squared output norm.
+
+Every K point has output norm at most M. Equality would put it in maximalSpace by the separately proved exact norm characterization, hence in unitMaximal; the assumed positive-gradient lower bound gamma≤descentForm then contradicts descentForm≤gamma/2 and gamma>0. Therefore the maximizer has squared norm strictly below M². Choose beta=M²−max; compactness yields the required uniform gap on all K. This is a true positive-gap existence proof, not numerical sampling or an assumed distance from the maximal subspace.
+
+Pinned Mathlib compact sphere/intersection, continuous inner/norm and IsCompact.exists_isMaxOn supply the standard facts. No additional interval computation or numerical certificate is needed. No frozen definitions or contracts may change. The stronger compactness argument does not need the separately supplied hn or hne after K-nonempty and positive-gradient assumptions; preserve and explicitly document those frozen redundant premises instead of manufacturing dependencies. Wait for local success of MaximalSpace before compiling this dependent module.

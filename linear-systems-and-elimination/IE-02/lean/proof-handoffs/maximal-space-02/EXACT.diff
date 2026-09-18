@@ -1,0 +1,22 @@
+--- maximal-space-01/MaximalSpace.lean
++++ maximal-space-02/MaximalSpace.lean
+@@ -44,9 +44,8 @@
+       rw [← henergy x, ContinuousLinearMap.reApplyInnerSelf_apply]
+       -- Expose the same Gram action before substituting its eigen equation.
+       change (inner ℂ (G x) x).re = (operatorNorm A * ‖x‖) ^ 2
+-      rw [hx, inner_smul_ofReal_left, RCLike.re_mul_ofReal,
++      rw [hx, inner_smul_left, RCLike.conj_ofReal, RCLike.re_ofReal_mul,
+         ← norm_sq_eq_re_inner, mul_pow]
+-      exact mul_comm _ _
+     exact (sq_eq_sq₀ (norm_nonneg (L x))
+       (mul_nonneg (norm_nonneg (euclideanCLM A)) (norm_nonneg x))).mp hsquared
+   · intro hx
+@@ -63,6 +62,8 @@
+         intro y hy
+         have hny : ‖y‖ = ‖x‖ := by
+           simpa only [Metric.mem_sphere, dist_zero_right] using hy
++        -- Expose the reducible set-membership predicate in IsMaxOn as its inequality.
++        change T.reApplyInnerSelf y ≤ T.reApplyInnerSelf x
+         rw [henergy y, henergy x]
+         have hop : ‖L y‖ ≤ operatorNorm A * ‖y‖ := (euclideanCLM A).le_opNorm y
+         rw [hny, ← hxL] at hop

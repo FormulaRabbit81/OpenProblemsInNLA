@@ -1,0 +1,205 @@
+{
+  "prepared_utc": "2026-09-17T05:28:30.278889+00:00",
+  "owner": "/root/ie02_foundation_preflight",
+  "status": "Bounded spelling continuation prepared; exact diff review and actual root retry pending",
+  "original_draft": {
+    "directory": "/tmp/nla-lean-next-20260915/next-statements/IE-02",
+    "manifest_sha256": "972a12860c8f7c9c0374a2ad51a9eee66104c43de333b379b3dad04eb27097ed",
+    "payloads": 23,
+    "entire_inventory_unchanged": true
+  },
+  "source_changes": [
+    {
+      "path": "NLA/IE02/Definitions.lean",
+      "old_sha256": "68a516d1cde704892fecbf5cfb2e958b32fd0a7bfb3c3157a1a2ad734a525602",
+      "new_sha256": "ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a",
+      "lambda_character_replacements": 6,
+      "sole_change": "replace every λ character by ASCII lam, including hλ → hlam"
+    },
+    {
+      "path": "Challenge.lean",
+      "old_sha256": "aac733145ff51f7abd34c52cad23f2f939cddda631c5f085e8cc1e0909877ca7",
+      "new_sha256": "a09907c4074776caeddf729da4ef9461433f105da5dff60396103121178288f9",
+      "lambda_character_replacements": 38,
+      "sole_change": "replace every λ character by ASCII lam, including hλ → hlam"
+    }
+  ],
+  "changed_headers": [
+    "NLA.IE02.jordan_reversal",
+    "NLA.IE02.jordan_direction_toeplitz",
+    "NLA.IE02.normalized_polynomial_residuals",
+    "NLA.IE02.jordan_polynomial_transport",
+    "NLA.IE02.canonical_jordan_minimax"
+  ],
+  "unchanged_header_count": 45,
+  "unchanged_copied_payloads": [
+    "API-SUMMARY.md",
+    "DEFINITION-AND-CONTRACT-PLAN.md",
+    "LICENSE",
+    "NUMERICAL-FIRST.json",
+    "NUMERICAL_TARGETS.md",
+    "PINNED-API-BINDINGS.json",
+    "REVIEW-PLAN.md",
+    "SOURCE-PROVENANCE.json",
+    "STANDARD-BINDINGS.json",
+    "SourceCorrespondence.md",
+    "comparator.json",
+    "lake-manifest.json",
+    "lakefile.toml",
+    "lean-toolchain",
+    "sources/standards/v0.4.schema.json",
+    "verify_draft.py"
+  ],
+  "numerical_first": {
+    "original_record_sha256": "7ecf430908886532d254f7858dfcab173a44f031a81ccf44fa433f89a8bb7e39",
+    "record_copied_byte_identically": true,
+    "numerical_targets_sha256": "33f5e2b47de6b7c2b7bc0eedaeaa2dec7a0e992f7e45710e19a6cc0509a91e90",
+    "definition_plan_sha256": "23b470cc3715912ab6de5db7062bd48754393105d8fe2292b3584497f6e98c84",
+    "original_chronology_preserved": true,
+    "new_chronology_claim": false
+  },
+  "original_statement_reviews": [
+    {
+      "reviewer": "/root/sf_ra_runtime_referee",
+      "directory": "/tmp/nla-lean-next-20260915/reviews/IE02-statement-referee-1-20260917",
+      "manifest_sha256": "b4fc1acce3ee264a45d5ae89344a84457fcaec448d1514fb6dcf53a65430a7bf",
+      "verdict": "APPROVE exact fifty-contract statement draft for local elaboration after the second independent approval; no mathematical amendment required.",
+      "scope": "Original Definitions/Challenge bytes only; continuation spelling diff not yet approved",
+      "manifest_payloads_rehashed": 38
+    },
+    {
+      "reviewer": "/root/mi13_statement_freeze",
+      "directory": "/tmp/nla-lean-next-20260915/reviews/IE02-statement-referee-2-20260917",
+      "manifest_sha256": "b398c274557aea9608b57836482793308a67fe1bcb6bb4b76d7d94b76004dcc2",
+      "verdict": "PASS_EXACT_STATEMENT_MEANING_ONLY",
+      "scope": "Original Definitions/Challenge bytes only; continuation spelling diff not yet approved",
+      "manifest_payloads_rehashed": 54
+    }
+  ],
+  "bounded_diff_approvals": [],
+  "required_bounded_diff_reviewers": [
+    "/root/sf_ra_runtime_referee",
+    "/root/mi13_statement_freeze"
+  ],
+  "failed_local35": {
+    "directory": "/private/tmp/nla-lean-local-shared-20260916/runs/development-35",
+    "receipt_sha256": "635e4bd1e50b8b6bc9ca4b6d67a66a3d7259724d410cee875c82068ab0489763",
+    "log_sha256": "a90221052f43f4a8e4d2af0b14811596a9222bbe6c2fd9d54c0bc10006fb5fbb",
+    "copies": {
+      "evidence/local35/RECEIPT.json": "635e4bd1e50b8b6bc9ca4b6d67a66a3d7259724d410cee875c82068ab0489763",
+      "evidence/local35/NLA.IE02.Definitions.log": "a90221052f43f4a8e4d2af0b14811596a9222bbe6c2fd9d54c0bc10006fb5fbb"
+    },
+    "Definitions_exit_code": 1,
+    "Challenge_status": "not_run",
+    "parse_error_lines": [
+      153,
+      154,
+      158
+    ],
+    "start": "2026-09-17T05:20:30.257748+00:00",
+    "end": "2026-09-17T05:20:45.388884+00:00",
+    "module_order": [
+      "NLA.IE02.Definitions",
+      "NLA.IE02.Challenge"
+    ],
+    "commands": [
+      {
+        "module": "NLA.IE02.Definitions",
+        "argv": [
+          "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+          "--threads=1",
+          "--memory=4096",
+          "-o",
+          "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/IE02/Definitions.olean",
+          "NLA/IE02/Definitions.lean"
+        ],
+        "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+        "start": "2026-09-17T05:20:30.258518+00:00",
+        "source_sha256": "68a516d1cde704892fecbf5cfb2e958b32fd0a7bfb3c3157a1a2ad734a525602",
+        "dependency_olean_sha256": {},
+        "exit_code": 1,
+        "end": "2026-09-17T05:20:45.371225+00:00",
+        "elapsed_seconds": 15.112670459086075,
+        "log_sha256": "a90221052f43f4a8e4d2af0b14811596a9222bbe6c2fd9d54c0bc10006fb5fbb",
+        "maxrss_bytes_macos_cumulative": 2794848256,
+        "output_sha256": null
+      },
+      {
+        "module": "NLA.IE02.Challenge",
+        "status": "not_run",
+        "failed_dependencies": [
+          "NLA.IE02.Definitions"
+        ]
+      }
+    ],
+    "threads": 1,
+    "memory_cap_mib": 4096,
+    "max_compiler_processes": 1,
+    "scope": "macOS serial development only; no Comparator, isolation controls, publication or whole-problem acceptance"
+  },
+  "external_bindings": [
+    {
+      "path": "/tmp/nla-lean-next-20260915/next-statements/IE-02/MANIFEST.json",
+      "sha256": "972a12860c8f7c9c0374a2ad51a9eee66104c43de333b379b3dad04eb27097ed",
+      "role": "original sealed draft"
+    },
+    {
+      "path": "/tmp/nla-lean-next-20260915/reviews/IE02-statement-referee-1-20260917/MANIFEST.json",
+      "sha256": "b4fc1acce3ee264a45d5ae89344a84457fcaec448d1514fb6dcf53a65430a7bf",
+      "role": "original nonauthor exact-statement review"
+    },
+    {
+      "path": "/tmp/nla-lean-next-20260915/reviews/IE02-statement-referee-1-20260917/REVIEW.md",
+      "sha256": "fc08032dc5286ef4782ac84f6518570bc384a0ff1bc6dd84152296f2845d84ba",
+      "role": "original nonauthor exact-statement review"
+    },
+    {
+      "path": "/tmp/nla-lean-next-20260915/reviews/IE02-statement-referee-1-20260917/HEADERS.json",
+      "sha256": "2f10ed089491b32f7f0ca3519e75d553b30a4eaa2d656b1fe38bca403f71219e",
+      "role": "original nonauthor exact-statement review"
+    },
+    {
+      "path": "/tmp/nla-lean-next-20260915/reviews/IE02-statement-referee-1-20260917/CHECKS.json",
+      "sha256": "089b33713f36bd352774bcd51f31d272c3902c36ea0252a489f48a16668b6066",
+      "role": "original nonauthor exact-statement review"
+    },
+    {
+      "path": "/tmp/nla-lean-next-20260915/reviews/IE02-statement-referee-2-20260917/MANIFEST.json",
+      "sha256": "b398c274557aea9608b57836482793308a67fe1bcb6bb4b76d7d94b76004dcc2",
+      "role": "original nonauthor exact-statement review"
+    },
+    {
+      "path": "/tmp/nla-lean-next-20260915/reviews/IE02-statement-referee-2-20260917/REVIEW.md",
+      "sha256": "f0fa24dc1b351419f03b121151ef52221692587e845d26e543d295e13e32fddd",
+      "role": "original nonauthor exact-statement review"
+    },
+    {
+      "path": "/tmp/nla-lean-next-20260915/reviews/IE02-statement-referee-2-20260917/HEADERS.json",
+      "sha256": "07e336cc70c830f3fbfec3aebe9455efdd79d15aeb1a1a8981c7e17ea2491a33",
+      "role": "original nonauthor exact-statement review"
+    },
+    {
+      "path": "/tmp/nla-lean-next-20260915/reviews/IE02-statement-referee-2-20260917/CHECKS.json",
+      "sha256": "5cb98b5b5ac96bf2108ce3637e18f97ceed05eef6adbdab8428c353eeafe37c6",
+      "role": "original nonauthor exact-statement review"
+    },
+    {
+      "path": "/private/tmp/nla-lean-local-shared-20260916/runs/development-35/RECEIPT.json",
+      "sha256": "635e4bd1e50b8b6bc9ca4b6d67a66a3d7259724d410cee875c82068ab0489763",
+      "role": "actual original local development-35 evidence"
+    },
+    {
+      "path": "/private/tmp/nla-lean-local-shared-20260916/runs/development-35/NLA.IE02.Definitions.log",
+      "sha256": "a90221052f43f4a8e4d2af0b14811596a9222bbe6c2fd9d54c0bc10006fb5fbb",
+      "role": "actual original local development-35 evidence"
+    }
+  ],
+  "retry_run": false,
+  "author_Lean_Lake_cache_Git_commands": 0,
+  "proof_implementation": false,
+  "Solution_exists": false,
+  "root_accepted_freeze": false,
+  "Comparator_kernel_sandbox_run": false,
+  "publication": false,
+  "complete_original_target_count_delta": 0
+}

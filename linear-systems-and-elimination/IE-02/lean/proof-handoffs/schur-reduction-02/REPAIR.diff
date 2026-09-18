@@ -1,0 +1,27 @@
+--- SchurReduction-before.lean
++++ SchurReduction-after.lean
+@@ -157,6 +157,8 @@
+   have hZcon : operatorNorm Z ≤ 1 := by
+     apply ContinuousLinearMap.opNorm_le_bound (euclideanCLM Z) (by norm_num)
+     intro y
++    -- The continuous extension acts by the same underlying Euclidean linear map.
++    change ‖euclideanLin Z y‖ ≤ 1 * ‖y‖
+     simpa only [one_mul] using hZbound y
+   obtain ⟨x, hx, hUx⟩ := (euclidean_norm_attainment (by omega : 1 ≤ n + 2) U).2.2.2
+   have hxnorm : ‖x‖ = 1 := hx
+@@ -174,13 +176,13 @@
+     exact (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).mp (sub_eq_zero.mp he).symm
+   have hZnorm : operatorNorm Z = 1 := by
+     apply le_antisymm hZcon
+-    apply (mul_le_mul_right (norm_pos_iff.mpr hyne)).mp
++    apply (mul_le_mul_iff_left₀ (norm_pos_iff.mpr hyne)).mp
+     calc
+       1 * ‖y‖ = ‖euclideanLin Z y‖ := by rw [one_mul, hynorm]
+       _ ≤ operatorNorm Z * ‖y‖ := (euclideanCLM Z).le_opNorm y
+   have hVnorm : operatorNorm (activeBlock Z) = 1 :=
+     (schur_active_block Z hZtoep hdiag hZcon).2.1.symm.trans hZnorm
+-  refine ⟨B, hBtoep, hleft, hright, hZtoep, hdiag, hZnorm, hVnorm, henergy, ?_⟩
++  refine ⟨B, ⟨q, hq⟩, hleft, hright, hZtoep, hdiag, hZnorm, hVnorm, henergy, ?_⟩
+   intro x
+   rw [maximal_space_norm_one U hU' x,
+     maximal_space_norm_one Z hZnorm (euclideanLin (schurM U c) x)]

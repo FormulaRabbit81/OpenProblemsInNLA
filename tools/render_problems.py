@@ -104,7 +104,7 @@ def render(source):
             input=body.strip(), text=True, capture_output=True, check=True,
         )
         tex = result.stdout
-        if identifier in {"IE-04", "IE-14", "IV-03", "KE-05", "MF-12", "MF-22", "NM-04", "SP-04", "SP-05", "SP-15"}:
+        if identifier in {"IE-02", "IE-04", "IE-14", "IV-03", "KE-05", "MF-12", "MF-22", "NM-04", "SP-04", "SP-05", "SP-15"}:
             # These publication dates record formal verification, not a literature search.
             tex = tex.replace("Literature check:", "Verification check:")
         # The code spans in this catalog are literal search phrases. Set them
@@ -115,7 +115,7 @@ def render(source):
         # leave only a few lines on a second page after the status audit.
         if identifier in {
             'AA-01', 'AC-13', 'AV-01', 'AV-02', 'AV-03', 'FR-01', 'FR-02', 'FR-04',
-            'FR-10', 'FR-11', 'FR-12', 'IE-01', 'IE-02', 'IE-03', 'IE-06', 'IE-08', 'IE-10', 'IE-11', 'IE-13',
+            'FR-10', 'FR-11', 'FR-12', 'IE-01', 'IE-03', 'IE-06', 'IE-08', 'IE-10', 'IE-11', 'IE-13',
             'IE-14', 'IE-15', 'IE-17', 'IE-19', 'IE-21', 'IE-22', 'IE-23',
             'IE-24', 'IE-25', 'IE-26', 'IS-02', 'IS-03', 'IS-05', 'IV-02', 'IV-03', 'IV-04',
             'IV-05', 'IV-06', 'KE-03', 'KE-04', 'MD-06', 'MF-15',

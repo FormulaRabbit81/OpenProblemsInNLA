@@ -1,0 +1,13 @@
+# Exact effective Fourier polynomial: statements before code
+
+This is root-authored implementation planning for frozen effective_factor_polynomial, not an independent approval or execution certificate. All thirteen frozen inputs and original target remain unchanged. First implement only the finite support foundations in FourierSupport; then construct EffectivePolynomial using those foundations. No additional numerical interval or approximation is required.
+
+For arbitrary l,m and the frozen coefficients c(r)=fourierCoeff m q r, prove c(r)=0 whenever r < -m or m < r directly from the bounds on u,v in Fin(m+1). Under the original degree bounds and no common unit-circle zero, prove c(0) is a strictly positive real scalar, hence nonzero: a polynomial nonzero at z=1 has a nonzero leading coefficient within degree m; its squared norm is one nonnegative summand in the exact zero-frequency formula. This uses actual coefficients, not an assumed spectral factor.
+
+Take ell to be the maximum of the nonempty finite set {k≤m : c(k)≠0}. The set contains zero. Prove ell≤m, c(ell)≠0, and c(r)=0 for r outside [-ell,ell], with negative frequencies handled by the already proved conjugate symmetry. Zero families violate the no-common-zero premise; m=0 and constant-polynomial cases remain included. No hidden positivity premise is added.
+
+For the later polynomial P=effectivePolynomial m ell q, derive its coefficient formula by finite monomial summation. Its leading coefficient is c(ell), constant coefficient is c(-ell)=star(c(ell)); both are nonzero. Thus degree P=2ell, including ell=0. Reflection at the fixed bound 2ell has coefficient star(c(ell-i)), exactly c(i-ell), establishing self-reflection by polynomial extensionality. Values outside the coefficient range must vanish on both sides.
+
+For every unit z, nonzero z permits integer-power shifts. The full Fourier identity already compiled in actual97 can be truncated to [-ell,ell] using the proved support vanishing and unique finite frequency reindexing. Multiplying by z^ell yields exactly the polynomial evaluation. Its value is nonzero because z is nonzero and the sum of squared norms is positive under the original no-common-zero premise. The final theorem must retain the exact frozen header, not merely a conditional reduction.
+
+All proof work uses pinned Mathlib, explicit kernel-mode LeanCert trust/assertions, no native oracle or extra axiom, and root's one-process/one-thread/4096MiB/default-heartbeat local runner. Retain prior failed local runs separately; complete original target and final Comparator remain pending. Credit George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology, preserve prior attribution, no email.

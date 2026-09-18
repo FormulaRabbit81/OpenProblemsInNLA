@@ -1,0 +1,7 @@
+# Gradient topology foundations, before code
+
+These helpers provide the nonempty/compact clauses of the already frozen exact31. They do not prove convexity or count the contract. For every n>=1 and actual complex square T, prove that the frozen unitMaximal T is nonempty and compact. NormAttainment gives an actual unit vector attaining the Euclidean operator norm, including T=0. MaximalSpace identifies exactly its Gram kernel with norm saturation; the sphere is compact in the original finite-dimensional Euclidean space, and the kernel is closed. The actual unitMaximal is their intersection, no new predicate.
+
+For every n,k and actual T,R, including n=0 or k=0 for continuity, prove continuity of the frozen gradient into H k by continuous_pi of the true complex inner products and PiLp.continuous_toLp. Then its image of unitMaximal is nonempty and compact. These universal conclusions require no Toeplitz, nonzero, convexity, root-factorization or minimax hypothesis. They are auxiliary facts rather than weakened replacements for exact31. No interval computations, new certificate, numerical matrix examples, resource changes or source definition changes.
+
+Reuse the project's actual NormAttainment and MaximalSpace, pinned isCompact_sphere, IsCompact.inter_right, IsCompact.image and Continuous.inner. No proof implementation existed when this plan was saved. Convexity will separately consume complete exact30 after actual verification. Two independent final reviews and whole-target Comparator remain pending.

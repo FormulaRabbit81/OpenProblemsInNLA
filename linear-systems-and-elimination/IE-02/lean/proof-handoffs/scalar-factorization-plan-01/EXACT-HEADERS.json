@@ -1,0 +1,54 @@
+{
+  "targets": [
+    {
+      "ordinal": 27,
+      "name": "NLA.IE02.strict_scalar_factorization",
+      "header": "theorem strict_scalar_factorization {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (hq : ∀ j, DegreeLE (q j) m)\n    (hno : ∀ z : ℂ, ‖z‖ = 1 → ∃ j, (q j).eval z ≠ 0) :\n    ∃ h : Poly, DegreeLE h m ∧\n      ∀ z : ℂ, ‖z‖ = 1 → ‖h.eval z‖ ^ 2 = sumSquares q z",
+      "header_sha256": "6547e85532c8433ad326d13f692dc4bdf7ac5204be166bfdcff2ac1b6d03afb3"
+    },
+    {
+      "ordinal": 28,
+      "name": "NLA.IE02.weighted_scalar_factorization",
+      "header": "theorem weighted_scalar_factorization {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (w : Fin l → ℝ) (hq : ∀ j, DegreeLE (q j) m) (hw : ∀ j, 0 ≤ w j) :\n    ∃ h : Poly, DegreeLE h m ∧\n      (∀ z : ℂ, ‖z‖ = 1 → ‖h.eval z‖ ^ 2 = ∑ j, w j * ‖(q j).eval z‖ ^ 2) ∧\n      h * conjReflect m h = ∑ j, C (w j : ℂ) * (q j * conjReflect m (q j))",
+      "header_sha256": "db286da2d0a94f79beb0ef7e89f49e0216a4c9a1d5f5a6abc8de0c0e680920c3"
+    }
+  ],
+  "prerequisites": [
+    {
+      "ordinal": 20,
+      "name": "NLA.IE02.circle_polynomial_uniqueness",
+      "header": "theorem circle_polynomial_uniqueness (p q : Poly) :\n    Set.Infinite {z : ℂ | ‖z‖ = 1} ∧\n    ((∀ z : ℂ, ‖z‖ = 1 → p.eval z = q.eval z) → p = q)",
+      "header_sha256": "b20c546f3ae7a4099f977332cb9efb58742fdfab797ade3545587e2314e3fa43"
+    },
+    {
+      "ordinal": 21,
+      "name": "NLA.IE02.weighted_fold",
+      "header": "theorem weighted_fold {l : ℕ} (m : ℕ) (q : Fin l → Poly) (w : Fin l → ℝ)\n    (hq : ∀ j, DegreeLE (q j) m) (hw : ∀ j, 0 ≤ w j) :\n    (∀ j, DegreeLE (weightedFold (w j) (q j)) m) ∧\n    ∀ z : ℂ, sumSquares (fun j => weightedFold (w j) (q j)) z =\n      ∑ j, w j * ‖(q j).eval z‖ ^ 2",
+      "header_sha256": "6049e2b5c7b7235b6159694426e81cc025ddb97e92078d58c41a44e6ff4c3974"
+    },
+    {
+      "ordinal": 22,
+      "name": "NLA.IE02.common_circle_root_reduction",
+      "header": "theorem common_circle_root_reduction {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (hq : ∀ j, DegreeLE (q j) m) (hne : ∃ j, q j ≠ 0)\n    (z : ℂ) (hz : ‖z‖ = 1) (hroot : ∀ j, (q j).eval z = 0) :\n    1 ≤ m ∧ ∃ r : Fin l → Poly,\n      ∀ j, q j = (X - C z) * r j ∧ DegreeLE (r j) (m - 1)",
+      "header_sha256": "f8a461298dc75aa0ea671823a3712842e541193721fc06e763f5a56f875bac97"
+    },
+    {
+      "ordinal": 24,
+      "name": "NLA.IE02.effective_factor_polynomial",
+      "header": "theorem effective_factor_polynomial {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (hq : ∀ j, DegreeLE (q j) m)\n    (hno : ∀ z : ℂ, ‖z‖ = 1 → ∃ j, (q j).eval z ≠ 0) :\n    ∃ ell : ℕ, ell ≤ m ∧\n      (effectivePolynomial m ell q).degree = (2 * ell : WithBot ℕ) ∧\n      (effectivePolynomial m ell q).coeff 0 ≠ 0 ∧\n      conjReflect (2 * ell) (effectivePolynomial m ell q) = effectivePolynomial m ell q ∧\n      (∀ z : ℂ, ‖z‖ = 1 →\n        (effectivePolynomial m ell q).eval z = z ^ ell * (sumSquares q z : ℂ) ∧\n        (effectivePolynomial m ell q).eval z ≠ 0)",
+      "header_sha256": "9632c851b4594554f15aa7268e24bf84475baefdd73a444328e38a9f8c8fc768"
+    },
+    {
+      "ordinal": 25,
+      "name": "NLA.IE02.reciprocal_root_pairing",
+      "header": "theorem reciprocal_root_pairing (ell : ℕ) (P : Poly)\n    (hdeg : P.degree = (2 * ell : WithBot ℕ)) (hzero : P.coeff 0 ≠ 0)\n    (href : conjReflect (2 * ell) P = P)\n    (hcircle : ∀ z : ℂ, ‖z‖ = 1 → P.eval z ≠ 0) :\n    P.roots = P.roots.map reciprocalConj ∧\n    P.roots = insideRoots P + (insideRoots P).map reciprocalConj ∧\n    (insideRoots P).card = ell ∧ (∀ z ∈ P.roots, z ≠ 0)",
+      "header_sha256": "2d2c8603394a47d1197b825a97df93ccdcfdb9dc16ebf3e7c7bf58b0426a0cfc"
+    },
+    {
+      "ordinal": 26,
+      "name": "NLA.IE02.reciprocal_inside_factor",
+      "header": "theorem reciprocal_inside_factor (ell : ℕ) (P : Poly)\n    (hdeg : P.degree = (2 * ell : WithBot ℕ)) (hzero : P.coeff 0 ≠ 0)\n    (href : conjReflect (2 * ell) P = P)\n    (hcircle : ∀ z : ℂ, ‖z‖ = 1 → P.eval z ≠ 0) :\n    (rootProduct (insideRoots P)).degree = (ell : WithBot ℕ) ∧\n    (rootProduct (insideRoots P)).eval 0 ≠ 0 ∧\n    (∀ z : ℂ, ‖z‖ = 1 → (rootProduct (insideRoots P)).eval z ≠ 0) ∧\n    ∃ κ : ℂ, κ ≠ 0 ∧ P = C κ *\n      (rootProduct (insideRoots P) * conjReflect ell (rootProduct (insideRoots P)))",
+      "header_sha256": "6fddc88b69e1feb874ee400b2d03349f62076c71ec1797abbf7fddf487a8f37c"
+    }
+  ]
+}

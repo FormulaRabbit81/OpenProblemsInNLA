@@ -1,0 +1,6 @@
+{
+  "ordinal": 29,
+  "name": "NLA.IE02.weighted_coefficient_preservation",
+  "header": "theorem weighted_coefficient_preservation {l k : ℕ} (d m : ℕ)\n    (a b h : Poly) (q : Fin l → Poly) (w : Fin l → ℝ) (r : Fin k → Poly)\n    (ha : DegreeLE a d) (hb : DegreeLE b d) (hh : DegreeLE h m)\n    (hq : ∀ j, DegreeLE (q j) m)\n    (hfactor : h * conjReflect m h = ∑ j, C (w j : ℂ) * (q j * conjReflect m (q j))) :\n    ‖coeffVector (d + m + 1) (b * h)‖ ^ 2 =\n      ∑ j, w j * ‖coeffVector (d + m + 1) (b * q j)‖ ^ 2 ∧\n    ∀ i, inner ℂ (coeffVector (d + m + 1) (a * h))\n        (euclideanLin (toeplitz (d + m + 1) (r i)) (coeffVector (d + m + 1) (b * h))) =\n      ∑ j, (w j : ℂ) * inner ℂ (coeffVector (d + m + 1) (a * q j))\n        (euclideanLin (toeplitz (d + m + 1) (r i)) (coeffVector (d + m + 1) (b * q j)))",
+  "header_sha256": "d3ab509da0515dda27b2f68e5c7084370ddefdec7f8a109eb4a360be9d01eb52"
+}

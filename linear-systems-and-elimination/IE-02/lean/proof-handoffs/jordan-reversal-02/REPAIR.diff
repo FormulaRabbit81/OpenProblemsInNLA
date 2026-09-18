@@ -1,0 +1,11 @@
+--- actual87
++++ dependent-ite-congruence
+@@ -74,7 +74,7 @@
+       simp only [Fin.val_rev]
+       omega
+     unfold upperShift shift toeplitz
+-    rw [hrev]
++    simp only [hrev]
+     by_cases hij : i.val = j.val + 1
+     · have hji : j.val ≤ i.val := by omega
+       have hsub : i.val - j.val = 1 := by omega

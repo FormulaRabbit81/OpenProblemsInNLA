@@ -1,0 +1,18 @@
+--- before/SchurBasicNorms.lean
++++ after/SchurBasicNorms.lean
+@@ -22,6 +22,7 @@
+   let e : H n := PiLp.single 2 i 1
+   have he : ‖e‖ = 1 := by simp [e]
+   have hcoord : (euclideanLin (toeplitz n p) e) i = p.coeff 0 := by
++    -- Expose the Euclidean matrix action as its coordinate sum.
+     change (∑ j : Fin n, toeplitz n p i j * e j) = _
+     simp [e, PiLp.single_apply, toeplitz]
+   calc
+@@ -43,6 +44,7 @@
+       p.coeff 0 • ContinuousLinearMap.id ℂ (H 1) := by
+     apply ContinuousLinearMap.ext
+     intro x
++    -- Expose the continuous-linear wrapper as the underlying Euclidean matrix map.
+     change (Matrix.toLpLin 2 2 (p.coeff 0 • (1 : Square 1))) x = p.coeff 0 • x
+     rw [map_smul, Matrix.toLpLin_one]
+     rfl

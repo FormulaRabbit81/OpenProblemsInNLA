@@ -1,0 +1,18 @@
+{
+  "time": "2026-09-17T08:46:58.912011+00:00",
+  "headers": {
+    "jordan_reversal": "theorem jordan_reversal (n : \u2115) (lam : \u2102) :\n    (reversal n).conjTranspose = reversal n \u2227 reversal n * reversal n = 1 \u2227\n    reversal n * jordan n lam * (reversal n).conjTranspose = lowerJordan n lam \u2227\n    (\u2200 x : H n, euclideanLin (reversal n) x = reverseVector x \u2227 \u2016reverseVector x\u2016 = \u2016x\u2016 \u2227\n      reverseVector (reverseVector x) = x)",
+    "jordan_polynomial_transport": "theorem jordan_polynomial_transport (n : \u2115) (lam : \u2102) (p : Poly) :\n    polyEval p (jordan n lam) * reversal n = reversal n * polyEval p (lowerJordan n lam) \u2227\n    operatorNorm (polyEval p (jordan n lam)) = operatorNorm (polyEval p (lowerJordan n lam)) \u2227\n    (\u2200 x : H n, euclideanLin (polyEval p (jordan n lam)) (reverseVector x) =\n      reverseVector (euclideanLin (polyEval p (lowerJordan n lam)) x))"
+  },
+  "bindings": {
+    "/Users/georgestepaniants/Research/project/lean-verification/.lake/packages/mathlib/Mathlib/Data/Fin/Rev.lean": "cd616713110393338bd880146a89ac3dce464df31d107d96fa652164727f4888",
+    "/Users/georgestepaniants/Research/project/lean-verification/.lake/packages/mathlib/Mathlib/Analysis/Normed/Lp/PiLp.lean": "660f3ad7077490c9a8eae924e18731c400282b8dccf80bfec1c6b02fe11ee25f",
+    "/Users/georgestepaniants/Research/project/lean-verification/.lake/packages/mathlib/Mathlib/Analysis/Normed/Lp/Matrix.lean": "976400e4430cbe64214a24e37f3f98c807c30f1c9926c8cbd367ae2fd111e2f9",
+    "/Users/georgestepaniants/Research/project/lean-verification/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/AlgebraMap.lean": "44480220e8998fc94589b1648a673d868dfc6d381d627bf0cbc901d58540d2e1",
+    "/Users/georgestepaniants/Research/project/lean-verification/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Basic.lean": "18f967ad36db74f73667ac7bdef2a404d77226a7d33cbdef33d415e5b3e4c389",
+    "/private/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/Definitions.lean": "ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a",
+    "/private/tmp/nla-lean-next-20260915/next-proofs/IE-02/Challenge.lean": "a09907c4074776caeddf729da4ef9461433f105da5dff60396103121178288f9"
+  },
+  "plan_sha256": "7c263bdac9e5c9ebc0fe80ed50b60ea6ae6dd8493203513f70d40617ec162c5e",
+  "proof_sources_exist": false
+}

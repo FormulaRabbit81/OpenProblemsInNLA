@@ -1,0 +1,141 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original mathematical and library
+attribution is retained in Definitions.lean and SourceCorrespondence.md.
+
+An attained operator minimum and full complex orthogonality give a common
+minimizing tuple and maximizing vector. The zero residual has its own unit
+vector witness. All extrema are the original infima and suprema.
+-/
+import NLA.IE02.AffineMinima
+import NLA.IE02.MinimizerOrthogonality
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+open scoped BigOperators
+
+private theorem directionSum_sub {n k : ℕ} (R : Fin k → Square n)
+    (c d : Fin k → ℂ) : directionSum R (c - d) = directionSum R c - directionSum R d := by
+  simp only [directionSum, Pi.sub_apply, sub_smul, Finset.sum_sub_distrib]
+
+private theorem affineResidual_add_direction {n k : ℕ} (Y : Square n)
+    (R : Fin k → Square n) (c d : Fin k → ℂ) :
+    affineResidual Y R c + directionSum R d = affineResidual Y R (c - d) := by
+  simp only [affineResidual, directionSum_sub]
+  abel
+
+private theorem affineResidual_toeplitz {n k : ℕ} (Y : Square n)
+    (R : Fin k → Square n) (hY : IsToeplitz Y) (hR : ∀ j, IsToeplitz (R j))
+    (c : Fin k → ℂ) : IsToeplitz (affineResidual Y R c) := by
+  classical
+  obtain ⟨p, hp⟩ := hY
+  choose q hq using hR
+  refine ⟨p - ∑ j, c j • q j, ?_⟩
+  -- The existing algebra hom has exactly the frozen coefficient-matrix function.
+  change affineResidual Y R c = (toeplitzAlgHom n) (p - ∑ j, c j • q j)
+  simp only [map_sub, map_sum, map_smul]
+  change Y - ∑ j, c j • R j = toeplitz n p - ∑ j, c j • toeplitz n (q j)
+  simp only [hp, hq]
+
+private theorem directionSum_action {n k : ℕ} (R : Fin k → Square n)
+    (c : Fin k → ℂ) (x : H n) :
+    euclideanLin (directionSum R c) x = ∑ j, c j • euclideanLin (R j) x := by
+  simp only [directionSum, euclideanLin, map_sum, map_smul,
+    LinearMap.sum_apply, LinearMap.smul_apply]
+
+private theorem affine_common_vector {n k : ℕ} (hn : 1 ≤ n)
+    (Y : Square n) (R : Fin k → Square n) (hY : IsToeplitz Y)
+    (hR : ∀ j, IsToeplitz (R j)) (c : Fin k → ℂ)
+    (hmin : ∀ d, operatorNorm (affineResidual Y R c) ≤ operatorNorm (affineResidual Y R d)) :
+    ∃ x : H n, x ∈ unitSphere n ∧
+      ‖euclideanLin (affineResidual Y R c) x‖ = operatorNorm (affineResidual Y R c) ∧
+      ∀ d, ‖euclideanLin (affineResidual Y R c) x‖ ≤
+        ‖euclideanLin (affineResidual Y R d) x‖ := by
+  let T := affineResidual Y R c
+  by_cases hzero : T = 0
+  · let x : H n := (EuclideanSpace.basisFun (Fin n) ℂ) ⟨0, hn⟩
+    have hx : ‖x‖ = 1 := OrthonormalBasis.norm_eq_one _ _
+    have hTx : euclideanLin T x = 0 := by simp [hzero, euclideanLin]
+    have hTnorm : operatorNorm T = 0 := by simp [hzero, operatorNorm, euclideanCLM, euclideanLin]
+    refine ⟨x, hx, ?_, ?_⟩
+    · exact (congrArg norm hTx).trans ((norm_zero : ‖(0 : H n)‖ = 0).trans hTnorm.symm)
+    · intro d
+      rw [hTx, norm_zero]
+      exact norm_nonneg _
+  · have hT : IsToeplitz T := affineResidual_toeplitz Y R hY hR c
+    have hdirmin (d : Fin k → ℂ) : operatorNorm T ≤ operatorNorm (T + directionSum R d) := by
+      rw [affineResidual_add_direction]
+      exact hmin (c - d)
+    obtain ⟨x, hx, horth⟩ := minimizer_orthogonality hn T R hT hzero hR hdirmin
+    have hnorm : ‖euclideanLin T x‖ = operatorNorm T := by
+      simpa only [hx.2, mul_one] using ((maximal_space_norm T).2 x).mp hx.1
+    refine ⟨x, hx.2, hnorm, ?_⟩
+    intro d
+    let v : H n := ∑ j, (c j - d j) • euclideanLin (R j) x
+    have haction : euclideanLin (affineResidual Y R d) x = euclideanLin T x + v := by
+      have hmat : affineResidual Y R d = T + directionSum R (c - d) := by
+        rw [affineResidual_add_direction, sub_sub_cancel]
+      rw [hmat]
+      simp only [euclideanLin, map_add, LinearMap.add_apply]
+      rw [directionSum_action]
+      rfl
+    have hinner : inner ℂ (euclideanLin T x) v = 0 := by
+      simp only [v, inner_sum, inner_smul_right, horth, mul_zero, Finset.sum_const_zero]
+    have hpyth := norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero
+      (𝕜 := ℂ) (euclideanLin T x) v hinner
+    rw [haction]
+    apply (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mp
+    nlinarith [sq_nonneg ‖v‖]
+
+theorem affine_minimax_attained {n k : ℕ} (hn : 1 ≤ n)
+    (Y : Square n) (R : Fin k → Square n) (hY : IsToeplitz Y) (hR : ∀ j, IsToeplitz (R j)) :
+    affineWorst Y R = affineIdeal Y R ∧
+    (∀ x ∈ unitSphere n, ∃ c : Fin k → ℂ,
+      ‖euclideanLin (affineResidual Y R c) x‖ = affineInner Y R x) ∧
+    ∃ (c : Fin k → ℂ) (x : H n), x ∈ unitSphere n ∧
+      operatorNorm (affineResidual Y R c) = affineIdeal Y R ∧
+      affineInner Y R x = affineWorst Y R ∧
+      ‖euclideanLin (affineResidual Y R c) x‖ = operatorNorm (affineResidual Y R c) ∧
+      (∀ d : Fin k → ℂ, operatorNorm (affineResidual Y R c) ≤ operatorNorm (affineResidual Y R d)) ∧
+      (∀ d : Fin k → ℂ, ‖euclideanLin (affineResidual Y R c) x‖ ≤
+        ‖euclideanLin (affineResidual Y R d) x‖) ∧
+      (∀ z ∈ unitSphere n, affineInner Y R z ≤ affineInner Y R x) := by
+  obtain ⟨c, hc, hmin⟩ := affine_operator_minimum Y R
+  obtain ⟨x, hx, hnorm, hvecmin⟩ := affine_common_vector hn Y R hY hR c hmin
+  have hinner_le (z : H n) : affineInner Y R z ≤ ‖euclideanLin (affineResidual Y R c) z‖ := by
+    obtain ⟨d, hd, hdmin⟩ := affine_vector_minimum Y R z
+    rw [← hd]
+    exact hdmin c
+  have hxinner : affineInner Y R x = operatorNorm (affineResidual Y R c) := by
+    obtain ⟨d, hd, _⟩ := affine_vector_minimum Y R x
+    apply le_antisymm
+    · exact (hinner_le x).trans_eq hnorm
+    · rw [← hnorm, ← hd]
+      exact hvecmin d
+  have hupper (z : H n) (hz : z ∈ unitSphere n) :
+      affineInner Y R z ≤ affineInner Y R x := by
+    calc
+      affineInner Y R z ≤ ‖euclideanLin (affineResidual Y R c) z‖ := hinner_le z
+      _ ≤ operatorNorm (affineResidual Y R c) * ‖z‖ :=
+        (euclideanCLM (affineResidual Y R c)).le_opNorm z
+      _ = affineInner Y R x := by rw [hz, mul_one, hxinner]
+  have hgreatest : IsGreatest (affineInner Y R '' unitSphere n) (affineInner Y R x) := by
+    refine ⟨⟨x, hx, rfl⟩, ?_⟩
+    rintro _ ⟨z, hz, rfl⟩
+    exact hupper z hz
+  have hworst : affineWorst Y R = affineInner Y R x := hgreatest.csSup_eq
+  refine ⟨hworst.trans (hxinner.trans hc), ?_, c, x, hx, hc,
+    hworst.symm, hnorm, hmin, hvecmin, hupper⟩
+  intro z _hz
+  obtain ⟨d, hd, _⟩ := affine_vector_minimum Y R z
+  exact ⟨d, hd⟩
+
+#print axioms affine_minimax_attained
+#assert_trust kernel affine_minimax_attained
+
+end
+end NLA.IE02

@@ -1,0 +1,17 @@
+# IE-02 Lean formalization
+
+For every complex Jordan block in the original IE-02 range, ideal GMRES equals worst-case GMRES. All polynomial minima, sphere suprema and their attaining witnesses use the actual Euclidean matrix and vector norms.
+
+**Complete local Lean checks passed; final Linux Comparator is pending.** All 50 exported statements have actual axiom reports containing only `propext`, `Classical.choice` and `Quot.sound`, and all kernel trust assertions passed. [Local evidence](verification/LOCAL-COMPLETE.json) records the exact sources, commands, logs and successful cache provenance. Local compilation is distinct from final GitHub Comparator, default-kernel replay, sandbox and rejection-control checks. Independent full reviews and their cleanup continuations are recorded separately before publication.
+
+Read [Definitions](NLA/IE02/Definitions.lean), the independent [Challenge](Challenge.lean), [Solution](Solution.lean), [implementation map](IMPLEMENTATION-MAP.json), [numerical targets](NUMERICAL_TARGETS.md) and [source correspondence](SourceCorrespondence.md). Challenge deliberately specifies obligations using placeholders and is never imported into Solution. [Comparator](comparator.json) checks every advertised theorem with no replaceable definitions.
+
+The finite Schur recursion proves the full maximal-subspace factorization. Scalar polynomial factorization preserves repeated and boundary roots. Complex gradient convexity, real separation and a uniform descent argument produce a norm-attaining orthogonal vector; the affine minimax theorem then transfers to the actual upper Jordan block through reversal. Zero, empty and dependent directions are included in the supporting contracts. No interpolation or minimax theorem is assumed as an oracle.
+
+The positive-half bound is proved using genuine kernel-mode LeanCert and consumed by the symbolic descent bounds. Root selection, factorization, matrix norms and extrema are proved symbolically. There is no interval grid or sampled assertion.
+
+With the pinned Lean toolchain and dependencies, run `lake build` from this directory. The shared repository [harness](../../../tools/lean/HARNESS.md) performs the separate non-root Linux checks. No local Comparator installation is needed for the campaign workflow.
+
+The frozen statement history retains its original preparatory wording. The current state is this README and [STATE.json](STATE.json), not an older pending-stage report. The only operational frozen-file change registers Solution as the default Lake target; its [exact diff](verification/packaging/LAKE-REGISTRATION.patch) and original file are retained. Mathematical definitions, statements, IDs, canonical paths and dependency pins are unchanged. [Copy map](verification/RETAINED-PATHS.json) records byte-identical historical payloads with inactive suffixes.
+
+Formalization contributor: **George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. George Stepaniants for the retained solution and formalization contribution, with the original mathematical and library authors identified in Definitions and SourceCorrespondence retained. Substantial OpenAI Codex assistance is disclosed. Mathlib, LeanCert, Comparator, Tau Ceti, Schiffer and Forsythe contributors retain their attribution. Scoped agent review is not official Tau Ceti endorsement or external human peer review. No email is published. [License](LICENSE).

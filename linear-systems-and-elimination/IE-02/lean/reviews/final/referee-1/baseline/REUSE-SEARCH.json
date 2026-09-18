@@ -1,0 +1,67 @@
+{
+  "time": "2026-09-17T13:12:10.011951+00:00",
+  "searches": [
+    {
+      "name": "direct-CF-GMRES-factorization",
+      "argv": [
+        "rg",
+        "-n",
+        "-i",
+        "schur.*(toeplitz|interpol)|carath[eé]odory.*fej|fej[eé]r.*riesz|spectral.factorization|gmres|roots_reverse|roots.*reflect|reflect.*roots",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib"
+      ],
+      "exit_code": 0,
+      "stdout": "direct-CF-GMRES-factorization.rg.txt",
+      "stdout_sha256": "04f7a0add6ba90232fcc8adaa8d408adf6e6eda4ee849670ef0b10434ca37689",
+      "stderr": ""
+    },
+    {
+      "name": "polynomial-reuse",
+      "argv": [
+        "rg",
+        "-n",
+        "-i",
+        "degree_C_mul_le|degree_mul_C_le|degree_mul_le_of_le|degree_smul_le|semiconj.*eval|SemiconjBy.*eval|roots_multiset_prod_X_sub_C|natDegree_multiset_prod_X_sub_C_eq_card",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/Polynomial"
+      ],
+      "exit_code": 0,
+      "stdout": "polynomial-reuse.rg.txt",
+      "stdout_sha256": "e1d583acfcbf1bfa0233a2e86712d137898edf5dc5c07fa6b1a2f6553472fb38",
+      "stderr": ""
+    },
+    {
+      "name": "attainment-and-circle",
+      "argv": [
+        "rg",
+        "-n",
+        "-i",
+        "infinite.*sphere|sphere.*infinite|infinite.*circle|circle.*infinite|attain.*norm|norm.*attain|exists.*norm_eq.*norm",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Topology"
+      ],
+      "exit_code": 0,
+      "stdout": "attainment-and-circle.rg.txt",
+      "stdout_sha256": "2d5d2618e2f27ad6201b18696c4bad9d82760d82c5403d4571d540f0a285c507",
+      "stderr": ""
+    },
+    {
+      "name": "existing-project-action-helper",
+      "argv": [
+        "rg",
+        "-n",
+        "-i",
+        "euclideanLin_mul_apply|euclidean_mul_apply",
+        "/private/tmp/nla-lean-next-20260915/reviews/IE02-full-referee1-20260917/snapshots/project/NLA/IE02"
+      ],
+      "exit_code": 0,
+      "stdout": "existing-project-action-helper.rg.txt",
+      "stdout_sha256": "a3951629b916fba8c284a2314dc940ac179cff95f7c7d5a201af537b185afd30",
+      "stderr": ""
+    }
+  ],
+  "Mathlib_pin": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "Tau_Ceti_guidance_pin": "afb424eda89e8ac96d9eb69f6a88972055a4cd1b",
+  "Tau_Ceti_mathematical_code_search_limitation": "Only retained pinned TauCetiReview guidance exists in the searched local workspace. No full pinned Tau Ceti mathematical source checkout was available; parent also searched and confirmed this. No search of absent code or official Tau Ceti service is claimed.",
+  "result": "One exact project duplicate located: private euclidean_mul_apply in JordanTransport is the public euclideanLin_mul_apply in SchurEnergy. R1 requests direct reuse. No located pinned direct theorem replaced the full finite Schur/GMRES/weighted-factorization developments; negative searches are bounded, not exhaustive literature claims."
+}

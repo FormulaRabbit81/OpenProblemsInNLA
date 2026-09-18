@@ -1,0 +1,13 @@
+# Fourier semantics: exact statement and symbolic plan before code
+
+Root owns the future FourierSemantics.lean module. Scope is exactly the frozen fourier_semantics contract, including all l,m, all degree-at-most-m complex polynomial families, every integer r and every complex z with norm one. Empty families and m=0 remain included. No existing numerical obligation, definition, hypothesis or target changes. No proof module exists yet.
+
+There is no new numerical computation or interval. All equalities are finite polynomial, complex-conjugation and integer-exponent identities. Frozen fourierCoeff has the convention q_u * star(q_v) and frequency u-v; keep that sign convention exactly.
+
+First prove coefficient conjugate symmetry by exchanging the finite u,v sums. The conditions u-v=-r and v-u=r are equivalent over integers; star reverses the product and cancels double conjugation. No spectral or real-parameter assumption is needed. For frequency zero, integer equality forces u=v, so the inner sum selects one term and q_u*star(q_u) becomes the actual complex norm squared.
+
+For the evaluation identity, expand each degree-bounded polynomial over Fin(m+1) by the pinned eval_eq_sum_range' theorem and the degree/natDegree bridge. Express the complex cast of its squared norm as its product with its conjugate. Expand both finite sums. For norm-one z, use the named inv_eq_conj identity and integer-exponent subtraction to obtain z^u*star(z^v)=z^(u-v). Norm-one implies z is nonzero before using inverse/exponent identities.
+
+Regroup the finite double sum by the exact index r in Fin(2*m+1), whose frequency is r.val-m. For every u,v in Fin(m+1), the unique index has natural value u.val+m-v.val; its bounds and the frequency identity follow from the actual Fin bounds by integer/natural linear arithmetic. A finite sum_eq_single proof records the unique matching frequency; this avoids Laurent-polynomial infrastructure, analytic Fourier integrals, approximations or enumeration depending on numeric m. Reorder only finite sums. This yields the exact frozen RHS after unfolding fourierCoeff and sumSquares.
+
+The new module will use explicit kernel LeanCert trust and a standard-three-axiom assertion; the existing numerical certificate remains elsewhere in the full target. It must not add a decorative certificate or count a helper as a new problem. Root local compiler only, one thread,4096MiB, default limits. Preserve George Stepaniants Caltech CMS, prior problem/library attribution and Codex assistance. Independent proof reviews and final whole-target Comparator remain pending. This plan is source-author reasoning, not verification of an unwritten proof.

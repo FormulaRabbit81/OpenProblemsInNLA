@@ -1,0 +1,261 @@
+#!/usr/bin/env python3
+"""One-time isolated handoff assembly. No compiler, Git, network or proof implementation."""
+from pathlib import Path
+import datetime, hashlib, json, re
+import jsonschema
+
+B=Path('/tmp/nla-lean-next-20260915')
+O=B/'next-statements/IE-02'
+N=B/'next-statements/IE-02-elaboration-01'
+W=B/'next-proofs/IE-02'
+R=B/'reviews/IE02-local42-statement-freeze'
+L=Path('/private/tmp/nla-lean-local-shared-20260916')
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+now=datetime.datetime.now(datetime.timezone.utc).isoformat()
+checks=[]
+def check(name,condition):
+    if not condition:raise AssertionError(name)
+    checks.append(name)
+def read(p):return json.loads(Path(p).read_text())
+def write(rel,value):
+    q=W/rel;q.parent.mkdir(parents=True,exist_ok=True)
+    q.write_text(json.dumps(value,indent=2,ensure_ascii=False)+'\n')
+copies=[]
+def copy(source,rel,role):
+    p=Path(source);q=W/rel;q.parent.mkdir(parents=True,exist_ok=True)
+    if q.exists():check('existing identical copy '+rel,q.read_bytes()==p.read_bytes())
+    else:q.write_bytes(p.read_bytes())
+    copies.append({'source':str(p),'sha256':sha(p),'workspace_path':rel,'role':role})
+check('isolated workspace contains only this preparer before assembly',
+      {str(p.relative_to(W)) for p in W.rglob('*') if p.is_file()}=={'statement-history/prepare-handoff.py.txt'})
+check('runtime audit exact sealed manifest',sha(R/'MANIFEST.json')=='2e5e2b265dfdcce88480a9af82a44b8cc16c93bd4e1a8f2d3ff6dde259f23df1')
+audit=read(R/'AUDIT.json');review_manifest=read(R/'MANIFEST.json')
+for rel,h in review_manifest['files'].items():check('runtime audit payload '+rel,sha(R/rel)==h)
+for p,h in read(R/'BINDINGS.json').items():check('runtime bound input still exact '+p,sha(p)==h)
+for source,expected,label in [(O,'972a12860c8f7c9c0374a2ad51a9eee66104c43de333b379b3dad04eb27097ed','original'),
+                              (N,'ccaa18d34331f8fea6dcb1c990498d2eb02d19536473ebba1f11a9789cc9b7af','continuation')]:
+    check('historical '+label+' manifest',sha(source/'MANIFEST.json')==expected)
+    manifest=read(source/'MANIFEST.json')
+    check('historical '+label+' exact inventory',{str(q.relative_to(source)) for q in source.rglob('*')
+          if q.is_file() and q!=source/'MANIFEST.json'}==set(manifest['files']))
+    for rel,h in manifest['files'].items():check('historical '+label+' payload '+rel,sha(source/rel)==h)
+    for rel in list(manifest['files'])+['MANIFEST.json']:
+        inactive=rel+'.txt' if rel.endswith(('.lean','.py')) else rel
+        copy(source/rel,'statement-history/'+label+'/'+inactive,
+             'Exact historical source packet bytes; Lean/Python suffixes made inactive; COPY-MAP gives original locations')
+
+frozen_names=['Challenge.lean','NLA/IE02/Definitions.lean','NUMERICAL_TARGETS.md','NUMERICAL-FIRST.json',
+ 'DEFINITION-AND-CONTRACT-PLAN.md','STATEMENT-HEADERS.json','SourceCorrespondence.md','REVIEW-PLAN.md',
+ 'comparator.json','lean-toolchain','lakefile.toml','lake-manifest.json','LICENSE']
+for rel in frozen_names:copy(N/rel,rel,'Immutable exact reviewed and locally elaborated mathematical/configuration input')
+for rel in ['API-SUMMARY.md','PINNED-API-BINDINGS.json','SOURCE-PROVENANCE.json','STANDARD-BINDINGS.json',
+            'sources/standards/v0.4.schema.json']:
+    copy(N/rel,rel,'Unchanged source correspondence, primary API or standard binding')
+for item in read(N/'STANDARD-BINDINGS.json')['standards']:
+    check('pinned standard source '+item['path'],sha(item['path'])==item['sha256'])
+    copy(item['path'],item['upstream']['packet_path'],'Exact retained pinned standard snapshot; no new network fetch')
+for item in read(N/'SOURCE-PROVENANCE.json')['inputs']:
+    source=Path(item['path']);rel=None
+    if source.name=='IE-02-README.md':rel='sources/canonical/README.md'
+    elif source.name=='IE-02.tex':rel='sources/canonical/solution.tex'
+    elif source.parent.name=='IE-02-foundation-preflight' and source.name.startswith(('00-','01-','02-','03-')):
+        rel='sources/route/'+source.name
+    if rel:
+        check('retained canonical/route source '+str(source),sha(source)==item['sha256'])
+        copy(source,rel,'Exact canonical or finite-route text previously reviewed; no fresh external literature audit')
+
+review_index=[]
+for name,data in audit['statement_review_bindings'].items():
+    source=B/'reviews'/name
+    for rel in ['MANIFEST.json','REVIEW.md','BINDINGS.json']:
+        copy(source/rel,'statement-audit/review-extracts/'+name+'/'+rel,'Selected display/binding copy; full sealed packet remains at source directory')
+    review_index.append({'directory':str(source),**data,'display_copies':'statement-audit/review-extracts/'+name,
+                         'scope':'Original full sealed packet inventory is external; these are selected exact excerpts.'})
+for rel in ['MANIFEST.json','REVIEW.md','AUDIT.json','BINDINGS.json','CHECKS.json','HEADERS.json','DEPENDENCIES.json']:
+    copy(R/rel,'statement-audit/runtime-review/'+rel,'Selected exact runtime-review record; full packet remains at source directory')
+copy(R/'audit.py','statement-audit/runtime-review/audit.py.txt','Inactive exact independently executed evidence-audit script')
+copy(R/'audit.log','statement-audit/runtime-review/audit.log','Actual evidence-audit output, not a compiler execution')
+for rel in ['RECEIPT.json','NLA.IE02.Definitions.log','NLA.IE02.Challenge.log']:
+    copy(L/'runs/development-42'/rel,'statement-audit/local42/'+rel,'Actual successful local statement-elaboration record')
+for rel in ['RECEIPT.json','NLA.IE02.Definitions.log']:
+    copy(L/'runs/development-35'/rel,'statement-audit/local35/'+rel,'Actual original failed statement-elaboration record')
+for rel in ['ASSEMBLY-42.json','ASSEMBLY-41.json','LOCAL-ENVIRONMENT.json']:
+    copy(L/rel,'statement-audit/local42/'+rel,'Actual local source assembly/environment record')
+copy(L/'serial_compile_v3.py','statement-audit/local42/serial_compile_v3.py.txt','Inactive actual serial local runner source; not invoked here')
+for name in ['IE02-ROOT-STATEMENT-REVIEW-ACCEPTANCE.json','IE02-ALPHA-RETRY-APPROVAL.json']:
+    copy(B/name,'statement-audit/'+name,'Earlier coordinator statement/retry authorization; not final freeze acceptance')
+write('statement-audit/REVIEW-INDEX.json',{'reviews':review_index,'runtime_review_directory':str(R),
+      'runtime_review_manifest_sha256':sha(R/'MANIFEST.json'),
+      'copy_scope':'Review directories contain selected exact display/binding records; each manifest still inventories its full original external packet. No partial directory is represented as that complete packet.'})
+
+frozen={rel:sha(W/rel) for rel in frozen_names}
+receipt=read(L/'runs/development-42/RECEIPT.json')
+freeze={'prepared_by':'/root/sf_ra_runtime_referee','coordinator':'/root','prepared_at_utc':now,
+ 'status':'Exact reviewed and locally elaborated statements frozen; coordinator independent handoff acceptance pending before proof assignment.',
+ 'problem':'IE-02','canonical_README_path':'linear-systems-and-elimination/IE-02/README.md',
+ 'source_draft':str(N),'source_draft_manifest_sha256':sha(N/'MANIFEST.json'),
+ 'original_draft':str(O),'original_draft_manifest_sha256':sha(O/'MANIFEST.json'),
+ 'original_and_continuation_packets_unchanged':True,
+ 'source_author_agent':'/root/ie02_foundation_preflight',
+ 'historical_status_scope':'Both complete input packets are retained under statement-history with exact bytes and inactive Lean/Python suffixes. Their manifests describe their original packet inventories, mapped explicitly by COPY-MAP.json. Historical pending/unrun text does not describe this handoff. Current status is README.md, STATE.json, CONTRACT-STATUS.json, STATEMENT-FREEZE.json and formalization.yaml. No original record is overwritten.',
+ 'actual_statement_contracts_elaborated':50,'intentional_Challenge_specification_holes':50,'definition_holes':0,
+ 'frozen_files':frozen,
+ 'statement_review_manifest_bindings':{str(B/'reviews'/name/'MANIFEST.json'):data['manifest_sha256']
+       for name,data in audit['statement_review_bindings'].items()},
+ 'independent_runtime_audit':{'directory':str(R),'manifest_sha256':sha(R/'MANIFEST.json'),
+       'audit_sha256':sha(R/'AUDIT.json'),'checks':audit['checks'],'external_bindings':audit['external_bindings']},
+ 'actual_local_elaboration':{'run':'development-42','platform':'macOS','receipt':'statement-audit/local42/RECEIPT.json',
+       'receipt_sha256':sha(L/'runs/development-42/RECEIPT.json'),'assembly_sha256':sha(L/'ASSEMBLY-42.json'),
+       'max_compiler_processes':1,'threads':1,'memory_cap_mib':4096,'module_order':receipt['module_order'],
+       'exit_codes':[0,0],'expected_Challenge_warnings':50,
+       'transport':'Challenge.lean copied byte-identically to NLA/IE02/Challenge.lean in the shared development environment.',
+       'project_level_Challenge_target_built':False,'proof_or_numerical_certificate_executed':False,
+       'final_Linux_Comparator_kernel_sandbox_checked':False},
+ 'prior_failed_local_elaboration':{'run':'development-35','Definitions_exit_code':1,'Challenge_status':'not_run',
+       'receipt':'statement-audit/local35/RECEIPT.json','scope':'Original reserved-lambda spelling; failure retained unchanged.'},
+ 'coordinator_acceptance_record':None,'proof_implementation_authorized_by_this_record':False,
+ 'rules':[
+  'Root must independently accept this sealed handoff before assigning proof implementation; record its acceptance separately without rewriting this immutable freeze.',
+  'Preserve the exact concrete Definitions, fifty Challenge contracts, original target and numerical-first record. A mathematical boundary change reopens both independent statement reviews.',
+  'After coordinator acceptance, add proof modules only in the isolated workspace; preserve separate Challenge and Solution environments. Solution must never import Challenge.',
+  'Develop and repair locally before pushing. Root alone coordinates at most one local Lean compiler process, one thread and 4096 MiB. Reuse only pinned caches and exact source-matched successful outputs.',
+  'Implement the single planned positive-half LeanCert certificate explicitly in kernel mode and consume it in descent-step positivity. All other matrix/polynomial/spectral reasoning remains symbolic.',
+  'Do not introduce custom axioms, native/unsafe evaluation, changed definitions, weakened hypotheses/conclusions, skipped controls or silent pin/resource changes.',
+  'Prove finite Schur reconstruction, complete maximal-singular-subspace characterization, weighted factorization, complex coefficient preservation, convexity, descent and all attainment internally. Do not assume those foundations.',
+  'Retain empty-space, endpoint, zero-residual, repeated-root, rank-deficient and arbitrary complex cases. Preserve the original n>=2, nonzero complex lam and 1<=k<n target with every extremum attained.',
+  'Later operational Solution registration in Lake configuration requires a recorded diff retaining dependency pins; it does not authorize changing the mathematical boundary.',
+  'Obtain two nonauthor final proof reviews and real non-root GitHub Linux Comparator/default-kernel/sandbox/rejection checks for all fifty contracts before complete-target acceptance.',
+  'Preserve IE-02 identity, path and all prior mathematical/library attribution. Credit George Stepaniants with Caltech Computing and Mathematical Sciences and no email. Keep truthful metadata; no count increment before acceptance of the full original target.'
+ ],'whole_problem_verified':False,'published':False,'count_change':0}
+write('STATEMENT-FREEZE.json',freeze)
+state={'prepared_at_utc':now,'stage':freeze['status'],'active_Lean_files':audit['source_hashes'],
+ 'statement_freeze':True,'frozen_contract_count':50,'intentional_Challenge_holes':50,'definition_holes':0,
+ 'independent_original_statement_reviews':2,'independent_bounded_continuation_reviews':2,
+ 'actual_local_statement_elaboration':True,'actual_local_run':'development-42',
+ 'proof_implementation':False,'proof_implementation_authorized_by_this_record':False,
+ 'coordinator_acceptance_pending':True,'LeanCert_executed':False,'Comparator_executed':False,
+ 'canonical_verified':False,'Git_mutation':False,'published':False,'count_change':0,
+ 'statement_freeze_sha256':sha(W/'STATEMENT-FREEZE.json')}
+write('STATE.json',state)
+write('CONTRACT-STATUS.json',{'prepared_utc':now,'status':freeze['status'],'contracts':50,'definition_holes':0,
+ 'intentional_Challenge_holes':50,'Solution_exists':False,'original_full_statement_reviews_completed':2,
+ 'bounded_continuation_reviews_completed':2,'actual_local_elaboration_run':True,'actual_run':'development-42',
+ 'root_freeze_acceptance':False,'proof_implementation_started':False,'kernel_LeanCert_run':False,
+ 'Comparator_run':False,'sandbox_run':False,'published':False,'complete_original_target_count_delta':0})
+meta=json.loads('\n'.join(line for line in (N/'formalization.yaml').read_text().splitlines() if not line.startswith('#')))
+meta['project']['description']='Frozen exact Definitions and fifty independently reviewed, locally elaborated contracts for the complete original attained complex Jordan-block GMRES target. Coordinator handoff acceptance is pending; no proof implementation or verified result exists.'
+meta['automation']['notes']='Two nonauthor agents reviewed all original statements and separately approved the exact lambda-to-lam spelling continuation. Root actual local35 failed the original Definitions parsing and did not run Challenge; local42 successfully elaborated both repaired sources with fifty expected specification warnings. An independent retained-evidence audit authenticated the exact execution and prepared this isolated freeze. Root acceptance remains pending before proofs.'
+meta['status']={'scope':'Fifty exact reviewed contracts and concrete Definitions frozen after actual local42 statement elaboration. Challenge has fifty intentional specification holes; Definitions has none. Coordinator independent handoff acceptance pending. No Solution, proof implementation, kernel LeanCert execution, project-level Challenge build, final Linux Comparator/kernel/sandbox acceptance, publication or verified-target count increment.','main_results':[]}
+meta['review']['status']='Exact statements and bounded spelling continuation approved by two nonauthor reviewers; successful local42 evidence independently audited; coordinator handoff acceptance and final proof reviews pending'
+meta['review']['reviewers']=['/root/sf_ra_runtime_referee — full statement review, bounded spelling continuation, independent retained local42 evidence audit and handoff assembly','/root/mi13_statement_freeze — full statement review and bounded spelling continuation; earlier finite paper-route review']
+meta['review']['notes']='These are scoped AI-agent statement and retained-runtime reviews, not official Tau Ceti output, external human peer review or proof acceptance. Exact manifests are in STATEMENT-FREEZE.json. This preparer did not author the statements or run Lean. Root must independently accept this handoff before implementation; two nonauthor final proof reviews remain required.'
+meta['alignment']['statement_freeze']='STATEMENT-FREEZE.json'
+meta['alignment']['local_statement_receipt']='statement-audit/local42/RECEIPT.json'
+jsonschema.validate(meta,read(W/'sources/standards/v0.4.schema.json'))
+(W/'formalization.yaml').write_text('# JSON syntax is valid YAML 1.2; current frozen-statement handoff metadata.\n'+json.dumps(meta,indent=2,ensure_ascii=False)+'\n')
+(W/'README.md').write_text('''# IE-02: frozen statements for proof development
+
+The exact concrete Definitions and all fifty Challenge contracts have two
+independent original statement approvals, two bounded spelling-continuation
+approvals and successful actual local elaboration. Their thirteen immutable
+mathematical/configuration inputs are listed in `STATEMENT-FREEZE.json`.
+**Coordinator acceptance is pending. Root must accept this handoff separately
+before assigning proofs.** There is no proof module or Solution.
+
+The unchanged original target is attained equality of worst-case and ideal
+GMRES for every upper complex Jordan block, with `n ≥ 2`, nonzero complex
+`lam`, and `1 ≤ k < n`. All normalized complex polynomials of degree at most
+`k`, genuine Euclidean norms, every inner minimum, and the common minimizing
+polynomial/maximizing unit vector remain explicit. The stronger affine
+Toeplitz route, finite Schur foundations, weighted factorization, complex
+coefficient preservation, convexity, descent and attainment must all be proved
+internally. The optional unused Hardy-space corollary is not a target.
+
+Read `NUMERICAL_TARGETS.md`, `DEFINITION-AND-CONTRACT-PLAN.md`,
+`NLA/IE02/Definitions.lean`, `Challenge.lean`, `SourceCorrespondence.md` and
+`REVIEW-PLAN.md`. Exact canonical and finite-route reading copies are under
+`sources/canonical/` and `sources/route/`; pinned standard copies are under
+`sources/standards/`. Preserve all zero/empty, endpoint, repeated-root,
+rank-deficient and arbitrary-complex cases.
+
+Actual macOS local `development-42` ran Lean 4.33.1 with one thread and a
+4096 MiB cap. Definitions and the byte-identically transported Challenge both
+exited zero. Definitions had an empty log; Challenge emitted exactly fifty
+expected `sorry` specification warnings. Full receipts and logs are under
+`statement-audit/local42/`. This is statement elaboration, not proof checking,
+LeanCert execution, a project-level Challenge build or Linux Comparator.
+The earlier original-spelling local35 failure is retained under
+`statement-audit/local35/`; it is not relabeled as success.
+
+The full independent runtime audit remains at
+`/tmp/nla-lean-next-20260915/reviews/IE02-local42-statement-freeze`.
+`statement-audit/REVIEW-INDEX.json` binds both original and both continuation
+reviews, with selected exact display/binding copies. Their manifests still
+inventory their full original external packets, not these selected copies.
+
+Both immutable input packets are preserved under `statement-history/` with
+exact bytes. Historical Lean and Python source copies have inactive `.txt`
+suffixes; `COPY-MAP.json` records every original-to-copy mapping. Historical
+manifests describe their original packet inventories. Their pending/unrun
+status text records preparation chronology and must not be rewritten.
+Unchanged comments in frozen files likewise retain their original stage.
+Current handoff status is this README, STATE, CONTRACT-STATUS,
+STATEMENT-FREEZE and `formalization.yaml`, whose main-results list is empty.
+The initial WORKSPACE-MANIFEST inventories this pre-implementation handoff;
+it will remain historical when separately authorized proof files are added.
+
+Root alone coordinates local Lean: at most one process, one thread and
+4096 MiB. Develop and fix failures locally before pushing, using only pinned
+caches and source-matched successful outputs. Keep separate Challenge and
+Solution environments; Solution must never import Challenge. Any mathematical
+definition or contract change reopens both independent statement reviews.
+The only planned numerical computation is an explicit kernel-mode positive
+half certificate consumed in descent-step positivity; it has not run.
+
+Final acceptance requires two nonauthor proof reviews and actual non-root
+GitHub Linux Comparator/default-kernel/sandbox/rejection checks for all fifty
+contracts, with exact publication correspondence. No completed-target count
+or canonical ID/path changes occur in this handoff.
+
+Formalization contributor: George Stepaniants, Department of Computing and
+Mathematical Sciences, California Institute of Technology. Substantial OpenAI
+Codex assistance is disclosed. The existing Tichý–Liesen–Faber,
+Faber–Liesen–Tichý, Courtney–Sarason and library/workflow attribution is retained.
+No contact address, external human peer review or official Tau Ceti endorsement
+is claimed.
+''')
+(W/'statement-history/README.md').write_text('''These are exact historical copies of both sealed input packets. Lean and Python
+source filenames gain `.txt` so only the two active frozen Lean files can be
+mistaken for current source. COPY-MAP.json binds every original path and exact
+hash. The original and continuation MANIFEST.json files still describe their
+original external inventories; they are not manifests of this workspace or of
+the renamed snapshot directories. Original pending/unrun status records remain
+unaltered. Current state is explicitly in the workspace root documents.
+''')
+write('COPY-MAP.json',{'prepared_at_utc':now,'scope':'Exact retained source/evidence copies; historical renamings and partial review display-copy scopes are explicit.','copies':copies})
+check('exact thirteen frozen files',len(frozen)==13 and all(sha(W/rel)==h==sha(N/rel) for rel,h in frozen.items()))
+check('only two active Lean sources',sorted(str(p.relative_to(W)) for p in W.rglob('*.lean'))==['Challenge.lean','NLA/IE02/Definitions.lean'])
+check('no Solution or compiler outputs in workspace',(not (W/'Solution.lean').exists()) and not list(W.rglob('*.olean')))
+check('metadata truthful pending acceptance and no results',meta['status']['main_results']==[] and freeze['coordinator_acceptance_record'] is None)
+for item in copies:check('exact retained copy '+item['workspace_path'],sha(item['source'])==item['sha256']==sha(W/item['workspace_path']))
+for p,h in read(R/'BINDINGS.json').items():check('final original bound input unchanged '+p,sha(p)==h)
+contacts=[str(p.relative_to(W)) for p in W.rglob('*') if p.is_file() and
+          re.search(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b',p.read_text(errors='replace'),re.I)]
+check('no copied contact address',contacts==[])
+write('STATIC-CHECKS.json',{'prepared_at_utc':now,'scope':'Actual handoff byte/copy/schema/source guard only; no compiler execution.',
+ 'passed':True,'checks':len(checks),'frozen_inputs':13,'active_Lean_sources':2,'contracts':50,
+ 'copied_source_records':len(copies),'schema':'v0.4 actual jsonschema validation PASS',
+ 'original_and_continuation_unchanged':True,'coordinator_acceptance_pending':True,'proof_implementation':False,
+ 'fresh_Lean_execution':False,'Comparator_run':False,'count_change':0})
+write('HANDOFF-CHECKS.json',checks)
+manifest={'prepared_by':'/root/sf_ra_runtime_referee','prepared_at_utc':now,
+ 'scope':'Initial isolated pre-implementation handoff inventory. Immutable frozen inputs are separately named in STATEMENT-FREEZE.json; root acceptance is still pending.',
+ 'source_continuation_manifest_sha256':sha(N/'MANIFEST.json'),'statement_freeze_sha256':sha(W/'STATEMENT-FREEZE.json'),
+ 'runtime_review_manifest_sha256':sha(R/'MANIFEST.json'),'files':{str(p.relative_to(W)):sha(p) for p in sorted(W.rglob('*'))
+      if p.is_file() and p!=W/'WORKSPACE-MANIFEST.json'},
+ 'proof_implementation_authorized':False,'whole_problem_verified':False,'published':False,'count_change':0}
+write('WORKSPACE-MANIFEST.json',manifest)
+print(json.dumps({'status':'PASS: isolated statement handoff assembled; root independent acceptance pending',
+ 'workspace':str(W),'freeze_sha256':sha(W/'STATEMENT-FREEZE.json'),'workspace_manifest_sha256':sha(W/'WORKSPACE-MANIFEST.json'),
+ 'metadata_sha256':sha(W/'formalization.yaml'),'payload_files':len(manifest['files']),'frozen_inputs':13,
+ 'active_Lean_files':2,'copy_records':len(copies),'assembly_checks':len(checks),'proof_implementation':False},indent=2))

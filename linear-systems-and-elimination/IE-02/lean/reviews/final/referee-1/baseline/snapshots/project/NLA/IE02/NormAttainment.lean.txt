@@ -1,0 +1,57 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original IE-02 attribution is retained in
+Definitions.lean and SourceCorrespondence.md. Mathlib's operator-norm, Euclidean
+basis and compact-extremum results are reused directly. The two injective map
+conversions follow the previously developed MI-13 OperatorNorm proof pattern.
+-/
+import NLA.IE02.Definitions
+import LeanCert.Tactic
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+
+theorem euclidean_norm_attainment {n : ℕ} (hn : 1 ≤ n) (A : Square n) :
+    0 ≤ operatorNorm A ∧ (operatorNorm A = 0 ↔ A = 0) ∧
+    (∀ x : H n, ‖euclideanLin A x‖ ≤ operatorNorm A * ‖x‖) ∧
+    ∃ x : H n, x ∈ unitSphere n ∧ ‖euclideanLin A x‖ = operatorNorm A := by
+  classical
+  refine ⟨norm_nonneg _, ?_, fun x => (euclideanCLM A).le_opNorm x, ?_⟩
+  · constructor
+    · intro h
+      have hclm : euclideanCLM A = 0 := norm_eq_zero.mp h
+      have hlin : euclideanLin A = 0 := by
+        apply LinearMap.toContinuousLinearMap.injective
+        simpa only [euclideanCLM, map_zero] using hclm
+      apply Matrix.toEuclideanLin.injective
+      simpa only [euclideanLin, map_zero] using hlin
+    · rintro rfl
+      simp only [operatorNorm, euclideanCLM, euclideanLin, map_zero, norm_zero]
+  · let i : Fin n := ⟨0, hn⟩
+    let b := EuclideanSpace.basisFun (Fin n) ℂ
+    have hs : (unitSphere n).Nonempty := ⟨b i, b.norm_eq_one i⟩
+    have hset : unitSphere n = Metric.sphere (0 : H n) 1 := by
+      ext x
+      simp only [unitSphere, Set.mem_ofPred_eq, Metric.mem_sphere, dist_zero_right]
+    have hc : IsCompact (unitSphere n) := by
+      rw [hset]
+      exact isCompact_sphere _ _
+    obtain ⟨x, hx, hmax⟩ := hc.exists_isMaxOn hs
+      (euclideanCLM A).continuous.norm.continuousOn
+    have hxnorm : ‖x‖ = 1 := hx
+    refine ⟨x, hx, le_antisymm ?_ ?_⟩
+    · calc
+        ‖euclideanLin A x‖ ≤ operatorNorm A * ‖x‖ := (euclideanCLM A).le_opNorm x
+        _ = operatorNorm A := by rw [hxnorm, mul_one]
+    · exact ContinuousLinearMap.opNorm_le_of_unit_norm (norm_nonneg _)
+        (fun y hy => hmax hy)
+
+#print axioms euclidean_norm_attainment
+#assert_trust kernel euclidean_norm_attainment
+
+end
+end NLA.IE02

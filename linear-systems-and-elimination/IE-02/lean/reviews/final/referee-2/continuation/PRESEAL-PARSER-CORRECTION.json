@@ -1,0 +1,33 @@
+{
+  "time_utc": "2026-09-17T13:33:04.728839+00:00",
+  "scope": "Referee read-only verifier parser development; no Lean/compiler/source change",
+  "initial_invocations": [
+    {
+      "argv": [
+        "python3",
+        "verify.py",
+        "--preseal"
+      ],
+      "exit_code": 1
+    },
+    {
+      "argv": [
+        "python3",
+        "verify.py",
+        "--preseal",
+        "--sources"
+      ],
+      "exit_code": 1
+    }
+  ],
+  "failure": "AssertionError: Only three retained frozen unused-variable warnings",
+  "reason": "A substring count also counted three explanatory hint lines ending in warning:, yielding six lines rather than the three diagnostic headers.",
+  "correction": "Match only anchored NLA/IE02/<file>:<line>:<column>: warning: diagnostic headers. All three actual warnings are retained frozen canonical parameter warnings.",
+  "subsequent_summary_parser": "A follow-up summary attempted to parse empty failed stdout and raised JSONDecodeError; not a Lean failure.",
+  "raw_evidence_changed": false,
+  "expected_actual_diagnostics": [
+    "hlam",
+    "hk",
+    "hkn"
+  ]
+}

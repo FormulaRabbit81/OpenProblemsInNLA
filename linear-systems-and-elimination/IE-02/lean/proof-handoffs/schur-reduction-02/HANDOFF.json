@@ -1,0 +1,75 @@
+{
+  "time_utc": "2026-09-17T09:19:02.224238+00:00",
+  "scope": "Observed strict reduction contract12 elaboration repair only",
+  "before_sha256": "a08b789e01cd7c26dae5125391159871975ec135e0b04674e162a72deabbdef7",
+  "after_sha256": "52c69e94d77d4b7dc68674fa8fdc2e9c48ac9dcc4770163fcdd72cd05524217f",
+  "exact_header": {
+    "name": "NLA.IE02.schur_strict_reduction",
+    "header": "theorem schur_strict_reduction {n : ℕ} (p : Poly)\n    (hU : operatorNorm (toeplitz (n + 2) p) = 1) (hc : ‖p.coeff 0‖ < 1) :\n    ∃ B : Square (n + 2), IsToeplitz B ∧\n      schurM (toeplitz (n + 2) p) (p.coeff 0) * B = 1 ∧\n      B * schurM (toeplitz (n + 2) p) (p.coeff 0) = 1 ∧\n      IsToeplitz (schurZ (toeplitz (n + 2) p) (p.coeff 0) B) ∧\n      (∀ i, schurZ (toeplitz (n + 2) p) (p.coeff 0) B i i = 0) ∧\n      operatorNorm (schurZ (toeplitz (n + 2) p) (p.coeff 0) B) = 1 ∧\n      operatorNorm (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) = 1 ∧\n      (∀ x : H (n + 2),\n        ‖euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x‖ ^ 2 -\n          ‖euclideanLin (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)\n            (euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x)‖ ^ 2 =\n          (1 - ‖p.coeff 0‖ ^ 2) * (‖x‖ ^ 2 - ‖euclideanLin (toeplitz (n + 2) p) x‖ ^ 2)) ∧\n      (∀ x : H (n + 2), x ∈ maximalSpace (toeplitz (n + 2) p) ↔\n        euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x ∈\n          maximalSpace (schurZ (toeplitz (n + 2) p) (p.coeff 0) B))",
+    "header_sha256": "6c3876c9e7bb498059533a4cd0f3219c0a89b551e82de734f875a253004a953e",
+    "ordinal": 12
+  },
+  "all_13_frozen_inputs_unchanged": true,
+  "accepted_SchurEnergy_unchanged": "4935077022d5bbc111755bb8e16a5473f82ee766aaa244db7a5450d7b160b83d",
+  "actual95_receipt_sha256": "6594da77368e0cc17d626e894fcdf1d37f5cbe5a82d5ebff0241a3232e57a7d5",
+  "actual95_reduction": {
+    "module": "NLA.IE02.SchurReduction",
+    "argv": [
+      "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+      "--threads=1",
+      "--memory=4096",
+      "-o",
+      "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/IE02/SchurReduction.olean",
+      "NLA/IE02/SchurReduction.lean"
+    ],
+    "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+    "start": "2026-09-17T09:15:44.997075+00:00",
+    "source_sha256": "a08b789e01cd7c26dae5125391159871975ec135e0b04674e162a72deabbdef7",
+    "dependency_olean_sha256": {
+      "NLA.IE02.NilpotentInverse": "4cf1bb4235862c138343c113f712e313b945aa8e78cb8b0801895b07ae41148a",
+      "NLA.IE02.SchurEnergy": "86fc54347c363ae4e53c49b94182ab7415a4bd8386467f026c0cb77500a3ddf4",
+      "NLA.IE02.NormAttainment": "245a55dac294bbf1a4cbd4646990eaaad2e13410196864a32be7e4de676fd7ff",
+      "NLA.IE02.MaximalSpace": "e0b4a9c581e93356ef23a99943ac386679025b20b3c9cae884363d400d25cf25",
+      "NLA.IE02.SchurActiveBlock": "d5a98ec8f5e0e10ab41b1b6de21ca45b754dde57ce6495900e91d87487fc5b4e"
+    },
+    "exit_code": 1,
+    "end": "2026-09-17T09:15:56.740944+00:00",
+    "elapsed_seconds": 11.742208209005184,
+    "log_sha256": "a8e0a585a2f681b2a1a4c878998a1a028559933c55d1a2c37d05d8b09f5daa4a",
+    "maxrss_bytes_macos_cumulative": 3500081152,
+    "output_sha256": null
+  },
+  "actual95_energy": {
+    "module": "NLA.IE02.SchurEnergy",
+    "argv": [
+      "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+      "--threads=1",
+      "--memory=4096",
+      "-o",
+      "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/IE02/SchurEnergy.olean",
+      "NLA/IE02/SchurEnergy.lean"
+    ],
+    "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+    "start": "2026-09-17T09:15:22.698773+00:00",
+    "source_sha256": "4935077022d5bbc111755bb8e16a5473f82ee766aaa244db7a5450d7b160b83d",
+    "dependency_olean_sha256": {
+      "NLA.IE02.SchurDefect": "122cfd9a9a37323005ba1ab107ac990c3ea9a593df03ee85cf7374d31c22ba20"
+    },
+    "exit_code": 0,
+    "end": "2026-09-17T09:15:44.962598+00:00",
+    "elapsed_seconds": 22.26371895801276,
+    "log_sha256": "183dd929e611d7abfbd315c45bdfa5553e9e147a7b832220ef1989355097dc87",
+    "maxrss_bytes_macos_cumulative": 3500081152,
+    "output_sha256": "86fc54347c363ae4e53c49b94182ab7415a4bd8386467f026c0cb77500a3ddf4"
+  },
+  "prior_packet_manifest_sha256": "8635b1b22bea01ac8133ab799a516867ac09bef4a6cede5bedf10417bc2c3aa1",
+  "new_primary_binding": {
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/GroupWithZero/Defs.lean": "01a908236dc99e5040cb487165c1a73fbd4e495d44183e6465f86b42f744dc02"
+  },
+  "primary_interface": "mul_le_mul_iff_left₀ at line303 cancels positive right factor",
+  "retry": "UNRUN; root serial compiler only",
+  "independent_proof_review": "PENDING",
+  "GitHub_Comparator": "UNRUN",
+  "whole_target_complete": false,
+  "count_change": 0
+}

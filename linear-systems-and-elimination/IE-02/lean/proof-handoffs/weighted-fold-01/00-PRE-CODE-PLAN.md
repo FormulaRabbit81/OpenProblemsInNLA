@@ -1,0 +1,7 @@
+# Exact weighted-fold contract 21 before implementation
+
+For every natural l,m (including empty families), complex polynomial family of degree at most m, and nonnegative real weights (including zeros), prove each weightedFold has degree at most m and its sumSquares equals the sum of weighted squared absolute values at every complex point z. This is the unchanged frozen contract, not a Fejer-Riesz factorization claim.
+
+No numerical approximation or new LeanCert interval is needed: the genuine certificate is already consumed in DescentSteps. Symbolically rewrite constant polynomial multiplication as scalar action, apply Polynomial.degree_smul_le, and use the original degree hypotheses. Pointwise polynomial evaluation, multiplicativity of the complex norm, Complex.norm_real and Real.norm_of_nonneg for the nonnegative square root reduce the energy identity to Real.sq_sqrt under the actual hw hypothesis. Apply finite sum congruence; no l>0 or nonzero weight assumption.
+
+Read pinned degree_smul_le in Algebra/Polynomial/Degree/Operations.lean, Complex norm_real/of_nonneg in Analysis/Complex/Norm.lean, and square-root squared law in Analysis/Real/Sqrt.lean, lines173-178. No claim of exhaustive external reuse search. All original frozen definitions, header and source hashes remain unchanged; this new source is UNRUN and unreviewed until actual local compile and independent review. Root owns the serial one-thread, 4096MiB local compiler.

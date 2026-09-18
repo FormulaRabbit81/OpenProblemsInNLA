@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+"""Author evidence closure only; no compiler and no independent self-review."""
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib,json,re
+R=Path(__file__).resolve().parent
+W=R.parents[1]
+B=W.parents[1]
+L=Path('/private/tmp/nla-lean-local-shared-20260916')
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+bindings,copies,checks={},[],[]
+def ck(label,ok):
+    assert ok,label
+    checks.append(label)
+def bind(p,h=None):
+    p=Path(p).absolute(); actual=sha(p)
+    if h is not None:ck('sha256 '+str(p),actual==h)
+    bindings[str(p)]=actual
+    return actual
+def keep(p,rel):
+    h=bind(p);d=R/'evidence'/rel;d.parent.mkdir(parents=True,exist_ok=True);d.write_bytes(Path(p).read_bytes())
+    ck('retained '+rel,sha(d)==h)
+    copies.append({'source':str(Path(p).absolute()),'retained':str(d.relative_to(R)),'sha256':h})
+def read(p):return json.loads(Path(p).read_text())
+bind(W/'STATEMENT-FREEZE.json','ae43b034d03574563cbd47c92c4a96b4b7892fa200612722fe6f8b53397e8fa0')
+freeze=read(W/'STATEMENT-FREEZE.json')
+for f,h in freeze['frozen_files'].items():bind(W/f,h)
+ck('frozen13 unchanged',len(freeze['frozen_files'])==13)
+keep(W/'STATEMENT-FREEZE.json','STATEMENT-FREEZE.json')
+keep(B/'IE02-ROOT-RECIPROCAL-PLAN-ACCEPTANCE.json','ROOT-PLAN-ACCEPTANCE.json')
+for i in [1,2,3,4]:
+    p=R.parent/f'reciprocal-roots-{i:02d}'
+    bind(p/'MANIFEST.json')
+    for f,h in read(p/'MANIFEST.json')['files'].items():bind(p/f,h)
+    keep(p/'MANIFEST.json',f'prior-handoffs/{i:02d}-MANIFEST.json')
+sources={'Definitions':'ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a',
+ 'Reflection':'9c4d833d0d7e9b76b9d80a2443dd02d13c90541367717b7c166012642ffa929d',
+ 'RootProductReflection':'7609e8e5b570e29aca1ffed68333ba80a13c019237f4ebd512bad97144ce3721',
+ 'ReciprocalRoots':'6697dbd9e5a1c90cb114e83a7ed6a2434fa7116feee112774e83275ec97e17a6',
+ 'InsideFactor':'8933c7f29d06f2dd4d1a9b3cba7d656acc0e8ef558f578ac5b368d3e5f2a19b5'}
+deps={'Definitions':[],'Reflection':['Definitions'],'RootProductReflection':['Reflection'],'ReciprocalRoots':['RootProductReflection'],'InsideFactor':['ReciprocalRoots']}
+for m,h in sources.items():
+    rel='NLA/IE02/'+m+'.lean';bind(W/rel,h);bind(L/rel,h);keep(W/rel,'sources/'+m+'.lean.txt')
+    text=(W/rel).read_text();code=re.sub(r'/\-.*?\-/','',text,flags=re.S)
+    ck('exact project imports '+m,re.findall(r'^import (NLA\.[\w.]+)',code,re.M)==['NLA.IE02.'+x for x in deps[m]])
+    ck('no proof escapes '+m,not re.search(r'\b(sorry|admit|axiom|native_decide|unsafe)\b',code))
+headers=read(W/'STATEMENT-HEADERS.json')['headers']
+for m,name in [('ReciprocalRoots','reciprocal_root_pairing'),('InsideFactor','reciprocal_inside_factor')]:
+    h=next(h for h in headers if h['name']=='NLA.IE02.'+name)
+    actual=re.search(r'^theorem '+name+r'\b.*?(?=\s*:=)',(W/('NLA/IE02/'+m+'.lean')).read_text(),re.M|re.S).group(0).rstrip()
+    ck('exact frozen header '+name,actual==h['header'])
+env=read(L/'LOCAL-ENVIRONMENT.json');bind(L/'LOCAL-ENVIRONMENT.json')
+bind(env['compiler'],'1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554')
+bind(L/'serial_compile_v3.py','d6c00e953688e155c0a313a8f49c7c395ad0fb1166faf3655c0b47f3ea2b2266')
+receipts={}
+for n,h in [(108,'1502c1f367cbbe3e2ae69a9d433a74a4a051eb533178cd29f37db20e8665e252'),(110,'1fada3bbcc06c3d467ca376a468c626b58986c2313d1ca0f747c943e25480e9f'),(111,'b8f3635a10c2b153482b718579a91ef65e084b0477513d0e2db62da0e4c55ec5')]:
+    p=L/f'runs/development-{n}/RECEIPT.json';bind(p,h);r=read(p);receipts[n]=r
+    ck('final actual local receipt '+str(n),'end' in r and r['platform']=='darwin' and r['threads']==r['max_compiler_processes']==1 and r['memory_cap_mib']==4096)
+    ck('pinned compiler and runner '+str(n),r['compiler_sha256']==sha(env['compiler']) and r['runner_sha256']==sha(L/'serial_compile_v3.py'))
+    a=L/f'ASSEMBLY-{n}.json';bind(a,r['assembly_sha256']);keep(p,f'actual{n}/RECEIPT.json');keep(a,f'actual{n}/ASSEMBLY.json')
+selected=[]
+for n,m,t in [(108,'RootProductReflection','rootProduct_reflection'),(111,'ReciprocalRoots','reciprocal_root_pairing'),(111,'InsideFactor','reciprocal_inside_factor')]:
+    r=receipts[n];c=next(c for c in r['commands'] if c['module']=='NLA.IE02.'+m)
+    rel='NLA/IE02/'+m+'.lean';out=L/('.lake/build/lib/lean/'+rel[:-5]+'.olean')
+    ck('fresh exact-source success '+m,c['exit_code']==0 and c['source_sha256']==sources[m]==r['source_inputs'][rel])
+    ck('exact actual command '+m,c['argv']==[env['compiler'],'--threads=1','--memory=4096','-o',str(out),rel] and c['cwd']==str(L))
+    bind(out,c['output_sha256'])
+    for d,h in c['dependency_olean_sha256'].items():bind(L/('.lake/build/lib/lean/'+d.replace('.','/')+'.olean'),h)
+    log=L/f'runs/development-{n}'/(c['module']+'.log');bind(log,c['log_sha256'])
+    ck('clean standard3 full log '+m,log.read_text()==f"'NLA.IE02.{t}' depends on axioms: [propext, Classical.choice, Quot.sound]\n")
+    keep(log,f'actual{n}/'+m+'.log');selected.append({'run':n,'command':c})
+for m in ['Definitions','Reflection','RootProductReflection']:
+    c=next(c for c in receipts[111]['commands'] if c['module']=='NLA.IE02.'+m)
+    ck('recorded exact reused source '+m,c.get('status')=='reused_exact_successful_local_output' and c['source_sha256']==sources[m])
+    closure={'Definitions'} if m=='Definitions' else {'Definitions','Reflection'} if m=='Reflection' else {'Definitions','Reflection','RootProductReflection'}
+    ck('complete reused source closure '+m,c['transitive_source_hashes']=={'NLA/IE02/'+x+'.lean':sources[x] for x in closure})
+    bind(L/('.lake/build/lib/lean/'+c['module'].replace('.','/')+'.olean'),c['output_sha256'])
+    bind(c['prior_receipt'],c['prior_receipt_sha256'])
+    old=next(x for x in read(c['prior_receipt'])['commands'] if x['module']==c['module'])
+    ck('immediate prior success '+m,(old.get('exit_code')==0 or old.get('status')=='reused_exact_successful_local_output') and old['source_sha256']==c['source_sha256'] and old['output_sha256']==c['output_sha256'])
+failed=next(c for c in receipts[110]['commands'] if c['module']=='NLA.IE02.ReciprocalRoots')
+ck('actual110 rejected',failed['exit_code']==1 and failed['output_sha256'] is None and failed['source_sha256']=='0f28fb1b83f246a10c8279e7c5b50a238c88852ec9471099555594fc2acdc5ec')
+fl=L/'runs/development-110/NLA.IE02.ReciprocalRoots.log';bind(fl,failed['log_sha256']);keep(fl,'actual110/ReciprocalRoots.log')
+ck('failed trust rejection retained','sorryAx' in fl.read_text() and '#assert_trust' in fl.read_text())
+summary={'author':'/root/sf_ra_runtime_referee','recorded_utc':datetime.now(timezone.utc).isoformat(),'status':'Three authored modules have exact root-run local success; independent proof reviews pending',
+ 'author_of_these_proofs':True,'independent_self_review':False,'source_sha256':sources,'exact_public_contracts':[25,26],'new_intervals':0,'selected_actual_commands':selected,
+ 'actual110_failure_accepted':False,'whole_actual111_status':'mixed','whole_actual111_failed':receipts[111]['failed_modules'],'whole_actual111_blocked':receipts[111]['blocked_modules'],
+ 'other_run_modules_in_scope':False,'author_compiler_run':False,'fresh_kernel_replay_by_author':False,'GitHub_Comparator_claim':False,'whole_target_approval':False,'count_change':0,
+ 'checks':len(checks),'bindings':len(bindings),'dependency_scope':'Current source/output and complete project closure checked; immediate reused receipts checked, not every historical reuse hop'}
+for f,d in [('AUTHOR-EVIDENCE.json',summary),('BINDINGS.json',bindings),('COPY-MAP.json',copies),('CHECKS.json',checks)]:
+    (R/f).write_text(json.dumps(d,indent=2,ensure_ascii=False)+'\n')
+print(json.dumps({k:summary[k] for k in ['status','checks','bindings','whole_actual111_status','whole_actual111_failed']},indent=2))

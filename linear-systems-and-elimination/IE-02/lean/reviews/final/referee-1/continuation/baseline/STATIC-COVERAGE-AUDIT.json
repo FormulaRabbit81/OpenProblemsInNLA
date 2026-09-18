@@ -1,0 +1,819 @@
+{
+  "time": "2026-09-17T13:12:10.012491+00:00",
+  "core_source_files": 56,
+  "core_source_line_count": 4873,
+  "protected_files": {
+    "Challenge.lean": "a09907c4074776caeddf729da4ef9461433f105da5dff60396103121178288f9",
+    "NLA/IE02/Definitions.lean": "ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a",
+    "NUMERICAL_TARGETS.md": "33f5e2b47de6b7c2b7bc0eedaeaa2dec7a0e992f7e45710e19a6cc0509a91e90",
+    "NUMERICAL-FIRST.json": "7ecf430908886532d254f7858dfcab173a44f031a81ccf44fa433f89a8bb7e39",
+    "DEFINITION-AND-CONTRACT-PLAN.md": "23b470cc3715912ab6de5db7062bd48754393105d8fe2292b3584497f6e98c84",
+    "STATEMENT-HEADERS.json": "0907a434a785e15f95e3f977b18592b4cf7ed99ddaf3f604f3bae37105302374",
+    "SourceCorrespondence.md": "d7d26f5a9cbee120c499cf547233bb91b1f6d35aec3b4186f640ce8e501c5440",
+    "REVIEW-PLAN.md": "7ba443c1712766c8b9a6dd598e00cbab4cf02622290efc90412ef4a8a64f5792",
+    "comparator.json": "b553796f4c137f5d3ab1d5491f48aaa5d752bc6cef7a57d80b2b6eeeb6ecb7a7",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+    "lakefile.toml": "392e7aad754a2e38487900b98e003d8a5b352693e39b32ba7699aa7a086f0ac8",
+    "lake-manifest.json": "9d123374c6c7b2dbe8cafc316656ced1c28b1aea86e6f4d9a3c217ea8e488f3c",
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  "source_hashes": {
+    "NLA/IE02/Definitions.lean": "ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a",
+    "NLA/IE02/AffineMinima.lean": "bdc513cd8199b8ba4daf6388ece335d828022ec26ea34b00829b8b58b15c15be",
+    "NLA/IE02/SchurBasicNorms.lean": "918f3b556560fc06cdac56daa15d26da76574360da51fdbb0d8cd48b1a8e0388",
+    "NLA/IE02/Coefficients.lean": "edd60266a5a89fd86f2aa254e71cae919ed8cdff47aa5a01b09edb37b71bbbb7",
+    "NLA/IE02/Toeplitz.lean": "29cfd72873d8211f2b85c7ab2cae4a1c7d9580675736291012a8313802667b7d",
+    "NLA/IE02/MaximalSpace.lean": "d59c07d89b55472fed5298789c1e335ee86dcdb068cf8bbfd7e117e0b79b1fc3",
+    "NLA/IE02/SchurEndpoint.lean": "2de791b0512845bbe9443cdf46abd620be28403c03c330362b01d45051ea0585",
+    "NLA/IE02/SchurPolynomial.lean": "3dc6cbcd5e340f3cde8dc58ab7dac0b1a24d2a729c70a35271ec45b9dab619e8",
+    "NLA/IE02/NilpotentInverse.lean": "cd674181f201dea1e63ea80ed2a87be259de5cbdd9c2fb40e0646d906ed4df5f",
+    "NLA/IE02/SchurDefect.lean": "b2a90f550aa0a238292cd81089e57e1cad5ae64a73192fd412200e6559dbcbd9",
+    "NLA/IE02/SchurEnergy.lean": "4935077022d5bbc111755bb8e16a5473f82ee766aaa244db7a5450d7b160b83d",
+    "NLA/IE02/NormAttainment.lean": "eb33ccf46f5b6979f4e0e61cb4ba0c5150a65006707562d99ffe7dfd9510e170",
+    "NLA/IE02/SchurActiveBlock.lean": "3b7653b2813f0ed614538c6294fc0e2b8d15c8303277e461e56850678c22dd31",
+    "NLA/IE02/SchurReduction.lean": "afb1c7cf68cf3f0ee67a39c585de5c99768c763f5d5f034f277f6e091016cf90",
+    "NLA/IE02/SchurCoordinates.lean": "d59e6cec6fa3b5d760cddd69abca6403ba4d7ed3b26bffa9832fb95cde334752",
+    "NLA/IE02/SchurPairStep.lean": "f5da33061dea8b3f26015eff5ddaf548815cf25c5f44834db8bdcc17a04b87e3",
+    "NLA/IE02/FiniteSchur.lean": "ce09a256744c50f20113fd494aa77cebe84a379f9de60c9cf7daf7cb0ff297ce",
+    "NLA/IE02/ScaledFactorization.lean": "32e7665ca587f037edd2ec58cc086b9be15c40403fcacc8931b8efa8f1ec9ab3",
+    "NLA/IE02/FourierCoefficients.lean": "ade5f0e1a9d89dafb0e2965cfc097f6088aa510a2c39f9bc9d069f4b993e9d87",
+    "NLA/IE02/FourierEvaluation.lean": "c85329a4261dbc9686bf69229498473d2c2ede3566b785982ea9ae8e61cfada0",
+    "NLA/IE02/FourierSemantics.lean": "5874e340175b267d01e07772c9c28895e83da899855335c216b2965652b3187b",
+    "NLA/IE02/FourierSupport.lean": "04d8fb55f3fe1efabf82656eec357630bfcc60f2f081752d657b5c12f6a1365b",
+    "NLA/IE02/EffectiveCoefficients.lean": "099cd8bb71dbefc7faa9d5ce1ad880b6baa389907e2459da5e8f2db8814c1fc0",
+    "NLA/IE02/EffectiveEvaluation.lean": "e02cdfb7c3638f44b0d09f2b370d505dd90b7b61454a4c6374879c0be4e22629",
+    "NLA/IE02/EffectivePolynomial.lean": "cfbcc3dcb3f070861b42771ffd3118a14edce825ac5bc2f9921ca8cded3d4f37",
+    "NLA/IE02/Reflection.lean": "9c4d833d0d7e9b76b9d80a2443dd02d13c90541367717b7c166012642ffa929d",
+    "NLA/IE02/RootProductReflection.lean": "7609e8e5b570e29aca1ffed68333ba80a13c019237f4ebd512bad97144ce3721",
+    "NLA/IE02/ReciprocalRoots.lean": "6697dbd9e5a1c90cb114e83a7ed6a2434fa7116feee112774e83275ec97e17a6",
+    "NLA/IE02/InsideFactor.lean": "8933c7f29d06f2dd4d1a9b3cba7d656acc0e8ef558f578ac5b368d3e5f2a19b5",
+    "NLA/IE02/CircleSquares.lean": "d1f1be5f20efe259119e00d2648ea85728373afcd7f6f602f94a7218b58976b5",
+    "NLA/IE02/WeightedFold.lean": "00cc2472775074d9cb68d45d1ba4f1997d1c6eb30657d0958a5d80eb61537a0f",
+    "NLA/IE02/StrictFactorization.lean": "09fafb1a6afc26c536ffcfe8ba2029fd47bad21cbcc4097070f6580129217a1c",
+    "NLA/IE02/CommonCircleRoot.lean": "a79a3cd921a99fea4a067a6e545fc9f8ec01d089475fc355a3a47bc6df073bd0",
+    "NLA/IE02/CircleUniqueness.lean": "d4e993590cab1cb6698e4cf353fb6ed41675907020247fe5097b7c69e49b747e",
+    "NLA/IE02/WeightedFactorization.lean": "1431657062edfe83ab32b6c18b4c7fcaefe3d6002a05d6f57320600f5f50cfa3",
+    "NLA/IE02/WeightedCoefficients.lean": "6ca298679b9e426c5d4b987372f011aad6d5d0e5d9c0fe3ac70e790d687057e4",
+    "NLA/IE02/MaximalPreservation.lean": "dd060fbdabc73445ba21e0724e21fe9144458196734d19bcc6ac8c96f794a25e",
+    "NLA/IE02/GradientTopology.lean": "f021f01054129804aaa3896638e2b78aea0adaa999b3ea10c66e9d0455f17ec4",
+    "NLA/IE02/GradientConvexity.lean": "414e2db71b8d76a93eb62cf827d3f83c9c4bb2d29174dd806cd9b0edb18caf72",
+    "NLA/IE02/RealSeparator.lean": "7c8e6672c19cc6405acab904920ec1fa9feae3cc66417163a866751123c6b98f",
+    "NLA/IE02/GradientSeparation.lean": "31e7eea03c37a0b4ee922d44ada55a1180b71c33f6f7358fbf280ba37f2834a2",
+    "NLA/IE02/Numerical.lean": "c850a3cec68a938ed4d5299804d7033620160b85b1711c5a1044450625d0c985",
+    "NLA/IE02/DescentSteps.lean": "56bc2876b9ea39765a08cb8628633a154652b79aead5065b6946afd6d88e1e12",
+    "NLA/IE02/DescentQuadratic.lean": "e2eca2d568e6f24914ccf71d00f8e59b4d9184ea04dd68210885c2d2867721c7",
+    "NLA/IE02/DescentGap.lean": "f2debb0a22eb27842686803d51aa254175a82051b64dae6685fc2e5ac3ea30dc",
+    "NLA/IE02/DescentConclusions.lean": "4c0480ac5030d6a745e993825ffacbdb52d44aeb892422d91f5c1bb9bf1b6c94",
+    "NLA/IE02/MinimizerOrthogonality.lean": "abd73a84cfbff90a5a2d359be0c8dc47aef82600477ca84490bdd26489593f2e",
+    "NLA/IE02/AffineMinimax.lean": "610cba1697f89658da96fbbf70ba0d4079f077df2376d9343d143d027acef0ab",
+    "NLA/IE02/JordanDirections.lean": "f8207e34d9334767aef39395c025b02673a2f7dfd58c90e4931e21d0aeccef56",
+    "NLA/IE02/JordanReversal.lean": "fbbaf599d91a5cfbba48e618e55a76db1ea9763a8c0d73eac5c096ad72b7c7b2",
+    "NLA/IE02/JordanTransport.lean": "b520bad7fa95e2ce42738f0135ec1c1b0c9810362cfdd77db2850b8cfa0789ca",
+    "NLA/IE02/PolynomialResiduals.lean": "89f39e4609a9b488941d650298d68cb11c7d32c91f3e914249a20959842679d6",
+    "NLA/IE02/GMRESSemantics.lean": "1c492682dc047a1b7853a8046de15741e2f1ad769820180ea19064de2bc1bda2",
+    "NLA/IE02/CanonicalJordan.lean": "b3de5d0085865aec95d77e8fa8bd5cd3abaff7a694008ca7adcc6978df8614a5",
+    "NLA/IE02/Proof.lean": "56ba7c56ff25ad3148160ea1651e2c3615cfe785f5a252f3af10a27379587823",
+    "Solution.lean": "cad8f453e858bd927cd518afb2f173b363d1294031c518a07a6a2ca8237e3787"
+  },
+  "imports": {
+    "NLA/IE02/Definitions.lean": [
+      "Mathlib.Analysis.CStarAlgebra.Matrix",
+      "Mathlib.Analysis.InnerProductSpace.Adjoint",
+      "Mathlib.Analysis.LocallyConvex.Separation",
+      "Mathlib.Analysis.Complex.Polynomial.Basic",
+      "Mathlib.Algebra.Polynomial.Reverse",
+      "Mathlib.Algebra.Polynomial.Splits",
+      "Mathlib.Algebra.Polynomial.AlgebraMap",
+      "Mathlib.RingTheory.Coprime.Basic",
+      "Mathlib.Data.Fin.Tuple.Basic"
+    ],
+    "NLA/IE02/AffineMinima.lean": [
+      "NLA.IE02.Definitions",
+      "Mathlib.Topology.MetricSpace.HausdorffDistance",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/SchurBasicNorms.lean": [
+      "NLA.IE02.Definitions",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/Coefficients.lean": [
+      "NLA.IE02.Definitions",
+      "Mathlib.Algebra.Polynomial.OfFn",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/Toeplitz.lean": [
+      "NLA.IE02.Coefficients"
+    ],
+    "NLA/IE02/MaximalSpace.lean": [
+      "NLA.IE02.Definitions",
+      "Mathlib.Analysis.InnerProductSpace.Rayleigh",
+      "Mathlib.Topology.Algebra.Module.FiniteDimension",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/SchurEndpoint.lean": [
+      "NLA.IE02.Toeplitz",
+      "NLA.IE02.MaximalSpace",
+      "Mathlib.Algebra.Order.BigOperators.Group.Finset"
+    ],
+    "NLA/IE02/SchurPolynomial.lean": [
+      "NLA.IE02.Definitions",
+      "Mathlib.Algebra.Polynomial.Inductions",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/NilpotentInverse.lean": [
+      "NLA.IE02.Toeplitz",
+      "Mathlib.Algebra.Ring.GeomSum"
+    ],
+    "NLA/IE02/SchurDefect.lean": [
+      "NLA.IE02.Definitions",
+      "Mathlib.Tactic.Abel",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/SchurEnergy.lean": [
+      "NLA.IE02.SchurDefect"
+    ],
+    "NLA/IE02/NormAttainment.lean": [
+      "NLA.IE02.Definitions",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/SchurActiveBlock.lean": [
+      "NLA.IE02.Definitions",
+      "Mathlib.Algebra.Polynomial.Inductions",
+      "Mathlib.Algebra.BigOperators.Fin",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/SchurReduction.lean": [
+      "NLA.IE02.NilpotentInverse",
+      "NLA.IE02.SchurEnergy",
+      "NLA.IE02.NormAttainment",
+      "NLA.IE02.MaximalSpace",
+      "NLA.IE02.SchurActiveBlock"
+    ],
+    "NLA/IE02/SchurCoordinates.lean": [
+      "NLA.IE02.SchurReduction"
+    ],
+    "NLA/IE02/SchurPairStep.lean": [
+      "NLA.IE02.SchurPolynomial",
+      "NLA.IE02.SchurCoordinates"
+    ],
+    "NLA/IE02/FiniteSchur.lean": [
+      "NLA.IE02.SchurBasicNorms",
+      "NLA.IE02.SchurEndpoint",
+      "NLA.IE02.SchurPairStep"
+    ],
+    "NLA/IE02/ScaledFactorization.lean": [
+      "NLA.IE02.FiniteSchur"
+    ],
+    "NLA/IE02/FourierCoefficients.lean": [
+      "NLA.IE02.Definitions",
+      "Mathlib.Data.Complex.BigOperators",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/FourierEvaluation.lean": [
+      "NLA.IE02.FourierCoefficients",
+      "Mathlib.Algebra.Polynomial.Eval.Degree"
+    ],
+    "NLA/IE02/FourierSemantics.lean": [
+      "NLA.IE02.FourierEvaluation"
+    ],
+    "NLA/IE02/FourierSupport.lean": [
+      "NLA.IE02.FourierSemantics",
+      "Mathlib.Data.Finset.Max"
+    ],
+    "NLA/IE02/EffectiveCoefficients.lean": [
+      "NLA.IE02.FourierCoefficients",
+      "Mathlib.Algebra.Polynomial.OfFn"
+    ],
+    "NLA/IE02/EffectiveEvaluation.lean": [
+      "NLA.IE02.FourierSupport",
+      "NLA.IE02.EffectiveCoefficients"
+    ],
+    "NLA/IE02/EffectivePolynomial.lean": [
+      "NLA.IE02.EffectiveEvaluation"
+    ],
+    "NLA/IE02/Reflection.lean": [
+      "NLA.IE02.Definitions",
+      "Mathlib.Algebra.GroupWithZero.Invertible",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/RootProductReflection.lean": [
+      "NLA.IE02.Reflection",
+      "Mathlib.Algebra.BigOperators.Ring.Multiset"
+    ],
+    "NLA/IE02/ReciprocalRoots.lean": [
+      "NLA.IE02.RootProductReflection"
+    ],
+    "NLA/IE02/InsideFactor.lean": [
+      "NLA.IE02.ReciprocalRoots"
+    ],
+    "NLA/IE02/CircleSquares.lean": [
+      "NLA.IE02.Reflection"
+    ],
+    "NLA/IE02/WeightedFold.lean": [
+      "NLA.IE02.Definitions",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/StrictFactorization.lean": [
+      "NLA.IE02.EffectivePolynomial",
+      "NLA.IE02.InsideFactor",
+      "NLA.IE02.CircleSquares",
+      "NLA.IE02.WeightedFold",
+      "Mathlib.Algebra.BigOperators.Fin"
+    ],
+    "NLA/IE02/CommonCircleRoot.lean": [
+      "NLA.IE02.Definitions",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/CircleUniqueness.lean": [
+      "NLA.IE02.Definitions",
+      "Mathlib.Order.Interval.Set.Infinite",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/WeightedFactorization.lean": [
+      "NLA.IE02.StrictFactorization",
+      "NLA.IE02.CommonCircleRoot",
+      "NLA.IE02.CircleUniqueness",
+      "Mathlib.Data.Complex.BigOperators"
+    ],
+    "NLA/IE02/WeightedCoefficients.lean": [
+      "NLA.IE02.Toeplitz",
+      "NLA.IE02.Reflection",
+      "Mathlib.Data.Complex.BigOperators"
+    ],
+    "NLA/IE02/MaximalPreservation.lean": [
+      "NLA.IE02.ScaledFactorization",
+      "NLA.IE02.WeightedFactorization",
+      "NLA.IE02.WeightedCoefficients",
+      "Mathlib.Tactic.Choose"
+    ],
+    "NLA/IE02/GradientTopology.lean": [
+      "NLA.IE02.NormAttainment",
+      "NLA.IE02.MaximalSpace"
+    ],
+    "NLA/IE02/GradientConvexity.lean": [
+      "NLA.IE02.MaximalPreservation",
+      "NLA.IE02.GradientTopology",
+      "Mathlib.Tactic.FinCases"
+    ],
+    "NLA/IE02/RealSeparator.lean": [
+      "NLA.IE02.Definitions",
+      "Mathlib.Data.Complex.BigOperators",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/GradientSeparation.lean": [
+      "NLA.IE02.GradientConvexity",
+      "NLA.IE02.RealSeparator",
+      "Mathlib.Analysis.LocallyConvex.Separation"
+    ],
+    "NLA/IE02/Numerical.lean": [
+      "NLA.IE02.Definitions",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/DescentSteps.lean": [
+      "NLA.IE02.Numerical"
+    ],
+    "NLA/IE02/DescentQuadratic.lean": [
+      "NLA.IE02.Definitions",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/DescentGap.lean": [
+      "NLA.IE02.MaximalSpace",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/DescentConclusions.lean": [
+      "NLA.IE02.NormAttainment",
+      "NLA.IE02.DescentSteps",
+      "NLA.IE02.DescentQuadratic",
+      "NLA.IE02.DescentGap"
+    ],
+    "NLA/IE02/MinimizerOrthogonality.lean": [
+      "NLA.IE02.GradientSeparation",
+      "NLA.IE02.DescentConclusions"
+    ],
+    "NLA/IE02/AffineMinimax.lean": [
+      "NLA.IE02.AffineMinima",
+      "NLA.IE02.MinimizerOrthogonality"
+    ],
+    "NLA/IE02/JordanDirections.lean": [
+      "NLA.IE02.Toeplitz"
+    ],
+    "NLA/IE02/JordanReversal.lean": [
+      "NLA.IE02.Definitions",
+      "Mathlib.Data.Fin.Rev",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/JordanTransport.lean": [
+      "NLA.IE02.JordanReversal"
+    ],
+    "NLA/IE02/PolynomialResiduals.lean": [
+      "NLA.IE02.Definitions",
+      "Mathlib.Algebra.BigOperators.Fin",
+      "LeanCert.Tactic"
+    ],
+    "NLA/IE02/GMRESSemantics.lean": [
+      "NLA.IE02.PolynomialResiduals",
+      "NLA.IE02.AffineMinima"
+    ],
+    "NLA/IE02/CanonicalJordan.lean": [
+      "NLA.IE02.AffineMinimax",
+      "NLA.IE02.JordanDirections",
+      "NLA.IE02.JordanTransport",
+      "NLA.IE02.GMRESSemantics"
+    ],
+    "NLA/IE02/Proof.lean": [
+      "NLA.IE02.CanonicalJordan"
+    ],
+    "Solution.lean": [
+      "NLA.IE02.Proof"
+    ]
+  },
+  "solution_closure": [
+    "NLA.IE02.AffineMinima",
+    "NLA.IE02.AffineMinimax",
+    "NLA.IE02.CanonicalJordan",
+    "NLA.IE02.CircleSquares",
+    "NLA.IE02.CircleUniqueness",
+    "NLA.IE02.Coefficients",
+    "NLA.IE02.CommonCircleRoot",
+    "NLA.IE02.Definitions",
+    "NLA.IE02.DescentConclusions",
+    "NLA.IE02.DescentGap",
+    "NLA.IE02.DescentQuadratic",
+    "NLA.IE02.DescentSteps",
+    "NLA.IE02.EffectiveCoefficients",
+    "NLA.IE02.EffectiveEvaluation",
+    "NLA.IE02.EffectivePolynomial",
+    "NLA.IE02.FiniteSchur",
+    "NLA.IE02.FourierCoefficients",
+    "NLA.IE02.FourierEvaluation",
+    "NLA.IE02.FourierSemantics",
+    "NLA.IE02.FourierSupport",
+    "NLA.IE02.GMRESSemantics",
+    "NLA.IE02.GradientConvexity",
+    "NLA.IE02.GradientSeparation",
+    "NLA.IE02.GradientTopology",
+    "NLA.IE02.InsideFactor",
+    "NLA.IE02.JordanDirections",
+    "NLA.IE02.JordanReversal",
+    "NLA.IE02.JordanTransport",
+    "NLA.IE02.MaximalPreservation",
+    "NLA.IE02.MaximalSpace",
+    "NLA.IE02.MinimizerOrthogonality",
+    "NLA.IE02.NilpotentInverse",
+    "NLA.IE02.NormAttainment",
+    "NLA.IE02.Numerical",
+    "NLA.IE02.PolynomialResiduals",
+    "NLA.IE02.Proof",
+    "NLA.IE02.RealSeparator",
+    "NLA.IE02.ReciprocalRoots",
+    "NLA.IE02.Reflection",
+    "NLA.IE02.RootProductReflection",
+    "NLA.IE02.ScaledFactorization",
+    "NLA.IE02.SchurActiveBlock",
+    "NLA.IE02.SchurBasicNorms",
+    "NLA.IE02.SchurCoordinates",
+    "NLA.IE02.SchurDefect",
+    "NLA.IE02.SchurEndpoint",
+    "NLA.IE02.SchurEnergy",
+    "NLA.IE02.SchurPairStep",
+    "NLA.IE02.SchurPolynomial",
+    "NLA.IE02.SchurReduction",
+    "NLA.IE02.StrictFactorization",
+    "NLA.IE02.Toeplitz",
+    "NLA.IE02.WeightedCoefficients",
+    "NLA.IE02.WeightedFactorization",
+    "NLA.IE02.WeightedFold",
+    "Solution"
+  ],
+  "contracts": [
+    {
+      "name": "NLA.IE02.coefficient_roundtrip",
+      "header": "theorem coefficient_roundtrip (n : ℕ) :\n    (∀ x : H n, coeffVector n (vectorPolynomial x) = x ∧\n      DegreeLT (vectorPolynomial x) n) ∧\n    (∀ p : Poly, DegreeLT p n → vectorPolynomial (coeffVector n p) = p)",
+      "header_sha256": "9c30a2943e8407c7cabe0f1406f0d3cfa8451bf8d00cdb003946bdb753dab09e",
+      "path": "NLA/IE02/Coefficients.lean",
+      "line": 29
+    },
+    {
+      "name": "NLA.IE02.coefficient_inner_product",
+      "header": "theorem coefficient_inner_product (n N : ℕ) (p q : Poly) (hp : DegreeLE p N) :\n    ‖coeffVector n p‖ ^ 2 = ∑ i : Fin n, ‖p.coeff i.val‖ ^ 2 ∧\n    (conjReflect N p * q).coeff N =\n      inner ℂ (coeffVector (N + 1) p) (coeffVector (N + 1) q)",
+      "header_sha256": "0fae1beb9aabd67644f9d20a662b134c232f54c06cbb8d3cd7ec4fc5a739a19a",
+      "path": "NLA/IE02/Coefficients.lean",
+      "line": 60
+    },
+    {
+      "name": "NLA.IE02.toeplitz_action",
+      "header": "theorem toeplitz_action {n : ℕ} (p : Poly) (x : H n) :\n    euclideanLin (toeplitz n p) x = coeffVector n (p * vectorPolynomial x)",
+      "header_sha256": "21e03d9fae887b61181704f72310dfb796fd77707db93edaf3a7eb0b98ff9f65",
+      "path": "NLA/IE02/Toeplitz.lean",
+      "line": 22
+    },
+    {
+      "name": "NLA.IE02.toeplitz_algebra",
+      "header": "theorem toeplitz_algebra (n : ℕ) (p q : Poly) (c : ℂ) :\n    toeplitz n (1 : Poly) = 1 ∧\n    toeplitz n (p + q) = toeplitz n p + toeplitz n q ∧\n    toeplitz n (p * q) = toeplitz n p * toeplitz n q ∧\n    toeplitz n (C c * p) = c • toeplitz n p ∧\n    shift n ^ n = 0 ∧ polyEval p (shift n) = toeplitz n p",
+      "header_sha256": "fc97934492c7b92772b7aee7676ca38a2aaa41dcdd4937e05c53c604122d14d5",
+      "path": "NLA/IE02/Toeplitz.lean",
+      "line": 131
+    },
+    {
+      "name": "NLA.IE02.nilpotent_inverse",
+      "header": "theorem nilpotent_inverse {n : ℕ} (α : ℂ) (K : Square n)\n    (hα : α ≠ 0) (hK : K ^ n = 0) :\n    (α • 1 + K) * finiteInverse α K = 1 ∧\n    finiteInverse α K * (α • 1 + K) = 1 ∧\n    (IsToeplitz K → IsToeplitz (finiteInverse α K))",
+      "header_sha256": "67610526d264cb25f869e995e20aac480f414ec339e7e794a1b40be406a61a35",
+      "path": "NLA/IE02/NilpotentInverse.lean",
+      "line": 22
+    },
+    {
+      "name": "NLA.IE02.euclidean_norm_attainment",
+      "header": "theorem euclidean_norm_attainment {n : ℕ} (hn : 1 ≤ n) (A : Square n) :\n    0 ≤ operatorNorm A ∧ (operatorNorm A = 0 ↔ A = 0) ∧\n    (∀ x : H n, ‖euclideanLin A x‖ ≤ operatorNorm A * ‖x‖) ∧\n    ∃ x : H n, x ∈ unitSphere n ∧ ‖euclideanLin A x‖ = operatorNorm A",
+      "header_sha256": "ba74a55d755a7f348350b55fa8dd35a3941e1c9536bf89ff9b83c5f2ac724590",
+      "path": "NLA/IE02/NormAttainment.lean",
+      "line": 18
+    },
+    {
+      "name": "NLA.IE02.maximal_space_norm",
+      "header": "theorem maximal_space_norm {n : ℕ} (A : Square n) :\n    IsClosed (maximalSpace A : Set (H n)) ∧\n    ∀ x : H n, x ∈ maximalSpace A ↔\n      ‖euclideanLin A x‖ = operatorNorm A * ‖x‖",
+      "header_sha256": "f1b396c04129e195c8984f879f597b3296f5d856511955fa85e673928c048d04",
+      "path": "NLA/IE02/MaximalSpace.lean",
+      "line": 19
+    },
+    {
+      "name": "NLA.IE02.schur_diagonal_bound",
+      "header": "theorem schur_diagonal_bound {n : ℕ} (hn : 1 ≤ n) (p : Poly)\n    (hU : operatorNorm (toeplitz n p) ≤ 1) : ‖p.coeff 0‖ ≤ 1",
+      "header_sha256": "8a751911471753e87b5927489dd2ea3e8617f09764d8103669392da52cc8922d",
+      "path": "NLA/IE02/SchurBasicNorms.lean",
+      "line": 18
+    },
+    {
+      "name": "NLA.IE02.schur_scalar_endpoint",
+      "header": "theorem schur_scalar_endpoint {n : ℕ} (hn : 1 ≤ n) (p : Poly)\n    (hU : operatorNorm (toeplitz n p) = 1) (hc : ‖p.coeff 0‖ = 1) :\n    toeplitz n p = p.coeff 0 • 1 ∧\n    SchurPair n (toeplitz n p) 0 (C (p.coeff 0)) 1",
+      "header_sha256": "89e7628f7f0525cf766a59e9e72971e6ec50098d536c2345d222943ca0a312eb",
+      "path": "NLA/IE02/SchurEndpoint.lean",
+      "line": 25
+    },
+    {
+      "name": "NLA.IE02.schur_dimension_one",
+      "header": "theorem schur_dimension_one (p : Poly) :\n    operatorNorm (toeplitz 1 p) = ‖p.coeff 0‖",
+      "header_sha256": "1a5f997ba1807b47dd6e7b5352b594d1d2acae0fb15dda58aefbee6229bdf2c6",
+      "path": "NLA/IE02/SchurBasicNorms.lean",
+      "line": 35
+    },
+    {
+      "name": "NLA.IE02.schur_defect_identity",
+      "header": "theorem schur_defect_identity {n : ℕ} (U : Square n) (c : ℂ) :\n    (schurM U c).conjTranspose * schurM U c -\n      (U - c • 1).conjTranspose * (U - c • 1) =\n      (((1 - ‖c‖ ^ 2 : ℝ) : ℂ) • (1 - U.conjTranspose * U))",
+      "header_sha256": "190d851a4526675c16bb4768c83fa9beeddf9dff4a1169410015809ad59a7754",
+      "path": "NLA/IE02/SchurDefect.lean",
+      "line": 19
+    },
+    {
+      "name": "NLA.IE02.schur_strict_reduction",
+      "header": "theorem schur_strict_reduction {n : ℕ} (p : Poly)\n    (hU : operatorNorm (toeplitz (n + 2) p) = 1) (hc : ‖p.coeff 0‖ < 1) :\n    ∃ B : Square (n + 2), IsToeplitz B ∧\n      schurM (toeplitz (n + 2) p) (p.coeff 0) * B = 1 ∧\n      B * schurM (toeplitz (n + 2) p) (p.coeff 0) = 1 ∧\n      IsToeplitz (schurZ (toeplitz (n + 2) p) (p.coeff 0) B) ∧\n      (∀ i, schurZ (toeplitz (n + 2) p) (p.coeff 0) B i i = 0) ∧\n      operatorNorm (schurZ (toeplitz (n + 2) p) (p.coeff 0) B) = 1 ∧\n      operatorNorm (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) = 1 ∧\n      (∀ x : H (n + 2),\n        ‖euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x‖ ^ 2 -\n          ‖euclideanLin (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)\n            (euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x)‖ ^ 2 =\n          (1 - ‖p.coeff 0‖ ^ 2) * (‖x‖ ^ 2 - ‖euclideanLin (toeplitz (n + 2) p) x‖ ^ 2)) ∧\n      (∀ x : H (n + 2), x ∈ maximalSpace (toeplitz (n + 2) p) ↔\n        euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x ∈\n          maximalSpace (schurZ (toeplitz (n + 2) p) (p.coeff 0) B))",
+      "header_sha256": "6c3876c9e7bb498059533a4cd0f3219c0a89b551e82de734f875a253004a953e",
+      "path": "NLA/IE02/SchurReduction.lean",
+      "line": 64
+    },
+    {
+      "name": "NLA.IE02.schur_active_block",
+      "header": "theorem schur_active_block {n : ℕ} (Z : Square (n + 1)) (hZ : IsToeplitz Z)\n    (hdiag : ∀ i, Z i i = 0) (hcon : operatorNorm Z ≤ 1) :\n    IsToeplitz (activeBlock Z) ∧ operatorNorm Z = operatorNorm (activeBlock Z) ∧\n    ∀ (g : H n) (η : ℂ),\n      euclideanLin Z (appendVector g η) = prependZero (euclideanLin (activeBlock Z) g) ∧\n      ‖appendVector g η‖ ^ 2 = ‖g‖ ^ 2 + ‖η‖ ^ 2 ∧\n      (‖euclideanLin Z (appendVector g η)‖ = ‖appendVector g η‖ ↔\n        η = 0 ∧ ‖euclideanLin (activeBlock Z) g‖ = ‖g‖)",
+      "header_sha256": "05e880da942019cc0207bdf1bd5be0371e0465eb315641aab3726e70bf9e1554",
+      "path": "NLA/IE02/SchurActiveBlock.lean",
+      "line": 71
+    },
+    {
+      "name": "NLA.IE02.schur_pair_step",
+      "header": "theorem schur_pair_step {n d : ℕ} (p a b : Poly) (B : Square (n + 2))\n    (hU : operatorNorm (toeplitz (n + 2) p) = 1) (hc : ‖p.coeff 0‖ < 1)\n    (hleft : schurM (toeplitz (n + 2) p) (p.coeff 0) * B = 1)\n    (hright : B * schurM (toeplitz (n + 2) p) (p.coeff 0) = 1)\n    (hV : operatorNorm (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) = 1)\n    (hpair : SchurPair (n + 1)\n      (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) d a b) :\n    SchurPair (n + 2) (toeplitz (n + 2) p) (d + 1)\n      (schurNumerator (p.coeff 0) a b) (schurDenominator (p.coeff 0) a b)",
+      "header_sha256": "85ee101ab04d9d5d8d9a85353575bf90ae2692e9cc22e8d1828d3c6ecb69a02b",
+      "path": "NLA/IE02/SchurPairStep.lean",
+      "line": 93
+    },
+    {
+      "name": "NLA.IE02.finite_schur_boundary",
+      "header": "theorem finite_schur_boundary {n : ℕ} (hn : 1 ≤ n) (U : Square n)\n    (hU : IsToeplitz U) (hnorm : operatorNorm U = 1) :\n    ∃ (d : ℕ) (a b : Poly), SchurPair n U d a b",
+      "header_sha256": "70b33851abbaa1070dcad13bd1d4ff63db754ba91909967e4ec691b32f9bec45",
+      "path": "NLA/IE02/FiniteSchur.lean",
+      "line": 21
+    },
+    {
+      "name": "NLA.IE02.scaled_maximal_factorization",
+      "header": "theorem scaled_maximal_factorization {n : ℕ} (hn : 1 ≤ n) (T : Square n)\n    (hT : IsToeplitz T) (hne : T ≠ 0) :\n    ∃ (d : ℕ) (a b : Poly),\n      SchurPair n ((operatorNorm T : ℂ)⁻¹ • T) d a b ∧\n      (∀ x : H n, x ∈ maximalSpace T ↔\n        ∃ h : Poly, DegreeLE h (n - 1 - d) ∧ x = coeffVector n (b * h)) ∧\n      (∀ h : Poly, DegreeLE h (n - 1 - d) →\n        euclideanLin T (coeffVector n (b * h)) =\n          (operatorNorm T : ℂ) • coeffVector n (a * h))",
+      "header_sha256": "92204d364e7eb0bbab8ef9d50ae8d2776692c528b95f354089922b0ac541c013",
+      "path": "NLA/IE02/ScaledFactorization.lean",
+      "line": 32
+    },
+    {
+      "name": "NLA.IE02.reflection_algebra",
+      "header": "theorem reflection_algebra (m : ℕ) (p q : Poly) (c : ℂ)\n    (hp : DegreeLE p m) (hq : DegreeLE q m) :\n    DegreeLE (conjReflect m p) m ∧ conjReflect m (conjReflect m p) = p ∧\n    conjReflect m (p + q) = conjReflect m p + conjReflect m q ∧\n    conjReflect m (C c * p) = C (star c) * conjReflect m p ∧\n    (conjReflect m p).coeff m = star (p.coeff 0)",
+      "header_sha256": "1a81def9822de6726774ff8c5315b9d956a8b42f8303d02daf99c3b581f720bc",
+      "path": "NLA/IE02/Reflection.lean",
+      "line": 27
+    },
+    {
+      "name": "NLA.IE02.reflection_product",
+      "header": "theorem reflection_product (d m : ℕ) (p q : Poly)\n    (hp : DegreeLE p d) (hq : DegreeLE q m) :\n    conjReflect (d + m) (p * q) = conjReflect d p * conjReflect m q",
+      "header_sha256": "0cce9121db58811bc097d7c3b035e88ca4198d0164f2bf5daa21dab575634921",
+      "path": "NLA/IE02/Reflection.lean",
+      "line": 52
+    },
+    {
+      "name": "NLA.IE02.reflection_evaluation",
+      "header": "theorem reflection_evaluation (m : ℕ) (p : Poly) (hp : DegreeLE p m)\n    (z : ℂ) (hz : z ≠ 0) :\n    (conjReflect m p).eval z = z ^ m * star (p.eval ((star z)⁻¹)) ∧\n    (‖z‖ = 1 → (conjReflect m p).eval z = z ^ m * star (p.eval z))",
+      "header_sha256": "7dca206a4a940775f687bb90424abb9b543deaaec677ea4a6a20ac2d6037b31b",
+      "path": "NLA/IE02/Reflection.lean",
+      "line": 59
+    },
+    {
+      "name": "NLA.IE02.circle_polynomial_uniqueness",
+      "header": "theorem circle_polynomial_uniqueness (p q : Poly) :\n    Set.Infinite {z : ℂ | ‖z‖ = 1} ∧\n    ((∀ z : ℂ, ‖z‖ = 1 → p.eval z = q.eval z) → p = q)",
+      "header_sha256": "b20c546f3ae7a4099f977332cb9efb58742fdfab797ade3545587e2314e3fa43",
+      "path": "NLA/IE02/CircleUniqueness.lean",
+      "line": 18
+    },
+    {
+      "name": "NLA.IE02.weighted_fold",
+      "header": "theorem weighted_fold {l : ℕ} (m : ℕ) (q : Fin l → Poly) (w : Fin l → ℝ)\n    (hq : ∀ j, DegreeLE (q j) m) (hw : ∀ j, 0 ≤ w j) :\n    (∀ j, DegreeLE (weightedFold (w j) (q j)) m) ∧\n    ∀ z : ℂ, sumSquares (fun j => weightedFold (w j) (q j)) z =\n      ∑ j, w j * ‖(q j).eval z‖ ^ 2",
+      "header_sha256": "6049e2b5c7b7235b6159694426e81cc025ddb97e92078d58c41a44e6ff4c3974",
+      "path": "NLA/IE02/WeightedFold.lean",
+      "line": 19
+    },
+    {
+      "name": "NLA.IE02.common_circle_root_reduction",
+      "header": "theorem common_circle_root_reduction {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (hq : ∀ j, DegreeLE (q j) m) (hne : ∃ j, q j ≠ 0)\n    (z : ℂ) (hz : ‖z‖ = 1) (hroot : ∀ j, (q j).eval z = 0) :\n    1 ≤ m ∧ ∃ r : Fin l → Poly,\n      ∀ j, q j = (X - C z) * r j ∧ DegreeLE (r j) (m - 1)",
+      "header_sha256": "f8a461298dc75aa0ea671823a3712842e541193721fc06e763f5a56f875bac97",
+      "path": "NLA/IE02/CommonCircleRoot.lean",
+      "line": 19
+    },
+    {
+      "name": "NLA.IE02.fourier_semantics",
+      "header": "theorem fourier_semantics {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (hq : ∀ j, DegreeLE (q j) m) :\n    (∀ r : ℤ, fourierCoeff m q (-r) = star (fourierCoeff m q r)) ∧\n    fourierCoeff m q 0 = ((∑ j, ∑ i : Fin (m + 1), ‖(q j).coeff i.val‖ ^ 2 : ℝ) : ℂ) ∧\n    (∀ z : ℂ, ‖z‖ = 1 → (sumSquares q z : ℂ) =\n      ∑ r : Fin (2 * m + 1),\n        fourierCoeff m q ((r.val : ℤ) - (m : ℤ)) * z ^ ((r.val : ℤ) - (m : ℤ)))",
+      "header_sha256": "9b94fdff092085f703919984333db7e32fe1d0cefb8f8d55f018ac061fd94797",
+      "path": "NLA/IE02/FourierSemantics.lean",
+      "line": 18
+    },
+    {
+      "name": "NLA.IE02.effective_factor_polynomial",
+      "header": "theorem effective_factor_polynomial {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (hq : ∀ j, DegreeLE (q j) m)\n    (hno : ∀ z : ℂ, ‖z‖ = 1 → ∃ j, (q j).eval z ≠ 0) :\n    ∃ ell : ℕ, ell ≤ m ∧\n      (effectivePolynomial m ell q).degree = (2 * ell : WithBot ℕ) ∧\n      (effectivePolynomial m ell q).coeff 0 ≠ 0 ∧\n      conjReflect (2 * ell) (effectivePolynomial m ell q) = effectivePolynomial m ell q ∧\n      (∀ z : ℂ, ‖z‖ = 1 →\n        (effectivePolynomial m ell q).eval z = z ^ ell * (sumSquares q z : ℂ) ∧\n        (effectivePolynomial m ell q).eval z ≠ 0)",
+      "header_sha256": "9632c851b4594554f15aa7268e24bf84475baefdd73a444328e38a9f8c8fc768",
+      "path": "NLA/IE02/EffectivePolynomial.lean",
+      "line": 18
+    },
+    {
+      "name": "NLA.IE02.reciprocal_root_pairing",
+      "header": "theorem reciprocal_root_pairing (ell : ℕ) (P : Poly)\n    (hdeg : P.degree = (2 * ell : WithBot ℕ)) (hzero : P.coeff 0 ≠ 0)\n    (href : conjReflect (2 * ell) P = P)\n    (hcircle : ∀ z : ℂ, ‖z‖ = 1 → P.eval z ≠ 0) :\n    P.roots = P.roots.map reciprocalConj ∧\n    P.roots = insideRoots P + (insideRoots P).map reciprocalConj ∧\n    (insideRoots P).card = ell ∧ (∀ z ∈ P.roots, z ≠ 0)",
+      "header_sha256": "2d2c8603394a47d1197b825a97df93ccdcfdb9dc16ebf3e7c7bf58b0426a0cfc",
+      "path": "NLA/IE02/ReciprocalRoots.lean",
+      "line": 53
+    },
+    {
+      "name": "NLA.IE02.reciprocal_inside_factor",
+      "header": "theorem reciprocal_inside_factor (ell : ℕ) (P : Poly)\n    (hdeg : P.degree = (2 * ell : WithBot ℕ)) (hzero : P.coeff 0 ≠ 0)\n    (href : conjReflect (2 * ell) P = P)\n    (hcircle : ∀ z : ℂ, ‖z‖ = 1 → P.eval z ≠ 0) :\n    (rootProduct (insideRoots P)).degree = (ell : WithBot ℕ) ∧\n    (rootProduct (insideRoots P)).eval 0 ≠ 0 ∧\n    (∀ z : ℂ, ‖z‖ = 1 → (rootProduct (insideRoots P)).eval z ≠ 0) ∧\n    ∃ κ : ℂ, κ ≠ 0 ∧ P = C κ *\n      (rootProduct (insideRoots P) * conjReflect ell (rootProduct (insideRoots P)))",
+      "header_sha256": "6fddc88b69e1feb874ee400b2d03349f62076c71ec1797abbf7fddf487a8f37c",
+      "path": "NLA/IE02/InsideFactor.lean",
+      "line": 57
+    },
+    {
+      "name": "NLA.IE02.strict_scalar_factorization",
+      "header": "theorem strict_scalar_factorization {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (hq : ∀ j, DegreeLE (q j) m)\n    (hno : ∀ z : ℂ, ‖z‖ = 1 → ∃ j, (q j).eval z ≠ 0) :\n    ∃ h : Poly, DegreeLE h m ∧\n      ∀ z : ℂ, ‖z‖ = 1 → ‖h.eval z‖ ^ 2 = sumSquares q z",
+      "header_sha256": "6547e85532c8433ad326d13f692dc4bdf7ac5204be166bfdcff2ac1b6d03afb3",
+      "path": "NLA/IE02/StrictFactorization.lean",
+      "line": 24
+    },
+    {
+      "name": "NLA.IE02.weighted_scalar_factorization",
+      "header": "theorem weighted_scalar_factorization {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (w : Fin l → ℝ) (hq : ∀ j, DegreeLE (q j) m) (hw : ∀ j, 0 ≤ w j) :\n    ∃ h : Poly, DegreeLE h m ∧\n      (∀ z : ℂ, ‖z‖ = 1 → ‖h.eval z‖ ^ 2 = ∑ j, w j * ‖(q j).eval z‖ ^ 2) ∧\n      h * conjReflect m h = ∑ j, C (w j : ℂ) * (q j * conjReflect m (q j))",
+      "header_sha256": "db286da2d0a94f79beb0ef7e89f49e0216a4c9a1d5f5a6abc8de0c0e680920c3",
+      "path": "NLA/IE02/WeightedFactorization.lean",
+      "line": 72
+    },
+    {
+      "name": "NLA.IE02.weighted_coefficient_preservation",
+      "header": "theorem weighted_coefficient_preservation {l k : ℕ} (d m : ℕ)\n    (a b h : Poly) (q : Fin l → Poly) (w : Fin l → ℝ) (r : Fin k → Poly)\n    (ha : DegreeLE a d) (hb : DegreeLE b d) (hh : DegreeLE h m)\n    (hq : ∀ j, DegreeLE (q j) m)\n    (hfactor : h * conjReflect m h = ∑ j, C (w j : ℂ) * (q j * conjReflect m (q j))) :\n    ‖coeffVector (d + m + 1) (b * h)‖ ^ 2 =\n      ∑ j, w j * ‖coeffVector (d + m + 1) (b * q j)‖ ^ 2 ∧\n    ∀ i, inner ℂ (coeffVector (d + m + 1) (a * h))\n        (euclideanLin (toeplitz (d + m + 1) (r i)) (coeffVector (d + m + 1) (b * h))) =\n      ∑ j, (w j : ℂ) * inner ℂ (coeffVector (d + m + 1) (a * q j))\n        (euclideanLin (toeplitz (d + m + 1) (r i)) (coeffVector (d + m + 1) (b * q j)))",
+      "header_sha256": "d3ab509da0515dda27b2f68e5c7084370ddefdec7f8a109eb4a360be9d01eb52",
+      "path": "NLA/IE02/WeightedCoefficients.lean",
+      "line": 63
+    },
+    {
+      "name": "NLA.IE02.maximal_complex_preservation",
+      "header": "theorem maximal_complex_preservation {n k l : ℕ} (hn : 1 ≤ n)\n    (T : Square n) (R : Fin k → Square n) (hT : IsToeplitz T) (hne : T ≠ 0)\n    (hR : ∀ j, IsToeplitz (R j)) (f : Fin l → H n) (w : Fin l → ℝ)\n    (hf : ∀ j, f j ∈ unitMaximal T) (hw : ∀ j, 0 ≤ w j) (hsum : ∑ j, w j = 1) :\n    ∃ x : H n, x ∈ unitMaximal T ∧\n      ∀ i, inner ℂ (euclideanLin T x) (euclideanLin (R i) x) =\n        ∑ j, (w j : ℂ) * inner ℂ (euclideanLin T (f j)) (euclideanLin (R i) (f j))",
+      "header_sha256": "f678a972a60307e523ac5dddc423b75d3fc037ac16c4d3e5070d52757f725ced",
+      "path": "NLA/IE02/MaximalPreservation.lean",
+      "line": 23
+    },
+    {
+      "name": "NLA.IE02.gradient_compact_convex",
+      "header": "theorem gradient_compact_convex {n k : ℕ} (hn : 1 ≤ n)\n    (T : Square n) (R : Fin k → Square n) (hT : IsToeplitz T) (hne : T ≠ 0)\n    (hR : ∀ j, IsToeplitz (R j)) :\n    (gradientImage T R).Nonempty ∧ IsCompact (gradientImage T R) ∧\n      Convex ℝ (gradientImage T R)",
+      "header_sha256": "77dff2c66dbc0ddb8b560842f02eaca71d8c9ece94c42bb1b3c530173ad5a50b",
+      "path": "NLA/IE02/GradientConvexity.lean",
+      "line": 21
+    },
+    {
+      "name": "NLA.IE02.real_separator_complex_form",
+      "header": "theorem real_separator_complex_form {k : ℕ} (ell : H k →L[ℝ] ℝ) :\n    ∀ z : H k, ell z = (∑ j, separatorCoefficients ell j * z j).re",
+      "header_sha256": "445fc8de08dd1c0b548133675a7a9bb8d10359573110a24b8017855fcec5aac0",
+      "path": "NLA/IE02/RealSeparator.lean",
+      "line": 19
+    },
+    {
+      "name": "NLA.IE02.gradient_strict_separation",
+      "header": "theorem gradient_strict_separation {n k : ℕ} (hn : 1 ≤ n)\n    (T : Square n) (R : Fin k → Square n) (hT : IsToeplitz T) (hne : T ≠ 0)\n    (hR : ∀ j, IsToeplitz (R j)) (hzero : 0 ∉ gradientImage T R) :\n    ∃ (c : Fin k → ℂ) (γ : ℝ), 0 < γ ∧\n      ∀ x ∈ unitMaximal T, γ ≤ descentForm T (directionSum R c) x",
+      "header_sha256": "b00912ac06874dba9a561115ef9bd7183ecbf116e0d2acc89a50ddd6561799c8",
+      "path": "NLA/IE02/GradientSeparation.lean",
+      "line": 22
+    },
+    {
+      "name": "NLA.IE02.half_certificate",
+      "header": "theorem half_certificate : (0 : ℝ) < 1 / 2",
+      "header_sha256": "2c9540a2e478856392f950f3442b1fd94d2f8b59a70ed9738e99bdaf04a23f14",
+      "path": "NLA/IE02/Numerical.lean",
+      "line": 17
+    },
+    {
+      "name": "NLA.IE02.descent_step_bounds",
+      "header": "theorem descent_step_bounds {n : ℕ} (T D : Square n) (γ β : ℝ)\n    (hγ : 0 < γ) (hβ : 0 < β) :\n    0 < emptyStep D γ ∧ emptyStep D γ ≤ 1 ∧\n    emptyStep D γ ≤ γ / (2 * (descentL D + 1)) ∧\n    0 < gapStep T D γ β ∧ gapStep T D γ β ≤ 1 ∧\n    gapStep T D γ β ≤ γ / (2 * (descentL D + 1)) ∧\n    gapStep T D γ β ≤ β / (2 * (descentC T D + 1))",
+      "header_sha256": "1732cf822a8001e9a7e99ae3c6d461299e23bdb0222dc65f8cf0d3871b0b8e98",
+      "path": "NLA/IE02/DescentSteps.lean",
+      "line": 25
+    },
+    {
+      "name": "NLA.IE02.descent_quadratic_expansion",
+      "header": "theorem descent_quadratic_expansion {n : ℕ} (T D : Square n) (ε : ℝ) (x : H n) :\n    ‖euclideanLin (T - (ε : ℂ) • D) x‖ ^ 2 =\n      ‖euclideanLin T x‖ ^ 2 - 2 * ε * descentForm T D x +\n        ε ^ 2 * ‖euclideanLin D x‖ ^ 2",
+      "header_sha256": "3386c7db31356483cd684ebb405e7902eacf8754281d965ac2c52412a42da147",
+      "path": "NLA/IE02/DescentQuadratic.lean",
+      "line": 17
+    },
+    {
+      "name": "NLA.IE02.descent_complement_gap",
+      "header": "theorem descent_complement_gap {n : ℕ} (hn : 1 ≤ n) (T D : Square n)\n    (hne : T ≠ 0) (γ : ℝ) (hγ : 0 < γ)\n    (hpos : ∀ x ∈ unitMaximal T, γ ≤ descentForm T D x)\n    (hK : (descentComplement T D γ).Nonempty) :\n    ∃ β : ℝ, 0 < β ∧ ∀ x ∈ descentComplement T D γ,\n      ‖euclideanLin T x‖ ^ 2 ≤ operatorNorm T ^ 2 - β",
+      "header_sha256": "984a2ce25574c0970cfecc7ddd2f568044fb5ece08bbf7a2f15c007c121df774",
+      "path": "NLA/IE02/DescentGap.lean",
+      "line": 18
+    },
+    {
+      "name": "NLA.IE02.descent_empty_complement",
+      "header": "theorem descent_empty_complement {n : ℕ} (hn : 1 ≤ n) (T D : Square n)\n    (hne : T ≠ 0) (γ : ℝ) (hγ : 0 < γ) (hK : descentComplement T D γ = ∅) :\n    operatorNorm (T - (emptyStep D γ : ℂ) • D) < operatorNorm T",
+      "header_sha256": "a5c3c111f844cafca3832199e1ce635c4b8cc71ba880c065c82185d0b352a6c6",
+      "path": "NLA/IE02/DescentConclusions.lean",
+      "line": 95
+    },
+    {
+      "name": "NLA.IE02.descent_nonempty_complement",
+      "header": "theorem descent_nonempty_complement {n : ℕ} (hn : 1 ≤ n) (T D : Square n)\n    (hne : T ≠ 0) (γ β : ℝ) (hγ : 0 < γ) (hβ : 0 < β)\n    (hK : (descentComplement T D γ).Nonempty)\n    (hgap : ∀ x ∈ descentComplement T D γ,\n      ‖euclideanLin T x‖ ^ 2 ≤ operatorNorm T ^ 2 - β) :\n    operatorNorm (T - (gapStep T D γ β : ℂ) • D) < operatorNorm T",
+      "header_sha256": "ff55ac9baf56630b93463e680a212c7cbc4766a3646a7792024035342142b92f",
+      "path": "NLA/IE02/DescentConclusions.lean",
+      "line": 114
+    },
+    {
+      "name": "NLA.IE02.positive_gradient_descent",
+      "header": "theorem positive_gradient_descent {n : ℕ} (hn : 1 ≤ n) (T D : Square n)\n    (hne : T ≠ 0) (γ : ℝ) (hγ : 0 < γ)\n    (hpos : ∀ x ∈ unitMaximal T, γ ≤ descentForm T D x) :\n    ∃ ε : ℝ, 0 < ε ∧ operatorNorm (T - (ε : ℂ) • D) < operatorNorm T",
+      "header_sha256": "2ee2ade1957bd8fc970465cddea11ce281a43197b96b79fa9acc1284d6450c8f",
+      "path": "NLA/IE02/DescentConclusions.lean",
+      "line": 136
+    },
+    {
+      "name": "NLA.IE02.minimizer_orthogonality",
+      "header": "theorem minimizer_orthogonality {n k : ℕ} (hn : 1 ≤ n)\n    (T : Square n) (R : Fin k → Square n) (hT : IsToeplitz T) (hne : T ≠ 0)\n    (hR : ∀ j, IsToeplitz (R j))\n    (hmin : ∀ c : Fin k → ℂ, operatorNorm T ≤ operatorNorm (T + directionSum R c)) :\n    ∃ x : H n, x ∈ unitMaximal T ∧\n      ∀ j, inner ℂ (euclideanLin T x) (euclideanLin (R j) x) = 0",
+      "header_sha256": "9b83f5809fc395ec466bfade8c0c04cf64f0d0a508622ff1ad4ab4f8ead81599",
+      "path": "NLA/IE02/MinimizerOrthogonality.lean",
+      "line": 20
+    },
+    {
+      "name": "NLA.IE02.affine_operator_minimum",
+      "header": "theorem affine_operator_minimum {n k : ℕ} (Y : Square n) (R : Fin k → Square n) :\n    ∃ c : Fin k → ℂ, operatorNorm (affineResidual Y R c) = affineIdeal Y R ∧\n      ∀ d : Fin k → ℂ, operatorNorm (affineResidual Y R c) ≤ operatorNorm (affineResidual Y R d)",
+      "header_sha256": "b138a7e02de3ca26f0286bea5fef2d364a5a5cb466b8c315722530b1128ac946",
+      "path": "NLA/IE02/AffineMinima.lean",
+      "line": 54
+    },
+    {
+      "name": "NLA.IE02.affine_vector_minimum",
+      "header": "theorem affine_vector_minimum {n k : ℕ} (Y : Square n) (R : Fin k → Square n) (x : H n) :\n    ∃ c : Fin k → ℂ, ‖euclideanLin (affineResidual Y R c) x‖ = affineInner Y R x ∧\n      ∀ d : Fin k → ℂ, ‖euclideanLin (affineResidual Y R c) x‖ ≤\n        ‖euclideanLin (affineResidual Y R d) x‖",
+      "header_sha256": "830f049c11be2ab1e68d83111e5cef28de2873c6f9ba4ce80631892915dd34ff",
+      "path": "NLA/IE02/AffineMinima.lean",
+      "line": 60
+    },
+    {
+      "name": "NLA.IE02.affine_minimax_attained",
+      "header": "theorem affine_minimax_attained {n k : ℕ} (hn : 1 ≤ n)\n    (Y : Square n) (R : Fin k → Square n) (hY : IsToeplitz Y) (hR : ∀ j, IsToeplitz (R j)) :\n    affineWorst Y R = affineIdeal Y R ∧\n    (∀ x ∈ unitSphere n, ∃ c : Fin k → ℂ,\n      ‖euclideanLin (affineResidual Y R c) x‖ = affineInner Y R x) ∧\n    ∃ (c : Fin k → ℂ) (x : H n), x ∈ unitSphere n ∧\n      operatorNorm (affineResidual Y R c) = affineIdeal Y R ∧\n      affineInner Y R x = affineWorst Y R ∧\n      ‖euclideanLin (affineResidual Y R c) x‖ = operatorNorm (affineResidual Y R c) ∧\n      (∀ d : Fin k → ℂ, operatorNorm (affineResidual Y R c) ≤ operatorNorm (affineResidual Y R d)) ∧\n      (∀ d : Fin k → ℂ, ‖euclideanLin (affineResidual Y R c) x‖ ≤\n        ‖euclideanLin (affineResidual Y R d) x‖) ∧\n      (∀ z ∈ unitSphere n, affineInner Y R z ≤ affineInner Y R x)",
+      "header_sha256": "56cef9db001f4e078bb85bcb88fb4fe52b588308c3193abc0128feb32488b889",
+      "path": "NLA/IE02/AffineMinimax.lean",
+      "line": 95
+    },
+    {
+      "name": "NLA.IE02.jordan_reversal",
+      "header": "theorem jordan_reversal (n : ℕ) (lam : ℂ) :\n    (reversal n).conjTranspose = reversal n ∧ reversal n * reversal n = 1 ∧\n    reversal n * jordan n lam * (reversal n).conjTranspose = lowerJordan n lam ∧\n    (∀ x : H n, euclideanLin (reversal n) x = reverseVector x ∧ ‖reverseVector x‖ = ‖x‖ ∧\n      reverseVector (reverseVector x) = x)",
+      "header_sha256": "337bea62c1f848e1a7a1251c176e36edf07c575093405af460a5e43069345d94",
+      "path": "NLA/IE02/JordanReversal.lean",
+      "line": 53
+    },
+    {
+      "name": "NLA.IE02.jordan_direction_toeplitz",
+      "header": "theorem jordan_direction_toeplitz (n k : ℕ) (lam : ℂ) :\n    IsToeplitz (1 : Square n) ∧ ∀ j, IsToeplitz (jordanDirections n k lam j)",
+      "header_sha256": "25b0ba7df3d42efb3493b7634b004bcb2ff31fee7e27e610a443a2ec6fc28ac4",
+      "path": "NLA/IE02/JordanDirections.lean",
+      "line": 17
+    },
+    {
+      "name": "NLA.IE02.normalized_polynomial_residuals",
+      "header": "theorem normalized_polynomial_residuals (n k : ℕ) (lam : ℂ) :\n    (∀ p : Poly, Admissible k p → ∃ c : Fin k → ℂ,\n      polyEval p (lowerJordan n lam) = affineResidual 1 (jordanDirections n k lam) c) ∧\n    (∀ c : Fin k → ℂ, ∃ p : Poly, Admissible k p ∧\n      polyEval p (lowerJordan n lam) = affineResidual 1 (jordanDirections n k lam) c)",
+      "header_sha256": "27644ec8ab7ceaa4f60a2c9b95e0131ca95a7a56c333dcd13fd0713d77d6f632",
+      "path": "NLA/IE02/PolynomialResiduals.lean",
+      "line": 79
+    },
+    {
+      "name": "NLA.IE02.jordan_polynomial_transport",
+      "header": "theorem jordan_polynomial_transport (n : ℕ) (lam : ℂ) (p : Poly) :\n    polyEval p (jordan n lam) * reversal n = reversal n * polyEval p (lowerJordan n lam) ∧\n    operatorNorm (polyEval p (jordan n lam)) = operatorNorm (polyEval p (lowerJordan n lam)) ∧\n    (∀ x : H n, euclideanLin (polyEval p (jordan n lam)) (reverseVector x) =\n      reverseVector (euclideanLin (polyEval p (lowerJordan n lam)) x))",
+      "header_sha256": "4c1a7cd2cc2f10f19c66fd98fc82657bbe0ca87a89382eb1f30456d12d61a27a",
+      "path": "NLA/IE02/JordanTransport.lean",
+      "line": 60
+    },
+    {
+      "name": "NLA.IE02.gmres_extrema_semantics",
+      "header": "theorem gmres_extrema_semantics {n : ℕ} (A : Square n) (k : ℕ) :\n    (∃ p : Poly, Admissible k p ∧ operatorNorm (polyEval p A) = idealGMRES A k ∧\n      ∀ q : Poly, Admissible k q → operatorNorm (polyEval p A) ≤ operatorNorm (polyEval q A)) ∧\n    (∀ x : H n, ∃ p : Poly, Admissible k p ∧\n      ‖euclideanLin (polyEval p A) x‖ = gmresInner A k x ∧\n      ∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p A) x‖ ≤\n        ‖euclideanLin (polyEval q A) x‖) ∧\n    (∀ x ∈ unitSphere n, 0 ≤ gmresInner A k x ∧ gmresInner A k x ≤ idealGMRES A k)",
+      "header_sha256": "1918f82b30423f701830bebc47da2f0f4a6cb2019ae8d1f4bacd2a7dffd5f87a",
+      "path": "NLA/IE02/GMRESSemantics.lean",
+      "line": 20
+    },
+    {
+      "name": "NLA.IE02.canonical_jordan_minimax",
+      "header": "theorem canonical_jordan_minimax (n k : ℕ) (lam : ℂ)\n    (hn : 2 ≤ n) (hlam : lam ≠ 0) (hk : 1 ≤ k) (hkn : k < n) :\n    worstGMRES (jordan n lam) k = idealGMRES (jordan n lam) k ∧\n    (∀ x ∈ unitSphere n, ∃ p : Poly, Admissible k p ∧\n      ‖euclideanLin (polyEval p (jordan n lam)) x‖ = gmresInner (jordan n lam) k x ∧\n      ∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p (jordan n lam)) x‖ ≤\n        ‖euclideanLin (polyEval q (jordan n lam)) x‖) ∧\n    ∃ (p : Poly) (x : H n), Admissible k p ∧ x ∈ unitSphere n ∧\n      operatorNorm (polyEval p (jordan n lam)) = idealGMRES (jordan n lam) k ∧\n      ‖euclideanLin (polyEval p (jordan n lam)) x‖ = operatorNorm (polyEval p (jordan n lam)) ∧\n      gmresInner (jordan n lam) k x = worstGMRES (jordan n lam) k ∧\n      (∀ q : Poly, Admissible k q →\n        operatorNorm (polyEval p (jordan n lam)) ≤ operatorNorm (polyEval q (jordan n lam))) ∧\n      (∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p (jordan n lam)) x‖ ≤\n        ‖euclideanLin (polyEval q (jordan n lam)) x‖) ∧\n      (∀ z ∈ unitSphere n, gmresInner (jordan n lam) k z ≤ gmresInner (jordan n lam) k x)",
+      "header_sha256": "5ac02eb062acec394aab77f0533de611e1c0442f077c447820b3ec513a6d4d4b",
+      "path": "NLA/IE02/CanonicalJordan.lean",
+      "line": 74
+    }
+  ],
+  "all_50_verbatim_unique_headers": true,
+  "Challenge_imported": false,
+  "concrete_definitions_no_holes": true,
+  "forbidden_scan_patterns": {
+    "proof_holes_or_custom_axioms": "\\b(?:sorry|sorryAx|admit|axiom)\\b",
+    "native_or_unsafe_or_meta_override": "\\b(?:native_decide|unsafe|implemented_by)\\b|Lean\\.(?:ofReduceBool|ofReduceNat|trustCompiler)",
+    "new_elaborator_or_command_execution": "\\b(?:elab_rules|macro_rules|run_tac|run_elab|initialize|command_elab)\\b|#(?:eval|reduce)",
+    "resource_or_lint_overrides": "\\bset_option\\s+(?:maxHeartbeats|maxRecDepth|debug|linter\\.)"
+  },
+  "forbidden_active_code_matches": [],
+  "LeanCert_kernel_certificate": "NLA.IE02.half_certificate",
+  "genuine_consumer": "NLA/IE02/DescentSteps.lean: half_min_bounds uses mul_pos half_certificate; it is consumed in both step inequalities and the original final target closure.",
+  "email_scan_paths": [
+    "NLA/IE02/Definitions.lean",
+    "NLA/IE02/AffineMinima.lean",
+    "NLA/IE02/SchurBasicNorms.lean",
+    "NLA/IE02/Coefficients.lean",
+    "NLA/IE02/Toeplitz.lean",
+    "NLA/IE02/MaximalSpace.lean",
+    "NLA/IE02/SchurEndpoint.lean",
+    "NLA/IE02/SchurPolynomial.lean",
+    "NLA/IE02/NilpotentInverse.lean",
+    "NLA/IE02/SchurDefect.lean",
+    "NLA/IE02/SchurEnergy.lean",
+    "NLA/IE02/NormAttainment.lean",
+    "NLA/IE02/SchurActiveBlock.lean",
+    "NLA/IE02/SchurReduction.lean",
+    "NLA/IE02/SchurCoordinates.lean",
+    "NLA/IE02/SchurPairStep.lean",
+    "NLA/IE02/FiniteSchur.lean",
+    "NLA/IE02/ScaledFactorization.lean",
+    "NLA/IE02/FourierCoefficients.lean",
+    "NLA/IE02/FourierEvaluation.lean",
+    "NLA/IE02/FourierSemantics.lean",
+    "NLA/IE02/FourierSupport.lean",
+    "NLA/IE02/EffectiveCoefficients.lean",
+    "NLA/IE02/EffectiveEvaluation.lean",
+    "NLA/IE02/EffectivePolynomial.lean",
+    "NLA/IE02/Reflection.lean",
+    "NLA/IE02/RootProductReflection.lean",
+    "NLA/IE02/ReciprocalRoots.lean",
+    "NLA/IE02/InsideFactor.lean",
+    "NLA/IE02/CircleSquares.lean",
+    "NLA/IE02/WeightedFold.lean",
+    "NLA/IE02/StrictFactorization.lean",
+    "NLA/IE02/CommonCircleRoot.lean",
+    "NLA/IE02/CircleUniqueness.lean",
+    "NLA/IE02/WeightedFactorization.lean",
+    "NLA/IE02/WeightedCoefficients.lean",
+    "NLA/IE02/MaximalPreservation.lean",
+    "NLA/IE02/GradientTopology.lean",
+    "NLA/IE02/GradientConvexity.lean",
+    "NLA/IE02/RealSeparator.lean",
+    "NLA/IE02/GradientSeparation.lean",
+    "NLA/IE02/Numerical.lean",
+    "NLA/IE02/DescentSteps.lean",
+    "NLA/IE02/DescentQuadratic.lean",
+    "NLA/IE02/DescentGap.lean",
+    "NLA/IE02/DescentConclusions.lean",
+    "NLA/IE02/MinimizerOrthogonality.lean",
+    "NLA/IE02/AffineMinimax.lean",
+    "NLA/IE02/JordanDirections.lean",
+    "NLA/IE02/JordanReversal.lean",
+    "NLA/IE02/JordanTransport.lean",
+    "NLA/IE02/PolynomialResiduals.lean",
+    "NLA/IE02/GMRESSemantics.lean",
+    "NLA/IE02/CanonicalJordan.lean",
+    "NLA/IE02/Proof.lean",
+    "Solution.lean",
+    "README.md",
+    "formalization.yaml",
+    "SourceCorrespondence.md",
+    "sources/canonical/README.md"
+  ],
+  "email_matches": [],
+  "original_solution_local_renaming_byte_identical": true,
+  "fresh_Lean_run": false,
+  "fresh_Comparator_run": false,
+  "whole_problem_or_publication_approval": false
+}

@@ -1,0 +1,109 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original mathematical and library attribution
+is retained in Definitions.lean and SourceCorrespondence.md. Mathlib supplies the
+complex splitting theorem, full root-product factorization and multiset root APIs.
+
+Reflection preserves every root multiplicity. The inside/outside partition uses
+multiset filters, including the empty root multiset when ell = 0.
+-/
+import NLA.IE02.RootProductReflection
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+open Polynomial
+
+private theorem reflected_root_multiset (P : Poly) (hP : P ≠ 0)
+    (hroots : ∀ z ∈ P.roots, z ≠ 0) :
+    (conjReflect P.natDegree P).roots = P.roots.map reciprocalConj := by
+  classical
+  have hleading : P.leadingCoeff ≠ 0 := leadingCoeff_ne_zero.mpr hP
+  have hscalar : (P.roots.map (fun z => -star z)).prod ≠ 0 := by
+    apply Multiset.prod_ne_zero
+    intro hmem
+    obtain ⟨z, hz, heq⟩ := Multiset.mem_map.mp hmem
+    exact (neg_ne_zero.mpr (star_ne_zero.mpr (hroots z hz))) heq
+  have hcard : P.roots.card = P.natDegree :=
+    (IsAlgClosed.splits P).natDegree_eq_card_roots.symm
+  have hfactor : P = C P.leadingCoeff * rootProduct P.roots := by
+    simpa only [rootProduct] using (IsAlgClosed.splits P).eq_prod_roots
+  -- Reflect the established complete factorization at its exact degree.
+  -- The nonzero scalar can then be removed by the library roots_C_mul API.
+  have hreflection : conjReflect P.natDegree P =
+      C (star P.leadingCoeff * (P.roots.map (fun z => -star z)).prod) *
+        rootProduct (P.roots.map reciprocalConj) := by
+    calc
+      conjReflect P.natDegree P =
+          conjReflect P.natDegree (C P.leadingCoeff * rootProduct P.roots) :=
+        congrArg (conjReflect P.natDegree) hfactor
+      _ = C (star P.leadingCoeff) * conjReflect P.natDegree (rootProduct P.roots) := by
+        simp only [conjReflect, Polynomial.map_mul, Polynomial.map_C,
+          starRingEnd_apply, reflect_C_mul]
+      _ = _ := by
+        rw [← hcard, rootProduct_reflection P.roots hroots, C_mul]
+        ring
+  rw [hreflection,
+    roots_C_mul _ (mul_ne_zero (star_ne_zero.mpr hleading) hscalar)]
+  exact roots_multiset_prod_X_sub_C _
+
+theorem reciprocal_root_pairing (ell : ℕ) (P : Poly)
+    (hdeg : P.degree = (2 * ell : WithBot ℕ)) (hzero : P.coeff 0 ≠ 0)
+    (href : conjReflect (2 * ell) P = P)
+    (hcircle : ∀ z : ℂ, ‖z‖ = 1 → P.eval z ≠ 0) :
+    P.roots = P.roots.map reciprocalConj ∧
+    P.roots = insideRoots P + (insideRoots P).map reciprocalConj ∧
+    (insideRoots P).card = ell ∧ (∀ z ∈ P.roots, z ≠ 0) := by
+  classical
+  have hP : P ≠ 0 := by
+    intro h
+    apply hzero
+    simp [h]
+  have hnonzero : ∀ z ∈ P.roots, z ≠ 0 := by
+    intro z hz hzeroz
+    subst z
+    exact hzero (zero_isRoot_iff_coeff_zero_eq_zero.mp (isRoot_of_mem_roots hz))
+  have hnorm : ∀ z ∈ P.roots, ‖z‖ ≠ 1 := by
+    intro z hz h
+    exact hcircle z h (isRoot_of_mem_roots hz)
+  have hnat : P.natDegree = 2 * ell := natDegree_eq_of_degree_eq_some hdeg
+  have hcard : P.roots.card = 2 * ell :=
+    (IsAlgClosed.splits P).natDegree_eq_card_roots.symm.trans hnat
+  have hpair : P.roots = P.roots.map reciprocalConj := by
+    have h := reflected_root_multiset P hP hnonzero
+    rw [hnat, href] at h
+    exact h
+  -- Filter the full multiset pairing. The inverse-norm equivalence is used
+  -- only on roots, whose norms are positive and different from one.
+  have hout : P.roots.filter (fun z => ¬‖z‖ < 1) =
+      (insideRoots P).map reciprocalConj := by
+    calc
+      P.roots.filter (fun z => ¬‖z‖ < 1) =
+          (P.roots.map reciprocalConj).filter (fun z => ¬‖z‖ < 1) :=
+        congrArg (Multiset.filter (fun z : ℂ => ¬‖z‖ < 1)) hpair
+      _ = (P.roots.filter (fun z => ¬‖reciprocalConj z‖ < 1)).map reciprocalConj := by
+        rw [Multiset.filter_map]
+        simp only [Function.comp_def]
+      _ = (insideRoots P).map reciprocalConj := by
+        apply congrArg (Multiset.map reciprocalConj)
+        unfold insideRoots
+        apply Multiset.filter_congr
+        intro z hz
+        have hpos : 0 < ‖z‖ := norm_pos_iff.mpr (hnonzero z hz)
+        rw [reciprocalConj, norm_inv, norm_star, inv_lt_one₀ hpos, not_lt]
+        exact ⟨fun h => lt_of_le_of_ne h (hnorm z hz), le_of_lt⟩
+  have hpartition : P.roots = insideRoots P + (insideRoots P).map reciprocalConj := by
+    simpa only [insideRoots, hout] using
+      (Multiset.filter_add_not (fun z : ℂ => ‖z‖ < 1) P.roots).symm
+  have hcount := congrArg Multiset.card hpartition
+  simp only [Multiset.card_add, Multiset.card_map] at hcount
+  exact ⟨hpair, hpartition, by omega, hnonzero⟩
+
+#print axioms reciprocal_root_pairing
+#assert_trust kernel reciprocal_root_pairing
+
+end
+end NLA.IE02

@@ -1,0 +1,72 @@
+{
+  "reviewer": "/root/sf_ra_runtime_referee",
+  "recorded_utc": "2026-09-17T09:14:49.458793+00:00",
+  "scope": "Four frozen IE02 contracts and their exact eight-module local source closure",
+  "source_and_runtime_audit": "PASS",
+  "overall_proof_review": "BLOCK_ON_TWO_DIRECT_REUSE_DUPLICATES",
+  "new_contracts": {
+    "WeightedCoefficients": "weighted_coefficient_preservation",
+    "RealSeparator": "real_separator_complex_form",
+    "JordanReversal": "jordan_reversal",
+    "JordanTransport": "jordan_polynomial_transport"
+  },
+  "source_sha256": {
+    "WeightedCoefficients": "6ca298679b9e426c5d4b987372f011aad6d5d0e5d9c0fe3ac70e790d687057e4",
+    "RealSeparator": "7c8e6672c19cc6405acab904920ec1fa9feae3cc66417163a866751123c6b98f",
+    "JordanReversal": "ea30a3ea9bacfb4b66641d9ab21bd95738115818390e123a523ca1095b33b476",
+    "JordanTransport": "e8a1c0db3cc5105d4d296422ecd458ff7caaa4f0640c9c4eec9c79a5b9f8f580"
+  },
+  "actual_runs": {
+    "WeightedCoefficients": 75,
+    "RealSeparator": 82,
+    "JordanReversal": 90,
+    "JordanTransport": 90
+  },
+  "checks": 783,
+  "external_bindings": 406,
+  "own_prior_review_reuse": [
+    {
+      "packet": "/private/tmp/nla-lean-next-20260915/reviews/IE02-coeff-schur-referee1-20260917",
+      "manifest_sha256": "ca8e96a7cb09cff573d73fe2fa1d68b3d8693ad6310f08381fe99de9591be0cc",
+      "payloads_reauthenticated": 110,
+      "mathematical_reuse_only": [
+        "Coefficients"
+      ]
+    },
+    {
+      "packet": "/private/tmp/nla-lean-next-20260915/reviews/IE02-toeplitz-inverse-norm-referee1-20260917",
+      "manifest_sha256": "b9167eaee9368fdf535ab541563f02d2e4b16f8d9066af9139f558ecaaa59681",
+      "payloads_reauthenticated": 127,
+      "mathematical_reuse_only": [
+        "Toeplitz"
+      ]
+    }
+  ],
+  "handoff_payload_counts": {
+    "weighted-coefficients-01": 8,
+    "weighted-coefficients-02": 7,
+    "real-separator-01": 4,
+    "real-separator-02": 8,
+    "real-separator-03": 6,
+    "jordan-reversal-01": 4,
+    "jordan-reversal-02": 7,
+    "jordan-reversal-03": 7
+  },
+  "dependency_evidence_method": "Exact original successful output and source closure plus immediate reused receipt. No redundant full historical replay.",
+  "selected_current_logs": "One standard-three-axiom line each; no warnings",
+  "dependency_warnings": "Coefficients54 retains intentional hp warning; Reflection62 retains intentional hq warning.",
+  "historical_environment_annotation": "The initial LOCAL-ENVIRONMENT text says2048MiB; actual selected argv, receipts, assemblies and runner use4096MiB.",
+  "excluded": [
+    "other selected modules in shared run90",
+    "all other IE02 new proofs",
+    "SP15 authored proofs",
+    "full IE02 target acceptance",
+    "GitHub Comparator/kernel replay/sandbox",
+    "fresh Lean execution"
+  ],
+  "new_compiler_run": false,
+  "proof_source_edit": false,
+  "whole_target_verified": false,
+  "count_change": 0,
+  "published": false
+}

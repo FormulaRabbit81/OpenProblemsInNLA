@@ -1,0 +1,30 @@
+--- before
++++ after
+@@ -16,18 +16,6 @@
+ noncomputable section
+ open Polynomial
+ 
+-private theorem powers_intertwine {n : ℕ} (A B R : Square n)
+-    (h : A * R = R * B) (k : ℕ) : A ^ k * R = R * B ^ k := by
+-  induction k with
+-  | zero => simp
+-  | succ k hk =>
+-    calc
+-      A ^ (k + 1) * R = A ^ k * (A * R) := by rw [pow_succ, mul_assoc]
+-      _ = A ^ k * (R * B) := by rw [h]
+-      _ = (A ^ k * R) * B := (mul_assoc _ _ _).symm
+-      _ = (R * B ^ k) * B := by rw [hk]
+-      _ = R * B ^ (k + 1) := by rw [mul_assoc, pow_succ]
+-
+ private theorem polynomial_intertwine {n : ℕ} (A B R : Square n)
+     (h : A * R = R * B) (p : Poly) : polyEval p A * R = R * polyEval p B := by
+   unfold polyEval
+@@ -36,7 +24,7 @@
+   | monomial k c =>
+     simp only [aeval_monomial, Algebra.algebraMap_eq_smul_one,
+       Matrix.smul_mul, Matrix.mul_smul, one_mul]
+-    rw [powers_intertwine A B R h k]
++    rw [(SemiconjBy.pow_right (a := R) (x := B) (y := A) h.symm k).eq.symm]
+ 
+ private theorem euclidean_mul_apply {n : ℕ} (A B : Square n) (x : H n) :
+     euclideanLin (A * B) x = euclideanLin A (euclideanLin B x) := by

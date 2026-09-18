@@ -1,0 +1,1 @@
+Actual59 reports unresolved dependent-family inference for an explicit PiLp.single inside change. Preserve the already typed e:H n in the changed finite sum; unfold it only in simp. No mathematical, statement, trust or resource changes. The one-dimensional proof itself succeeded, but the failed module is not counted; rerun the whole module.

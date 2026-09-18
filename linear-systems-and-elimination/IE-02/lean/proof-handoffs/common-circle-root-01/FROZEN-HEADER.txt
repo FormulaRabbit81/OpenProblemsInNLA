@@ -1,0 +1,5 @@
+theorem common_circle_root_reduction {l : ℕ} (m : ℕ) (q : Fin l → Poly)
+    (hq : ∀ j, DegreeLE (q j) m) (hne : ∃ j, q j ≠ 0)
+    (z : ℂ) (hz : ‖z‖ = 1) (hroot : ∀ j, (q j).eval z = 0) :
+    1 ≤ m ∧ ∃ r : Fin l → Poly,
+      ∀ j, q j = (X - C z) * r j ∧ DegreeLE (r j) (m - 1) := by

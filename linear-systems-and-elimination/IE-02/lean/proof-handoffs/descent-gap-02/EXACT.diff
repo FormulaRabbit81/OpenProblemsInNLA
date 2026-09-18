@@ -1,0 +1,13 @@
+--- before
++++ after
+@@ -42,7 +42,9 @@
+   obtain ⟨x, hx, hmax⟩ := hcompact.exists_isMaxOn hK hnormContinuous.continuousOn
+   have hxnorm : ‖x‖ = 1 := hx.1
+   have hbound : ‖euclideanLin T x‖ ≤ operatorNorm T := by
+-    simpa only [hxnorm, mul_one] using (euclideanCLM T).le_opNorm x
++    have hop : ‖euclideanLin T x‖ ≤ operatorNorm T * ‖x‖ :=
++      (euclideanCLM T).le_opNorm x
++    simpa only [hxnorm, mul_one] using hop
+   have hstrict : ‖euclideanLin T x‖ < operatorNorm T := by
+     rcases lt_or_eq_of_le hbound with hlt | heq
+     · exact hlt

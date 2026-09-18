@@ -1,0 +1,11 @@
+--- actual101
++++ namedAPI
+@@ -69,7 +69,7 @@
+     (effectivePolynomial m ell q).eval z =
+         ∑ i : Fin (2 * ell + 1),
+           fourierCoeff m q ((i.val : ℤ) - (ell : ℤ)) * z ^ i.val := by
+-      simp only [effectivePolynomial, Polynomial.eval_finset_sum, Polynomial.eval_mul,
++      simp only [effectivePolynomial, Polynomial.eval_finsetSum, Polynomial.eval_mul,
+         Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X]
+     _ = z ^ ell * ∑ i : Fin (2 * ell + 1),
+           fourierCoeff m q ((i.val : ℤ) - (ell : ℤ)) * z ^ ((i.val : ℤ) - (ell : ℤ)) := by

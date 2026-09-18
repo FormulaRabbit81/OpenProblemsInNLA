@@ -1,0 +1,27 @@
+--- toeplitz-nilpotent-01/NilpotentInverse.lean
++++ toeplitz-nilpotent-02/NilpotentInverse.lean
+@@ -28,13 +28,13 @@
+   let S : Square n := ∑ j : Fin n, N ^ j.val
+   have hN : N ^ n = 0 := by
+     dsimp only [N]
+-    rw [smul_pow, hK, smul_zero]
++    rw [_root_.smul_pow, hK, smul_zero]
+   have hleft : (1 - N) * S = 1 := by
+     simpa only [S, Fin.sum_univ_eq_sum_range, hN, sub_zero] using mul_neg_geom_sum N n
+   have hright : S * (1 - N) = 1 := by
+     simpa only [S, Fin.sum_univ_eq_sum_range, hN, sub_zero] using geom_sum_mul_neg N n
+   have hscale : α • (1 - N) = α • 1 + K := by
+-    simp [N, smul_sub, smul_smul, hα]
++    simp [N, smul_smul, hα]
+   refine ⟨?_, ?_, ?_⟩
+   · rw [← hscale]
+     -- finiteInverse is exactly the frozen scalar multiple of this finite sum.
+@@ -50,6 +50,8 @@
+     change α⁻¹ • (∑ j : Fin n, (-α⁻¹ • toeplitz n p) ^ j.val) =
+       (toeplitzAlgHom n) (α⁻¹ • ∑ j : Fin n, (-α⁻¹ • p) ^ j.val)
+     simp only [map_smul, map_sum, map_pow]
++    -- The remaining algebra-hom coercion has toFun = toeplitz n.
++    rfl
+ 
+ #print axioms nilpotent_inverse
+ #assert_trust kernel nilpotent_inverse
