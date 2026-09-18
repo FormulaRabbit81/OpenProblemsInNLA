@@ -1,0 +1,673 @@
+{
+  "version": "v0.4",
+  "project": {
+    "name": "MF-18: full complex limiting Green-function rank equality",
+    "description": "For every complex matrix dimension n\u22651 under the original positivity, unique stabilizing family, nonsingular right-limit, regular-pencil and simple-unit-root assumptions, the Hermitian imaginary-part rank equals half the unit-circle root count.",
+    "authors": [
+      "George Stepaniants"
+    ],
+    "responsible_maintainers": [
+      "George Stepaniants"
+    ],
+    "license": "Apache-2.0",
+    "affiliation": "Department of Computing and Mathematical Sciences, California Institute of Technology",
+    "contribution_note": "Substantial ChatGPT/Codex assistance; detailed source, code, review and documentation roles are in SOURCE-ATTRIBUTION.json."
+  },
+  "repository": {
+    "role": "substantive-development"
+  },
+  "sources": [
+    {
+      "title": "MF-18: complete complex Green-function imaginary-part rank proof",
+      "authors": [
+        "George Stepaniants"
+      ],
+      "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/e7519c46fd249a6a033bfe5d11c66bf47f7f8885/matrix-functions-and-stability/MF-18/solution.md",
+      "type": "repository manuscript",
+      "location": "Theorem 1 and Sections 1\u20134",
+      "relationship": "formalizes",
+      "author_endorsement": "participated",
+      "note": "Complete complex target. Developed with substantial ChatGPT/Codex assistance; independently reviewed by agents."
+    },
+    {
+      "title": "Numerical solution of nonlinear matrix equations arising from Green\u2019s function calculations in nano research",
+      "authors": [
+        "Chun-Hua Guo",
+        "Yueh-Cheng Kuo",
+        "Wen-Wei Lin"
+      ],
+      "id": "https://doi.org/10.1016/j.cam.2012.05.012",
+      "type": "article",
+      "location": "JCAM 236 (2012), 4166\u20134180; equation (1), Theorems 3 and 5, conjecture p. 4172",
+      "relationship": "background",
+      "author_endorsement": "not-contacted",
+      "note": "Original problem and upper bound. Source reviewers inspected the relevant primary-source sections. No literature result is assumed as an axiom."
+    },
+    {
+      "title": "On a nonlinear matrix equation arising in nano research",
+      "authors": [
+        "Chun-Hua Guo",
+        "Yueh-Cheng Kuo",
+        "Wen-Wei Lin"
+      ],
+      "id": "https://doi.org/10.1137/100814706",
+      "type": "article",
+      "location": "SIMAX 33 (2012), 235\u2013262, Section 3",
+      "relationship": "background",
+      "author_endorsement": "not-contacted",
+      "note": "Earlier real-coefficient case; its restricted setting is not substituted for the canonical complex problem."
+    },
+    {
+      "title": "MF-18 real-coefficient scalar-regularization auxiliary theorem",
+      "authors": [
+        "Matthew J. Colbrook"
+      ],
+      "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/e7519c46fd249a6a033bfe5d11c66bf47f7f8885/references/colbrook-matrix-functions-2026-09-11/manuscripts/MF-18.tex",
+      "type": "repository manuscript",
+      "location": "Theorem 1, Corollary 3, Section 8",
+      "relationship": "background",
+      "author_endorsement": "not-contacted",
+      "note": "Separate contribution including defective unit-circle behavior for real coefficients and scalar regularization. It is not a premise of this full complex proof and is not newly claimed here."
+    }
+  ],
+  "related_formalizations": [
+    {
+      "id": "https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62",
+      "relationship": "adapts",
+      "note": "Challenge separation and exact numerical-target documentation pattern; no mathematical theorem from this project is imported."
+    },
+    {
+      "id": "https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1",
+      "relationship": "adapts",
+      "note": "Challenge separation and exact numerical-target documentation pattern; no mathematical theorem from this project is imported."
+    },
+    {
+      "id": "https://github.com/sgstepaniants/OpenProblemsInNLA/tree/1b9f12661b90f40561e255293e11b2a08d79351e",
+      "relationship": "adapts",
+      "note": "MF05 kernel-mode LeanCert idiom by George Stepaniants. That project credits its separate local-neighborhood argument to Matthew J. Colbrook. No MF05 theorem is a premise of MF18."
+    }
+  ],
+  "automation": {
+    "methods": [
+      {
+        "method": "agent",
+        "framework": "OpenAI Codex",
+        "tool_setup": "Statement-first frozen Challenge/Definitions, pinned Mathlib and LeanCert; root alone ran one local Lean process with one thread and a 4096 MiB limit. Two other agents reviewed the proof without compiling. Actual non-root Linux run 35315336123 separately passed real Comparator/default-kernel/sandbox and rejection controls at proof commit 0d3a658789510d3cdd14729f22165219f7e7eaf8.",
+        "prompting_notes": "Preserve the complete original target and exact source hashes; minimize numerical computation; use kernel-mode LeanCert; separate local compilation from final Linux Comparator."
+      }
+    ],
+    "notes": "Proof author, compiler, independent reviewers and documentation roles are recorded. No cost or runtime model-version estimate is invented. This docs task ran only Python and source reads."
+  },
+  "status": {
+    "scope": "Complete original MF-18 target; actual local and non-root Linux immutable proof-commit verification passed",
+    "sorry_count": 0,
+    "sorry_in_definitions": 0,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "main_results": [
+      {
+        "declaration": "NLA.MF18.certified_half",
+        "file": "NLA/MF18/Numerical.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "b3ddd61721a6ddc8af9a3f179082ff89f8bb88c63779973b3c6c8ff3854a9f1a",
+        "contract": "C01",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.stability_semantics",
+        "file": "NLA/MF18/StabilitySemantics.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "5e59fc4ef81e51822d2f8a64b35ecb55ff039c6a274390a8378100b38cbabeb0",
+        "contract": "C02",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.pencil_evaluation",
+        "file": "NLA/MF18/PencilAlgebra.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "b122bfc87dfbf05864062983315ab3260c4575ffe024a21ca3a324999121adff",
+        "contract": "C03",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.pencil_degree_bound",
+        "file": "NLA/MF18/PencilAlgebra.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "b122bfc87dfbf05864062983315ab3260c4575ffe024a21ca3a324999121adff",
+        "contract": "C04",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.positive_average_and_sign",
+        "file": "NLA/MF18/Positivity.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "5fe658ec6781c199b6365b5432d96abe6cb14bcb09a4cbd401e4ecc55f7d4840",
+        "contract": "C05",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.homotopy_boundary_nonvanishing",
+        "file": "NLA/MF18/BoundaryNonvanishing.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "e00727f13b1ddd3fd4a36568153066c0f29934a11e962452643be78d82e27bcc",
+        "contract": "C06",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.cayley_degree_and_count",
+        "file": "NLA/MF18/CayleyCount.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "2899145f0a4938699aa679326d0b827fa18616ff4a4368f87caff6ed54db9aa2",
+        "contract": "C07",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.cayley_boundary_transfer",
+        "file": "NLA/MF18/CayleyBoundary.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "4c99f1e0422a293ffd3b0620dd8b6d18d57617c6c7537a43eb72595139b31a76",
+        "contract": "C08",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.monic_half_plane_count_homotopy",
+        "file": "NLA/MF18/HalfPlaneHomotopy.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "42ba9b419eab07df5fcf6c3d4a5ac96e984559e8f07d1aa3de9b649d2da1e44c",
+        "contract": "C09",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.bounded_degree_disk_count_homotopy",
+        "file": "NLA/MF18/DiskHomotopy.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "bb9d8e339df1015d532b48daf52742d8ae66c0b4eab52963d1ee30dcbf843cd8",
+        "contract": "C10",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.regularized_root_count",
+        "file": "NLA/MF18/RegularizedCount.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "fd7a74040b013c2ac39f70e0dcd5339ef30efcc76752cd9a26c059cb53eda911",
+        "contract": "C11",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.solution_factorization",
+        "file": "NLA/MF18/PencilAlgebra.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "b122bfc87dfbf05864062983315ab3260c4575ffe024a21ca3a324999121adff",
+        "contract": "C12",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.complementary_stability",
+        "file": "NLA/MF18/ComplementaryStability.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "11c3fd8726baeccf832bf425f780de361540aa7306ca7b77b90e300133c0b14a",
+        "contract": "C13",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.closed_disk_stability_limit",
+        "file": "NLA/MF18/StabilityLimits.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "8b22666b00759a0a822168d58b1eb3fc3fb068d8ea4cc88e807f45bb8cc587f9",
+        "contract": "C14",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.limiting_equation_and_spectra",
+        "file": "NLA/MF18/LimitingEquation.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "2a372cb33c3c1e87b4fc565640a377c7fba05ab66ab6316e41da59b7ea93e4bf",
+        "contract": "C15",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.reciprocal_count_identity",
+        "file": "NLA/MF18/ReciprocalCount.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "e3224e0ffa046bef7afb076d6e9d4eddf554886c8c13fdb0f3a89687aa44ca1a",
+        "contract": "C16",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.selected_spectrum_count",
+        "file": "NLA/MF18/SelectedCount.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "6e536ee9a913f584b5cb913cfbc7ded75a5b5419859a71d0e87381121eddc4b1",
+        "contract": "C17",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.stein_identity",
+        "file": "NLA/MF18/SteinIdentity.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "0a89e60cdcf71ab3beeb7b7596eedd913c21ccb9cc5d35341ce3d9d023f97203",
+        "contract": "C18",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.simple_unit_root_pairing",
+        "file": "NLA/MF18/SimpleUnitPairing.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "7abbdbc1acfad14cb0529a1698ff5fb3f1f3f79488e196b2e3866e2c13ce5ea7",
+        "contract": "C19",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.generalized_stein_pairing",
+        "file": "NLA/MF18/GeneralizedStein.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "5d12c7c02e693888b1cc48ba9a0f16ee841e7b27c9c73e309e43f79b89b078aa",
+        "contract": "C20",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.stable_space_dimension",
+        "file": "NLA/MF18/StableDimension.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "8ecfb9ad40d6b43fc271c87d5c20b552a93bd18c6a2a006b02ab317f4cde9145",
+        "contract": "C21",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.stable_space_in_kernel",
+        "file": "NLA/MF18/StableKernel.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "bfd0426a7b77d86444bd84bfb0cc6c10c312b1c8a7787484088500baf95bffd0",
+        "contract": "C22",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.stein_rank_lower_bound",
+        "file": "NLA/MF18/SteinRankLower.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "8cf767f262d193d700f256dec11b44bbd3a6a6c210504e44c0119973fdbc8ed9",
+        "contract": "C23",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.full_complex_rank",
+        "file": "NLA/MF18/CanonicalRank.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "1c3ae7603ad1821b5d749cf890de5fbf440507464edba9a4331f275f94fc0a3e",
+        "contract": "C24",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MF18.canonical_full_complex_rank",
+        "file": "NLA/MF18/CanonicalRank.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "1c3ae7603ad1821b5d749cf890de5fbf440507464edba9a4331f275f94fc0a3e",
+        "contract": "C25",
+        "verification_status": "PASS actual Linux run 35315336123 at 0d3a658789510d3cdd14729f22165219f7e7eaf8: Comparator, default kernel, standard axioms and per-project controls."
+      }
+    ],
+    "deliberate_challenge_placeholders": 25,
+    "local_proof": {
+      "run": "development-340",
+      "record": "verification/local340/LOCAL-COMPLETE.json",
+      "record_sha256": "e756d376820b92a92ca1b1c9b61bb9b508779a2546f51d29e66e7856769b1df4",
+      "modules": 38,
+      "fresh_modules": 28,
+      "source_matched_reused_modules": 10,
+      "contracts": 25,
+      "platform": "macOS",
+      "compiler_owner": "/root; one process, --threads=1 --memory=4096",
+      "success": true,
+      "source_sha256": {
+        "NLA/MF18/GeneralizedStein.lean": "5d12c7c02e693888b1cc48ba9a0f16ee841e7b27c9c73e309e43f79b89b078aa",
+        "NLA/MF18/HalfPlaneHomotopy.lean": "42ba9b419eab07df5fcf6c3d4a5ac96e984559e8f07d1aa3de9b649d2da1e44c",
+        "Solution.lean": "ecb4bdd99330332bed1de12c2aa2674c33efa8dd0a802ee4586ead4ee928ab46",
+        "NLA/MF18/BoundaryNonvanishing.lean": "e00727f13b1ddd3fd4a36568153066c0f29934a11e962452643be78d82e27bcc",
+        "NLA/MF18/SolutionPolynomial.lean": "acd286682a629440472f9a2b5b1363729f74318a7cc17df69b4cf590b20abd07",
+        "NLA/MF18/PairingVectors.lean": "710b23315f1d25dbe2b332082723846193a13fdf75d7c604e6c66cd3dcaea589",
+        "NLA/MF18/CayleyCount.lean": "2899145f0a4938699aa679326d0b827fa18616ff4a4368f87caff6ed54db9aa2",
+        "NLA/MF18/CanonicalRank.lean": "1c3ae7603ad1821b5d749cf890de5fbf440507464edba9a4331f275f94fc0a3e",
+        "NLA/MF18/Positivity.lean": "5fe658ec6781c199b6365b5432d96abe6cb14bcb09a4cbd401e4ecc55f7d4840",
+        "NLA/MF18/StabilitySemantics.lean": "5e59fc4ef81e51822d2f8a64b35ecb55ff039c6a274390a8378100b38cbabeb0",
+        "NLA/MF18/PairingAlgebra.lean": "4f6d433aafef295184c326087ec5b0629c79cba3c6deb0b45f76d7492685ecd1",
+        "NLA/MF18/StabilityLimits.lean": "8b22666b00759a0a822168d58b1eb3fc3fb068d8ea4cc88e807f45bb8cc587f9",
+        "NLA/MF18/CayleyBoundary.lean": "4c99f1e0422a293ffd3b0620dd8b6d18d57617c6c7537a43eb72595139b31a76",
+        "NLA/MF18/CayleyAlgebra.lean": "adc9a31f0bc564a60741392c9c2c9dd73ce38e55e069936bc0161a131e7038ce",
+        "NLA/MF18/SelectedCount.lean": "6e536ee9a913f584b5cb913cfbc7ded75a5b5419859a71d0e87381121eddc4b1",
+        "NLA/MF18/RootCountLimits.lean": "57fe9a064c62702b0b5671f86b6e1c1cf7004d4dc934f7b68976d9b20c79f6e2",
+        "NLA/MF18/SteinRankLower.lean": "8cf767f262d193d700f256dec11b44bbd3a6a6c210504e44c0119973fdbc8ed9",
+        "NLA/MF18/DiskHomotopy.lean": "bb9d8e339df1015d532b48daf52742d8ae66c0b4eab52963d1ee30dcbf843cd8",
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/RootProductLimits.lean": "c093dc888d35f28608452aa30cb9f4d5f8200c6fd2fffe0d4138f2adef3effd3",
+        "NLA/MF18/StableKernel.lean": "bfd0426a7b77d86444bd84bfb0cc6c10c312b1c8a7787484088500baf95bffd0",
+        "NLA/MF18/SimpleUnitPairing.lean": "7abbdbc1acfad14cb0529a1698ff5fb3f1f3f79488e196b2e3866e2c13ce5ea7",
+        "NLA/MF18/PencilAlgebra.lean": "b122bfc87dfbf05864062983315ab3260c4575ffe024a21ca3a324999121adff",
+        "NLA/MF18/ReflectionAlgebra.lean": "a1b2dc3f950fe4b479286595ddfa3cfc8ba60db8dd1cef5a68652d12073850fa",
+        "NLA/MF18/RootEnumeration.lean": "4f1d6c5e4914b74862098b433661994d249a3fdb1eff0d8f5e32a8e3bb7af2e2",
+        "NLA/MF18/SimpleEigenfunctional.lean": "77322e8e6c982717d963790c6ed35447366db5e6ff8fb61381ae46f62c854cba",
+        "NLA/MF18/ComplementaryStability.lean": "11c3fd8726baeccf832bf425f780de361540aa7306ca7b77b90e300133c0b14a",
+        "NLA/MF18/Numerical.lean": "b3ddd61721a6ddc8af9a3f179082ff89f8bb88c63779973b3c6c8ff3854a9f1a",
+        "NLA/MF18/UnitPencilKernel.lean": "833902739fad92b686df8c236ec11f9de370980b5f9479e041b6339689e640c7",
+        "NLA/MF18/ReflectedRoots.lean": "1a432d5c3bb507995be560d5c15ac4d5e26d1967b770a7d97048f4a46db6c81f",
+        "NLA/MF18/UnregularizedFactorization.lean": "b22164146c7009648d7b0fa19d4ba208a5b4255a4f54d99a5bc340ae55b06729",
+        "NLA/MF18/WeakComplement.lean": "6e5391890bf737ba26f240b5f66df802b3697c00381c4b55801a1dafdbddcb1c",
+        "NLA/MF18/ReciprocalCount.lean": "e3224e0ffa046bef7afb076d6e9d4eddf554886c8c13fdb0f3a89687aa44ca1a",
+        "NLA/MF18/RegularizedCount.lean": "fd7a74040b013c2ac39f70e0dcd5339ef30efcc76752cd9a26c059cb53eda911",
+        "NLA/MF18/CoefficientContinuity.lean": "67e69f3148c429c47a65ea94d779d34c739fc631248bd8e381355efea77e2851",
+        "NLA/MF18/StableDimension.lean": "8ecfb9ad40d6b43fc271c87d5c20b552a93bd18c6a2a006b02ab317f4cde9145",
+        "NLA/MF18/SteinIdentity.lean": "0a89e60cdcf71ab3beeb7b7596eedd913c21ccb9cc5d35341ce3d9d023f97203",
+        "NLA/MF18/LimitingEquation.lean": "2a372cb33c3c1e87b4fc565640a377c7fba05ab66ab6316e41da59b7ea93e4bf"
+      },
+      "execution_lineage": "The original completion record binds 38 successful source origins, command lines, logs, dependencies and reuse chains. Documentation and independent reviewers did not rerun Lean."
+    },
+    "local_type_diagnostic": {
+      "run": "development-341",
+      "record": "verification/type-diagnostics-341/COMPARISON.json",
+      "record_sha256": "6a1faf5e104e7f7a0c3bb66bbba92a72c7225145c823f46f37587b94bc443710",
+      "matched_contracts": 25,
+      "binder_normalized_types_and_universes_match": true,
+      "LeanCert_certificate_consumed": true,
+      "Comparator_executed": false,
+      "scope": "Separate actual elaboration of frozen Challenge and Solution; binder names erased only. Actual proof bodies reach the frozen certificate and checked LeanCert declarations."
+    },
+    "final_Linux_status": "passed at immutable proof commit; later publication checks pending",
+    "whole_problem_verified": true,
+    "completed_original_targets": 1
+  },
+  "fidelity": {
+    "divergences": "No weakening of the original target. Fin n with NeZero n models arbitrary n\u22651 over \u2102. Root counts are multiset counts with algebraic multiplicity; C02 proves spectral-radius semantics. The canonical export retains uniqueness, although C24 proves the stronger result without it. Fixed-grade Cayley root-count homotopy, algebraic simple-root pairings and generalized Stein pairings replace informal analytic steps with proved lemmas. No invertibility of C or D, positivity of the limiting imaginary part, or interior semisimplicity is assumed. Limit existence and nonsingularity, regularity, and simple unit roots remain original assumptions. Historical preproof comments in frozen files are preserved byte-for-byte; current status is in STATE.json."
+  },
+  "review": {
+    "status": "agent-reviewed (complete source scope; final publication checks pending)",
+    "reviewers": [
+      "/root/nm04_final_referee1 \u2014 independent nonauthor proof reviewer",
+      "/root/mi24_full_referee1 \u2014 independent nonauthor proof reviewer"
+    ],
+    "notes": "Both full local332 baseline reviews requested bounded quality/reuse improvements. Both independently approved the exact local340 continuation after the 17-file cleanup and actual local340/341 evidence. The historical request-changes packets remain immutable. Two earlier nonauthor statement approvals preceded implementation. These are AI-agent reviews under pinned Tau Ceti guidance, not official Tau Ceti service execution or external human peer review. The second source reviewer subsequently prepared these docs; that is a separate role and not independent metadata review. See REVIEW-INDEX.json."
+  },
+  "alignment": {
+    "canonical_problem": "MF-18",
+    "canonical_revision": "e7519c46fd249a6a033bfe5d11c66bf47f7f8885",
+    "canonical_path": "matrix-functions-and-stability/MF-18/README.md",
+    "contracts": "IMPLEMENTATION-MAP.json",
+    "frozen_statement": "STATEMENT-FREEZE.json",
+    "numerical_targets": "NUMERICAL_TARGETS.md",
+    "formal_assumptions": "NLA.MF18.GreenAssumptions",
+    "formal_proof": "NLA.MF18.canonical_full_complex_rank",
+    "stronger_proof_without_uniqueness": "NLA.MF18.full_complex_rank",
+    "comparator": "comparator.json",
+    "extra_substantive_hypotheses": false,
+    "status": "All 25 exact contracts matched by actual Linux Comparator at the immutable proof revision"
+  },
+  "acknowledgements": "George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology. Preserve Guo\u2013Kuo\u2013Lin\u2019s original problem and earlier results, Matthew J. Colbrook\u2019s separate auxiliary theorem, and Mathlib/LeanCert code authorship including the credited Yakov Pechersky determinant-degree argument. Schiffer, Forsythe and MF05 are workflow/code-pattern sources as specified in SOURCE-ATTRIBUTION.json.",
+  "verification": {
+    "local_Lean": {
+      "run": "development-340",
+      "record": "verification/local340/LOCAL-COMPLETE.json",
+      "record_sha256": "e756d376820b92a92ca1b1c9b61bb9b508779a2546f51d29e66e7856769b1df4",
+      "modules": 38,
+      "fresh_modules": 28,
+      "source_matched_reused_modules": 10,
+      "contracts": 25,
+      "platform": "macOS",
+      "compiler_owner": "/root; one process, --threads=1 --memory=4096",
+      "success": true,
+      "source_sha256": {
+        "NLA/MF18/GeneralizedStein.lean": "5d12c7c02e693888b1cc48ba9a0f16ee841e7b27c9c73e309e43f79b89b078aa",
+        "NLA/MF18/HalfPlaneHomotopy.lean": "42ba9b419eab07df5fcf6c3d4a5ac96e984559e8f07d1aa3de9b649d2da1e44c",
+        "Solution.lean": "ecb4bdd99330332bed1de12c2aa2674c33efa8dd0a802ee4586ead4ee928ab46",
+        "NLA/MF18/BoundaryNonvanishing.lean": "e00727f13b1ddd3fd4a36568153066c0f29934a11e962452643be78d82e27bcc",
+        "NLA/MF18/SolutionPolynomial.lean": "acd286682a629440472f9a2b5b1363729f74318a7cc17df69b4cf590b20abd07",
+        "NLA/MF18/PairingVectors.lean": "710b23315f1d25dbe2b332082723846193a13fdf75d7c604e6c66cd3dcaea589",
+        "NLA/MF18/CayleyCount.lean": "2899145f0a4938699aa679326d0b827fa18616ff4a4368f87caff6ed54db9aa2",
+        "NLA/MF18/CanonicalRank.lean": "1c3ae7603ad1821b5d749cf890de5fbf440507464edba9a4331f275f94fc0a3e",
+        "NLA/MF18/Positivity.lean": "5fe658ec6781c199b6365b5432d96abe6cb14bcb09a4cbd401e4ecc55f7d4840",
+        "NLA/MF18/StabilitySemantics.lean": "5e59fc4ef81e51822d2f8a64b35ecb55ff039c6a274390a8378100b38cbabeb0",
+        "NLA/MF18/PairingAlgebra.lean": "4f6d433aafef295184c326087ec5b0629c79cba3c6deb0b45f76d7492685ecd1",
+        "NLA/MF18/StabilityLimits.lean": "8b22666b00759a0a822168d58b1eb3fc3fb068d8ea4cc88e807f45bb8cc587f9",
+        "NLA/MF18/CayleyBoundary.lean": "4c99f1e0422a293ffd3b0620dd8b6d18d57617c6c7537a43eb72595139b31a76",
+        "NLA/MF18/CayleyAlgebra.lean": "adc9a31f0bc564a60741392c9c2c9dd73ce38e55e069936bc0161a131e7038ce",
+        "NLA/MF18/SelectedCount.lean": "6e536ee9a913f584b5cb913cfbc7ded75a5b5419859a71d0e87381121eddc4b1",
+        "NLA/MF18/RootCountLimits.lean": "57fe9a064c62702b0b5671f86b6e1c1cf7004d4dc934f7b68976d9b20c79f6e2",
+        "NLA/MF18/SteinRankLower.lean": "8cf767f262d193d700f256dec11b44bbd3a6a6c210504e44c0119973fdbc8ed9",
+        "NLA/MF18/DiskHomotopy.lean": "bb9d8e339df1015d532b48daf52742d8ae66c0b4eab52963d1ee30dcbf843cd8",
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/RootProductLimits.lean": "c093dc888d35f28608452aa30cb9f4d5f8200c6fd2fffe0d4138f2adef3effd3",
+        "NLA/MF18/StableKernel.lean": "bfd0426a7b77d86444bd84bfb0cc6c10c312b1c8a7787484088500baf95bffd0",
+        "NLA/MF18/SimpleUnitPairing.lean": "7abbdbc1acfad14cb0529a1698ff5fb3f1f3f79488e196b2e3866e2c13ce5ea7",
+        "NLA/MF18/PencilAlgebra.lean": "b122bfc87dfbf05864062983315ab3260c4575ffe024a21ca3a324999121adff",
+        "NLA/MF18/ReflectionAlgebra.lean": "a1b2dc3f950fe4b479286595ddfa3cfc8ba60db8dd1cef5a68652d12073850fa",
+        "NLA/MF18/RootEnumeration.lean": "4f1d6c5e4914b74862098b433661994d249a3fdb1eff0d8f5e32a8e3bb7af2e2",
+        "NLA/MF18/SimpleEigenfunctional.lean": "77322e8e6c982717d963790c6ed35447366db5e6ff8fb61381ae46f62c854cba",
+        "NLA/MF18/ComplementaryStability.lean": "11c3fd8726baeccf832bf425f780de361540aa7306ca7b77b90e300133c0b14a",
+        "NLA/MF18/Numerical.lean": "b3ddd61721a6ddc8af9a3f179082ff89f8bb88c63779973b3c6c8ff3854a9f1a",
+        "NLA/MF18/UnitPencilKernel.lean": "833902739fad92b686df8c236ec11f9de370980b5f9479e041b6339689e640c7",
+        "NLA/MF18/ReflectedRoots.lean": "1a432d5c3bb507995be560d5c15ac4d5e26d1967b770a7d97048f4a46db6c81f",
+        "NLA/MF18/UnregularizedFactorization.lean": "b22164146c7009648d7b0fa19d4ba208a5b4255a4f54d99a5bc340ae55b06729",
+        "NLA/MF18/WeakComplement.lean": "6e5391890bf737ba26f240b5f66df802b3697c00381c4b55801a1dafdbddcb1c",
+        "NLA/MF18/ReciprocalCount.lean": "e3224e0ffa046bef7afb076d6e9d4eddf554886c8c13fdb0f3a89687aa44ca1a",
+        "NLA/MF18/RegularizedCount.lean": "fd7a74040b013c2ac39f70e0dcd5339ef30efcc76752cd9a26c059cb53eda911",
+        "NLA/MF18/CoefficientContinuity.lean": "67e69f3148c429c47a65ea94d779d34c739fc631248bd8e381355efea77e2851",
+        "NLA/MF18/StableDimension.lean": "8ecfb9ad40d6b43fc271c87d5c20b552a93bd18c6a2a006b02ab317f4cde9145",
+        "NLA/MF18/SteinIdentity.lean": "0a89e60cdcf71ab3beeb7b7596eedd913c21ccb9cc5d35341ce3d9d023f97203",
+        "NLA/MF18/LimitingEquation.lean": "2a372cb33c3c1e87b4fc565640a377c7fba05ab66ab6316e41da59b7ea93e4bf"
+      },
+      "execution_lineage": "The original completion record binds 38 successful source origins, command lines, logs, dependencies and reuse chains. Documentation and independent reviewers did not rerun Lean."
+    },
+    "local_diagnostic": {
+      "run": "development-341",
+      "record": "verification/type-diagnostics-341/COMPARISON.json",
+      "record_sha256": "6a1faf5e104e7f7a0c3bb66bbba92a72c7225145c823f46f37587b94bc443710",
+      "matched_contracts": 25,
+      "binder_normalized_types_and_universes_match": true,
+      "LeanCert_certificate_consumed": true,
+      "Comparator_executed": false,
+      "scope": "Separate actual elaboration of frozen Challenge and Solution; binder names erased only. Actual proof bodies reach the frozen certificate and checked LeanCert declarations."
+    },
+    "independent_reviews": {
+      "statement": 2,
+      "final": 2,
+      "record": "reviews/INDEX.json"
+    },
+    "GitHub_Comparator": {
+      "status": "passed",
+      "published_commit": "0d3a658789510d3cdd14729f22165219f7e7eaf8",
+      "run": 35315336123,
+      "job": 105505732924,
+      "url": "https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35315336123/job/105505732924",
+      "input_count": 226,
+      "exports": 25,
+      "evidence": "verification/linux-2026-09-18/README.md",
+      "root_audit": "verification/linux-2026-09-18/ROOT-AUDIT.json",
+      "artifact_sha256": "3acd67339797de461be65197d27bf1a3e8d541b176bdc5c850bc66bc2ea7f618",
+      "source_lock_sha256": "b3833b07916e5db77579b9cc53ca582282f6a841f36d6a60d693e5b02d342b6b",
+      "scope": "Actual proof-commit execution; later publication and PR merge checkouts checked separately"
+    },
+    "count_change": 0,
+    "package_preflight": {
+      "result": "Coordinator preflight passed",
+      "record": "verification/MF18-ROOT-PACKAGE-PREFLIGHT.json",
+      "checks": 2035,
+      "scope": "Author/coordinator packaging checks, not an additional independent referee. Two independent complete source approvals remain in reviews/INDEX.json."
+    },
+    "publication_status": "Immutable full proof verified; publication and PR checks pending"
+  }
+}

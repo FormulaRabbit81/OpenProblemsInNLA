@@ -1,0 +1,58 @@
+{
+  "overall": "request_changes",
+  "mathematical_source_verdict": "approve",
+  "semantic_blockers": [],
+  "scope": "Complete original target, all25 frozen contracts and entire38-module local332 closure, plus retained local332/334 evidence. No final Linux or publication acceptance.",
+  "rubrics": {
+    "correctness": "approve",
+    "generality": "request_changes: R2 duplicated algebraic special case; no target narrowing found",
+    "proof_quality": "request_changes: Q1 and R2",
+    "attribution": "approve for mathematical/proof-source scope; final publication metadata is separate",
+    "reuse": "request_changes: R1"
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "rubric": "reuse",
+      "severity": "request_changes",
+      "files": [
+        "NLA/MF18/BoundaryNonvanishing.lean:32",
+        "NLA/MF18/UnitPencilKernel.lean:28"
+      ],
+      "finding": "Both local proofs expand the same adjoint scalar/double-adjoint identity to establish that lam*Cᴴ + lam^-1*C is Hermitian.",
+      "located_replacement": "Mathlib/LinearAlgebra/Matrix/Hermitian.lean:216 Matrix.isHermitian_add_transpose_self",
+      "replacement_source_sha256": "9f4e84cafd93f05935d8accc2846a4d624c1fe994c53ab348b8338464bf5cb21",
+      "requested_action": "Specialize the existing theorem to lam • C.conjTranspose and use the proved unit-circle star identity to rewrite its second summand; reuse at both sites. Do not add a compatibility alias or change the frozen theorem headers.",
+      "mathematical_defect": false
+    },
+    {
+      "id": "R2",
+      "rubric": "generality/proof-quality",
+      "severity": "request_changes",
+      "files": [
+        "NLA/MF18/PencilAlgebra.lean:60",
+        "NLA/MF18/UnregularizedFactorization.lean:23"
+      ],
+      "finding": "solution_factorization and unregularized_factorization repeat the same determinant-nonzero algebraic pencil identity with only the input coefficient names changed. The unregularized theorem correctly does not assume stability, but its proof is the same special case.",
+      "requested_action": "Factor the common matrix identity for arbitrary A,B,Q,X with det X nonzero and X+B*X^-1*A=Q. Derive the unchanged regularized and unregularized statements from it. Keep the exact original contracts and assumptions of the downstream theorem.",
+      "mathematical_defect": false
+    },
+    {
+      "id": "Q1",
+      "rubric": "proof-quality",
+      "severity": "request_changes",
+      "inventory": "BRIDGE-INVENTORY.json",
+      "finding": "31 of32 explicit change/show sites lack a local explanation of the definitional or wrapper bridge. SelectedCount.lean:43 already has an adequate local IsRoot explanation and is exempt. Two listed sites overlap R1 and may disappear when the existing theorem is used.",
+      "requested_action": "At each requested site, replace the conversion with a suitable explicit rewrite or add a concise adjacent explanation of the exact definitional/coercion bridge and why the current goal needs it. Do not alter mathematical targets or frozen files.",
+      "mathematical_defect": false
+    }
+  ],
+  "reviewer_is_proof_author": false,
+  "reviewer_Lean_runs": 0,
+  "reviewer_Comparator_runs": 0,
+  "external_human_peer_review": false,
+  "Tau_Ceti_service_executed": false,
+  "final_Linux_status": "not-run",
+  "count_increment": 0,
+  "next_required_step": "Source author performs only requested cleanup; root alone recompiles the changed closure and supplies an exact successful successor snapshot, then this nonauthor reviewer checks the bounded delta."
+}

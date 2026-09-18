@@ -2,7 +2,7 @@
 
 **112 problems with open targets:** 42 open and 70 partially resolved. **105 other retained entries**, excluded from the open count.
 
-**Resolution evidence:** 49 solved (published or independently audited); 56 solved with Lean verification.
+**Resolution evidence:** 48 solved (published or independently audited); 57 solved with Lean verification.
 
 Each entry records its own literature-check date. Literature checks are bounded; ratings are editorial. “Impact” uses the canonical `Importance` field.
 
@@ -111,7 +111,7 @@ Retained entries outside the open count:
 | [MF-12](matrix-functions-and-stability/MF-12/README.md) | Realizing arbitrary polynomial growth exponents by finite matrix families | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-12/problem.pdf) · [TeX](matrix-functions-and-stability/MF-12/problem.tex) |
 | [MF-14](matrix-functions-and-stability/MF-14/README.md) | Degree coverage with seven matrix multiplications | **✅ SOLVED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-14/problem.pdf) · [TeX](matrix-functions-and-stability/MF-14/problem.tex) |
 | [MF-16](matrix-functions-and-stability/MF-16/README.md) | Uniqueness of positive definite solutions of two-letter word equations in order two | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](matrix-functions-and-stability/MF-16/problem.pdf) · [TeX](matrix-functions-and-stability/MF-16/problem.tex) |
-| [MF-18](matrix-functions-and-stability/MF-18/README.md) | Imaginary-part rank in a limiting Green-function matrix equation | **✅ SOLVED** | challenging | interesting to specialist | [PDF](matrix-functions-and-stability/MF-18/problem.pdf) · [TeX](matrix-functions-and-stability/MF-18/problem.tex) |
+| [MF-18](matrix-functions-and-stability/MF-18/README.md) | Imaginary-part rank in a limiting Green-function matrix equation | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](matrix-functions-and-stability/MF-18/problem.pdf) · [TeX](matrix-functions-and-stability/MF-18/problem.tex) |
 | [MF-21](matrix-functions-and-stability/MF-21/README.md) | The uniform expansion threshold for Toeplitz symbols with higher-order zeros | **✅ SOLVED** | challenging | interesting to specialist | [PDF](matrix-functions-and-stability/MF-21/problem.pdf) · [TeX](matrix-functions-and-stability/MF-21/problem.tex) |
 | [MF-22](matrix-functions-and-stability/MF-22/README.md) | Polynomial conditioning of the cubic C1 spline Schrödinger Toeplitz family | **🏆 LEAN VERIFIED** | hard | interesting to specialist | [PDF](matrix-functions-and-stability/MF-22/problem.pdf) · [TeX](matrix-functions-and-stability/MF-22/problem.tex) |
 | [MF-24](matrix-functions-and-stability/MF-24/README.md) | A dimension-independent polynomial norm bound from super-identical pseudospectra | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](matrix-functions-and-stability/MF-24/problem.pdf) · [TeX](matrix-functions-and-stability/MF-24/problem.tex) |

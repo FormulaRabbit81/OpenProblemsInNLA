@@ -1,0 +1,377 @@
+﻿2026-09-18T06:32:44.1443088Z Current runner version: '2.337.0'
+2026-09-18T06:32:44.1460685Z ##[group]Runner Image Provisioner
+2026-09-18T06:32:44.1461540Z Hosted Compute Agent
+2026-09-18T06:32:44.1462031Z Version: 20260828.587
+2026-09-18T06:32:44.1462927Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-09-18T06:32:44.1463581Z Build Date: 2026-08-28T16:44:25Z
+2026-09-18T06:32:44.1464148Z Worker ID: {8e7d6122-50d4-4821-a25c-f2be866d1d46}
+2026-09-18T06:32:44.1464764Z Azure Region: centralus
+2026-09-18T06:32:44.1465257Z ##[endgroup]
+2026-09-18T06:32:44.1466506Z ##[group]Operating System
+2026-09-18T06:32:44.1467072Z Ubuntu
+2026-09-18T06:32:44.1467512Z 24.04.5
+2026-09-18T06:32:44.1467957Z LTS
+2026-09-18T06:32:44.1468397Z ##[endgroup]
+2026-09-18T06:32:44.1468847Z ##[group]Runner Image
+2026-09-18T06:32:44.1469339Z Image: ubuntu-24.04
+2026-09-18T06:32:44.1469810Z Version: 20260907.300.1
+2026-09-18T06:32:44.1470873Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+2026-09-18T06:32:44.1472225Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+2026-09-18T06:32:44.1473339Z ##[endgroup]
+2026-09-18T06:32:44.1474281Z ##[group]GITHUB_TOKEN Permissions
+2026-09-18T06:32:44.1476115Z Contents: read
+2026-09-18T06:32:44.1476603Z Metadata: read
+2026-09-18T06:32:44.1477040Z ##[endgroup]
+2026-09-18T06:32:44.1478756Z Secret source: Actions
+2026-09-18T06:32:44.1479587Z Cache mode: write
+2026-09-18T06:32:44.1480211Z Prepare workflow directory
+2026-09-18T06:32:44.1748746Z Prepare all required actions
+2026-09-18T06:32:44.1788469Z Getting action download info
+2026-09-18T06:32:44.4055851Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-09-18T06:32:44.5951796Z Complete job name: select
+2026-09-18T06:32:44.6523854Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-18T06:32:44.6531271Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-09-18T06:32:44.6532276Z with:
+2026-09-18T06:32:44.6532722Z   fetch-depth: 0
+2026-09-18T06:32:44.6533198Z   persist-credentials: false
+2026-09-18T06:32:44.6533773Z   repository: sgstepaniants/OpenProblemsInNLA
+2026-09-18T06:32:44.6537264Z   token: ***
+2026-09-18T06:32:44.6537696Z   ssh-strict: true
+2026-09-18T06:32:44.6538169Z   ssh-user: git
+2026-09-18T06:32:44.6538605Z   clean: true
+2026-09-18T06:32:44.6539068Z   sparse-checkout-cone-mode: true
+2026-09-18T06:32:44.6539575Z   fetch-tags: false
+2026-09-18T06:32:44.6540017Z   show-progress: true
+2026-09-18T06:32:44.6540585Z   lfs: false
+2026-09-18T06:32:44.6541005Z   submodules: false
+2026-09-18T06:32:44.6541458Z   set-safe-directory: true
+2026-09-18T06:32:44.6541951Z   allow-unsafe-pr-checkout: false
+2026-09-18T06:32:44.6542711Z ##[endgroup]
+2026-09-18T06:32:44.7397609Z Syncing repository: sgstepaniants/OpenProblemsInNLA
+2026-09-18T06:32:44.7399468Z ##[group]Getting Git version info
+2026-09-18T06:32:44.7400397Z Working directory is '/home/runner/work/OpenProblemsInNLA/OpenProblemsInNLA'
+2026-09-18T06:32:44.7401883Z [command]/usr/bin/git version
+2026-09-18T06:32:44.7461555Z git version 2.55.0
+2026-09-18T06:32:44.7477340Z ##[endgroup]
+2026-09-18T06:32:44.7489858Z Temporarily overriding HOME='/home/runner/work/_temp/e5eddec2-bfe3-4a74-909c-1c5bfdc0b5c2' before making global git config changes
+2026-09-18T06:32:44.7491947Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-18T06:32:44.7494313Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/OpenProblemsInNLA/OpenProblemsInNLA
+2026-09-18T06:32:44.7533857Z Deleting the contents of '/home/runner/work/OpenProblemsInNLA/OpenProblemsInNLA'
+2026-09-18T06:32:44.7540517Z ##[group]Initializing the repository
+2026-09-18T06:32:44.7541922Z [command]/usr/bin/git init /home/runner/work/OpenProblemsInNLA/OpenProblemsInNLA
+2026-09-18T06:32:44.7615648Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-09-18T06:32:44.7617739Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-09-18T06:32:44.7619227Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-09-18T06:32:44.7620340Z hint: call:
+2026-09-18T06:32:44.7621256Z hint:
+2026-09-18T06:32:44.7622353Z hint: 	git config --global init.defaultBranch <name>
+2026-09-18T06:32:44.7623190Z hint:
+2026-09-18T06:32:44.7624276Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-09-18T06:32:44.7625523Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-09-18T06:32:44.7626640Z hint:
+2026-09-18T06:32:44.7627400Z hint: 	git branch -m <name>
+2026-09-18T06:32:44.7628271Z hint:
+2026-09-18T06:32:44.7629212Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-09-18T06:32:44.7630390Z Initialized empty Git repository in /home/runner/work/OpenProblemsInNLA/OpenProblemsInNLA/.git/
+2026-09-18T06:32:44.7634064Z [command]/usr/bin/git remote add origin https://github.com/sgstepaniants/OpenProblemsInNLA
+2026-09-18T06:32:44.7676450Z ##[endgroup]
+2026-09-18T06:32:44.7677701Z ##[group]Disabling automatic garbage collection
+2026-09-18T06:32:44.7678883Z [command]/usr/bin/git config --local gc.auto 0
+2026-09-18T06:32:44.7700281Z ##[endgroup]
+2026-09-18T06:32:44.7701237Z ##[group]Setting up auth
+2026-09-18T06:32:44.7706643Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-18T06:32:44.7732260Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-18T06:32:44.8024013Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-18T06:32:44.8027616Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-18T06:32:44.8190476Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-18T06:32:44.8218444Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-18T06:32:44.8376251Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-09-18T06:32:44.8401610Z ##[endgroup]
+2026-09-18T06:32:44.8402672Z ##[group]Fetching the repository
+2026-09-18T06:32:44.8409446Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-09-18T06:32:52.8660436Z From https://github.com/sgstepaniants/OpenProblemsInNLA
+2026-09-18T06:32:52.8661816Z  * [new branch]        codex/lean-fr12-hadamard-enumeration -> origin/codex/lean-fr12-hadamard-enumeration
+2026-09-18T06:32:52.8662997Z  * [new branch]        codex/lean-ie02-verification -> origin/codex/lean-ie02-verification
+2026-09-18T06:32:52.8663982Z  * [new branch]        codex/lean-ie04-verification -> origin/codex/lean-ie04-verification
+2026-09-18T06:32:52.8665062Z  * [new branch]        codex/lean-ie05-orthogonal-extremizer -> origin/codex/lean-ie05-orthogonal-extremizer
+2026-09-18T06:32:52.8666201Z  * [new branch]        codex/lean-ie13-verification -> origin/codex/lean-ie13-verification
+2026-09-18T06:32:52.8667217Z  * [new branch]        codex/lean-ie14-verification -> origin/codex/lean-ie14-verification
+2026-09-18T06:32:52.8668276Z  * [new branch]        codex/lean-ie16-development -> origin/codex/lean-ie16-development
+2026-09-18T06:32:52.8669259Z  * [new branch]        codex/lean-ie17-verification -> origin/codex/lean-ie17-verification
+2026-09-18T06:32:52.8670679Z  * [new branch]        codex/lean-ie18-anderson-counterexample -> origin/codex/lean-ie18-anderson-counterexample
+2026-09-18T06:32:52.8671762Z  * [new branch]        codex/lean-ie19-inverse-norm -> origin/codex/lean-ie19-inverse-norm
+2026-09-18T06:32:52.8673047Z  * [new branch]        codex/lean-ie23-induced-norm-nonuniqueness -> origin/codex/lean-ie23-induced-norm-nonuniqueness
+2026-09-18T06:32:52.8674185Z  * [new branch]        codex/lean-is02-spectral-uniqueness -> origin/codex/lean-is02-spectral-uniqueness
+2026-09-18T06:32:52.8675173Z  * [new branch]        codex/lean-is03-derivative-realizability -> origin/codex/lean-is03-derivative-realizability
+2026-09-18T06:32:52.8676133Z  * [new branch]        codex/lean-iv03-verification -> origin/codex/lean-iv03-verification
+2026-09-18T06:32:52.8677209Z  * [new branch]        codex/lean-iv06-interval-eigenvalue-components -> origin/codex/lean-iv06-interval-eigenvalue-components
+2026-09-18T06:32:52.8678353Z  * [new branch]        codex/lean-ke04-block-lanczos-v2 -> origin/codex/lean-ke04-block-lanczos-v2
+2026-09-18T06:32:52.8679095Z  * [new branch]        codex/lean-ke05-verification -> origin/codex/lean-ke05-verification
+2026-09-18T06:32:52.8679695Z  * [new branch]        codex/lean-mf02-verification -> origin/codex/lean-mf02-verification
+2026-09-18T06:32:52.8680269Z  * [new branch]        codex/lean-mf05-verification -> origin/codex/lean-mf05-verification
+2026-09-18T06:32:52.8680871Z  * [new branch]        codex/lean-mf06-verification -> origin/codex/lean-mf06-verification
+2026-09-18T06:32:52.8681429Z  * [new branch]        codex/lean-mf07-verification -> origin/codex/lean-mf07-verification
+2026-09-18T06:32:52.8682038Z  * [new branch]        codex/lean-mf12-verification -> origin/codex/lean-mf12-verification
+2026-09-18T06:32:52.8683718Z  * [new branch]        codex/lean-mf16-word-equation-nonuniqueness -> origin/codex/lean-mf16-word-equation-nonuniqueness
+2026-09-18T06:32:52.8684428Z  * [new branch]        codex/lean-mf18-verification -> origin/codex/lean-mf18-verification
+2026-09-18T06:32:52.8685046Z  * [new branch]        codex/lean-mf22-verification -> origin/codex/lean-mf22-verification
+2026-09-18T06:32:52.8685618Z  * [new branch]        codex/lean-mf24-verification -> origin/codex/lean-mf24-verification
+2026-09-18T06:32:52.8686240Z  * [new branch]        codex/lean-mi03-contraction-constant -> origin/codex/lean-mi03-contraction-constant
+2026-09-18T06:32:52.8686909Z  * [new branch]        codex/lean-mi04-verification -> origin/codex/lean-mi04-verification
+2026-09-18T06:32:52.8687690Z  * [new branch]        codex/lean-mi06-arithmetic-modulus -> origin/codex/lean-mi06-arithmetic-modulus
+2026-09-18T06:32:52.8688616Z  * [new branch]        codex/lean-mi07-maximal-modulus -> origin/codex/lean-mi07-maximal-modulus
+2026-09-18T06:32:52.8689431Z  * [new branch]        codex/lean-mi13-verification -> origin/codex/lean-mi13-verification
+2026-09-18T06:32:52.8690326Z  * [new branch]        codex/lean-mi19-q-permanent -> origin/codex/lean-mi19-q-permanent
+2026-09-18T06:32:52.8691105Z  * [new branch]        codex/lean-mi21-geometric-mean -> origin/codex/lean-mi21-geometric-mean
+2026-09-18T06:32:52.8691821Z  * [new branch]        codex/lean-mi22-singular-value-log-majorization -> origin/codex/lean-mi22-singular-value-log-majorization
+2026-09-18T06:32:52.8692956Z  * [new branch]        codex/lean-mi23-geometric-mean -> origin/codex/lean-mi23-geometric-mean
+2026-09-18T06:32:52.8693638Z  * [new branch]        codex/lean-mi24-verification -> origin/codex/lean-mi24-verification
+2026-09-18T06:32:52.8694307Z  * [new branch]        codex/lean-mi26-concave-functional-calculus -> origin/codex/lean-mi26-concave-functional-calculus
+2026-09-18T06:32:52.8695049Z  * [new branch]        codex/lean-mi29-modulus-determinant -> origin/codex/lean-mi29-modulus-determinant
+2026-09-18T06:32:52.8695701Z  * [new branch]        codex/lean-next-development -> origin/codex/lean-next-development
+2026-09-18T06:32:52.8696292Z  * [new branch]        codex/lean-nm04-verification -> origin/codex/lean-nm04-verification
+2026-09-18T06:32:52.8697068Z  * [new branch]        codex/lean-nr03-nonnegative-rank -> origin/codex/lean-nr03-nonnegative-rank
+2026-09-18T06:32:52.8697684Z  * [new branch]        codex/lean-nr03-verification -> origin/codex/lean-nr03-verification
+2026-09-18T06:32:52.8698284Z  * [new branch]        codex/lean-ra02-verification -> origin/codex/lean-ra02-verification
+2026-09-18T06:32:52.8698878Z  * [new branch]        codex/lean-ra03-randomized-lu -> origin/codex/lean-ra03-randomized-lu
+2026-09-18T06:32:52.8699548Z  * [new branch]        codex/lean-ra07-symmetric-ratio-convexity -> origin/codex/lean-ra07-symmetric-ratio-convexity
+2026-09-18T06:32:52.8700758Z  * [new branch]        codex/lean-ra08-concave-spectral-transfer -> origin/codex/lean-ra08-concave-spectral-transfer
+2026-09-18T06:32:52.8702011Z  * [new branch]        codex/lean-ra09-concave-frobenius-transfer -> origin/codex/lean-ra09-concave-frobenius-transfer
+2026-09-18T06:32:52.8703450Z  * [new branch]        codex/lean-ra20-hollow-critical-count -> origin/codex/lean-ra20-hollow-critical-count
+2026-09-18T06:32:52.8704442Z  * [new branch]        codex/lean-sf01-verification -> origin/codex/lean-sf01-verification
+2026-09-18T06:32:52.8705402Z  * [new branch]        codex/lean-sp06-jordan-curve -> origin/codex/lean-sp06-jordan-curve
+2026-09-18T06:32:52.8706436Z  * [new branch]        codex/lean-sp15-verification -> origin/codex/lean-sp15-verification
+2026-09-18T06:32:52.8707528Z  * [new branch]        codex/lean-tr15-hankel-inheritance -> origin/codex/lean-tr15-hankel-inheritance
+2026-09-18T06:32:52.8708723Z  * [new branch]        codex/lean-verification-infrastructure -> origin/codex/lean-verification-infrastructure
+2026-09-18T06:32:52.8710274Z  * [new branch]        codex/stepaniants-aa01-md03-md04-resolutions -> origin/codex/stepaniants-aa01-md03-md04-resolutions
+2026-09-18T06:32:52.8711801Z  * [new branch]        codex/stepaniants-fr12-hadamard-counting -> origin/codex/stepaniants-fr12-hadamard-counting
+2026-09-18T06:32:52.8713246Z  * [new branch]        codex/stepaniants-ie02-jordan-gmres -> origin/codex/stepaniants-ie02-jordan-gmres
+2026-09-18T06:32:52.8714493Z  * [new branch]        codex/stepaniants-ie04-smoothed-tail-counterexample -> origin/codex/stepaniants-ie04-smoothed-tail-counterexample
+2026-09-18T06:32:52.8715884Z  * [new branch]        codex/stepaniants-ie05-orthogonal-counterexample -> origin/codex/stepaniants-ie05-orthogonal-counterexample
+2026-09-18T06:32:52.8717093Z  * [new branch]        codex/stepaniants-ie15-rook-growth -> origin/codex/stepaniants-ie15-rook-growth
+2026-09-18T06:32:52.8718285Z  * [new branch]        codex/stepaniants-ie26-fourier-stability -> origin/codex/stepaniants-ie26-fourier-stability
+2026-09-18T06:32:52.8719159Z  * [new branch]        codex/stepaniants-ke05-interpolation-counterexample -> origin/codex/stepaniants-ke05-interpolation-counterexample
+2026-09-18T06:32:52.8719973Z  * [new branch]        codex/stepaniants-mf02-cubic-overhead -> origin/codex/stepaniants-mf02-cubic-overhead
+2026-09-18T06:32:52.8720779Z  * [new branch]        codex/stepaniants-mf06-pointwise-lower-lipschitz -> origin/codex/stepaniants-mf06-pointwise-lower-lipschitz
+2026-09-18T06:32:52.8721590Z  * [new branch]        codex/stepaniants-mf18-complex-rank -> origin/codex/stepaniants-mf18-complex-rank
+2026-09-18T06:32:52.8722817Z  * [new branch]        codex/stepaniants-mf21-toeplitz-expansion-threshold -> origin/codex/stepaniants-mf21-toeplitz-expansion-threshold
+2026-09-18T06:32:52.8724251Z  * [new branch]        codex/stepaniants-mf22-spline-conditioning -> origin/codex/stepaniants-mf22-spline-conditioning
+2026-09-18T06:32:52.8725293Z  * [new branch]        codex/stepaniants-mi24-schatten -> origin/codex/stepaniants-mi24-schatten
+2026-09-18T06:32:52.8726013Z  * [new branch]        codex/stepaniants-mi28-determinant -> origin/codex/stepaniants-mi28-determinant
+2026-09-18T06:32:52.8726720Z  * [new branch]        codex/stepaniants-ra10-nuclear-transfer -> origin/codex/stepaniants-ra10-nuclear-transfer
+2026-09-18T06:32:52.8727473Z  * [new branch]        codex/stepaniants-ra12-gamma-tails -> origin/codex/stepaniants-ra12-gamma-tails
+2026-09-18T06:32:52.8728308Z  * [new branch]        codex/stepaniants-ra13-trace-tails -> origin/codex/stepaniants-ra13-trace-tails
+2026-09-18T06:32:52.8729063Z  * [new branch]        codex/stepaniants-ra19-critical-point-count -> origin/codex/stepaniants-ra19-critical-point-count
+2026-09-18T06:32:52.8730444Z  * [new branch]        codex/stepaniants-sp11-sp12-hall-applications -> origin/codex/stepaniants-sp11-sp12-hall-applications
+2026-09-18T06:32:52.8731998Z  * [new branch]        codex/stepaniants-sp13-trace-norm-perturbations -> origin/codex/stepaniants-sp13-trace-norm-perturbations
+2026-09-18T06:32:52.8733709Z  * [new branch]        codex/stepaniants-sp15-infinite-unitary-fiber -> origin/codex/stepaniants-sp15-infinite-unitary-fiber
+2026-09-18T06:32:52.8734782Z  * [new branch]        main       -> origin/main
+2026-09-18T06:32:52.8737098Z [command]/usr/bin/git branch --list --remote origin/codex/lean-mf18-verification
+2026-09-18T06:32:52.8738038Z   origin/codex/lean-mf18-verification
+2026-09-18T06:32:52.8739572Z [command]/usr/bin/git rev-parse refs/remotes/origin/codex/lean-mf18-verification
+2026-09-18T06:32:52.8740388Z 0d3a658789510d3cdd14729f22165219f7e7eaf8
+2026-09-18T06:32:52.8741803Z ##[endgroup]
+2026-09-18T06:32:52.8743024Z ##[group]Determining the checkout info
+2026-09-18T06:32:52.8743752Z ##[endgroup]
+2026-09-18T06:32:52.8749856Z [command]/usr/bin/git sparse-checkout disable
+2026-09-18T06:32:52.8784322Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-09-18T06:32:52.8805222Z ##[group]Checking out the ref
+2026-09-18T06:32:52.8807553Z [command]/usr/bin/git checkout --progress --force -B codex/lean-mf18-verification refs/remotes/origin/codex/lean-mf18-verification
+2026-09-18T06:32:53.9221751Z Updating files:  47% (17813/37345)
+2026-09-18T06:32:53.9363779Z Updating files:  48% (17926/37345)
+2026-09-18T06:32:53.9528211Z Updating files:  49% (18300/37345)
+2026-09-18T06:32:53.9735612Z Updating files:  50% (18673/37345)
+2026-09-18T06:32:54.0902270Z Updating files:  51% (19046/37345)
+2026-09-18T06:32:54.1128686Z Updating files:  52% (19420/37345)
+2026-09-18T06:32:54.1325645Z Updating files:  53% (19793/37345)
+2026-09-18T06:32:54.1504116Z Updating files:  54% (20167/37345)
+2026-09-18T06:32:54.1640888Z Updating files:  55% (20540/37345)
+2026-09-18T06:32:54.1845445Z Updating files:  56% (20914/37345)
+2026-09-18T06:32:54.1986963Z Updating files:  57% (21287/37345)
+2026-09-18T06:32:54.2160424Z Updating files:  58% (21661/37345)
+2026-09-18T06:32:54.2312903Z Updating files:  59% (22034/37345)
+2026-09-18T06:32:54.2498727Z Updating files:  60% (22407/37345)
+2026-09-18T06:32:54.2702990Z Updating files:  61% (22781/37345)
+2026-09-18T06:32:54.2892818Z Updating files:  62% (23154/37345)
+2026-09-18T06:32:54.3124322Z Updating files:  63% (23528/37345)
+2026-09-18T06:32:54.3261563Z Updating files:  64% (23901/37345)
+2026-09-18T06:32:54.3395856Z Updating files:  65% (24275/37345)
+2026-09-18T06:32:54.3511042Z Updating files:  66% (24648/37345)
+2026-09-18T06:32:54.3643650Z Updating files:  67% (25022/37345)
+2026-09-18T06:32:54.3799022Z Updating files:  68% (25395/37345)
+2026-09-18T06:32:54.3967690Z Updating files:  69% (25769/37345)
+2026-09-18T06:32:54.4164882Z Updating files:  70% (26142/37345)
+2026-09-18T06:32:54.4297839Z Updating files:  71% (26515/37345)
+2026-09-18T06:32:54.4418229Z Updating files:  72% (26889/37345)
+2026-09-18T06:32:54.4572995Z Updating files:  73% (27262/37345)
+2026-09-18T06:32:54.4733595Z Updating files:  74% (27636/37345)
+2026-09-18T06:32:54.4833150Z Updating files:  75% (28009/37345)
+2026-09-18T06:32:54.5002031Z Updating files:  76% (28383/37345)
+2026-09-18T06:32:54.5184205Z Updating files:  77% (28756/37345)
+2026-09-18T06:32:54.5288554Z Updating files:  78% (29130/37345)
+2026-09-18T06:32:54.5442833Z Updating files:  79% (29503/37345)
+2026-09-18T06:32:54.5579561Z Updating files:  80% (29876/37345)
+2026-09-18T06:32:54.5684167Z Updating files:  81% (30250/37345)
+2026-09-18T06:32:54.5858651Z Updating files:  82% (30623/37345)
+2026-09-18T06:32:54.6166134Z Updating files:  83% (30997/37345)
+2026-09-18T06:32:54.6358062Z Updating files:  84% (31370/37345)
+2026-09-18T06:32:54.7782722Z Updating files:  85% (31744/37345)
+2026-09-18T06:32:54.9150486Z Updating files:  86% (32117/37345)
+2026-09-18T06:32:54.9320622Z Updating files:  86% (32281/37345)
+2026-09-18T06:32:54.9716548Z Updating files:  87% (32491/37345)
+2026-09-18T06:32:55.1000701Z Updating files:  88% (32864/37345)
+2026-09-18T06:32:55.1581585Z Updating files:  89% (33238/37345)
+2026-09-18T06:32:55.1961506Z Updating files:  90% (33611/37345)
+2026-09-18T06:32:55.2689460Z Updating files:  91% (33984/37345)
+2026-09-18T06:32:55.3306280Z Updating files:  92% (34358/37345)
+2026-09-18T06:32:55.3970932Z Updating files:  93% (34731/37345)
+2026-09-18T06:32:55.4230226Z Updating files:  94% (35105/37345)
+2026-09-18T06:32:55.4504123Z Updating files:  95% (35478/37345)
+2026-09-18T06:32:55.4706025Z Updating files:  96% (35852/37345)
+2026-09-18T06:32:55.4890286Z Updating files:  97% (36225/37345)
+2026-09-18T06:32:55.5044637Z Updating files:  98% (36599/37345)
+2026-09-18T06:32:55.5185069Z Updating files:  99% (36972/37345)
+2026-09-18T06:32:55.5185541Z Updating files: 100% (37345/37345)
+2026-09-18T06:32:55.5185979Z Updating files: 100% (37345/37345), done.
+2026-09-18T06:32:55.5576482Z Switched to a new branch 'codex/lean-mf18-verification'
+2026-09-18T06:32:55.5579394Z branch 'codex/lean-mf18-verification' set up to track 'origin/codex/lean-mf18-verification'.
+2026-09-18T06:32:55.5634409Z ##[endgroup]
+2026-09-18T06:32:55.5671762Z [command]/usr/bin/git log -1 --format=%H
+2026-09-18T06:32:55.5697439Z 0d3a658789510d3cdd14729f22165219f7e7eaf8
+2026-09-18T06:32:55.5706100Z ##[group]Removing auth
+2026-09-18T06:32:55.5709420Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-18T06:32:55.5732554Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-18T06:32:55.5931789Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-18T06:32:55.5950651Z http.https://github.com/.extraheader
+2026-09-18T06:32:55.5955456Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-09-18T06:32:55.5976300Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-18T06:32:55.6168968Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-18T06:32:55.6191191Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-18T06:32:55.6369918Z ##[endgroup]
+2026-09-18T06:32:55.6520884Z ##[group]Run python3 -m pip install -r tools/lean/requirements.txt
+2026-09-18T06:32:55.6521463Z [36;1mpython3 -m pip install -r tools/lean/requirements.txt[0m
+2026-09-18T06:32:55.6546021Z shell: /usr/bin/bash -e {0}
+2026-09-18T06:32:55.6546446Z ##[endgroup]
+2026-09-18T06:32:56.1504165Z Defaulting to user installation because normal site-packages is not writeable
+2026-09-18T06:32:56.7728569Z Collecting PyYAML==6.0.3 (from -r tools/lean/requirements.txt (line 1))
+2026-09-18T06:32:56.8527877Z   Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2026-09-18T06:32:56.8931917Z Collecting jsonschema==4.26.0 (from -r tools/lean/requirements.txt (line 2))
+2026-09-18T06:32:56.9083857Z   Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+2026-09-18T06:32:56.9319593Z Requirement already satisfied: attrs>=22.2.0 in /usr/lib/python3/dist-packages (from jsonschema==4.26.0->-r tools/lean/requirements.txt (line 2)) (23.2.0)
+2026-09-18T06:32:56.9568813Z Collecting jsonschema-specifications>=2023.03.6 (from jsonschema==4.26.0->-r tools/lean/requirements.txt (line 2))
+2026-09-18T06:32:56.9724717Z   Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+2026-09-18T06:32:57.0535652Z Collecting referencing>=0.28.4 (from jsonschema==4.26.0->-r tools/lean/requirements.txt (line 2))
+2026-09-18T06:32:57.0690345Z   Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+2026-09-18T06:32:57.3750723Z Collecting rpds-py>=0.25.0 (from jsonschema==4.26.0->-r tools/lean/requirements.txt (line 2))
+2026-09-18T06:32:57.3906018Z   Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
+2026-09-18T06:32:57.6447434Z Requirement already satisfied: typing-extensions>=4.4.0 in /usr/lib/python3/dist-packages (from referencing>=0.28.4->jsonschema==4.26.0->-r tools/lean/requirements.txt (line 2)) (4.10.0)
+2026-09-18T06:32:57.6624553Z Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+2026-09-18T06:32:58.5067685Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 948.6 kB/s eta 0:00:00
+2026-09-18T06:32:58.5227697Z Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+2026-09-18T06:32:58.5262861Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 90.6/90.6 kB 40.5 MB/s eta 0:00:00
+2026-09-18T06:32:58.5416814Z Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+2026-09-18T06:32:58.5588260Z Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+2026-09-18T06:32:58.5758040Z Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (366 kB)
+2026-09-18T06:32:58.5838806Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 366.2/366.2 kB 53.2 MB/s eta 0:00:00
+2026-09-18T06:32:58.8543897Z Installing collected packages: rpds-py, PyYAML, referencing, jsonschema-specifications, jsonschema
+2026-09-18T06:32:59.1775026Z Successfully installed PyYAML-6.0.3 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 referencing-0.37.0 rpds-py-2026.6.3
+2026-09-18T06:32:59.2700856Z ##[group]Run python3 -m unittest discover -s tests -p 'test_lean_verification.py' -v
+2026-09-18T06:32:59.2701407Z [36;1mpython3 -m unittest discover -s tests -p 'test_lean_verification.py' -v[0m
+2026-09-18T06:32:59.2724059Z shell: /usr/bin/bash -e {0}
+2026-09-18T06:32:59.2724365Z ##[endgroup]
+2026-09-18T06:32:59.4717278Z test_custom_or_native_trust_is_rejected (test_lean_verification.ManifestTests.test_custom_or_native_trust_is_rejected) ... ok
+2026-09-18T06:32:59.4779779Z test_definition_hole_rejected (test_lean_verification.ManifestTests.test_definition_hole_rejected) ... ok
+2026-09-18T06:32:59.4843936Z test_duplicate_comparator_key_is_rejected (test_lean_verification.ManifestTests.test_duplicate_comparator_key_is_rejected) ... ok
+2026-09-18T06:32:59.4863326Z test_duplicate_nested_yaml_key_is_rejected (test_lean_verification.ManifestTests.test_duplicate_nested_yaml_key_is_rejected) ... ok
+2026-09-18T06:32:59.4882665Z test_duplicate_yaml_status_is_rejected (test_lean_verification.ManifestTests.test_duplicate_yaml_status_is_rejected) ... ok
+2026-09-18T06:32:59.4944472Z test_empty_theorem_list_is_rejected (test_lean_verification.ManifestTests.test_empty_theorem_list_is_rejected) ... ok
+2026-09-18T06:32:59.5002717Z test_missing_required_schema_field (test_lean_verification.ManifestTests.test_missing_required_schema_field) ... ok
+2026-09-18T06:32:59.5084030Z test_nonzero_proof_sorries_rejected (test_lean_verification.ManifestTests.test_nonzero_proof_sorries_rejected) ... ok
+2026-09-18T06:32:59.5187078Z test_result_source_outside_project_rejected (test_lean_verification.ManifestTests.test_result_source_outside_project_rejected) ... ok
+2026-09-18T06:32:59.5267218Z test_result_specific_unchecked_axiom_rejected (test_lean_verification.ManifestTests.test_result_specific_unchecked_axiom_rejected) ... ok
+2026-09-18T06:32:59.5333577Z test_unchecked_export_is_rejected (test_lean_verification.ManifestTests.test_unchecked_export_is_rejected) ... ok
+2026-09-18T06:32:59.5399092Z test_valid_consistent_metadata (test_lean_verification.ManifestTests.test_valid_consistent_metadata) ... ok
+2026-09-18T06:32:59.7243926Z test_complete_project_deletion_fails_selection (test_lean_verification.ProjectSelectionGitTests.test_complete_project_deletion_fails_selection) ... ok
+2026-09-18T06:32:59.8270377Z test_complete_project_rename_fails_selection (test_lean_verification.ProjectSelectionGitTests.test_complete_project_rename_fails_selection) ... ok
+2026-09-18T06:32:59.8737323Z test_new_source_only_project_for_existing_id_is_selected (test_lean_verification.ProjectSelectionGitTests.test_new_source_only_project_for_existing_id_is_selected) ... ok
+2026-09-18T06:33:00.0595160Z test_partial_project_deletion_still_selects_project (test_lean_verification.ProjectSelectionGitTests.test_partial_project_deletion_still_selects_project) ... ok
+2026-09-18T06:33:00.1064620Z test_renamed_file_selects_both_surviving_projects (test_lean_verification.ProjectSelectionGitTests.test_renamed_file_selects_both_surviving_projects) ... ok
+2026-09-18T06:33:00.2308317Z test_unicode_quoted_and_newline_filenames_select_project (test_lean_verification.ProjectSelectionGitTests.test_unicode_quoted_and_newline_filenames_select_project) ... ok
+2026-09-18T06:33:00.3092978Z test_workflow_control_fixture_toolchain_requests_only_controls (test_lean_verification.ProjectSelectionGitTests.test_workflow_control_fixture_toolchain_requests_only_controls) ... ok
+2026-09-18T06:33:00.3839066Z test_workflow_renamed_away_tool_requests_controls (test_lean_verification.ProjectSelectionGitTests.test_workflow_renamed_away_tool_requests_controls) ... ok
+2026-09-18T06:33:00.4988491Z test_workflow_unicode_quoted_newline_tool_changes_request_controls (test_lean_verification.ProjectSelectionGitTests.test_workflow_unicode_quoted_newline_tool_changes_request_controls) ... ok
+2026-09-18T06:33:00.4990313Z test_canonical_statement_change_rechecks_its_project (test_lean_verification.ProjectSelectionTests.test_canonical_statement_change_rechecks_its_project) ... ok
+2026-09-18T06:33:00.4991960Z test_control_fixture_toolchain_does_not_rebuild_problem_projects (test_lean_verification.ProjectSelectionTests.test_control_fixture_toolchain_does_not_rebuild_problem_projects) ... ok
+2026-09-18T06:33:00.4994766Z test_discovery_uses_registry_and_detects_incomplete_project (test_lean_verification.ProjectSelectionTests.test_discovery_uses_registry_and_detects_incomplete_project) ... ok
+2026-09-18T06:33:00.4996659Z test_invalid_registry_path_is_rejected (test_lean_verification.ProjectSelectionTests.test_invalid_registry_path_is_rejected) ... ok
+2026-09-18T06:33:00.4998044Z test_problem_proof_change_selects_only_that_problem (test_lean_verification.ProjectSelectionTests.test_problem_proof_change_selects_only_that_problem) ... ok
+2026-09-18T06:33:00.4999530Z test_shared_checker_or_schema_change_rechecks_every_project (test_lean_verification.ProjectSelectionTests.test_shared_checker_or_schema_change_rechecks_every_project) ... ok
+2026-09-18T06:33:00.5001145Z test_source_only_project_cannot_skip_verification (test_lean_verification.ProjectSelectionTests.test_source_only_project_cannot_skip_verification) ... ok
+2026-09-18T06:33:00.5004423Z test_symlinked_project_is_rejected (test_lean_verification.ProjectSelectionTests.test_symlinked_project_is_rejected) ... ok
+2026-09-18T06:33:00.5005678Z test_unrelated_document_does_not_rebuild_proofs (test_lean_verification.ProjectSelectionTests.test_unrelated_document_does_not_rebuild_proofs) ... ok
+2026-09-18T06:33:00.5006406Z 
+2026-09-18T06:33:00.5006637Z ----------------------------------------------------------------------
+2026-09-18T06:33:00.5007204Z Ran 30 tests in 1.048s
+2026-09-18T06:33:00.5007392Z 
+2026-09-18T06:33:00.5007581Z OK
+2026-09-18T06:33:00.5007997Z Manifest schema and comparator coverage: PASS (1 declarations)
+2026-09-18T06:33:00.5180271Z ##[group]Run python3 -m unittest discover -s tools/lean -p 'test_*.py' -v
+2026-09-18T06:33:00.5180758Z [36;1mpython3 -m unittest discover -s tools/lean -p 'test_*.py' -v[0m
+2026-09-18T06:33:00.5201969Z shell: /usr/bin/bash -e {0}
+2026-09-18T06:33:00.5202619Z ##[endgroup]
+2026-09-18T06:33:00.6003600Z test_ci_probe_adaptation_retains_assertions_and_adds_deadlines (test_harness.HarnessTests.test_ci_probe_adaptation_retains_assertions_and_adds_deadlines) ... ok
+2026-09-18T06:33:00.7030068Z test_custom_sorry_and_native_axioms_are_rejected (test_harness.HarnessTests.test_custom_sorry_and_native_axioms_are_rejected) ... ok
+2026-09-18T06:33:00.7035947Z test_definition_holes_are_rejected (test_harness.HarnessTests.test_definition_holes_are_rejected) ... ok
+2026-09-18T06:33:00.7041519Z test_duplicate_json_keys_are_rejected (test_harness.HarnessTests.test_duplicate_json_keys_are_rejected) ... ok
+2026-09-18T06:33:00.7050319Z test_mac_os_does_not_silently_fall_back (test_harness.HarnessTests.test_mac_os_does_not_silently_fall_back) ... ok
+2026-09-18T06:33:00.7062694Z test_nonimmutable_or_credential_dependencies_are_rejected (test_harness.HarnessTests.test_nonimmutable_or_credential_dependencies_are_rejected) ... ok
+2026-09-18T06:33:00.7076403Z test_real_source_lock (test_harness.HarnessTests.test_real_source_lock) ... ok
+2026-09-18T06:33:00.7088928Z test_same_module_and_empty_theorem_list_are_rejected (test_harness.HarnessTests.test_same_module_and_empty_theorem_list_are_rejected) ... ok
+2026-09-18T06:33:00.8780709Z test_snapshot_uses_committed_files_and_detects_change (test_harness.HarnessTests.test_snapshot_uses_committed_files_and_detects_change) ... ok
+2026-09-18T06:33:00.8787658Z test_standard_config_and_stricter_axiom_subset (test_harness.HarnessTests.test_standard_config_and_stricter_axiom_subset) ... ok
+2026-09-18T06:33:00.8914004Z test_tracked_compiled_artifact_is_rejected (test_harness.HarnessTests.test_tracked_compiled_artifact_is_rejected) ... ok
+2026-09-18T06:33:00.9046305Z test_uncommitted_trusted_file_is_rejected (test_harness.HarnessTests.test_uncommitted_trusted_file_is_rejected) ... ok
+2026-09-18T06:33:00.9047328Z 
+2026-09-18T06:33:00.9047612Z ----------------------------------------------------------------------
+2026-09-18T06:33:00.9048370Z Ran 12 tests in 0.305s
+2026-09-18T06:33:00.9048713Z 
+2026-09-18T06:33:00.9048880Z OK
+2026-09-18T06:33:00.9233842Z ##[group]Run if [ "$EVENT_NAME" = "workflow_dispatch" ] || [ -z "$BASE_REF" ] || [ "$BASE_REF" = "0000000000000000000000000000000000000000" ]; then
+2026-09-18T06:33:00.9234590Z [36;1mif [ "$EVENT_NAME" = "workflow_dispatch" ] || [ -z "$BASE_REF" ] || [ "$BASE_REF" = "0000000000000000000000000000000000000000" ]; then[0m
+2026-09-18T06:33:00.9235195Z [36;1m  python3 tools/lean/projects.py --all --github-output "$GITHUB_OUTPUT"[0m
+2026-09-18T06:33:00.9235623Z [36;1m  echo "tools_changed=true" >> "$GITHUB_OUTPUT"[0m
+2026-09-18T06:33:00.9235977Z [36;1melse[0m
+2026-09-18T06:33:00.9236358Z [36;1m  python3 tools/lean/projects.py --base-ref "$BASE_REF" --github-output "$GITHUB_OUTPUT"[0m
+2026-09-18T06:33:00.9236817Z [36;1m  python3 - "$BASE_REF" "$GITHUB_OUTPUT" <<'PY'[0m
+2026-09-18T06:33:00.9237297Z [36;1mimport pathlib, subprocess, sys[0m
+2026-09-18T06:33:00.9238237Z [36;1mchanged = subprocess.check_output(['git','diff','--name-only','--no-renames','-z',sys.argv[1],'HEAD','--'], text=True).split('\0')[0m
+2026-09-18T06:33:00.9239024Z [36;1mneeds_tools = any(p.startswith(('tools/lean/', 'docs/lean/ci-toolchain/')) or p == '.github/workflows/lean-verification.yml' for p in changed)[0m
+2026-09-18T06:33:00.9239738Z [36;1mwith pathlib.Path(sys.argv[2]).open('a') as stream:[0m
+2026-09-18T06:33:00.9240188Z [36;1m    stream.write('tools_changed=' + str(needs_tools).lower() + '\n')[0m
+2026-09-18T06:33:00.9240560Z [36;1mPY[0m
+2026-09-18T06:33:00.9240822Z [36;1mfi[0m
+2026-09-18T06:33:00.9261624Z shell: /usr/bin/bash -e {0}
+2026-09-18T06:33:00.9261915Z env:
+2026-09-18T06:33:00.9262492Z   BASE_REF: 6ae07217f790f62c7d0550f5d4b30a67500a94c2
+2026-09-18T06:33:00.9262850Z   EVENT_NAME: push
+2026-09-18T06:33:00.9263126Z ##[endgroup]
+2026-09-18T06:33:01.6988750Z {"include":[{"id":"MF-18","project":"matrix-functions-and-stability/MF-18/lean"}]}
+2026-09-18T06:33:01.7413215Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-18T06:33:01.7414675Z Post job cleanup.
+2026-09-18T06:33:01.8117716Z [command]/usr/bin/git version
+2026-09-18T06:33:01.8148655Z git version 2.55.0
+2026-09-18T06:33:01.8195608Z Temporarily overriding HOME='/home/runner/work/_temp/b2aeb7f2-2354-477c-b8ce-8c2dcf587549' before making global git config changes
+2026-09-18T06:33:01.8196841Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-18T06:33:01.8198019Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/OpenProblemsInNLA/OpenProblemsInNLA
+2026-09-18T06:33:01.8209448Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-18T06:33:01.8238966Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-18T06:33:01.8448486Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-18T06:33:01.8474677Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-18T06:33:01.8703761Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-18T06:33:01.8728629Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-18T06:33:01.9057820Z Evaluate and set job outputs
+2026-09-18T06:33:01.9064567Z Set output 'matrix'
+2026-09-18T06:33:01.9066105Z Set output 'count'
+2026-09-18T06:33:01.9066894Z Set output 'tools_changed'
+2026-09-18T06:33:01.9067567Z Cleaning up orphan processes
+2026-09-18T06:33:01.9258891Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
