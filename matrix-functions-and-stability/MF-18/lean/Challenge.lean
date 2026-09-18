@@ -1,0 +1,172 @@
+import NLA.MF18.Definitions
+
+/-!
+Independent contract PROPOSAL for MF-18. No elaboration or freeze has occurred.
+Every body is an intentional Challenge placeholder, never a proof claim.
+All proposed reductions and headers need two independent statement reviews.
+-/
+
+open scoped BigOperators Topology ComplexOrder
+
+namespace NLA.MF18
+
+theorem certified_half : (0 : ℝ) < 1 / 2 ∧ (1 / 2 : ℝ) < 1 := by
+  sorry
+
+theorem stability_semantics {n : ℕ} [NeZero n] (S : Mat n) :
+    StrictStable S ↔ spectralRadius ℂ S < 1 := by
+  sorry
+
+theorem pencil_evaluation {n : ℕ} (A B Q : Mat n) (lam : ℂ) :
+    (scalarPencil A B Q).eval lam = (pencilValue A B Q lam).det := by
+  sorry
+
+theorem pencil_degree_bound {n : ℕ} (A B Q : Mat n) :
+    (scalarPencil A B Q).natDegree ≤ 2 * n := by
+  sorry
+
+theorem positive_average_and_sign {n : ℕ} (P D : Mat n) (h : CirclePositive P D) :
+    P.PosDef ∧ ∀ lam : ℂ, ‖lam‖ = 1 →
+      (P - lam • D.conjTranspose - lam⁻¹ • D).PosDef := by
+  sorry
+
+theorem homotopy_boundary_nonvanishing {n : ℕ} (C D R P : Mat n)
+    (hR : R.IsHermitian) (hP : P.IsHermitian) (hpos : CirclePositive P D)
+    (η : ℝ) (hη : 0 < η) (t : ℝ) (ht : t ∈ Set.Icc 0 1) :
+    ∀ lam : ℂ, ‖lam‖ = 1 → (homotopyPolynomial C D R P η t).eval lam ≠ 0 := by
+  sorry
+
+theorem cayley_degree_and_count (N : ℕ) (p : CPoly)
+    (hd : p.natDegree ≤ N) (h1 : p.eval 1 ≠ 0) :
+    (monicCayleyPolynomial N p).Monic ∧
+    (monicCayleyPolynomial N p).natDegree = N ∧
+    diskRootCount p = rightHalfPlaneRootCount (monicCayleyPolynomial N p) := by
+  sorry
+
+theorem cayley_boundary_transfer (N : ℕ) (p : CPoly)
+    (hd : p.natDegree ≤ N) (hb : ∀ lam : ℂ, ‖lam‖ = 1 → p.eval lam ≠ 0) :
+    ∀ z : ℂ, z.re = 0 → (monicCayleyPolynomial N p).eval z ≠ 0 := by
+  sorry
+
+theorem monic_half_plane_count_homotopy (N : ℕ) (q : ℝ → CPoly)
+    (hc : CoeffContinuousOn q (Set.Icc 0 1))
+    (hm : ∀ t ∈ Set.Icc (0 : ℝ) 1, (q t).Monic ∧ (q t).natDegree = N)
+    (hb : ∀ t ∈ Set.Icc (0 : ℝ) 1, ∀ z : ℂ, z.re = 0 → (q t).eval z ≠ 0) :
+    rightHalfPlaneRootCount (q 0) = rightHalfPlaneRootCount (q 1) := by
+  sorry
+
+theorem bounded_degree_disk_count_homotopy (N : ℕ) (p : ℝ → CPoly)
+    (hc : CoeffContinuousOn p (Set.Icc 0 1))
+    (hd : ∀ t ∈ Set.Icc (0 : ℝ) 1, (p t).natDegree ≤ N)
+    (hb : ∀ t ∈ Set.Icc (0 : ℝ) 1, ∀ lam : ℂ, ‖lam‖ = 1 → (p t).eval lam ≠ 0) :
+    diskRootCount (p 0) = diskRootCount (p 1) := by
+  sorry
+
+theorem regularized_root_count {n : ℕ} [NeZero n] (C D R P : Mat n)
+    (hR : R.IsHermitian) (hP : P.IsHermitian) (hpos : CirclePositive P D)
+    (η : ℝ) (hη : 0 < η) :
+    diskRootCount (regularizedPolynomial C D R P η) = n ∧
+    ∀ lam : ℂ, ‖lam‖ = 1 → (regularizedPolynomial C D R P η).eval lam ≠ 0 := by
+  sorry
+
+theorem solution_factorization {n : ℕ} (C D R P : Mat n) (η : ℝ) (X : Mat n)
+    (h : IsStabilizingSolution C D R P η X) (lam : ℂ) :
+    pencilValue (regularizedA C D η) (regularizedB C D η) (regularizedQ R P η) lam =
+      (lam • (regularizedB C D η * X⁻¹) - 1) * X *
+        (lam • (1 : Mat n) - X⁻¹ * regularizedA C D η) := by
+  sorry
+
+theorem complementary_stability {n : ℕ} [NeZero n] (C D R P : Mat n)
+    (hR : R.IsHermitian) (hP : P.IsHermitian) (hpos : CirclePositive P D)
+    (η : ℝ) (hη : 0 < η) (X : Mat n)
+    (hX : IsStabilizingSolution C D R P η X) :
+    StrictStable (regularizedB C D η * X⁻¹) := by
+  sorry
+
+theorem closed_disk_stability_limit {n : ℕ} (S : ℕ → Mat n) (S₀ : Mat n)
+    (hlim : Filter.Tendsto S Filter.atTop (nhds S₀))
+    (hs : ∀ k : ℕ, StrictStable (S k)) : WeakStable S₀ := by
+  sorry
+
+theorem limiting_equation_and_spectra {n : ℕ} [NeZero n] (C D R P : Mat n)
+    (X : ℝ → Mat n) (X₀ : Mat n) (h : GreenAssumptions C D R P X X₀) :
+    X₀ + C.conjTranspose * X₀⁻¹ * C = R ∧
+    WeakStable (X₀⁻¹ * C) ∧ WeakStable (C.conjTranspose * X₀⁻¹) := by
+  sorry
+
+theorem reciprocal_count_identity {n : ℕ} (C R : Mat n)
+    (hR : R.IsHermitian) (hreg : unregularizedPolynomial C R ≠ 0) :
+    (unregularizedPolynomial C R).natDegree +
+      (unregularizedPolynomial C R).rootMultiplicity 0 = 2 * n ∧
+    2 * diskRootCount (unregularizedPolynomial C R) +
+      circleRootCount (unregularizedPolynomial C R) = 2 * n := by
+  sorry
+
+theorem selected_spectrum_count {n : ℕ} [NeZero n] (C D R P : Mat n)
+    (X : ℝ → Mat n) (X₀ : Mat n) (m : ℕ)
+    (h : GreenAssumptions C D R P X X₀)
+    (hcount : circleRootCount (unregularizedPolynomial C R) = 2 * m) :
+    diskRootCount (X₀⁻¹ * C).charpoly + m = n ∧
+    circleRootCount (X₀⁻¹ * C).charpoly = m ∧
+    SimpleCircleRoots (X₀⁻¹ * C).charpoly := by
+  sorry
+
+theorem stein_identity {n : ℕ} (C R X₀ : Mat n)
+    (hR : R.IsHermitian) (hX : X₀.det ≠ 0)
+    (heq : X₀ + C.conjTranspose * X₀⁻¹ * C = R) :
+    (hermitianImaginaryPart X₀).IsHermitian ∧
+    hermitianImaginaryPart X₀ =
+      (X₀⁻¹ * C).conjTranspose * hermitianImaginaryPart X₀ * (X₀⁻¹ * C) := by
+  sorry
+
+theorem simple_unit_root_pairing {n : ℕ} [NeZero n] (C R X₀ : Mat n)
+    (hR : R.IsHermitian) (hX : X₀.det ≠ 0)
+    (heq : X₀ + C.conjTranspose * X₀⁻¹ * C = R)
+    (lam : ℂ) (hlam : ‖lam‖ = 1)
+    (hsimple : (unregularizedPolynomial C R).rootMultiplicity lam = 1)
+    (v : Vec n) (hv : v ≠ 0) (heig : (X₀⁻¹ * C).mulVec v = lam • v) :
+    pairing (hermitianImaginaryPart X₀) v v ≠ 0 := by
+  sorry
+
+theorem generalized_stein_pairing {n : ℕ} (S H : Mat n) (lam μ : ℂ)
+    (hstein : H = S.conjTranspose * H * S)
+    (hnonres : 1 - star lam * μ ≠ 0) (k l : ℕ) (v w : Vec n)
+    (hv : ((S - lam • (1 : Mat n)) ^ k).mulVec v = 0)
+    (hw : ((S - μ • (1 : Mat n)) ^ l).mulVec w = 0) :
+    pairing H v w = 0 := by
+  sorry
+
+theorem stable_space_dimension {n : ℕ} (S : Mat n) :
+    Module.finrank ℂ (stableSubspace S) = diskRootCount S.charpoly := by
+  sorry
+
+theorem stable_space_in_kernel {n : ℕ} (S H : Mat n)
+    (hweak : WeakStable S) (hstein : H = S.conjTranspose * H * S) :
+    stableSubspace S ≤ LinearMap.ker H.toLin' := by
+  sorry
+
+theorem stein_rank_lower_bound {n : ℕ} (S H : Mat n)
+    (hstein : H = S.conjTranspose * H * S) (hsimple : SimpleCircleRoots S.charpoly)
+    (hnonzero : ∀ lam : ℂ, ‖lam‖ = 1 → ∀ v : Vec n, v ≠ 0 →
+      S.mulVec v = lam • v → pairing H v v ≠ 0) :
+    circleRootCount S.charpoly ≤ H.rank := by
+  sorry
+
+/-- Stronger than the canonical statement: uniqueness of the family is unused. -/
+theorem full_complex_rank {n : ℕ} [NeZero n] (C D R P : Mat n)
+    (X : ℝ → Mat n) (X₀ : Mat n) (m : ℕ)
+    (h : GreenAssumptions C D R P X X₀)
+    (hcount : circleRootCount (unregularizedPolynomial C R) = 2 * m) :
+    (hermitianImaginaryPart X₀).rank = m := by
+  sorry
+
+theorem canonical_full_complex_rank {n : ℕ} [NeZero n] (C D R P : Mat n)
+    (X : ℝ → Mat n) (X₀ : Mat n) (m : ℕ)
+    (h : GreenAssumptions C D R P X X₀)
+    (hunique : ∀ η : ℝ, 0 < η → ∀ Y : Mat n,
+      IsStabilizingSolution C D R P η Y → Y = X η)
+    (hcount : circleRootCount (unregularizedPolynomial C R) = 2 * m) :
+    (hermitianImaginaryPart X₀).rank = m := by
+  sorry
+
+end NLA.MF18

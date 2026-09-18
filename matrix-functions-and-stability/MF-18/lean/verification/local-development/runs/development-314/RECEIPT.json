@@ -1,0 +1,781 @@
+{
+  "scope": "macOS serial development only; no Comparator, isolation controls, publication or whole-problem acceptance",
+  "start": "2026-09-18T04:07:54.539582+00:00",
+  "assembly_sha256": "ba41e0d9b0c304bdb5e695617cd0a014500649db6166e82c65775d39bcc27c67",
+  "runner_sha256": "d6c00e953688e155c0a313a8f49c7c395ad0fb1166faf3655c0b47f3ea2b2266",
+  "compiler_sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+  "platform": "darwin",
+  "max_compiler_processes": 1,
+  "threads": 1,
+  "memory_cap_mib": 4096,
+  "source_inputs": {
+    "NLA/MF14/Definitions.lean": "f9ab23794894bfa508b5382393d95457a361cf07063629c7f48e5f14fefea9a8",
+    "NLA/MF14/RawData.lean": "434940f41b424ea7ea26628c990fa918691ddd2b66215c4f2e996d8758667a86",
+    "NLA/MF14/NumericalDefinitions.lean": "13f077b8671089f60087eb60e93dcd3ab85c79431a0f78a834fcd40eff2f30b8",
+    "NLA/MF14/Challenge.lean": "8d1bb0877a3de9cb11db53f7b3d8985b50eb2b972a28b5bede7029f8277f0985",
+    "NLA/MF14/CircuitFoundations.lean": "411343755bad7f24ac27539bb3c3f24ea0c614b893825ac071dfb4ea69315a35",
+    "NLA/MF14/ClosureFoundations.lean": "77f91046d5855b1979a80b74f6d2256fc012eff83891aa0661c24c0c3a051e48",
+    "NLA/MF14/DataLayout.lean": "0d26603b0ee062ddb0d5698a2242930ce78127a99ed5c149d154ba2758641b1b",
+    "NLA/MF14/Scaling.lean": "1060ce9b06201f6d5e8dc6486afa2c5799326146ee8cfff136dd14b533be7c57",
+    "NLA/MF14/FamilyChart.lean": "c6635fca2c7a11ebcaf9e72d42a7e7812711dbd6fea343abc5ddaf339312fcc9",
+    "NLA/MF14/FamilySmooth.lean": "4809579b9b193d7b0ed6f0ea65c05f7038f9b151cabc75e016693e514ce95c42",
+    "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+    "NLA/MF18/Challenge.lean": "820a141fd9465598787a557c21a476d3dcb540ac517a494108af35de08a7d2fe",
+    "NLA/MF14/FamilyClosure.lean": "980fea365e925b74ecf9c0666ac8d18ddd4df1b25de3e2b876fddde2e2ef3e68",
+    "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c",
+    "NLA/MI24/Challenge.lean": "3fa2f5bd1c0fae0316987363e7ccdf363d3a34ceb1a574b9e80a57e166a31d76",
+    "NLA/MF14/FamilyDegree.lean": "18a193bf51db9dedb4f7d311ecba05bc84f5e1ccaaa307847da97bedd400ed21",
+    "NLA/MF14/LowReconstruction.lean": "2b6f3c0abda4ef039b30dab382fbcb3760041afe8d29a6f9920f927c64ef20f2",
+    "NLA/MI24/Numerical.lean": "786a6e6b71d761310deb971ed7404e219bb2456b26624d8925cdd668bfa0bd45",
+    "NLA/MI24/SpectralPowers.lean": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00",
+    "NLA/MI24/MeanPositivity.lean": "c26b8d10c54e5dd22a28a959a8b131540ae9f901485b86bb88ef31a4892ffef3",
+    "NLA/MF18/Numerical.lean": "b3ddd61721a6ddc8af9a3f179082ff89f8bb88c63779973b3c6c8ff3854a9f1a",
+    "NLA/MF18/PencilAlgebra.lean": "0f44e04ae4a3281656211a372855fd3482e6c38ab485ccc105a6229751ba1070",
+    "NLA/MF18/Positivity.lean": "5fe658ec6781c199b6365b5432d96abe6cb14bcb09a4cbd401e4ecc55f7d4840",
+    "NLA/MI24/GeometricCongruence.lean": "e3f7ca2be36c65ab148445e3e28aa4f2c4f5f133adc97f3a3d42c0d375084fd5",
+    "NLA/MF14/AlgebraicRelation.lean": "7aaa194508a1ccb1a14e60a4bbd2b4d5ad3dfc320d13044ad598bc2e0df7120d",
+    "NLA/MI24/HalfFixedPoint.lean": "dd4c1463dbf0ca23e00d05c242acbe64ee2ffb071abcc02f935dc3d9a6ffb0b5",
+    "NLA/MF14/WeightedReconstruction.lean": "a20992e35ae64880fda25c743cfd767f10a2a9aa2f751e366df2d72d39dd8681",
+    "NLA/MF18/StabilityLimits.lean": "8b22666b00759a0a822168d58b1eb3fc3fb068d8ea4cc88e807f45bb8cc587f9",
+    "NLA/MF14/ScalarMajorant.lean": "e1d39c0619b3cbc9d37aacf139428c9c75c9210b215b8db7d52abe3caf01114e",
+    "NLA/MI24/PolarPowers.lean": "dc7cdeda4e85f107bc23f89bced445d002717c59c92845737568b3e8f42110f2",
+    "NLA/MF18/PairingAlgebra.lean": "4f6d433aafef295184c326087ec5b0629c79cba3c6deb0b45f76d7492685ecd1",
+    "NLA/MF18/BoundaryNonvanishing.lean": "5fad487982c7677506fe86093a0065ce6640a6b4346dc3a0989f251e0e011d35",
+    "NLA/MI24/OrderPowers.lean": "5271fa66e5d7ad4620f5ec4ac35dc931a37dd910a16a6a9f1db32c37cbaf2e53",
+    "NLA/MI24/FurutaBase.lean": "14ec41c39b65ee408455b8caf23d3f5342809912c5c7dcfaf1c8a9d6a6ac7c6f",
+    "NLA/MF18/StabilitySemantics.lean": "5e59fc4ef81e51822d2f8a64b35ecb55ff039c6a274390a8378100b38cbabeb0",
+    "NLA/MI24/FurutaHalfPower.lean": "92b7837ef9999a30fe858c1883ce5514d640fd5f0ca55f88b5382941a8ca315b",
+    "NLA/MF18/SteinIdentity.lean": "8e51b054c4fe7508355486b290aaf2363d7c89cb1dea4bdc09ad79bc7fa32c71",
+    "NLA/MF18/RootEnumeration.lean": "34308d4fee907b7dfa082b5b0fce26d61aec4ad72bbfbb372a1a25109bc328a3",
+    "NLA/MF18/RootProductLimits.lean": "c093dc888d35f28608452aa30cb9f4d5f8200c6fd2fffe0d4138f2adef3effd3",
+    "NLA/MF18/RootCountLimits.lean": "57fe9a064c62702b0b5671f86b6e1c1cf7004d4dc934f7b68976d9b20c79f6e2",
+    "NLA/MF18/HalfPlaneHomotopy.lean": "42ba9b419eab07df5fcf6c3d4a5ac96e984559e8f07d1aa3de9b649d2da1e44c",
+    "NLA/MI24/PolarModulus.lean": "ab2d08bee103bd8c0c4c603529aa80cc5f24885b05d59e65dc1e32b971cc3be8",
+    "NLA/MI24/LinComparison.lean": "f5028813dd891e53833486773faa490797fdc8a4b40ddae143ec24d4f735a9a9",
+    "NLA/MI24/OperatorNorm.lean": "aab69153dc8d7557fc6d8959aa15ea007f4d1db70c73ae147cde320746d13752",
+    "NLA/MF14/UniversalCircuit.lean": "6c8c0ce9a5642f355552e595cb352ee9414df3ecf03ff45b47f60cb98290f459",
+    "NLA/MF18/CayleyAlgebra.lean": "9fa359d58f7596fb5520aa27f0c6ad29d2516327b1bdae82bdaffc43cad659e1",
+    "NLA/MI24/HeronOrder.lean": "692e8a7aac8e9ed8d8f605d7e837b763be96d45999760e7f7eb69d9d3e0bdd5b",
+    "NLA/MI24/HeronNorm.lean": "ad719160a338aeecb4a97ca6ab5cce36af362a4fa3483e69a24afc2fdc0f094f",
+    "NLA/MF14/UniversalPolynomial.lean": "bae38b0cf0b22324fbd306a12eb6c884454881432909ad323da7f3e6891e19e6",
+    "NLA/MF18/CayleyBoundary.lean": "4c99f1e0422a293ffd3b0620dd8b6d18d57617c6c7537a43eb72595139b31a76",
+    "NLA/MI24/TraceSpectral.lean": "e6e918194268f476b932fb5a04911e514afba776e2e0ea4ef1564285cbe50d74",
+    "NLA/MI24/FiniteSemantics.lean": "71737e2428178f875b14d8c96bd64ed9363118b20dac2efb06a5ea014a2030ef",
+    "NLA/MF14/UniversalParameterization.lean": "545acc32dda708e6771e2cc370a9c556a349943f4f81aa84c633040fbdaab351",
+    "NLA/MF18/CayleyCount.lean": "0233488bc61cb2ed5a6f9b26c89bcc852cd672bbb58fe81dd2e5854bb1de9711",
+    "NLA/MI24/TraceOverlap.lean": "26a0ef5f0fbb18b8c978c3fc5e5bd467b776f4958212da6928e7115db3d8f065",
+    "NLA/MI24/TraceYoung.lean": "ea3a7b7e7415340f12236856f33e8e4f6814be0d6f3e70e78d968bffe1e2fc0c",
+    "NLA/MF14/SpaceNormalization.lean": "1c7a944946565702324c709035e7c320172d1ab9686bc819588a0ace7f0cff61",
+    "NLA/MF14/FamilyPolynomiality.lean": "75fd4177ebeedda7e18dc027f4c7ab0e9318b8794a9ebf6db72e8608076c26bc",
+    "NLA/MF18/CoefficientContinuity.lean": "67e69f3148c429c47a65ea94d779d34c739fc631248bd8e381355efea77e2851",
+    "NLA/MF18/DiskHomotopy.lean": "bb9d8e339df1015d532b48daf52742d8ae66c0b4eab52963d1ee30dcbf843cd8",
+    "NLA/MI24/PowerScaling.lean": "6695e7ab684fa52d5917796eb3eedb21f07c49ff51cfb16953a59af1dab5dbc8",
+    "NLA/MF14/FamilyObstruction.lean": "1915dbb199fc20a6e944a4c7c356fdbb650113de07fbb7fac28abce0450d9af4",
+    "NLA/MF18/RegularizedCount.lean": "f54135988fe21f0145766e62fc1fa859c2e408bcc13b5d2d03c37b9c104c7120",
+    "NLA/MI24/TraceHolder.lean": "b0197afbe382e0c0bd3ec59db242051b208d99673f88d198cfe1eb3f289ad1ca",
+    "NLA/MF18/PairingVectors.lean": "710b23315f1d25dbe2b332082723846193a13fdf75d7c604e6c66cd3dcaea589",
+    "NLA/MF18/GeneralizedStein.lean": "5d12c7c02e693888b1cc48ba9a0f16ee841e7b27c9c73e309e43f79b89b078aa",
+    "NLA/MI24/PositivePowers.lean": "0158a2f6326155eb43d9060eb84dc10975cdf28d9ab6bbd7bfa756b793d09ca0",
+    "NLA/MI24/PositiveSchatten.lean": "ad6a1925a305080a0f51a038d9498ba189b3b371570e0f3fbde45bb9746704d7",
+    "NLA/MF14/LowGateNormalization.lean": "eed140b9511e550f2e6ede32045b86fc68ac07412a42a33539bc1c4c82d239c7",
+    "NLA/MF18/SolutionPolynomial.lean": "427779a970949a04e1387e934f1e226ebbeb56702828fbe976774d3172d2ea35",
+    "NLA/MF18/ComplementaryStability.lean": "11c3fd8726baeccf832bf425f780de361540aa7306ca7b77b90e300133c0b14a",
+    "NLA/MF18/LimitingEquation.lean": "04c163719806c51a67acc407d1b21b13a686e927c1e35a5cfbe183efc0b6fbe0",
+    "NLA/MI24/CompoundAlgebra.lean": "1c173e0dc0e34675f48acc42c6835a7b0aefa8c684448b697e3309a860474082",
+    "NLA/MF18/StableDimension.lean": "a3d6d2804c30cdcc80f96614bd6158aec8cd81297be149eebceca85bb07c176b",
+    "NLA/MF18/StableKernel.lean": "2b1e5a10520ce0d37938d3bf96ae59b2a9da9ac6fcf6640ec1fef485d3a1c8d5",
+    "NLA/MF18/SteinRankLower.lean": "c7c0a56711b9bd1f93f428764d45551e143f980fe7083cd9ce1bf3f97419f1aa",
+    "NLA/MF18/SimpleEigenfunctional.lean": "4b59354207ab6b0fd24bd83b57652227be4db1d222b63141d3ec1fc2f566d38b",
+    "NLA/MI24/DiagonalPowers.lean": "40706ab467936c2382fdde7901791a40f2c094dfe749d1850bde8d6a9e8fb461",
+    "NLA/MI24/CompoundSpectral.lean": "3e31d6deb2339a4c1bbb2203bcca18fee7b4a90c64f5643e92dba864e7378a6d"
+  },
+  "module_order": [
+    "NLA.MF18.Definitions",
+    "NLA.MF18.PencilAlgebra",
+    "NLA.MF18.SolutionPolynomial",
+    "NLA.MF18.CayleyAlgebra",
+    "NLA.MF18.CayleyBoundary",
+    "NLA.MF18.RootEnumeration",
+    "NLA.MF18.RootProductLimits",
+    "NLA.MF18.CayleyCount",
+    "NLA.MF18.RootCountLimits",
+    "NLA.MF18.HalfPlaneHomotopy",
+    "NLA.MF18.CoefficientContinuity",
+    "NLA.MF18.DiskHomotopy",
+    "NLA.MF18.Numerical",
+    "NLA.MF18.Positivity",
+    "NLA.MF18.PairingAlgebra",
+    "NLA.MF18.BoundaryNonvanishing",
+    "NLA.MF18.RegularizedCount",
+    "NLA.MF18.ComplementaryStability",
+    "NLA.MF18.StabilityLimits",
+    "NLA.MF18.LimitingEquation",
+    "NLA.MF18.StableDimension",
+    "NLA.MF18.PairingVectors",
+    "NLA.MF18.GeneralizedStein",
+    "NLA.MF18.StableKernel",
+    "NLA.MF18.SteinRankLower",
+    "NLA.MF18.SimpleEigenfunctional",
+    "NLA.MI24.Definitions",
+    "NLA.MI24.CompoundAlgebra",
+    "NLA.MI24.SpectralPowers",
+    "NLA.MI24.DiagonalPowers",
+    "NLA.MI24.TraceSpectral",
+    "NLA.MI24.MeanPositivity",
+    "NLA.MI24.GeometricCongruence",
+    "NLA.MI24.PolarPowers",
+    "NLA.MI24.OrderPowers",
+    "NLA.MI24.FurutaBase",
+    "NLA.MI24.FurutaHalfPower",
+    "NLA.MI24.HeronOrder",
+    "NLA.MI24.OperatorNorm",
+    "NLA.MI24.HeronNorm",
+    "NLA.MI24.CompoundSpectral"
+  ],
+  "commands": [
+    {
+      "module": "NLA.MF18.Definitions",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+      "output_sha256": "eea4e698f7a389237a064aea1531c600c573f07edf5bef1d8ead664c7d3a3814",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f"
+      }
+    },
+    {
+      "module": "NLA.MF18.PencilAlgebra",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "0f44e04ae4a3281656211a372855fd3482e6c38ab485ccc105a6229751ba1070",
+      "output_sha256": "5a55e90328c1448d65a5de84fd5fa81302c331bff23217124086424b8a769244",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/PencilAlgebra.lean": "0f44e04ae4a3281656211a372855fd3482e6c38ab485ccc105a6229751ba1070"
+      }
+    },
+    {
+      "module": "NLA.MF18.SolutionPolynomial",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MF18/SolutionPolynomial.olean",
+        "NLA/MF18/SolutionPolynomial.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-18T04:07:54.549000+00:00",
+      "source_sha256": "427779a970949a04e1387e934f1e226ebbeb56702828fbe976774d3172d2ea35",
+      "dependency_olean_sha256": {
+        "NLA.MF18.PencilAlgebra": "5a55e90328c1448d65a5de84fd5fa81302c331bff23217124086424b8a769244"
+      },
+      "exit_code": 0,
+      "end": "2026-09-18T04:08:12.826623+00:00",
+      "elapsed_seconds": 18.277576957945712,
+      "log_sha256": "be669b767280325657d39a02e7eb2686b1fb27f8ff89d7cd7cb2f95cc226fc61",
+      "maxrss_bytes_macos_cumulative": 2833645568,
+      "output_sha256": "7086d8d5f4036a836220bb8f2be8ae50e7637b8a7bcd7f2e9245ec186c15b6fc"
+    },
+    {
+      "module": "NLA.MF18.CayleyAlgebra",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "9fa359d58f7596fb5520aa27f0c6ad29d2516327b1bdae82bdaffc43cad659e1",
+      "output_sha256": "cbfb375e7f0357aa5e1a32374aa74fb2703e1e32fa6d335cfedf5563d73cd09a",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/CayleyAlgebra.lean": "9fa359d58f7596fb5520aa27f0c6ad29d2516327b1bdae82bdaffc43cad659e1",
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f"
+      }
+    },
+    {
+      "module": "NLA.MF18.CayleyBoundary",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "4c99f1e0422a293ffd3b0620dd8b6d18d57617c6c7537a43eb72595139b31a76",
+      "output_sha256": "f7f8520f262443de5ef991db2f89975ff94b713e9bc257c7e97cfe8bb4d76757",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/CayleyAlgebra.lean": "9fa359d58f7596fb5520aa27f0c6ad29d2516327b1bdae82bdaffc43cad659e1",
+        "NLA/MF18/CayleyBoundary.lean": "4c99f1e0422a293ffd3b0620dd8b6d18d57617c6c7537a43eb72595139b31a76",
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f"
+      }
+    },
+    {
+      "module": "NLA.MF18.RootEnumeration",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "34308d4fee907b7dfa082b5b0fce26d61aec4ad72bbfbb372a1a25109bc328a3",
+      "output_sha256": "86b8ca5fd67cf737f1c1ee8c8757f1f7d41ad47b16c69f52b5e3ead7a3f8318c",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/RootEnumeration.lean": "34308d4fee907b7dfa082b5b0fce26d61aec4ad72bbfbb372a1a25109bc328a3"
+      }
+    },
+    {
+      "module": "NLA.MF18.RootProductLimits",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "c093dc888d35f28608452aa30cb9f4d5f8200c6fd2fffe0d4138f2adef3effd3",
+      "output_sha256": "1bd3da68f81a5b82fecc27015f9fa138fb1b0b3d14d34cbc8d5ebe3c1fa4543b",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/RootEnumeration.lean": "34308d4fee907b7dfa082b5b0fce26d61aec4ad72bbfbb372a1a25109bc328a3",
+        "NLA/MF18/RootProductLimits.lean": "c093dc888d35f28608452aa30cb9f4d5f8200c6fd2fffe0d4138f2adef3effd3"
+      }
+    },
+    {
+      "module": "NLA.MF18.CayleyCount",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "0233488bc61cb2ed5a6f9b26c89bcc852cd672bbb58fe81dd2e5854bb1de9711",
+      "output_sha256": "aa2967c68e0aebf0edf1d43275dadcd851e5de36eed035f62d64816f213d1ba5",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/CayleyAlgebra.lean": "9fa359d58f7596fb5520aa27f0c6ad29d2516327b1bdae82bdaffc43cad659e1",
+        "NLA/MF18/CayleyBoundary.lean": "4c99f1e0422a293ffd3b0620dd8b6d18d57617c6c7537a43eb72595139b31a76",
+        "NLA/MF18/CayleyCount.lean": "0233488bc61cb2ed5a6f9b26c89bcc852cd672bbb58fe81dd2e5854bb1de9711",
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/RootEnumeration.lean": "34308d4fee907b7dfa082b5b0fce26d61aec4ad72bbfbb372a1a25109bc328a3",
+        "NLA/MF18/RootProductLimits.lean": "c093dc888d35f28608452aa30cb9f4d5f8200c6fd2fffe0d4138f2adef3effd3"
+      }
+    },
+    {
+      "module": "NLA.MF18.RootCountLimits",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "57fe9a064c62702b0b5671f86b6e1c1cf7004d4dc934f7b68976d9b20c79f6e2",
+      "output_sha256": "39534023a8fb759668931ca9974032007f8ce11068834f4618b80bc7bf61cb97",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/RootCountLimits.lean": "57fe9a064c62702b0b5671f86b6e1c1cf7004d4dc934f7b68976d9b20c79f6e2",
+        "NLA/MF18/RootEnumeration.lean": "34308d4fee907b7dfa082b5b0fce26d61aec4ad72bbfbb372a1a25109bc328a3",
+        "NLA/MF18/RootProductLimits.lean": "c093dc888d35f28608452aa30cb9f4d5f8200c6fd2fffe0d4138f2adef3effd3"
+      }
+    },
+    {
+      "module": "NLA.MF18.HalfPlaneHomotopy",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "42ba9b419eab07df5fcf6c3d4a5ac96e984559e8f07d1aa3de9b649d2da1e44c",
+      "output_sha256": "1ccea6e56f9b526f10342eccec9d6fb1698656f713d1fa1c6cc552ba6dd7e197",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/HalfPlaneHomotopy.lean": "42ba9b419eab07df5fcf6c3d4a5ac96e984559e8f07d1aa3de9b649d2da1e44c",
+        "NLA/MF18/RootCountLimits.lean": "57fe9a064c62702b0b5671f86b6e1c1cf7004d4dc934f7b68976d9b20c79f6e2",
+        "NLA/MF18/RootEnumeration.lean": "34308d4fee907b7dfa082b5b0fce26d61aec4ad72bbfbb372a1a25109bc328a3",
+        "NLA/MF18/RootProductLimits.lean": "c093dc888d35f28608452aa30cb9f4d5f8200c6fd2fffe0d4138f2adef3effd3"
+      }
+    },
+    {
+      "module": "NLA.MF18.CoefficientContinuity",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "67e69f3148c429c47a65ea94d779d34c739fc631248bd8e381355efea77e2851",
+      "output_sha256": "3652bb29ebee3e7ffeea91885a4a5c5b4cddd1b2dd0ac4e715df0b087dc8dcfe",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/CoefficientContinuity.lean": "67e69f3148c429c47a65ea94d779d34c739fc631248bd8e381355efea77e2851",
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f"
+      }
+    },
+    {
+      "module": "NLA.MF18.DiskHomotopy",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "bb9d8e339df1015d532b48daf52742d8ae66c0b4eab52963d1ee30dcbf843cd8",
+      "output_sha256": "b4130ab18c1353973e2d71b84e805b3fb562af99dcf05f8667b64c2de0060a34",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/CayleyAlgebra.lean": "9fa359d58f7596fb5520aa27f0c6ad29d2516327b1bdae82bdaffc43cad659e1",
+        "NLA/MF18/CayleyBoundary.lean": "4c99f1e0422a293ffd3b0620dd8b6d18d57617c6c7537a43eb72595139b31a76",
+        "NLA/MF18/CayleyCount.lean": "0233488bc61cb2ed5a6f9b26c89bcc852cd672bbb58fe81dd2e5854bb1de9711",
+        "NLA/MF18/CoefficientContinuity.lean": "67e69f3148c429c47a65ea94d779d34c739fc631248bd8e381355efea77e2851",
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/DiskHomotopy.lean": "bb9d8e339df1015d532b48daf52742d8ae66c0b4eab52963d1ee30dcbf843cd8",
+        "NLA/MF18/HalfPlaneHomotopy.lean": "42ba9b419eab07df5fcf6c3d4a5ac96e984559e8f07d1aa3de9b649d2da1e44c",
+        "NLA/MF18/RootCountLimits.lean": "57fe9a064c62702b0b5671f86b6e1c1cf7004d4dc934f7b68976d9b20c79f6e2",
+        "NLA/MF18/RootEnumeration.lean": "34308d4fee907b7dfa082b5b0fce26d61aec4ad72bbfbb372a1a25109bc328a3",
+        "NLA/MF18/RootProductLimits.lean": "c093dc888d35f28608452aa30cb9f4d5f8200c6fd2fffe0d4138f2adef3effd3"
+      }
+    },
+    {
+      "module": "NLA.MF18.Numerical",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "b3ddd61721a6ddc8af9a3f179082ff89f8bb88c63779973b3c6c8ff3854a9f1a",
+      "output_sha256": "dd7d6e25e1f3d23a3fcee285f6afcbc5b1582e6d90b97ea41813e8731ca75b42",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/Numerical.lean": "b3ddd61721a6ddc8af9a3f179082ff89f8bb88c63779973b3c6c8ff3854a9f1a"
+      }
+    },
+    {
+      "module": "NLA.MF18.Positivity",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "5fe658ec6781c199b6365b5432d96abe6cb14bcb09a4cbd401e4ecc55f7d4840",
+      "output_sha256": "961b45dc1dc45165df46e5354c0ab507321f766bf77ae1ddeb4b37e01fafff63",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/Numerical.lean": "b3ddd61721a6ddc8af9a3f179082ff89f8bb88c63779973b3c6c8ff3854a9f1a",
+        "NLA/MF18/Positivity.lean": "5fe658ec6781c199b6365b5432d96abe6cb14bcb09a4cbd401e4ecc55f7d4840"
+      }
+    },
+    {
+      "module": "NLA.MF18.PairingAlgebra",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "4f6d433aafef295184c326087ec5b0629c79cba3c6deb0b45f76d7492685ecd1",
+      "output_sha256": "3193366e9cc0b4aa9b0128228df987c2b71a942599e62b39ba8155c802a5348a",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/PairingAlgebra.lean": "4f6d433aafef295184c326087ec5b0629c79cba3c6deb0b45f76d7492685ecd1"
+      }
+    },
+    {
+      "module": "NLA.MF18.BoundaryNonvanishing",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "5fad487982c7677506fe86093a0065ce6640a6b4346dc3a0989f251e0e011d35",
+      "output_sha256": "cd05c09e0f3af533fb4a1c6e496a0531cfc02703293250d6c6b2b38c7e1ddf55",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/BoundaryNonvanishing.lean": "5fad487982c7677506fe86093a0065ce6640a6b4346dc3a0989f251e0e011d35",
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/Numerical.lean": "b3ddd61721a6ddc8af9a3f179082ff89f8bb88c63779973b3c6c8ff3854a9f1a",
+        "NLA/MF18/PairingAlgebra.lean": "4f6d433aafef295184c326087ec5b0629c79cba3c6deb0b45f76d7492685ecd1",
+        "NLA/MF18/PencilAlgebra.lean": "0f44e04ae4a3281656211a372855fd3482e6c38ab485ccc105a6229751ba1070",
+        "NLA/MF18/Positivity.lean": "5fe658ec6781c199b6365b5432d96abe6cb14bcb09a4cbd401e4ecc55f7d4840"
+      }
+    },
+    {
+      "module": "NLA.MF18.RegularizedCount",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "f54135988fe21f0145766e62fc1fa859c2e408bcc13b5d2d03c37b9c104c7120",
+      "output_sha256": "1c514aa198cbc79938b0d1860e569c18019875da9bb0583a99efe676f3d32d6e",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/BoundaryNonvanishing.lean": "5fad487982c7677506fe86093a0065ce6640a6b4346dc3a0989f251e0e011d35",
+        "NLA/MF18/CayleyAlgebra.lean": "9fa359d58f7596fb5520aa27f0c6ad29d2516327b1bdae82bdaffc43cad659e1",
+        "NLA/MF18/CayleyBoundary.lean": "4c99f1e0422a293ffd3b0620dd8b6d18d57617c6c7537a43eb72595139b31a76",
+        "NLA/MF18/CayleyCount.lean": "0233488bc61cb2ed5a6f9b26c89bcc852cd672bbb58fe81dd2e5854bb1de9711",
+        "NLA/MF18/CoefficientContinuity.lean": "67e69f3148c429c47a65ea94d779d34c739fc631248bd8e381355efea77e2851",
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/DiskHomotopy.lean": "bb9d8e339df1015d532b48daf52742d8ae66c0b4eab52963d1ee30dcbf843cd8",
+        "NLA/MF18/HalfPlaneHomotopy.lean": "42ba9b419eab07df5fcf6c3d4a5ac96e984559e8f07d1aa3de9b649d2da1e44c",
+        "NLA/MF18/Numerical.lean": "b3ddd61721a6ddc8af9a3f179082ff89f8bb88c63779973b3c6c8ff3854a9f1a",
+        "NLA/MF18/PairingAlgebra.lean": "4f6d433aafef295184c326087ec5b0629c79cba3c6deb0b45f76d7492685ecd1",
+        "NLA/MF18/PencilAlgebra.lean": "0f44e04ae4a3281656211a372855fd3482e6c38ab485ccc105a6229751ba1070",
+        "NLA/MF18/Positivity.lean": "5fe658ec6781c199b6365b5432d96abe6cb14bcb09a4cbd401e4ecc55f7d4840",
+        "NLA/MF18/RegularizedCount.lean": "f54135988fe21f0145766e62fc1fa859c2e408bcc13b5d2d03c37b9c104c7120",
+        "NLA/MF18/RootCountLimits.lean": "57fe9a064c62702b0b5671f86b6e1c1cf7004d4dc934f7b68976d9b20c79f6e2",
+        "NLA/MF18/RootEnumeration.lean": "34308d4fee907b7dfa082b5b0fce26d61aec4ad72bbfbb372a1a25109bc328a3",
+        "NLA/MF18/RootProductLimits.lean": "c093dc888d35f28608452aa30cb9f4d5f8200c6fd2fffe0d4138f2adef3effd3"
+      }
+    },
+    {
+      "module": "NLA.MF18.ComplementaryStability",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MF18/ComplementaryStability.olean",
+        "NLA/MF18/ComplementaryStability.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-18T04:08:12.890068+00:00",
+      "source_sha256": "11c3fd8726baeccf832bf425f780de361540aa7306ca7b77b90e300133c0b14a",
+      "dependency_olean_sha256": {
+        "NLA.MF18.RegularizedCount": "1c514aa198cbc79938b0d1860e569c18019875da9bb0583a99efe676f3d32d6e",
+        "NLA.MF18.SolutionPolynomial": "7086d8d5f4036a836220bb8f2be8ae50e7637b8a7bcd7f2e9245ec186c15b6fc"
+      },
+      "exit_code": 0,
+      "end": "2026-09-18T04:08:31.245606+00:00",
+      "elapsed_seconds": 18.355320457951166,
+      "log_sha256": "3795abfcdc2ec23120232d3af677d470e76e381bd244bd3e1ac8508fe38acaee",
+      "maxrss_bytes_macos_cumulative": 3126788096,
+      "output_sha256": "8a65c299c96e47c8a4e2e46c1973a151ca921d8c4ec212d1d1cc34da23fc48e8"
+    },
+    {
+      "module": "NLA.MF18.StabilityLimits",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "8b22666b00759a0a822168d58b1eb3fc3fb068d8ea4cc88e807f45bb8cc587f9",
+      "output_sha256": "46b83255ca4675fdffd816a2efe46695097eb4b98f0c8e287aee7719e1b99fde",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/StabilityLimits.lean": "8b22666b00759a0a822168d58b1eb3fc3fb068d8ea4cc88e807f45bb8cc587f9"
+      }
+    },
+    {
+      "module": "NLA.MF18.LimitingEquation",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MF18/LimitingEquation.olean",
+        "NLA/MF18/LimitingEquation.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-18T04:08:31.261774+00:00",
+      "source_sha256": "04c163719806c51a67acc407d1b21b13a686e927c1e35a5cfbe183efc0b6fbe0",
+      "dependency_olean_sha256": {
+        "NLA.MF18.ComplementaryStability": "8a65c299c96e47c8a4e2e46c1973a151ca921d8c4ec212d1d1cc34da23fc48e8",
+        "NLA.MF18.StabilityLimits": "46b83255ca4675fdffd816a2efe46695097eb4b98f0c8e287aee7719e1b99fde"
+      },
+      "exit_code": 1,
+      "end": "2026-09-18T04:08:44.420970+00:00",
+      "elapsed_seconds": 13.158986624912359,
+      "log_sha256": "f1401199a860825519c535844bc8facbbbbf2051ec898f57c8cb5818038382a1",
+      "maxrss_bytes_macos_cumulative": 3477258240,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.MF18.StableDimension",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MF18/StableDimension.olean",
+        "NLA/MF18/StableDimension.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-18T04:08:44.433956+00:00",
+      "source_sha256": "a3d6d2804c30cdcc80f96614bd6158aec8cd81297be149eebceca85bb07c176b",
+      "dependency_olean_sha256": {
+        "NLA.MF18.Definitions": "eea4e698f7a389237a064aea1531c600c573f07edf5bef1d8ead664c7d3a3814"
+      },
+      "exit_code": 1,
+      "end": "2026-09-18T04:08:48.202170+00:00",
+      "elapsed_seconds": 3.767395041999407,
+      "log_sha256": "a213d5d31745d4bd4193277b6c542dd932d2669c5e6ff8cf8b5b585eae21ec04",
+      "maxrss_bytes_macos_cumulative": 3477258240,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.MF18.PairingVectors",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "710b23315f1d25dbe2b332082723846193a13fdf75d7c604e6c66cd3dcaea589",
+      "output_sha256": "47f25aaa2d776fdc3b54b52e2ae40ae08f48efab5d952f8d863f0ebdd4160e2a",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/PairingAlgebra.lean": "4f6d433aafef295184c326087ec5b0629c79cba3c6deb0b45f76d7492685ecd1",
+        "NLA/MF18/PairingVectors.lean": "710b23315f1d25dbe2b332082723846193a13fdf75d7c604e6c66cd3dcaea589"
+      }
+    },
+    {
+      "module": "NLA.MF18.GeneralizedStein",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "5d12c7c02e693888b1cc48ba9a0f16ee841e7b27c9c73e309e43f79b89b078aa",
+      "output_sha256": "dc824accc6bd52c62820fb86ee2e150e158aa38c6afbebe942c5b5e158d09286",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MF18/Definitions.lean": "dda1ae8d337a7f2ae2a2c968b75eda24536bc4c569ea93d5c295b00d31d5712f",
+        "NLA/MF18/GeneralizedStein.lean": "5d12c7c02e693888b1cc48ba9a0f16ee841e7b27c9c73e309e43f79b89b078aa",
+        "NLA/MF18/PairingAlgebra.lean": "4f6d433aafef295184c326087ec5b0629c79cba3c6deb0b45f76d7492685ecd1",
+        "NLA/MF18/PairingVectors.lean": "710b23315f1d25dbe2b332082723846193a13fdf75d7c604e6c66cd3dcaea589"
+      }
+    },
+    {
+      "module": "NLA.MF18.StableKernel",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF18.StableDimension"
+      ]
+    },
+    {
+      "module": "NLA.MF18.SteinRankLower",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MF18/SteinRankLower.olean",
+        "NLA/MF18/SteinRankLower.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-18T04:08:48.212032+00:00",
+      "source_sha256": "c7c0a56711b9bd1f93f428764d45551e143f980fe7083cd9ce1bf3f97419f1aa",
+      "dependency_olean_sha256": {
+        "NLA.MF18.GeneralizedStein": "dc824accc6bd52c62820fb86ee2e150e158aa38c6afbebe942c5b5e158d09286"
+      },
+      "exit_code": 1,
+      "end": "2026-09-18T04:08:51.887250+00:00",
+      "elapsed_seconds": 3.6750859590247273,
+      "log_sha256": "95feeb6af787594e4bf6363d00f928c36dc6be2c6b68a2c4ecaed6a75851ed7c",
+      "maxrss_bytes_macos_cumulative": 3477258240,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.MF18.SimpleEigenfunctional",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF18.StableKernel"
+      ]
+    },
+    {
+      "module": "NLA.MI24.Definitions",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c",
+      "output_sha256": "168f7e54864bd58113d101a5028770e8af4d84f2ac6fbd314485d29b5dd31d0d",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c"
+      }
+    },
+    {
+      "module": "NLA.MI24.CompoundAlgebra",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MI24/CompoundAlgebra.olean",
+        "NLA/MI24/CompoundAlgebra.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-18T04:08:51.894555+00:00",
+      "source_sha256": "1c173e0dc0e34675f48acc42c6835a7b0aefa8c684448b697e3309a860474082",
+      "dependency_olean_sha256": {
+        "NLA.MI24.Definitions": "168f7e54864bd58113d101a5028770e8af4d84f2ac6fbd314485d29b5dd31d0d"
+      },
+      "exit_code": 0,
+      "end": "2026-09-18T04:08:56.257395+00:00",
+      "elapsed_seconds": 4.362718624994159,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "maxrss_bytes_macos_cumulative": 3477258240,
+      "output_sha256": "a35b20a605a55e1a088ea6590b0da1fb33c1259fa340dd71893a75477c7a55af"
+    },
+    {
+      "module": "NLA.MI24.SpectralPowers",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00",
+      "output_sha256": "08d9f65fc32342af67f4c619320e1127fc84f770f8e1c0b89e56686ba6bfc4f0",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c",
+        "NLA/MI24/SpectralPowers.lean": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00"
+      }
+    },
+    {
+      "module": "NLA.MI24.DiagonalPowers",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MI24/DiagonalPowers.olean",
+        "NLA/MI24/DiagonalPowers.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-18T04:08:56.265159+00:00",
+      "source_sha256": "40706ab467936c2382fdde7901791a40f2c094dfe749d1850bde8d6a9e8fb461",
+      "dependency_olean_sha256": {
+        "NLA.MI24.SpectralPowers": "08d9f65fc32342af67f4c619320e1127fc84f770f8e1c0b89e56686ba6bfc4f0"
+      },
+      "exit_code": 1,
+      "end": "2026-09-18T04:08:59.631103+00:00",
+      "elapsed_seconds": 3.3658432500669733,
+      "log_sha256": "acc38a7b3974d96d59b6fe624264d11e1540f783011e547dab077bd4537424ca",
+      "maxrss_bytes_macos_cumulative": 3477258240,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.MI24.TraceSpectral",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "e6e918194268f476b932fb5a04911e514afba776e2e0ea4ef1564285cbe50d74",
+      "output_sha256": "3bf2b9178279ea11bda6f085d561f8382f7b0e409faa51ed677afc7ab7ef9435",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-313/RECEIPT.json",
+      "prior_receipt_sha256": "e50952c46c2c03e9dddf5fed40a5da3bc26ecc087f26d40fb5c9fbe0ef9fd6b4",
+      "transitive_source_hashes": {
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c",
+        "NLA/MI24/SpectralPowers.lean": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00",
+        "NLA/MI24/TraceSpectral.lean": "e6e918194268f476b932fb5a04911e514afba776e2e0ea4ef1564285cbe50d74"
+      }
+    },
+    {
+      "module": "NLA.MI24.MeanPositivity",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "c26b8d10c54e5dd22a28a959a8b131540ae9f901485b86bb88ef31a4892ffef3",
+      "output_sha256": "23a84c38a80797c2d8c35c835866bd8c84a365129ddb21f11b5881050406617a",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-310/RECEIPT.json",
+      "prior_receipt_sha256": "648ad4d3c51ba64b3b4d8ffd87f9b2a930c03380003ef8e91ff4e16d61b7f8ad",
+      "transitive_source_hashes": {
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c",
+        "NLA/MI24/MeanPositivity.lean": "c26b8d10c54e5dd22a28a959a8b131540ae9f901485b86bb88ef31a4892ffef3",
+        "NLA/MI24/SpectralPowers.lean": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00"
+      }
+    },
+    {
+      "module": "NLA.MI24.GeometricCongruence",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "e3f7ca2be36c65ab148445e3e28aa4f2c4f5f133adc97f3a3d42c0d375084fd5",
+      "output_sha256": "24f62904c26b076986250f348a42630feea0bba83c943e764062515392b4ce2e",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-310/RECEIPT.json",
+      "prior_receipt_sha256": "648ad4d3c51ba64b3b4d8ffd87f9b2a930c03380003ef8e91ff4e16d61b7f8ad",
+      "transitive_source_hashes": {
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c",
+        "NLA/MI24/GeometricCongruence.lean": "e3f7ca2be36c65ab148445e3e28aa4f2c4f5f133adc97f3a3d42c0d375084fd5",
+        "NLA/MI24/MeanPositivity.lean": "c26b8d10c54e5dd22a28a959a8b131540ae9f901485b86bb88ef31a4892ffef3",
+        "NLA/MI24/SpectralPowers.lean": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00"
+      }
+    },
+    {
+      "module": "NLA.MI24.PolarPowers",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "dc7cdeda4e85f107bc23f89bced445d002717c59c92845737568b3e8f42110f2",
+      "output_sha256": "85ead4ef9d9c2d062797a976e8ffba11d276e70bbf4a5c4235e36f221002cb7a",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-310/RECEIPT.json",
+      "prior_receipt_sha256": "648ad4d3c51ba64b3b4d8ffd87f9b2a930c03380003ef8e91ff4e16d61b7f8ad",
+      "transitive_source_hashes": {
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c",
+        "NLA/MI24/GeometricCongruence.lean": "e3f7ca2be36c65ab148445e3e28aa4f2c4f5f133adc97f3a3d42c0d375084fd5",
+        "NLA/MI24/MeanPositivity.lean": "c26b8d10c54e5dd22a28a959a8b131540ae9f901485b86bb88ef31a4892ffef3",
+        "NLA/MI24/PolarPowers.lean": "dc7cdeda4e85f107bc23f89bced445d002717c59c92845737568b3e8f42110f2",
+        "NLA/MI24/SpectralPowers.lean": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00"
+      }
+    },
+    {
+      "module": "NLA.MI24.OrderPowers",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "5271fa66e5d7ad4620f5ec4ac35dc931a37dd910a16a6a9f1db32c37cbaf2e53",
+      "output_sha256": "cbea8e02b95209ab21ea4c0e3901cef96487ff22229302c998a3f4aa6dae7417",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-307/RECEIPT.json",
+      "prior_receipt_sha256": "c3ee7a1e1d6e34b736bfde88dc88e4d4ccccbaf619a3bdca2d6065ce5c44a697",
+      "transitive_source_hashes": {
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c",
+        "NLA/MI24/OrderPowers.lean": "5271fa66e5d7ad4620f5ec4ac35dc931a37dd910a16a6a9f1db32c37cbaf2e53",
+        "NLA/MI24/SpectralPowers.lean": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00"
+      }
+    },
+    {
+      "module": "NLA.MI24.FurutaBase",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "14ec41c39b65ee408455b8caf23d3f5342809912c5c7dcfaf1c8a9d6a6ac7c6f",
+      "output_sha256": "1a0731390277d1d83a2dc49d09f9ac97c58fc9b19d15cc0308fb6eb6febada10",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-307/RECEIPT.json",
+      "prior_receipt_sha256": "c3ee7a1e1d6e34b736bfde88dc88e4d4ccccbaf619a3bdca2d6065ce5c44a697",
+      "transitive_source_hashes": {
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c",
+        "NLA/MI24/FurutaBase.lean": "14ec41c39b65ee408455b8caf23d3f5342809912c5c7dcfaf1c8a9d6a6ac7c6f",
+        "NLA/MI24/GeometricCongruence.lean": "e3f7ca2be36c65ab148445e3e28aa4f2c4f5f133adc97f3a3d42c0d375084fd5",
+        "NLA/MI24/MeanPositivity.lean": "c26b8d10c54e5dd22a28a959a8b131540ae9f901485b86bb88ef31a4892ffef3",
+        "NLA/MI24/OrderPowers.lean": "5271fa66e5d7ad4620f5ec4ac35dc931a37dd910a16a6a9f1db32c37cbaf2e53",
+        "NLA/MI24/PolarPowers.lean": "dc7cdeda4e85f107bc23f89bced445d002717c59c92845737568b3e8f42110f2",
+        "NLA/MI24/SpectralPowers.lean": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00"
+      }
+    },
+    {
+      "module": "NLA.MI24.FurutaHalfPower",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "92b7837ef9999a30fe858c1883ce5514d640fd5f0ca55f88b5382941a8ca315b",
+      "output_sha256": "651ced5bc9f4c743aeb8a40566780cb1c7999deb67c50c5691851f12017e329f",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-307/RECEIPT.json",
+      "prior_receipt_sha256": "c3ee7a1e1d6e34b736bfde88dc88e4d4ccccbaf619a3bdca2d6065ce5c44a697",
+      "transitive_source_hashes": {
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c",
+        "NLA/MI24/FurutaBase.lean": "14ec41c39b65ee408455b8caf23d3f5342809912c5c7dcfaf1c8a9d6a6ac7c6f",
+        "NLA/MI24/FurutaHalfPower.lean": "92b7837ef9999a30fe858c1883ce5514d640fd5f0ca55f88b5382941a8ca315b",
+        "NLA/MI24/GeometricCongruence.lean": "e3f7ca2be36c65ab148445e3e28aa4f2c4f5f133adc97f3a3d42c0d375084fd5",
+        "NLA/MI24/MeanPositivity.lean": "c26b8d10c54e5dd22a28a959a8b131540ae9f901485b86bb88ef31a4892ffef3",
+        "NLA/MI24/OrderPowers.lean": "5271fa66e5d7ad4620f5ec4ac35dc931a37dd910a16a6a9f1db32c37cbaf2e53",
+        "NLA/MI24/PolarPowers.lean": "dc7cdeda4e85f107bc23f89bced445d002717c59c92845737568b3e8f42110f2",
+        "NLA/MI24/SpectralPowers.lean": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00"
+      }
+    },
+    {
+      "module": "NLA.MI24.HeronOrder",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "692e8a7aac8e9ed8d8f605d7e837b763be96d45999760e7f7eb69d9d3e0bdd5b",
+      "output_sha256": "fae2de09894fe97d56cc3e116d203ff1f51284711a12814afa386d8e4e2c9ce7",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-307/RECEIPT.json",
+      "prior_receipt_sha256": "c3ee7a1e1d6e34b736bfde88dc88e4d4ccccbaf619a3bdca2d6065ce5c44a697",
+      "transitive_source_hashes": {
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c",
+        "NLA/MI24/FurutaBase.lean": "14ec41c39b65ee408455b8caf23d3f5342809912c5c7dcfaf1c8a9d6a6ac7c6f",
+        "NLA/MI24/FurutaHalfPower.lean": "92b7837ef9999a30fe858c1883ce5514d640fd5f0ca55f88b5382941a8ca315b",
+        "NLA/MI24/GeometricCongruence.lean": "e3f7ca2be36c65ab148445e3e28aa4f2c4f5f133adc97f3a3d42c0d375084fd5",
+        "NLA/MI24/HeronOrder.lean": "692e8a7aac8e9ed8d8f605d7e837b763be96d45999760e7f7eb69d9d3e0bdd5b",
+        "NLA/MI24/MeanPositivity.lean": "c26b8d10c54e5dd22a28a959a8b131540ae9f901485b86bb88ef31a4892ffef3",
+        "NLA/MI24/OrderPowers.lean": "5271fa66e5d7ad4620f5ec4ac35dc931a37dd910a16a6a9f1db32c37cbaf2e53",
+        "NLA/MI24/PolarPowers.lean": "dc7cdeda4e85f107bc23f89bced445d002717c59c92845737568b3e8f42110f2",
+        "NLA/MI24/SpectralPowers.lean": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00"
+      }
+    },
+    {
+      "module": "NLA.MI24.OperatorNorm",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "aab69153dc8d7557fc6d8959aa15ea007f4d1db70c73ae147cde320746d13752",
+      "output_sha256": "226f879d4aabcca478ea1ed0b5e6f16fb6c91efc7848851807b97a5159fcd7c9",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-310/RECEIPT.json",
+      "prior_receipt_sha256": "648ad4d3c51ba64b3b4d8ffd87f9b2a930c03380003ef8e91ff4e16d61b7f8ad",
+      "transitive_source_hashes": {
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c",
+        "NLA/MI24/OperatorNorm.lean": "aab69153dc8d7557fc6d8959aa15ea007f4d1db70c73ae147cde320746d13752"
+      }
+    },
+    {
+      "module": "NLA.MI24.HeronNorm",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "ad719160a338aeecb4a97ca6ab5cce36af362a4fa3483e69a24afc2fdc0f094f",
+      "output_sha256": "0f5e0fb6afe42038565d92c7f9a02474021296bb02c9d3b54c940137ce2f5b14",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-307/RECEIPT.json",
+      "prior_receipt_sha256": "c3ee7a1e1d6e34b736bfde88dc88e4d4ccccbaf619a3bdca2d6065ce5c44a697",
+      "transitive_source_hashes": {
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c",
+        "NLA/MI24/FurutaBase.lean": "14ec41c39b65ee408455b8caf23d3f5342809912c5c7dcfaf1c8a9d6a6ac7c6f",
+        "NLA/MI24/FurutaHalfPower.lean": "92b7837ef9999a30fe858c1883ce5514d640fd5f0ca55f88b5382941a8ca315b",
+        "NLA/MI24/GeometricCongruence.lean": "e3f7ca2be36c65ab148445e3e28aa4f2c4f5f133adc97f3a3d42c0d375084fd5",
+        "NLA/MI24/HeronNorm.lean": "ad719160a338aeecb4a97ca6ab5cce36af362a4fa3483e69a24afc2fdc0f094f",
+        "NLA/MI24/HeronOrder.lean": "692e8a7aac8e9ed8d8f605d7e837b763be96d45999760e7f7eb69d9d3e0bdd5b",
+        "NLA/MI24/MeanPositivity.lean": "c26b8d10c54e5dd22a28a959a8b131540ae9f901485b86bb88ef31a4892ffef3",
+        "NLA/MI24/OperatorNorm.lean": "aab69153dc8d7557fc6d8959aa15ea007f4d1db70c73ae147cde320746d13752",
+        "NLA/MI24/OrderPowers.lean": "5271fa66e5d7ad4620f5ec4ac35dc931a37dd910a16a6a9f1db32c37cbaf2e53",
+        "NLA/MI24/PolarPowers.lean": "dc7cdeda4e85f107bc23f89bced445d002717c59c92845737568b3e8f42110f2",
+        "NLA/MI24/SpectralPowers.lean": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00"
+      }
+    },
+    {
+      "module": "NLA.MI24.CompoundSpectral",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MI24.DiagonalPowers"
+      ]
+    }
+  ],
+  "count_change": 0,
+  "end": "2026-09-18T04:08:59.686859+00:00",
+  "completed_modules": 34,
+  "failed_modules": [
+    "NLA.MF18.LimitingEquation",
+    "NLA.MF18.StableDimension",
+    "NLA.MF18.SteinRankLower",
+    "NLA.MI24.DiagonalPowers"
+  ],
+  "blocked_modules": [
+    "NLA.MF18.StableKernel",
+    "NLA.MF18.SimpleEigenfunctional",
+    "NLA.MI24.CompoundSpectral"
+  ]
+}

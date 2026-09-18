@@ -1,0 +1,69 @@
+"""Local source-bound Lean expression diagnostics, not real Comparator."""
+from pathlib import Path
+import datetime,fcntl,hashlib,json,os,shutil,sys
+B=Path(__file__).resolve().parent;L=Path('/private/tmp/nla-lean-local-shared-20260916');P=B/'next-proofs/MF-18';proof_run,N=map(int,sys.argv[1:]);D=B/f'MF18-type-diagnostics-{N}';D.mkdir(exist_ok=False)
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+assert sha(L/'serial_compile_v3.py')=='d6c00e953688e155c0a313a8f49c7c395ad0fb1166faf3655c0b47f3ea2b2266'
+for rel,h in json.loads((B/'MF18-STATEMENT-FREEZE-local288.json').read_text())['frozen_files'].items():assert sha(P/rel)==h
+lock=(L/'.compiler.lock').open('r+');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+for p in (L/'runs').glob('development-*/RECEIPT.json'):assert 'end' in json.loads(p.read_text())
+complete=json.loads((B/f'MF18-LOCAL-COMPLETE-{proof_run}.json').read_text())
+for rel,h in complete['sources'].items():assert sha(P/rel)==h
+names=json.loads((P/'comparator.json').read_text())['theorem_names'];literal='#['+', '.join('`'+n for n in names)+']'
+def suffix(label):
+ return '''
+private def diagnosticEraseBinderNames : Lean.Expr → Lean.Expr
+  | .forallE _ t b info => .forallE .anonymous (diagnosticEraseBinderNames t) (diagnosticEraseBinderNames b) info
+  | .lam _ t b info => .lam .anonymous (diagnosticEraseBinderNames t) (diagnosticEraseBinderNames b) info
+  | .letE _ t v b nd => .letE .anonymous (diagnosticEraseBinderNames t) (diagnosticEraseBinderNames v) (diagnosticEraseBinderNames b) nd
+  | .app f a => .app (diagnosticEraseBinderNames f) (diagnosticEraseBinderNames a)
+  | .mdata m b => .mdata m (diagnosticEraseBinderNames b)
+  | .proj n i b => .proj n i (diagnosticEraseBinderNames b)
+  | e => e
+open Lean in
+run_cmd do
+  let mut rows : Array Json := #[]
+  for name in '''+literal+''' do
+    let ci ← getConstInfo name
+    rows := rows.push <| Json.mkObj [
+      ("name", toJson name.toString),
+      ("levelParams", toJson (ci.levelParams.map Name.toString)),
+      ("type", toJson (reprStr ci.type)),
+      ("binderNormalizedType", toJson (reprStr (diagnosticEraseBinderNames ci.type)))]
+  IO.FS.writeFile "'''+str(D/(label+'-types.json'))+'''" (Json.compress (toJson rows))
+'''
+challenge=(P/'Challenge.lean').read_text().replace('import NLA.MF18.Definitions','import NLA.MF18.Definitions\nimport Lean',1)
+inputs={f'NLA.MF18Diagnostics.ChallengeTypes{N}':challenge+suffix('challenge'),f'NLA.MF18Diagnostics.SolutionTypes{N}':'import NLA.MF18.Solution\nimport Lean\n'+suffix('solution')}
+inputs[f'NLA.MF18Diagnostics.SolutionTypes{N}']+='''
+open Lean in
+run_cmd do
+  let mut rows : Array Json := #[]
+  let mut pending : Array Name := '''+literal+'''
+  let mut seen : Array Name := #[]
+  while !pending.isEmpty do
+    let name := pending.back!
+    pending := pending.pop
+    if seen.contains name then continue
+    seen := seen.push name
+    let ci ← getConstInfo name
+    match ci.value? (allowOpaque := true) with
+    | none => rows := rows.push <| Json.mkObj [
+        ("name", toJson name.toString), ("hasBody", toJson false),
+        ("bodyConstants", toJson (#[] : Array String))]
+    | some body =>
+      let cs := body.getUsedConstants
+      rows := rows.push <| Json.mkObj [
+        ("name", toJson name.toString), ("hasBody", toJson true),
+        ("bodyConstants", toJson (cs.map Name.toString))]
+      for c in cs do
+        if c.toString.startsWith "NLA.MF18." || c.toString.startsWith "_private.NLA.MF18." then
+          if !seen.contains c then pending := pending.push c
+  IO.FS.writeFile "'''+str(D/'certificate-body-route.json')+'''" (Json.compress (toJson rows))
+'''
+previous=max(int(p.stem.split('-')[1]) for p in L.glob('ASSEMBLY-*.json') if p.stem.split('-')[1].isdigit() and int(p.stem.split('-')[1])<N)
+a=json.loads((L/f'ASSEMBLY-{previous}.json').read_text())
+for module,data in inputs.items():
+ rel=module.replace('.','/')+'.lean';p=D/'sources'/rel;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(data);dst=L/rel;assert not dst.exists();dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dst);a['sources'][rel]={'source':str(p),'sha256':sha(p)}
+a.update(scope='Actual local elaborated-type and body-dependency diagnostics only; not Linux Comparator',time=datetime.datetime.now(datetime.timezone.utc).isoformat(),diagnostic_script_sha256=sha(__file__))
+p=L/f'ASSEMBLY-{N}.json';assert not p.exists();p.write_text(json.dumps(a,indent=2)+'\n');fcntl.flock(lock,fcntl.LOCK_UN);lock.close();os.chdir(L)
+os.execv(sys.executable,[sys.executable,str(L/'serial_compile_v3.py'),p.name,f'development-{N}',*inputs])
