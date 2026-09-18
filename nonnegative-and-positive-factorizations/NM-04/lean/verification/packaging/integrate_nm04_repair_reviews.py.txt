@@ -1,0 +1,92 @@
+"""Append the two actual source-review continuations to NM04's local204 package.
+
+This script checks and packages review evidence. It does not execute Lean.
+"""
+from pathlib import Path
+import datetime, gzip, hashlib, io, json, re, shutil, sys, tarfile
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+P = B / 'NM04-canonical-package-local204'
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+load = lambda p: json.loads(p.read_text())
+review1, review2 = map(Path, sys.argv[1:])
+local = load(B / 'NM04-LOCAL-COMPLETE-204.json')
+assert sha(B / 'NM04-LOCAL-COMPLETE-204.json') == '4063492a265402d4c9cf50d6019911f00d939d294d44702f966975119a7c3e6d'
+for rel, h in local['sources'].items():
+    assert sha(P / rel) == h, rel
+old_manifest = load(P / 'PACKAGE-MANIFEST.json')
+for rel, h in old_manifest['files'].items():
+    assert sha(P / rel) == h, rel
+index = load(P / 'reviews/INDEX.json')
+assert not any(r['label'].startswith('final-1-local204') or r['label'].startswith('final-2-local204') for r in index)
+reviews = []
+for number, folder in enumerate([review1, review2], 1):
+    accepted = load(B / f'NM04-ROOT-REFEREE{number}-ACCEPTANCE204.json')
+    assert accepted['actual_integrity_exit_code'] == 0
+    assert accepted['current_source_complete_record_sha256'] == sha(B / 'NM04-LOCAL-COMPLETE-204.json')
+    assert accepted['manifest_sha256'] == sha(folder / 'MANIFEST.json')
+    assert accepted['verdict_sha256'] == sha(folder / 'VERDICT.json')
+    files = load(folder / 'MANIFEST.json')['files']
+    assert isinstance(files, dict)
+    for rel, value in files.items():
+        h = value['sha256'] if isinstance(value, dict) else value
+        assert sha(folder / rel) == h, (number, rel)
+    label = f'final-{number}-local204'
+    for filename, suffix in [('REVIEW.md', '.md'), ('VERDICT.json', '-verdict.json'), ('MANIFEST.json', '-manifest.json')]:
+        shutil.copy2(folder / filename, P / 'reviews' / (label + suffix))
+    dest = P / 'reviews' / (label + '-packet.tar.gz')
+    with dest.open('wb') as raw, gzip.GzipFile(fileobj=raw, mode='wb', mtime=0) as gz, tarfile.open(fileobj=gz, mode='w') as tar:
+        for f in sorted(folder.rglob('*')):
+            assert not f.is_symlink(), f
+            if f.is_file():
+                data = f.read_bytes()
+                assert not re.search(r'(?i)(?:george|g?stepaniants|sgstepaniants)[^\s@<>]{0,40}@[\w.-]+\.[A-Za-z]{2,}', data.decode('utf-8', errors='ignore')), f
+                info = tarfile.TarInfo(folder.name + '/' + str(f.relative_to(folder)))
+                info.size, info.mode = len(data), 0o644
+                tar.addfile(info, io.BytesIO(data))
+    row = {'label': label, 'original_packet': folder.name, 'report': label + '.md', 'verdict': label + '-verdict.json',
+           'manifest': label + '-manifest.json', 'manifest_sha256': sha(folder / 'MANIFEST.json'),
+           'archive': dest.name, 'archive_sha256': sha(dest), 'archive_bytes': dest.stat().st_size,
+           'scope': 'Exact204 continuation of the same nonauthor whole-target source review; no Linux acceptance'}
+    index.append(row)
+    reviews.append(row)
+    shutil.copy2(B / f'NM04-ROOT-REFEREE{number}-ACCEPTANCE204.json', P / 'verification' / f'ROOT-REFEREE{number}-ACCEPTANCE204.json')
+(P / 'reviews/INDEX.json').write_text(json.dumps(index, indent=2) + '\n')
+metadata = load(P / 'formalization.yaml')
+metadata['review']['status'] = 'Two independent statement approvals before proof implementation; two nonauthor complete source reviews with exact local204 continuation approvals.'
+metadata['alignment']['status'] = metadata['review']['status']
+metadata['automation']['notes'] = metadata['automation']['notes'].replace('exact204 continuation approvals are pending', 'both exact204 continuation approvals are retained')
+metadata['verification']['independent_reviews'] = {'statement': 2, 'final': 2,
+    'result': 'Two nonauthor whole-target reviews with approved exact204 continuations', 'record': 'reviews/INDEX.json'}
+metadata['verification']['publication_status'] = 'Reviewed local204 repair; local205 all35 types match; new real Linux verification pending; canonical remains Solved'
+for r in metadata['status']['main_results']:
+    r['verification_status'] = 'PASS: actual source-bound local Lean204 and kernel trust assertion; local205 elaborated types match; two independent final exact-source review continuations. New real Linux Comparator pending.'
+(P / 'formalization.yaml').write_text(json.dumps(metadata, indent=2) + '\n')
+(P / 'IMPLEMENTATION-MAP.json').write_text(json.dumps({'results': metadata['status']['main_results']}, indent=2) + '\n')
+state = load(P / 'STATE.json')
+state.update(time=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+             stage=metadata['verification']['publication_status'], current_source_review_continuations=2)
+(P / 'STATE.json').write_text(json.dumps(state, indent=2) + '\n')
+readme = (P / 'README.md').read_text().replace(
+    'The repaired source still requires independent review continuations and a new real Linux Comparator run.',
+    'Two independent nonauthor final reviewers approved the exact repaired source; a new real Linux Comparator run is pending.')
+(P / 'README.md').write_text(readme)
+readme = (P / 'reviews/README.md').read_text().replace('Exact local204\ncontinuation approvals are pending.',
+    'Both independent exact local204\ncontinuation approvals are retained and extend the prior complete mathematical reviews.')
+(P / 'reviews/README.md').write_text(readme)
+scope = B / 'NM04-PUBLIC-REFRESH-LOCAL204'
+dest = P / 'verification/public-scope/local204'
+dest.mkdir()
+# Keep raw API responses privately; unrelated Git author email fields are
+# unnecessary for documenting the observed duplicate-search scope.
+for name in ['PUBLIC-SUMMARY.json', 'RECEIPT.json']:
+    shutil.copy2(scope / name, dest / name)
+shutil.copy2(Path(__file__), P / 'verification/packaging/integrate_nm04_repair_reviews.py.txt')
+for rel, h in local['sources'].items():
+    assert sha(P / rel) == h
+manifest = {'stage': state['stage'], 'files': {str(f.relative_to(P)): sha(f) for f in sorted(P.rglob('*')) if f.is_file() and f != P / 'PACKAGE-MANIFEST.json'}}
+(P / 'PACKAGE-MANIFEST.json').write_text(json.dumps(manifest, indent=2) + '\n')
+assert len(list(P.rglob('*.lean'))) == 39
+print(json.dumps({'package': str(P), 'manifest_sha256': sha(P / 'PACKAGE-MANIFEST.json'),
+                  'payload_files': len(manifest['files']), 'current204_review_continuations': 2,
+                  'new_real_Linux_Comparator': False}, indent=2))

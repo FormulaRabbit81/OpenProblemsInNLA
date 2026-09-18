@@ -1,0 +1,28 @@
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/QuantitativeComparison.lean:22:lemma applyMatrix_sub {d : ℕ} (A B : Square d) (x : EuclideanVector d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/QuantitativeComparison.lean:81:        rw [applyMatrix_sub, sub_eq_add_neg]
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:45:    norm_mul_le (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ) A)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:46:      (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ) B)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:51:    norm_add_le (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ) A)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:52:      (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ) B)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:58:lemma spectralNorm_smul {d : ℕ} (c : ℂ) (A : Square d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:62:lemma continuous_spectralNorm {d : ℕ} : Continuous (spectralNorm (d := d)) := by
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:64:    (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ)).toAlgEquiv.toLinearEquiv.toLinearMap
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:103:def toEuclideanCLM :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:110:lemma coe_toEuclideanCLM_eq_toEuclideanLin (A : Matrix n n 𝕜) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:111:    (toEuclideanCLM (n := n) (𝕜 := 𝕜) A : _ →ₗ[𝕜] _) = toEuclideanLin A :=
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:115:lemma toEuclideanCLM_toLp (A : Matrix n n 𝕜) (x : n → 𝕜) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:116:    toEuclideanCLM (n := n) (𝕜 := 𝕜) A (toLp _ x) = toLp _ (A *ᵥ x) := rfl
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:119:lemma ofLp_toEuclideanCLM (A : Matrix n n 𝕜) (x : EuclideanSpace 𝕜 n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:120:    ofLp (toEuclideanCLM (n := n) (𝕜 := 𝕜) A x) = A *ᵥ ofLp x := rfl
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:123:lemma inner_toEuclideanCLM (A : Matrix n n ℝ) (x y : EuclideanSpace ℝ n) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:124:    ⟪x, toEuclideanCLM (𝕜 := ℝ) A y⟫ = x ⬝ᵥ A *ᵥ y := by
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:125:  simp only [toEuclideanCLM, AddHom.toFun_eq_coe, LinearMap.coe_toAddHom, LinearEquiv.coe_coe,
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:150:    _ _ _ ContinuousLinearMap.toNormedRing _ _ toEuclideanCLM.injective
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:229:lemma l2_opNorm_toEuclideanCLM (A : Matrix n n 𝕜) :
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:230:    ‖toEuclideanCLM (n := n) (𝕜 := 𝕜) A‖ = ‖A‖ := rfl
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:234:  set T := toEuclideanCLM (n := n) (𝕜 := 𝕜) (diagonal v)
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:235:  rw [← l2_opNorm_toEuclideanCLM]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:239:    simp only [(T x).norm_sq_eq, ofLp_toEuclideanCLM, mulVec_diagonal, norm_mul, T]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:244:          rw [toEuclideanCLM_toLp (diagonal v) (Pi.single i (1 : 𝕜))]
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:272:lemma cstar_norm_def (A : Matrix n n 𝕜) : ‖A‖ = ‖toEuclideanCLM (n := n) (𝕜 := 𝕜) A‖ := rfl
+/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/CStarAlgebra/Matrix.lean:276:lemma cstar_nnnorm_def (A : Matrix n n 𝕜) : ‖A‖₊ = ‖toEuclideanCLM (n := n) (𝕜 := 𝕜) A‖₊ := rfl

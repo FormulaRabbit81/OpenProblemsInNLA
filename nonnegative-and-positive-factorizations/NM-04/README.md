@@ -4,8 +4,8 @@
 **Difficulty:** challenging  
 **Importance:** interesting to the community  
 **Rating rationale:** Challenging because the full coefficient formula requires a general algebraic-combinatorial identity; community importance concerns exact formulas for a widely used matrix-scaling limit.  
-**Last checked:** 2026-09-11  
-**Status:** Solved  
+**Last checked:** 2026-09-17
+**Status:** Lean verified
 
 <!-- colbrook-factorization -->
 ## Resolution — 2026-09-11
@@ -16,9 +16,19 @@ The complete Rowland--Wu coefficient identity holds for every positive real rect
 
 The complete target is resolved. Its former difficulty rating is historical; the original statement, references and dated audits remain below.
 
-**Primary reference:** [complete authored PDF](../../references/colbrook-factorization-2026-09-11/manuscripts/NM-04_sinkhorn_identity.pdf), [standalone TeX](../../references/colbrook-factorization-2026-09-11/manuscripts/NM-04_sinkhorn_identity.tex), **Theorem 1**. [Independent proof review](../../references/colbrook-factorization-2026-09-11/verification/reviews/NM-04-review.md) · [Authorship and submission record](../../references/colbrook-factorization-2026-09-11/README.md). Verification is independent agent review, not external human peer review or formal certification.
+**Primary reference:** [complete authored PDF](../../references/colbrook-factorization-2026-09-11/manuscripts/NM-04_sinkhorn_identity.pdf), [standalone TeX](../../references/colbrook-factorization-2026-09-11/manuscripts/NM-04_sinkhorn_identity.tex), **Theorem 1**. [Independent proof review](../../references/colbrook-factorization-2026-09-11/verification/reviews/NM-04-review.md) · [Authorship and submission record](../../references/colbrook-factorization-2026-09-11/README.md). The 11 September verification was independent agent review. The later Lean verification is recorded below; no external human peer review is claimed.
 
 <!-- /colbrook-factorization -->
+
+## Lean proof and verification evidence
+
+**The complete original target is Lean verified, 17 September 2026.** The [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/21ed3545a8b4784303e9cc0473879eb33ef4d813/nonnegative-and-positive-factorizations/NM-04/lean/Solution.lean) at revision `21ed3545a8b4784303e9cc0473879eb33ef4d813` passed [non-root Linux run 35276203784](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35276203784/job/105387449317). The [retained execution evidence](lean/verification/linux-2026-09-17/README.md) authenticates all 380 submitted project inputs and 35 exported statements. Comparator statement matching, default-kernel replay, standard transitive axioms, sandbox checks and rejection controls passed.
+
+The main declaration `NLA.NM04.rowland_wu_identity` proves the literal subset-sum coefficient formula for every strictly positive real rectangular matrix with both dimensions at least one. The formalization also proves positive scaling existence and uniqueness, the four transition signs, sorted indices, scaling covariance, and empty or singular minor cases. The [35 contracts](lean/Challenge.lean), [implementation map](lean/IMPLEMENTATION-MAP.json) and [source correspondence](lean/SourceCorrespondence.md) identify the full target. They use the original equivalent scaling definition; convergence of a particular normalization algorithm is outside this claim.
+
+Formalization contributor: **George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology**. Matthew J. Colbrook retains mathematical solution credit; Eric Rowland and Jason Wu retain the question. Two independent statement reviews preceded implementation, and two independent nonauthor final source reviews approved the proof. [Review records](lean/reviews/README.md) disclose substantial OpenAI Codex assistance and exact reviewer scopes.
+
+The project pins Lean 4.33.1, Mathlib and LeanCert. Two exact half inequalities execute through LeanCert in kernel mode and are consumed by coercivity; dimensions, minors and sums remain symbolic. Every export uses only `propext`, `Classical.choice` and `Quot.sound`. Run `lake build` in the [Lean project](lean/README.md); its reproduction instructions distinguish local compilation from the Linux checker.
 
 ## Problem statement
 

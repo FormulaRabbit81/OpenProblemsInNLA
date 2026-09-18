@@ -1,0 +1,138 @@
+"""Attach canonical MF06 documents only after the actual proof-commit Linux pass."""
+from pathlib import Path
+import datetime, hashlib, json, shutil, subprocess, sys
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+W = Path('/private/tmp/nla-lean-next-mf06-worktree')
+Q = W / 'matrix-functions-and-stability/MF-06'
+L = Q / 'lean'
+R = Path(sys.argv[1])
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+load = lambda p: json.loads(Path(p).read_text())
+def write(p, data):
+    Path(p).write_text(json.dumps(data, indent=2) + '\n')
+audit = load(R / 'ROOT-AUDIT.json')
+HEAD, RUNID, JOB = audit['actual_checkout'], audit['run'], audit['job']
+push = load(B / 'MF06-PROOF-PUSH-20260917.json')
+assert push['pushed'] and HEAD == push['proof_commit']
+assert subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=W, text=True).strip() == HEAD
+assert not subprocess.check_output(['git', 'status', '--porcelain'], cwd=W)
+INPUTS = push['tracked_project_files']
+assert audit['literal_published_commit'] and audit['bound_inputs'] == INPUTS
+assert len(audit['exports']) == 38 and audit['default_kernel_and_comparator'] == 'PASS'
+assert audit['all_rejection_regression_sandbox_controls'] == 'PASS' and audit['problem'] == 'MF-06'
+RUN = f'https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/{RUNID}/job/{JOB}'
+PROOF = f'https://github.com/sgstepaniants/OpenProblemsInNLA/blob/{HEAD}/matrix-functions-and-stability/MF-06/lean/Solution.lean'
+DATE = '2026-09-18'
+protected = {str(p.relative_to(L)): sha(p) for p in L.rglob('*.lean')}
+for rel in ['lean-toolchain', 'lakefile.toml', 'lake-manifest.json', 'comparator.json', 'STATEMENT-FREEZE.json', 'NUMERICAL_TARGETS.md', 'SourceCorrespondence.md', 'STATEMENT-HEADERS.json']:
+    protected[rel] = sha(L / rel)
+for rel, h in load(L / 'STATEMENT-FREEZE.json')['source_sha256'].items():
+    assert sha(L / rel) == h
+before = B / f'MF06-publication-before-{RUNID}'
+before.mkdir()
+for rel in ['README.md', 'lean/README.md', 'lean/STATE.json', 'lean/formalization.yaml', 'lean/PACKAGE-MANIFEST.json', 'lean/reviews/README.md']:
+    target = before / rel
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(Q / rel, target)
+shutil.copy2(W / 'RESOLVED.md', before / 'RESOLVED.md')
+E = L / ('verification/linux-' + DATE)
+shutil.copytree(R, E)
+shutil.copy2(B / 'audit_canonical_runtime_axiom_set.py', E / 'audit_runtime.py')
+shutil.copy2(W / 'tools/lean/source-lock.json', E / 'source-lock.json')
+(E / 'README.md').write_text(f'''# MF-06 Linux verification, {DATE} (UTC)
+
+Actual [run {RUNID}]({RUN}) checked literal proof commit `{HEAD}`.
+The retained GitHub metadata, artifact ZIP and complete logs authenticate all
+{INPUTS} tracked project inputs and all 38 exports. Comparator statement matching,
+Lean's default-kernel replay, permitted transitive axioms, sandbox checks and
+negative/regression controls passed. The required controls ran inside MF-06's
+verification job; the separate global checker-controls job was skipped because
+the shared tools were unchanged.
+
+`ROOT-AUDIT.json` records the coordinator's inspection of the real execution.
+It is not a second compiler run or an independent mathematical referee report.
+The two nonauthor mathematical/source approvals are in ../../reviews/.
+Actual macOS local268 compilation and local270 type diagnostics are retained
+separately. Only the Challenge has 38 deliberate specification placeholders;
+Solution never imports it. All exports use only the three standard axioms.
+
+This result binds the immutable proof revision. Subsequent documentation and
+the upstream PR merge checkout require their own runs, recorded in the PR.
+No earlier run is represented as having checked future files.
+''')
+canonical = (before / 'README.md').read_text()
+original_target = canonical.split('## Context and notation\n', 1)[1]
+canonical = canonical.replace('**Status:** Solved', '**Status:** Lean verified', 1)
+canonical = canonical.replace('**Last checked:** 2026-09-12', '**Last checked:** ' + DATE, 1)
+canonical = canonical.replace('Substantial AI assistance is disclosed; this is informal agent review, not external human peer review or formal verification.', 'That September 12 audit was informal agent review. The later Lean verification is recorded below; substantial AI assistance is disclosed and no external human peer review is claimed.', 1)
+section = f'''## Lean proof and verification evidence
+
+**The complete original target is Lean verified, {DATE} (UTC).** The [immutable proof]({PROOF}) at revision `{HEAD}` passed [non-root Linux run {RUNID}]({RUN}). The [retained execution evidence](lean/verification/linux-{DATE}/README.md) binds all {INPUTS} submitted project inputs and all 38 exported statements. Comparator, default-kernel replay, standard transitive axioms, sandbox checks and rejection controls passed.
+
+The main declaration `NLA.MF06.canonical_pointwise_lower_lipschitz` proves the stated bound for every positive dimension and every fixed nonempty compact complex matrix family. Positive constants are chosen before the arbitrary nearby nonempty compact family. The spectral norm, literal two-sided Hausdorff distance and actual all-word joint-spectral-radius limit are proved to match the original definitions. Reducible reference families, unbounded normalized products, infinite compact sets, singular generators, zero radius and zero distance are covered. The proof internally establishes the critical product-bounded exterior power; it adds no flag-preservation or irreducibility hypothesis. The [38 exact contracts](lean/Challenge.lean), [implementation map](lean/IMPLEMENTATION-MAP.json) and [source correspondence](lean/SourceCorrespondence.md) identify these obligations.
+
+Mathematical solution and formalization: **George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. Epperlein and Wirth retain the question, and the reused MF05/MF07 mathematics retain Matthew J. Colbrook's credit. Two independent statement reviews preceded implementation; two independent nonauthor final source reviews approved all 119 imported proof modules. [Review records](lean/reviews/README.md) disclose substantial OpenAI Codex assistance and distinguish source inspection from executed checks.
+
+The project pins Lean 4.33.1, [Mathlib](https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474) and [LeanCert](https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926). A kernel-mode LeanCert half-radius certificate is consumed by the proof; matrix dimensions, words and exterior powers remain symbolic. Every export has only `propext`, `Classical.choice` and `Quot.sound` as transitive axioms. Run `lake build` in `matrix-functions-and-stability/MF-06/lean`; [reproduction instructions](lean/README.md) distinguish actual local checks from the Linux checker.
+
+'''
+canonical = canonical.replace('## Context and notation\n', section + '## Context and notation\n', 1)
+assert canonical.split('## Context and notation\n', 1)[1] == original_target
+(Q / 'README.md').write_text(canonical)
+readme = (before / 'lean/README.md').read_text()
+start = readme.index('**All 38 frozen contracts')
+end = readme.index('\n\nRead [CanonicalLower]', start)
+readme = readme[:start] + f'''**Complete immutable proof verification passed.** All 38 frozen contracts passed actual local Lean268, two independent full-source reviews, and [non-root Linux run {RUNID}]({RUN}) at proof commit `{HEAD}`. Comparator, default-kernel replay, standard transitive axioms, sandbox checks and negative/regression controls passed. The [Linux evidence](verification/linux-{DATE}/README.md) retains the original artifact and logs; the [local record](verification/LOCAL-COMPLETE.json) separately binds all 119 proof modules and successful compiler origins. Later publication and PR merge checkouts have separate checks.''' + readme[end:]
+readme = readme.replace('No Linux success is claimed\nin this local-stage package.', 'The actual successful proof-commit execution is recorded above; this command reproduces that class of check.')
+readme = readme.replace('The [current public audit]', 'The [prepublication public audit]')
+readme = readme.replace('It is separate from the two independent full mathematical/source reviews and does not claim Linux execution.', 'It preceded the successful Linux execution and is separate from the two independent full mathematical/source reviews.')
+(L / 'README.md').write_text(readme)
+review_readme = (before / 'lean/reviews/README.md').read_text().replace('The final Linux runtime check\nis still pending.', f'The successful immutable proof-commit Linux runtime check is recorded in\n[verification evidence](../verification/linux-{DATE}/README.md).')
+(L / 'reviews/README.md').write_text(review_readme)
+meta = load(before / 'lean/formalization.yaml')
+meta['status']['whole_problem_verified'] = True
+meta['status']['completed_original_targets'] = 1
+meta['status']['stage'] = 'immutable-full-proof-verified-publication-checks-pending'
+meta['status']['scope'] = 'Complete original MF-06 target, actual local and non-root Linux proof-commit verification complete'
+for item in meta['status']['main_results']:
+    item['verification_status'] = f'PASS actual non-root Linux run {RUNID} at {HEAD}: Comparator, default kernel, standard axioms and per-project controls.'
+meta['alignment']['contracts'] = meta['status']['main_results']
+meta['alignment']['status'] = 'All38 exact contracts matched by actual Linux Comparator at the immutable proof revision'
+meta['verification']['GitHub_Comparator'] = {'status': 'passed', 'published_commit': HEAD,
+    'run': RUNID, 'job': JOB, 'url': RUN, 'input_count': INPUTS, 'exports': 38,
+    'evidence': f'verification/linux-{DATE}/README.md', 'root_audit': f'verification/linux-{DATE}/ROOT-AUDIT.json',
+    'artifact_sha256': audit['artifact_sha256'], 'source_lock_sha256': audit['source_lock_sha256'],
+    'scope': 'Actual immutable proof-commit execution; later publication/PR merge checkouts checked separately'}
+meta['verification']['publication_status'] = 'Immutable full proof verified; final publication and PR checks remain pending'
+meta['automation']['notes'] = meta['automation']['notes'].replace('Linux Comparator remains pending;', f'Actual Linux Comparator run {RUNID} passed at the proof commit;')
+meta['review']['notes'] = meta['review']['notes'].replace('an unrun Linux check', 'a Linux run by the reviewer')
+write(L / 'formalization.yaml', meta)
+write(L / 'IMPLEMENTATION-MAP.json', {'results': meta['status']['main_results']})
+state = load(before / 'lean/STATE.json')
+state.update(time=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    stage='Immutable complete proof verified; publication and PR checks pending',
+    GitHub_Comparator='pass at immutable proof commit', whole_problem_verified=True,
+    proof_commit=HEAD, proof_run=RUNID, proof_job=JOB, count_change=0,
+    remaining=['Permanent-ID/catalog checks', 'Rendered PDF visual review', 'Final publication commit Linux run', 'Upstream PR and merge-checkout Linux run'])
+write(L / 'STATE.json', state)
+active = load(L / 'ACTIVE-SOURCE-MANIFEST.json')
+active['Linux_Comparator'] = f'PASS at immutable proof commit {HEAD}, run {RUNID}; subsequent documentation checkout separate'
+write(L / 'ACTIVE-SOURCE-MANIFEST.json', active)
+resolved = (before / 'RESOLVED.md').read_text()
+start = resolved.index('### ✅ MF-06 -')
+end = resolved.index('\n### ', start + 1)
+old_section = resolved[start:end]
+new_section = old_section.replace('this is informal agent review, not human peer review or formal verification.', 'that September 12 audit was informal agent review; the later Lean verification is recorded below and no human peer review is claimed.')
+new_section += f'''\n\n**Lean verified, {DATE} (UTC). Formalization: George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. The [complete 38-contract formalization](matrix-functions-and-stability/MF-06/lean/README.md) proves the unchanged original target for arbitrary nonempty compact complex families in every positive dimension, including reducible references and zero radius. The [immutable proof]({PROOF}) and [actual Linux run {RUNID}]({RUN}) passed Comparator, default-kernel replay, standard transitive axioms and per-project sandbox/rejection controls. Two independent nonauthor full-source reviews and the exact execution evidence are linked from the [canonical verification section](matrix-functions-and-stability/MF-06/README.md#lean-proof-and-verification-evidence). The proof consumes kernel-mode LeanCert and preserves all prior mathematical attribution.\n'''
+resolved = resolved[:start] + new_section + resolved[end:]
+(W / 'RESOLVED.md').write_text(resolved)
+for rel, h in protected.items():
+    assert sha(L / rel) == h, rel
+shutil.copy2(before / 'lean/PACKAGE-MANIFEST.json', L / 'verification/packaging/proof-commit-PACKAGE-MANIFEST.json')
+write(L / 'PACKAGE-MANIFEST.json', {'stage': state['stage'], 'proof_commit': HEAD, 'proof_run': RUNID,
+    'files': {str(f.relative_to(L)): sha(f) for f in sorted(L.rglob('*')) if f.is_file() and f != L / 'PACKAGE-MANIFEST.json'}})
+write(B / 'MF06-PUBLICATION-DOCS-TRANSITION.json', {'proof_commit': HEAD, 'proof_run': RUNID,
+    'protected_inputs': protected, 'canonical_original_target_unchanged': True,
+    'root_runtime_audit_sha256': sha(R / 'ROOT-AUDIT.json'), 'remaining': state['remaining'], 'count_change': 0})
+print('MF06 actual proof evidence attached; all mathematical source bytes and original target preserved; final publication checks pending.')

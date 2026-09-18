@@ -1,0 +1,32 @@
+47:* `hausdorffEDist_ne_top_of_nonempty_of_bounded`: if two sets in a metric space
+576:theorem infDist_eq_iInf : infDist x s = ⨅ y : s, dist x y := by
+590:  simpa [infDist_eq_iInf, sInf_image']
+727:theorem _root_.IsCompact.exists_infDist_eq_dist (h : IsCompact s) (hne : s.Nonempty) (x : α) :
+732:theorem _root_.IsClosed.exists_infDist_eq_dist [ProperSpace α] (h : IsClosed s) (hne : s.Nonempty)
+739:  obtain ⟨y, ⟨hys, -⟩, hyd⟩ : ∃ y ∈ t, infDist x t = dist x y := htc.exists_infDist_eq_dist htne x
+742:theorem exists_mem_closure_infDist_eq_dist [ProperSpace α] (hne : s.Nonempty) (x : α) :
+744:  simpa only [infDist_closure] using isClosed_closure.exists_infDist_eq_dist hne.closure x
+778:theorem hausdorffDist_nonneg : 0 ≤ hausdorffDist s t := by simp [hausdorffDist]
+782:theorem hausdorffEDist_ne_top_of_nonempty_of_bounded (hs : s.Nonempty) (ht : t.Nonempty)
+803:alias hausdorffEdist_ne_top_of_nonempty_of_bounded := hausdorffEDist_ne_top_of_nonempty_of_bounded
+807:theorem hausdorffDist_self_zero : hausdorffDist s s = 0 := by simp [hausdorffDist]
+810:theorem hausdorffDist_comm : hausdorffDist s t = hausdorffDist t s := by
+811:  simp [hausdorffDist, hausdorffEDist_comm]
+824:theorem hausdorffDist_empty' : hausdorffDist ∅ s = 0 := by simp [hausdorffDist_comm]
+828:theorem hausdorffDist_le_of_infDist {r : ℝ} (hr : 0 ≤ r) (H1 : ∀ x ∈ s, infDist x t ≤ r)
+842:theorem hausdorffDist_le_of_mem_dist {r : ℝ} (hr : 0 ≤ r) (H1 : ∀ x ∈ s, ∃ y ∈ t, dist x y ≤ r)
+844:  apply hausdorffDist_le_of_infDist hr
+853:theorem hausdorffDist_le_diam (hs : s.Nonempty) (bs : IsBounded s) (ht : t.Nonempty)
+857:  refine hausdorffDist_le_of_mem_dist diam_nonneg ?_ ?_
+872:  have r0 : 0 < r := lt_of_le_of_lt hausdorffDist_nonneg H
+874:    rwa [hausdorffDist, ← ENNReal.toReal_ofReal (le_of_lt r0),
+884:  rw [hausdorffDist_comm] at H
+903:theorem hausdorffDist_triangle (fin : hausdorffEDist s t ≠ ⊤) :
+910:theorem hausdorffDist_triangle' (fin : hausdorffEDist t u ≠ ⊤) :
+914:    hausdorffDist_triangle fin
+915:  simpa [add_comm, hausdorffDist_comm] using I
+936:theorem hausdorffDist_zero_iff_closure_eq_closure (fin : hausdorffEDist s t ≠ ⊤) :
+942:theorem _root_.IsClosed.hausdorffDist_zero_iff_eq (hs : IsClosed s) (ht : IsClosed t)
+944:  simp [← _root_.IsClosed.hausdorffEDist_zero_iff hs ht, hausdorffDist, ENNReal.toReal_eq_zero_iff,
+948:theorem hausdorffDist_singleton : hausdorffDist {x} {y} = dist x y := by
+949:  rw [hausdorffDist, hausdorffEDist_singleton, dist_edist]

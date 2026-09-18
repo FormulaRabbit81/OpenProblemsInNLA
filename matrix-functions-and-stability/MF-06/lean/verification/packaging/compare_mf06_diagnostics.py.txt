@@ -1,0 +1,54 @@
+"""Check actual local elaborated-type dumps, without claiming Comparator ran."""
+from pathlib import Path
+import datetime, hashlib, json, sys
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+proof_run, diagnostic_run = map(int, sys.argv[1:])
+D = B / f'MF06-type-diagnostics-{diagnostic_run}'
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+load = lambda p: json.loads(p.read_text())
+complete_path = B / f'MF06-LOCAL-COMPLETE-{proof_run}.json'
+complete = load(complete_path)
+receipt_path = L / f'runs/development-{diagnostic_run}/RECEIPT.json'
+receipt = load(receipt_path)
+assert receipt.get('end') and not receipt['failed_modules'] and not receipt['blocked_modules']
+assembly_path = L / f'ASSEMBLY-{diagnostic_run}.json'
+assembly = load(assembly_path)
+assert receipt['assembly_sha256'] == sha(assembly_path)
+for rel, h in complete['sources'].items():
+    if rel == 'Solution.lean':
+        continue
+    assert assembly['sources'][rel]['sha256'] == h, rel
+    assert sha(Path(assembly['sources'][rel]['source'])) == h, rel
+for label in ['Challenge', 'Solution']:
+    name = f'NLA.MF06Diagnostics.{label}Types{diagnostic_run}'
+    command = next(c for c in receipt['commands'] if c['module'] == name)
+    assert command.get('exit_code') == 0
+    assert '--threads=1' in command['argv'] and '--memory=4096' in command['argv']
+    assert sha(receipt_path.parent / (name + '.log')) == command['log_sha256']
+challenge_path, solution_path = D / 'challenge-types.json', D / 'solution-types.json'
+challenge, solution = load(challenge_path), load(solution_path)
+names = load(B / 'next-proofs/MF-06/comparator.json')['theorem_names']
+assert len(names) == 38
+assert [r['name'] for r in challenge] == [r['name'] for r in solution] == names
+results = [{'name': c['name'], 'same_universes': c['levelParams'] == s['levelParams'],
+            'same_binder_normalized_type': c['binderNormalizedType'] == s['binderNormalizedType']}
+           for c, s in zip(challenge, solution)]
+record = {
+    'time': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'scope': 'Actual local Lean elaborated-type comparison with binder-name erasure only; not a Comparator or Linux execution',
+    'source_complete_record_sha256': sha(complete_path),
+    'receipt': str(receipt_path), 'receipt_sha256': sha(receipt_path),
+    'challenge_dump_sha256': sha(challenge_path), 'solution_dump_sha256': sha(solution_path),
+    'results': results,
+    'all38_match': all(r['same_universes'] and r['same_binder_normalized_type'] for r in results),
+    'comparison_script_sha256': sha(Path(__file__)), 'count_change': 0,
+}
+destination = D / 'COMPARISON.json'
+assert not destination.exists()
+destination.write_text(json.dumps(record, indent=2) + '\n')
+print(json.dumps({'all38_match': record['all38_match'], 'record_sha256': sha(destination),
+                  'differences': [r for r in results if not r['same_universes'] or not r['same_binder_normalized_type']],
+                  'Comparator_executed': False}, indent=2))
+assert record['all38_match'], 'Local statement mismatch remains; do not publish as a repaired candidate'

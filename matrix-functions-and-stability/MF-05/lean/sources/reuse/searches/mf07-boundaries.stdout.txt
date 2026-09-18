@@ -1,0 +1,178 @@
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ScalarFamily.lean:17:lemma scalar_matrix_eq_smul_one (A : Square 1) : A = A 0 0 • (1 : Square 1) := by
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ScalarFamily.lean:23:lemma scalar_spectralNorm (A : Square 1) : spectralNorm A = ‖A 0 0‖ := by
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ScalarFamily.lean:28:lemma scalar_spectralNorm_mul (A B : Square 1) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ScalarFamily.lean:32:lemma scalar_replicate_norm (A : Square 1) (n : ℕ) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ScalarFamily.lean:39:lemma scalar_growth_eq (M : Set (Square 1)) (hM : IsCompact M)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ScalarFamily.lean:51:lemma scalar_rootGrowth (M : Set (Square 1)) (hM : IsCompact M)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ScalarFamily.lean:57:theorem scalar_family_growth (M : Set (Square 1)) (hM : IsCompact M)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/UnitaryGeometry.lean:23:lemma isUnitary_mem {d : ℕ} {Q : Square d} (hQ : IsUnitary Q) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/UnitaryGeometry.lean:27:lemma isUnitary_star {d : ℕ} {Q : Square d} (hQ : IsUnitary Q) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/UnitaryGeometry.lean:31:lemma spectralNorm_unitary_left {d : ℕ} {Q : Square d} (hQ : IsUnitary Q) (A : Square d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/UnitaryGeometry.lean:36:lemma spectralNorm_unitary_right {d : ℕ} {Q : Square d} (hQ : IsUnitary Q) (A : Square d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/UnitaryGeometry.lean:41:lemma spectralNorm_unitary_conj {d : ℕ} {Q : Square d} (hQ : IsUnitary Q) (A : Square d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/UnitaryGeometry.lean:45:lemma diagonalDamping_apply {d : ℕ} (h : Fin d → ℝ) (X : Square d) (i j : Fin d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/UnitaryGeometry.lean:51:def cutReflection (d k : ℕ) : Square d :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/UnitaryGeometry.lean:54:lemma cutReflection_star (d k : ℕ) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/UnitaryGeometry.lean:62:lemma cutReflection_unitary (d k : ℕ) : IsUnitary (cutReflection d k) := by
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/UnitaryGeometry.lean:75:def cutDamping {d : ℕ} (k : ℕ) (t : ℝ) (X : Square d) : Square d :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/UnitaryGeometry.lean:79:lemma cutDamping_spectralNorm_le {d : ℕ} (k : ℕ) (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/UnitaryGeometry.lean:96:lemma cutDamping_apply {d : ℕ} (k : ℕ) (t : ℝ) (X : Square d) (i j : Fin d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/NormGeometry.lean:28:lemma complexNorm_zero {d : ℕ} {v : EuclideanVector d → ℝ} (hv : IsComplexNorm v) : v 0 = 0 :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/NormGeometry.lean:31:lemma complexNorm_neg {d : ℕ} {v : EuclideanVector d → ℝ} (hv : IsComplexNorm v)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/NormGeometry.lean:35:lemma complexNorm_sum {d : ℕ} {v : EuclideanVector d → ℝ} (hv : IsComplexNorm v)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/NormGeometry.lean:45:lemma complexNorm_continuous {d : ℕ} {v : EuclideanVector d → ℝ}
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/NormGeometry.lean:65:lemma complexNorm_unitBall_compact {d : ℕ} {v : EuclideanVector d → ℝ}
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/NormGeometry.lean:75:def coordinateUnit {d : ℕ} (i : Fin d) : EuclideanVector d := EuclideanSpace.single i 1
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/NormGeometry.lean:84:lemma continuous_coordinate {d : ℕ} (i : Fin d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/NormGeometry.lean:92:lemma applyMatrix_coordinate {d : ℕ} (A : Square d) (x : EuclideanVector d) (i : Fin d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/NormGeometry.lean:97:lemma coordinate_norm_le {d : ℕ} (x : EuclideanVector d) (i : Fin d) : ‖x i‖ ≤ ‖x‖ := by
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/NormGeometry.lean:103:lemma spectralNorm_entry_bound {d : ℕ} (A : Square d) (i j : Fin d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/NormGeometry.lean:109:lemma sum_coordinate_norms_le {d : ℕ} (x : EuclideanVector d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/NormGeometry.lean:121:lemma norm_le_sqrt_card_mul_coordinate_bound {d : ℕ} (x : EuclideanVector d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/SingularCoordinates.lean:24:lemma norm_applyMatrix_unitary {d : ℕ} (hd : 1 ≤ d) {Q : Square d}
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/SingularCoordinates.lean:37:lemma diagonalWeights_star {d : ℕ} (σ : Fin d → ℝ) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/SingularCoordinates.lean:45:lemma inverseDiagonalWeights_star {d : ℕ} (σ : Fin d → ℝ) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/SingularCoordinates.lean:50:lemma ordered_positive_gram_coordinates {d : ℕ} (T : Square d) (hT : T.det ≠ 0) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/SingularCoordinates.lean:95:lemma exists_singular_coordinates {d : ℕ} (T : Square d) (hT : T.det ≠ 0) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:28:lemma matrixProduct_append {d : ℕ} (u v : List (Square d)) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:32:theorem matrix_product_semantics {d : ℕ} :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:40:lemma spectralNorm_nonneg {d : ℕ} (A : Square d) : 0 ≤ spectralNorm A := norm_nonneg _
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:42:lemma spectralNorm_mul_le {d : ℕ} (A B : Square d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:48:lemma spectralNorm_add_le {d : ℕ} (A B : Square d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:54:lemma spectralNorm_one {d : ℕ} (hd : 1 ≤ d) : spectralNorm (1 : Square d) = 1 := by
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:58:lemma spectralNorm_smul {d : ℕ} (c : ℂ) (A : Square d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:62:lemma continuous_spectralNorm {d : ℕ} : Continuous (spectralNorm (d := d)) := by
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:67:lemma continuous_finiteProduct {d n : ℕ} :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:83:lemma WordIn_nil {d : ℕ} (M : Set (Square d)) : WordIn M [] := by
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:86:lemma WordIn_cons_iff {d : ℕ} (M : Set (Square d)) (A : Square d) (w : List (Square d)) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:90:lemma WordIn_append_iff {d : ℕ} (M : Set (Square d)) (u v : List (Square d)) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:101:lemma WordIn_ofFn {d n : ℕ} (M : Set (Square d)) (A : Fin n → Square d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:105:lemma word_spectralNorm_le_pow {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/MatrixBasics.lean:117:theorem diagonal_inverse {d : ℕ} (σ : Fin d → ℝ) (hσ : ∀ i, σ i ≠ 0) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:25:lemma applyMatrix_mul {d : ℕ} (A B : Square d) (x : EuclideanVector d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:29:lemma applyMatrix_add {d : ℕ} (A B : Square d) (x : EuclideanVector d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:33:lemma applyMatrix_add_vector {d : ℕ} (A : Square d) (x y : EuclideanVector d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:37:lemma applyMatrix_smul_vector {d : ℕ} (A : Square d) (c : ℂ) (x : EuclideanVector d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:41:lemma norm_applyMatrix_le {d : ℕ} (A : Square d) (x : EuclideanVector d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:46:def envelopeValues {d : ℕ} (M : Set (Square d)) (C : Square d → Square d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:51:def productEnvelope {d : ℕ} (M : Set (Square d)) (C : Square d → Square d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:54:lemma envelopeValues_empty {d : ℕ} (M : Set (Square d)) (C : Square d → Square d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:59:lemma envelopeValues_bddAbove {d : ℕ} (M : Set (Square d)) (C : Square d → Square d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:75:lemma productEnvelope_bounds {d : ℕ} (M : Set (Square d)) (C : Square d → Square d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:85:lemma envelope_word_le {d : ℕ} (M : Set (Square d)) (C : Square d → Square d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:94:lemma productEnvelope_triangle {d : ℕ} (M : Set (Square d)) (C : Square d → Square d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:114:lemma productEnvelope_smul_le {d : ℕ} (M : Set (Square d)) (C : Square d → Square d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:129:lemma productEnvelope_isComplexNorm {d : ℕ} (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ProductEnvelope.lean:155:lemma productEnvelope_generator {d : ℕ} (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Numerical.lean:22:theorem exp_one_bound : Real.exp 1 ≤ 3 := by
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Numerical.lean:25:lemma variable_binomial_bound (m n : ℕ) (hn : 1 ≤ n) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Numerical.lean:41:lemma comparisonThreshold_ge_one (d n : ℕ) (hd : 2 ≤ d) (hn : 1 ≤ n)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Numerical.lean:57:lemma comparisonThreshold_ratio (d n : ℕ) (hd : 2 ≤ d) (hn : 1 ≤ n)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Numerical.lean:69:theorem comparison_threshold_bound (d n : ℕ) (hd : 2 ≤ d) (hn : 1 ≤ n)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Numerical.lean:93:theorem growth_constant_positive (d : ℕ) (hd : 1 ≤ d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Similarity.lean:21:lemma rotatedGenerator_apply {d : ℕ} (Q : Square d) (σ : Fin d → ℝ)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Similarity.lean:32:lemma rotatedGenerator_change_weights {d : ℕ} (Q : Square d) (σ τ : Fin d → ℝ)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Similarity.lean:44:lemma similarity_inverse_pairs {d : ℕ} {Q : Square d} (hQ : IsUnitary Q)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Similarity.lean:59:lemma rotatedGenerator_one {d : ℕ} {Q : Square d} (hQ : IsUnitary Q)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Similarity.lean:68:lemma rotatedGenerator_mul {d : ℕ} {Q : Square d} (hQ : IsUnitary Q)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Similarity.lean:84:lemma rotatedGenerator_product {d : ℕ} {Q : Square d} (hQ : IsUnitary Q)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Similarity.lean:92:lemma diagonalWeights_spectralNorm_le {d : ℕ} (σ : Fin d → ℝ) (b : ℝ)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Similarity.lean:99:lemma inverseDiagonalWeights_spectralNorm_le_one {d : ℕ} (τ : Fin d → ℝ)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Similarity.lean:110:lemma spectralNorm_unrotate_le {d : ℕ} {Q : Square d} (hQ : IsUnitary Q)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CompactGrowth.lean:22:lemma wordNorms_eq_range {d : ℕ} (M : Set (Square d)) (n : ℕ) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CompactGrowth.lean:36:lemma wordNorms_nonempty {d : ℕ} (M : Set (Square d)) (hne : M.Nonempty) (n : ℕ) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CompactGrowth.lean:42:lemma wordNorms_compact {d : ℕ} (M : Set (Square d)) (hM : IsCompact M) (n : ℕ) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CompactGrowth.lean:51:theorem family_norm_maximum {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CompactGrowth.lean:66:lemma familyGrowth_attained {d : ℕ} (M : Set (Square d)) (hM : IsCompact M)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CompactGrowth.lean:74:lemma word_le_familyGrowth {d : ℕ} (M : Set (Square d)) (hM : IsCompact M)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CompactGrowth.lean:79:lemma familyGrowth_nonneg {d : ℕ} (M : Set (Square d)) (hM : IsCompact M)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CompactGrowth.lean:85:theorem family_growth_maximum {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CompactGrowth.lean:99:lemma familyGrowth_zero {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CompactGrowth.lean:105:lemma familyGrowth_one {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CompactGrowth.lean:114:theorem family_growth_submultiplicative {d : ℕ} (hd : 1 ≤ d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Final.lean:22:theorem radius_one_growth {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Final.lean:40:theorem canonical_uniform_bound (d : ℕ) (hd : 1 ≤ d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Auerbach.lean:24:def columnMatrix {d : ℕ} (b : Fin d → EuclideanVector d) : Square d := fun i j => b j i
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Auerbach.lean:26:def matrixColumn {d : ℕ} (T : Square d) (j : Fin d) : EuclideanVector d :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Auerbach.lean:43:lemma applyMatrix_eq_sum_columns {d : ℕ} (T : Square d) (z : EuclideanVector d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Auerbach.lean:48:lemma matrixColumn_updateCol {d : ℕ} (T : Square d) (j k : Fin d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Auerbach.lean:58:lemma continuous_columnMatrix {d : ℕ} :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Auerbach.lean:64:lemma maximal_determinant_basis {d : ℕ} {v : EuclideanVector d → ℝ}
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Auerbach.lean:110:lemma det_updateCol_applyMatrix {d : ℕ} (T : Square d) (z : EuclideanVector d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Auerbach.lean:116:lemma maximal_basis_coordinate_bound {d : ℕ} {v : EuclideanVector d → ℝ}
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Auerbach.lean:160:lemma basis_norm_upper {d : ℕ} {v : EuclideanVector d → ℝ} (hv : IsComplexNorm v)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Auerbach.lean:174:lemma exists_auerbach_coordinates {d : ℕ} {v : EuclideanVector d → ℝ}
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/BlockComparison.lean:23:lemma spectralNorm_le_card_mul_entry_bound {d : ℕ} (A : Square d) (b : ℝ)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/BlockComparison.lean:51:lemma spectralNorm_product_of_norm {d : ℕ} (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/BlockComparison.lean:67:lemma lowerForWeights_one {d : ℕ} (h : Fin d → ℝ) : LowerForWeights h (1 : Square d) := by
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/BlockComparison.lean:72:lemma lowerForWeights_mul {d : ℕ} (h : Fin d → ℝ) {X Y : Square d}
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/BlockComparison.lean:82:lemma lowerForWeights_product {d : ℕ} (h : Fin d → ℝ) (z : List (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/BlockComparison.lean:91:lemma diagonalDamping_one {d : ℕ} (h : Fin d → ℝ) (hh : ∀ i, h i ≠ 0) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/BlockComparison.lean:95:lemma diagonalDamping_mul {d : ℕ} (h : Fin d → ℝ) (hh : ∀ i, h i ≠ 0)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/BlockComparison.lean:110:lemma diagonalDamping_product {d : ℕ} (h : Fin d → ℝ) (hh : ∀ i, h i ≠ 0)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/BlockComparison.lean:118:lemma damped_lower_product_bound {d : ℕ} (h : Fin d → ℝ) (hh : Antitone h)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/BlockComparison.lean:125:def upperWeightPart {d : ℕ} (h : Fin d → ℝ) (X : Square d) : Square d :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/BlockComparison.lean:128:lemma subtract_upperWeightPart_lower {d : ℕ} (h : Fin d → ℝ) (X : Square d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/BlockComparison.lean:133:lemma upperWeightPart_entry_bound {d : ℕ} (h : Fin d → ℝ) (X : Square d) (b : ℝ)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Interspersed.lean:21:lemma spectralNorm_eq_zero_iff {d : ℕ} (A : Square d) : spectralNorm A = 0 ↔ A = 0 := by
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Interspersed.lean:30:lemma norm_product_from_generator {d : ℕ} (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Interspersed.lean:47:lemma interspersed_positive_rate {d : ℕ} (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Interspersed.lean:88:lemma interspersed_zero_rate {d : ℕ} (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Interspersed.lean:117:theorem interspersed_product_bound {d : ℕ} (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/QuantitativeComparison.lean:22:lemma applyMatrix_sub {d : ℕ} (A B : Square d) (x : EuclideanVector d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/QuantitativeComparison.lean:26:lemma diagonalDamping_add {d : ℕ} (h : Fin d → ℝ) (A B : Square d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/QuantitativeComparison.lean:31:lemma diagonalDamping_upperWeightPart {d : ℕ} (h : Fin d → ℝ) (A : Square d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/QuantitativeComparison.lean:37:lemma word_quantitative_comparison_above_one {d : ℕ} (hd : 1 ≤ d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/QuantitativeComparison.lean:140:theorem quantitative_comparison {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ApproximateNorm.lean:23:lemma exponential_growth_envelope {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/ApproximateNorm.lean:54:theorem approximate_extremal_norm {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:26:lemma rootGrowth_nonneg {d : ℕ} (M : Set (Square d)) (hM : IsCompact M)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:30:lemma rootValues_nonempty {d : ℕ} (M : Set (Square d)) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:34:lemma rootValues_bddBelow {d : ℕ} (M : Set (Square d)) (hM : IsCompact M)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:40:lemma jointSpectralRadius_le_root {d : ℕ} (M : Set (Square d)) (hM : IsCompact M)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:44:lemma rootGrowth_pow {d : ℕ} (M : Set (Square d)) (hM : IsCompact M)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:50:lemma familyGrowth_ge_one_of_radius_one {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:62:lemma logarithmic_growth_subadditive {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:74:lemma radius_one_root_limit {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:104:lemma familyGrowth_mul_le_pow {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:114:lemma rootGrowth_mul_le {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:131:lemma one_le_rootGrowth_of_limit {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:146:lemma radius_one_of_root_limit {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:157:theorem radius_one_semantics {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:166:lemma identity_word_product {d : ℕ} (z : List (Square d))
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RootSemantics.lean:175:theorem identity_family_semantics {d : ℕ} (hd : 1 ≤ d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:26:abbrev Square (d : ℕ) := Matrix (Fin d) (Fin d) ℂ
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:27:abbrev EuclideanVector (d : ℕ) := EuclideanSpace ℂ (Fin d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:30:def spectralNorm {d : ℕ} (A : Square d) : ℝ :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:33:def applyMatrix {d : ℕ} (A : Square d) (x : EuclideanVector d) : EuclideanVector d :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:37:def matrixProduct {d : ℕ} (w : List (Square d)) : Square d := w.reverse.prod
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:39:def finiteProduct {d n : ℕ} (A : Fin n → Square d) : Square d :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:42:def WordIn {d : ℕ} (M : Set (Square d)) (w : List (Square d)) : Prop :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:46:def familyNorm {d : ℕ} (M : Set (Square d)) : ℝ := sSup (spectralNorm '' M)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:50:def wordNorms {d : ℕ} (M : Set (Square d)) (n : ℕ) : Set ℝ :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:54:def familyGrowth {d : ℕ} (M : Set (Square d)) (n : ℕ) : ℝ := sSup (wordNorms M n)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:57:def rootGrowth {d : ℕ} (M : Set (Square d)) (n : ℕ) : ℝ :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:62:def jointSpectralRadius {d : ℕ} (M : Set (Square d)) : ℝ :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:66:def IsComplexNorm {d : ℕ} (v : EuclideanVector d → ℝ) : Prop :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:71:def IsUnitary {d : ℕ} (Q : Square d) : Prop :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:74:def diagonalWeights {d : ℕ} (σ : Fin d → ℝ) : Square d :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:77:def inverseDiagonalWeights {d : ℕ} (σ : Fin d → ℝ) : Square d :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:80:def rotatedGenerator {d : ℕ} (Q : Square d) (σ : Fin d → ℝ) (A : Square d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:85:def LowerForWeights {d : ℕ} (h : Fin d → ℝ) (X : Square d) : Prop :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:88:def diagonalDamping {d : ℕ} (h : Fin d → ℝ) (X : Square d) : Square d :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:93:def growthConstant (d : ℕ) : ℝ :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/Definitions.lean:97:def comparisonThreshold (d n : ℕ) (L : ℝ) : ℝ :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/TriangularDamping.lean:22:def clippedWeights {d : ℕ} (h : Fin d → ℝ) (k : ℕ) (hk : k < d) (i : Fin d) : ℝ :=
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/TriangularDamping.lean:25:lemma clippedWeights_zero {d : ℕ} (h : Fin d → ℝ) (hd : 0 < d) (i : Fin d) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/TriangularDamping.lean:33:lemma clippedWeights_succ_apply {d : ℕ} (h : Fin d → ℝ) (k : ℕ)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/TriangularDamping.lean:44:lemma clippedDamping_zero {d : ℕ} (h : Fin d → ℝ) (hd : 0 < d)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/TriangularDamping.lean:53:lemma clippedDamping_step {d : ℕ} (h : Fin d → ℝ) (hh : Antitone h)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/TriangularDamping.lean:97:lemma clippedDamping_bound {d : ℕ} (h : Fin d → ℝ) (hh : Antitone h)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/TriangularDamping.lean:117:theorem triangular_damping {d : ℕ} (h : Fin d → ℝ) (hh : Antitone h)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CappedWeights.lean:21:lemma antitone_fin_prepend {n : ℕ} (f : Fin (n + 1) → ℝ) (a : ℝ)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CappedWeights.lean:34:lemma exists_capped_weights_succ (n : ℕ) :
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CappedWeights.lean:143:lemma exists_capped_weights {d : ℕ} (hd : 1 ≤ d) (σ : Fin d → ℝ)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/CappedWeights.lean:153:lemma divided_weight_entry_bound {L s a b : ℝ} (hL : 0 ≤ L) (hs : 0 < s)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RoundedNorm.lean:22:lemma complexNorm_transport {d : ℕ} {v : EuclideanVector d → ℝ} (hv : IsComplexNorm v)
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RoundedNorm.lean:43:lemma rotatedGenerator_entry_bound {d : ℕ} (hd : 1 ≤ d) {Q : Square d}
+/private/tmp/nla-lean-next-20260915/next-statements/MF-05/NLA/MF07/RoundedNorm.lean:71:theorem rounded_extremal_norm {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))

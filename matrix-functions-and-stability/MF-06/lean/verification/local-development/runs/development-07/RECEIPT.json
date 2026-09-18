@@ -1,0 +1,417 @@
+{
+  "scope": "macOS serial development only; no Comparator, isolation controls, publication or whole-problem acceptance",
+  "start": "2026-09-16T20:36:14.253293+00:00",
+  "assembly_sha256": "c285ae7295282f99ee83855a29fafaa5f5db5ed93396e18c6e41f207a6fc608d",
+  "runner_sha256": "d6c00e953688e155c0a313a8f49c7c395ad0fb1166faf3655c0b47f3ea2b2266",
+  "compiler_sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+  "platform": "darwin",
+  "max_compiler_processes": 1,
+  "threads": 1,
+  "memory_cap_mib": 4096,
+  "source_inputs": {
+    "NLA/MI04/BasisTransport.lean": "b0425ada4b3e2a58d0280929236f92e3a1017c2216f5d09dc8f52163834e8189",
+    "NLA/MI04/BlockSymmetry.lean": "7d5c0e711ba01a8bb98616427b50b06c64768e3bb12aef81ab06cd03720d3826",
+    "NLA/MI04/Complete.lean": "f00a126f014cf0220f104ac344991a0075e155218431e9e670607cc0d68dc587",
+    "NLA/MI04/Conclusion.lean": "d12abb7dd84e2407b5a3f52769aec699f3f3a282eb2043fd9a6a00a3fb67b6d8",
+    "NLA/MI04/Coordinates.lean": "9fbf6dac25ce96499fdd7a6371e948c11d6e1b04156788af48998b0919d555d6",
+    "NLA/MI04/Correction.lean": "9c647ae819a57c51b8a1529fe2783d9e27c3bb541ee2979a48a8c84a7de3c740",
+    "NLA/MI04/Definitions.lean": "de70e2a9dd878f1d083adacf8df6808c90c27630ffc2644a62293bf085e41715",
+    "NLA/MI04/Diagonalization.lean": "8621b2fa6f84a620b553bce5583f716693e8c64ff8e3f7120b4c1995d86c9d81",
+    "NLA/MI04/Geometry.lean": "2d3c52a8ec6c9d146310018819e2f7f038de56bd49a8b907a5b46c69e85e91e9",
+    "NLA/MI04/JointBasis.lean": "ea3acff2f539beaeae34d665e1858a14b8b8acd2c195feab46d61df50ef0f584",
+    "NLA/MI04/Limit.lean": "7cdbd3546146dc78ce37452fffcc4c95be66ab7c909180f1694ff23009fed981",
+    "NLA/MI04/Normality.lean": "ff2d57732f8b619fa2bd9bccb8d42dcce24e5a9e6d214e886801a09548e9df54",
+    "NLA/MI04/Probes.lean": "0e4b3d9a0e6bb70c8b91a1669e89785cbefe99777315d9a4b52d961fa93f5f76",
+    "NLA/MI04/Punctured.lean": "8c7ff3d4386c0ff3a466f316b402637ce0ea7e6df02f80e96ade989ae22bc3ad",
+    "NLA/MI04/Quadratic.lean": "81af17f3172536a7bf5e6c4d8f535b3cca8d801fae0884a60a477c4deff9ea18",
+    "NLA/MI04/Rayleigh.lean": "a9308e19575aa44ec56389ef2a24e75b375bcb577703c706590af6b63ebcca97",
+    "NLA/MI04/ScalarGeometry.lean": "583817923f7be81b7792a89b4e5ce48bd4817b07ef52655068fb17e3f48a4682",
+    "NLA/MI04/ScaledSymmetry.lean": "54694087df421c0f4e6148008b43447728e053ef075aa319a116d34dbc980457",
+    "NLA/MI04/Unitary.lean": "05ccea07c757797829759c8a637ef14d5d216826d28b79a615e8b1df32b738e0",
+    "NLA/MI04/UpperBound.lean": "5dc357316ab5e3ff1aeb282c20770870bd8b14d93c2928f64e3807cd96629c20",
+    "NLA/MI04/WeightedProbes.lean": "e72d7cd3a10c574477a794d26aba66d40da7486c9ead38e9e4e1d31840570eea",
+    "NLA/MF07/ApproximateNorm.lean": "883e7e7c0455c5e3b257f5b3946d8ad4fcbef2a3d61e87061f1d92f9099a40a9",
+    "NLA/MF07/Auerbach.lean": "bb77d8267e83654093eae335f95dfb277f032668d5244179886dfddd36ad8001",
+    "NLA/MF07/BlockComparison.lean": "a35335a4c1b9eaceb5e18cefd7656a6c943d5738bc9dd3883e7ea727c0d7a498",
+    "NLA/MF07/CappedWeights.lean": "d805dd0e28524a6add975afb89fe857a639111fb0c65702aec93d27b5493bcc4",
+    "NLA/MF07/CompactGrowth.lean": "d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9",
+    "NLA/MF07/Complete.lean": "04de4ca8c2ab3635777015bcbd4a1425106b08a6b4dd126d085581fe2003aa62",
+    "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+    "NLA/MF07/Final.lean": "b9daa70a5881d142537010a3739ee348b113f111e558bf5fd87463b419a63468",
+    "NLA/MF07/Interspersed.lean": "8f65ea5980bb23640c5185abc3d793964f84b1e1a45550e580ee184bcafdc898",
+    "NLA/MF07/MatrixBasics.lean": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+    "NLA/MF07/NormGeometry.lean": "9069dada9936d5b4c2568aa247a8ce050c3ca79385fa4b50dbf42e2c94fcafe8",
+    "NLA/MF07/Numerical.lean": "90407ab2d374d652549c8b57858f9c5123602a1edf72bde8ce2ea2243b786c03",
+    "NLA/MF07/ProductEnvelope.lean": "a770edbd047fc56f53da8f364d1a4207c0bdbaf346d5be359d035dc6aef0b7e0",
+    "NLA/MF07/QuantitativeComparison.lean": "ad20c7a071d84ea13b6c95f2a915d5ae9fcb362aa7f35d3730e7d910054e6248",
+    "NLA/MF07/RootSemantics.lean": "bee70f65ab8e7e517ebec8f579ea3ee8fb276d52a8f5cd293c9c0e085ab304ee",
+    "NLA/MF07/RoundedNorm.lean": "a352a64d47f2f163b648b8804ce9de7341249f20df243a47078e9f92b328dc0a",
+    "NLA/MF07/ScalarFamily.lean": "a7e0a6b1dabdb866649f0381934b9bea0c5da7698bf0c93e4bedc38876a4227c",
+    "NLA/MF07/Similarity.lean": "c9d06e4ca115f58c384b0dfe2298ae2fd49e9c73d138a7319445ed2d08eb86c3",
+    "NLA/MF07/SingularCoordinates.lean": "d10e341a08ca6c99168ae96f63c26f85757149861cb23187ddacac00f97aa629",
+    "NLA/MF07/TriangularDamping.lean": "ea35c872a9c579f4d6e9a259140cbe64afdf12491fa34729272b34e7150aab2a",
+    "NLA/MF07/UnitaryGeometry.lean": "ee0bf9c4b7f1fba1dee0534f24e9ba095ecc53b7b57d5910e537f9316edbba1d",
+    "NLA/SF01/AnalyticalChecks.lean": "0a55cabfd580b58eb0a5e3d4b12e671ae3fcbcdf5af515799c6fc62f7bc5b0bb",
+    "NLA/SF01/Complexification.lean": "837168905826f0a7c574cc1b7e9afb429d6bdb8dab8259f1eba41d46ede5a2e3",
+    "NLA/SF01/Definitions.lean": "937c5a9f6908fe90b9633f80aa4db1e40859a51bf37cd3bbf87729d64719057d",
+    "NLA/SF01/FoundationChecks.lean": "39adde092f33f283b7f17137f2ab4f763c75bb324619effa6e0203d9493b65c0",
+    "NLA/SF01/HWeight.lean": "c0a2970679b4073184b5cbf21e6806f01141fbf46a0e20e9c31fbfd225ca0397",
+    "NLA/SF01/Numerical.lean": "b337740491a5d55cc53ff53f59b3bb4f42190c3226be8d564f452ac14502bcb0",
+    "NLA/SF01/PositivePath.lean": "1c90f8d404670af3b514b86b375203669b1fc434122b11c86fcc689121c87bd8",
+    "NLA/SF01/SpectralBridgeChecks.lean": "020c23ab69ad835a9bbcdca56ac5981952d5293e0f8c263f7aea0d0798287df0",
+    "NLA/SF01/SpectralHomotopy.lean": "b58abad7e8b41dabb93b8c7f1eb6a14093848aa467e90c4dc042a6b772fddaac",
+    "NLA/SF01/SpectralMConverse.lean": "8cff7ed155e5ea780b645ec3949d04152912b82d387e5795b8fbc7d14d929b06",
+    "NLA/SF01/SpectralMWeight.lean": "f7dcb6f05ba8ea29e910624d925609c8f0279e5ba72bd9a43cbf69aabcffc639",
+    "NLA/SF01/Spectrum.lean": "c23e6ccabc4004192177b897de819e5c9f3ad402fb1a24a79aa68172ee784114",
+    "NLA/SF01/UnitWeightContinuity.lean": "5af01a58e9e15cd75c6d33a3912a2e0236b5c11a3b2694e301fa4c4463f6be02",
+    "NLA/SF01/WeightedSpectrum.lean": "a87033931229c5df1f452500fd72098b9ddb768aeb5713ed814a88f35efeaada",
+    "NLA/SF01/WeightedZReuse.lean": "cea224b26d76958de082947cd633335394f933fb0cf76c7858767aa6a445722f",
+    "NLA/RA02/ArrowheadEntries.lean": "19b4fcd44ebf58539f1daecc534258ff7d68ad9562fe9f15f2f0f7213b1bf2ae",
+    "NLA/RA02/ArrowheadQuadratic.lean": "f9e086e10f95e6b5512317438215c9d50b68d8b9478fe55a1b5e396c4c0c31a9",
+    "NLA/RA02/Definitions.lean": "1a0f251cfcc38f57787de3ee79dc8c89e7bf0f496ebfe9196a66f8b3f452a376",
+    "NLA/RA02/FiniteExpectation.lean": "4481e779f0c8a54648f1fb34952dbbfbb7623e230002c925297b2346586d6e47",
+    "NLA/RA02/Numerical.lean": "055d55303f717f3765956412d9c852381bb73c43f71bb63bba56f07d4183d8fa",
+    "NLA/RA02/Parameters.lean": "5998ac9d64e920681c48acd2d95fc1e396debc6d566156cf6b5d74e2b192103b",
+    "NLA/RA02/PathSemantics.lean": "48d5d511390da0d5fef239b52ab94c1beab8cd343705e25ed1d95e02dfa129ce",
+    "NLA/RA02/PivotAlgebra.lean": "b792a74df60c919ad2cb142279a8b814c8de94b105e4d9654e7f8ceacc706d17",
+    "NLA/RA02/PivotKernel.lean": "faf91ce03e8a1ee941e155802a5aa617f7b5edb5237acddcbc93675cf979fe29",
+    "NLA/RA02/ProbeValues.lean": "7b1131d9c5586df3d6c6b672908c4dba4f8c2f818a697401f24803f69a5bd703",
+    "NLA/RA02/StateConstruction.lean": "8ee4d12fc5717df95b2de8ed2e0f4685a669cd22b9393d7c5a1cce01be06e856",
+    "NLA/IV03/Definitions.lean": "34d9726c54ec0b10005cb4225adf1c403a7109a0800b42c1f19865c1a897db2b",
+    "NLA/IV03/Proof.lean": "8a6de76006c53aac4b9f37860b790bfe304ba25cf40aea5385daed376acc0272",
+    "NLA/SF01/ShiftStructure.lean": "6f769ee89084b5a347a00ae1d6db66d0dfa593bb67482d5864fbfc7ed13788ef",
+    "NLA/SF01/AbsoluteComparison.lean": "ba90ca0ba03c81dc2a2abfce7269da435d93176dbd9d08849eddaa3702f1101e",
+    "NLA/SF01/ResolventDomination.lean": "b29ba2e5316293c29954630d886bd49653e0c3ee6959bcf211b3ff1aabc47e82",
+    "NLA/SF01/ResolventChecks.lean": "2914d5dccef63365e5b342e5d44b969d33492bf1a244ef7cbe35fd28ff7fa7ef",
+    "NLA/SF01/RidgeAlgebra.lean": "0cadf0f744c4fbaf0757c9c731a266bf0571466a611c4b91f45bfb2f25d0392d",
+    "NLA/SF01/WeightedRidge.lean": "7e4e06ad03d5904e1e94300afc57e788f55d459c70ba701db982f8571cc2db23",
+    "NLA/SF01/RidgeComparison.lean": "187afc52283965f352d4e32587ab676e9a892d1b2671f69413650048f1a4ef67",
+    "NLA/SF01/RidgeChecks.lean": "41121493566b4207a39768b5677b16da172874029cf87b2549a4d3fb90f3f104",
+    "NLA/RA02/EuclideanBridge.lean": "22539aba02a99bad4632cc86c7ca897cc99ebbfe282b23c823baad00a026a5ab",
+    "NLA/RA02/OrderedSpectrum.lean": "c491278a70e88ecb66b7cc28f89ce5bcee9c3d81524e6261e75f57dca02d6711",
+    "NLA/RA02/RayleighMinimum.lean": "1354226404c4285c0fb4269318d5b4d1fc24a286072e7d208de4b59afe11bff7",
+    "NLA/RA02/SpectralTail.lean": "899184fb5a634f50f1075417f5d0a25c1a67d4872c5e446fd79c8752543cb58e",
+    "NLA/RA02/ArrowheadTail.lean": "3d16c63fdf2f0845ce851790ee0ec5f8c7e05bbce0a43ef16bc3e82c5f3632f5",
+    "NLA/RA02/PivotCommutation.lean": "1de21bb1b638dc42b25ceeaaedf812be0137128a63cba9e0789808a5fc2fa98a",
+    "NLA/RA02/StateUpdates.lean": "503a51254ef48c84cdfc1281898e8bcaf382901d18a89f98fe893fec715f87ec",
+    "NLA/RA02/HistoryLabels.lean": "72b60ae84b3044b453491f3b4bfb87a17fa09e01a4b21ed5a3fb11c2960170f5",
+    "NLA/RA02/DistinctHistory.lean": "4cadb59cb32f15a552f2ecc11b84f138c735c2bea9a2026e9d3c926a6fc93bfe",
+    "NLA/RA02/HistoryProducts.lean": "0b5230a1b6acde124cb79ed591d868c8647786b4510e5321862e0809c2cf3382",
+    "NLA/RA02/StatePotential.lean": "94bf6c20d94196285f2bb088ad04bb9e476efcca32675fb036c81831849ec3a9",
+    "NLA/RA02/HistoryCardinality.lean": "8f4b48370b745e0692e1c720a3dcfba6d4817594e53780110f8b316ac108ea9c",
+    "NLA/RA02/StateTrace.lean": "fa9485632b827862dac20fa668b5931aab3519f68f360c443c8dac439e44e124",
+    "NLA/RA02/DistinctTrace.lean": "060d1e71faf1cdb85ab976d78f72f8e5dc2d41fbae7ae221f515bd9199f47095",
+    "NLA/RA02/HistoryIdentity.lean": "8acfd8426a7a2232e33311a59a557bfd127649da156a33f8a664e860f7a45016",
+    "NLA/SF01/PoleEnergy.lean": "e6950c1c7adb72c171cf7e0bc7b40043882e9a2ad1855e0d907f1279f680b053",
+    "NLA/SF01/PoleDiagonalization.lean": "306773e788eb9d56cf13084b51831c38c37b28cb87ffb990caad747d768cbdcf",
+    "NLA/SF01/PoleResidues.lean": "38aa1e0eb42abea5849a1632d1e5ce626b42aa664364dbc98801d4217a98ef5e",
+    "NLA/SF01/PoleChecks.lean": "58ee25e1fe6549156a2152a8ba2041b0529c3d02a3aa2313a6c47ecaf48f9e70"
+  },
+  "module_order": [
+    "NLA.MF07.Definitions",
+    "NLA.MF07.MatrixBasics",
+    "NLA.MF07.ProductEnvelope",
+    "NLA.MF07.NormGeometry",
+    "NLA.MF07.Auerbach",
+    "NLA.MF07.UnitaryGeometry",
+    "NLA.MF07.SingularCoordinates",
+    "NLA.MF07.CompactGrowth",
+    "NLA.MF07.RootSemantics",
+    "NLA.MF07.ApproximateNorm",
+    "NLA.MF07.RoundedNorm",
+    "NLA.MF07.TriangularDamping",
+    "NLA.MF07.Interspersed",
+    "NLA.MF07.BlockComparison",
+    "NLA.MF07.CappedWeights",
+    "NLA.MF07.Similarity",
+    "NLA.MF07.QuantitativeComparison",
+    "NLA.MF07.ScalarFamily",
+    "NLA.MF07.Numerical",
+    "NLA.MF07.Final",
+    "NLA.MF07.Complete"
+  ],
+  "commands": [
+    {
+      "module": "NLA.MF07.Definitions",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+      "output_sha256": "9c0f380362656f07fd55fa493a5728668a33196abd5a7c69bf09ae2bb3f1e2cc",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-03/RECEIPT.json",
+      "prior_receipt_sha256": "a5fcb48d958b7c1844f7c9f92da6ddd5140cd7a6e9cdadad5ae2ff5265a7e1f2",
+      "transitive_source_hashes": {
+        "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32"
+      }
+    },
+    {
+      "module": "NLA.MF07.MatrixBasics",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+      "output_sha256": "42ecab766effa5c8cbb5433a74f8fa92a34cd9b7645278dea7062f77d230069f",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-03/RECEIPT.json",
+      "prior_receipt_sha256": "a5fcb48d958b7c1844f7c9f92da6ddd5140cd7a6e9cdadad5ae2ff5265a7e1f2",
+      "transitive_source_hashes": {
+        "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+        "NLA/MF07/MatrixBasics.lean": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197"
+      }
+    },
+    {
+      "module": "NLA.MF07.ProductEnvelope",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "a770edbd047fc56f53da8f364d1a4207c0bdbaf346d5be359d035dc6aef0b7e0",
+      "output_sha256": "914d27b4809317e9d456847bdc26b2fa1bde25e9471e558332d71270e5c7d1b6",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-03/RECEIPT.json",
+      "prior_receipt_sha256": "a5fcb48d958b7c1844f7c9f92da6ddd5140cd7a6e9cdadad5ae2ff5265a7e1f2",
+      "transitive_source_hashes": {
+        "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+        "NLA/MF07/MatrixBasics.lean": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+        "NLA/MF07/ProductEnvelope.lean": "a770edbd047fc56f53da8f364d1a4207c0bdbaf346d5be359d035dc6aef0b7e0"
+      }
+    },
+    {
+      "module": "NLA.MF07.NormGeometry",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "9069dada9936d5b4c2568aa247a8ce050c3ca79385fa4b50dbf42e2c94fcafe8",
+      "output_sha256": "ebe13aa063ae605de74361f20d9644967feb8d4f28fc1fb27f8c77d8023b15ab",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-03/RECEIPT.json",
+      "prior_receipt_sha256": "a5fcb48d958b7c1844f7c9f92da6ddd5140cd7a6e9cdadad5ae2ff5265a7e1f2",
+      "transitive_source_hashes": {
+        "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+        "NLA/MF07/MatrixBasics.lean": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+        "NLA/MF07/NormGeometry.lean": "9069dada9936d5b4c2568aa247a8ce050c3ca79385fa4b50dbf42e2c94fcafe8",
+        "NLA/MF07/ProductEnvelope.lean": "a770edbd047fc56f53da8f364d1a4207c0bdbaf346d5be359d035dc6aef0b7e0"
+      }
+    },
+    {
+      "module": "NLA.MF07.Auerbach",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "bb77d8267e83654093eae335f95dfb277f032668d5244179886dfddd36ad8001",
+      "output_sha256": "742bae22d17659e4cefb92bf16c1fdc2a6e79887341920d23d0ffdf882cb08ff",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-03/RECEIPT.json",
+      "prior_receipt_sha256": "a5fcb48d958b7c1844f7c9f92da6ddd5140cd7a6e9cdadad5ae2ff5265a7e1f2",
+      "transitive_source_hashes": {
+        "NLA/MF07/Auerbach.lean": "bb77d8267e83654093eae335f95dfb277f032668d5244179886dfddd36ad8001",
+        "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+        "NLA/MF07/MatrixBasics.lean": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+        "NLA/MF07/NormGeometry.lean": "9069dada9936d5b4c2568aa247a8ce050c3ca79385fa4b50dbf42e2c94fcafe8",
+        "NLA/MF07/ProductEnvelope.lean": "a770edbd047fc56f53da8f364d1a4207c0bdbaf346d5be359d035dc6aef0b7e0"
+      }
+    },
+    {
+      "module": "NLA.MF07.UnitaryGeometry",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "ee0bf9c4b7f1fba1dee0534f24e9ba095ecc53b7b57d5910e537f9316edbba1d",
+      "output_sha256": "f49c5ecf680cd7fcc94daa6afce1e76d6736aa11de0d08bf38f0aedeea2962c5",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-03/RECEIPT.json",
+      "prior_receipt_sha256": "a5fcb48d958b7c1844f7c9f92da6ddd5140cd7a6e9cdadad5ae2ff5265a7e1f2",
+      "transitive_source_hashes": {
+        "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+        "NLA/MF07/MatrixBasics.lean": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+        "NLA/MF07/ProductEnvelope.lean": "a770edbd047fc56f53da8f364d1a4207c0bdbaf346d5be359d035dc6aef0b7e0",
+        "NLA/MF07/UnitaryGeometry.lean": "ee0bf9c4b7f1fba1dee0534f24e9ba095ecc53b7b57d5910e537f9316edbba1d"
+      }
+    },
+    {
+      "module": "NLA.MF07.SingularCoordinates",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MF07/SingularCoordinates.olean",
+        "NLA/MF07/SingularCoordinates.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T20:36:14.273156+00:00",
+      "source_sha256": "d10e341a08ca6c99168ae96f63c26f85757149861cb23187ddacac00f97aa629",
+      "dependency_olean_sha256": {
+        "NLA.MF07.Auerbach": "742bae22d17659e4cefb92bf16c1fdc2a6e79887341920d23d0ffdf882cb08ff",
+        "NLA.MF07.UnitaryGeometry": "f49c5ecf680cd7fcc94daa6afce1e76d6736aa11de0d08bf38f0aedeea2962c5"
+      },
+      "exit_code": 0,
+      "end": "2026-09-16T20:36:28.067449+00:00",
+      "elapsed_seconds": 13.794046833063476,
+      "log_sha256": "84771795672cac9d1f77dadfd33f83f6d81fda8bd6b06ac181ca7d4616866375",
+      "maxrss_bytes_macos_cumulative": 3394240512,
+      "output_sha256": "5333a3242c2e9b27eacc0b4e5acab3cc51b1161071576ef88f89c32284873749"
+    },
+    {
+      "module": "NLA.MF07.CompactGrowth",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9",
+      "output_sha256": "db898571819511fc1b2b73c2e1d127be7eadb1f8cd7c34954b3b4eeee8542909",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-03/RECEIPT.json",
+      "prior_receipt_sha256": "a5fcb48d958b7c1844f7c9f92da6ddd5140cd7a6e9cdadad5ae2ff5265a7e1f2",
+      "transitive_source_hashes": {
+        "NLA/MF07/CompactGrowth.lean": "d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9",
+        "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+        "NLA/MF07/MatrixBasics.lean": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197"
+      }
+    },
+    {
+      "module": "NLA.MF07.RootSemantics",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "bee70f65ab8e7e517ebec8f579ea3ee8fb276d52a8f5cd293c9c0e085ab304ee",
+      "output_sha256": "5178bcea853e05a9418f6cc91920cbbc18af76fa79dd71c90e4a6dcfbf5d62b0",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-03/RECEIPT.json",
+      "prior_receipt_sha256": "a5fcb48d958b7c1844f7c9f92da6ddd5140cd7a6e9cdadad5ae2ff5265a7e1f2",
+      "transitive_source_hashes": {
+        "NLA/MF07/CompactGrowth.lean": "d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9",
+        "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+        "NLA/MF07/MatrixBasics.lean": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+        "NLA/MF07/RootSemantics.lean": "bee70f65ab8e7e517ebec8f579ea3ee8fb276d52a8f5cd293c9c0e085ab304ee"
+      }
+    },
+    {
+      "module": "NLA.MF07.ApproximateNorm",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "883e7e7c0455c5e3b257f5b3946d8ad4fcbef2a3d61e87061f1d92f9099a40a9",
+      "output_sha256": "d0fae9317b8ae39c89af4ec86110fa3d8c11591c64510ef92327613ef24307fe",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-03/RECEIPT.json",
+      "prior_receipt_sha256": "a5fcb48d958b7c1844f7c9f92da6ddd5140cd7a6e9cdadad5ae2ff5265a7e1f2",
+      "transitive_source_hashes": {
+        "NLA/MF07/ApproximateNorm.lean": "883e7e7c0455c5e3b257f5b3946d8ad4fcbef2a3d61e87061f1d92f9099a40a9",
+        "NLA/MF07/CompactGrowth.lean": "d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9",
+        "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+        "NLA/MF07/MatrixBasics.lean": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+        "NLA/MF07/ProductEnvelope.lean": "a770edbd047fc56f53da8f364d1a4207c0bdbaf346d5be359d035dc6aef0b7e0",
+        "NLA/MF07/RootSemantics.lean": "bee70f65ab8e7e517ebec8f579ea3ee8fb276d52a8f5cd293c9c0e085ab304ee"
+      }
+    },
+    {
+      "module": "NLA.MF07.RoundedNorm",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/MF07/RoundedNorm.olean",
+        "NLA/MF07/RoundedNorm.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-16T20:36:28.084957+00:00",
+      "source_sha256": "a352a64d47f2f163b648b8804ce9de7341249f20df243a47078e9f92b328dc0a",
+      "dependency_olean_sha256": {
+        "NLA.MF07.SingularCoordinates": "5333a3242c2e9b27eacc0b4e5acab3cc51b1161071576ef88f89c32284873749",
+        "NLA.MF07.ApproximateNorm": "d0fae9317b8ae39c89af4ec86110fa3d8c11591c64510ef92327613ef24307fe"
+      },
+      "exit_code": 1,
+      "end": "2026-09-16T20:36:32.526772+00:00",
+      "elapsed_seconds": 4.441498166997917,
+      "log_sha256": "13f84a8f870c98e6dc2db18199fb0cadc7bc206844c2adcb596211d82202d58f",
+      "maxrss_bytes_macos_cumulative": 3394240512,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.MF07.TriangularDamping",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "ea35c872a9c579f4d6e9a259140cbe64afdf12491fa34729272b34e7150aab2a",
+      "output_sha256": "821495220ed70c0b70c747aa6ce9d6eb8f6f31129a3b0267e7e35e68f6cd9cc3",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-03/RECEIPT.json",
+      "prior_receipt_sha256": "a5fcb48d958b7c1844f7c9f92da6ddd5140cd7a6e9cdadad5ae2ff5265a7e1f2",
+      "transitive_source_hashes": {
+        "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+        "NLA/MF07/MatrixBasics.lean": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+        "NLA/MF07/ProductEnvelope.lean": "a770edbd047fc56f53da8f364d1a4207c0bdbaf346d5be359d035dc6aef0b7e0",
+        "NLA/MF07/TriangularDamping.lean": "ea35c872a9c579f4d6e9a259140cbe64afdf12491fa34729272b34e7150aab2a",
+        "NLA/MF07/UnitaryGeometry.lean": "ee0bf9c4b7f1fba1dee0534f24e9ba095ecc53b7b57d5910e537f9316edbba1d"
+      }
+    },
+    {
+      "module": "NLA.MF07.Interspersed",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "8f65ea5980bb23640c5185abc3d793964f84b1e1a45550e580ee184bcafdc898",
+      "output_sha256": "79808a00e8bc8feeadbd18245577388f3c9c1170f6f42816902143c17d2a46a0",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-03/RECEIPT.json",
+      "prior_receipt_sha256": "a5fcb48d958b7c1844f7c9f92da6ddd5140cd7a6e9cdadad5ae2ff5265a7e1f2",
+      "transitive_source_hashes": {
+        "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+        "NLA/MF07/Interspersed.lean": "8f65ea5980bb23640c5185abc3d793964f84b1e1a45550e580ee184bcafdc898",
+        "NLA/MF07/MatrixBasics.lean": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+        "NLA/MF07/ProductEnvelope.lean": "a770edbd047fc56f53da8f364d1a4207c0bdbaf346d5be359d035dc6aef0b7e0"
+      }
+    },
+    {
+      "module": "NLA.MF07.BlockComparison",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.RoundedNorm"
+      ]
+    },
+    {
+      "module": "NLA.MF07.CappedWeights",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.BlockComparison"
+      ]
+    },
+    {
+      "module": "NLA.MF07.Similarity",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.CappedWeights"
+      ]
+    },
+    {
+      "module": "NLA.MF07.QuantitativeComparison",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.Similarity"
+      ]
+    },
+    {
+      "module": "NLA.MF07.ScalarFamily",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "a7e0a6b1dabdb866649f0381934b9bea0c5da7698bf0c93e4bedc38876a4227c",
+      "output_sha256": "a7f463b6e0a158004c69c433b17112b6e3046bf4d559146131254dd890c4ee43",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-03/RECEIPT.json",
+      "prior_receipt_sha256": "a5fcb48d958b7c1844f7c9f92da6ddd5140cd7a6e9cdadad5ae2ff5265a7e1f2",
+      "transitive_source_hashes": {
+        "NLA/MF07/CompactGrowth.lean": "d5f90c834c9d2f15a621575e0fd29185671e7c6a66ad997ceea2ae8bd198b1f9",
+        "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+        "NLA/MF07/MatrixBasics.lean": "93fff7e5cec29cbcbeada4ef775b426f20b2a5f57745f784dbcbcda801d0e197",
+        "NLA/MF07/RootSemantics.lean": "bee70f65ab8e7e517ebec8f579ea3ee8fb276d52a8f5cd293c9c0e085ab304ee",
+        "NLA/MF07/ScalarFamily.lean": "a7e0a6b1dabdb866649f0381934b9bea0c5da7698bf0c93e4bedc38876a4227c"
+      }
+    },
+    {
+      "module": "NLA.MF07.Numerical",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "90407ab2d374d652549c8b57858f9c5123602a1edf72bde8ce2ea2243b786c03",
+      "output_sha256": "a05d181233e80268b54f8c339c4703ae00cc5ca17118595e638ce25496976a1e",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-03/RECEIPT.json",
+      "prior_receipt_sha256": "a5fcb48d958b7c1844f7c9f92da6ddd5140cd7a6e9cdadad5ae2ff5265a7e1f2",
+      "transitive_source_hashes": {
+        "NLA/MF07/Definitions.lean": "8eec7f3f10c012e8721687cfced35537cc754f0a12f08ed42595a64e3ad18c32",
+        "NLA/MF07/Numerical.lean": "90407ab2d374d652549c8b57858f9c5123602a1edf72bde8ce2ea2243b786c03"
+      }
+    },
+    {
+      "module": "NLA.MF07.Final",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.QuantitativeComparison"
+      ]
+    },
+    {
+      "module": "NLA.MF07.Complete",
+      "status": "not_run",
+      "failed_dependencies": [
+        "NLA.MF07.Final"
+      ]
+    }
+  ],
+  "count_change": 0,
+  "end": "2026-09-16T20:36:32.545620+00:00",
+  "completed_modules": 14,
+  "failed_modules": [
+    "NLA.MF07.RoundedNorm"
+  ],
+  "blocked_modules": [
+    "NLA.MF07.BlockComparison",
+    "NLA.MF07.CappedWeights",
+    "NLA.MF07.Similarity",
+    "NLA.MF07.QuantitativeComparison",
+    "NLA.MF07.Final",
+    "NLA.MF07.Complete"
+  ]
+}

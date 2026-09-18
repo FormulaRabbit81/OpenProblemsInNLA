@@ -1,0 +1,88 @@
+"""Stage immutable MF06 sources and invoke the existing serial compiler.
+
+Only the coordinator runs this. Never counts helpers as a completed problem.
+"""
+from pathlib import Path
+import argparse, datetime, fcntl, hashlib, json, os, re, shutil, sys
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+P = B / 'next-proofs/MF-06'
+ap = argparse.ArgumentParser()
+ap.add_argument('run', type=int)
+ap.add_argument('modules', nargs='+')
+ap.add_argument('--fresh', nargs='+', required=True)
+ap.add_argument('--scope', required=True)
+args = ap.parse_args()
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+assert sha(P / 'STATEMENT-FREEZE.json') == '0acb781d89b640a5e1cc8e5a85e9611567e268db34e69a3ef7f2b4bb8085777c'
+assert sha(L / 'serial_compile_v3.py') == 'd6c00e953688e155c0a313a8f49c7c395ad0fb1166faf3655c0b47f3ea2b2266'
+lock = (L / '.compiler.lock').open('r+')
+fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+assert not (L / f'runs/development-{args.run}').exists()
+assert not (L / f'ASSEMBLY-{args.run}.json').exists()
+for receipt in (L / 'runs').glob('development-*/RECEIPT.json'):
+    assert 'end' in json.loads(receipt.read_text()), receipt
+freeze = json.loads((P / 'STATEMENT-FREEZE.json').read_text())
+for rel, expected in freeze['source_sha256'].items():
+    assert sha(P / rel) == expected, rel
+reused = json.loads((P / 'REUSE-SOURCE-PINS.json').read_text())['git_bytes_matched']
+selected = {}
+def visit(module):
+    if module in selected:
+        return
+    assert module == 'Solution' or module.startswith('NLA.')
+    rel = module.replace('.', '/') + '.lean'
+    src = P / rel
+    text = src.read_text()
+    if module != 'Solution' and not module.startswith('NLA.MF06.'):
+        assert sha(src) == reused[rel], ('published reuse source drift', rel)
+    selected[module] = rel
+    for line in text.splitlines():
+        if line.startswith('import '):
+            for dep in line[7:].split():
+                if dep.startswith('NLA.'):
+                    visit(dep)
+fullname = lambda name: name if name == 'Solution' else 'NLA.MF06.' + name
+for name in args.modules:
+    visit(fullname(name))
+snapshot = B / f'MF06-local{args.run}-source-snapshot'
+snapshot.mkdir(exist_ok=False)
+quarantine = L / f'quarantine/development-{args.run}'
+quarantine.mkdir(parents=True, exist_ok=False)
+sources, moved = {}, {}
+headers = json.loads((P / 'STATEMENT-HEADERS.json').read_text())['headers']
+header_checks = []
+for module, rel in selected.items():
+    src = P / rel
+    text = src.read_text()
+    for contract in headers:
+        short = contract['declaration'].rsplit('.', 1)[1]
+        found = re.search(r'(?m)^theorem ' + re.escape(short) + r'\b[\s\S]*?(?=\s*:=)', text)
+        if found:
+            assert ' '.join(found.group().split()) == ' '.join(contract['header'].split()), short
+            header_checks.append(contract['declaration'])
+    dst = snapshot / rel
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(src, dst)
+    if module.rsplit('.', 1)[-1] in args.fresh:
+        for artifact in (L / '.lake/build/lib/lean' / Path(rel).parent).glob(Path(rel).stem + '.*'):
+            target = quarantine / artifact.relative_to(L)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            moved[str(artifact.relative_to(L))] = sha(artifact)
+            shutil.move(artifact, target)
+    shutil.copy2(dst, L / rel)
+    sources[rel] = {'source': str(dst), 'sha256': sha(dst)}
+if 'Solution' in args.modules:
+    assert set(header_checks) == {h['declaration'] for h in headers}, ('missing exact contracts', header_checks)
+assembly = {'scope': args.scope, 'time': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            'sources': sources, 'statement_freeze_sha256': sha(P / 'STATEMENT-FREEZE.json'),
+            'matched_frozen_headers': header_checks, 'preparation_script_sha256': sha(Path(__file__))}
+(L / f'ASSEMBLY-{args.run}.json').write_text(json.dumps(assembly, indent=2) + '\n')
+(quarantine / 'MANIFEST.json').write_text(json.dumps(moved, indent=2) + '\n')
+fcntl.flock(lock, fcntl.LOCK_UN)
+lock.close()
+os.chdir(L)
+os.execv(sys.executable, [sys.executable, str(L / 'serial_compile_v3.py'),
+                         f'ASSEMBLY-{args.run}.json', f'development-{args.run}',
+                         *[fullname(x) for x in args.modules]])

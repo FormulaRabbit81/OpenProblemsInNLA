@@ -1,0 +1,71 @@
+{
+  "scope": "Current upstream main/all-state MF06 PR search and current upstream/user branch-head metadata; not a complete contemporaneous fork-tree audit. No mutation.",
+  "observations": [
+    {
+      "time": "2026-09-17T17:21:23.884476+00:00",
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "api",
+        "repos/ajt60gaibb/OpenProblemsInNLA/commits/main",
+        "--jq",
+        "{sha:.sha,date:.commit.committer.date}"
+      ],
+      "cwd": "/private/tmp",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "error connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n"
+    },
+    {
+      "time": "2026-09-17T17:21:23.883451+00:00",
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "pr",
+        "list",
+        "--repo",
+        "ajt60gaibb/OpenProblemsInNLA",
+        "--state",
+        "all",
+        "--search",
+        "MF-06",
+        "--limit",
+        "100",
+        "--json",
+        "number,title,state,headRefName,headRepositoryOwner,headRefOid,url,mergedAt,updatedAt"
+      ],
+      "cwd": "/private/tmp",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "error connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n"
+    },
+    {
+      "time": "2026-09-17T17:21:23.884404+00:00",
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "api",
+        "repos/ajt60gaibb/OpenProblemsInNLA/branches?per_page=100",
+        "--paginate",
+        "--jq",
+        "map({name:.name,sha:.commit.sha})"
+      ],
+      "cwd": "/private/tmp",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "error connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n"
+    },
+    {
+      "time": "2026-09-17T17:21:23.884441+00:00",
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "api",
+        "repos/sgstepaniants/OpenProblemsInNLA/branches?per_page=100",
+        "--paginate",
+        "--jq",
+        "map({name:.name,sha:.commit.sha})"
+      ],
+      "cwd": "/private/tmp",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "error connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n"
+    }
+  ]
+}
