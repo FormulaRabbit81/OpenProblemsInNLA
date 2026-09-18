@@ -1,0 +1,50 @@
+{
+  "time": "2026-09-18T00:26:13.585664+00:00",
+  "scope": "Fresh current upstream revision, GitHub indexed MF06 PR search and exact proposed remote branch existence; public branch/fork path audit retained separately",
+  "observations": [
+    {
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "api",
+        "repos/ajt60gaibb/OpenProblemsInNLA/commits/main",
+        "--jq",
+        "{sha:.sha,date:.commit.committer.date}"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"date\":\"2026-09-18T00:17:19Z\",\"sha\":\"e7519c46fd249a6a033bfe5d11c66bf47f7f8885\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "pr",
+        "list",
+        "--repo",
+        "ajt60gaibb/OpenProblemsInNLA",
+        "--state",
+        "all",
+        "--search",
+        "MF-06",
+        "--limit",
+        "100",
+        "--json",
+        "number,title,state,headRefName,headRepositoryOwner,url,mergedAt"
+      ],
+      "exit_code": 0,
+      "stdout": "[{\"headRefName\":\"codex/stepaniants-mf06-pointwise-lower-lipschitz\",\"headRepositoryOwner\":{\"id\":\"MDQ6VXNlcjE1NzA3ODQ3\",\"name\":\"George Stepaniants\",\"login\":\"sgstepaniants\"},\"mergedAt\":\"2026-09-12T11:39:52Z\",\"number\":149,\"state\":\"MERGED\",\"title\":\"Resolve MF-06: pointwise lower-Lipschitz bound (George Stepaniants)\",\"url\":\"https://github.com/ajt60gaibb/OpenProblemsInNLA/pull/149\"},{\"headRefName\":\"codex/colbrook-jsr-growth\",\"headRepositoryOwner\":{\"id\":\"MDQ6VXNlcjI4NTkyNTQ4\",\"name\":\"Matthew Colbrook\",\"login\":\"MColbrook\"},\"mergedAt\":\"2026-09-11T23:04:59Z\",\"number\":110,\"state\":\"MERGED\",\"title\":\"Resolve MF-05, MF-07 and MF-12: uniform JSR bounds and arbitrary growth\",\"url\":\"https://github.com/ajt60gaibb/OpenProblemsInNLA/pull/110\"},{\"headRefName\":\"codex/audit-prs-195-228\",\"headRepositoryOwner\":{\"id\":\"MDQ6VXNlcjE4MTQwNjM=\",\"name\":\"Alex Townsend \",\"login\":\"ajt60gaibb\"},\"mergedAt\":\"2026-09-13T12:29:47Z\",\"number\":231,\"state\":\"MERGED\",\"title\":\"Integrate eight resolutions, five Lean verifications and audited partial results\",\"url\":\"https://github.com/ajt60gaibb/OpenProblemsInNLA/pull/231\"}]\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "api",
+        "repos/sgstepaniants/OpenProblemsInNLA/git/matching-refs/heads/codex/lean-mf06-verification",
+        "--jq",
+        "map({ref:.ref,sha:.object.sha})"
+      ],
+      "exit_code": 0,
+      "stdout": "[]\n",
+      "stderr": ""
+    }
+  ]
+}

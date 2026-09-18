@@ -1,0 +1,129 @@
+"""Coordinator publication preflight; no Lean, Comparator or independent-referee claim."""
+from pathlib import Path, PurePosixPath
+import datetime, gzip, hashlib, importlib.util, io, json, os, re, subprocess, tarfile
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+P = B / 'MF06-canonical-package-local268'
+W = Path('/private/tmp/nla-lean-next-mf06-worktree')
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+load = lambda p: json.loads(Path(p).read_text())
+checks = 0
+def ck(value, msg):
+    global checks
+    checks += 1
+    if not value:
+        raise AssertionError(msg)
+
+manifest = load(P / 'PACKAGE-MANIFEST.json')
+ck(sha(P / 'PACKAGE-MANIFEST.json') == '77c11d8cf3e225588cba517e98cb845463278a2232e4c0510d85c80fc5add71d', 'expected candidate')
+files = {str(f.relative_to(P)): f for f in P.rglob('*') if f.is_file() and f != P / 'PACKAGE-MANIFEST.json'}
+ck(set(files) == set(manifest['files']), 'complete inventory')
+for rel, f in files.items():
+    ck(not f.is_symlink() and sha(f) == manifest['files'][rel], 'candidate hash ' + rel)
+    ck(not any(s in rel.split('/') for s in ['.lake', '.git', '__pycache__']), 'no build/cache files ' + rel)
+    ck(f.suffix not in {'.olean', '.ilean', '.o', '.so', '.a'}, 'no compiler outputs ' + rel)
+
+email = re.compile(r'(?i)(?:george|g?stepaniants|sgstepaniants)[^\s@<>]{0,40}@[\w.-]+\.[A-Za-z]{2,}')
+archive_files = 0
+def privacy(data, name):
+    global archive_files
+    if name.endswith('.tar.gz'):
+        with tarfile.open(fileobj=io.BytesIO(data), mode='r:gz') as archive:
+            for member in archive.getmembers():
+                ck(member.isfile() and not PurePosixPath(member.name).is_absolute() and '..' not in PurePosixPath(member.name).parts, 'ordinary safe archived file ' + name + ':' + member.name)
+                archive_files += 1
+                privacy(archive.extractfile(member).read(), member.name)
+    elif name.endswith('.gz'):
+        privacy(gzip.decompress(data), name[:-3])
+    else:
+        ck(email.search(data.decode('utf8', errors='ignore')) is None, 'George email absent: ' + name)
+for rel, f in files.items():
+    privacy(f.read_bytes(), rel)
+
+local = load(P / 'verification/LOCAL-COMPLETE.json')
+ck(len(local['sources']) == 119, '119 proof closure sources')
+for rel, h in local['sources'].items():
+    ck(sha(P / rel) == h, 'same locally checked proof ' + rel)
+ck({str(f.relative_to(P)) for f in P.rglob('*.lean')} == set(local['sources']) | {'Challenge.lean'}, 'only proof closure and separate challenge Lean sources')
+freeze = load(P / 'STATEMENT-FREEZE.json')
+for rel, h in freeze['source_sha256'].items():
+    ck(sha(P / rel) == h, 'frozen statement ' + rel)
+ck(len(freeze['accepted_reviews']) == 2, 'two pre-proof statement approvals')
+cfg = load(P / 'comparator.json')
+ck(len(cfg['theorem_names']) == 38 and cfg['definition_names'] == [], '38 contracts and no definition holes')
+proof = (P / 'Solution.lean').read_text()
+for name in cfg['theorem_names']:
+    ck('#print axioms ' + name in proof and '#assert_trust kernel ' + name in proof, 'actual local export assertions ' + name)
+imports = {}
+for rel in local['sources']:
+    imports[rel] = []
+    for line in re.findall(r'^import\s+([^\n]+)', (P / rel).read_text(), re.M):
+        for name in line.split():
+            if name.startswith('NLA.'):
+                dep = name.replace('.', '/') + '.lean'
+                ck(dep in local['sources'], 'standalone project dependency ' + dep)
+                imports[rel].append(dep)
+            else:
+                ck(name.startswith(('Mathlib.', 'LeanCert.')), 'pinned external import ' + name)
+seen = set()
+def visit(rel):
+    if rel in seen:
+        return
+    seen.add(rel)
+    for dep in imports[rel]:
+        visit(dep)
+visit('Solution.lean')
+ck(seen == set(local['sources']) and 'Challenge.lean' not in seen, 'complete isolated Solution closure')
+
+for item in load(P / 'verification/RETAINED-PATHS.json'):
+    dest = P / item['destination']
+    ck(sha(dest) == item['sha256'], 'retained evidence ' + item['destination'])
+    if item.get('encoding') == 'gzip':
+        ck(hashlib.sha256(gzip.decompress(dest.read_bytes())).hexdigest() == item['decoded_sha256'], 'raw compressed binding')
+comparison = load(P / 'verification/type-diagnostics-270/COMPARISON.json')
+for side in ['challenge', 'solution']:
+    data = gzip.decompress((P / 'verification/type-diagnostics-270' / (side + '-types.json.gz')).read_bytes())
+    ck(hashlib.sha256(data).hexdigest() == comparison[side + '_dump_sha256'], 'exact original ' + side + ' diagnostic')
+for rel, h in load(P / 'ACTIVE-SOURCE-MANIFEST.json')['source_sha256'].items():
+    ck(local['sources'][rel] == h, 'active manifest ' + rel)
+reviews = load(P / 'reviews/INDEX.json')
+ck(len(reviews) == 4, 'two statement and two final source reviews')
+for item in reviews:
+    ck(sha(P / 'reviews' / item['archive']) == item['archive_sha256'], 'review archive binding')
+meta = load(P / 'formalization.yaml')
+ck(meta['status']['whole_problem_verified'] is False and meta['status']['completed_original_targets'] == 0, 'no premature promotion')
+ck(meta['verification']['GitHub_Comparator']['status'] == 'not run for MF06', 'no unrun Linux claim')
+ck(meta['verification']['independent_reviews']['final'] == 2, 'two source approvals recorded')
+ck(meta['project']['authors'] == ['George Stepaniants'], 'formalization author')
+ck(meta['project']['affiliation'] == 'Department of Computing and Mathematical Sciences, California Institute of Technology', 'affiliation')
+for name in ['README.md', 'solution.md', 'solution.tex']:
+    ck((P / 'source-inputs/canonical' / name).read_bytes() == subprocess.check_output(['git', 'show', 'e7519c46fd249a6a033bfe5d11c66bf47f7f8885:matrix-functions-and-stability/MF-06/' + name], cwd=W), 'current canonical target/source ' + name)
+ck(not subprocess.check_output(['git', 'diff', 'ff6abf718126ceb23f933cf4f627f95104461fe8', 'HEAD', '--', 'tools/lean', '.github/workflows/lean-verification.yml'], cwd=W), 'unchanged accepted shared checker')
+ck(sha(W / 'tools/lean/source-lock.json') == 'b3833b07916e5db77579b9cc53ca582282f6a841f36d6a60d693e5b02d342b6b', 'checker source lock')
+spec = importlib.util.spec_from_file_location('mf06_harness_preflight', W / 'tools/lean/harness.py')
+harness = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(harness)
+ck(harness.validate_project(P) == cfg, 'actual harness package validation only; no run')
+ck((P / 'lean-toolchain').read_text().strip() == harness.load_lock()['lean_toolchain'], 'same pinned Lean')
+lake = (P / 'lakefile.toml').read_text()
+ck('defaultTargets = ["Solution"]' in lake and 'name = "Solution"' in lake and 'name = "Challenge"' in lake, 'standalone Lake targets')
+packages = {x['name']: x['rev'] for x in load(P / 'lake-manifest.json')['packages']}
+ck(packages['mathlib'] == '0df444a360eaa60ab8c11dca51a86af692955474' and packages['leancert'] == '621a43d7cf21f87872392a01e874f2f1dbddc926', 'exact proven dependency pins')
+argv = ['/Users/georgestepaniants/miniforge3/bin/python', str(W / 'tools/lean/validate_manifest.py'), str(P)]
+env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1', PYTHONPATH='/tmp/nla-publication-python-20260917')
+r = subprocess.run(argv, env=env, capture_output=True, text=True)
+ck(r.returncode == 0, 'actual schema validation: ' + r.stderr)
+record = {'time': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'reviewer': '/root',
+    'scope': 'Author/coordinator publication preflight, not an independent source referee and not Lean/Comparator execution',
+    'package_manifest_sha256': sha(P / 'PACKAGE-MANIFEST.json'), 'checks': checks,
+    'payload_files': len(files), 'archived_files_privacy_checked': archive_files,
+    'all119_proof_sources_exact268': True, 'all38_contracts_unchanged': True,
+    'two_independent_full_source_approvals': True, 'schema': {'argv': argv, 'exit_code': r.returncode, 'stdout': r.stdout, 'stderr': r.stderr},
+    'current_upstream': 'e7519c46fd249a6a033bfe5d11c66bf47f7f8885',
+    'current_canonical_source_bytes_unchanged': True, 'shared_checker_unchanged': True,
+    'independent_publication_package_preflight': 'Not completed: reviewer agent account usage limit. Coordinator checks are explicitly identified.',
+    'Linux_Comparator': 'not run; next separate gate', 'count_change': 0}
+out = B / 'MF06-ROOT-PACKAGE-PREFLIGHT.json'
+ck(not out.exists(), 'new preflight record')
+out.write_text(json.dumps(record, indent=2) + '\n')
+print(json.dumps(record, indent=2))

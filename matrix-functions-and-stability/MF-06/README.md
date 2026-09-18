@@ -7,8 +7,8 @@
 **Difficulty:** challenging  
 **Importance:** interesting to the community  
 **Rating rationale:** Challenging because the sharp one-sided perturbation rate must survive reducibility; community impact is reliable lower stability estimates under data perturbation.  
-**Status:** Solved  
-**Last checked:** 2026-09-12  
+**Status:** Lean verified  
+**Last checked:** 2026-09-18  
 
 ## Affirmative resolution - 2026-09-12
 
@@ -18,9 +18,19 @@
 
 The proof establishes a product-bounded exterior-power family at a maximal critical degree and transfers a robust one-sided estimate back to the original family. The nearby family may be arbitrary; it need not preserve the reference's invariant subspaces. [Proof PDF](solution.pdf) · [Standalone proof TeX](solution.tex).
 
-The complete clarified proof passed a separate [independent Codex-agent mathematical audit](../../references/stepaniants-mf06-2026-09-12/REVIEW.md). The [submission record](../../references/stepaniants-mf06-2026-09-12/README.md) contains the exact sources, source clarification, supplementary checks, document inspection and bounded public-network/source audit. Substantial AI assistance is disclosed; this is informal agent review, not external human peer review or formal verification.
+The complete clarified proof passed a separate [independent Codex-agent mathematical audit](../../references/stepaniants-mf06-2026-09-12/REVIEW.md). The [submission record](../../references/stepaniants-mf06-2026-09-12/README.md) contains the exact sources, source clarification, supplementary checks, document inspection and bounded public-network/source audit. That September 12 audit was informal agent review. The later Lean verification is recorded below; substantial AI assistance is disclosed and no external human peer review is claimed.
 
 Epperlein and Wirth retain attribution for the target. The Barabanov/Wirth extremal-norm theorem and Chitour-Mason-Sigalotti nonresonance theory retain credit; the proof supplies its needed paired-tensor arguments in full. The result is pointwise at a fixed family and does not claim a two-sided Lipschitz estimate uniform over two varying families. The original definitions, statement, historical partial status evidence and ratings below are retained.
+
+## Lean proof and verification evidence
+
+**The complete original target is Lean verified, 2026-09-18 (UTC).** The [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/eae51c5c054eaa4b27b542488fab5ceef497dabb/matrix-functions-and-stability/MF-06/lean/Solution.lean) at revision `eae51c5c054eaa4b27b542488fab5ceef497dabb` passed [non-root Linux run 35291765215](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35291765215/job/105435999248). The [retained execution evidence](lean/verification/linux-2026-09-18/README.md) binds all 484 submitted project inputs and all 38 exported statements. Comparator, default-kernel replay, standard transitive axioms, sandbox checks and rejection controls passed.
+
+The main declaration `NLA.MF06.canonical_pointwise_lower_lipschitz` proves the stated bound for every positive dimension and every fixed nonempty compact complex matrix family. Positive constants are chosen before the arbitrary nearby nonempty compact family. The spectral norm, literal two-sided Hausdorff distance and actual all-word joint-spectral-radius limit are proved to match the original definitions. Reducible reference families, unbounded normalized products, infinite compact sets, singular generators, zero radius and zero distance are covered. The proof internally establishes the critical product-bounded exterior power; it adds no flag-preservation or irreducibility hypothesis. The [38 exact contracts](lean/Challenge.lean), [implementation map](lean/IMPLEMENTATION-MAP.json) and [source correspondence](lean/SourceCorrespondence.md) identify these obligations.
+
+Mathematical solution and formalization: **George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. Epperlein and Wirth retain the question, and the reused MF05/MF07 mathematics retain Matthew J. Colbrook's credit. Two independent statement reviews preceded implementation; two independent nonauthor final source reviews approved all 119 imported proof modules. [Review records](lean/reviews/README.md) disclose substantial OpenAI Codex assistance and distinguish source inspection from executed checks.
+
+The project pins Lean 4.33.1, [Mathlib](https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474) and [LeanCert](https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926). A kernel-mode LeanCert half-radius certificate is consumed by the proof; matrix dimensions, words and exterior powers remain symbolic. Every export has only `propext`, `Classical.choice` and `Quot.sound` as transitive axioms. Run `lake build` in `matrix-functions-and-stability/MF-06/lean`; [reproduction instructions](lean/README.md) distinguish actual local checks from the Linux checker.
 
 ## Context and notation
 

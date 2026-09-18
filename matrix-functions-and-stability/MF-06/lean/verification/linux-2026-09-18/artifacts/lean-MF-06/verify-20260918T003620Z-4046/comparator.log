@@ -1,0 +1,771 @@
+$ systemd-run --user --quiet --wait --pipe --collect -p 'RestrictAddressFamilies=~AF_UNIX' --working-directory /home/runner/work/_temp/nla-lean-tools/.verification-tmp/nla-fresh-proof-8q749kww/project /usr/bin/env -i PATH=/home/runner/.elan/toolchains/leanprover--lean4---v4.33.1/bin:/home/runner/.elan/bin:/home/runner/go/bin:/opt/hostedtoolcache/go/1.27.1/x64/bin:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin HOME=/home/runner LANG=C.UTF-8 XDG_RUNTIME_DIR=/run/user/1001 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus GIT_TERMINAL_PROMPT=0 GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null COMPARATOR_BIN=/home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator COMPARATOR_LEAN4EXPORT=/home/runner/work/_temp/nla-lean-tools/.tools/lean4export/.lake/build/bin/lean4export COMPARATOR_LANDRUN=/home/runner/work/_temp/nla-lean-tools/scripts/strict_landrun.py XDG_CACHE_HOME=/home/runner/work/_temp/nla-lean-tools/.tools/cache TMPDIR=/home/runner/work/_temp/nla-lean-tools/.verification-tmp lake env /home/runner/work/_temp/nla-lean-tools/.tools/comparator/.lake/build/bin/comparator comparator.json
+Building Challenge
+✔ [3129/3136] Built LeanCert.Tactic.Verification (2.1s)
+✔ [3130/3136] Built NLA.MF07.Definitions (2.4s)
+⚠ [3131/3136] Built NLA.MF07.MatrixBasics (3.1s)
+warning: NLA/MF07/MatrixBasics.lean:55:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/MF07/MatrixBasics.lean:122:51: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [diagonalWeights, inverseDiagonalWeights, Matrix.one_apply, hij, hz]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: NLA/MF07/MatrixBasics.lean:125:0: 'NLA.MF07.matrix_product_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/MatrixBasics.lean:127:0: 'NLA.MF07.diagonal_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/MatrixBasics.lean:129:0: 'NLA.MF07.word_spectralNorm_le_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3132/3136] Built NLA.MF07.ProductEnvelope (2.9s)
+info: NLA/MF07/ProductEnvelope.lean:175:0: 'NLA.MF07.productEnvelope_isComplexNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/ProductEnvelope.lean:177:0: 'NLA.MF07.productEnvelope_generator' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3133/3136] Built NLA.MF05.Definitions (2.3s)
+✔ [3134/3136] Built NLA.MF06.Definitions (2.4s)
+⚠ [3135/3136] Built Challenge (2.7s)
+warning: Challenge.lean:30:8: declaration uses `sorry`
+warning: Challenge.lean:35:8: declaration uses `sorry`
+warning: Challenge.lean:53:8: declaration uses `sorry`
+warning: Challenge.lean:60:8: declaration uses `sorry`
+warning: Challenge.lean:75:8: declaration uses `sorry`
+warning: Challenge.lean:86:8: declaration uses `sorry`
+warning: Challenge.lean:98:8: declaration uses `sorry`
+warning: Challenge.lean:108:8: declaration uses `sorry`
+warning: Challenge.lean:120:8: declaration uses `sorry`
+warning: Challenge.lean:132:8: declaration uses `sorry`
+warning: Challenge.lean:143:8: declaration uses `sorry`
+warning: Challenge.lean:153:8: declaration uses `sorry`
+warning: Challenge.lean:163:8: declaration uses `sorry`
+warning: Challenge.lean:175:8: declaration uses `sorry`
+warning: Challenge.lean:183:8: declaration uses `sorry`
+warning: Challenge.lean:193:8: declaration uses `sorry`
+warning: Challenge.lean:202:8: declaration uses `sorry`
+warning: Challenge.lean:208:8: declaration uses `sorry`
+warning: Challenge.lean:219:8: declaration uses `sorry`
+warning: Challenge.lean:227:8: declaration uses `sorry`
+warning: Challenge.lean:234:8: declaration uses `sorry`
+warning: Challenge.lean:243:8: declaration uses `sorry`
+warning: Challenge.lean:250:8: declaration uses `sorry`
+warning: Challenge.lean:260:8: declaration uses `sorry`
+warning: Challenge.lean:267:8: declaration uses `sorry`
+warning: Challenge.lean:275:8: declaration uses `sorry`
+warning: Challenge.lean:285:8: declaration uses `sorry`
+warning: Challenge.lean:296:8: declaration uses `sorry`
+warning: Challenge.lean:304:8: declaration uses `sorry`
+warning: Challenge.lean:314:8: declaration uses `sorry`
+warning: Challenge.lean:329:8: declaration uses `sorry`
+warning: Challenge.lean:342:8: declaration uses `sorry`
+warning: Challenge.lean:353:8: declaration uses `sorry`
+warning: Challenge.lean:364:8: declaration uses `sorry`
+warning: Challenge.lean:374:8: declaration uses `sorry`
+warning: Challenge.lean:381:8: declaration uses `sorry`
+warning: Challenge.lean:388:8: declaration uses `sorry`
+warning: Challenge.lean:400:8: declaration uses `sorry`
+Build completed successfully (3136 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.MF05.half_radius_certificate, NLA.MF05.spectral_hausdorff_semantics, NLA.MF05.general_root_limit_semantics, NLA.MF05.positive_scaling_semantics, NLA.MF06.bounded_envelope_norm, NLA.MF06.tail_seminorm_limit, NLA.MF06.stable_gauge_max_recurrence, NLA.MF06.stable_kernel_exponential, NLA.MF06.cone_numerical_bound, NLA.MF06.product_bounded_lower_lipschitz, NLA.MF06.separated_sum_bound, NLA.MF06.block_radius_formula, NLA.MF06.block_nonresonance_product_bounded, NLA.MF06.irreducible_radius_one_product_bounded, NLA.MF06.irreducible_flag, NLA.MF06.similarity_semantics, NLA.MF06.compound_dimensions, NLA.MF06.compound_coordinate_semantics, NLA.MF06.compound_algebra, NLA.MF06.compound_norm_bound, NLA.MF06.compound_local_lipschitz, NLA.MF06.tensor_algebra, NLA.MF06.tensor_norm_comparison, NLA.MF06.allocation_dimensions, NLA.MF06.allocation_algebra, NLA.MF06.allocation_product_bounded, NLA.MF06.compound_allocation_radius, NLA.MF06.distinct_allocation_degrees, NLA.MF06.allocation_tensor_norm_bridge, NLA.MF06.critical_allocation_nonresonance, NLA.MF06.compound_nonresonance_product_bounded, NLA.MF06.compound_family_semantics, NLA.MF06.critical_compound_product_bounded, NLA.MF06.compound_hausdorff_bound, NLA.MF06.positive_hausdorff_scaling, NLA.MF06.root_lower_bound, NLA.MF06.normalized_pointwise_lower_lipschitz, NLA.MF06.canonical_pointwise_lower_lipschitz, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+Building Solution
+⚠ [3097/3142] Replayed NLA.MF07.MatrixBasics
+warning: NLA/MF07/MatrixBasics.lean:55:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/MF07/MatrixBasics.lean:122:51: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [diagonalWeights, inverseDiagonalWeights, Matrix.one_apply, hij, hz]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: NLA/MF07/MatrixBasics.lean:125:0: 'NLA.MF07.matrix_product_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/MatrixBasics.lean:127:0: 'NLA.MF07.diagonal_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/MatrixBasics.lean:129:0: 'NLA.MF07.word_spectralNorm_le_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3098/3142] Replayed NLA.MF07.ProductEnvelope
+info: NLA/MF07/ProductEnvelope.lean:175:0: 'NLA.MF07.productEnvelope_isComplexNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/ProductEnvelope.lean:177:0: 'NLA.MF07.productEnvelope_generator' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3134/3142] Built NLA.MF06.BlockCoordinates (5.0s)
+info: NLA/MF06/BlockCoordinates.lean:81:0: 'NLA.MF06.blockCoordinate_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/BlockCoordinates.lean:83:0: 'NLA.MF06.diagonalFamily_isCompact' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3135/3230] Built NLA.MF07.UnitaryGeometry (5.4s)
+warning: NLA/MF07/UnitaryGeometry.lean:69:40: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.one_apply, hi]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/UnitaryGeometry.lean:69:63: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.diagonal_apply, hi]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/UnitaryGeometry.lean:70:12: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.one_apply, hij]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/UnitaryGeometry.lean:70:35: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.diagonal_apply, hij]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/UnitaryGeometry.lean:101:4: Unused tactic linter: `push_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+info: NLA/MF07/UnitaryGeometry.lean:103:0: 'NLA.MF07.spectralNorm_unitary_conj' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/UnitaryGeometry.lean:105:0: 'NLA.MF07.cutDamping_spectralNorm_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3241/3256] Built NLA.MF06.CompoundAlgebra (5.6s)
+info: NLA/MF06/CompoundAlgebra.lean:97:0: 'NLA.MF06.compound_dimensions' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/CompoundAlgebra.lean:99:0: 'NLA.MF06.compound_coordinate_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/CompoundAlgebra.lean:101:0: 'NLA.MF06.compound_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3242/3256] Built NLA.MF07.NormGeometry (5.7s)
+info: NLA/MF07/NormGeometry.lean:134:0: 'NLA.MF07.complexNorm_unitBall_compact' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/NormGeometry.lean:136:0: 'NLA.MF07.sum_coordinate_norms_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3244/3256] Built NLA.MF06.BlockAlgebra (3.7s)
+info: NLA/MF06/BlockAlgebra.lean:89:0: 'NLA.MF06.blockMatrix_matrixProduct' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3245/3260] Built NLA.MF06.AllocationDimensions (3.7s)
+info: NLA/MF06/AllocationDimensions.lean:85:0: 'NLA.MF06.allocation_dimensions' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/AllocationDimensions.lean:87:0: 'NLA.MF06.distinct_allocation_degrees' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3246/3260] Built NLA.MF07.CompactGrowth (3.9s)
+warning: NLA/MF07/CompactGrowth.lean:31:28: This simp argument is unused:
+  List.ofFn_get
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [finiteProduct, A]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/CompactGrowth.lean:44:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/MF07/CompactGrowth.lean:51:37: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: NLA/MF07/CompactGrowth.lean:114:49: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF07/CompactGrowth.lean:133:0: 'NLA.MF07.family_norm_maximum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/CompactGrowth.lean:135:0: 'NLA.MF07.family_growth_maximum' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/CompactGrowth.lean:137:0: 'NLA.MF07.family_growth_submultiplicative' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3247/3262] Built NLA.MF07.TriangularDamping (4.5s)
+warning: NLA/MF07/TriangularDamping.lean:50:2: Unused tactic linter: `push_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF07/TriangularDamping.lean:90:31: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF07/TriangularDamping.lean:94:6: Unused tactic linter: `push_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF07/TriangularDamping.lean:95:31: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF07/TriangularDamping.lean:90:31: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: NLA/MF07/TriangularDamping.lean:95:31: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+info: NLA/MF07/TriangularDamping.lean:130:0: 'NLA.MF07.triangular_damping' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3249/3262] Built NLA.MF07.Interspersed (4.6s)
+info: NLA/MF07/Interspersed.lean:132:0: 'NLA.MF07.interspersed_product_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3252/3271] Built NLA.MF06.AllocationAlgebra (4.1s)
+info: NLA/MF06/AllocationAlgebra.lean:98:0: 'NLA.MF06.allocation_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3253/3278] Built NLA.MF07.Auerbach (4.2s)
+warning: NLA/MF07/Auerbach.lean:46:67: This simp argument is unused:
+  PiLp.smul_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [applyMatrix_coordinate, WithLp.ofLp_sum, Finset.sum_apply, mul_comm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/Auerbach.lean:56:10: This simp argument is unused:
+  Matrix.updateCol_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [h]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/Auerbach.lean:71:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/MF07/Auerbach.lean:73:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: NLA/MF07/Auerbach.lean:100:13: This simp argument is unused:
+  Matrix.det_smul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [W, hcpos.ne']
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: NLA/MF07/Auerbach.lean:186:0: 'NLA.MF07.maximal_determinant_basis' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/Auerbach.lean:188:0: 'NLA.MF07.exists_auerbach_coordinates' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3254/3281] Built NLA.MF07.RootSemantics (4.5s)
+info: NLA/MF07/RootSemantics.lean:193:0: 'NLA.MF07.radius_one_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/RootSemantics.lean:195:0: 'NLA.MF07.identity_family_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3255/3281] Built NLA.MF06.WordImages (3.4s)
+info: NLA/MF06/WordImages.lean:44:0: 'NLA.MF06.word_image_preimage' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/WordImages.lean:46:0: 'NLA.MF06.matrixProduct_map_monoidHom' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3256/3281] Built NLA.MF06.InvariantChain (3.8s)
+info: NLA/MF06/InvariantChain.lean:82:0: 'NLA.MF06.exists_saturated_invariant_chain' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3257/3284] Built NLA.MF07.SingularCoordinates (4.5s)
+warning: NLA/MF07/SingularCoordinates.lean:43:55: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [diagonalWeights, Matrix.conjTranspose_apply, hij, Ne.symm hij]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: NLA/MF07/SingularCoordinates.lean:109:29: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [diagonalWeights, hij]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: NLA/MF07/SingularCoordinates.lean:143:0: 'NLA.MF07.ordered_positive_gram_coordinates' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/SingularCoordinates.lean:145:0: 'NLA.MF07.exists_singular_coordinates' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3258/3284] Built NLA.MF05.GeneralEnvelope (3.6s)
+info: NLA/MF05/GeneralEnvelope.lean:78:0: 'NLA.MF05.jointSpectralRadius_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF05/GeneralEnvelope.lean:80:0: 'NLA.MF05.general_exponential_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3259/3286] Built NLA.MF07.ApproximateNorm (3.0s)
+info: NLA/MF07/ApproximateNorm.lean:72:0: 'NLA.MF07.approximate_extremal_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3260/3286] Built NLA.MF06.CompactPositiveTests (3.4s)
+info: NLA/MF06/CompactPositiveTests.lean:54:0: 'NLA.MF06.compact_uniform_positive_tests' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3261/3286] Built NLA.MF06.IrreducibleOrbit (4.4s)
+info: NLA/MF06/IrreducibleOrbit.lean:82:0: 'NLA.MF06.irreducible_word_not_annihilated' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3262/3286] Built NLA.MF06.NestedIndependent (3.6s)
+info: NLA/MF06/NestedIndependent.lean:43:0: 'NLA.MF06.exists_nested_independent_sets' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3263/3286] Built NLA.MF06.WordAmplification (3.6s)
+info: NLA/MF06/WordAmplification.lean:98:0: 'NLA.MF06.bounded_word_amplification_contradiction' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3264/3290] Built NLA.MF05.RootLimit (3.5s)
+info: NLA/MF05/RootLimit.lean:87:0: 'NLA.MF05.general_root_limit_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF05/RootLimit.lean:89:0: 'NLA.MF05.exponential_bound_controls_radius' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3265/3290] Built NLA.MF07.RoundedNorm (3.9s)
+warning: NLA/MF07/RoundedNorm.lean:43:44: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF07/RoundedNorm.lean:143:0: 'NLA.MF07.rounded_extremal_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3266/3290] Built NLA.MF06.IrreducibleBridge (5.4s)
+info: NLA/MF06/IrreducibleBridge.lean:122:0: 'NLA.MF06.irreducible_bounded_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3267/3290] Built NLA.MF06.AdaptedBasis (3.8s)
+info: NLA/MF06/AdaptedBasis.lean:67:0: 'NLA.MF06.exists_basis_spanning_chain' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3268/3292] Built NLA.MF06.GrowthComparison (3.5s)
+info: NLA/MF06/GrowthComparison.lean:53:0: 'NLA.MF06.product_bounded_of_growth_comparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/GrowthComparison.lean:55:0: 'NLA.MF06.radius_le_of_growth_comparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3269/3292] Built NLA.MF07.BlockComparison (3.0s)
+warning: NLA/MF07/BlockComparison.lean:70:8: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hne]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: NLA/MF07/BlockComparison.lean:141:0: 'NLA.MF07.spectralNorm_le_card_mul_entry_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/BlockComparison.lean:143:0: 'NLA.MF07.damped_lower_product_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3270/3292] Built NLA.MF06.IrreducibleBounded (3.6s)
+info: NLA/MF06/IrreducibleBounded.lean:54:0: 'NLA.MF06.irreducible_radius_one_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3271/3295] Built NLA.MF06.FlagLabeling (3.8s)
+info: NLA/MF06/FlagLabeling.lean:88:0: 'NLA.MF06.basis_chain_labeling' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3272/3295] Built NLA.MF06.SimilaritySemantics (3.7s)
+info: NLA/MF06/SimilaritySemantics.lean:123:0: 'NLA.MF06.similarity_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3273/3295] Built NLA.MF06.OccupationSubsets (3.4s)
+info: NLA/MF06/OccupationSubsets.lean:115:0: 'NLA.MF06.blockCoordinate_mem_assemble' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/OccupationSubsets.lean:117:0: 'NLA.MF06.assembleBlockSubset_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/OccupationSubsets.lean:119:0: 'NLA.MF06.occupationAllocation_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3274/3295] Built NLA.MF06.ImageWordComparison (3.6s)
+info: NLA/MF06/ImageWordComparison.lean:92:0: 'NLA.MF06.image_radius_le_of_word_comparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/ImageWordComparison.lean:94:0: 'NLA.MF06.product_bounded_reindexed' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3275/3295] Built NLA.MF06.TensorAlgebra (3.6s)
+info: NLA/MF06/TensorAlgebra.lean:76:0: 'NLA.MF06.tensor_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/TensorAlgebra.lean:78:0: 'NLA.MF06.tensor_norm_comparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3276/3296] Built NLA.MF06.CompoundNorm (3.5s)
+info: NLA/MF06/CompoundNorm.lean:51:0: 'NLA.MF06.compound_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3277/3300] Built NLA.MF06.IrreducibleSubcritical (3.3s)
+info: NLA/MF06/IrreducibleSubcritical.lean:28:0: 'NLA.MF06.irreducible_radius_le_one_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3278/3300] Built NLA.MF06.FlagMatrices (3.9s)
+info: NLA/MF06/FlagMatrices.lean:85:0: 'NLA.MF06.basisForward_mul_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/FlagMatrices.lean:87:0: 'NLA.MF06.inBasis_eq_conjugate' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/FlagMatrices.lean:89:0: 'NLA.MF06.inBasis_upper_of_flag' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3279/3300] Built NLA.MF06.MinorTransition (3.7s)
+info: NLA/MF06/MinorTransition.lean:108:0: 'NLA.MF06.minor_nonzero_matching' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/MinorTransition.lean:110:0: 'NLA.MF06.minor_counts_eq_of_nonzero_equal_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/MinorTransition.lean:112:0: 'NLA.MF06.minor_eq_zero_of_weight_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3280/3300] Built NLA.MF06.AllocationCoordinates (3.8s)
+info: NLA/MF06/AllocationCoordinates.lean:137:0: 'NLA.MF06.allocationOccupationEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/AllocationCoordinates.lean:139:0: 'NLA.MF06.compoundAllocationFiberEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/AllocationCoordinates.lean:141:0: 'NLA.MF06.degreeOccupation_compoundIndex_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3281/3300] Built NLA.MF06.PairedWords (3.7s)
+info: NLA/MF06/PairedWords.lean:103:0: 'NLA.MF06.paired_word_decay' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3282/3300] Built NLA.MF06.AllocationNormBridge (3.8s)
+info: NLA/MF06/AllocationNormBridge.lean:105:0: 'NLA.MF06.allocation_pair_entry_factorization' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/AllocationNormBridge.lean:107:0: 'NLA.MF06.allocation_tensor_norm_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3283/3300] Built NLA.MF06.AllocationProducts (3.6s)
+warning: NLA/MF06/AllocationProducts.lean:81:46: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF06/AllocationProducts.lean:109:0: 'NLA.MF06.allocation_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3284/3306] Built NLA.MF06.DeterminantNormReindex (3.3s)
+info: NLA/MF06/DeterminantNormReindex.lean:33:0: 'NLA.MF06.norm_det_submatrix_equiv_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3285/3306] Built NLA.MF06.FlagCoordinates (3.8s)
+info: NLA/MF06/FlagCoordinates.lean:76:0: 'NLA.MF06.mem_flag_iff_repr_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/FlagCoordinates.lean:78:0: 'NLA.MF06.flagBlockProjection_action' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3286/3306] Built NLA.MF06.OccupationWeights (3.5s)
+info: NLA/MF06/OccupationWeights.lean:117:0: 'NLA.MF06.sortedSubset_labelCount' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/OccupationWeights.lean:119:0: 'NLA.MF06.compound_nonzero_occupation' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3287/3307] Built NLA.MF06.GroupedMinorCoordinates (3.5s)
+info: NLA/MF06/GroupedMinorCoordinates.lean:114:0: 'NLA.MF06.groupedSubsetEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/GroupedMinorCoordinates.lean:116:0: 'NLA.MF06.groupedMinorEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3288/3307] Built NLA.MF06.CompoundRadius (3.5s)
+info: NLA/MF06/CompoundRadius.lean:69:0: 'NLA.MF06.compound_radius_le_power' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3289/3307] Built NLA.MF06.AllocationPairRadius (4.5s)
+info: NLA/MF06/AllocationPairRadius.lean:77:0: 'NLA.MF06.allocation_pair_radius_le_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3290/3307] Built NLA.MF06.BlockLowerRadius (3.5s)
+info: NLA/MF06/BlockLowerRadius.lean:70:0: 'NLA.MF06.diagonal_sup_radius_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3291/3307] Built NLA.MF06.FlagQuotient (3.4s)
+info: NLA/MF06/FlagQuotient.lean:76:0: 'NLA.MF06.flagBlockProjection_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/FlagQuotient.lean:78:0: 'NLA.MF06.flagBlockProjection_surjective_on' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3292/3308] Built NLA.MF06.CompoundPartition (3.6s)
+info: NLA/MF06/CompoundPartition.lean:115:0: 'NLA.MF06.compoundAllocationLabel_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/CompoundPartition.lean:117:0: 'NLA.MF06.compoundMatrix_upperBlock' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/CompoundPartition.lean:119:0: 'NLA.MF06.compoundBlockAllocationEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3293/3308] Built NLA.MF06.GroupedMinorDeterminant (3.5s)
+info: NLA/MF06/GroupedMinorDeterminant.lean:122:0: 'NLA.MF06.groupedMinorMatrix_det' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/GroupedMinorDeterminant.lean:124:0: 'NLA.MF06.norm_minor_of_degreeOccupation' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/GroupedMinorDeterminant.lean:126:0: 'NLA.MF06.norm_compoundAllocationFiber_entry' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3294/3308] Built NLA.MF06.CompoundFirstDegree (3.5s)
+info: NLA/MF06/CompoundFirstDegree.lean:78:0: 'NLA.MF06.compound_family_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3295/3308] Built NLA.MF06.BlockDiagonalEnvelope (3.7s)
+info: NLA/MF06/BlockDiagonalEnvelope.lean:137:0: 'NLA.MF06.blockDiagonal_exponential_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3296/3308] Built NLA.MF06.FlagIrreducibility (3.6s)
+info: NLA/MF06/FlagIrreducibility.lean:64:0: 'NLA.MF06.diagonal_irreducible_of_saturated_flag' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3297/3308] Built NLA.MF06.CompoundBlockEntries (3.7s)
+info: NLA/MF06/CompoundBlockEntries.lean:95:0: 'NLA.MF06.norm_compoundBlock_entry' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/CompoundBlockEntries.lean:97:0: 'NLA.MF06.compoundBlock_norm_comparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3298/3315] Built NLA.MF06.CompoundSimilarity (3.4s)
+info: NLA/MF06/CompoundSimilarity.lean:47:0: 'NLA.MF06.compound_similarity_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3299/3315] Built NLA.MF06.TwoBlockWords (4.2s)
+warning: NLA/MF06/TwoBlockWords.lean:63:18: This simp argument is unused:
+  zero_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [offDiagonalSum, List.length_cons, Fin.sum_univ_succ, Fin.val_zero, List.drop_succ_cons,
+    List.drop_zero, List.get_cons_zero, List.take_zero, List.map_nil, matrixProduct_nil, Matrix.mul_one, Fin.val_succ,
+    List.get_cons_succ', List.take_succ_cons, List.map_cons, matrixProduct_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+info: NLA/MF06/TwoBlockWords.lean:86:0: 'NLA.MF06.twoBlock_matrixProduct' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3300/3315] Built NLA.MF06.CriticalDegree (3.4s)
+info: NLA/MF06/CriticalDegree.lean:47:0: 'NLA.MF06.exists_maximal_critical_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3301/3316] Built NLA.MF06.BlockScaling (3.6s)
+info: NLA/MF06/BlockScaling.lean:86:0: 'NLA.MF06.blockConjugate_error_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/BlockScaling.lean:88:0: 'NLA.MF06.blockConjugate_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3302/3318] Built NLA.MF06.IrreducibleFlag (3.4s)
+info: NLA/MF06/IrreducibleFlag.lean:47:0: 'NLA.MF06.irreducible_flag' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3303/3318] Built NLA.MF06.CompoundAllocationWords (3.5s)
+info: NLA/MF06/CompoundAllocationWords.lean:123:0: 'NLA.MF06.compoundDiagonal_radius_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/CompoundAllocationWords.lean:125:0: 'NLA.MF06.compoundDiagonal_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3304/3324] Built NLA.MF06.GeometricCuts (3.7s)
+info: NLA/MF06/GeometricCuts.lean:98:0: 'NLA.MF06.scalar_cut_product_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3305/3324] Built NLA.MF06.BlockRadius (3.8s)
+info: NLA/MF06/BlockRadius.lean:109:0: 'NLA.MF06.block_radius_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3306/3324] Built NLA.MF06.LeadingPartition (3.5s)
+info: NLA/MF06/LeadingPartition.lean:101:0: 'NLA.MF06.leadingBlockLabel_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/LeadingPartition.lean:103:0: 'NLA.MF06.leadingBlockLabel_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3307/3324] Built NLA.MF06.FiberCompression (3.4s)
+info: NLA/MF06/FiberCompression.lean:68:0: 'NLA.MF06.spectralNorm_submatrix_fiber_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/FiberCompression.lean:70:0: 'NLA.MF06.spectralNorm_tensor_submatrix_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3308/3324] Built NLA.MF06.ScalarPrefixes (3.8s)
+info: NLA/MF06/ScalarPrefixes.lean:82:0: 'NLA.MF06.scalar_half_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3309/3324] Built NLA.MF06.CompoundAllocationRadius (3.5s)
+warning: NLA/MF06/CompoundAllocationRadius.lean:23:46: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: NLA/MF06/CompoundAllocationRadius.lean:24:25: Variable name `hb` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hb
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF06/CompoundAllocationRadius.lean:53:0: 'NLA.MF06.compound_allocation_radius' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3310/3324] Built NLA.MF06.LeadingWords (3.6s)
+info: NLA/MF06/LeadingWords.lean:135:0: 'NLA.MF06.leadingBlock_word_submatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/LeadingWords.lean:137:0: 'NLA.MF06.leading_final_pair_word_norm_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3311/3324] Built NLA.MF06.TensorBlockGeometry (3.3s)
+info: NLA/MF06/TensorBlockGeometry.lean:65:0: 'NLA.MF06.tensorBlock_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/TensorBlockGeometry.lean:67:0: 'NLA.MF06.tensorBlock_submatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3312/3332] Built NLA.MF06.CriticalAllocationGap (3.5s)
+warning: NLA/MF06/CriticalAllocationGap.lean:27:13: Variable name `hk0` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hk0
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: NLA/MF06/CriticalAllocationGap.lean:27:27: Variable name `hkd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hkd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF06/CriticalAllocationGap.lean:45:0: 'NLA.MF06.critical_allocation_nonresonance' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3313/3333] Built NLA.MF06.CompoundPairedWords (10s)
+info: NLA/MF06/CompoundPairedWords.lean:105:0: 'NLA.MF06.spectralNorm_tensor_le_of_entry_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/CompoundPairedWords.lean:107:0: 'NLA.MF06.compoundDiagonal_pair_radius_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3314/3333] Built NLA.MF06.SeparatedSum (5.2s)
+info: NLA/MF06/SeparatedSum.lean:60:0: 'NLA.MF06.separated_sum_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3315/3337] Built NLA.MF06.TensorBlockRadius (3.8s)
+info: NLA/MF06/TensorBlockRadius.lean:108:0: 'NLA.MF06.paired_radius_lt_one_of_blocks' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3316/3337] Built NLA.MF06.Envelope (3.5s)
+warning: NLA/MF06/Envelope.lean:28:24: Variable name `hneM` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hneM
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF06/Envelope.lean:75:0: 'NLA.MF06.bounded_envelope_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/Envelope.lean:77:0: 'NLA.MF06.boundedEnvelope_word_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3317/3337] Built NLA.MF06.NormCoercivity (3.8s)
+info: NLA/MF06/NormCoercivity.lean:67:0: 'NLA.MF06.definite_seminorm_bounds_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3318/3337] Built NLA.MF06.TransitionWeights (3.9s)
+info: NLA/MF06/TransitionWeights.lean:148:0: 'NLA.MF06.transition_sum_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3319/3406] Built NLA.MF06.LeadingInheritance (4.2s)
+info: NLA/MF06/LeadingInheritance.lean:125:0: 'NLA.MF06.leading_diagonal_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/LeadingInheritance.lean:127:0: 'NLA.MF06.leading_pair_radius_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/LeadingInheritance.lean:129:0: 'NLA.MF06.grouped_leading_final_radius_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3557/3621] Built NLA.MF06.BlockDecay (3.9s)
+info: NLA/MF06/BlockDecay.lean:67:0: 'NLA.MF06.exponential_decay_of_half_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3595/3621] Built NLA.MF06.TailEnvelope (3.7s)
+info: NLA/MF06/TailEnvelope.lean:149:0: 'NLA.MF06.tailEnvelope_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/TailEnvelope.lean:151:0: 'NLA.MF06.tailEnvelope_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3596/3622] Built LeanCert.Core.Interval (2.9s)
+ℹ [3597/3623] Built NLA.MF06.TwoBlockEstimates (4.3s)
+info: NLA/MF06/TwoBlockEstimates.lean:124:0: 'NLA.MF06.twoBlock_word_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3598/3623] Built NLA.MF06.StableGauge (4.0s)
+info: NLA/MF06/StableGauge.lean:93:0: 'NLA.MF06.tail_seminorm_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3599/3624] Built LeanCert.Core.Expr (6.0s)
+ℹ [3600/3624] Built NLA.MF06.TwoBlockBounded (4.6s)
+info: NLA/MF06/TwoBlockBounded.lean:85:0: 'NLA.MF06.twoBlock_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3601/3624] Built LeanCert.Core.IntervalRat.Basic (7.3s)
+✔ [3602/3624] Built LeanCert.Core.Support (3.9s)
+ℹ [3603/3624] Built NLA.MF06.MaxRecurrence (5.2s)
+info: NLA/MF06/MaxRecurrence.lean:110:0: 'NLA.MF06.stable_gauge_max_recurrence' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3604/3624] Built LeanCert.Meta.Numeral (3.0s)
+ℹ [3605/3624] Built NLA.MF06.BinaryGrouping (4.2s)
+info: NLA/MF06/BinaryGrouping.lean:115:0: 'NLA.MF06.binary_partition_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3606/3624] Built LeanCert.Core.IntervalRat.LogReduction (5.7s)
+✔ [3607/3624] Built LeanCert.Tactic.IntervalAuto.Types (4.3s)
+✔ [3608/3624] Built LeanCert.Core.IntervalRat.Transcendental (5.3s)
+✔ [3609/3626] Built LeanCert.Tactic.IntervalAuto.Extract (2.0s)
+ℹ [3610/3626] Built NLA.MF06.StableKernel (3.9s)
+info: NLA/MF06/StableKernel.lean:91:0: 'NLA.MF06.stableKernel_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/StableKernel.lean:93:0: 'NLA.MF06.uniform_small_tail_on_subspace' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3612/3626] Built NLA.MF06.BlockNonresonance (3.6s)
+info: NLA/MF06/BlockNonresonance.lean:88:0: 'NLA.MF06.block_nonresonance_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3613/3626] Built LeanCert.Meta.ToExpr (4.9s)
+✔ [3614/3626] Built LeanCert.Tactic.IntervalAuto.Norm (3.8s)
+ℹ [3616/3626] Built NLA.MF06.RestrictedGrowth (4.8s)
+info: NLA/MF06/RestrictedGrowth.lean:121:0: 'NLA.MF06.restrictedGrowth_submultiplicative' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/RestrictedGrowth.lean:123:0: 'NLA.MF06.restrictedGrowth_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3617/3626] Built NLA.MF06.FiniteTailNorm (4.6s)
+info: NLA/MF06/FiniteTailNorm.lean:167:0: 'NLA.MF06.stable_coordinate_norm_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3618/3629] Built NLA.MF06.QuotientSeminorm (4.0s)
+info: NLA/MF06/QuotientSeminorm.lean:95:0: 'NLA.MF06.stableQuotientSeminorm_definite' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/QuotientSeminorm.lean:97:0: 'NLA.MF06.stableGauge_sub_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3619/3631] Built NLA.MF06.CompoundNonresonance (3.5s)
+warning: NLA/MF06/CompoundNonresonance.lean:23:57: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: NLA/MF06/CompoundNonresonance.lean:24:25: Variable name `hb` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hb
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF06/CompoundNonresonance.lean:43:0: 'NLA.MF06.compound_nonresonance_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3621/3646] Built NLA.MF06.KernelExponential (3.8s)
+info: NLA/MF06/KernelExponential.lean:73:0: 'NLA.MF06.stable_kernel_exponential' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3636/3647] Built LeanCert.Tactic.IntervalAuto.Parse (5.8s)
+ℹ [3638/3650] Built NLA.MF06.CriticalCompound (4.1s)
+info: NLA/MF06/CriticalCompound.lean:58:0: 'NLA.MF06.critical_compound_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3639/3654] Built NLA.MF06.ComponentNorm (5.5s)
+info: NLA/MF06/ComponentNorm.lean:127:0: 'NLA.MF06.componentSum_definite' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/ComponentNorm.lean:129:0: 'NLA.MF06.component_norm_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3640/3654] Built LeanCert.Core.DerivativeIntervals (3.5s)
+✔ [3641/3655] Built LeanCert.Tactic.IntervalAuto.Diagnostic (3.3s)
+✔ [3642/3663] Built LeanCert.Core.TrigReduction (3.3s)
+ℹ [3644/3673] Built NLA.MF06.ReferenceCone (4.5s)
+info: NLA/MF06/ReferenceCone.lean:131:0: 'NLA.MF06.reference_cone_data' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3645/3673] Built LeanCert.Engine.Eval.Result (2.9s)
+✔ [3646/3674] Built LeanCert.Contrib.Sinc (6.1s)
+✔ [3647/3674] Built LeanCert.Tactic.LeanCert.Bridge.Environment (4.7s)
+✔ [3648/3708] Built LeanCert.Core.Dyadic (5.8s)
+✔ [3677/3776] Built LeanCert.Tactic.NumericalRefinement (1.2s)
+✔ [3699/3777] Built LeanCert.Core.Taylor (8.8s)
+✔ [3700/3780] Built LeanCert.Tactic.LeanCert.Normalize (3.8s)
+✔ [3701/3782] Built LeanCert.Tactic.VecUtil (3.0s)
+✔ [3702/3782] Built LeanCert.Tactic.FinsetParse (3.3s)
+✔ [3703/3782] Built LeanCert.Tactic.BridgeNative (1.8s)
+✔ [3704/3791] Built LeanCert.Tactic.FinSumExpand (2.8s)
+✔ [3705/3791] Built LeanCert.Tactic.LeanCert.Semantic.Domain (2.4s)
+✔ [3706/3793] Built LeanCert.Validity.Eventual (4.6s)
+✔ [3707/3795] Built LeanCert.Tactic.VecSimp (2.6s)
+✔ [3708/3796] Built LeanCert.Tactic.LeanCert.Semantic.Goal (2.0s)
+✔ [3709/3796] Built LeanCert.Tactic.LeanCert.Semantic.Parse.Comparison (2.6s)
+✔ [3710/3799] Built LeanCert.Tactic.Extension.Protocol (4.8s)
+✔ [3711/3799] Built LeanCert.Tactic.EventualBound (6.8s)
+✔ [3712/3799] Built LeanCert.Tactic.LeanCert.Diagnostic.Evidence (3.8s)
+✔ [3713/3803] Built LeanCert.Tactic.LeanCert.Semantic.Parse.Bound (3.9s)
+✔ [3715/3812] Built LeanCert.Tactic.LeanCert.Config (1.9s)
+✔ [3716/3818] Built LeanCert.Tactic.Extension.Registry (3.5s)
+✔ [3717/3819] Built LeanCert.Core.IntervalRat.Taylor (19s)
+✔ [3718/3819] Built LeanCert.Engine.Algebra.QPoly (4.1s)
+✔ [3719/3819] Built LeanCert.Tactic.Extension.Command (3.1s)
+✔ [3720/3823] Built LeanCert.Engine.FloatEval (3.3s)
+✔ [3721/3823] Built LeanCert.Core.IntervalRat.TrigReduced (2.9s)
+✔ [3722/3825] Built LeanCert.Core.IntervalReal (2.5s)
+✔ [3723/3825] Built LeanCert.Engine.Algebra.QPolyIntegral (3.7s)
+✔ [3724/3825] Built LeanCert.Tactic.Extension (2.9s)
+ℹ [3725/3825] Built NLA.MF05.Hausdorff (5.5s)
+info: NLA/MF05/Hausdorff.lean:162:0: 'NLA.MF05.spectral_hausdorff_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3726/3825] Built NLA.MF07.CappedWeights (5.8s)
+warning: NLA/MF07/CappedWeights.lean:31:37: Try `simp at hij` instead of `simpa using hij`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: NLA/MF07/CappedWeights.lean:123:90: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF07/CappedWeights.lean:123:90: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+info: NLA/MF07/CappedWeights.lean:158:0: 'NLA.MF07.exists_capped_weights' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3727/3826] Built LeanCert.Core.IntervalRealEndpoints (6.0s)
+✔ [3728/3826] Built LeanCert.Engine.Affine.Basic (8.7s)
+✔ [3729/3828] Built LeanCert.Core.IntervalDyadic (8.9s)
+ℹ [3730/3829] Built NLA.MF06.ConeWords (5.8s)
+info: NLA/MF06/ConeWords.lean:88:0: 'NLA.MF06.cone_trajectory_words' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF06/ConeWords.lean:90:0: 'NLA.MF06.radius_ge_of_exponential_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [3731/3829] Built NLA.MF07.Similarity (4.6s)
+warning: NLA/MF07/Similarity.lean:42:6: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: NLA/MF07/Similarity.lean:42:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+info: NLA/MF07/Similarity.lean:142:0: 'NLA.MF07.rotatedGenerator_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: NLA/MF07/Similarity.lean:144:0: 'NLA.MF07.spectralNorm_unrotate_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3732/3829] Built NLA.MF06.HausdorffImages (5.6s)
+info: NLA/MF06/HausdorffImages.lean:69:0: 'NLA.MF06.canonicalHausdorff_image_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3733/3832] Built LeanCert.Engine.Affine.Nonlinear (6.0s)
+✔ [3734/3832] Built LeanCert.Engine.Eval.Core (8.9s)
+✔ [3736/3837] Built LeanCert.Core.DyadicCell (5.7s)
+⚠ [3737/3837] Built NLA.MF06.RootLowerBound (3.7s)
+warning: NLA/MF06/RootLowerBound.lean:18:18: Variable name `hz0` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hz0
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+info: NLA/MF06/RootLowerBound.lean:28:0: 'NLA.MF06.root_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3738/3837] Built NLA.MF06.CompoundLipschitz (4.6s)
+info: NLA/MF06/CompoundLipschitz.lean:144:0: 'NLA.MF06.compound_local_lipschitz' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3739/3837] Built NLA.MF07.QuantitativeComparison (4.4s)
+info: NLA/MF07/QuantitativeComparison.lean:160:0: 'NLA.MF07.quantitative_comparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3740/3837] Built LeanCert.Engine.Eval.Extended (4.7s)
+✔ [3741/3837] Built LeanCert.Core.DyadicFrontier (3.2s)
+ℹ [3742/3837] Built NLA.MF05.Scaling (3.7s)
+info: NLA/MF05/Scaling.lean:114:0: 'NLA.MF05.positive_scaling_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3743/3837] Built NLA.MF06.CompoundHausdorff (3.3s)
+info: NLA/MF06/CompoundHausdorff.lean:34:0: 'NLA.MF06.compound_hausdorff_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3744/3837] Built LeanCert.Engine.Bounds.Lemmas (2.6s)
+ℹ [3745/3837] Built NLA.MF06.HausdorffScaling (2.6s)
+info: NLA/MF06/HausdorffScaling.lean:54:0: 'NLA.MF06.positive_hausdorff_scaling' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [3746/3837] Built LeanCert.Engine.IntervalEval (1.8s)
+✔ [3747/3837] Built LeanCert.Engine.Optimization.Box (3.3s)
+✔ [3748/3837] Built LeanCert.Validity.Bounds.Core (3.7s)
+✔ [3749/3837] Built LeanCert.Engine.RootFinding.Basic (5.4s)
+✔ [3750/3837] Built LeanCert.Engine.Integrate (6.5s)
+✔ [3751/3837] Built LeanCert.Engine.AD.Basic (3.3s)
+✔ [3752/3837] Built LeanCert.Validity.Bounds.Checked (3.8s)
+✔ [3753/3837] Built LeanCert.Engine.Affine.Transcendental (5.8s)
+✔ [3754/3837] Built LeanCert.Engine.Search.Heuristic (4.5s)
+✔ [3755/3837] Built LeanCert.Engine.TaylorModel.Core (10s)
+✔ [3756/3837] Built LeanCert.Engine.IntervalEvalDyadic (7.9s)
+✔ [3757/3837] Built LeanCert.Engine.RootFinding.Bisection (5.5s)
+✔ [3758/3837] Built LeanCert.Engine.AD.Transcendental (4.8s)
+✔ [3759/3837] Built LeanCert.Engine.TaylorModel.Integral (4.1s)
+✔ [3760/3837] Built LeanCert.Engine.IntervalEvalAffine (5.7s)
+✔ [3761/3837] Built LeanCert.Engine.TaylorModel.Special (3.1s)
+✔ [3762/3837] Built LeanCert.Engine.TaylorModel.ExpLog (9.8s)
+✔ [3763/3837] Built LeanCert.Engine.FinSumDyadic (8.1s)
+✔ [3764/3837] Built LeanCert.Engine.TaylorModel.Trig (12s)
+✔ [3765/3837] Built LeanCert.Engine.AD.Eval (3.0s)
+✔ [3766/3837] Built LeanCert.Validity.DyadicBounds (3.4s)
+✔ [3767/3837] Built LeanCert.Engine.TaylorModel.Hyperbolic (13s)
+✔ [3768/3837] Built LeanCert.Engine.WitnessSum (3.4s)
+✔ [3769/3837] Built LeanCert.Engine.TaylorModel.Functions (3.0s)
+✔ [3770/3837] Built LeanCert.Engine.Affine.Environment (3.0s)
+✔ [3771/3837] Built LeanCert.Engine.AD.Correctness (3.7s)
+✔ [3772/3837] Built LeanCert.Engine.AD.Computable (3.9s)
+✔ [3773/3837] Built LeanCert.Engine.TaylorModel.Expr (4.5s)
+✔ [3774/3837] Built LeanCert.Engine.AD.PartialCorrectness (5.5s)
+✔ [3775/3837] Built LeanCert.Engine.TaylorModel (2.2s)
+✔ [3776/3837] Built LeanCert.Engine.AD.DomainChecked (2.8s)
+✔ [3777/3837] Built LeanCert.Engine.AD.Dyadic (2.7s)
+✔ [3778/3837] Built LeanCert.Engine.AD (1.7s)
+✔ [3779/3837] Built LeanCert.Validity.Bounds.Smart (3.6s)
+✔ [3780/3837] Built LeanCert.Engine.IntervalEvalRefined (4.2s)
+✔ [3781/3837] Built LeanCert.Meta.ProveSupported (4.3s)
+✔ [3782/3837] Built LeanCert.Engine.Optimize (6.4s)
+✔ [3783/3837] Built LeanCert.Validity.Bounds.Bridge (3.6s)
+✔ [3784/3837] Built LeanCert.Meta.ProveContinuous (4.8s)
+✔ [3785/3837] Built LeanCert.Tactic.IntervalAuto.ProveCommon (5.9s)
+✔ [3786/3837] Built LeanCert.Validity.Bounds.Basic (3.1s)
+✔ [3787/3837] Built LeanCert.Engine.RootFinding.Newton (5.4s)
+✔ [3788/3837] Built LeanCert.Engine.Optimization.Gradient (6.5s)
+✔ [3789/3837] Built LeanCert.Tactic.LeanCert.Bridge.ReifiedFunction (3.6s)
+✔ [3790/3837] Built LeanCert.Tactic.IntervalAuto.Basic (3.3s)
+✔ [3791/3837] Built LeanCert.Validity.Integration (6.5s)
+✔ [3792/3837] Built LeanCert.Engine.RootFinding.MVTBounds (8.3s)
+✔ [3793/3837] Built LeanCert.Tactic.LeanCert.Semantic.Prepare (6.5s)
+✔ [3794/3837] Built LeanCert.Engine.RootFinding.Krawczyk (7.3s)
+✔ [3795/3837] Built LeanCert.Tactic.LeanCert.Integral (10s)
+✔ [3796/3837] Built LeanCert.Engine.RootFinding.Contraction (9.1s)
+✔ [3797/3837] Built LeanCert.Tactic.Extension.Execute (10s)
+✔ [3798/3837] Built LeanCert.Engine.RootFinding.KrawczykCandidate (3.0s)
+✔ [3799/3837] Built LeanCert.Validity.Krawczyk (3.2s)
+✔ [3800/3837] Built LeanCert.Tactic.LeanCert.Solver.Protocol (6.2s)
+✔ [3801/3837] Built LeanCert.Engine.RootFinding.Main (2.5s)
+✔ [3802/3837] Built LeanCert.Engine.Optimization.Global (23s)
+✔ [3803/3837] Built LeanCert.Tactic.Enclosure (3.5s)
+✔ [3804/3837] Built LeanCert.Tactic.LeanCert.Diagnostic.Render (3.5s)
+✔ [3805/3837] Built LeanCert.Validity.Types (3.1s)
+✔ [3806/3837] Built LeanCert.Engine.Optimization.Guided (3.1s)
+✔ [3807/3837] Built LeanCert.Engine.Search.CounterExample (3.3s)
+✔ [3808/3837] Built LeanCert.Validity.Bounds (6.2s)
+✔ [3809/3837] Built LeanCert.Engine.Optimization.BoundVerify (3.2s)
+✔ [3810/3837] Built LeanCert.Discovery.Find (3.3s)
+✔ [3811/3837] Built LeanCert.Tactic.IntervalAuto.RootBound (3.9s)
+✔ [3812/3837] Built LeanCert.Tactic.IntervalAuto.OptBound (3.9s)
+✔ [3813/3837] Built LeanCert.Tactic.IntervalAuto.Multivariate (4.2s)
+✔ [3814/3837] Built LeanCert.Tactic.IntervalAuto.Bound (13s)
+✔ [3815/3837] Built LeanCert.Tactic.IntervalAuto.Subdiv (4.4s)
+✔ [3816/3837] Built LeanCert.Tactic.IntervalAuto.Adaptive (5.9s)
+✔ [3817/3837] Built LeanCert.Tactic.IntervalAuto.PointIneq (7.9s)
+✔ [3818/3837] Built LeanCert.Tactic.IntervalAuto (2.2s)
+✔ [3819/3837] Built LeanCert.Tactic.Refute (3.7s)
+✔ [3820/3837] Built LeanCert.Tactic.FinSumWitness (4.1s)
+✔ [3821/3837] Built LeanCert.Tactic.FinSumBound (3.7s)
+✔ [3822/3837] Built LeanCert.Tactic.LeanCert.Semantic.Parse (2.9s)
+✔ [3823/3837] Built LeanCert.Tactic.Discovery (11s)
+✔ [3824/3837] Built LeanCert.Tactic.Krawczyk (2.9s)
+✔ [3825/3837] Built LeanCert.Tactic.LeanCert.Router (6.4s)
+✔ [3826/3837] Built LeanCert.Tactic.LeanCert (2.3s)
+✔ [3827/3837] Built LeanCert.Tactic (2.3s)
+ℹ [3828/3837] Built NLA.MF05.Numerical (2.5s)
+info: NLA/MF05/Numerical.lean:25:0: 'NLA.MF05.half_radius_certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3829/3837] Built NLA.MF05.LocalBall (2.5s)
+info: NLA/MF05/LocalBall.lean:46:0: 'NLA.MF05.local_common_norm_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3830/3837] Built NLA.MF06.ConeNumerical (3.2s)
+info: NLA/MF06/ConeNumerical.lean:57:0: 'NLA.MF06.cone_numerical_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3831/3837] Built NLA.MF06.PerturbationCone (6.6s)
+info: NLA/MF06/PerturbationCone.lean:135:0: 'NLA.MF06.matched_cone_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3832/3837] Built NLA.MF06.ProductBoundedLower (2.8s)
+info: NLA/MF06/ProductBoundedLower.lean:92:0: 'NLA.MF06.product_bounded_lower_lipschitz' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3833/3837] Built NLA.MF06.CompoundLowerTransfer (3.2s)
+info: NLA/MF06/CompoundLowerTransfer.lean:82:0: 'NLA.MF06.lower_lipschitz_of_critical_compound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3834/3837] Built NLA.MF06.NormalizedLower (2.4s)
+info: NLA/MF06/NormalizedLower.lean:31:0: 'NLA.MF06.normalized_pointwise_lower_lipschitz' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3835/3837] Built NLA.MF06.CanonicalLower (2.6s)
+info: NLA/MF06/CanonicalLower.lean:59:0: 'NLA.MF06.canonical_pointwise_lower_lipschitz' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [3836/3837] Built Solution (2.4s)
+info: Solution.lean:14:0: 'NLA.MF05.half_radius_certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:16:0: 'NLA.MF05.spectral_hausdorff_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:18:0: 'NLA.MF05.general_root_limit_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:20:0: 'NLA.MF05.positive_scaling_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:22:0: 'NLA.MF06.bounded_envelope_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:24:0: 'NLA.MF06.tail_seminorm_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:26:0: 'NLA.MF06.stable_gauge_max_recurrence' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:28:0: 'NLA.MF06.stable_kernel_exponential' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:30:0: 'NLA.MF06.cone_numerical_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:32:0: 'NLA.MF06.product_bounded_lower_lipschitz' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:34:0: 'NLA.MF06.separated_sum_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:36:0: 'NLA.MF06.block_radius_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:38:0: 'NLA.MF06.block_nonresonance_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:40:0: 'NLA.MF06.irreducible_radius_one_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:42:0: 'NLA.MF06.irreducible_flag' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:44:0: 'NLA.MF06.similarity_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:46:0: 'NLA.MF06.compound_dimensions' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:48:0: 'NLA.MF06.compound_coordinate_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:50:0: 'NLA.MF06.compound_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:52:0: 'NLA.MF06.compound_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:54:0: 'NLA.MF06.compound_local_lipschitz' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:56:0: 'NLA.MF06.tensor_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:58:0: 'NLA.MF06.tensor_norm_comparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:60:0: 'NLA.MF06.allocation_dimensions' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:62:0: 'NLA.MF06.allocation_algebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:64:0: 'NLA.MF06.allocation_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:66:0: 'NLA.MF06.compound_allocation_radius' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:68:0: 'NLA.MF06.distinct_allocation_degrees' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:70:0: 'NLA.MF06.allocation_tensor_norm_bridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:72:0: 'NLA.MF06.critical_allocation_nonresonance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:74:0: 'NLA.MF06.compound_nonresonance_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:76:0: 'NLA.MF06.compound_family_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:78:0: 'NLA.MF06.critical_compound_product_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:80:0: 'NLA.MF06.compound_hausdorff_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:82:0: 'NLA.MF06.positive_hausdorff_scaling' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:84:0: 'NLA.MF06.root_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:86:0: 'NLA.MF06.normalized_pointwise_lower_lipschitz' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Solution.lean:88:0: 'NLA.MF06.canonical_pointwise_lower_lipschitz' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (3837 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, NLA.MF05.half_radius_certificate, NLA.MF05.spectral_hausdorff_semantics, NLA.MF05.general_root_limit_semantics, NLA.MF05.positive_scaling_semantics, NLA.MF06.bounded_envelope_norm, NLA.MF06.tail_seminorm_limit, NLA.MF06.stable_gauge_max_recurrence, NLA.MF06.stable_kernel_exponential, NLA.MF06.cone_numerical_bound, NLA.MF06.product_bounded_lower_lipschitz, NLA.MF06.separated_sum_bound, NLA.MF06.block_radius_formula, NLA.MF06.block_nonresonance_product_bounded, NLA.MF06.irreducible_radius_one_product_bounded, NLA.MF06.irreducible_flag, NLA.MF06.similarity_semantics, NLA.MF06.compound_dimensions, NLA.MF06.compound_coordinate_semantics, NLA.MF06.compound_algebra, NLA.MF06.compound_norm_bound, NLA.MF06.compound_local_lipschitz, NLA.MF06.tensor_algebra, NLA.MF06.tensor_norm_comparison, NLA.MF06.allocation_dimensions, NLA.MF06.allocation_algebra, NLA.MF06.allocation_product_bounded, NLA.MF06.compound_allocation_radius, NLA.MF06.distinct_allocation_degrees, NLA.MF06.allocation_tensor_norm_bridge, NLA.MF06.critical_allocation_nonresonance, NLA.MF06.compound_nonresonance_product_bounded, NLA.MF06.compound_family_semantics, NLA.MF06.critical_compound_product_bounded, NLA.MF06.compound_hausdorff_bound, NLA.MF06.positive_hausdorff_scaling, NLA.MF06.root_lower_bound, NLA.MF06.normalized_pointwise_lower_lipschitz, NLA.MF06.canonical_pointwise_lower_lipschitz, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution
+Running Lean default kernel on solution.
+Lean default kernel accepts the solution
+Your solution is okay!
+
+EXIT_STATUS=0

@@ -1,0 +1,271 @@
+{
+  "stage": "uncompiled draft; not frozen",
+  "headers": [
+    {
+      "id": "C01",
+      "declaration": "NLA.MF05.half_radius_certificate",
+      "header": "theorem half_radius_certificate : 0 < localRadius \u2227 localRadius < 1",
+      "header_sha256": "fd21798693ef4a8baf32828f7d9bdabf85efc60f88e6ff93c633f09fda3cf9f4",
+      "line": 30
+    },
+    {
+      "id": "C02",
+      "declaration": "NLA.MF05.spectral_hausdorff_semantics",
+      "header": "theorem spectral_hausdorff_semantics {d : \u2115} (M N : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) (hN : IsCompact N) (hneN : N.Nonempty) :\n    IsCompact (spectralImage M) \u2227 IsCompact (spectralImage N) \u2227\n    Metric.hausdorffEDist (spectralImage M) (spectralImage N) \u2260 \u22a4 \u2227\n    spectralHausdorff M N = canonicalHausdorff M N \u2227\n    0 \u2264 spectralHausdorff M N \u2227\n    spectralHausdorff M N = spectralHausdorff N M \u2227\n    (spectralHausdorff M N = 0 \u2194 M = N) \u2227\n    (\u2200 A \u2208 M, \u2203 B \u2208 N,\n      pointFamilyDistance A N = spectralNorm (A - B) \u2227\n      spectralNorm (A - B) \u2264 spectralHausdorff M N) \u2227\n    (\u2200 B \u2208 N, \u2203 A \u2208 M,\n      pointFamilyDistance B M = spectralNorm (B - A) \u2227\n      spectralNorm (B - A) \u2264 spectralHausdorff M N)",
+      "header_sha256": "2db02f9aaed50538115ef887d046b60949ee361393a115f79b9d32c08b7682d7",
+      "line": 35
+    },
+    {
+      "id": "C03",
+      "declaration": "NLA.MF05.general_root_limit_semantics",
+      "header": "theorem general_root_limit_semantics {d : \u2115} (hd : 1 \u2264 d) (M : Set (Square d))\n    (hM : IsCompact M) (hne : M.Nonempty) :\n    0 \u2264 jointSpectralRadius M \u2227 jointSpectralRadius M \u2264 familyNorm M \u2227\n    Tendsto (rootGrowth M) atTop (\ud835\udcdd (jointSpectralRadius M))",
+      "header_sha256": "8f0a7b0bcbd9815185d9188fd2fb3888f9ff6cced5b5c34d29678a9912b0240a",
+      "line": 53
+    },
+    {
+      "id": "C04",
+      "declaration": "NLA.MF05.positive_scaling_semantics",
+      "header": "theorem positive_scaling_semantics {d : \u2115} (hd : 1 \u2264 d) (M : Set (Square d))\n    (hM : IsCompact M) (hne : M.Nonempty) (c : \u211d) (hc : 0 < c) :\n    IsCompact (scaledFamily c M) \u2227 (scaledFamily c M).Nonempty \u2227\n    familyNorm (scaledFamily c M) = c * familyNorm M \u2227\n    (\u2200 n : \u2115, familyGrowth (scaledFamily c M) n = c ^ n * familyGrowth M n) \u2227\n    jointSpectralRadius (scaledFamily c M) = c * jointSpectralRadius M",
+      "header_sha256": "b6dc28ae874b219323428fd5c6f70442d384a7b283039c8f88942143a248cbfa",
+      "line": 60
+    },
+    {
+      "id": "C05",
+      "declaration": "NLA.MF06.bounded_envelope_norm",
+      "header": "theorem bounded_envelope_norm {d : \u2115} (M : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) (hbounded : IsProductBounded M) :\n    IsComplexNorm (boundedEnvelope M) \u2227 Continuous (boundedEnvelope M) \u2227\n    (\u2203 K : \u211d, 1 \u2264 K \u2227 \u2200 x : EuclideanVector d,\n      \u2016x\u2016 \u2264 boundedEnvelope M x \u2227 boundedEnvelope M x \u2264 K * \u2016x\u2016) \u2227\n    (\u2200 A \u2208 M, \u2200 x : EuclideanVector d,\n      boundedEnvelope M (applyMatrix A x) \u2264 boundedEnvelope M x)",
+      "header_sha256": "6217a37b45a64ce93792ae656319393145719ee0c65f25bda27d2095818f7fed",
+      "line": 75
+    },
+    {
+      "id": "C06",
+      "declaration": "NLA.MF06.tail_seminorm_limit",
+      "header": "theorem tail_seminorm_limit {d : \u2115} (M : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) (hbounded : IsProductBounded M) :\n    (\u2200 n : \u2115, Continuous (tailEnvelope M n)) \u2227\n    (\u2200 x : EuclideanVector d, Antitone (fun n : \u2115 => tailEnvelope M n x)) \u2227\n    (\u2203 p : Seminorm \u2102 (EuclideanVector d), \u2200 x, p x = stableGauge M x) \u2227\n    Continuous (stableGauge M) \u2227\n    (\u2200 x : EuclideanVector d, stableGauge M x \u2264 boundedEnvelope M x) \u2227\n    (\u2200 K : Set (EuclideanVector d), IsCompact K \u2192\n      TendstoUniformlyOn (tailEnvelope M) (stableGauge M) atTop K)",
+      "header_sha256": "bee73c38d3361ae32fb5255f78fe85ea55f58af1ea152d9b2eae4e7fd0d8e78c",
+      "line": 86
+    },
+    {
+      "id": "C07",
+      "declaration": "NLA.MF06.stable_gauge_max_recurrence",
+      "header": "theorem stable_gauge_max_recurrence {d : \u2115} (M : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) (hbounded : IsProductBounded M) :\n    \u2200 x : EuclideanVector d,\n      (\u2200 A \u2208 M, stableGauge M (applyMatrix A x) \u2264 stableGauge M x) \u2227\n      \u2203 A \u2208 M, stableGauge M (applyMatrix A x) = stableGauge M x",
+      "header_sha256": "36c72a97eb22cc5642c48895b690b3e00499cb2ddda29fdbcf9ce30aebec267f",
+      "line": 98
+    },
+    {
+      "id": "C08",
+      "declaration": "NLA.MF06.stable_kernel_exponential",
+      "header": "theorem stable_kernel_exponential {d : \u2115} (hd : 1 \u2264 d) (M : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) (hbounded : IsProductBounded M)\n    (hradius : jointSpectralRadius M = 1) :\n    \u2203 S : Submodule \u2102 (EuclideanVector d),\n      (\u2200 x : EuclideanVector d, x \u2208 S \u2194 stableGauge M x = 0) \u2227\n      S \u2260 \u22a4 \u2227 FamilyInvariant M S \u2227\n      \u2203 q K : \u211d, 0 < q \u2227 q < 1 \u2227 1 \u2264 K \u2227\n        \u2200 n : \u2115, restrictedGrowth M S n \u2264 K * q ^ n",
+      "header_sha256": "b43f712d7eff898d204770998aa1e928fb5cc86c618bdd8ea63b0dbc83eff951",
+      "line": 108
+    },
+    {
+      "id": "C09",
+      "declaration": "NLA.MF06.cone_numerical_bound",
+      "header": "theorem cone_numerical_bound (q K t : \u211d) (hq0 : 0 \u2264 q) (hq1 : q < 1)\n    (hK : 0 \u2264 K) (ht0 : 0 \u2264 t) (ht : t \u2264 1 / coneLoss q K ^ 2) :\n    1 \u2264 coneHeight q K \u2227 2 \u2264 coneLoss q K \u2227\n    q * coneHeight q K + K = coneHeight q K - 1 \u2227\n    coneHeight q K - 1 + coneLoss q K * t \u2264\n      coneHeight q K * (1 - coneLoss q K * t) \u2227\n    localRadius \u2264 1 - coneLoss q K * t \u2227\n    0 < 1 - coneLoss q K * t",
+      "header_sha256": "29ba64a5e803289f312c32f9808a49581f5d0013cd1c68590f7781b357676e2f",
+      "line": 120
+    },
+    {
+      "id": "C10",
+      "declaration": "NLA.MF06.product_bounded_lower_lipschitz",
+      "header": "theorem product_bounded_lower_lipschitz {d : \u2115} (hd : 1 \u2264 d)\n    (M : Set (Square d)) (hM : IsCompact M) (hneM : M.Nonempty)\n    (hbounded : IsProductBounded M) (hradius : jointSpectralRadius M = 1) :\n    \u2203 r : \u211d, 0 < r \u2227 \u2203 C : \u211d, 0 < C \u2227\n      \u2200 N : Set (Square d), IsCompact N \u2192 N.Nonempty \u2192\n        canonicalHausdorff M N < r \u2192\n        1 - C * canonicalHausdorff M N \u2264 jointSpectralRadius N",
+      "header_sha256": "a6e9999a5a7abdf55fe4c89a277002eceb3f1a738887202d3315a0f68728501c",
+      "line": 132
+    },
+    {
+      "id": "C11",
+      "declaration": "NLA.MF06.separated_sum_bound",
+      "header": "theorem separated_sum_bound (n : \u2115) (x : Fin n \u2192 \u211d) (K F q : \u211d)\n    (hK : 0 \u2264 K) (hF : 0 \u2264 F) (hq0 : 0 < q) (hq1 : q < 1)\n    (hx0 : \u2200 i, 0 \u2264 x i) (hxK : \u2200 i, x i \u2264 K)\n    (hpair : \u2200 i j : Fin n, i \u2260 j \u2192\n      x i * x j \u2264 F * q ^ (max i.val j.val - min i.val j.val)) :\n    \u2211 i : Fin n, x i \u2264 2 * K + 4 * (F * q / (1 - q) ^ 2) + 1",
+      "header_sha256": "ff6ac956802c509e851ebeb2768fa2ba9bedde056468c9954d4cc7f2ab8f1c9d",
+      "line": 143
+    },
+    {
+      "id": "C12",
+      "declaration": "NLA.MF06.block_radius_formula",
+      "header": "theorem block_radius_formula {d r : \u2115} (hd : 1 \u2264 d) (b : Fin d \u2192 Fin r)\n    (hb : Function.Surjective b) (M : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty)\n    (hupper : \u2200 A \u2208 M, IsUpperBlockTriangular b A) :\n    jointSpectralRadius M =\n      sSup (Set.range (fun i : Fin r => jointSpectralRadius (diagonalFamily b i M)))",
+      "header_sha256": "630af08f7a7513ca4ad53dc4d843133aafc4641d5a088e27d51e10570b0fbe09",
+      "line": 153
+    },
+    {
+      "id": "C13",
+      "declaration": "NLA.MF06.block_nonresonance_product_bounded",
+      "header": "theorem block_nonresonance_product_bounded {d r : \u2115} (hd : 1 \u2264 d)\n    (b : Fin d \u2192 Fin r) (hb : Function.Surjective b) (M : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty)\n    (hupper : \u2200 A \u2208 M, IsUpperBlockTriangular b A)\n    (hdiag : \u2200 i : Fin r, IsProductBounded (diagonalFamily b i M))\n    (hpair : \u2200 i j : Fin r, i \u2260 j \u2192\n      jointSpectralRadius (pairedFamily M (blockMatrix b i) (blockMatrix b j)) < 1) :\n    IsProductBounded M",
+      "header_sha256": "e15a572027bcb21af4291afe78cb67731e6b4ad01fc56373b8f14fabc61a0a5a",
+      "line": 163
+    },
+    {
+      "id": "C14",
+      "declaration": "NLA.MF06.irreducible_radius_one_product_bounded",
+      "header": "theorem irreducible_radius_one_product_bounded {d : \u2115} (hd : 1 \u2264 d)\n    (M : Set (Square d)) (hM : IsCompact M) (hneM : M.Nonempty)\n    (hirr : FamilyIrreducible M) (hradius : jointSpectralRadius M = 1) :\n    IsProductBounded M",
+      "header_sha256": "9ee0e8d5cac62e401166935c9bed98f3240a806d483f815ccdf5c5cae9fa4201",
+      "line": 175
+    },
+    {
+      "id": "C15",
+      "declaration": "NLA.MF06.irreducible_flag",
+      "header": "theorem irreducible_flag {d : \u2115} (hd : 1 \u2264 d) (M : Set (Square d)) :\n    \u2203 r : \u2115, 1 \u2264 r \u2227 r \u2264 d \u2227\n      \u2203 b : Fin d \u2192 Fin r, Function.Surjective b \u2227\n        \u2203 Q R : Square d, Q * R = 1 \u2227 R * Q = 1 \u2227\n          (\u2200 A \u2208 conjugateFamily Q R M, IsUpperBlockTriangular b A) \u2227\n          \u2200 i : Fin r, FamilyIrreducible (diagonalFamily b i (conjugateFamily Q R M))",
+      "header_sha256": "2280af70852c1a2f19dcdd1c908bd4065f60da9aed22c766a936c197a316551a",
+      "line": 183
+    },
+    {
+      "id": "C16",
+      "declaration": "NLA.MF06.similarity_semantics",
+      "header": "theorem similarity_semantics {d : \u2115} (hd : 1 \u2264 d) (Q R : Square d)\n    (hQR : Q * R = 1) (hRQ : R * Q = 1) (M : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) :\n    IsCompact (conjugateFamily Q R M) \u2227 (conjugateFamily Q R M).Nonempty \u2227\n    jointSpectralRadius (conjugateFamily Q R M) = jointSpectralRadius M \u2227\n    (IsProductBounded (conjugateFamily Q R M) \u2194 IsProductBounded M)",
+      "header_sha256": "c8c385a8c6aa77c699e41f973e03ed9a226523c6e55e4ea63cda884a0b080c0e",
+      "line": 193
+    },
+    {
+      "id": "C17",
+      "declaration": "NLA.MF06.compound_dimensions",
+      "header": "theorem compound_dimensions (d k : \u2115) :\n    compoundDim d k = Nat.choose d k \u2227 (k \u2264 d \u2192 1 \u2264 compoundDim d k)",
+      "header_sha256": "b45c7945f8e362339647285ed2369b9a25af6781b5ce5793a7f5c3b682d6a9c4",
+      "line": 202
+    },
+    {
+      "id": "C18",
+      "declaration": "NLA.MF06.compound_coordinate_semantics",
+      "header": "theorem compound_coordinate_semantics {d : \u2115} (k : \u2115) (A : Square d)\n    (i j : Fin (compoundDim d k)) :\n    compoundMatrix k A i j =\n      ((Pi.basisFun \u2102 (Fin d)).exteriorPower k).repr\n        (exteriorPower.map k (Matrix.toLin' A)\n          (((Pi.basisFun \u2102 (Fin d)).exteriorPower k) (compoundIndex d k j)))\n        (compoundIndex d k i)",
+      "header_sha256": "363eb8eaff52cfa665fe3d303da0b9b3d4ee3aa5f94fe8e211ed066508cf1e01",
+      "line": 208
+    },
+    {
+      "id": "C19",
+      "declaration": "NLA.MF06.compound_algebra",
+      "header": "theorem compound_algebra {d : \u2115} (k : \u2115) (A B : Square d) :\n    compoundMatrix k (1 : Square d) = 1 \u2227\n    compoundMatrix k (A * B) = compoundMatrix k A * compoundMatrix k B \u2227\n    compoundMatrix 0 A = 1",
+      "header_sha256": "8489bfd0573c3712e87c00113503d1f95c27438e62315482ce3a7dfbe7499963",
+      "line": 219
+    },
+    {
+      "id": "C20",
+      "declaration": "NLA.MF06.compound_norm_bound",
+      "header": "theorem compound_norm_bound {d : \u2115} (k : \u2115) (hk : k \u2264 d) (A : Square d) :\n    0 < compoundNormConstant d k \u2227\n    spectralNorm (compoundMatrix k A) \u2264 compoundNormConstant d k * spectralNorm A ^ k",
+      "header_sha256": "d5f29849625ea1cce4dc7c473652924de9f04e2d21c5145989b1d0e0f7287a44",
+      "line": 227
+    },
+    {
+      "id": "C21",
+      "declaration": "NLA.MF06.compound_local_lipschitz",
+      "header": "theorem compound_local_lipschitz {d : \u2115} (k : \u2115) (hk0 : 1 \u2264 k) (hkd : k \u2264 d)\n    (L : \u211d) (hL : 0 < L) (A B : Square d)\n    (hA : spectralNorm A \u2264 L) (hB : spectralNorm B \u2264 L) :\n    0 < compoundLipschitzConstant d k L \u2227\n    spectralNorm (compoundMatrix k A - compoundMatrix k B) \u2264\n      compoundLipschitzConstant d k L * spectralNorm (A - B)",
+      "header_sha256": "d2b8f5e51bc6f3bbd0938dd77bec17240cee8ca6a8a162e0e90618f1bb2277c5",
+      "line": 234
+    },
+    {
+      "id": "C22",
+      "declaration": "NLA.MF06.tensor_algebra",
+      "header": "theorem tensor_algebra {m n : \u2115} (A C : Square m) (B D : Square n) :\n    tensorMatrix (1 : Square m) (1 : Square n) = 1 \u2227\n    tensorMatrix (A * C) (B * D) = tensorMatrix A B * tensorMatrix C D",
+      "header_sha256": "e59a62435afd2b9b44485a0b280a5a77725a5b154869d7aa0c7680a47a15e95d",
+      "line": 243
+    },
+    {
+      "id": "C23",
+      "declaration": "NLA.MF06.tensor_norm_comparison",
+      "header": "theorem tensor_norm_comparison {m n : \u2115} (hm : 1 \u2264 m) (hn : 1 \u2264 n)\n    (A : Square m) (B : Square n) :\n    spectralNorm (tensorMatrix A B) \u2264\n      (m : \u211d) * (n : \u211d) * spectralNorm A * spectralNorm B \u2227\n    spectralNorm A * spectralNorm B \u2264\n      (m : \u211d) * (n : \u211d) * spectralNorm (tensorMatrix A B)",
+      "header_sha256": "26254631bd8417113a50e2d0792d2d1e31224857271d0038715f7d89537bb81d",
+      "line": 250
+    },
+    {
+      "id": "C24",
+      "declaration": "NLA.MF06.allocation_dimensions",
+      "header": "theorem allocation_dimensions {d r : \u2115} (b : Fin d \u2192 Fin r) (a : Allocation b) :\n    (\u2211 i : Fin r, blockDim b i) = d \u2227\n    allocationDegree b a \u2264 d \u2227 1 \u2264 allocationDim b a",
+      "header_sha256": "ea635d054d0eefcba2db17feafcbeb26f95d573262dbf735b17a0e3a70ef99bc",
+      "line": 260
+    },
+    {
+      "id": "C25",
+      "declaration": "NLA.MF06.allocation_algebra",
+      "header": "theorem allocation_algebra {d r : \u2115} (b : Fin d \u2192 Fin r) (a : Allocation b)\n    (A B : Square d) (hA : IsUpperBlockTriangular b A) (hB : IsUpperBlockTriangular b B) :\n    allocationMatrix b a (1 : Square d) = 1 \u2227\n    allocationMatrix b a (A * B) = allocationMatrix b a A * allocationMatrix b a B",
+      "header_sha256": "118fc0f61cf08d35042a9748d01c50993b184246d9ed5f9d07c07644c6ff1f30",
+      "line": 267
+    },
+    {
+      "id": "C26",
+      "declaration": "NLA.MF06.allocation_product_bounded",
+      "header": "theorem allocation_product_bounded {d r : \u2115} (hd : 1 \u2264 d)\n    (b : Fin d \u2192 Fin r) (M : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty)\n    (hdiag : \u2200 i : Fin r, IsProductBounded (diagonalFamily b i M))\n    (a : Allocation b) :\n    IsProductBounded (allocationFamily b a M)",
+      "header_sha256": "fa604104ad57706013d5e9011c2b36433a78031b2396dc1c98e80c5cf16d79e8",
+      "line": 275
+    },
+    {
+      "id": "C27",
+      "declaration": "NLA.MF06.compound_allocation_radius",
+      "header": "theorem compound_allocation_radius {d r : \u2115} (hd : 1 \u2264 d)\n    (b : Fin d \u2192 Fin r) (hb : Function.Surjective b) (M : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty)\n    (hupper : \u2200 A \u2208 M, IsUpperBlockTriangular b A) (k : \u2115) (hk : k \u2264 d) :\n    jointSpectralRadius (compoundFamily k M) =\n      sSup (Set.range (fun a : DegreeAllocation b k =>\n        jointSpectralRadius (allocationFamily b a.val M)))",
+      "header_sha256": "16a2ce84e8f583883ce3e0a1c84c77fdfb049f16911557b82e74998d42c7adce",
+      "line": 285
+    },
+    {
+      "id": "C28",
+      "declaration": "NLA.MF06.distinct_allocation_degrees",
+      "header": "theorem distinct_allocation_degrees {d r : \u2115} (b : Fin d \u2192 Fin r) (k : \u2115)\n    (a c : DegreeAllocation b k) (hne : a \u2260 c) :\n    k < allocationDegree b (allocationMax a.val c.val) \u2227\n    allocationDegree b (allocationMin a.val c.val) < k",
+      "header_sha256": "95effac135e1ea99fc7e67d045f74f1adb76bae91e4383af663cd2770c88a271",
+      "line": 296
+    },
+    {
+      "id": "C29",
+      "declaration": "NLA.MF06.allocation_tensor_norm_bridge",
+      "header": "theorem allocation_tensor_norm_bridge {d r : \u2115} (b : Fin d \u2192 Fin r)\n    (a c : Allocation b) :\n    \u2203 D : \u211d, 0 < D \u2227 \u2200 P : Square d,\n      spectralNorm (tensorMatrix (allocationMatrix b a P) (allocationMatrix b c P)) \u2264\n        D * spectralNorm (allocationMatrix b (allocationMax a c) P) *\n          spectralNorm (allocationMatrix b (allocationMin a c) P)",
+      "header_sha256": "0236a58e1cc81820df106160df92fea7d4a436976c580d758dc8238ad83d8185",
+      "line": 304
+    },
+    {
+      "id": "C30",
+      "declaration": "NLA.MF06.critical_allocation_nonresonance",
+      "header": "theorem critical_allocation_nonresonance {d r : \u2115} (hd : 1 \u2264 d)\n    (b : Fin d \u2192 Fin r) (hb : Function.Surjective b) (M : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty)\n    (hupper : \u2200 A \u2208 M, IsUpperBlockTriangular b A)\n    (hdiag : \u2200 i : Fin r, IsProductBounded (diagonalFamily b i M))\n    (k : \u2115) (hk0 : 1 \u2264 k) (hkd : k \u2264 d)\n    (hhigher : \u2200 j : \u2115, k < j \u2192 j \u2264 d \u2192 jointSpectralRadius (compoundFamily j M) < 1)\n    (a c : DegreeAllocation b k) (hne : a \u2260 c) :\n    jointSpectralRadius\n      (pairedFamily M (allocationMatrix b a.val) (allocationMatrix b c.val)) < 1",
+      "header_sha256": "6c5432d193d1d511f692b2e3ae3780880cae719b523262e77cdd47ab8d4c4ec1",
+      "line": 314
+    },
+    {
+      "id": "C31",
+      "declaration": "NLA.MF06.compound_nonresonance_product_bounded",
+      "header": "theorem compound_nonresonance_product_bounded {d r : \u2115} (hd : 1 \u2264 d)\n    (b : Fin d \u2192 Fin r) (hb : Function.Surjective b) (M : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty)\n    (hupper : \u2200 A \u2208 M, IsUpperBlockTriangular b A) (k : \u2115) (hk : k \u2264 d)\n    (halloc : \u2200 a : DegreeAllocation b k, IsProductBounded (allocationFamily b a.val M))\n    (hpair : \u2200 a c : DegreeAllocation b k, a \u2260 c \u2192\n      jointSpectralRadius\n        (pairedFamily M (allocationMatrix b a.val) (allocationMatrix b c.val)) < 1) :\n    IsProductBounded (compoundFamily k M)",
+      "header_sha256": "1330295da8cc29876ec5b7e23f35c36a95197be5f67db58bd568097bf343c39d",
+      "line": 329
+    },
+    {
+      "id": "C32",
+      "declaration": "NLA.MF06.compound_family_semantics",
+      "header": "theorem compound_family_semantics {d : \u2115} (hd : 1 \u2264 d) (M : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) :\n    (\u2200 k : \u2115, k \u2264 d \u2192\n      IsCompact (compoundFamily k M) \u2227 (compoundFamily k M).Nonempty \u2227\n      jointSpectralRadius (compoundFamily k M) \u2264 jointSpectralRadius M ^ k) \u2227\n    jointSpectralRadius (compoundFamily 1 M) = jointSpectralRadius M",
+      "header_sha256": "fe686a2fe7eb42c8e00b59930c5094b62b05ecd982d10b213f9185de6849680c",
+      "line": 342
+    },
+    {
+      "id": "C33",
+      "declaration": "NLA.MF06.critical_compound_product_bounded",
+      "header": "theorem critical_compound_product_bounded {d : \u2115} (hd : 1 \u2264 d)\n    (M : Set (Square d)) (hM : IsCompact M) (hneM : M.Nonempty)\n    (hradius : jointSpectralRadius M = 1) :\n    \u2203 k : \u2115, 1 \u2264 k \u2227 k \u2264 d \u2227\n      jointSpectralRadius (compoundFamily k M) = 1 \u2227\n      IsProductBounded (compoundFamily k M) \u2227\n      \u2200 j : \u2115, k < j \u2192 j \u2264 d \u2192 jointSpectralRadius (compoundFamily j M) < 1",
+      "header_sha256": "404e5dabc03aca881570c9608a720f2f5dc9b25ecf44c5c3860348cdfdad0d77",
+      "line": 353
+    },
+    {
+      "id": "C34",
+      "declaration": "NLA.MF06.compound_hausdorff_bound",
+      "header": "theorem compound_hausdorff_bound {d : \u2115} (k : \u2115) (hk0 : 1 \u2264 k) (hkd : k \u2264 d)\n    (M N : Set (Square d)) (hM : IsCompact M) (hneM : M.Nonempty)\n    (hN : IsCompact N) (hneN : N.Nonempty) (L : \u211d) (hL : 0 < L)\n    (hML : InNormBall M L) (hNL : InNormBall N L) :\n    canonicalHausdorff (compoundFamily k M) (compoundFamily k N) \u2264\n      compoundLipschitzConstant d k L * canonicalHausdorff M N",
+      "header_sha256": "024a05e469802ecba0edaaa3dd94bf23e91562b48536487e0c330c9457bd6a04",
+      "line": 364
+    },
+    {
+      "id": "C35",
+      "declaration": "NLA.MF06.positive_hausdorff_scaling",
+      "header": "theorem positive_hausdorff_scaling {d : \u2115} (M N : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) (hN : IsCompact N) (hneN : N.Nonempty)\n    (c : \u211d) (hc : 0 < c) :\n    canonicalHausdorff (scaledFamily c M) (scaledFamily c N) = c * canonicalHausdorff M N",
+      "header_sha256": "cb635548f337d14b1e2dfdbab1521e1e658cacb89ab58358a7d0cfe132a0ef67",
+      "line": 374
+    },
+    {
+      "id": "C36",
+      "declaration": "NLA.MF06.root_lower_bound",
+      "header": "theorem root_lower_bound (k : \u2115) (hk : 1 \u2264 k) (u z : \u211d)\n    (hu : 0 \u2264 u) (hz0 : 0 \u2264 z) (hz1 : z \u2264 1) (hz : z \u2264 u ^ k) :\n    z \u2264 u",
+      "header_sha256": "4411ef8bf10556e2fc9a14b4e319b6250d0874f1eb09d7a3775635a366f55821",
+      "line": 381
+    },
+    {
+      "id": "C37",
+      "declaration": "NLA.MF06.normalized_pointwise_lower_lipschitz",
+      "header": "theorem normalized_pointwise_lower_lipschitz {d : \u2115} (hd : 1 \u2264 d)\n    (M : Set (Square d)) (hM : IsCompact M) (hneM : M.Nonempty)\n    (hradius : jointSpectralRadius M = 1) :\n    \u2203 r : \u211d, 0 < r \u2227 \u2203 C : \u211d, 0 < C \u2227\n      \u2200 N : Set (Square d), IsCompact N \u2192 N.Nonempty \u2192\n        canonicalHausdorff M N < r \u2192\n        1 - C * canonicalHausdorff M N \u2264 jointSpectralRadius N",
+      "header_sha256": "902c3af42157e640210de717b6317effe3ca365fbca0cee61bfd2dbd75b9d9d5",
+      "line": 388
+    },
+    {
+      "id": "C38",
+      "declaration": "NLA.MF06.canonical_pointwise_lower_lipschitz",
+      "header": "theorem canonical_pointwise_lower_lipschitz {d : \u2115} (hd : 1 \u2264 d)\n    (M : Set (Square d)) (hM : IsCompact M) (hneM : M.Nonempty) :\n    \u2203 r : \u211d, 0 < r \u2227 \u2203 C : \u211d, 0 < C \u2227\n      \u2200 N : Set (Square d), IsCompact N \u2192 N.Nonempty \u2192\n        canonicalHausdorff M N < r \u2192\n        jointSpectralRadius M - C * canonicalHausdorff M N \u2264 jointSpectralRadius N",
+      "header_sha256": "91c5c21849c5c69f0ee49a19bd090033f7d42246051e1b7485631e5dd6dfcff6",
+      "line": 400
+    }
+  ]
+}
