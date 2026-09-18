@@ -4,12 +4,12 @@
 [All categories](../../README.md) · [Category index](../README.md) · [Read PDF](problem.pdf) · [LaTeX source](problem.tex)
 <!-- /navigation -->
 
-**Last checked:** 2026-09-11  
+**Last checked:** 2026-09-18  
 **Difficulty:** challenging  
 **Importance:** interesting to specialist  
 **Rating rationale:** Historical: challenging because the limiting complex solution must be tied exactly to unit-circle eigenstructure; specialist impact is on structured Green-function matrix equations.
 
-**Status:** Solved
+**Status:** Lean verified
 
 <!-- stepaniants-mf18-resolution -->
 ## Resolution - 2026-09-11
@@ -20,7 +20,7 @@
 
 [Proof PDF](solution.pdf) · [Standalone TeX](solution.tex) · [Independent mathematical review](../../references/stepaniants-mf18-2026-09-11/verification/MF-18-independent-review.md) · [Authorship, source history and public-branch audit](../../references/stepaniants-mf18-2026-09-11/README.md).
 
-The proof passed a separate Codex-agent review against the exact canonical statement and the original paper. It was developed with substantial ChatGPT/Codex assistance; this verification is independent automated-agent review, not external human peer review or formal certification. On 11 September 2026, the pre-submission audit found only the earlier partial result across five public repositories and all 29 public branch heads. The original target, permanent ID and canonical path are retained. Difficulty and importance above are historical ratings.
+The proof passed a separate Codex-agent review against the exact canonical statement and the original paper. It was developed with substantial ChatGPT/Codex assistance; that September 11 verification was independent automated-agent review. The later Lean verification is recorded below; no external human peer review is claimed. On 11 September 2026, the pre-submission audit found only the earlier partial result across five public repositories and all 29 public branch heads. The original target, permanent ID and canonical path are retained. Difficulty and importance above are historical ratings.
 <!-- /stepaniants-mf18-resolution -->
 
 <!-- colbrook-matrix-functions -->
@@ -35,6 +35,16 @@ This auxiliary result did not settle the canonical general complex $`C,D,R,P`$ p
 **Primary reference:** [complete authored PDF](../../references/colbrook-matrix-functions-2026-09-11/manuscripts/MF-18.pdf), [standalone TeX](../../references/colbrook-matrix-functions-2026-09-11/manuscripts/MF-18.tex), **Theorem 1 and Corollary 3; Section 8 exact defective example**. [Independent proof review](../../references/colbrook-matrix-functions-2026-09-11/verification/reviews/MF-18-review.md) · [Authorship and submission record](../../references/colbrook-matrix-functions-2026-09-11/README.md). Verification is independent agent review, not external human peer review or formal certification.
 
 <!-- /colbrook-matrix-functions -->
+
+## Lean proof and verification evidence
+
+**The complete original target is Lean verified, 2026-09-18 (UTC).** The [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/0d3a658789510d3cdd14729f22165219f7e7eaf8/matrix-functions-and-stability/MF-18/lean/Solution.lean) at revision `0d3a658789510d3cdd14729f22165219f7e7eaf8` passed [non-root Linux run 35315336123](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35315336123/job/105505732924). The [retained execution evidence](lean/verification/linux-2026-09-18/README.md) binds all 226 submitted project inputs and 25 exported statements. Real Comparator, default-kernel replay, standard transitive axioms, sandbox checks and rejection controls passed. Subsequent publication and PR merge checkouts are checked separately.
+
+The main declaration `NLA.MF18.canonical_full_complex_rank` proves the unchanged rank equality for every positive dimension and the full complex matrix model. It retains the original uniqueness, finite nonsingular limit, regular pencil and simple unit-circle root assumptions. Singular coefficient matrices, roots at 1 or -1, the case of no unit-circle roots and arbitrary stable Jordan blocks are included. Determinants, algebraic root multiplicities, spectral-radius conditions and complex matrix rank have concrete definitions. The [25 exact contracts](lean/Challenge.lean) and [proof map](lean/PROOF-REVIEWER-MAP.md) connect these definitions and assumptions to the original target; no cited theorem is accepted as an axiom.
+
+Mathematical resolution and formalization: **George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. The original question and earlier results remain attributed to Guo, Kuo and Lin; Matthew J. Colbrook's separate auxiliary result retains its credit and scope above. Two independent statement reviews preceded implementation. Two independent nonauthor final reviews approved the complete 38-module proof closure. [Review records](lean/reviews/README.md) disclose substantial OpenAI Codex assistance and distinguish source review from executed verification.
+
+The project pins Lean 4.33.1, [Mathlib](https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474) and [LeanCert](https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926). Kernel-mode LeanCert certifies the exact positive half used in positive-matrix averaging; the remaining proof is symbolic. Every export has only `propext`, `Classical.choice` and `Quot.sound` as transitive axioms. Run `lake build Solution` in `matrix-functions-and-stability/MF-18/lean`; [reproduction instructions](lean/README.md) distinguish local compilation from the Linux checker.
 
 ## Problem statement
 

@@ -7,10 +7,7 @@ independently elaborated the Challenge and Solution types and checked the actual
 proof-body dependency route to the kernel-mode LeanCert certificate. Both
 nonauthor proof reviewers approve the exact source continuation.
 
-**The final Linux Comparator/kernel/sandbox run has not run.** The coordinator has assembled the package and reviewed its metadata;
-final integrated preflight remains a separate gate. These local results do not
-increment the campaign's complete Lean-verification count. This directory contains the unchanged reviewed sources and their retained execution evidence.
-The current machine-readable status is [STATE.json](STATE.json).
+**Complete immutable proof verification passed.** All 25 contracts passed [non-root Linux run 35315336123](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35315336123/job/105505732924) at proof commit `0d3a658789510d3cdd14729f22165219f7e7eaf8`. The [retained Linux evidence](verification/linux-2026-09-18/README.md) binds every input and the real Comparator, default kernel, permitted axioms and per-project controls. Publication and PR merge checkouts remain separate gates before campaign acceptance. The machine-readable status is [STATE.json](STATE.json).
 
 ## The original target
 
@@ -98,9 +95,7 @@ default target. Lean is `leanprover/lean4:v4.33.1`; Mathlib is pinned at
 `0df444a360eaa60ab8c11dca51a86af692955474`, and LeanCert at
 `621a43d7cf21f87872392a01e874f2f1dbddc926`. All transitive revisions are retained
 in the Lake manifest. [LAKE-CONFIGURATION.json](LAKE-CONFIGURATION.json) binds
-the exact configuration bytes. No standalone Lake build was run by this docs
-task; the successful campaign build used root's serial direct Lean runner with
-`--threads=1 --memory=4096` and authenticated pinned dependencies.
+the exact configuration bytes. The original docs task did not run Lean. Root used its serial local runner with `--threads=1 --memory=4096` and authenticated pinned dependencies; the later standalone Linux harness compiled the exact package independently.
 
 From this project directory, `lake build Solution` is the ordinary Lake build target. The final repository check belongs
 on the non-root Linux runner. From the repository root, the established harness
@@ -111,10 +106,7 @@ tools/lean/bootstrap.sh /tmp/nla-mf18-tools
 tools/lean/verify.sh matrix-functions-and-stability/MF-18/lean /tmp/nla-mf18-tools
 ```
 
-These are reproduction instructions, not commands executed in this review or
-documentation task. Record the actual tested commit, run ID, Comparator result,
-default-kernel check, sandbox and rejection/regression controls before changing
-the pending final status. The historical documentation checker, retained in the docs archive, checks schema
+These reproduce the kind of check actually completed at the immutable proof revision above. They were not run by the source reviewers or original documentation author; exact execution roles and commands remain in the retained receipts. The historical documentation checker, retained in the docs archive, checks schema
 and integrity against the campaign evidence; it does not compile. See
 [verification/README.md](verification/README.md) for the retained execution records.
 
@@ -145,4 +137,4 @@ documentation task made no new network query. The records do not establish
 universal novelty or inspect private, deleted, unpublished or differently named
 work. The existing mathematical resolution is not counted again.
 
-The [coordinator publication preflight](verification/MF18-ROOT-PACKAGE-PREFLIGHT.json) checks the complete package, current upstream source correspondence, dependency pins and privacy. It is separate from the two independent full mathematical/source reviews and does not claim Linux execution.
+The [coordinator publication preflight](verification/MF18-ROOT-PACKAGE-PREFLIGHT.json) checks the complete package, current upstream source correspondence, dependency pins and privacy. It preceded the actual Linux execution and is separate from the two independent full mathematical/source reviews.

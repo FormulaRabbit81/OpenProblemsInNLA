@@ -31,7 +31,7 @@
 | [MF-12](MF-12/README.md) | Realizing arbitrary polynomial growth exponents by finite matrix families | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](MF-12/problem.pdf) · [TeX](MF-12/problem.tex) |
 | [MF-14](MF-14/README.md) | Degree coverage with seven matrix multiplications | **✅ SOLVED** | challenging | interesting to the community | [PDF](MF-14/problem.pdf) · [TeX](MF-14/problem.tex) |
 | [MF-16](MF-16/README.md) | Uniqueness of positive definite solutions of two-letter word equations in order two | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](MF-16/problem.pdf) · [TeX](MF-16/problem.tex) |
-| [MF-18](MF-18/README.md) | Imaginary-part rank in a limiting Green-function matrix equation | **✅ SOLVED** | challenging | interesting to specialist | [PDF](MF-18/problem.pdf) · [TeX](MF-18/problem.tex) |
+| [MF-18](MF-18/README.md) | Imaginary-part rank in a limiting Green-function matrix equation | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](MF-18/problem.pdf) · [TeX](MF-18/problem.tex) |
 | [MF-21](MF-21/README.md) | The uniform expansion threshold for Toeplitz symbols with higher-order zeros | **✅ SOLVED** | challenging | interesting to specialist | [PDF](MF-21/problem.pdf) · [TeX](MF-21/problem.tex) |
 | [MF-22](MF-22/README.md) | Polynomial conditioning of the cubic C1 spline Schrödinger Toeplitz family | **🏆 LEAN VERIFIED** | hard | interesting to specialist | [PDF](MF-22/problem.pdf) · [TeX](MF-22/problem.tex) |
 | [MF-24](MF-24/README.md) | A dimension-independent polynomial norm bound from super-identical pseudospectra | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](MF-24/problem.pdf) · [TeX](MF-24/problem.tex) |

@@ -8,4 +8,4 @@ unchanged. Original absolute paths describe the campaign environment.
 
 The two final reviewers did not author the proof. Their mathematical source
 reviews, metadata checks and read-only integrity replays are distinct from actual
-local compilation and the still-pending Linux Comparator/kernel/sandbox checks.
+local compilation and the [actual proof-commit Linux Comparator/kernel/sandbox execution](../verification/linux-2026-09-18/README.md).

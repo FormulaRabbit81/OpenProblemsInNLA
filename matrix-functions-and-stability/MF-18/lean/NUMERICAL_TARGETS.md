@@ -51,7 +51,7 @@ integrity checks over those receipts, logs and diagnostic dumps. All configured
 theorems retain only the permitted standard axioms `propext`,
 `Classical.choice`, `Quot.sound`; no `sorryAx`, oracle or literature axiom is
 accepted. `#assert_trust kernel` checks are present for all 25 final exports.
-The final non-root Linux Comparator/kernel/sandbox run remains **not-run**.
+The later non-root Linux run 35315336123 passed at immutable proof commit `0d3a658789510d3cdd14729f22165219f7e7eaf8`; [its evidence](verification/linux-2026-09-18/README.md) is distinct from local341 and the source reviews.
 
 LeanCert is pinned to `621a43d7cf21f87872392a01e874f2f1dbddc926` with Lean
 `v4.33.1`. The minimal certificate pattern follows MF05's numerical module;

@@ -34,7 +34,7 @@ equation},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}MF-18}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-11}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Verification check: 2026-09-18}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -51,7 +51,7 @@ rank in a limiting Green-function matrix equation\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to specialist\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
@@ -85,13 +85,13 @@ source history and public-branch audit}.
 
 The proof passed a separate Codex-agent review against the exact
 canonical statement and the original paper. It was developed with
-substantial ChatGPT/Codex assistance; this verification is independent
-automated-agent review, not external human peer review or formal
-certification. On 11 September 2026, the pre-submission audit found only
-the earlier partial result across five public repositories and all 29
-public branch heads. The original target, permanent ID and canonical
-path are retained. Difficulty and importance above are historical
-ratings.
+substantial ChatGPT/Codex assistance; that September 11 verification was
+independent automated-agent review. The later Lean verification is
+recorded below; no external human peer review is claimed. On 11
+September 2026, the pre-submission audit found only the earlier partial
+result across five public repositories and all 29 public branch heads.
+The original target, permanent ID and canonical path are retained.
+Difficulty and importance above are historical ratings.
 
 \subsection{Earlier auxiliary result; original scope retained ---
 2026-09-11}\label{earlier-auxiliary-result-original-scope-retained-2026-09-11}
@@ -126,32 +126,84 @@ proof review} ·
 and submission record}. Verification is independent agent review, not
 external human peer review or formal certification.
 
+\newpage
+
+\subsection{Lean proof and verification
+evidence}\label{lean-proof-and-verification-evidence}
+
+\textbf{The complete original target is Lean verified, 2026-09-18
+(UTC).} The
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/0d3a658789510d3cdd14729f22165219f7e7eaf8/matrix-functions-and-stability/MF-18/lean/Solution.lean}{immutable
+proof} at revision \textit{0d3a658789510d3cdd14729f22165219f7e7eaf8}
+passed
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35315336123/job/105505732924}{non-root
+Linux run 35315336123}. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-18/lean/verification/linux-2026-09-18/README.md}{retained
+execution evidence} binds all 226 submitted project inputs and 25
+exported statements. Real Comparator, default-kernel replay, standard
+transitive axioms, sandbox checks and rejection controls passed.
+Subsequent publication and PR merge checkouts are checked separately.
+
+The main declaration \textit{NLA.MF18.canonical\_full\_complex\_rank}
+proves the unchanged rank equality for every positive dimension and the
+full complex matrix model. It retains the original uniqueness, finite
+nonsingular limit, regular pencil and simple unit-circle root
+assumptions. Singular coefficient matrices, roots at 1 or -1, the case
+of no unit-circle roots and arbitrary stable Jordan blocks are included.
+Determinants, algebraic root multiplicities, spectral-radius conditions
+and complex matrix rank have concrete definitions. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-18/lean/Challenge.lean}{25
+exact contracts} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-18/lean/PROOF-REVIEWER-MAP.md}{proof
+map} connect these definitions and assumptions to the original target;
+no cited theorem is accepted as an axiom.
+
+Mathematical resolution and formalization: \textbf{George Stepaniants},
+Department of Computing and Mathematical Sciences, California Institute
+of Technology. The original question and earlier results remain
+attributed to Guo, Kuo and Lin; Matthew J. Colbrook's separate auxiliary
+result retains its credit and scope above. Two independent statement
+reviews preceded implementation. Two independent nonauthor final reviews
+approved the complete 38-module proof closure.
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-18/lean/reviews/README.md}{Review
+records} disclose substantial OpenAI Codex assistance and distinguish
+source review from executed verification.
+
+The project pins Lean 4.33.1,
+\href{https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474}{Mathlib}
+and
+\href{https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926}{LeanCert}.
+Kernel-mode LeanCert certifies the exact positive half used in
+positive-matrix averaging; the remaining proof is symbolic. Every export
+has only \textit{propext}, \textit{Classical.choice} and
+\textit{Quot.sound} as transitive axioms. Run
+\textit{lake build Solution} in
+\textit{matrix-functions-and-stability/MF-18/lean};
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-18/lean/README.md}{reproduction
+instructions} distinguish local compilation from the Linux checker.
+
+\newpage
+
 \subsection{Problem statement}\label{problem-statement}
 
 Let \(n\geq1\), let \(C,D,R,P\in\mathbb C^{n\times n}\), and write
 \(M^*\) for conjugate transpose. Suppose \(R=R^*\), \(P=P^*\), and
 
-\[
-P+\lambda D^*+\lambda^{-1}D\succ0
-\qquad (|\lambda|=1).
-\]
+\[P+\lambda D^*+\lambda^{-1}D\succ0
+\qquad (|\lambda|=1).\]
 
 For each \(\eta>0\), let \(X_\eta\) be the unique nonsingular solution
 of
 
-\[
-X_\eta+(C^*+i\eta D^*)X_\eta^{-1}(C+i\eta D)
- =R+i\eta P
-\]
+\[X_\eta+(C^*+i\eta D^*)X_\eta^{-1}(C+i\eta D)
+ =R+i\eta P\]
 
 satisfying \(\rho(X_\eta^{-1}(C+i\eta D))<1\), where \(\rho\) denotes
 spectral radius. Assume the finite limit
 \(X_0=\lim_{\eta\downarrow0}X_\eta\) exists and is nonsingular. Assume
 the matrix polynomial
 
-\[
-\mathcal P_0(\lambda)=\lambda^2C^*-\lambda R+C
-\]
+\[\mathcal P_0(\lambda)=\lambda^2C^*-\lambda R+C\]
 
 is regular, meaning \(\det\mathcal P_0(\lambda)\not\equiv0\). Suppose
 its eigenvalues on the unit circle are all simple (algebraic
@@ -159,9 +211,7 @@ multiplicity one). Their number is even; denote it by \(2m\).
 
 Is it always true that
 
-\[
-\operatorname{rank}\!\left(\frac{X_0-X_0^*}{2i}\right)=m?
-\]
+\[\mathop{\mathrm{rank}}\nolimits\!\left(\frac{X_0-X_0^*}{2i}\right)=m?\]
 
 \subsection{Why this matters for NLA}\label{why-this-matters-for-nla}
 
