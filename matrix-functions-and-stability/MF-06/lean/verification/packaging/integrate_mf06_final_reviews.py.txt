@@ -1,0 +1,118 @@
+"""Retain two exact268 nonauthor source approvals; Linux remains pending."""
+from pathlib import Path
+import datetime, gzip, hashlib, io, json, re, shutil, tarfile
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+P = B / 'MF06-canonical-package-local268'
+N = B / 'next-proofs/MF-06'
+R = P / 'reviews'
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+load = lambda p: json.loads(Path(p).read_text())
+assert sha(P / 'PACKAGE-MANIFEST.json') == '4a1decd038e63af3e863b4be6caedd443fe4091e001354eb609d1bad0ff7dd03'
+local = load(P / 'verification/LOCAL-COMPLETE.json')
+index = load(R / 'INDEX.json')
+assert len(index) == 2
+old = P / 'verification/packaging/before-final-review-integration'
+old.mkdir()
+for rel in ['PACKAGE-MANIFEST.json', 'README.md', 'formalization.yaml', 'STATE.json', 'IMPLEMENTATION-MAP.json', 'reviews/INDEX.json', 'reviews/README.md']:
+    dest = old / rel
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(P / rel, dest)
+
+for i, name, expected in [
+    (1, 'MF06-final-full-referee1-local268-20260917', 'a8a9a6b857cddf9e9fcc03f46b4e9af149edbad24de8828b595a10caf8de3020'),
+    (2, 'MF06-final-referee2-20260917', 'a0c94b8f6b3a3b11b9769710f3573e0fa589d2e633bcba920c412fa348db98ef')]:
+    src = B / 'reviews' / name
+    assert sha(src / 'MANIFEST.json') == expected
+    manifest, verdict = load(src / 'MANIFEST.json'), load(src / 'VERDICT.json')
+    if i == 1:
+        assert verdict['verdict'] == 'APPROVE_EXACT_SOURCE_FULL_ORIGINAL_MF06'
+        assert load(src / 'SCOPE.json')['proof_sources'] == local['sources']
+        assert set(manifest) == {str(f.relative_to(src)) for f in src.rglob('*') if f.is_file() and f != src / 'MANIFEST.json'}
+        for rel, h in manifest.items():
+            assert sha(src / rel) == h, rel
+    else:
+        assert verdict['verdict'] == 'PASS' and verdict['authored_MF06_statements_or_proofs'] is False
+        assert set(manifest['proof_closure_files']) == set(local['sources'])
+        for rel, h in manifest['project_files'].items():
+            assert sha(N / rel) == h, rel
+        for rel, h in manifest['evidence_files'].items():
+            assert sha(rel) == h, rel
+        for rel, h in manifest['review_files'].items():
+            assert sha(src / rel) == h, rel
+    acceptance = B / f'MF06-ROOT-REFEREE{i}-ACCEPTANCE268.json'
+    assert load(acceptance)['exit_code'] == 0
+    assert load(acceptance)['review_manifest_sha256'] == expected
+    shutil.copy2(acceptance, P / 'verification' / acceptance.name)
+    label = f'final-referee-{i}'
+    for original, suffix in [('REVIEW.md', '.md'), ('VERDICT.json', '-verdict.json'), ('MANIFEST.json', '-manifest.json')]:
+        shutil.copy2(src / original, R / (label + suffix))
+    archive = R / (label + '-packet.tar.gz')
+    with archive.open('wb') as raw, gzip.GzipFile(fileobj=raw, mode='wb', mtime=0) as gz, tarfile.open(fileobj=gz, mode='w') as tar:
+        for f in sorted(src.rglob('*')):
+            assert not f.is_symlink(), f
+            if f.is_file():
+                data = f.read_bytes()
+                text = gzip.decompress(data).decode('utf8', errors='ignore') if f.suffix == '.gz' else data.decode('utf8', errors='ignore')
+                assert not re.search(r'(?i)(?:george|g?stepaniants|sgstepaniants)[^\s@<>]{0,40}@[\w.-]+\.[A-Za-z]{2,}', text), f
+                info = tarfile.TarInfo(name + '/' + str(f.relative_to(src)))
+                info.size, info.mode = len(data), 0o644
+                tar.addfile(info, io.BytesIO(data))
+    index.append({'label': label, 'source_packet': str(src), 'manifest_sha256': expected,
+                  'report': label + '.md', 'verdict': label + '-verdict.json',
+                  'archive': archive.name, 'archive_sha256': sha(archive),
+                  'scope': 'Independent nonauthor full-target source review; no reviewer Lean or Comparator run',
+                  'root_actual_replay': '../verification/' + acceptance.name})
+(R / 'INDEX.json').write_text(json.dumps(index, indent=2) + '\n')
+(R / 'README.md').write_text('''# Independent reviews
+
+Two independent statement reviews preceded proof implementation. Two independent
+nonauthor final referees approved the complete original MF-06 target and all 119
+proof-closure sources at local268, including all 38 frozen contracts.
+
+- [Statement referee 1](statement-referee-1.md): coordinator, before proof authorship.
+- [Statement referee 2](statement-referee-2.md): independent statement referee.
+- [Final referee 1](final-referee-1.md): `/root/nm04_final_referee1`.
+- [Final referee 2](final-referee-2.md): `/root/mf06_final_referee2`.
+
+Neither final referee authored MF-06 proof code or frozen definitions. Both
+reports and exact source/evidence bindings were saved before an account usage
+limit stopped the agents. Root actually replayed both read-only evidence
+verifiers. This does not claim a new reviewer Lean/Comparator run, external human
+peer review, or an official Tau Ceti service run. The final Linux runtime check
+is still pending. Whole publication-package review is distinct from these
+complete mathematical/source approvals.
+
+The [index](INDEX.json) binds full preserved packets. Some historical scripts
+refer to the development machine; those are provenance paths, not prerequisites
+for the current project's ordinary Lean build or the final Linux checker.
+''')
+meta = load(P / 'formalization.yaml')
+meta['automation']['notes'] = 'Actual local268 passes all38 contracts through119 modules (two fresh compilations,117 exact successful reuses), with one compiler/thread and4096 MiB. Local270 matches all38 independent elaborated types and confirms actual kernel LeanCert certificate consumption. Two independent nonauthor referees approved the entire proof source. Linux Comparator remains pending; no human peer review or official Tau Ceti service claim.'
+meta['review'] = {'status': 'Two independent statement approvals before implementation and two independent nonauthor final approvals of exact local268 full-target source.',
+    'reviewers': ['/root (statement phase only)', '/root/mf06_statement_referee2 (statement)', '/root/nm04_final_referee1 (final)', '/root/mf06_final_referee2 (final)'],
+    'notes': 'AI-agent source review under pinned Tau Ceti rubrics. Hashes, scopes and actual root read-only evidence replays are in reviews/INDEX.json. Neither source approval claims a reviewer compiler run or an unrun Linux check. Publication-package preflight is separate.'}
+meta['verification']['independent_reviews'] = {'statement': 2, 'final': 2, 'result': 'approved complete exact268 source', 'record': 'reviews/INDEX.json'}
+meta['verification']['publication_status'] = 'Local proof and two independent full-source approvals complete; canonical remains Solved pending actual Linux checks.'
+for item in meta['status']['main_results']:
+    item['verification_status'] = 'PASS actual local268 Lean/kernel trust, local270 type match and two independent complete source reviews. Real Linux Comparator pending.'
+meta['alignment']['contracts'] = meta['status']['main_results']
+assert meta['status']['whole_problem_verified'] is False
+(P / 'formalization.yaml').write_text(json.dumps(meta, indent=2) + '\n')
+(P / 'IMPLEMENTATION-MAP.json').write_text(json.dumps({'results': meta['status']['main_results']}, indent=2) + '\n')
+state = load(P / 'STATE.json')
+state.update(time=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+             stage='Complete local proof and two independent full-source approvals; Linux verification pending',
+             two_final_nonauthor_reviews=2, final_source_review_record='reviews/INDEX.json')
+(P / 'STATE.json').write_text(json.dumps(state, indent=2) + '\n')
+text = (P / 'README.md').read_text().replace(
+    '**All 38 frozen contracts pass actual local Lean268 through 119 modules. Final\nindependent reviews and the real Linux Comparator checks remain pending.**',
+    '**All 38 frozen contracts pass actual local Lean268 through 119 modules. Two\nindependent final source reviews approved the complete proof. Real Linux\nComparator checks remain pending.**')
+(P / 'README.md').write_text(text)
+for rel, h in local['sources'].items():
+    assert sha(P / rel) == h, rel
+shutil.copy2(Path(__file__), P / 'verification/packaging/integrate_mf06_final_reviews.py.txt')
+manifest = {'stage': state['stage'], 'files': {str(f.relative_to(P)): sha(f) for f in sorted(P.rglob('*')) if f.is_file() and f != P / 'PACKAGE-MANIFEST.json'}}
+(P / 'PACKAGE-MANIFEST.json').write_text(json.dumps(manifest, indent=2) + '\n')
+print(json.dumps({'manifest_sha256': sha(P / 'PACKAGE-MANIFEST.json'), 'files': len(manifest['files']),
+                  'final_source_approvals': 2, 'Linux_Comparator': 'not run', 'count_change': 0}, indent=2))
