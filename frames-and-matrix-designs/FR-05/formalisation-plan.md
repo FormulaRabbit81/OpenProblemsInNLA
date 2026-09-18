@@ -13,10 +13,12 @@ where $`A_d\in\mathbb C^{(4d-5)\times d}`$ has independent standard complex Gaus
 
 The exact PDF has been archived with its SHA-256 and retrieval date in the Lean
 project's source freeze. The deterministic checkpoint, a concrete
-complex-Gaussian frame interface, the source's final conditional numerical
-reduction, and the exact algebraic last step of Proposition 3.2 are now
-present; they remain deliberately below the full target. The full-probability
-signature is recorded, unproved, in `Challenge.lean`. Two
+complex-Gaussian frame interface, the exact planted source law, selected
+Jacobian/tail/contraction ingredients of Proposition 3.1, the source's final
+conditional numerical reduction, and the exact algebraic last step of
+Proposition 3.2 are now present; they remain deliberately below the full
+target. The full-probability signature is recorded, unproved, in
+`Challenge.lean`. Two
 independent statement reviews must still approve it before any analytic module
 is promoted to an advertised result. The public PDF is a live web source, so
 its URL alone is not a stable statement boundary.
@@ -60,8 +62,10 @@ FR-05 limit. `Challenge.lean` exposes the exact target and remains outside the
 | `Obstruction.lean` | an indefinite rank-two Hermitian kernel element yields a pair of unequal phase orbits with identical moduli; right-invertible coordinate changes preserve injectivity | Lemma 2.1's needed direction; §3.1 |
 | `RankTwoChart.lean` | the `D(s,b), C(z,t), Qθ` chart; local invertibility of `D`; rank two and inertia `(1,1)` from the displayed factorisation | (2.4)–(2.5), (3.19) |
 | `Probability.lean` | real-coordinate construction of the scaled complex-Gaussian frame law, its measurable coordinate map, and `0 ≤ p_d ≤ 1` | §3.1 |
-| `Planted.lean` | planted row law, exact `Fε`, its derivative at zero, and the deterministic quantitative contraction lemma | (3.18)–(3.24) |
-| `SmallBall.lean` | row small-ball bound, distance-to-span argument, and the least-singular-value tail | Lemmas 3.6–3.7 |
+| `Planted.lean`, `PlantedLaw.lean`, `SourceRowBridge.lean` | exact `Fε`, the planted coordinate law (3.18), and its iid-frame representation through checked rows | (3.18) |
+| `FactorChart.lean`, `FactorTaylor.lean`, `Jacobian.lean`, `Newton.lean` | polynomial endpoint chart, exact Taylor/Jacobian formula (3.21), and the verified contraction-to-zero implication | (3.19), (3.21), (3.24) |
+| `GaussianTail.lean`, `RadialTail.lean` | source-compatible complex-Gaussian and radial tail components of (3.22) | (3.2), (3.22) |
+| `SmallBallAlgebra.lean`, `SmallBall.lean` | checked variance-profile algebra; planned row small-ball, distance-to-span, and least-singular-value tail | Lemmas 3.6–3.7 |
 | `PlantedSuccess.lean` | norm event, derivative perturbation, contraction, and `P_g(E_d) ≤ C d⁻²` | Proposition 3.1 |
 | `ConeKernel.lean` | cone parametrisation and the Gaussian correlation estimate | Lemma 3.3 |
 | `Overlap.lean` | Haar two-frame overlap density and kernel identities/local expansion | Lemmas 3.4–3.5, (3.14)–(3.17) |
@@ -72,11 +76,15 @@ FR-05 limit. `Challenge.lean` exposes the exact target and remains outside the
 | `Main.lean` | covariance-matched reference law, invariance, and derivation of the eventual comparison from the planted and likelihood estimates | (3.3)–(3.6), Theorem 1.4 |
 
 The currently implemented `Definitions`, `Obstruction`, `RankTwoSeed`,
-`Probability`, `Assembly`, `MainReduction`, and `LikelihoodAlgebra`
-files form a useful kernel-checked milestone: they formalise the exact
-ambiguity mechanism, the Gaussian-law boundary, the final numerical
-implication, and the last algebraic transition in Proposition 3.2. They must
-still be labelled as an incomplete component, not as a verification of FR-05.
+`RankTwoChart`, `FactorChart`, `FactorTaylor`, `Planted`, `PlantedTaylor`,
+`Jacobian`, `Newton`, `PlantedBounds`, `PlantedLaw`, `SourceRowBridge`,
+`GaussianTail`, `RadialTail`, `SmallBallAlgebra`, `Probability`, `Assembly`,
+`MainReduction`, and `LikelihoodAlgebra` files form a useful kernel-checked
+milestone. They formalise the exact ambiguity mechanism, the source planted
+law, several quantitative inputs for Proposition 3.1, the Gaussian-law
+boundary, the final numerical implication, and the last algebraic transition
+in Proposition 3.2. They must still be labelled as an incomplete component,
+not as a verification of FR-05.
 
 ## Proof dependencies
 

@@ -5,9 +5,9 @@ project:
   description: >-
     A checked partial checkpoint for the phase-retrieval construction:
     exact all-signal measurement semantics, an explicit noninjective frame,
-    a scaled Gaussian-frame interface, and conditional algebraic reductions
-    at the ends of Proposition 3.2 and Theorem 1.4. It does not formalize the
-    source's probabilistic O(d^-1) theorem.
+    the source's iid planted law and a radial tail bound, and conditional
+    algebraic reductions at the ends of Proposition 3.2 and Theorem 1.4.
+    It does not formalize the source's full probabilistic O(d^-1) theorem.
   authors:
   - OpenAI Codex AI
   license: Apache-2.0
@@ -35,7 +35,8 @@ sources:
   author_endorsement: not-contacted
   note: >-
     Retrieved and hash-frozen as sources/injectivity_phase_retrieval.pdf.
-    The local-chart and probability estimates are outside the checked export.
+    The full small-ball, least-singular-value, derivative-control, and
+    probability assembly estimates remain outside the checked export.
 automation:
   methods:
   - method: agent
@@ -55,12 +56,13 @@ automation:
 status:
   scope: >-
     Incomplete checkpoint, locally type-checked on arm64 macOS. The exports
-    supply a simple explicit noninjective 4d-5 row frame, a real-Gaussian
+    supply a simple explicit noninjective 4d-5 row frame, an exact source
+    planted-frame law representation, a radial tail estimate, a real-Gaussian
     representation of a complex frame law, and conditional final reductions
-    for Proposition 3.2 and Theorem 1.4. They neither prove
-    injectivity-event measurability, an open neighbourhood of noninjectivity,
-    source likelihoods, Haar/Stiefel estimates, nor p_d <= C/d without the
-    analytic comparison hypotheses.
+    for Proposition 3.2 and Theorem 1.4. They do not prove the full Lemma 3.6
+    small-ball estimate, Lemma 3.7, the source good-event probability,
+    injectivity-event measurability, source likelihoods, Haar/Stiefel
+    estimates, or p_d <= C/d without the analytic comparison hypotheses.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms:
@@ -69,6 +71,18 @@ status:
   - Quot.sound
   main_results:
   - declaration: NLA.FR05.explicit_noninjective_frame
+    file: Solution.lean
+    sorry_count: 0
+    axioms: [propext, Classical.choice, Quot.sound]
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.FR05.source_planted_frame_law_representation
+    file: Solution.lean
+    sorry_count: 0
+    axioms: [propext, Classical.choice, Quot.sound]
+    comparator_config: comparator.json
+    literature_dependencies: []
+  - declaration: NLA.FR05.source_planted_radial_tail
     file: Solution.lean
     sorry_count: 0
     axioms: [propext, Classical.choice, Quot.sound]
@@ -95,13 +109,13 @@ verification_plan:
 fidelity:
   divergences: >-
     The source's target is a probability estimate p_d <= C/d. This project
-    exports a deterministic witness, a related Q_0 identity, and conditional
-    algebraic reductions. Its Proposition 3.2 result assumes the two
-    second-moment estimates rather than deriving them from the source
-    likelihoods, cone kernels, or overlap law. The all-ones frame is not the
-    source's random or locally regular frame, so the export remains a
-    checkpoint rather than the manuscript's theorem or its
-    finite-dimensional kernel criterion.
+    exports a deterministic witness, the exact planted coordinate law and one
+    radial tail bound, and conditional algebraic reductions. Its Proposition
+    3.2 result assumes the two second-moment estimates rather than deriving
+    them from the source likelihoods, cone kernels, or overlap law. The
+    planted branch does not yet establish the source small-ball and
+    least-singular-value estimates or their contraction event, so the export
+    remains a checkpoint rather than the manuscript's theorem.
 review:
   status: unchecked
   notes: >-
@@ -114,6 +128,9 @@ alignment:
   - NLA.FR05.qZero
   - NLA.FR05.standardComplexGaussianFrame
   - NLA.FR05.phaseRetrievalProbability
+  - NLA.FR05.sourceRadialLaw
+  - NLA.FR05.sourcePlantedFrameLawAt
+  - NLA.FR05.plantedEquationMap
   checked_results:
   - NLA.FR05.qZero_isHermitian
   - NLA.FR05.quadraticForm_qZero_allOnes
@@ -121,6 +138,9 @@ alignment:
   - NLA.FR05.inverse_bound_of_source_comparison
   - NLA.FR05.phaseRetrieval_injective_probability_le_inv_of_source_comparison
   - NLA.FR05.likelihood_l2_bound_of_second_moment_estimates
+  - NLA.FR05.sourcePlantedFrameLawAt_eq_viaPlantedRows
+  - NLA.FR05.sourceRadialLaw_sourceM_apply_Ici_le
+  - NLA.FR05.plantedEquationLinear_source_formula
 acknowledgements: >-
   The Lean and Mathlib contributors provide the proof assistant and library.
   Zhangsong Li is credited as the manuscript author, separately from this

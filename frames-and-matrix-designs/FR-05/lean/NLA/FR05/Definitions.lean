@@ -59,6 +59,17 @@ def qZero (d : ℕ) (hd : 2 ≤ d) : Matrix (Fin d) (Fin d) ℂ :=
 def quadraticForm {d : ℕ} (Q : Matrix (Fin d) (Fin d) ℂ) (x : Signal d) : ℂ :=
   star x ⬝ᵥ Q *ᵥ x
 
+/-- The conjugated column corresponding to a row of a measurement frame.
+For `a = conjugateRow A i`, the scalar `star a ⬝ᵥ x` is precisely the
+complex linear measurement in row `i`. -/
+def conjugateRow {m d : ℕ} (A : Frame m d) (i : Fin m) : Signal d :=
+  star (A i)
+
+/-- The Hermitian difference `xxᴴ - yyᴴ`.  A zero quadratic form for this
+matrix says that the corresponding two measurement magnitudes agree. -/
+def rankOneDifference {d : ℕ} (x y : Signal d) : Matrix (Fin d) (Fin d) ℂ :=
+  Matrix.vecMulVec x (star x) - Matrix.vecMulVec y (star y)
+
 /-- A simple all-ones frame used only to certify the exact ambiguity bridge.
 It has the same row count as FR-05 but is not the random or locally regular
 frame from the manuscript. -/

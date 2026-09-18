@@ -29,7 +29,7 @@ row-modulus measurements and the relation `y = exp(θ i) • x`. The explicit
 frame is intentionally simple (all entries one); its witnesses are the first
 two standard basis vectors. This establishes the deterministic exact-ambiguity
 bridge used by the source, but it does **not** assert an open neighbourhood,
-positive Gaussian probability, a planted law, a source-specific `L²`
+positive Gaussian probability for the good event, a source-specific `L²`
 likelihood comparison, or the claimed `C/d` bound.
 
 `NLA.FR05.RankTwoSeed` additionally checks the finite identities
@@ -41,6 +41,28 @@ Q₀ = diag(1,-1,0,...),   Q₀ = Q₀ᴴ,   1ᴴ Q₀ 1 = 0.
 The last equality is the source's exact seed cancellation for a constant row.
 It is not a proof that the flat frame has the locally regular, rank-two kernel
 structure or probability behavior required by the manuscript.
+
+## Checked Proposition 3.1 components
+
+The current development also formalizes several source-specific components of
+the planted argument:
+
+- the conditioned radial mixture (3.2), the independent scalar/Gaussian
+  coordinates in (3.18), and the exact iid planted-frame law;
+- an equality representing that law as the pushforward of the checked
+  `PlantedRow` construction;
+- the exact source Jacobian row expression (3.21) at zero imbalance and its
+  Gaussian variance profile;
+- the initial-residual estimate `‖F^ε(0)‖₂ ≤ ε√N`, a source-scale radial tail
+  `P(S ≥ 8M) ≤ 25 exp(-4M)`, and a complex-Gaussian tail estimate;
+- the fixed-point implication from a verified contraction certificate to an
+  exact noninjectivity witness.
+
+The unproved central bridge is still the quantitative good-event probability:
+the full phase small-ball estimate in Lemma 3.6, Lemma 3.7's least-singular
+tail, and the derivative perturbation/Lipschitz estimates that make the
+contraction certificate hold with high probability. Hence this is not yet a
+formal proof of Proposition 3.1.
 
 ## Checked conditional L² step of Proposition 3.2
 
@@ -83,7 +105,7 @@ Thus the only quantitative analytic interface remaining at the final assembly
 boundary is the displayed eventual comparison. It still has to be derived
 from the planted-failure and likelihood-comparison estimates in the source.
 
-## Source constants reserved for the later analytic development
+## Source constants used by the planted development
 
 - `N = 4d - 5`, `d ≥ 2`;
 - `η = 1/100`, `δ = d⁻²`, `ε = d⁻⁵⁰`;
@@ -91,5 +113,7 @@ from the planted-failure and likelihood-comparison estimates in the source.
   `η(1-η)/10 - 4η² > 1/2000`;
 - the planted small-singular-value threshold is `κ = d⁻¹²`.
 
-These constants are documentary only in this checkpoint. They will become
-quantified real inequalities in the later planted-law and correlation modules.
+The definitions of `N`, `η`, `δ`, `ε`, and `κ` are already present in
+`SourceParameters.lean`. The remaining displayed margins and all big-O
+statements still require quantified constants and thresholds before they can
+cross a theorem boundary.
