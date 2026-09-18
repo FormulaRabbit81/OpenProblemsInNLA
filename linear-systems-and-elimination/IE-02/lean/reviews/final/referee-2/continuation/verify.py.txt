@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+"""Read-only, self-contained IE-02 cleanup source/evidence audit.
+
+No subprocess, compiler, network, Git mutation, evaluator or cache mutation.
+Default checks immutable copies; --sources also authenticates the original
+external source/binary/output bindings as captured for actual123.
+--preseal is reserved for recorded preparation before the manifest exists.
+This script does not run Lean, Comparator, a kernel checker or a sandbox.
+"""
+from pathlib import Path
+import argparse,hashlib,json,re,difflib
+ap=argparse.ArgumentParser();ap.add_argument('--sources',action='store_true');ap.add_argument('--preseal',action='store_true');args=ap.parse_args()
+O=Path(__file__).resolve().parent;P=O/'project';checks=[]
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def ck(v,label):
+ if not v:raise AssertionError(label)
+ checks.append(label)
+def js(p):return json.loads(Path(p).read_text())
+def mask(s):
+ out=[];i=0;depth=0
+ while i<len(s):
+  if depth:
+   if s[i:i+2]=='/-':depth+=1;out+=[' ',' '];i+=2
+   elif s[i:i+2]=='-/':depth-=1;out+=[' ',' '];i+=2
+   else:out.append('\n' if s[i]=='\n' else ' ');i+=1
+  elif s[i:i+2]=='/-':depth=1;out+=[' ',' '];i+=2
+  elif s[i:i+2]=='--':
+   j=s.find('\n',i);j=len(s) if j<0 else j;out.extend(' '*(j-i));i=j
+  else:out.append(s[i]);i+=1
+ ck(depth==0,'Balanced comments');return ''.join(out)
+snap=js(O/'SNAPSHOT.json')
+for b in snap['bindings']:
+ if b.get('copy'):ck(sha(O/b['copy'])==b['sha256'],'Copied binding '+b['copy'])
+ if args.sources:ck(sha(b['source'])==b['sha256'],'Live captured binding '+b['source'])
+ck(sha(O/'original/MANIFEST.json')=='e5c35b6d82acd113f69c87af8672b1b618a7972ddedf3e39e9609bae732f8753','Immutable original review seal')
+old=js(O/'original/MANIFEST.json');review=js(O/'original/REVIEW.json')
+for f in ['REVIEW.json','REVIEW.md','AUDIT.json','SNAPSHOT.json']:ck(sha(O/'original'/f)==old['files'][f],'Original sealed '+f)
+ck(review['verdict']['overall_original_source']=='request_changes' and review['verdict']['mathematical_correctness']=='approve','Preserved original mathematical approval and source requests')
+ck({x['id'] for x in review['findings']}=={'R1','R2','Q1','Q2'},'Exactly original four findings')
+delta=js(O/'delta/MANIFEST.json');ck(sha(O/'delta/MANIFEST.json')=='872eac3f8e6ffe89c193e54efd41f9fbc36e7ba9c5ccca42a01809bb5d70eaa9','Exact supplied cleanup seal')
+for f,h in delta['files'].items():
+ if 'REVIEW1' not in f:ck(sha(O/'delta'/f)==h,'Cleanup payload '+f)
+ else:ck(any(b['source'].endswith('/'+f) and b['sha256']==h and b['copy'] is None for b in snap['bindings']),'Opaque uninspected peer-related root artifact bound only by hash')
+changed=set(snap['changed']);removed=set(snap['removed']);ck(changed=={'NLA/IE02/AffineMinima.lean','NLA/IE02/JordanTransport.lean','NLA/IE02/SchurEndpoint.lean','Solution.lean'},'Exactly four changed sources');ck(removed=={'NLA/IE02/Proof.lean'},'Only redundant forwarding module removed')
+oldsrc={f.removeprefix('snapshot/project/'):h for f,h in old['files'].items() if f.startswith('snapshot/project/') and f.endswith('.lean') and ('/NLA/' in f or f.endswith('/Solution.lean'))}
+texts={str(p.relative_to(P)):p.read_text() for p in sorted((P/'NLA').rglob('*.lean'))};texts['Solution.lean']=(P/'Solution.lean').read_text();ck(set(texts)==set(oldsrc)-removed,'Whole current source set is exact original minus Proof')
+for f in texts:
+ if f in changed:
+  ck(sha(O/'delta/before'/f)==oldsrc[f],'Original before bytes '+f);ck(sha(P/f)==sha(O/'delta/after'/f),'Current after bytes '+f)
+ else:ck(sha(P/f)==oldsrc[f],'Unchanged original source '+f)
+for f in removed:ck(sha(O/'delta/before'/f)==oldsrc[f] and not (P/f).exists(),'Exact removed source '+f)
+# Require the complete expected textual delta, not merely the claimed descriptions.
+before={f:(O/'delta/before'/f).read_text() for f in changed}
+f='NLA/IE02/AffineMinima.lean';s=before[f];oldline='    exact Metric.infDist_le_dist_of_mem (show L d ∈ S from ⟨d, rfl⟩)';new='    -- S is the actual range of L, so d supplies the membership witness.\n'+oldline;ck(s.count(oldline)==1 and texts[f]==s.replace(oldline,new),'Q2 exact explanatory range-witness comment')
+f='NLA/IE02/SchurEndpoint.lean';s=before[f];oldline='(show (0 : ℝ) ≤ 1 by norm_num)';ck(s.count(oldline)==1 and texts[f]==s.replace(oldline,'(zero_le_one : (0 : ℝ) ≤ 1)'),'Q1 exact typed existing theorem replacement')
+f='Solution.lean';s=before[f];ck(s.count('import NLA.IE02.Proof')==1 and texts[f]==s.replace('import NLA.IE02.Proof','import NLA.IE02.CanonicalJordan'),'R2 exact direct import and unchanged assertions')
+f='NLA/IE02/JordanTransport.lean';s=before[f];duplicate='''\nprivate theorem euclidean_mul_apply {n : ℕ} (A B : Square n) (x : H n) :
+    euclideanLin (A * B) x = euclideanLin A (euclideanLin B x) := by
+  -- Expose the frozen Euclidean matrix maps to use their named multiplication theorem.
+  change Matrix.toLpLin 2 2 (A * B) x =
+    Matrix.toLpLin 2 2 A (Matrix.toLpLin 2 2 B x)
+  rw [Matrix.toLpLin_mul_same]
+  rfl
+''';ck(s.count(duplicate)==1,'R1 exact identified private helper');expected=s.replace('import NLA.IE02.JordanReversal','import NLA.IE02.JordanReversal\nimport NLA.IE02.SchurEnergy').replace(duplicate,'').replace('[euclidean_mul_apply, reversal_action]','[euclideanLin_mul_apply, reversal_action]');ck(texts[f]==expected,'R1 only shared-helper import removal and consumer replacement')
+for f in changed:
+ patch=next(p for p in (O/'delta').glob('*.patch') if p.stem==Path(f).stem);actual=''.join(difflib.unified_diff(before[f].splitlines(keepends=True),texts[f].splitlines(keepends=True),fromfile='before/'+f,tofile='after/'+f));ck(actual==patch.read_text(),'Exact executable textual patch '+f)
+freeze=js(P/'STATEMENT-FREEZE.json');ck(sha(P/'STATEMENT-FREEZE.json')==old['files']['snapshot/project/STATEMENT-FREEZE.json'],'Original statement freeze unchanged');ck(len(freeze['frozen_files'])==13,'Thirteen frozen inputs')
+for f,h in freeze['frozen_files'].items():ck(sha(P/f)==h==old['files']['snapshot/project/'+f],'Frozen input '+f)
+config=js(P/'comparator.json');headers=js(P/'STATEMENT-HEADERS.json')['headers'];names=config['theorem_names'];ck(len(names)==50==len(set(names))==len(headers),'Fifty exact contracts');ck([h['name'] for h in headers]==names,'Frozen order');ck(config['definition_names']==[],'No definition holes');allowed={'propext','Classical.choice','Quot.sound'};ck(set(config['permitted_axioms'])==allowed,'Only foundational allowed axioms')
+masked={f:mask(t) for f,t in texts.items()};challenge=mask((P/'Challenge.lean').read_text());ck(len(re.findall(r'\bsorry\b',challenge))==50,'Intentional independent specification holes only')
+contracts=[]
+for h in headers:
+ header=h['header'];ck(hashlib.sha256(header.encode()).hexdigest()==h['header_sha256'],'Exact full header hash '+h['name']);ck(challenge.count(header+' := by')==1,'Independent literal Challenge '+h['name']);loc=[(f,t.index(header+' := by')) for f,t in masked.items() if header+' := by' in t];ck(len(loc)==1,'Unique full proof header '+h['name']);f,pos=loc[0];contracts.append({'name':h['name'],'source':f,'line':texts[f][:pos].count('\n')+1,'source_sha256':sha(P/f),'header_sha256':h['header_sha256']})
+ ck(texts['Solution.lean'].count('#print axioms '+h['name']+'\n')==1,'Retained entrypoint print '+h['name']);ck(texts['Solution.lean'].count('#assert_trust kernel '+h['name']+'\n')==1,'Retained entrypoint assert '+h['name'])
+for f,t in masked.items():
+ ck(not re.search(r'\b(sorry|admit|axiom|unsafe|native_decide|run_tac|elab|macro|initialize|implemented_by)\b|#eval|#reduce|ofReduceBool|trustCompiler',t),'No implementation hole or unsafe/native construct '+f)
+ ck(not re.search(r'set_option\s+(maxHeartbeats|maxRecDepth|debug.skipKernelTC|linter.unusedVariables)',t),'No kernel/resource/linter suppression '+f)
+ ck('Department of Computing and Mathematical Sciences, California Institute of Technology.' in texts[f],'Retained department and university '+f);ck(not re.search(r'[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}',texts[f]),'No email '+f)
+modules={('IE02Solution' if f=='Solution.lean' else f[:-5].replace('/','.')):f for f in texts};imports={m:[d for line in masked[f].splitlines() if line.startswith('import ') for d in line[7:].split() if d.startswith('NLA.')] for m,f in modules.items()};active=set();closures={}
+def visit(m):
+ ck(m not in active,'Acyclic import '+m)
+ if m in closures:return closures[m]
+ active.add(m);ds={m}
+ for d in imports[m]:ck(d in modules,'Closed declared dependency '+d);ds.update(visit(d))
+ active.remove(m);closures[m]=ds;return ds
+ck(len(visit('IE02Solution'))==len(modules)==55,'Full fifty-five module actual entrypoint closure');ck(imports['IE02Solution']==['NLA.IE02.CanonicalJordan'],'No forwarding import');ck(set(imports['NLA.IE02.JordanTransport'])=={'NLA.IE02.JordanReversal','NLA.IE02.SchurEnergy'},'Reuse import is acyclic and explicit');ck('NLA.IE02.Proof' not in modules,'Removed module absent')
+rp=O/'evidence/runs/development-123/RECEIPT.json';r=js(rp);rows={x['module']:x for x in r['commands']};ck(set(rows)==set(modules)==set(r['module_order']),'Exact actual123 closure');ck(len(rows)==r['completed_modules']==55 and r['failed_modules']==[] and r['blocked_modules']==[],'All actual123 modules successful');ck(sum('exit_code' in x for x in rows.values())==13 and sum('exit_code' not in x for x in rows.values())==42,'Thirteen actual fresh and forty-two exact reused modules');order={m:i for i,m in enumerate(r['module_order'])};ck(all(order[d]<order[m] for m in modules for d in imports[m]),'Actual compiler order topological')
+ck(r['max_compiler_processes']==1 and r['threads']==1 and r['memory_cap_mib']==4096 and r['platform']=='darwin','Serial macOS one-thread 4096 MiB resources');ck(sha(O/'evidence/serial_compile_v3.py.txt')==r['runner_sha256'],'Exact runner');ck(r['compiler_sha256']==review['pins']['lean_binary_sha256'],'Exact original compiler bytes recorded')
+a=js(O/'evidence/assemblies/ASSEMBLY-123.json');ck(sha(O/'evidence/assemblies/ASSEMBLY-123.json')==r['assembly_sha256'],'Exact assembly123');ck(sha(O/'evidence/LOCAL-ENVIRONMENT.json')==a['current_environment_sha256'],'Environment binding');complete=js(O/'evidence/IE02-LOCAL-COMPLETE-123.json');ck(complete['receipt_sha256']==sha(rp) and complete['assembly_sha256']==r['assembly_sha256'],'Root local summary bound to actual raw evidence')
+hops=0;receipts=set();origins=[];warnings=[]
+for m,row in rows.items():
+ f=modules[m];localrel=m.replace('.','/')+'.lean';ck(sha(P/f)==row['source_sha256']==r['source_inputs'][localrel]==a['sources'][localrel]['sha256']==complete['sources'][f],'Canonical/local/receipt/assembly source '+m);cur=row;path=rp
+ while True:
+  receipts.add(str(path));j=js(path);ar=O/'evidence/assemblies'/('ASSEMBLY-'+path.parent.name.split('-')[-1]+'.json');ck(sha(ar)==j['assembly_sha256'],'Historical assembly '+path.parent.name);ck(j['source_inputs'][localrel]==row['source_sha256']==cur['source_sha256'],'Historical exact source '+m);ck(cur['output_sha256']==row['output_sha256'],'Historical exact output '+m);ck(j['threads']==1 and j['memory_cap_mib']==4096,'Historical compiler resources '+m)
+  if cur.get('status')=='reused_exact_successful_local_output':
+   ck(set(cur['transitive_source_hashes'])=={d.replace('.','/')+'.lean' for d in closures[m]},'Exact current transitive source closure '+m)
+   for dep,h in cur['transitive_source_hashes'].items():ck(sha(P/('Solution.lean' if dep=='IE02Solution.lean' else dep))==h,'Transitive exact source '+dep)
+   prior=O/'evidence/runs'/Path(cur['prior_receipt']).parent.name/'RECEIPT.json';ck(sha(prior)==cur['prior_receipt_sha256'],'Authentic prior receipt '+m);cur=next(x for x in js(prior)['commands'] if x['module']==m);path=prior;hops+=1
+  else:
+   ck(cur['exit_code']==0,'Actual successful compiler invocation '+m);ck(set(cur['dependency_olean_sha256'])==set(imports[m]),'Actual exact import output set '+m)
+   for dep,h in cur['dependency_olean_sha256'].items():ck(rows[dep]['output_sha256']==h,'Exact current dependency output '+dep)
+   log=path.parent/(m+'.log');ck(sha(log)==cur['log_sha256'],'Actual raw successful log '+m);ck('--threads=1' in cur['argv'] and '--memory=4096' in cur['argv'],'Actual resource argv '+m);ck(not re.search(r'\berror:|sorryAx|nativeCompiler',log.read_text()),'No error or forbidden axiom in successful log '+m)
+   if path.parent.name=='development-123':warnings.extend(line for line in log.read_text().splitlines() if re.match(r'^NLA/IE02/[^:]+:\d+:\d+: warning:',line))
+   origins.append({'module':m,'run':path.parent.name,'command':cur['argv'],'source_sha256':cur['source_sha256'],'output_sha256':cur['output_sha256'],'log_sha256':cur['log_sha256'],'whole_run_failed_modules':j['failed_modules']});break
+ck(hops==238==snap['reuse_hops'] and len(receipts)==55==snap['receipt_files'],'Complete historical audit scope');ck(len(warnings)==3 and all('CanonicalJordan.lean:75:' in s for s in warnings),'Only three retained frozen unused-variable warnings')
+old_origins={x['module']:x for x in js(O/'original/AUDIT.json')['actual_success_origins']}
+for x in origins:
+ if x['run']!='development-123':ck(all(x[k]==old_origins[x['module']][k] for k in ['run','source_sha256','output_sha256','log_sha256']),'Reused actual origin unchanged from original full review '+x['module'])
+entry=(O/'evidence/runs/development-123/IE02Solution.log').read_text();observed=re.findall(r"'([^']+)' depends on axioms: \[([^\]]*)\]",entry);ck([n for n,_ in observed]==names,'All fifty actual aggregate trust outputs in order');ck(all(set(ax.split(', '))==allowed for _,ax in observed),'All fifty actual outputs exactly standard three axioms')
+ck(sum(t.count('interval_decide') for t in masked.values())==1 and masked['NLA/IE02/Numerical.lean'].count('interval_decide (trust := kernel)')==1,'Single unchanged kernel LeanCert proof');ck('mul_pos half_certificate hm' in masked['NLA/IE02/DescentSteps.lean'],'Actual LeanCert consumer retained');ck('NLA.IE02.Numerical' in closures['NLA.IE02.CanonicalJordan'],'Certificate remains in complete canonical dependency route')
+if not args.preseal:
+ man=js(O/'MANIFEST.json')
+ for f,h in man['files'].items():ck(sha(O/f)==h,'Manifest payload '+f)
+ ck(set(man['files'])=={str(p.relative_to(O)) for p in O.rglob('*') if p.is_file() and p!=O/'MANIFEST.json'},'Exhaustive manifest inventory including nested manifests')
+print(json.dumps({'result':'PASS','checks':len(checks),'scope':'Read-only cleanup source/evidence continuation; no Lean/Comparator/kernel/sandbox rerun','modules':55,'contracts':50,'frozen_inputs':13,'fresh_local_modules':13,'reused_local_modules':42,'reuse_hops':hops,'receipt_files':len(receipts),'original_external_sources_required':args.sources,'resolved_findings':['R1','R2','Q1','Q2'],'contracts_checked':contracts,'actual_success_origins':origins,'actual_fresh_warnings':warnings},indent=2))

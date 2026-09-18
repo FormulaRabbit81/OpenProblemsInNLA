@@ -1,0 +1,5 @@
+{
+  "name": "NLA.IE02.weighted_scalar_factorization",
+  "header": "theorem weighted_scalar_factorization {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (w : Fin l → ℝ) (hq : ∀ j, DegreeLE (q j) m) (hw : ∀ j, 0 ≤ w j) :\n    ∃ h : Poly, DegreeLE h m ∧\n      (∀ z : ℂ, ‖z‖ = 1 → ‖h.eval z‖ ^ 2 = ∑ j, w j * ‖(q j).eval z‖ ^ 2) ∧\n      h * conjReflect m h = ∑ j, C (w j : ℂ) * (q j * conjReflect m (q j))",
+  "header_sha256": "db286da2d0a94f79beb0ef7e89f49e0216a4c9a1d5f5a6abc8de0c0e680920c3"
+}

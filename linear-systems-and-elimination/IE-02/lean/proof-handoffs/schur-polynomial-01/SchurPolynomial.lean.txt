@@ -1,0 +1,157 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original IE-02 mathematical and library
+attribution is retained in Definitions.lean and SourceCorrespondence.md.
+Reuses Mathlib's polynomial degree, divX, Bezout and complex norm-square APIs.
+
+The scalar part of one finite Schur step. The parameter may be zero; the
+denominator is proved nonzero on the entire closed disk.
+-/
+import NLA.IE02.Definitions
+import Mathlib.Algebra.Polynomial.Inductions
+import LeanCert.Tactic
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+open Polynomial
+
+theorem schur_alpha_pos (c : ℂ) (hc : ‖c‖ < 1) : 0 < 1 - ‖c‖ ^ 2 := by
+  apply sub_pos.mpr
+  simpa only [one_pow] using
+    (sq_lt_sq₀ (norm_nonneg c) (show (0 : ℝ) ≤ 1 by norm_num)).mpr hc
+
+theorem schur_degree_C_mul_le (c : ℂ) (p : Poly) :
+    (C c * p).degree ≤ p.degree := by
+  rw [← Polynomial.smul_eq_C_mul]
+  exact Polynomial.degree_smul_le c p
+
+theorem schur_degree_mul_bound {d m : ℕ} (p q : Poly)
+    (hp : DegreeLE p d) (hq : DegreeLE q m) : DegreeLE (p * q) (d + m) := by
+  simpa only [DegreeLE, Nat.cast_add] using Polynomial.degree_mul_le_of_le hp hq
+
+theorem schur_polynomial_identities (c : ℂ) (a b : Poly) :
+    schurDenominator c a b - C (star c) * schurNumerator c a b =
+      C (((1 - ‖c‖ ^ 2 : ℝ) : ℂ)) * b ∧
+    schurNumerator c a b - C c * schurDenominator c a b =
+      C (((1 - ‖c‖ ^ 2 : ℝ) : ℂ)) * X * a := by
+  have hcnorm : ((‖c‖ ^ 2 : ℝ) : ℂ) = c * star c := by
+    rw [Complex.sq_norm]
+    exact (Complex.mul_conj c).symm
+  have hα : C (((1 - ‖c‖ ^ 2 : ℝ) : ℂ)) = 1 - C c * C (star c) := by
+    simp only [Complex.ofReal_sub, Complex.ofReal_one, hcnorm,
+      map_sub, map_one, map_mul]
+  constructor <;> simp only [schurNumerator, schurDenominator, hα] <;> ring
+
+theorem schur_polynomial_degrees {d : ℕ} (c : ℂ) (a b : Poly)
+    (ha : a.degree = (d : WithBot ℕ)) (hb : DegreeLE b d) (hb0 : b.coeff 0 = 1) :
+    (schurNumerator c a b).degree = (d + 1 : ℕ) ∧
+    DegreeLE (schurDenominator c a b) (d + 1) ∧
+    (schurDenominator c a b).coeff 0 = 1 := by
+  have hXa : (X * a).degree = (d + 1 : ℕ) := by
+    rw [mul_comm X a, Polynomial.degree_mul_X, ha]
+    simp only [Nat.cast_add, Nat.cast_one]
+  have hstep : (d : WithBot ℕ) < (d + 1 : ℕ) := WithBot.coe_lt_coe.mpr (by omega)
+  have hcb : (C c * b).degree < (X * a).degree := by
+    rw [hXa]
+    exact ((schur_degree_C_mul_le c b).trans hb).trans_lt hstep
+  refine ⟨(Polynomial.degree_add_eq_right_of_degree_lt hcb).trans hXa, ?_, ?_⟩
+  · apply Polynomial.degree_add_le_of_degree_le (hb.trans hstep.le)
+    rw [mul_assoc]
+    exact (schur_degree_C_mul_le (star c) (X * a)).trans hXa.le
+  · simp [schurDenominator, Polynomial.mul_coeff_zero, hb0]
+
+theorem schur_polynomial_coprime (c : ℂ) (a b : Poly) (hc : ‖c‖ < 1)
+    (hb0 : b.coeff 0 = 1) (hab : IsCoprime a b) :
+    IsCoprime (schurNumerator c a b) (schurDenominator c a b) := by
+  have hsplit : X * b.divX + 1 = b := by
+    simpa only [hb0, Polynomial.C_1] using Polynomial.X_mul_divX_add b
+  have hXb : IsCoprime (X : Poly) b := by
+    refine ⟨-b.divX, 1, ?_⟩
+    calc
+      -b.divX * X + 1 * b = b - X * b.divX := by ring
+      _ = 1 := sub_eq_iff_eq_add.mpr (hsplit.symm.trans (add_comm _ _))
+  obtain ⟨u, v, huv⟩ := hXb.mul_left hab
+  let α : ℂ := ((1 - ‖c‖ ^ 2 : ℝ) : ℂ)
+  have hα : α ≠ 0 := Complex.ofReal_ne_zero.mpr (ne_of_gt (schur_alpha_pos c hc))
+  obtain ⟨hD, hA⟩ := schur_polynomial_identities c a b
+  refine ⟨C α⁻¹ * (u - v * C (star c)), C α⁻¹ * (v - u * C c), ?_⟩
+  calc
+    C α⁻¹ * (u - v * C (star c)) * schurNumerator c a b +
+        C α⁻¹ * (v - u * C c) * schurDenominator c a b =
+        C α⁻¹ * (u * (schurNumerator c a b - C c * schurDenominator c a b) +
+          v * (schurDenominator c a b - C (star c) * schurNumerator c a b)) := by ring
+    _ = C α⁻¹ * (u * (C α * X * a) + v * (C α * b)) := by rw [hD, hA]
+    _ = (C α⁻¹ * C α) * (u * (X * a) + v * b) := by ring
+    _ = 1 := by rw [huv, mul_one, ← map_mul, inv_mul_cancel₀ hα, map_one]
+
+theorem schur_scalar_defect (c s t : ℂ) :
+    ‖s + star c * t‖ ^ 2 - ‖c * s + t‖ ^ 2 =
+      (1 - ‖c‖ ^ 2) * (‖s‖ ^ 2 - ‖t‖ ^ 2) := by
+  -- The two mixed terms coincide by conjugation and complex commutativity.
+  have hcross : (s * star (star c * t)).re = (c * s * star t).re := by
+    rw [star_mul, star_star]
+    congr 1
+    ring
+  have hstar : Complex.normSq (star c) = Complex.normSq c := Complex.normSq_conj c
+  simp only [Complex.sq_norm, Complex.normSq_add, Complex.normSq_mul,
+    starRingEnd_apply, hstar, hcross]
+  ring
+
+theorem schur_polynomial_disk_boundary (c : ℂ) (a b : Poly) (hc : ‖c‖ < 1)
+    (hdisk : ∀ z : ℂ, ‖z‖ ≤ 1 → b.eval z ≠ 0 ∧ ‖a.eval z‖ ≤ ‖b.eval z‖)
+    (hcircle : ∀ z : ℂ, ‖z‖ = 1 → ‖a.eval z‖ = ‖b.eval z‖) :
+    (∀ z : ℂ, ‖z‖ ≤ 1 → (schurDenominator c a b).eval z ≠ 0 ∧
+      ‖(schurNumerator c a b).eval z‖ ≤ ‖(schurDenominator c a b).eval z‖) ∧
+    (∀ z : ℂ, ‖z‖ = 1 →
+      ‖(schurNumerator c a b).eval z‖ = ‖(schurDenominator c a b).eval z‖) := by
+  have hA (z : ℂ) : (schurNumerator c a b).eval z = c * b.eval z + z * a.eval z := by
+    simp [schurNumerator]
+  have hD (z : ℂ) : (schurDenominator c a b).eval z = b.eval z + star c * (z * a.eval z) := by
+    simp [schurDenominator, mul_assoc]
+  have hα := schur_alpha_pos c hc
+  constructor
+  · intro z hz
+    obtain ⟨hbne, hab⟩ := hdisk z hz
+    have hmag : ‖z * a.eval z‖ ≤ ‖b.eval z‖ := by
+      rw [norm_mul]
+      exact (mul_le_mul_of_nonneg_right hz (norm_nonneg _)).trans (by simpa using hab)
+    refine ⟨?_, ?_⟩
+    · intro hzero
+      rw [hD] at hzero
+      have heq : b.eval z = -(star c * (z * a.eval z)) := by
+        simpa only [add_sub_cancel_right, zero_sub] using
+          congrArg (fun w : ℂ => w - star c * (z * a.eval z)) hzero
+      have heqnorm : ‖b.eval z‖ = ‖c‖ * ‖z * a.eval z‖ := by
+        rw [heq, norm_neg, norm_mul, norm_star]
+      have hle : ‖b.eval z‖ ≤ ‖c‖ * ‖b.eval z‖ :=
+        heqnorm.trans_le (mul_le_mul_of_nonneg_left hmag (norm_nonneg c))
+      have hlt : ‖c‖ * ‖b.eval z‖ < ‖b.eval z‖ := by
+        simpa only [one_mul] using mul_lt_mul_of_pos_right hc (norm_pos_iff.mpr hbne)
+      exact (not_lt_of_ge hle) hlt
+    · rw [hA, hD]
+      have he := schur_scalar_defect c (b.eval z) (z * a.eval z)
+      have hs := (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mpr hmag
+      have hnonneg := mul_nonneg hα.le (sub_nonneg.mpr hs)
+      apply (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mp
+      linarith
+  · intro z hz
+    rw [hA, hD]
+    have hmag : ‖z * a.eval z‖ = ‖b.eval z‖ := by
+      rw [norm_mul, hz, one_mul, hcircle z hz]
+    have he := schur_scalar_defect c (b.eval z) (z * a.eval z)
+    rw [hmag, sub_self, mul_zero] at he
+    exact (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).mp (sub_eq_zero.mp he).symm
+
+#print axioms schur_polynomial_degrees
+#assert_trust kernel schur_polynomial_degrees
+#print axioms schur_polynomial_coprime
+#assert_trust kernel schur_polynomial_coprime
+#print axioms schur_polynomial_disk_boundary
+#assert_trust kernel schur_polynomial_disk_boundary
+
+end
+end NLA.IE02

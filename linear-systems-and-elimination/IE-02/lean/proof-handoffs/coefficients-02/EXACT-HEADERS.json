@@ -1,0 +1,10 @@
+{
+  "coefficient_roundtrip": {
+    "header": "theorem coefficient_roundtrip (n : ℕ) :\n    (∀ x : H n, coeffVector n (vectorPolynomial x) = x ∧\n      DegreeLT (vectorPolynomial x) n) ∧\n    (∀ p : Poly, DegreeLT p n → vectorPolynomial (coeffVector n p) = p) := by",
+    "sha256": "fd960aeba6f905c4d2482e6c3d1c726bb664126a254ce75f1c926b5e364ccfe7"
+  },
+  "coefficient_inner_product": {
+    "header": "theorem coefficient_inner_product (n N : ℕ) (p q : Poly) (hp : DegreeLE p N) :\n    ‖coeffVector n p‖ ^ 2 = ∑ i : Fin n, ‖p.coeff i.val‖ ^ 2 ∧\n    (conjReflect N p * q).coeff N =\n      inner ℂ (coeffVector (N + 1) p) (coeffVector (N + 1) q) := by",
+    "sha256": "8fa8d5fb104a510d77e9850c5b1814ec974de14679b0806f91795ed8c0d1324e"
+  }
+}

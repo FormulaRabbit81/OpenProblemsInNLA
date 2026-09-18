@@ -1,0 +1,23 @@
+[
+  {
+    "name": "toeplitz_action",
+    "module": "Toeplitz",
+    "frozen_ordinal": 3,
+    "header": "theorem toeplitz_action {n : ℕ} (p : Poly) (x : H n) :\n    euclideanLin (toeplitz n p) x = coeffVector n (p * vectorPolynomial x) := by",
+    "header_sha256": "dd05f2047d52a9c32184a8129bb3898149436f42188568846abc1b0cda3f653d"
+  },
+  {
+    "name": "toeplitz_algebra",
+    "module": "Toeplitz",
+    "frozen_ordinal": 4,
+    "header": "theorem toeplitz_algebra (n : ℕ) (p q : Poly) (c : ℂ) :\n    toeplitz n (1 : Poly) = 1 ∧\n    toeplitz n (p + q) = toeplitz n p + toeplitz n q ∧\n    toeplitz n (p * q) = toeplitz n p * toeplitz n q ∧\n    toeplitz n (C c * p) = c • toeplitz n p ∧\n    shift n ^ n = 0 ∧ polyEval p (shift n) = toeplitz n p := by",
+    "header_sha256": "a2527f12b8a24966f57fb960234f933d596f2edf43ad9e77ef07ae3965248a59"
+  },
+  {
+    "name": "nilpotent_inverse",
+    "module": "NilpotentInverse",
+    "frozen_ordinal": 5,
+    "header": "theorem nilpotent_inverse {n : ℕ} (α : ℂ) (K : Square n)\n    (hα : α ≠ 0) (hK : K ^ n = 0) :\n    (α • 1 + K) * finiteInverse α K = 1 ∧\n    finiteInverse α K * (α • 1 + K) = 1 ∧\n    (IsToeplitz K → IsToeplitz (finiteInverse α K)) := by",
+    "header_sha256": "21bd8de63d65c51fb9187e2e801f0257a406f4f874d499c588eea812373ea683"
+  }
+]

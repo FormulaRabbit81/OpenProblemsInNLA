@@ -1,0 +1,255 @@
+Mathlib/Probability/Kernel/IonescuTulcea/Traj.lean:66:The kernel `traj κ a` is built using the Carathéodory extension theorem. First we build a projective
+Mathlib/Probability/Kernel/IonescuTulcea/Traj.lean:345:which allows to extend it to the `σ`-algebra by Carathéodory's theorem. -/
+Mathlib/Probability/ProductMeasure.lean:38:over an arbitrary type by extending `piContent μ` thanks to Carathéodory's theorem. The key lemma
+Mathlib/Probability/ProductMeasure.lean:266:which allows to extend it to the `σ`-algebra by Carathéodory's theorem. -/
+Mathlib/Probability/ProbabilityMassFunction/Basic.lean:23:Under this outer measure, every set is Carathéodory-measurable,
+Mathlib/Probability/ProbabilityMassFunction/Basic.lean:146:theorem toOuterMeasure_caratheodory : p.toOuterMeasure.caratheodory = ⊤ := by
+Mathlib/Probability/ProbabilityMassFunction/Basic.lean:147:  refine eq_top_iff.2 <| le_trans (le_sInf fun x hx => ?_) (le_sum_caratheodory _)
+Mathlib/Probability/ProbabilityMassFunction/Basic.lean:150:    ((le_of_eq (dirac_caratheodory y).symm).trans (le_smul_caratheodory _ _)).trans (le_of_eq hy)
+Mathlib/Probability/ProbabilityMassFunction/Basic.lean:211:/-- Since every set is Carathéodory-measurable under `PMF.toOuterMeasure`,
+Mathlib/Probability/ProbabilityMassFunction/Basic.lean:214:  p.toOuterMeasure.toMeasure (p.toOuterMeasure_caratheodory.symm ▸ le_top)
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:11:# Vitali-Carathéodory theorem
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:13:Vitali-Carathéodory theorem asserts the following. Consider an integrable function `f : α → ℝ` on
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:22:The most classical version of Vitali-Carathéodory theorem only ensures a large inequality
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:26:the classical Vitali-Carathéodory theorem. Since this is satisfied in all applications, this is
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:91:Auxiliary lemma for Vitali-Carathéodory theorem `exists_lt_lower_semicontinuous_integral_lt`. -/
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:156:Auxiliary lemma for Vitali-Carathéodory theorem `exists_lt_lower_semicontinuous_integral_lt`. -/
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:193:Auxiliary lemma for Vitali-Carathéodory theorem `exists_lt_lower_semicontinuous_integral_lt`. -/
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:219:Auxiliary lemma for Vitali-Carathéodory theorem `exists_lt_lower_semicontinuous_integral_lt`. -/
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:256:Auxiliary lemma for Vitali-Carathéodory theorem `exists_lt_lower_semicontinuous_integral_lt`. -/
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:306:Auxiliary lemma for Vitali-Carathéodory theorem `exists_lt_lower_semicontinuous_integral_lt`. -/
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:355:Auxiliary lemma for Vitali-Carathéodory theorem `exists_lt_lower_semicontinuous_integral_lt`. -/
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:387:Auxiliary lemma for Vitali-Carathéodory theorem `exists_lt_lower_semicontinuous_integral_lt`. -/
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:416:/-! ### Vitali-Carathéodory theorem -/
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:419:/-- **Vitali-Carathéodory Theorem**: given an integrable real function `f`, there exists an
+Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean:496:/-- **Vitali-Carathéodory Theorem**: given an integrable real function `f`, there exists an
+Mathlib/MeasureTheory/Integral/IntervalIntegral/FundThmCalculus.lean:11:public import Mathlib.MeasureTheory.Integral.Bochner.VitaliCaratheodory
+Mathlib/MeasureTheory/Integral/IntervalIntegral/FundThmCalculus.lean:955:integral close to that of `g'` (its existence is guaranteed by the Vitali-Carathéodory theorem).
+Mathlib/Analysis/InnerProductSpace/Symmetric.lean:255:/-- The **Hellinger--Toeplitz theorem**: if a symmetric operator is defined on a complete space,
+Mathlib/Analysis/InnerProductSpace/Adjoint.lean:526:/-- The **Hellinger--Toeplitz theorem**: Construct a self-adjoint operator from an everywhere
+Mathlib/Analysis/Complex/BorelCaratheodory.lean:12:# Borel-Carathéodory theorem
+Mathlib/Analysis/Complex/BorelCaratheodory.lean:14:This file proves the Borel-Carathéodory theorem: for any function `f` analytic on the
+Mathlib/Analysis/Complex/BorelCaratheodory.lean:20:* `Complex.borelCaratheodory_zero`: The theorem under the assumption `f 0 = 0`
+Mathlib/Analysis/Complex/BorelCaratheodory.lean:21:* `Complex.borelCaratheodory`: The general version of the theorem
+Mathlib/Analysis/Complex/BorelCaratheodory.lean:31:complex analysis, Borel, Carathéodory, analytic function, growth bound
+Mathlib/Analysis/Complex/BorelCaratheodory.lean:43:Schwarz transform used in the proof of the Borel-Carathéodory theorem. -/
+Mathlib/Analysis/Complex/BorelCaratheodory.lean:80:section BorelCaratheodory
+Mathlib/Analysis/Complex/BorelCaratheodory.lean:82:/-- **Borel-Carathéodory theorem** for functions vanishing at the origin.
+Mathlib/Analysis/Complex/BorelCaratheodory.lean:86:public theorem borelCaratheodory_zero (hM : 0 < M) (hf : DifferentiableOn ℂ f (ball 0 R))
+Mathlib/Analysis/Complex/BorelCaratheodory.lean:105:/-- **Borel-Carathéodory theorem**.
+Mathlib/Analysis/Complex/BorelCaratheodory.lean:109:public theorem borelCaratheodory (hM : 0 < M) (hf : DifferentiableOn ℂ f (ball 0 R))
+Mathlib/Analysis/Complex/BorelCaratheodory.lean:113:    apply borelCaratheodory_zero (by positivity) (by fun_prop) ?_ hR hz (by simp)
+Mathlib/Analysis/Complex/BorelCaratheodory.lean:123:end BorelCaratheodory
+Mathlib/Analysis/Convex/KreinMilman.lean:45:Krein-Milman theorem. This leads to the Minkowski-Carathéodory theorem (currently not in mathlib).
+Mathlib/Analysis/Convex/KreinMilman.lean:46:Birkhoff's theorem is the Minkowski-Carathéodory theorem applied to the set of bistochastic
+Mathlib/Analysis/Convex/Independent.lean:26:* `convexIndependent_iff_finset`: Carathéodory's theorem allows us to only check finsets to
+Mathlib/Analysis/Convex/Independent.lean:171:/-- To check convex independence, one only has to check finsets thanks to Carathéodory's theorem. -/
+Mathlib/Analysis/Convex/Combination.lean:428:/-- A weak version of Carathéodory's theorem. -/
+Mathlib/Analysis/Convex/Caratheodory.lean:13:# Carathéodory's convexity theorem
+Mathlib/Analysis/Convex/Caratheodory.lean:19:The cost of this refinement is that one no longer has bases. However Carathéodory's convexity
+Mathlib/Analysis/Convex/Caratheodory.lean:21:Carathéodory says that one may find an affine-independent family of elements `s` whose convex hull
+Mathlib/Analysis/Convex/Caratheodory.lean:25:In particular, in finite dimensions Carathéodory's theorem implies that the convex hull of a set `s`
+Mathlib/Analysis/Convex/Caratheodory.lean:30:* `convexHull_eq_union`: Carathéodory's convexity theorem
+Mathlib/Analysis/Convex/Caratheodory.lean:37:convex hull, caratheodory
+Mathlib/Analysis/Convex/Caratheodory.lean:51:namespace Caratheodory
+Mathlib/Analysis/Convex/Caratheodory.lean:144:end Caratheodory
+Mathlib/Analysis/Convex/Caratheodory.lean:148:/-- **Carathéodory's convexity theorem** -/
+Mathlib/Analysis/Convex/Caratheodory.lean:154:    exact ⟨Caratheodory.minCardFinsetOfMemConvexHull hx,
+Mathlib/Analysis/Convex/Caratheodory.lean:155:      Caratheodory.minCardFinsetOfMemConvexHull_subseteq hx,
+Mathlib/Analysis/Convex/Caratheodory.lean:156:      Caratheodory.affineIndependent_minCardFinsetOfMemConvexHull hx,
+Mathlib/Analysis/Convex/Caratheodory.lean:157:      Caratheodory.mem_minCardFinsetOfMemConvexHull hx⟩
+Mathlib/MeasureTheory/Measure/Stieltjes.lean:446:theorem measurableSet_Ioi {c : R} : MeasurableSet[f.outer.caratheodory] (Ioi c) := by
+Mathlib/MeasureTheory/Measure/Stieltjes.lean:447:  refine OuterMeasure.ofFunction_caratheodory fun t => ?_
+Mathlib/MeasureTheory/Measure/Stieltjes.lean:506:    borel R ≤ f.outer.caratheodory := by
+Mathlib/MeasureTheory/Measure/Stieltjes.lean:519:  m_iUnion _s hs := f.outer.iUnion_eq_of_caratheodory fun i => f.borel_le_measurable _ <| by
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:20:the Hausdorff measure `μH[d] s` of `s` is defined as `⨆ δ > 0, μ d δ s`. By Carathéodory's theorem
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:21:`MeasureTheory.OuterMeasure.IsMetric.borel_le_caratheodory`, this is a Borel measure on `X`.
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:43:`⨅ (x ∈ s) (y ∈ t), edist x y ≠ 0`. This is the property required for Carathéodory's theorem
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:44:`MeasureTheory.OuterMeasure.IsMetric.borel_le_caratheodory`, so we prove this theorem for any
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:52:  Borel extended metric space is guaranteed to satisfy the Carathéodory condition, see
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:53:  `MeasureTheory.OuterMeasure.IsMetric.borel_le_caratheodory`.
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:71:* `MeasureTheory.OuterMeasure.IsMetric.borel_le_caratheodory`: if `μ` is a metric outer measure
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:73:  every Borel set is Carathéodory measurable (hence, `μ` defines an actual
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:130:In this section we define metric outer measures and prove Carathéodory's theorem: a metric outer
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:131:measure has the Carathéodory property.
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:158:/-- **Carathéodory's theorem**. If `m` is a metric outer measure, then every Borel measurable set
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:159:`t` is Carathéodory measurable: for any (not necessarily measurable) set `s` we have
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:161:theorem borel_le_caratheodory (hm : IsMetric μ) : borel X ≤ μ.caratheodory := by
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:163:  refine MeasurableSpace.generateFrom_le fun t ht => μ.isCaratheodory_iff_le.2 fun s => ?_
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:229:theorem le_caratheodory [MeasurableSpace X] [BorelSpace X] (hm : IsMetric μ) :
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:230:    ‹MeasurableSpace X› ≤ μ.caratheodory := by
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:232:  exact hm.borel_le_caratheodory
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:417:  (OuterMeasure.mkMetric' m).toMeasure (OuterMeasure.mkMetric'_isMetric _).le_caratheodory
+Mathlib/MeasureTheory/Measure/Hausdorff.lean:423:  (OuterMeasure.mkMetric m).toMeasure (OuterMeasure.mkMetric'_isMetric _).le_caratheodory
+Mathlib/MeasureTheory/Measure/Content.lean:297:theorem outerMeasure_caratheodory (A : Set G) :
+Mathlib/MeasureTheory/Measure/Content.lean:298:    MeasurableSet[μ.outerMeasure.caratheodory] A ↔
+Mathlib/MeasureTheory/Measure/Content.lean:301:  apply inducedOuterMeasure_caratheodory
+Mathlib/MeasureTheory/Measure/Content.lean:315:theorem borel_le_caratheodory : S ≤ μ.outerMeasure.caratheodory := by
+Mathlib/MeasureTheory/Measure/Content.lean:319:  rw [μ.outerMeasure_caratheodory]
+Mathlib/MeasureTheory/Measure/Content.lean:357:  μ.outerMeasure.toMeasure μ.borel_le_caratheodory
+Mathlib/MeasureTheory/Measure/NullMeasurable.lean:263:/-- A null measurable set `t` is Carathéodory measurable: for any `s`, we have
+Mathlib/MeasureTheory/Measure/Restrict.lean:45:    exact le_toOuterMeasure_caratheodory _ _ hs' _
+Mathlib/MeasureTheory/Measure/Map.lean:44:set is Carathéodory-measurable w.r.t. `f μ` to a linear map between `Measure` spaces. -/
+Mathlib/MeasureTheory/Measure/Map.lean:47:    (hf : ∀ μ : Measure α, ‹_› ≤ (f μ.toOuterMeasure).caratheodory) :
+Mathlib/MeasureTheory/Measure/Map.lean:77:      le_toOuterMeasure_caratheodory μ _ (hf hs) (f ⁻¹' t)
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:57:  all measurable sets in the measurable space are Carathéodory measurable.
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:778:  Carathéodory measurable. -/
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:779:def OuterMeasure.toMeasure (m : OuterMeasure α) (h : ms ≤ m.caratheodory) : Measure α :=
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:781:    m.iUnion_eq_of_caratheodory (fun i => h _ (hf i)) hd
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:783:theorem le_toOuterMeasure_caratheodory (μ : Measure α) : ms ≤ μ.toOuterMeasure.caratheodory :=
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:787:theorem toMeasure_toOuterMeasure (m : OuterMeasure α) (h : ms ≤ m.caratheodory) :
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:792:theorem toMeasure_apply (m : OuterMeasure α) (h : ms ≤ m.caratheodory) {s : Set α}
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:796:theorem le_toMeasure_apply (m : OuterMeasure α) (h : ms ≤ m.caratheodory) (s : Set α) :
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:800:theorem toMeasure_apply₀ (m : OuterMeasure α) (h : ms ≤ m.caratheodory) {s : Set α}
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:811:    μ.toOuterMeasure.toMeasure (le_toOuterMeasure_caratheodory _) = μ :=
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:873:    [ms : MeasurableSpace α] (h : ms ≤ (0 : OuterMeasure α).caratheodory) :
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:879:    {μ : OuterMeasure α} (h : ms ≤ μ.caratheodory) : μ.toMeasure h = 0 ↔ μ = 0 where
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:1134:theorem sInf_caratheodory (s : Set α) (hs : MeasurableSet s) :
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:1135:    MeasurableSet[(sInf (toOuterMeasure '' m)).caratheodory] s := by
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:1137:  refine OuterMeasure.boundedBy_caratheodory fun t => ?_
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:1149:  ⟨fun m => (sInf (toOuterMeasure '' m)).toMeasure <| sInf_caratheodory⟩
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:1252:    (⊤ : OuterMeasure α).toMeasure (by rw [OuterMeasure.top_caratheodory]; exact le_top) =
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:1303:    le_trans (le_iInf fun _ => le_toOuterMeasure_caratheodory _)
+Mathlib/MeasureTheory/Measure/MeasureSpace.lean:1304:      (OuterMeasure.le_sum_caratheodory _)
+Mathlib/MeasureTheory/Measure/Comap.lean:47:      apply le_toOuterMeasure_caratheodory
+Mathlib/MeasureTheory/OuterMeasure/Induced.lean:10:public import Mathlib.MeasureTheory.OuterMeasure.Caratheodory
+Mathlib/MeasureTheory/OuterMeasure/Induced.lean:234:/-- To test whether `s` is Carathéodory-measurable we only need to check the sets `t` for which
+Mathlib/MeasureTheory/OuterMeasure/Induced.lean:235:  `P t` holds. See `ofFunction_caratheodory` for another way to show the Carathéodory-measurability
+Mathlib/MeasureTheory/OuterMeasure/Induced.lean:238:theorem inducedOuterMeasure_caratheodory (s : Set α) :
+Mathlib/MeasureTheory/OuterMeasure/Induced.lean:239:    MeasurableSet[(inducedOuterMeasure m P0 m0).caratheodory] s ↔
+Mathlib/MeasureTheory/OuterMeasure/Induced.lean:244:  rw [isCaratheodory_iff_le]
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:12:# The Carathéodory σ-algebra of an outer measure
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:14:Given an outer measure `m`, the Carathéodory-measurable sets are the sets `s` such that
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:19:* `MeasureTheory.OuterMeasure.caratheodory` is the Carathéodory-measurable space
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:29:Carathéodory-measurable, Carathéodory's criterion
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:43:section CaratheodoryMeasurable
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:53:/-- A set `s` is Carathéodory-measurable for an outer measure `m` if for all sets `t` we have
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:55:def IsCaratheodory (s : Set α) : Prop :=
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:58:theorem isCaratheodory_iff_le' {s : Set α} :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:59:    IsCaratheodory m s ↔ ∀ t, m (t ∩ s) + m (t \ s) ≤ m t :=
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:63:theorem isCaratheodory_empty : IsCaratheodory m ∅ := by simp [IsCaratheodory, sdiff_empty]
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:65:theorem isCaratheodory_compl : IsCaratheodory m s₁ → IsCaratheodory m s₁ᶜ := by
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:66:  simp [IsCaratheodory, sdiff_eq, add_comm]
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:69:theorem isCaratheodory_compl_iff : IsCaratheodory m sᶜ ↔ IsCaratheodory m s :=
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:70:  ⟨fun h => by simpa using isCaratheodory_compl m h, isCaratheodory_compl m⟩
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:72:theorem isCaratheodory_union (h₁ : IsCaratheodory m s₁) (h₂ : IsCaratheodory m s₂) :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:73:    IsCaratheodory m (s₁ ∪ s₂) := fun t => by
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:80:lemma IsCaratheodory.biUnion_of_finite {ι : Type*} {s : ι → Set α} {t : Set ι} (ht : t.Finite)
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:81:    (h : ∀ i ∈ t, m.IsCaratheodory (s i)) :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:82:    m.IsCaratheodory (⋃ i ∈ t, s i) := by
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:89:    exact m.isCaratheodory_union (h _ <| Or.inl rfl) (IH fun _ hj ↦ h _ <| Or.inr hj)
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:91:theorem measure_inter_union (h : s₁ ∩ s₂ ⊆ ∅) (h₁ : IsCaratheodory m s₁) {t : Set α} :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:96:theorem isCaratheodory_iUnion_lt {s : ℕ → Set α} :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:97:    ∀ {n : ℕ}, (∀ i < n, IsCaratheodory m (s i)) → IsCaratheodory m (⋃ i < n, s i)
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:101:    exact isCaratheodory_union m
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:102:            (isCaratheodory_iUnion_lt fun i hi => h i <| lt_of_lt_of_le hi <| Nat.le_succ _)
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:105:theorem isCaratheodory_inter (h₁ : IsCaratheodory m s₁) (h₂ : IsCaratheodory m s₂) :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:106:    IsCaratheodory m (s₁ ∩ s₂) := by
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:107:  rw [← isCaratheodory_compl_iff, Set.compl_inter]
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:108:  exact isCaratheodory_union _ (isCaratheodory_compl _ h₁) (isCaratheodory_compl _ h₂)
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:110:lemma isCaratheodory_sdiff (h₁ : IsCaratheodory m s₁) (h₂ : IsCaratheodory m s₂) :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:111:    IsCaratheodory m (s₁ \ s₂) := m.isCaratheodory_inter h₁ (m.isCaratheodory_compl h₂)
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:113:@[deprecated (since := "2026-06-03")] alias isCaratheodory_diff := isCaratheodory_sdiff
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:115:lemma isCaratheodory_partialSups {ι : Type*} [Preorder ι] [LocallyFiniteOrderBot ι]
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:116:    {s : ι → Set α} (h : ∀ i, m.IsCaratheodory (s i)) (i : ι) :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:117:    m.IsCaratheodory (partialSups s i) := by
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:121:lemma isCaratheodory_disjointed {ι : Type*} [Preorder ι] [LocallyFiniteOrderBot ι]
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:122:    {s : ι → Set α} (h : ∀ i, m.IsCaratheodory (s i)) (i : ι) :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:123:    m.IsCaratheodory (disjointed s i) :=
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:124:  disjointedRec (fun _ j ht ↦ m.isCaratheodory_sdiff ht <| h j) (h i)
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:126:theorem isCaratheodory_sum {s : ℕ → Set α} (h : ∀ i, IsCaratheodory m (s i))
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:131:    rw [biUnion_lt_succ, Finset.sum_range_succ, Set.union_comm, isCaratheodory_sum h hd,
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:136:/-- Use `isCaratheodory_iUnion` instead, which does not require the disjoint assumption. -/
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:137:theorem isCaratheodory_iUnion_of_disjoint {s : ℕ → Set α} (h : ∀ i, IsCaratheodory m (s i))
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:138:    (hd : Pairwise (Disjoint on s)) : IsCaratheodory m (⋃ i, s i) := by
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:139:  apply (isCaratheodory_iff_le' m).mpr
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:144:    · simp [ENNReal.tsum_eq_iSup_nat, isCaratheodory_sum m h hd]
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:147:  rw [isCaratheodory_iUnion_lt _ (fun i _ => h i) t (n := n)]
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:151:lemma isCaratheodory_iUnion {s : ℕ → Set α} (h : ∀ i, m.IsCaratheodory (s i)) :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:152:    m.IsCaratheodory (⋃ i, s i) := by
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:154:  exact m.isCaratheodory_iUnion_of_disjoint (m.isCaratheodory_disjointed h)
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:157:theorem f_iUnion {s : ℕ → Set α} (h : ∀ i, IsCaratheodory m (s i)) (hd : Pairwise (Disjoint on s)) :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:162:  have := @isCaratheodory_sum _ m _ h hd univ n
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:166:/-- The Carathéodory-measurable sets for an outer measure `m` form a Dynkin system. -/
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:167:def caratheodoryDynkin : MeasurableSpace.DynkinSystem α where
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:168:  Has := IsCaratheodory m
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:169:  has_empty := isCaratheodory_empty m
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:170:  has_compl s := isCaratheodory_compl m s
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:171:  has_iUnion_nat _ hf hn := by apply isCaratheodory_iUnion m hf
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:173:/-- Given an outer measure `μ`, the Carathéodory-measurable space is
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:176:protected def caratheodory : MeasurableSpace α := by
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:177:  apply MeasurableSpace.DynkinSystem.toMeasurableSpace (caratheodoryDynkin m)
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:179:  apply isCaratheodory_inter
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:181:theorem isCaratheodory_iff {s : Set α} :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:182:    MeasurableSet[OuterMeasure.caratheodory m] s ↔ ∀ t, m t = m (t ∩ s) + m (t \ s) :=
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:185:theorem isCaratheodory_iff_le {s : Set α} :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:186:    MeasurableSet[OuterMeasure.caratheodory m] s ↔ ∀ t, m (t ∩ s) + m (t \ s) ≤ m t :=
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:187:  isCaratheodory_iff_le' m
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:189:protected theorem iUnion_eq_of_caratheodory {s : ℕ → Set α}
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:190:    (h : ∀ i, MeasurableSet[OuterMeasure.caratheodory m] (s i)) (hd : Pairwise (Disjoint on s)) :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:194:end CaratheodoryMeasurable
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:198:theorem ofFunction_caratheodory {m : Set α → ℝ≥0∞} {s : Set α} {h₀ : m ∅ = 0}
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:200:    MeasurableSet[(OuterMeasure.ofFunction m h₀).caratheodory] s := by
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:201:  apply (isCaratheodory_iff_le _).mpr
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:215:theorem boundedBy_caratheodory {m : Set α → ℝ≥0∞} {s : Set α}
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:216:    (hs : ∀ t, m (t ∩ s) + m (t \ s) ≤ m t) : MeasurableSet[(boundedBy m).caratheodory] s := by
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:217:  apply ofFunction_caratheodory; intro t
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:225:theorem zero_caratheodory : (0 : OuterMeasure α).caratheodory = ⊤ :=
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:228:theorem top_caratheodory : (⊤ : OuterMeasure α).caratheodory = ⊤ :=
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:230:    (isCaratheodory_iff_le _).2 fun t =>
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:234:theorem le_add_caratheodory (m₁ m₂ : OuterMeasure α) :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:235:    m₁.caratheodory ⊓ m₂.caratheodory ≤ (m₁ + m₂ : OuterMeasure α).caratheodory :=
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:238:theorem le_sum_caratheodory {ι} (m : ι → OuterMeasure α) :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:239:    ⨅ i, (m i).caratheodory ≤ (sum m).caratheodory := fun s h t => by
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:242:theorem le_smul_caratheodory (a : ℝ≥0∞) (m : OuterMeasure α) :
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:243:    m.caratheodory ≤ (a • m).caratheodory := fun s h t => by
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:245:      rw [(isCaratheodory_iff m).mp h t]
+Mathlib/MeasureTheory/OuterMeasure/Caratheodory.lean:249:theorem dirac_caratheodory (a : α) : (dirac a).caratheodory = ⊤ :=
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:12:# Carathéodory's extension theorem
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:15:Then all sets in the sigma-algebra generated by `C` are Carathéodory measurable with respect to
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:20:* `MeasureTheory.AddContent.measureCaratheodory`:
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:22:  measure is defined on the associated Carathéodory sigma-algebra.
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:30:* `MeasureTheory.AddContent.isCaratheodory_inducedOuterMeasure_of_mem`: all sets of the semiring are
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:31:  Carathéodory measurable with respect to the outer measure induced by a sigma-subadditive content.
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:32:* `MeasureTheory.AddContent.isCaratheodory_inducedOuterMeasure`: all sets of the sigma-algebra
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:33:  generated by the semiring are Carathéodory measurable with respect to the outer measure induced
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:35:* `MeasureTheory.AddContent.measureCaratheodory_eq`: The measure
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:36:  `MeasureTheory.AddContent.measureCaratheodory` generated from an `m : AddContent C`
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:85:theorem isCaratheodory_ofFunction_of_mem (hC : IsSetSemiring C) (m : AddContent ℝ≥0∞ C)
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:87:    (OuterMeasure.ofFunction m addContent_empty).IsCaratheodory s := by
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:88:  rw [OuterMeasure.isCaratheodory_iff_le']
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:116:/-- Every `s ∈ C` for an `m : AddContent C` with `IsSetSemiring C` is Carathéodory measurable
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:118:theorem isCaratheodory_inducedOuterMeasure_of_mem (hC : IsSetSemiring C) (m : AddContent ℝ≥0∞ C)
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:120:    (inducedOuterMeasure (fun x _ ↦ m x) hC.empty_mem addContent_empty).IsCaratheodory s :=
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:121:  isCaratheodory_ofFunction_of_mem hC (m.extend hC) (fun _ ↦ m.extend_eq_top hC) hs
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:123:theorem isCaratheodory_inducedOuterMeasure (hC : IsSetSemiring C) (m : AddContent ℝ≥0∞ C)
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:125:    (inducedOuterMeasure (fun x _ ↦ m x) hC.empty_mem addContent_empty).IsCaratheodory s := by
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:127:  | basic u hu => exact isCaratheodory_inducedOuterMeasure_of_mem hC m hu
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:128:  | empty => exact OuterMeasure.isCaratheodory_empty _
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:129:  | compl t _ h => exact OuterMeasure.isCaratheodory_compl _ h
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:130:  | iUnion f _ h => exact OuterMeasure.isCaratheodory_iUnion _ h
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:133:measure is defined on the associated Carathéodory sigma-algebra. -/
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:134:noncomputable def measureCaratheodory (m : AddContent ℝ≥0∞ C) (hC : IsSetSemiring C)
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:136:    @Measure α (inducedOuterMeasure (fun x _ ↦ m x) hC.empty_mem addContent_empty).caratheodory :=
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:138:    (inducedOuterMeasure (fun x _ ↦ m x) hC.empty_mem addContent_empty).caratheodory
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:140:    m_iUnion := fun f hf hd ↦ OuterMeasure.iUnion_eq_of_caratheodory _ hf hd
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:144:          addContent_empty).caratheodory] s := by
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:145:        change (inducedOuterMeasure (fun x _ ↦ m x) hC.empty_mem addContent_empty).IsCaratheodory s
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:146:        exact isCaratheodory_inducedOuterMeasure_of_mem hC m hs
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:149:/-- The measure `MeasureTheory.AddContent.measureCaratheodory` generated from an
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:151:theorem measureCaratheodory_eq_inducedOuterMeasure (hC : IsSetSemiring C) (m : AddContent ℝ≥0∞ C)
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:153:    m.measureCaratheodory hC m_sigma_subadd s
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:156:theorem measureCaratheodory_eq (m : AddContent ℝ≥0∞ C) (hC : IsSetSemiring C)
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:158:    m.measureCaratheodory hC m_sigma_subadd s = m s :=
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:166:  (m.measureCaratheodory hC m_sigma_subadd).trim <|
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:167:    fun s a ↦ isCaratheodory_inducedOuterMeasure hC m s (hC_gen s a)
+Mathlib/MeasureTheory/OuterMeasure/OfAddContent.lean:177:  · exact m.measureCaratheodory_eq hC m_sigma_subadd hs
+Mathlib/MeasureTheory/OuterMeasure/OfFunction.lean:18:Given an outer measure `m`, the Carathéodory-measurable sets are the sets `s` such that
+Mathlib/MeasureTheory/OuterMeasure/OfFunction.lean:35:outer measure, Carathéodory-measurable, Carathéodory's criterion
+Mathlib/MeasureTheory/Measure/Trim.lean:37:  @OuterMeasure.toMeasure α m μ.toOuterMeasure (hm.trans (le_toOuterMeasure_caratheodory μ))
+Mathlib/MeasureTheory/Constructions/Pi.lean:194:theorem pi_caratheodory :
+Mathlib/MeasureTheory/Constructions/Pi.lean:195:    MeasurableSpace.pi ≤ (OuterMeasure.pi fun i => (μ i).toOuterMeasure).caratheodory := by
+Mathlib/MeasureTheory/Constructions/Pi.lean:200:  apply boundedBy_caratheodory
+Mathlib/MeasureTheory/Constructions/Pi.lean:211:  toMeasure (OuterMeasure.pi fun i => (μ i).toOuterMeasure) (pi_caratheodory μ)
+Mathlib/MeasureTheory/Function/ContinuousMapDense.lean:56:See the Vitali-Carathéodory theorem,
+Mathlib/MeasureTheory/Function/ContinuousMapDense.lean:57:in the file `Mathlib/MeasureTheory/Integral/Bochner/VitaliCaratheodory.lean`.

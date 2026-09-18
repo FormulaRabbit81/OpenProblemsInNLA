@@ -1,0 +1,29 @@
+--- before
++++ after
+@@ -57,7 +57,7 @@
+       (congrArg (sInf : Set ℝ → ℝ)
+         (polynomial_residual_value_set (lowerJordan n lam) k (fun A => ‖euclideanLin A x‖)))
+   have hunit (x : H n) : reverseVector x ∈ unitSphere n ↔ x ∈ unitSphere n := by
+-    simp only [unitSphere, Set.mem_setOf_eq, reverseVector_norm]
++    simp only [unitSphere, Set.mem_ofPred_eq, reverseVector_norm]
+   have hworstset : gmresInner (jordan n lam) k '' unitSphere n =
+       affineInner 1 (jordanDirections n k lam) '' unitSphere n := by
+     ext t
+@@ -96,7 +96,7 @@
+     exact (gmres_extrema_semantics (jordan n lam) k).2.1 z
+   · obtain ⟨p, hp, heval⟩ := (normalized_polynomial_residuals n k lam).2 c
+     have hy : reverseVector x ∈ unitSphere n := by
+-      simpa only [unitSphere, Set.mem_setOf_eq, reverseVector_norm] using hx
++      simpa only [unitSphere, Set.mem_ofPred_eq, reverseVector_norm] using hx
+     refine ⟨p, reverseVector x, hp, hy, ?_, ?_, ?_, ?_, ?_, ?_⟩
+     · rw [jordan_operator_transport, heval, hideal]
+       exact hc
+@@ -117,7 +117,7 @@
+       rw [reverseVector_involutive] at hzinner
+       rw [hzinner, hinner]
+       apply hxmax
+-      simpa only [unitSphere, Set.mem_setOf_eq, reverseVector_norm] using hz
++      simpa only [unitSphere, Set.mem_ofPred_eq, reverseVector_norm] using hz
+ 
+ #print axioms canonical_jordan_minimax
+ #assert_trust kernel canonical_jordan_minimax

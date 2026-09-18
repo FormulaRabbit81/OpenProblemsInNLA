@@ -1,0 +1,22 @@
+--- norm-attainment-01
++++ norm-attainment-02
+@@ -36,7 +36,7 @@
+     have hs : (unitSphere n).Nonempty := ⟨b i, b.norm_eq_one i⟩
+     have hset : unitSphere n = Metric.sphere (0 : H n) 1 := by
+       ext x
+-      simp only [unitSphere, Set.mem_setOf_eq, Metric.mem_sphere, dist_zero_right]
++      simp only [unitSphere, Set.mem_ofPred_eq, Metric.mem_sphere, dist_zero_right]
+     have hc : IsCompact (unitSphere n) := by
+       rw [hset]
+       exact isCompact_sphere _ _
+@@ -44,7 +44,9 @@
+       (euclideanCLM A).continuous.norm.continuousOn
+     have hxnorm : ‖x‖ = 1 := hx
+     refine ⟨x, hx, le_antisymm ?_ ?_⟩
+-    · simpa only [hxnorm, mul_one] using (euclideanCLM A).le_opNorm x
++    · calc
++        ‖euclideanLin A x‖ ≤ operatorNorm A * ‖x‖ := (euclideanCLM A).le_opNorm x
++        _ = operatorNorm A := by rw [hxnorm, mul_one]
+     · exact ContinuousLinearMap.opNorm_le_of_unit_norm (norm_nonneg _)
+         (fun y hy => hmax hy)
+ 

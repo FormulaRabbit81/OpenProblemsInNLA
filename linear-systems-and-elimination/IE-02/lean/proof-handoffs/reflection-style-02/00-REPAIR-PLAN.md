@@ -1,0 +1,1 @@
+Actual local60 passed all three reflection contracts. Follow only its style linter: use let instead of letI for the local proof-irrelevant Invertible witness. Keep exact frozen headers, intentional redundant hq, every other body token and trust settings. Record and test the changed proof; no claim until local rerun.

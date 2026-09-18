@@ -1,0 +1,17 @@
+NLA/IE02/WeightedFactorization.lean:45:10: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+NLA/IE02/WeightedFactorization.lean:52:14: error: Type mismatch: After simplification, term
+  degree_mul_le_of_le (Eq.le (degree_X_sub_C ζ)) hs
+ has type
+  @LE.le (WithBot ℕ) WithBot.instPreorder.toLE ((X - C ζ) * s).degree (1 + ↑(m - 1))
+but is expected to have type
+  @LE.le (WithBot ℕ) WithBot.instPreorder.toLE (degree ((X - C ζ) * s)) (↑1 + ↑(m - 1))
+'NLA.IE02.weighted_scalar_factorization' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/WeightedFactorization.lean:104:21: error: #assert_trust: 'NLA.IE02.weighted_scalar_factorization' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

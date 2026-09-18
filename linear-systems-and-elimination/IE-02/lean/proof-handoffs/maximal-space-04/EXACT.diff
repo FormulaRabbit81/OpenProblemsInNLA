@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -45,7 +45,7 @@
+       -- Expose the same Gram action before substituting its eigen equation.
+       change (inner ℂ (G x) x).re = (operatorNorm A * ‖x‖) ^ 2
+       rw [hx, inner_smul_left, Complex.conj_ofReal, Complex.re_ofReal_mul,
+-        ← norm_sq_eq_re_inner, mul_pow]
++        ← norm_sq_eq_re_inner (𝕜 := ℂ) x, mul_pow]
+     exact (sq_eq_sq₀ (norm_nonneg (L x))
+       (mul_nonneg (norm_nonneg (euclideanCLM A)) (norm_nonneg x))).mp hsquared
+   · intro hx

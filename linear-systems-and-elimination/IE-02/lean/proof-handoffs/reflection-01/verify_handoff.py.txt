@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+"""Static source/header/provenance checks; never invokes Lean, Lake, or Git."""
+import hashlib
+import json
+import re
+from pathlib import Path
+H = Path(__file__).resolve().parent
+W = H.parent.parent
+def digest(p):
+    return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def read(p):
+    return json.loads(Path(p).read_text())
+def require(condition, message):
+    if not condition:
+        raise AssertionError(message)
+m = read(H / 'MANIFEST.json')
+files = {str(p.relative_to(H)) for p in H.rglob('*') if p.is_file() and p.name != 'MANIFEST.json'}
+require(files == set(m['files']), 'manifest inventory')
+for rel, sha in m['files'].items():
+    require(digest(H / rel) == sha, 'payload: ' + rel)
+b = read(H / 'PRE-CODE-BINDINGS.json')
+require(len(b['frozen_files']) == 13, 'thirteen frozen inputs')
+for rel, sha in b['frozen_files'].items():
+    require(digest(W / rel) == sha, 'frozen input: ' + rel)
+require(digest(W / 'STATEMENT-FREEZE.json') == b['freeze_sha256'], 'freeze')
+require(digest(W.parent.parent / 'IE02-ROOT-FREEZE-ACCEPTANCE.json') == b['acceptance_sha256'], 'root authorization')
+source = (W / b['owned_source']).read_text()
+require(source == (H / 'sources/Reflection.lean.txt').read_text(), 'source snapshot')
+code = re.sub(r'/\-[\s\S]*?\-/|--[^\n]*', '', source)
+require(not re.search(r'\b(sorry|admit|axiom|unsafe|native_decide)\b', code), 'forbidden proof constructs')
+require(not re.search(r'^import .*Challenge', code, re.M), 'no Challenge import')
+require('set_option leancert.trust "kernel"' in code, 'kernel mode')
+require('interval_decide' not in code, 'no extra numerical certificate')
+headers = read(H / 'EXACT-HEADERS.json')
+frozen = read(W / 'STATEMENT-HEADERS.json')['headers']
+require([e['ordinal'] for e in headers] == [17, 18, 19], 'three frozen ordinals')
+for e in headers:
+    match = re.search(r'^theorem ' + e['name'] + r'\b[\s\S]*? := by', source, re.M)
+    require(match is not None and match.group() == e['header'], 'exact header: ' + e['name'])
+    f = frozen[e['ordinal'] - 1]
+    require(f['name'] == 'NLA.IE02.' + e['name'] and f['header'] + ' := by' == e['header'], 'frozen identity')
+    require(hashlib.sha256(e['header'].encode()).hexdigest() == e['header_sha256'], 'header hash')
+    require('#print axioms ' + e['name'] in code and '#assert_trust kernel ' + e['name'] in code, 'trust commands present, UNRUN')
+a = read(H / 'API-BINDINGS.json')
+for e in a['sources']:
+    require(digest(e['path']) == e['sha256'], 'primary source: ' + e['path'])
+require(digest(a['prior_literal_binding']) == a['prior_literal_binding_sha256'], 'prior pinned provenance')
+i = a['new_explicit_library_import']
+require(digest(i['source']) == i['source_sha256'] and digest(i['olean']) == i['olean_sha256'], 'read-only import availability')
+require(not b['Lean_execution'] and m['candidate_Lean_execution'] == 'UNRUN' and m['candidate_trust_execution'] == 'UNRUN', 'unrun source status')
+print(json.dumps({'status': 'PASS', 'payloads': len(files), 'frozen_inputs_unchanged': 13, 'exact_frozen_headers': 3, 'primary_API_sources': len(a['sources']), 'candidate_Lean_execution': False, 'candidate_trust_execution': False, 'Comparator_execution': False}, indent=2))

@@ -1,0 +1,10 @@
+--- before/SchurPairStep.lean
++++ after/SchurPairStep.lean
+@@ -51,6 +51,7 @@
+   have hA : toeplitz n (schurNumerator c a b) =
+       c • toeplitz n b + toeplitz n (X * a) := by
+     simp only [schurNumerator, toeplitz_add, toeplitz_C_mul]
++  -- Expose only the local U and c abbreviations so hD and hA rewrite the same matrices.
+   change U * toeplitz n (schurDenominator c a b) = toeplitz n (schurNumerator c a b)
+   rw [hD, hA, mul_add, Matrix.mul_smul]
+   calc

@@ -1,0 +1,17 @@
+--- before98
++++ after99
+@@ -64,12 +64,12 @@
+     ∃ ell : ℕ, ell ≤ m ∧ fourierCoeff m q (ell : ℤ) ≠ 0 ∧
+       ∀ r : ℤ, r < -(ell : ℤ) ∨ (ell : ℤ) < r → fourierCoeff m q r = 0 := by
+   classical
+-  let s := (Finset.range (m + 1)).filter (fun k => fourierCoeff m q (k : ℤ) ≠ 0)
++  let s : Finset ℕ := (Finset.range (m + 1)).filter (fun k : ℕ => fourierCoeff m q (k : ℤ) ≠ 0)
+   have hzero : 0 ∈ s := by
+     apply Finset.mem_filter.mpr
+     exact ⟨Finset.mem_range.mpr (by omega), hc0⟩
+   have hs : s.Nonempty := ⟨0, hzero⟩
+-  let ell := s.max' hs
++  let ell : ℕ := s.max' hs
+   have hell : ell ∈ s := s.max'_mem hs
+   obtain ⟨hbound, hcell⟩ := Finset.mem_filter.mp hell
+   have hle : ell ≤ m := Nat.le_of_lt_succ (Finset.mem_range.mp hbound)

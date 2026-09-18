@@ -34,7 +34,7 @@ block?},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}IE-02}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-11}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Verification check: 2026-09-17}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -51,7 +51,7 @@ the ideal GMRES bound sharp for every Jordan block?\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to specialist\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
@@ -65,7 +65,7 @@ structural test case for GMRES theory.
 \textbf{Solved affirmatively.} George Stepaniants, Department of
 Computing and Mathematical Sciences, California Institute of Technology,
 Pasadena, California, USA, proves the displayed equality for every
-\(n\ge2\), \(1\le k<n\), and nonzero complex \(\lambda\), with complex
+\(n\ge2\), \(1\le k< n\), and nonzero complex \(\lambda\), with complex
 polynomials and starting vectors. No divisibility or eigenvalue-regime
 case remains open.
 
@@ -82,12 +82,61 @@ XeLaTeX source}.
 
 The complete AI-assisted proof passed a separate
 \href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/stepaniants-ie02-2026-09-11/verification/IE-02-independent-review.md}{independent
-Codex-agent review}. This is automated-agent verification, without a
-claim of external human peer review or formal certification.
+Codex-agent review}. That earlier audit was automated-agent
+verification; the later Lean verification is recorded below.
 \href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/stepaniants-ie02-2026-09-11/README.md}{Submission
 record, preserved source and public eligibility check}. The original
 problem statement and permanent ID remain unchanged; the earlier special
 cases and status checks below are retained as history.
+
+\subsection{Lean proof and verification evidence -
+2026-09-17}\label{lean-proof-and-verification-evidence---2026-09-17}
+
+\textbf{The complete original target is Lean verified.}
+\textit{NLA.IE02.canonical\_jordan\_minimax} proves the result in the
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/9dc46f23457fed8396ad9f6a77677efe30c87df4/linear-systems-and-elimination/IE-02/lean/Solution.lean}{immutable
+proof} at revision \textit{9dc46f23457fed8396ad9f6a77677efe30c87df4}.
+Ideal and worst-case GMRES are equal for every complex upper Jordan
+block in the original range: n at least 2, nonzero complex eigenvalue,
+and 1 at most k less than n.~The polynomial minima and sphere maximum
+use actual Euclidean norms, with attaining witnesses. Finite Schur
+recursion, scalar spectral factorization, complex gradient convexity and
+uniform descent prove the affine minimax result and transport it to the
+actual upper Jordan block. No interpolation or minimax oracle is
+assumed.
+
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35230302016/job/105232489885}{Linux
+run 35230302016} passed all 50 exact Comparator contracts, Lean's
+default kernel, transitive permitted-axiom checks and actual
+rejection/isolation controls.
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/linear-systems-and-elimination/IE-02/lean/verification/linux-35230302016/README.md}{Retained
+evidence} distinguishes the preceding local macOS compilation from the
+final GitHub execution and the subsequent independent evidence audits.
+Two full nonauthor mathematical reviews and the operational reviews are
+linked in the
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/linear-systems-and-elimination/IE-02/lean/README.md}{project
+instructions}.
+
+A genuine kernel-mode LeanCert certificate proves the positive-half
+bound consumed by the symbolic descent estimate. Factorization, root
+selection and extrema are symbolic, without an interval grid or
+sampling. All exported results use only \textit{propext},
+\textit{Classical.choice} and \textit{Quot.sound}. The project pins Lean
+4.33.1, Mathlib \textit{0df444a360eaa60ab8c11dca51a86af692955474} and
+LeanCert \textit{621a43d7cf21f87872392a01e874f2f1dbddc926}. Run
+\textit{lake build} in
+\textit{linear-systems-and-elimination/IE-02/lean} to check locally; the
+shared harness runs the separate non-root Linux Comparator checks.
+
+Formalization and verification submission: \textbf{George Stepaniants},
+Department of Computing and Mathematical Sciences, California Institute
+of Technology. Prior mathematical and library authorship remains as
+credited below and in
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/linear-systems-and-elimination/IE-02/lean/SourceCorrespondence.md}{source
+correspondence}. Substantial OpenAI Codex assistance and scoped
+independent AI-agent reviews are disclosed; no external human peer
+review is claimed. Later publication and upstream PR checks remain
+pending and will be recorded separately.
 
 \subsection{Problem statement}\label{problem-statement}
 
@@ -96,20 +145,17 @@ For \(n\geq2\) and \(\lambda\in\mathbb C\setminus\{0\}\), let
 entries of \(N\) vanish. Let
 \(\mathcal P_k=\{p\in\mathbb C[z]:\deg p\leq k,\ p(0)=1\}\). Define
 
-\[
-\psi_k(J)=\max_{\|v\|_2=1}\min_{p\in\mathcal P_k}\|p(J)v\|_2,
+\[\psi_k(J)=\max_{\|v\|_2=1}\min_{p\in\mathcal P_k}\|p(J)v\|_2,
 \qquad
-\phi_k(J)=\min_{p\in\mathcal P_k}\|p(J)\|_2.
-\]
+\phi_k(J)=\min_{p\in\mathcal P_k}\|p(J)\|_2.\]
 
 Prove or disprove \(\psi_k(J_n(\lambda))=\phi_k(J_n(\lambda))\) for
-every \(1\leq k<n\). The maximum describes the slowest possible GMRES
+every \(1\leq k< n\). The maximum describes the slowest possible GMRES
 residual reduction, whereas the minimum over operator norms is the ideal
 bound. The familiar inequality \(\psi_k\leq\phi_k\) does not answer the
 question. A single Jordan block is a published structural test case, not
 a claim about all nonnormal matrices.
 
-\newpage
 \subsection{References}\label{references}
 
 Tichý, Liesen, and Faber,

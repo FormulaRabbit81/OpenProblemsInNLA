@@ -1,0 +1,57 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original IE-02 attribution is retained in
+Definitions.lean and SourceCorrespondence.md. Reuses Mathlib's actual Euclidean
+coordinate estimates, matrix linear equivalence and operator-norm identities.
+-/
+import NLA.IE02.Definitions
+import LeanCert.Tactic
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+open scoped BigOperators Matrix
+
+theorem schur_diagonal_bound {n : ℕ} (hn : 1 ≤ n) (p : Poly)
+    (hU : operatorNorm (toeplitz n p) ≤ 1) : ‖p.coeff 0‖ ≤ 1 := by
+  classical
+  let i : Fin n := ⟨0, hn⟩
+  let e : H n := PiLp.single 2 i 1
+  have he : ‖e‖ = 1 := by simp [e]
+  have hcoord : (euclideanLin (toeplitz n p) e) i = p.coeff 0 := by
+    change (∑ j : Fin n, toeplitz n p i j * e j) = _
+    simp [e, PiLp.single_apply, toeplitz]
+  calc
+    ‖p.coeff 0‖ = ‖(euclideanLin (toeplitz n p) e) i‖ := congrArg norm hcoord.symm
+    _ ≤ ‖euclideanLin (toeplitz n p) e‖ := PiLp.norm_apply_le _ i
+    _ ≤ operatorNorm (toeplitz n p) * ‖e‖ := (euclideanCLM (toeplitz n p)).le_opNorm e
+    _ = operatorNorm (toeplitz n p) := by rw [he, mul_one]
+    _ ≤ 1 := hU
+
+theorem schur_dimension_one (p : Poly) :
+    operatorNorm (toeplitz 1 p) = ‖p.coeff 0‖ := by
+  classical
+  have hmat : toeplitz 1 p = p.coeff 0 • (1 : Square 1) := by
+    ext i j
+    have hij : i = j := Subsingleton.elim _ _
+    subst j
+    simp [toeplitz]
+  have hmap : euclideanCLM (p.coeff 0 • (1 : Square 1)) =
+      p.coeff 0 • ContinuousLinearMap.id ℂ (H 1) := by
+    apply ContinuousLinearMap.ext
+    intro x
+    change (Matrix.toLpLin 2 2 (p.coeff 0 • (1 : Square 1))) x = p.coeff 0 • x
+    rw [map_smul, Matrix.toLpLin_one]
+    rfl
+  rw [operatorNorm, hmat, hmap, norm_smul, ContinuousLinearMap.norm_id, mul_one]
+
+#print axioms schur_diagonal_bound
+#assert_trust kernel schur_diagonal_bound
+#print axioms schur_dimension_one
+#assert_trust kernel schur_dimension_one
+
+end
+end NLA.IE02

@@ -1,0 +1,69 @@
+{
+  "time_utc": "2026-09-17T08:26:34.205894+00:00",
+  "status": "PLAN ONLY; await explicit root approval before proof implementation",
+  "proposed_ordinals": [
+    9,
+    13
+  ],
+  "proposed_modules": [
+    "SchurEndpoint",
+    "SchurActiveBlock"
+  ],
+  "both_proposed_modules_absent": true,
+  "plan_sha256": "fbe2abef56e4f39b17b5dc96e6870f70582c5a9c5334a90586e04bd972d5eea9",
+  "exact_frozen_headers": [
+    {
+      "name": "NLA.IE02.schur_scalar_endpoint",
+      "header": "theorem schur_scalar_endpoint {n : ℕ} (hn : 1 ≤ n) (p : Poly)\n    (hU : operatorNorm (toeplitz n p) = 1) (hc : ‖p.coeff 0‖ = 1) :\n    toeplitz n p = p.coeff 0 • 1 ∧\n    SchurPair n (toeplitz n p) 0 (C (p.coeff 0)) 1",
+      "header_sha256": "89e7628f7f0525cf766a59e9e72971e6ec50098d536c2345d222943ca0a312eb"
+    },
+    {
+      "name": "NLA.IE02.schur_active_block",
+      "header": "theorem schur_active_block {n : ℕ} (Z : Square (n + 1)) (hZ : IsToeplitz Z)\n    (hdiag : ∀ i, Z i i = 0) (hcon : operatorNorm Z ≤ 1) :\n    IsToeplitz (activeBlock Z) ∧ operatorNorm Z = operatorNorm (activeBlock Z) ∧\n    ∀ (g : H n) (η : ℂ),\n      euclideanLin Z (appendVector g η) = prependZero (euclideanLin (activeBlock Z) g) ∧\n      ‖appendVector g η‖ ^ 2 = ‖g‖ ^ 2 + ‖η‖ ^ 2 ∧\n      (‖euclideanLin Z (appendVector g η)‖ = ‖appendVector g η‖ ↔\n        η = 0 ∧ ‖euclideanLin (activeBlock Z) g‖ = ‖g‖)",
+      "header_sha256": "05e880da942019cc0207bdf1bd5be0371e0465eb315641aab3726e70bf9e1554"
+    }
+  ],
+  "13_frozen_inputs": {
+    "Challenge.lean": "a09907c4074776caeddf729da4ef9461433f105da5dff60396103121178288f9",
+    "NLA/IE02/Definitions.lean": "ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a",
+    "NUMERICAL_TARGETS.md": "33f5e2b47de6b7c2b7bc0eedaeaa2dec7a0e992f7e45710e19a6cc0509a91e90",
+    "NUMERICAL-FIRST.json": "7ecf430908886532d254f7858dfcab173a44f031a81ccf44fa433f89a8bb7e39",
+    "DEFINITION-AND-CONTRACT-PLAN.md": "23b470cc3715912ab6de5db7062bd48754393105d8fe2292b3584497f6e98c84",
+    "STATEMENT-HEADERS.json": "0907a434a785e15f95e3f977b18592b4cf7ed99ddaf3f604f3bae37105302374",
+    "SourceCorrespondence.md": "d7d26f5a9cbee120c499cf547233bb91b1f6d35aec3b4186f640ce8e501c5440",
+    "REVIEW-PLAN.md": "7ba443c1712766c8b9a6dd598e00cbab4cf02622290efc90412ef4a8a64f5792",
+    "comparator.json": "b553796f4c137f5d3ab1d5491f48aaa5d752bc6cef7a57d80b2b6eeeb6ecb7a7",
+    "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71",
+    "lakefile.toml": "392e7aad754a2e38487900b98e003d8a5b352693e39b32ba7699aa7a086f0ac8",
+    "lake-manifest.json": "9d123374c6c7b2dbe8cafc316656ced1c28b1aea86e6f4d9a3c217ea8e488f3c",
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  "primary_and_project_source_bindings": {
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/Definitions.lean": "ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/Coefficients.lean": "edd60266a5a89fd86f2aa254e71cae919ed8cdff47aa5a01b09edb37b71bbbb7",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/Toeplitz.lean": "29cfd72873d8211f2b85c7ab2cae4a1c7d9580675736291012a8313802667b7d",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/MaximalSpace.lean": "d59c07d89b55472fed5298789c1e335ee86dcdb068cf8bbfd7e117e0b79b1fc3",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/SchurBasicNorms.lean": "918f3b556560fc06cdac56daa15d26da76574360da51fdbb0d8cd48b1a8e0388",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/PiL2.lean": "1f9827b2db67213c725a2dcc3fec52a87772966d1fbd3fc6857a019dbd7a6053",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Lp/PiLp.lean": "660f3ad7077490c9a8eae924e18731c400282b8dccf80bfec1c6b02fe11ee25f",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Analysis/Normed/Operator/Basic.lean": "18f967ad36db74f73667ac7bdef2a404d77226a7d33cbdef33d415e5b3e4c389",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Order/BigOperators/Group/Finset.lean": "6a8daafb9e3b8b6ac48a696661c99a2d10dce57f48907ae18280914bf0ac639f",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean": "1305c143ee5528281992dc083faa3c881c2e7c0f3d09b127de4f58987182d1f2",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Inductions.lean": "d1c529c0efc818bce959f678d4ecde10ff1181f761f2575925e7718222822494",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Data/Fin/Tuple/Basic.lean": "c9a91f26403ddab92eb0599176545bc834f6b1e242e420875c3401bbdd9db0b7",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/BigOperators/Fin.lean": "4fe78cba9cdeac4eb8badbdd6359b055031900906fb94f3e51aba6d81451dbd5",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/LinearAlgebra/Dimension/Finrank.lean": "4ab91c2b2e2d56f24c0260f25d55a31042cac8112a943a7c877594528c363e21",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/Algebra/Polynomial/Degree/Defs.lean": "ff616e11c821c0baac9f9f4adb43b28eb1b442ef5e4752a9f8d3469350af7ffc",
+    "/private/tmp/nla-lean-local-shared-20260916/.lake/packages/mathlib/Mathlib/RingTheory/Coprime/Basic.lean": "b4209cdf2174b684a50c5b883d99ae5f2963e702f1b8041a1013d3005dd7e809"
+  },
+  "unrelated_queued_sources_observed_read_only": {
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/PolynomialResiduals.lean": "89f39e4609a9b488941d650298d68cb11c7d32c91f3e914249a20959842679d6",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/GMRESSemantics.lean": "1c492682dc047a1b7853a8046de15741e2f1ad769820180ea19064de2bc1bda2",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/WeightedCoefficients.lean": "6ca298679b9e426c5d4b987372f011aad6d5d0e5d9c0fe3ac70e790d687057e4",
+    "/tmp/nla-lean-next-20260915/next-proofs/IE-02/NLA/IE02/DescentGap.lean": "f2debb0a22eb27842686803d51aa254175a82051b64dae6685fc2e5ac3ea30dc"
+  },
+  "compiler_run": false,
+  "independent_proof_review": false,
+  "whole_target_complete": false,
+  "count_change": 0
+}

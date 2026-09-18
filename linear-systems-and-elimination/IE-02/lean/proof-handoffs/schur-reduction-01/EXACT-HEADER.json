@@ -1,0 +1,6 @@
+{
+  "name": "NLA.IE02.schur_strict_reduction",
+  "header": "theorem schur_strict_reduction {n : ℕ} (p : Poly)\n    (hU : operatorNorm (toeplitz (n + 2) p) = 1) (hc : ‖p.coeff 0‖ < 1) :\n    ∃ B : Square (n + 2), IsToeplitz B ∧\n      schurM (toeplitz (n + 2) p) (p.coeff 0) * B = 1 ∧\n      B * schurM (toeplitz (n + 2) p) (p.coeff 0) = 1 ∧\n      IsToeplitz (schurZ (toeplitz (n + 2) p) (p.coeff 0) B) ∧\n      (∀ i, schurZ (toeplitz (n + 2) p) (p.coeff 0) B i i = 0) ∧\n      operatorNorm (schurZ (toeplitz (n + 2) p) (p.coeff 0) B) = 1 ∧\n      operatorNorm (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) = 1 ∧\n      (∀ x : H (n + 2),\n        ‖euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x‖ ^ 2 -\n          ‖euclideanLin (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)\n            (euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x)‖ ^ 2 =\n          (1 - ‖p.coeff 0‖ ^ 2) * (‖x‖ ^ 2 - ‖euclideanLin (toeplitz (n + 2) p) x‖ ^ 2)) ∧\n      (∀ x : H (n + 2), x ∈ maximalSpace (toeplitz (n + 2) p) ↔\n        euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x ∈\n          maximalSpace (schurZ (toeplitz (n + 2) p) (p.coeff 0) B))",
+  "header_sha256": "6c3876c9e7bb498059533a4cd0f3219c0a89b551e82de734f875a253004a953e",
+  "ordinal": 12
+}

@@ -1,0 +1,5 @@
+# IE-02 common-root reduction: pre-code plan
+
+Prove the exact frozen common_circle_root_reduction statement. For each polynomial, eval z=0 gives divisibility by X-C z via Mathlib dvd_iff_isRoot, yielding a chosen quotient. For every nonzero quotient its product degree is 1+natDegree quotient, so the supplied DegreeLE bound yields 1+natDegree quotient≤m. A nonzero supplied polynomial gives a nonzero quotient and hence m≥1. Zero quotients satisfy any nonnegative degree bound. Thus all quotients have DegreeLE m-1, including zero and singleton families. No root approximation, sampling, or interval arithmetic.
+
+The proof actually works for any common root z; the frozen unit-circle hypothesis will therefore be intentionally unused and documented as a statement-preserving generality choice. Do not manufacture a false dependency or weaken the approved signature. All scalar factorization/repeated-root consumers still retain their exact circle assumptions. Use only Definitions, pinned polynomial divisibility/degree APIs, and standard trust checks. No whole-target completion claim.

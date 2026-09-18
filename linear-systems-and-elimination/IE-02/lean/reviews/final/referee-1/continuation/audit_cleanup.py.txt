@@ -1,0 +1,192 @@
+#!/usr/bin/env python3
+"""Snapshot/authenticate IE-02's bounded cleanup; no Lean/Git/network execution."""
+from pathlib import Path
+import datetime
+import difflib
+import hashlib
+import json
+import re
+
+D = Path(__file__).resolve().parent
+B = Path('/private/tmp/nla-lean-next-20260915')
+P = B/'next-proofs/IE-02'
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+O = B/'reviews/IE02-full-referee1-20260917'
+C = B/'IE02-jordan-reuse-cleanup-01'
+
+
+def sha(p):
+    return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+
+
+def get(p):
+    return json.loads(Path(p).read_text())
+
+
+def save(source, relative):
+    destination = D/relative
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_bytes(Path(source).read_bytes())
+    return str(destination.relative_to(D))
+
+
+assert sha(O/'MANIFEST.json') == 'eb41801f224a74d9a2b22b87200d45a13789eb29064d017c7af0fd643b842bbb'
+for p,h in get(O/'MANIFEST.json')['files'].items():
+    assert sha(O/p) == h, ('original immutable payload',p)
+assert sha(C/'MANIFEST.json') == '872eac3f8e6ffe89c193e54efd41f9fbc36e7ba9c5ccca42a01809bb5d70eaa9'
+for p,h in get(C/'MANIFEST.json')['files'].items():
+    assert sha(C/p) == h, ('cleanup payload',p)
+    save(C/p,Path('cleanup')/p)
+save(C/'MANIFEST.json','cleanup/MANIFEST.json')
+save(O/'MANIFEST.json','baseline/MANIFEST.json')
+save(O/'REVIEW.md','baseline/REVIEW.md')
+save(O/'FINDINGS.json','baseline/FINDINGS.json')
+save(O/'STATIC-COVERAGE-AUDIT.json','baseline/STATIC-COVERAGE-AUDIT.json')
+save(B/'IE02-ROOT-FULL-REVIEW1-ORIGINAL-ACCEPTANCE.json','evidence/ROOT-ORIGINAL-ACCEPTANCE.json')
+root_path = B/'IE02-LOCAL-COMPLETE-123.json'
+assert sha(root_path) == '60a6068541b30edcfbc4e002b52d42339ee91e95cbdf838fdcc8f6d8c8829375'
+save(root_path,'evidence/IE02-LOCAL-COMPLETE-123.json')
+root = get(root_path)
+rp = L/'runs/development-123/RECEIPT.json'
+assert sha(rp) == 'c810a0613b1e919e9fc3700a26428ebe1eae927bfedfe07878a2681e3cf4edec'
+assert sha(L/'ASSEMBLY-123.json') == '460e728c339fee068e847ca804f00236a0a9a637ff16e151ef75d2e9f920e6fe'
+save(L/'ASSEMBLY-123.json','evidence/ASSEMBLY-123.json')
+receipt = get(rp)
+assert receipt['completed_modules'] == 55 and not receipt['failed_modules'] and not receipt['blocked_modules']
+entries = {m['module']:m for m in root['commands_and_successful_origins']}
+old_sources = get(O/'STATIC-COVERAGE-AUDIT.json')['source_hashes']
+sources = root['sources']
+assert len(entries) == len(sources) == 55
+assert set(old_sources)-set(sources) == {'NLA/IE02/Proof.lean'}
+assert not set(sources)-set(old_sources)
+changed = sorted(p for p in sources if sources[p] != old_sources[p])
+assert changed == ['NLA/IE02/AffineMinima.lean','NLA/IE02/JordanTransport.lean','NLA/IE02/SchurEndpoint.lean','Solution.lean']
+assert not (P/'NLA/IE02/Proof.lean').exists()
+assert (C/'before/NLA/IE02/Proof.lean').read_bytes() == (O/'snapshots/project/NLA/IE02/Proof.lean').read_bytes()
+for p,h in sources.items():
+    assert sha(P/p) == h
+    save(P/p,Path('sources')/p)
+    if p in changed:
+        assert sha(C/'before'/p) == old_sources[p]
+        assert sha(C/'after'/p) == h
+        patch_name = Path(p).stem+'.patch'
+        expected = ''.join(difflib.unified_diff((C/'before'/p).read_text().splitlines(True), (C/'after'/p).read_text().splitlines(True),fromfile='before/'+p,tofile='after/'+p))
+        assert (C/patch_name).read_text() == expected, patch_name
+
+freeze = get(P/'STATEMENT-FREEZE.json')
+for p,h in freeze['frozen_files'].items():
+    assert sha(P/p) == h and sha(O/'snapshots/project'/p) == h
+    save(P/p,Path('protected')/p)
+save(P/'STATEMENT-FREEZE.json','protected/STATEMENT-FREEZE.json')
+headers = get(P/'STATEMENT-HEADERS.json')['headers']
+config = get(P/'comparator.json')
+assert len(headers) == 50 and [h['name'] for h in headers] == config['theorem_names']
+texts = {p:(P/p).read_text() for p in sources}
+for h in headers:
+    assert sum(t.count(h['header']) for t in texts.values()) == 1
+solution = texts['Solution.lean']
+assert (L/'IE02Solution.lean').read_bytes() == (P/'Solution.lean').read_bytes()
+assert solution.replace('import NLA.IE02.CanonicalJordan','import NLA.IE02.Proof',1) == (C/'before/Solution.lean').read_text()
+assert 'private theorem euclidean_mul_apply' not in texts['NLA/IE02/JordanTransport.lean']
+assert 'simpa only [euclideanLin_mul_apply, reversal_action]' in texts['NLA/IE02/JordanTransport.lean']
+assert 'import NLA.IE02.SchurEnergy' in texts['NLA/IE02/JordanTransport.lean']
+assert sha(P/'NLA/IE02/SchurEnergy.lean') == old_sources['NLA/IE02/SchurEnergy.lean']
+assert texts['NLA/IE02/AffineMinima.lean'].replace('    -- S is the actual range of L, so d supplies the membership witness.\n','') == (C/'before/NLA/IE02/AffineMinima.lean').read_text()
+assert texts['NLA/IE02/SchurEndpoint.lean'].replace('(zero_le_one : (0 : ℝ) ≤ 1)','(show (0 : ℝ) ≤ 1 by norm_num)',1) == (C/'before/NLA/IE02/SchurEndpoint.lean').read_text()
+for name in config['theorem_names']:
+    assert '#print axioms '+name in solution and '#assert_trust kernel '+name in solution
+
+nodepath = {'Solution' if p=='Solution.lean' else p[:-5].replace('/','.'):p for p in sources}
+graph = {n:re.findall(r'^import (NLA\.[\w.]+)',texts[p],re.M) for n,p in nodepath.items()}
+visiting, done = set(), set()
+
+
+def visit(n):
+    assert n not in visiting, ('cycle',n)
+    if n in done:
+        return
+    assert n in nodepath, ('unreviewed project import',n)
+    visiting.add(n)
+    for x in graph[n]:
+        visit(x)
+    visiting.remove(n)
+    done.add(n)
+
+
+visit('Solution')
+assert len(done) == 55
+assert not any('Challenge' in t or 'NLA.IE02.Proof' in t for xs in graph.values() for t in xs)
+origin_bindings, warnings, fresh_warnings = [], [], []
+fresh_names = [c['module'] for c in receipt['commands'] if 'argv' in c]
+assert len(fresh_names) == 13
+all_log_text = ''
+for name,m in entries.items():
+    origin = Path(m['success_origin_receipt'])
+    assert sha(origin) == m['receipt_sha256']
+    save(origin,Path('evidence')/origin.parent.name/'RECEIPT.json')
+    actual = get(origin)
+    cmds = [c for c in actual['commands'] if c['module']==name]
+    assert len(cmds)==1 and cmds[0]==m['command']
+    c=cmds[0]
+    assert c['exit_code']==0
+    assert '--threads=1' in c['argv'] and '--memory=4096' in c['argv']
+    assert actual['threads']==1 and actual['memory_cap_mib']==4096 and actual['max_compiler_processes']==1
+    assert sha(c['argv'][0]) == actual['compiler_sha256']
+    assert c['source_sha256']==m['source_sha256']==sources[m['canonical_source_path']]
+    assert sha(Path(c['cwd'])/c['argv'][-1])==c['source_sha256']
+    op=Path(c['argv'][c['argv'].index('-o')+1])
+    assert sha(op)==c['output_sha256']
+    for dep,h in c['dependency_olean_sha256'].items():
+        assert dep in entries and entries[dep]['command']['output_sha256']==h
+    lp=origin.parent/(name+'.log')
+    assert sha(lp)==c['log_sha256']
+    saved_log=save(lp,Path('evidence')/origin.parent.name/lp.name)
+    wt=re.findall(r'^.*\.lean:\d+:\d+: warning:.*$',lp.read_text(),re.M)
+    warnings.extend(wt)
+    if name in fresh_names:
+        fresh_warnings.extend(wt)
+        all_log_text+='\nLOG '+lp.name+'\n'+lp.read_text()
+    current=[x for x in receipt['commands'] if x['module']==name]
+    assert len(current)==1
+    now=current[0]
+    if name not in fresh_names:
+        assert now['status']=='reused_exact_successful_local_output'
+        assert now['source_sha256']==c['source_sha256'] and now['output_sha256']==c['output_sha256']
+        for p,h in now['transitive_source_hashes'].items():
+            assert p in sources and sources[p]==h
+    origin_bindings.append({'module':name,'source':m['canonical_source_path'],'source_sha256':c['source_sha256'],'receipt_snapshot':str(Path('evidence')/origin.parent.name/'RECEIPT.json'),'receipt_sha256':sha(origin),'log_snapshot':saved_log,'log_sha256':sha(lp),'observed_output':str(op),'output_sha256':sha(op),'actual_compiler_sha256':sha(c['argv'][0]),'fresh_in_123':name in fresh_names,'warnings':wt})
+assert len(warnings)==11 and len(fresh_warnings)==3
+final_log=(L/'runs/development-123/IE02Solution.log').read_text()
+reports=re.findall(r"^'([^']+)' depends on axioms: \[([^\]]*)\]$",final_log,re.M)
+assert [n for n,a in reports]==config['theorem_names']
+assert all(set(a.split(', '))=={'propext','Classical.choice','Quot.sound'} for n,a in reports)
+(D/'ALL-13-FRESH-LOGS.txt').write_text(all_log_text)
+audit={
+    'time':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'reviewer':'/root/mi13_full_referee2',
+    'scope':'Independent bounded source-delta review plus read-only authentication of actual local123 and successful origins; not a fresh Lean or Comparator run.',
+    'baseline_manifest_sha256':sha(O/'MANIFEST.json'),
+    'cleanup_manifest_sha256':sha(C/'MANIFEST.json'),
+    'root_complete_report_sha256':sha(root_path),
+    'actual123_receipt_sha256':sha(rp),
+    'actual123_assembly_sha256':sha(L/'ASSEMBLY-123.json'),
+    'source_hashes':sources,'changed_sources':changed,
+    'removed_forwarding_module':'NLA/IE02/Proof.lean',
+    'unchanged_source_files':51,
+    'protected_files':freeze['frozen_files'],
+    'exact_headers':50,
+    'project_import_graph':graph,'acyclic':True,'complete_closure_modules':55,
+    'fresh_modules':fresh_names,'reused_modules':42,
+    'module_evidence':origin_bindings,
+    'actual_axiom_reports':reports,
+    'fresh_warning_diagnostics':fresh_warnings,
+    'all_successful_origin_warning_count':len(warnings),
+    'R1':'closed: direct public lemma reuse, private duplicate removed',
+    'new_mathematical_assumption_or_statement_change':False,
+    'source_authored_or_edited_by_this_referee':False,
+    'fresh_Lean_invocation_by_referee':False,
+    'Comparator_invoked':False,
+    'publication_or_count_approval':False,
+}
+(D/'AUDIT.json').write_text(json.dumps(audit,indent=2,ensure_ascii=False)+'\n')
+print(json.dumps({'status':'PASS_SOURCE_AND_LOCAL_EVIDENCE_AUTHENTICATION','sources':55,'unchanged':51,'changed':4,'removed_import_only_module':1,'frozen_inputs':13,'exact_contracts':50,'actual123_fresh':13,'actual123_reused':42,'fresh_warnings':3,'full_origin_warnings':11,'R1':'closed','Lean_invoked':False,'Comparator_invoked':False},indent=2))

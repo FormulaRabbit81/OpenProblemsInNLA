@@ -1,0 +1,10 @@
+--- before/CircleUniqueness.lean
++++ after/CircleUniqueness.lean
+@@ -25,6 +25,7 @@
+     simpa only [hreal] using congrArg Complex.re hab
+   have hmap : Set.MapsTo f (Set.Icc (-1 : ℝ) 1) {z : ℂ | ‖z‖ = 1} := by
+     intro t ht
++    -- Unfold membership in the unit circle to its defining norm equality.
+     change ‖f t‖ = 1
+     apply (sq_eq_sq₀ (norm_nonneg _) zero_le_one).mp
+     rw [Complex.sq_norm, one_pow]

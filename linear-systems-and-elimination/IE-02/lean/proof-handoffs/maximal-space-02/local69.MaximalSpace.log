@@ -1,0 +1,26 @@
+NLA/IE02/MaximalSpace.lean:47:14: error(lean.unknownIdentifier): Unknown identifier `inner_smul_ofReal_left`
+NLA/IE02/MaximalSpace.lean:66:12: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  T.reApplyInnerSelf y
+in the target expression
+  y ∈ {x_1 | (fun x_2 => T.reApplyInnerSelf x_2 ≤ T.reApplyInnerSelf x) x_1}
+
+n : ℕ
+A : Square n
+L : H n →ₗ[ℂ] H n := euclideanLin A
+G : H n →ₗ[ℂ] H n := LinearMap.adjoint L ∘ₗ L
+T : H n →L[ℂ] H n := LinearMap.toContinuousLinearMap G
+henergy : ∀ (y : H n), T.reApplyInnerSelf y = ‖L y‖ ^ 2
+hmem : ∀ (y : H n), y ∈ maximalSpace A ↔ G y = ↑(operatorNorm A ^ 2) • y
+x : H n
+hx : ‖(euclideanLin A) x‖ = operatorNorm A * ‖x‖
+hxL : ‖L x‖ = operatorNorm A * ‖x‖
+hx0 : ¬x = 0
+hT : IsSelfAdjoint T
+y : H n
+hy : y ∈ Metric.sphere 0 ‖x‖
+hny : ‖y‖ = ‖x‖
+⊢ y ∈ {x_1 | (fun x_2 => T.reApplyInnerSelf x_2 ≤ T.reApplyInnerSelf x) x_1}
+'NLA.IE02.maximal_space_norm' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/MaximalSpace.lean:79:21: error: #assert_trust: 'NLA.IE02.maximal_space_norm' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

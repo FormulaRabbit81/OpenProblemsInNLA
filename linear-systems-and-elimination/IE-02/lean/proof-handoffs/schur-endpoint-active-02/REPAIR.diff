@@ -1,0 +1,58 @@
+--- SchurEndpoint-before.lean
++++ SchurEndpoint-after.lean
+@@ -34,6 +34,8 @@
+     -- Expose the Euclidean matrix action on the first coordinate vector.
+     change (∑ j : Fin n, toeplitz n p i j * e j) = p.coeff i.val
+     simp [e, PiLp.single_apply, toeplitz, i0]
++    intro hi
++    exact (Nat.not_lt_zero i.val hi).elim
+   have hbound : ‖euclideanLin (toeplitz n p) e‖ ≤ 1 := by
+     calc
+       ‖euclideanLin (toeplitz n p) e‖ ≤ operatorNorm (toeplitz n p) * ‖e‖ :=
+@@ -51,7 +53,12 @@
+   have hsplit :
+       1 + (∑ i ∈ (Finset.univ : Finset (Fin n)).erase i0, ‖p.coeff i.val‖ ^ 2) =
+         ∑ i : Fin n, ‖p.coeff i.val‖ ^ 2 := by
+-    simpa only [i0, hc, one_pow] using
++    have hfirst : ‖p.coeff i0.val‖ ^ 2 = (1 : ℝ) := by
++      -- The first finite index has natural value zero.
++      change ‖p.coeff 0‖ ^ 2 = 1
++      rw [hc]
++      norm_num
++    simpa only [hfirst] using
+       Finset.add_sum_erase (Finset.univ : Finset (Fin n))
+         (fun i => ‖p.coeff i.val‖ ^ 2) (Finset.mem_univ i0)
+   have hnonneg :
+@@ -128,7 +135,7 @@
+       exact hall x
+   · intro h _hh
+     rw [one_mul, hscalar, ← toeplitz_C, toeplitz_action, coeffVector_mul_truncate]
+-  · rw [htop, Module.finrank_top, finrank_euclideanSpace_fin, Nat.sub_zero]
++  · rw [htop, _root_.finrank_top, finrank_euclideanSpace_fin, Nat.sub_zero]
+ 
+ #print axioms schur_scalar_endpoint
+ #assert_trust kernel schur_scalar_endpoint
+--- SchurActiveBlock-before.lean
++++ SchurActiveBlock-after.lean
+@@ -24,7 +24,7 @@
+ theorem appendVector_norm_sq {n : ℕ} (g : H n) (η : ℂ) :
+     ‖appendVector g η‖ ^ 2 = ‖g‖ ^ 2 + ‖η‖ ^ 2 := by
+   simp only [EuclideanSpace.norm_sq_eq, Fin.sum_univ_castSucc,
+-    appendVector, PiLp.toLp_apply, Fin.snoc_castSucc, Fin.snoc_last]
++    appendVector, Fin.snoc_castSucc, Fin.snoc_last]
+ 
+ theorem prependZero_norm {n : ℕ} (g : H n) : ‖prependZero g‖ = ‖g‖ := by
+   apply (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).mp
+@@ -45,8 +45,10 @@
+   apply PiLp.ext
+   intro i
+   -- Expose the frozen Euclidean tuple wrappers as the original snoc decomposition.
+-  change x i = Fin.snoc (fun j : Fin n => x j.castSucc) (x (Fin.last n)) i
+-  exact (congrFun (Fin.snoc_init_self (q := fun j : Fin (n + 1) => x j)) i).symm
++  change x i = Fin.snoc (α := fun _ : Fin (n + 1) => ℂ)
++    (fun j : Fin n => x j.castSucc) (x (Fin.last n)) i
++  exact (congrFun (Fin.snoc_init_self (α := fun _ : Fin (n + 1) => ℂ)
++    (q := fun j : Fin (n + 1) => x j)) i).symm
+ 
+ theorem schur_active_block {n : ℕ} (Z : Square (n + 1)) (hZ : IsToeplitz Z)
+     (hdiag : ∀ i, Z i i = 0) (hcon : operatorNorm Z ≤ 1) :

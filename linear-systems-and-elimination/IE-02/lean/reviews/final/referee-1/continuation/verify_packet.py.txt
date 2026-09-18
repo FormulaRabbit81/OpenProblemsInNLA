@@ -1,0 +1,136 @@
+#!/usr/bin/env python3
+"""Check this continuation's immutable evidence, optionally current local bytes.
+
+No Lean, Lake, Git, subprocess or network invocation is performed.
+"""
+from pathlib import Path
+import argparse
+import hashlib
+import json
+import re
+
+D=Path(__file__).resolve().parent
+parser=argparse.ArgumentParser()
+parser.add_argument('--live',action='store_true')
+args=parser.parse_args()
+checks=0
+
+
+def sha(p):
+    return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+
+
+def get(p):
+    return json.loads(Path(p).read_text())
+
+
+def require(x,msg):
+    global checks
+    if not x:
+        raise AssertionError(msg)
+    checks+=1
+
+
+mf=D/'MANIFEST.json'
+if mf.exists():
+    j=get(mf)
+    require({str(p.relative_to(D)) for p in D.rglob('*') if p.is_file() and p!=mf}==set(j['files']),'packet inventory')
+    for p,h in j['files'].items():
+        require(sha(D/p)==h,'packet '+p)
+require(sha(D/'baseline/MANIFEST.json')=='eb41801f224a74d9a2b22b87200d45a13789eb29064d017c7af0fd643b842bbb','original full review anchor')
+baseline=get(D/'baseline/MANIFEST.json')
+for p in ['REVIEW.md','FINDINGS.json','STATIC-COVERAGE-AUDIT.json']:
+    require(sha(D/'baseline'/p)==baseline['files'][p],'baseline '+p)
+require(sha(D/'cleanup/MANIFEST.json')=='872eac3f8e6ffe89c193e54efd41f9fbc36e7ba9c5ccca42a01809bb5d70eaa9','cleanup anchor')
+for p,h in get(D/'cleanup/MANIFEST.json')['files'].items():
+    require(sha(D/'cleanup'/p)==h,'cleanup '+p)
+require(sha(D/'evidence/IE02-LOCAL-COMPLETE-123.json')=='60a6068541b30edcfbc4e002b52d42339ee91e95cbdf838fdcc8f6d8c8829375','full local123 anchor')
+require(sha(D/'evidence/development-123/RECEIPT.json')=='c810a0613b1e919e9fc3700a26428ebe1eae927bfedfe07878a2681e3cf4edec','receipt123 anchor')
+require(sha(D/'evidence/ASSEMBLY-123.json')=='460e728c339fee068e847ca804f00236a0a9a637ff16e151ef75d2e9f920e6fe','assembly123 anchor')
+audit=get(D/'AUDIT.json')
+root=get(D/'evidence/IE02-LOCAL-COMPLETE-123.json')
+receipt=get(D/'evidence/development-123/RECEIPT.json')
+old=get(D/'baseline/STATIC-COVERAGE-AUDIT.json')['source_hashes']
+sources=audit['source_hashes']
+require(sources==root['sources'] and len(sources)==55,'55 sources')
+require(set(old)-set(sources)=={'NLA/IE02/Proof.lean'} and not set(sources)-set(old),'only forwarding removal')
+require(sorted(p for p in sources if old[p]!=sources[p])==audit['changed_sources'],'four exact changes')
+for p,h in sources.items():
+    require(sha(D/'sources'/p)==h,'source '+p)
+    if p in audit['changed_sources']:
+        require(sha(D/'cleanup/after'/p)==h and sha(D/'cleanup/before'/p)==old[p],'before/after '+p)
+    if args.live:
+        require(sha(Path('/private/tmp/nla-lean-next-20260915/next-proofs/IE-02')/p)==h,'live source '+p)
+for p,h in audit['protected_files'].items():
+    require(sha(D/'protected'/p)==h,'protected '+p)
+headers=get(D/'protected/STATEMENT-HEADERS.json')['headers']
+comp=get(D/'protected/comparator.json')
+require(len(headers)==50 and [h['name'] for h in headers]==comp['theorem_names'],'50 frozen exact names')
+for h in headers:
+    require(sum((D/'sources'/p).read_text().count(h['header']) for p in sources)==1,'exact unique header '+h['name'])
+    require((D/'protected/Challenge.lean').read_text().count(h['header'])==1,'Challenge header '+h['name'])
+graph={('Solution' if p=='Solution.lean' else p[:-5].replace('/','.')):re.findall(r'^import (NLA\.[\w.]+)',(D/'sources'/p).read_text(),re.M) for p in sources}
+require(graph==audit['project_import_graph'],'actual source graph')
+visiting,visited=set(),set()
+
+
+def visit(n):
+    require(n not in visiting,'acyclic '+n)
+    if n in visited:
+        return
+    require(n in graph,'reviewed dependency '+n)
+    visiting.add(n)
+    for d in graph[n]:
+        visit(d)
+    visiting.remove(n)
+    visited.add(n)
+
+
+visit('Solution')
+require(len(visited)==55 and 'NLA.IE02.Proof' not in visited and not any('Challenge' in n for n in visited),'full real closure')
+byname={m['module']:m for m in root['commands_and_successful_origins']}
+require(receipt['completed_modules']==55 and not receipt['failed_modules'] and not receipt['blocked_modules'],'actual complete result')
+fresh=[m['module'] for m in receipt['commands'] if 'argv' in m]
+require(fresh==audit['fresh_modules'] and len(fresh)==13,'13 fresh actual modules')
+warning_count,fresh_warning_count=0,0
+for m in audit['module_evidence']:
+    name=m['module']; src=byname[name]
+    require(sha(D/m['receipt_snapshot'])==m['receipt_sha256']==src['receipt_sha256'],'origin receipt '+name)
+    r=get(D/m['receipt_snapshot'])
+    actual=[c for c in r['commands'] if c['module']==name]
+    require(len(actual)==1 and actual[0]==src['command'],'actual command '+name)
+    c=actual[0]
+    require(c['exit_code']==0 and c['source_sha256']==sources[m['source']],'source successful command '+name)
+    require('--threads=1' in c['argv'] and '--memory=4096' in c['argv'],'bounded command '+name)
+    require(r['threads']==1 and r['max_compiler_processes']==1 and r['memory_cap_mib']==4096,'bounded receipt '+name)
+    require(m['actual_compiler_sha256']==r['compiler_sha256'],'observed compiler '+name)
+    require(m['output_sha256']==c['output_sha256'],'observed output '+name)
+    require(sha(D/m['log_snapshot'])==m['log_sha256']==c['log_sha256'],'full actual log '+name)
+    ws=re.findall(r'^.*\.lean:\d+:\d+: warning:.*$',(D/m['log_snapshot']).read_text(),re.M)
+    require(ws==m['warnings'],'diagnostics '+name)
+    warning_count+=len(ws)
+    if name in fresh:
+        fresh_warning_count+=len(ws)
+    for dep,h in c['dependency_olean_sha256'].items():
+        require(byname[dep]['command']['output_sha256']==h,'dependency '+name+' -> '+dep)
+    now=[e for e in receipt['commands'] if e['module']==name][0]
+    if name not in fresh:
+        require(now['source_sha256']==c['source_sha256'] and now['output_sha256']==c['output_sha256'],'actual retained result '+name)
+        for p,h in now['transitive_source_hashes'].items():
+            require(sources[p]==h,'retained source '+name+' -> '+p)
+    if args.live:
+        require(sha(m['observed_output'])==m['output_sha256'],'live output '+name)
+        require(sha(c['argv'][0])==r['compiler_sha256'],'live compiler '+name)
+        require(sha(Path(c['cwd'])/c['argv'][-1])==c['source_sha256'],'live local source '+name)
+require(warning_count==11 and fresh_warning_count==3,'precise warning scopes')
+final=(D/'evidence/development-123/IE02Solution.log').read_text()
+reports=re.findall(r"^'([^']+)' depends on axioms: \[([^\]]*)\]$",final,re.M)
+require([n for n,a in reports]==comp['theorem_names'],'50 aggregate reports')
+for n,a in reports:
+    require(set(a.split(', '))=={'propext','Classical.choice','Quot.sound'},'standard axioms '+n)
+solution=(D/'sources/Solution.lean').read_text()
+require(sha(D/'sources/Solution.lean')==root['source_filename_mapping']['sha256'],'entrypoint alias source')
+for n in comp['theorem_names']:
+    require('#print axioms '+n in solution and '#assert_trust kernel '+n in solution,'retained trust assertions '+n)
+require(get(D/'FINDINGS.json')['verdict']=='APPROVE_FULL_PROOF_SOURCE' and get(D/'FINDINGS.json')['R1']=='closed','scoped approval')
+print(json.dumps({'status':'PASS_CONTINUATION_AUTHENTICATION','checks':checks,'mode':'live-current-source-and-existing-outputs' if args.live else 'immutable-packet','full_current_sources':55,'frozen_contracts':50,'fresh_local123_modules':13,'exact_reuses':42,'R1':'closed','verdict':'APPROVE_FULL_PROOF_SOURCE','Lean_invoked':False,'Comparator_invoked':False,'publication_or_count_approval':False},indent=2))

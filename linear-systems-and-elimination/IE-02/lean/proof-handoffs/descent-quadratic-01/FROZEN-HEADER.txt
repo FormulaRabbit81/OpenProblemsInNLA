@@ -1,0 +1,4 @@
+theorem descent_quadratic_expansion {n : ℕ} (T D : Square n) (ε : ℝ) (x : H n) :
+    ‖euclideanLin (T - (ε : ℂ) • D) x‖ ^ 2 =
+      ‖euclideanLin T x‖ ^ 2 - 2 * ε * descentForm T D x +
+        ε ^ 2 * ‖euclideanLin D x‖ ^ 2 := by

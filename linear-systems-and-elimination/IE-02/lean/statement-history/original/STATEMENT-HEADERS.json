@@ -1,0 +1,256 @@
+{
+  "status": "UNRUN proposed exact headers, not frozen",
+  "count": 50,
+  "headers": [
+    {
+      "name": "NLA.IE02.coefficient_roundtrip",
+      "header": "theorem coefficient_roundtrip (n : ℕ) :\n    (∀ x : H n, coeffVector n (vectorPolynomial x) = x ∧\n      DegreeLT (vectorPolynomial x) n) ∧\n    (∀ p : Poly, DegreeLT p n → vectorPolynomial (coeffVector n p) = p)",
+      "header_sha256": "9c30a2943e8407c7cabe0f1406f0d3cfa8451bf8d00cdb003946bdb753dab09e"
+    },
+    {
+      "name": "NLA.IE02.coefficient_inner_product",
+      "header": "theorem coefficient_inner_product (n N : ℕ) (p q : Poly) (hp : DegreeLE p N) :\n    ‖coeffVector n p‖ ^ 2 = ∑ i : Fin n, ‖p.coeff i.val‖ ^ 2 ∧\n    (conjReflect N p * q).coeff N =\n      inner ℂ (coeffVector (N + 1) p) (coeffVector (N + 1) q)",
+      "header_sha256": "0fae1beb9aabd67644f9d20a662b134c232f54c06cbb8d3cd7ec4fc5a739a19a"
+    },
+    {
+      "name": "NLA.IE02.toeplitz_action",
+      "header": "theorem toeplitz_action {n : ℕ} (p : Poly) (x : H n) :\n    euclideanLin (toeplitz n p) x = coeffVector n (p * vectorPolynomial x)",
+      "header_sha256": "21e03d9fae887b61181704f72310dfb796fd77707db93edaf3a7eb0b98ff9f65"
+    },
+    {
+      "name": "NLA.IE02.toeplitz_algebra",
+      "header": "theorem toeplitz_algebra (n : ℕ) (p q : Poly) (c : ℂ) :\n    toeplitz n (1 : Poly) = 1 ∧\n    toeplitz n (p + q) = toeplitz n p + toeplitz n q ∧\n    toeplitz n (p * q) = toeplitz n p * toeplitz n q ∧\n    toeplitz n (C c * p) = c • toeplitz n p ∧\n    shift n ^ n = 0 ∧ polyEval p (shift n) = toeplitz n p",
+      "header_sha256": "fc97934492c7b92772b7aee7676ca38a2aaa41dcdd4937e05c53c604122d14d5"
+    },
+    {
+      "name": "NLA.IE02.nilpotent_inverse",
+      "header": "theorem nilpotent_inverse {n : ℕ} (α : ℂ) (K : Square n)\n    (hα : α ≠ 0) (hK : K ^ n = 0) :\n    (α • 1 + K) * finiteInverse α K = 1 ∧\n    finiteInverse α K * (α • 1 + K) = 1 ∧\n    (IsToeplitz K → IsToeplitz (finiteInverse α K))",
+      "header_sha256": "67610526d264cb25f869e995e20aac480f414ec339e7e794a1b40be406a61a35"
+    },
+    {
+      "name": "NLA.IE02.euclidean_norm_attainment",
+      "header": "theorem euclidean_norm_attainment {n : ℕ} (hn : 1 ≤ n) (A : Square n) :\n    0 ≤ operatorNorm A ∧ (operatorNorm A = 0 ↔ A = 0) ∧\n    (∀ x : H n, ‖euclideanLin A x‖ ≤ operatorNorm A * ‖x‖) ∧\n    ∃ x : H n, x ∈ unitSphere n ∧ ‖euclideanLin A x‖ = operatorNorm A",
+      "header_sha256": "ba74a55d755a7f348350b55fa8dd35a3941e1c9536bf89ff9b83c5f2ac724590"
+    },
+    {
+      "name": "NLA.IE02.maximal_space_norm",
+      "header": "theorem maximal_space_norm {n : ℕ} (A : Square n) :\n    IsClosed (maximalSpace A : Set (H n)) ∧\n    ∀ x : H n, x ∈ maximalSpace A ↔\n      ‖euclideanLin A x‖ = operatorNorm A * ‖x‖",
+      "header_sha256": "f1b396c04129e195c8984f879f597b3296f5d856511955fa85e673928c048d04"
+    },
+    {
+      "name": "NLA.IE02.schur_diagonal_bound",
+      "header": "theorem schur_diagonal_bound {n : ℕ} (hn : 1 ≤ n) (p : Poly)\n    (hU : operatorNorm (toeplitz n p) ≤ 1) : ‖p.coeff 0‖ ≤ 1",
+      "header_sha256": "8a751911471753e87b5927489dd2ea3e8617f09764d8103669392da52cc8922d"
+    },
+    {
+      "name": "NLA.IE02.schur_scalar_endpoint",
+      "header": "theorem schur_scalar_endpoint {n : ℕ} (hn : 1 ≤ n) (p : Poly)\n    (hU : operatorNorm (toeplitz n p) = 1) (hc : ‖p.coeff 0‖ = 1) :\n    toeplitz n p = p.coeff 0 • 1 ∧\n    SchurPair n (toeplitz n p) 0 (C (p.coeff 0)) 1",
+      "header_sha256": "89e7628f7f0525cf766a59e9e72971e6ec50098d536c2345d222943ca0a312eb"
+    },
+    {
+      "name": "NLA.IE02.schur_dimension_one",
+      "header": "theorem schur_dimension_one (p : Poly) :\n    operatorNorm (toeplitz 1 p) = ‖p.coeff 0‖",
+      "header_sha256": "1a5f997ba1807b47dd6e7b5352b594d1d2acae0fb15dda58aefbee6229bdf2c6"
+    },
+    {
+      "name": "NLA.IE02.schur_defect_identity",
+      "header": "theorem schur_defect_identity {n : ℕ} (U : Square n) (c : ℂ) :\n    (schurM U c).conjTranspose * schurM U c -\n      (U - c • 1).conjTranspose * (U - c • 1) =\n      (((1 - ‖c‖ ^ 2 : ℝ) : ℂ) • (1 - U.conjTranspose * U))",
+      "header_sha256": "190d851a4526675c16bb4768c83fa9beeddf9dff4a1169410015809ad59a7754"
+    },
+    {
+      "name": "NLA.IE02.schur_strict_reduction",
+      "header": "theorem schur_strict_reduction {n : ℕ} (p : Poly)\n    (hU : operatorNorm (toeplitz (n + 2) p) = 1) (hc : ‖p.coeff 0‖ < 1) :\n    ∃ B : Square (n + 2), IsToeplitz B ∧\n      schurM (toeplitz (n + 2) p) (p.coeff 0) * B = 1 ∧\n      B * schurM (toeplitz (n + 2) p) (p.coeff 0) = 1 ∧\n      IsToeplitz (schurZ (toeplitz (n + 2) p) (p.coeff 0) B) ∧\n      (∀ i, schurZ (toeplitz (n + 2) p) (p.coeff 0) B i i = 0) ∧\n      operatorNorm (schurZ (toeplitz (n + 2) p) (p.coeff 0) B) = 1 ∧\n      operatorNorm (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) = 1 ∧\n      (∀ x : H (n + 2),\n        ‖euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x‖ ^ 2 -\n          ‖euclideanLin (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)\n            (euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x)‖ ^ 2 =\n          (1 - ‖p.coeff 0‖ ^ 2) * (‖x‖ ^ 2 - ‖euclideanLin (toeplitz (n + 2) p) x‖ ^ 2)) ∧\n      (∀ x : H (n + 2), x ∈ maximalSpace (toeplitz (n + 2) p) ↔\n        euclideanLin (schurM (toeplitz (n + 2) p) (p.coeff 0)) x ∈\n          maximalSpace (schurZ (toeplitz (n + 2) p) (p.coeff 0) B))",
+      "header_sha256": "6c3876c9e7bb498059533a4cd0f3219c0a89b551e82de734f875a253004a953e"
+    },
+    {
+      "name": "NLA.IE02.schur_active_block",
+      "header": "theorem schur_active_block {n : ℕ} (Z : Square (n + 1)) (hZ : IsToeplitz Z)\n    (hdiag : ∀ i, Z i i = 0) (hcon : operatorNorm Z ≤ 1) :\n    IsToeplitz (activeBlock Z) ∧ operatorNorm Z = operatorNorm (activeBlock Z) ∧\n    ∀ (g : H n) (η : ℂ),\n      euclideanLin Z (appendVector g η) = prependZero (euclideanLin (activeBlock Z) g) ∧\n      ‖appendVector g η‖ ^ 2 = ‖g‖ ^ 2 + ‖η‖ ^ 2 ∧\n      (‖euclideanLin Z (appendVector g η)‖ = ‖appendVector g η‖ ↔\n        η = 0 ∧ ‖euclideanLin (activeBlock Z) g‖ = ‖g‖)",
+      "header_sha256": "05e880da942019cc0207bdf1bd5be0371e0465eb315641aab3726e70bf9e1554"
+    },
+    {
+      "name": "NLA.IE02.schur_pair_step",
+      "header": "theorem schur_pair_step {n d : ℕ} (p a b : Poly) (B : Square (n + 2))\n    (hU : operatorNorm (toeplitz (n + 2) p) = 1) (hc : ‖p.coeff 0‖ < 1)\n    (hleft : schurM (toeplitz (n + 2) p) (p.coeff 0) * B = 1)\n    (hright : B * schurM (toeplitz (n + 2) p) (p.coeff 0) = 1)\n    (hV : operatorNorm (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) = 1)\n    (hpair : SchurPair (n + 1)\n      (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) d a b) :\n    SchurPair (n + 2) (toeplitz (n + 2) p) (d + 1)\n      (schurNumerator (p.coeff 0) a b) (schurDenominator (p.coeff 0) a b)",
+      "header_sha256": "85ee101ab04d9d5d8d9a85353575bf90ae2692e9cc22e8d1828d3c6ecb69a02b"
+    },
+    {
+      "name": "NLA.IE02.finite_schur_boundary",
+      "header": "theorem finite_schur_boundary {n : ℕ} (hn : 1 ≤ n) (U : Square n)\n    (hU : IsToeplitz U) (hnorm : operatorNorm U = 1) :\n    ∃ (d : ℕ) (a b : Poly), SchurPair n U d a b",
+      "header_sha256": "70b33851abbaa1070dcad13bd1d4ff63db754ba91909967e4ec691b32f9bec45"
+    },
+    {
+      "name": "NLA.IE02.scaled_maximal_factorization",
+      "header": "theorem scaled_maximal_factorization {n : ℕ} (hn : 1 ≤ n) (T : Square n)\n    (hT : IsToeplitz T) (hne : T ≠ 0) :\n    ∃ (d : ℕ) (a b : Poly),\n      SchurPair n ((operatorNorm T : ℂ)⁻¹ • T) d a b ∧\n      (∀ x : H n, x ∈ maximalSpace T ↔\n        ∃ h : Poly, DegreeLE h (n - 1 - d) ∧ x = coeffVector n (b * h)) ∧\n      (∀ h : Poly, DegreeLE h (n - 1 - d) →\n        euclideanLin T (coeffVector n (b * h)) =\n          (operatorNorm T : ℂ) • coeffVector n (a * h))",
+      "header_sha256": "92204d364e7eb0bbab8ef9d50ae8d2776692c528b95f354089922b0ac541c013"
+    },
+    {
+      "name": "NLA.IE02.reflection_algebra",
+      "header": "theorem reflection_algebra (m : ℕ) (p q : Poly) (c : ℂ)\n    (hp : DegreeLE p m) (hq : DegreeLE q m) :\n    DegreeLE (conjReflect m p) m ∧ conjReflect m (conjReflect m p) = p ∧\n    conjReflect m (p + q) = conjReflect m p + conjReflect m q ∧\n    conjReflect m (C c * p) = C (star c) * conjReflect m p ∧\n    (conjReflect m p).coeff m = star (p.coeff 0)",
+      "header_sha256": "1a81def9822de6726774ff8c5315b9d956a8b42f8303d02daf99c3b581f720bc"
+    },
+    {
+      "name": "NLA.IE02.reflection_product",
+      "header": "theorem reflection_product (d m : ℕ) (p q : Poly)\n    (hp : DegreeLE p d) (hq : DegreeLE q m) :\n    conjReflect (d + m) (p * q) = conjReflect d p * conjReflect m q",
+      "header_sha256": "0cce9121db58811bc097d7c3b035e88ca4198d0164f2bf5daa21dab575634921"
+    },
+    {
+      "name": "NLA.IE02.reflection_evaluation",
+      "header": "theorem reflection_evaluation (m : ℕ) (p : Poly) (hp : DegreeLE p m)\n    (z : ℂ) (hz : z ≠ 0) :\n    (conjReflect m p).eval z = z ^ m * star (p.eval ((star z)⁻¹)) ∧\n    (‖z‖ = 1 → (conjReflect m p).eval z = z ^ m * star (p.eval z))",
+      "header_sha256": "7dca206a4a940775f687bb90424abb9b543deaaec677ea4a6a20ac2d6037b31b"
+    },
+    {
+      "name": "NLA.IE02.circle_polynomial_uniqueness",
+      "header": "theorem circle_polynomial_uniqueness (p q : Poly) :\n    Set.Infinite {z : ℂ | ‖z‖ = 1} ∧\n    ((∀ z : ℂ, ‖z‖ = 1 → p.eval z = q.eval z) → p = q)",
+      "header_sha256": "b20c546f3ae7a4099f977332cb9efb58742fdfab797ade3545587e2314e3fa43"
+    },
+    {
+      "name": "NLA.IE02.weighted_fold",
+      "header": "theorem weighted_fold {l : ℕ} (m : ℕ) (q : Fin l → Poly) (w : Fin l → ℝ)\n    (hq : ∀ j, DegreeLE (q j) m) (hw : ∀ j, 0 ≤ w j) :\n    (∀ j, DegreeLE (weightedFold (w j) (q j)) m) ∧\n    ∀ z : ℂ, sumSquares (fun j => weightedFold (w j) (q j)) z =\n      ∑ j, w j * ‖(q j).eval z‖ ^ 2",
+      "header_sha256": "6049e2b5c7b7235b6159694426e81cc025ddb97e92078d58c41a44e6ff4c3974"
+    },
+    {
+      "name": "NLA.IE02.common_circle_root_reduction",
+      "header": "theorem common_circle_root_reduction {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (hq : ∀ j, DegreeLE (q j) m) (hne : ∃ j, q j ≠ 0)\n    (z : ℂ) (hz : ‖z‖ = 1) (hroot : ∀ j, (q j).eval z = 0) :\n    1 ≤ m ∧ ∃ r : Fin l → Poly,\n      ∀ j, q j = (X - C z) * r j ∧ DegreeLE (r j) (m - 1)",
+      "header_sha256": "f8a461298dc75aa0ea671823a3712842e541193721fc06e763f5a56f875bac97"
+    },
+    {
+      "name": "NLA.IE02.fourier_semantics",
+      "header": "theorem fourier_semantics {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (hq : ∀ j, DegreeLE (q j) m) :\n    (∀ r : ℤ, fourierCoeff m q (-r) = star (fourierCoeff m q r)) ∧\n    fourierCoeff m q 0 = ((∑ j, ∑ i : Fin (m + 1), ‖(q j).coeff i.val‖ ^ 2 : ℝ) : ℂ) ∧\n    (∀ z : ℂ, ‖z‖ = 1 → (sumSquares q z : ℂ) =\n      ∑ r : Fin (2 * m + 1),\n        fourierCoeff m q ((r.val : ℤ) - (m : ℤ)) * z ^ ((r.val : ℤ) - (m : ℤ)))",
+      "header_sha256": "9b94fdff092085f703919984333db7e32fe1d0cefb8f8d55f018ac061fd94797"
+    },
+    {
+      "name": "NLA.IE02.effective_factor_polynomial",
+      "header": "theorem effective_factor_polynomial {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (hq : ∀ j, DegreeLE (q j) m)\n    (hno : ∀ z : ℂ, ‖z‖ = 1 → ∃ j, (q j).eval z ≠ 0) :\n    ∃ ell : ℕ, ell ≤ m ∧\n      (effectivePolynomial m ell q).degree = (2 * ell : WithBot ℕ) ∧\n      (effectivePolynomial m ell q).coeff 0 ≠ 0 ∧\n      conjReflect (2 * ell) (effectivePolynomial m ell q) = effectivePolynomial m ell q ∧\n      (∀ z : ℂ, ‖z‖ = 1 →\n        (effectivePolynomial m ell q).eval z = z ^ ell * (sumSquares q z : ℂ) ∧\n        (effectivePolynomial m ell q).eval z ≠ 0)",
+      "header_sha256": "9632c851b4594554f15aa7268e24bf84475baefdd73a444328e38a9f8c8fc768"
+    },
+    {
+      "name": "NLA.IE02.reciprocal_root_pairing",
+      "header": "theorem reciprocal_root_pairing (ell : ℕ) (P : Poly)\n    (hdeg : P.degree = (2 * ell : WithBot ℕ)) (hzero : P.coeff 0 ≠ 0)\n    (href : conjReflect (2 * ell) P = P)\n    (hcircle : ∀ z : ℂ, ‖z‖ = 1 → P.eval z ≠ 0) :\n    P.roots = P.roots.map reciprocalConj ∧\n    P.roots = insideRoots P + (insideRoots P).map reciprocalConj ∧\n    (insideRoots P).card = ell ∧ (∀ z ∈ P.roots, z ≠ 0)",
+      "header_sha256": "2d2c8603394a47d1197b825a97df93ccdcfdb9dc16ebf3e7c7bf58b0426a0cfc"
+    },
+    {
+      "name": "NLA.IE02.reciprocal_inside_factor",
+      "header": "theorem reciprocal_inside_factor (ell : ℕ) (P : Poly)\n    (hdeg : P.degree = (2 * ell : WithBot ℕ)) (hzero : P.coeff 0 ≠ 0)\n    (href : conjReflect (2 * ell) P = P)\n    (hcircle : ∀ z : ℂ, ‖z‖ = 1 → P.eval z ≠ 0) :\n    (rootProduct (insideRoots P)).degree = (ell : WithBot ℕ) ∧\n    (rootProduct (insideRoots P)).eval 0 ≠ 0 ∧\n    (∀ z : ℂ, ‖z‖ = 1 → (rootProduct (insideRoots P)).eval z ≠ 0) ∧\n    ∃ κ : ℂ, κ ≠ 0 ∧ P = C κ *\n      (rootProduct (insideRoots P) * conjReflect ell (rootProduct (insideRoots P)))",
+      "header_sha256": "6fddc88b69e1feb874ee400b2d03349f62076c71ec1797abbf7fddf487a8f37c"
+    },
+    {
+      "name": "NLA.IE02.strict_scalar_factorization",
+      "header": "theorem strict_scalar_factorization {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (hq : ∀ j, DegreeLE (q j) m)\n    (hno : ∀ z : ℂ, ‖z‖ = 1 → ∃ j, (q j).eval z ≠ 0) :\n    ∃ h : Poly, DegreeLE h m ∧\n      ∀ z : ℂ, ‖z‖ = 1 → ‖h.eval z‖ ^ 2 = sumSquares q z",
+      "header_sha256": "6547e85532c8433ad326d13f692dc4bdf7ac5204be166bfdcff2ac1b6d03afb3"
+    },
+    {
+      "name": "NLA.IE02.weighted_scalar_factorization",
+      "header": "theorem weighted_scalar_factorization {l : ℕ} (m : ℕ) (q : Fin l → Poly)\n    (w : Fin l → ℝ) (hq : ∀ j, DegreeLE (q j) m) (hw : ∀ j, 0 ≤ w j) :\n    ∃ h : Poly, DegreeLE h m ∧\n      (∀ z : ℂ, ‖z‖ = 1 → ‖h.eval z‖ ^ 2 = ∑ j, w j * ‖(q j).eval z‖ ^ 2) ∧\n      h * conjReflect m h = ∑ j, C (w j : ℂ) * (q j * conjReflect m (q j))",
+      "header_sha256": "db286da2d0a94f79beb0ef7e89f49e0216a4c9a1d5f5a6abc8de0c0e680920c3"
+    },
+    {
+      "name": "NLA.IE02.weighted_coefficient_preservation",
+      "header": "theorem weighted_coefficient_preservation {l k : ℕ} (d m : ℕ)\n    (a b h : Poly) (q : Fin l → Poly) (w : Fin l → ℝ) (r : Fin k → Poly)\n    (ha : DegreeLE a d) (hb : DegreeLE b d) (hh : DegreeLE h m)\n    (hq : ∀ j, DegreeLE (q j) m)\n    (hfactor : h * conjReflect m h = ∑ j, C (w j : ℂ) * (q j * conjReflect m (q j))) :\n    ‖coeffVector (d + m + 1) (b * h)‖ ^ 2 =\n      ∑ j, w j * ‖coeffVector (d + m + 1) (b * q j)‖ ^ 2 ∧\n    ∀ i, inner ℂ (coeffVector (d + m + 1) (a * h))\n        (euclideanLin (toeplitz (d + m + 1) (r i)) (coeffVector (d + m + 1) (b * h))) =\n      ∑ j, (w j : ℂ) * inner ℂ (coeffVector (d + m + 1) (a * q j))\n        (euclideanLin (toeplitz (d + m + 1) (r i)) (coeffVector (d + m + 1) (b * q j)))",
+      "header_sha256": "d3ab509da0515dda27b2f68e5c7084370ddefdec7f8a109eb4a360be9d01eb52"
+    },
+    {
+      "name": "NLA.IE02.maximal_complex_preservation",
+      "header": "theorem maximal_complex_preservation {n k l : ℕ} (hn : 1 ≤ n)\n    (T : Square n) (R : Fin k → Square n) (hT : IsToeplitz T) (hne : T ≠ 0)\n    (hR : ∀ j, IsToeplitz (R j)) (f : Fin l → H n) (w : Fin l → ℝ)\n    (hf : ∀ j, f j ∈ unitMaximal T) (hw : ∀ j, 0 ≤ w j) (hsum : ∑ j, w j = 1) :\n    ∃ x : H n, x ∈ unitMaximal T ∧\n      ∀ i, inner ℂ (euclideanLin T x) (euclideanLin (R i) x) =\n        ∑ j, (w j : ℂ) * inner ℂ (euclideanLin T (f j)) (euclideanLin (R i) (f j))",
+      "header_sha256": "f678a972a60307e523ac5dddc423b75d3fc037ac16c4d3e5070d52757f725ced"
+    },
+    {
+      "name": "NLA.IE02.gradient_compact_convex",
+      "header": "theorem gradient_compact_convex {n k : ℕ} (hn : 1 ≤ n)\n    (T : Square n) (R : Fin k → Square n) (hT : IsToeplitz T) (hne : T ≠ 0)\n    (hR : ∀ j, IsToeplitz (R j)) :\n    (gradientImage T R).Nonempty ∧ IsCompact (gradientImage T R) ∧\n      Convex ℝ (gradientImage T R)",
+      "header_sha256": "77dff2c66dbc0ddb8b560842f02eaca71d8c9ece94c42bb1b3c530173ad5a50b"
+    },
+    {
+      "name": "NLA.IE02.real_separator_complex_form",
+      "header": "theorem real_separator_complex_form {k : ℕ} (ell : H k →L[ℝ] ℝ) :\n    ∀ z : H k, ell z = (∑ j, separatorCoefficients ell j * z j).re",
+      "header_sha256": "445fc8de08dd1c0b548133675a7a9bb8d10359573110a24b8017855fcec5aac0"
+    },
+    {
+      "name": "NLA.IE02.gradient_strict_separation",
+      "header": "theorem gradient_strict_separation {n k : ℕ} (hn : 1 ≤ n)\n    (T : Square n) (R : Fin k → Square n) (hT : IsToeplitz T) (hne : T ≠ 0)\n    (hR : ∀ j, IsToeplitz (R j)) (hzero : 0 ∉ gradientImage T R) :\n    ∃ (c : Fin k → ℂ) (γ : ℝ), 0 < γ ∧\n      ∀ x ∈ unitMaximal T, γ ≤ descentForm T (directionSum R c) x",
+      "header_sha256": "b00912ac06874dba9a561115ef9bd7183ecbf116e0d2acc89a50ddd6561799c8"
+    },
+    {
+      "name": "NLA.IE02.half_certificate",
+      "header": "theorem half_certificate : (0 : ℝ) < 1 / 2",
+      "header_sha256": "2c9540a2e478856392f950f3442b1fd94d2f8b59a70ed9738e99bdaf04a23f14"
+    },
+    {
+      "name": "NLA.IE02.descent_step_bounds",
+      "header": "theorem descent_step_bounds {n : ℕ} (T D : Square n) (γ β : ℝ)\n    (hγ : 0 < γ) (hβ : 0 < β) :\n    0 < emptyStep D γ ∧ emptyStep D γ ≤ 1 ∧\n    emptyStep D γ ≤ γ / (2 * (descentL D + 1)) ∧\n    0 < gapStep T D γ β ∧ gapStep T D γ β ≤ 1 ∧\n    gapStep T D γ β ≤ γ / (2 * (descentL D + 1)) ∧\n    gapStep T D γ β ≤ β / (2 * (descentC T D + 1))",
+      "header_sha256": "1732cf822a8001e9a7e99ae3c6d461299e23bdb0222dc65f8cf0d3871b0b8e98"
+    },
+    {
+      "name": "NLA.IE02.descent_quadratic_expansion",
+      "header": "theorem descent_quadratic_expansion {n : ℕ} (T D : Square n) (ε : ℝ) (x : H n) :\n    ‖euclideanLin (T - (ε : ℂ) • D) x‖ ^ 2 =\n      ‖euclideanLin T x‖ ^ 2 - 2 * ε * descentForm T D x +\n        ε ^ 2 * ‖euclideanLin D x‖ ^ 2",
+      "header_sha256": "3386c7db31356483cd684ebb405e7902eacf8754281d965ac2c52412a42da147"
+    },
+    {
+      "name": "NLA.IE02.descent_complement_gap",
+      "header": "theorem descent_complement_gap {n : ℕ} (hn : 1 ≤ n) (T D : Square n)\n    (hne : T ≠ 0) (γ : ℝ) (hγ : 0 < γ)\n    (hpos : ∀ x ∈ unitMaximal T, γ ≤ descentForm T D x)\n    (hK : (descentComplement T D γ).Nonempty) :\n    ∃ β : ℝ, 0 < β ∧ ∀ x ∈ descentComplement T D γ,\n      ‖euclideanLin T x‖ ^ 2 ≤ operatorNorm T ^ 2 - β",
+      "header_sha256": "984a2ce25574c0970cfecc7ddd2f568044fb5ece08bbf7a2f15c007c121df774"
+    },
+    {
+      "name": "NLA.IE02.descent_empty_complement",
+      "header": "theorem descent_empty_complement {n : ℕ} (hn : 1 ≤ n) (T D : Square n)\n    (hne : T ≠ 0) (γ : ℝ) (hγ : 0 < γ) (hK : descentComplement T D γ = ∅) :\n    operatorNorm (T - (emptyStep D γ : ℂ) • D) < operatorNorm T",
+      "header_sha256": "a5c3c111f844cafca3832199e1ce635c4b8cc71ba880c065c82185d0b352a6c6"
+    },
+    {
+      "name": "NLA.IE02.descent_nonempty_complement",
+      "header": "theorem descent_nonempty_complement {n : ℕ} (hn : 1 ≤ n) (T D : Square n)\n    (hne : T ≠ 0) (γ β : ℝ) (hγ : 0 < γ) (hβ : 0 < β)\n    (hK : (descentComplement T D γ).Nonempty)\n    (hgap : ∀ x ∈ descentComplement T D γ,\n      ‖euclideanLin T x‖ ^ 2 ≤ operatorNorm T ^ 2 - β) :\n    operatorNorm (T - (gapStep T D γ β : ℂ) • D) < operatorNorm T",
+      "header_sha256": "ff55ac9baf56630b93463e680a212c7cbc4766a3646a7792024035342142b92f"
+    },
+    {
+      "name": "NLA.IE02.positive_gradient_descent",
+      "header": "theorem positive_gradient_descent {n : ℕ} (hn : 1 ≤ n) (T D : Square n)\n    (hne : T ≠ 0) (γ : ℝ) (hγ : 0 < γ)\n    (hpos : ∀ x ∈ unitMaximal T, γ ≤ descentForm T D x) :\n    ∃ ε : ℝ, 0 < ε ∧ operatorNorm (T - (ε : ℂ) • D) < operatorNorm T",
+      "header_sha256": "2ee2ade1957bd8fc970465cddea11ce281a43197b96b79fa9acc1284d6450c8f"
+    },
+    {
+      "name": "NLA.IE02.minimizer_orthogonality",
+      "header": "theorem minimizer_orthogonality {n k : ℕ} (hn : 1 ≤ n)\n    (T : Square n) (R : Fin k → Square n) (hT : IsToeplitz T) (hne : T ≠ 0)\n    (hR : ∀ j, IsToeplitz (R j))\n    (hmin : ∀ c : Fin k → ℂ, operatorNorm T ≤ operatorNorm (T + directionSum R c)) :\n    ∃ x : H n, x ∈ unitMaximal T ∧\n      ∀ j, inner ℂ (euclideanLin T x) (euclideanLin (R j) x) = 0",
+      "header_sha256": "9b83f5809fc395ec466bfade8c0c04cf64f0d0a508622ff1ad4ab4f8ead81599"
+    },
+    {
+      "name": "NLA.IE02.affine_operator_minimum",
+      "header": "theorem affine_operator_minimum {n k : ℕ} (Y : Square n) (R : Fin k → Square n) :\n    ∃ c : Fin k → ℂ, operatorNorm (affineResidual Y R c) = affineIdeal Y R ∧\n      ∀ d : Fin k → ℂ, operatorNorm (affineResidual Y R c) ≤ operatorNorm (affineResidual Y R d)",
+      "header_sha256": "b138a7e02de3ca26f0286bea5fef2d364a5a5cb466b8c315722530b1128ac946"
+    },
+    {
+      "name": "NLA.IE02.affine_vector_minimum",
+      "header": "theorem affine_vector_minimum {n k : ℕ} (Y : Square n) (R : Fin k → Square n) (x : H n) :\n    ∃ c : Fin k → ℂ, ‖euclideanLin (affineResidual Y R c) x‖ = affineInner Y R x ∧\n      ∀ d : Fin k → ℂ, ‖euclideanLin (affineResidual Y R c) x‖ ≤\n        ‖euclideanLin (affineResidual Y R d) x‖",
+      "header_sha256": "830f049c11be2ab1e68d83111e5cef28de2873c6f9ba4ce80631892915dd34ff"
+    },
+    {
+      "name": "NLA.IE02.affine_minimax_attained",
+      "header": "theorem affine_minimax_attained {n k : ℕ} (hn : 1 ≤ n)\n    (Y : Square n) (R : Fin k → Square n) (hY : IsToeplitz Y) (hR : ∀ j, IsToeplitz (R j)) :\n    affineWorst Y R = affineIdeal Y R ∧\n    (∀ x ∈ unitSphere n, ∃ c : Fin k → ℂ,\n      ‖euclideanLin (affineResidual Y R c) x‖ = affineInner Y R x) ∧\n    ∃ (c : Fin k → ℂ) (x : H n), x ∈ unitSphere n ∧\n      operatorNorm (affineResidual Y R c) = affineIdeal Y R ∧\n      affineInner Y R x = affineWorst Y R ∧\n      ‖euclideanLin (affineResidual Y R c) x‖ = operatorNorm (affineResidual Y R c) ∧\n      (∀ d : Fin k → ℂ, operatorNorm (affineResidual Y R c) ≤ operatorNorm (affineResidual Y R d)) ∧\n      (∀ d : Fin k → ℂ, ‖euclideanLin (affineResidual Y R c) x‖ ≤\n        ‖euclideanLin (affineResidual Y R d) x‖) ∧\n      (∀ z ∈ unitSphere n, affineInner Y R z ≤ affineInner Y R x)",
+      "header_sha256": "56cef9db001f4e078bb85bcb88fb4fe52b588308c3193abc0128feb32488b889"
+    },
+    {
+      "name": "NLA.IE02.jordan_reversal",
+      "header": "theorem jordan_reversal (n : ℕ) (λ : ℂ) :\n    (reversal n).conjTranspose = reversal n ∧ reversal n * reversal n = 1 ∧\n    reversal n * jordan n λ * (reversal n).conjTranspose = lowerJordan n λ ∧\n    (∀ x : H n, euclideanLin (reversal n) x = reverseVector x ∧ ‖reverseVector x‖ = ‖x‖ ∧\n      reverseVector (reverseVector x) = x)",
+      "header_sha256": "42cf5f668c1d551254fd2c7c8c0f3c812f7f18ed267761df0ee5548338c06a11"
+    },
+    {
+      "name": "NLA.IE02.jordan_direction_toeplitz",
+      "header": "theorem jordan_direction_toeplitz (n k : ℕ) (λ : ℂ) :\n    IsToeplitz (1 : Square n) ∧ ∀ j, IsToeplitz (jordanDirections n k λ j)",
+      "header_sha256": "884eb0d4525702849bfbff54fc1c3a81d12a87a251f5c5de608c784e030dd8c6"
+    },
+    {
+      "name": "NLA.IE02.normalized_polynomial_residuals",
+      "header": "theorem normalized_polynomial_residuals (n k : ℕ) (λ : ℂ) :\n    (∀ p : Poly, Admissible k p → ∃ c : Fin k → ℂ,\n      polyEval p (lowerJordan n λ) = affineResidual 1 (jordanDirections n k λ) c) ∧\n    (∀ c : Fin k → ℂ, ∃ p : Poly, Admissible k p ∧\n      polyEval p (lowerJordan n λ) = affineResidual 1 (jordanDirections n k λ) c)",
+      "header_sha256": "6b66f9776c7c80c4ef20a9ebad743635d42c0c4dec1d7c339f517eac9266f3df"
+    },
+    {
+      "name": "NLA.IE02.jordan_polynomial_transport",
+      "header": "theorem jordan_polynomial_transport (n : ℕ) (λ : ℂ) (p : Poly) :\n    polyEval p (jordan n λ) * reversal n = reversal n * polyEval p (lowerJordan n λ) ∧\n    operatorNorm (polyEval p (jordan n λ)) = operatorNorm (polyEval p (lowerJordan n λ)) ∧\n    (∀ x : H n, euclideanLin (polyEval p (jordan n λ)) (reverseVector x) =\n      reverseVector (euclideanLin (polyEval p (lowerJordan n λ)) x))",
+      "header_sha256": "a91347a9796f0aa0403053b3df175df5153dc3fc621b26f2b79eb397263c90c8"
+    },
+    {
+      "name": "NLA.IE02.gmres_extrema_semantics",
+      "header": "theorem gmres_extrema_semantics {n : ℕ} (A : Square n) (k : ℕ) :\n    (∃ p : Poly, Admissible k p ∧ operatorNorm (polyEval p A) = idealGMRES A k ∧\n      ∀ q : Poly, Admissible k q → operatorNorm (polyEval p A) ≤ operatorNorm (polyEval q A)) ∧\n    (∀ x : H n, ∃ p : Poly, Admissible k p ∧\n      ‖euclideanLin (polyEval p A) x‖ = gmresInner A k x ∧\n      ∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p A) x‖ ≤\n        ‖euclideanLin (polyEval q A) x‖) ∧\n    (∀ x ∈ unitSphere n, 0 ≤ gmresInner A k x ∧ gmresInner A k x ≤ idealGMRES A k)",
+      "header_sha256": "1918f82b30423f701830bebc47da2f0f4a6cb2019ae8d1f4bacd2a7dffd5f87a"
+    },
+    {
+      "name": "NLA.IE02.canonical_jordan_minimax",
+      "header": "theorem canonical_jordan_minimax (n k : ℕ) (λ : ℂ)\n    (hn : 2 ≤ n) (hλ : λ ≠ 0) (hk : 1 ≤ k) (hkn : k < n) :\n    worstGMRES (jordan n λ) k = idealGMRES (jordan n λ) k ∧\n    (∀ x ∈ unitSphere n, ∃ p : Poly, Admissible k p ∧\n      ‖euclideanLin (polyEval p (jordan n λ)) x‖ = gmresInner (jordan n λ) k x ∧\n      ∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p (jordan n λ)) x‖ ≤\n        ‖euclideanLin (polyEval q (jordan n λ)) x‖) ∧\n    ∃ (p : Poly) (x : H n), Admissible k p ∧ x ∈ unitSphere n ∧\n      operatorNorm (polyEval p (jordan n λ)) = idealGMRES (jordan n λ) k ∧\n      ‖euclideanLin (polyEval p (jordan n λ)) x‖ = operatorNorm (polyEval p (jordan n λ)) ∧\n      gmresInner (jordan n λ) k x = worstGMRES (jordan n λ) k ∧\n      (∀ q : Poly, Admissible k q →\n        operatorNorm (polyEval p (jordan n λ)) ≤ operatorNorm (polyEval q (jordan n λ))) ∧\n      (∀ q : Poly, Admissible k q → ‖euclideanLin (polyEval p (jordan n λ)) x‖ ≤\n        ‖euclideanLin (polyEval q (jordan n λ)) x‖) ∧\n      (∀ z ∈ unitSphere n, gmresInner (jordan n λ) k z ≤ gmresInner (jordan n λ) k x)",
+      "header_sha256": "63707441dded95e114ec23fafb40cfb0468f0ffcfa11c1223498a2a5cc5d03ee"
+    }
+  ]
+}

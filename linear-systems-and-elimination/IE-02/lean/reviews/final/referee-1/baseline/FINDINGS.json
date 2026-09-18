@@ -1,0 +1,56 @@
+{
+  "time": "2026-09-17T13:16:24.078311+00:00",
+  "reviewer": "/root/mi13_full_referee2",
+  "role": "Independent nonauthor full IE-02 source referee1; SP-15 source author, no IE-02 source authorship",
+  "verdict": "REQUEST_CHANGES_REUSE_ONLY",
+  "complete_core_source_review": true,
+  "core_modules": 56,
+  "exact_original_contracts": 50,
+  "mathematical_or_statement_gap_found": false,
+  "rubrics": {
+    "correctness": "approve_scoped_full_source_review",
+    "generality": "approve",
+    "proof-quality": "approve_subject_to_reuse_finding",
+    "reuse": "request_changes_R1",
+    "attribution": "approve_active_source_scope"
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "status": "open",
+      "severity": "source_reuse_approval_blocker",
+      "mathematical_gap": false,
+      "path": "NLA/IE02/JordanTransport.lean",
+      "line": 29,
+      "source_sha256": "b520bad7fa95e2ce42738f0135ec1c1b0c9810362cfdd77db2850b8cfa0789ca",
+      "duplicate": "private euclidean_mul_apply",
+      "replacement": "NLA.IE02.euclideanLin_mul_apply",
+      "replacement_source": "NLA/IE02/SchurEnergy.lean",
+      "replacement_line": 25,
+      "replacement_source_sha256": "4935077022d5bbc111755bb8e16a5473f82ee766aaa244db7a5450d7b160b83d",
+      "reason": "Exact same matrix action statement and proof already public in final project closure; pinned reuse rubric asks direct reuse.",
+      "requested_change": "Add SchurEnergy import; delete private duplicate; replace single use at original line 78 with euclideanLin_mul_apply. Preserve frozen inputs and successful original evidence. Locally rerun exact affected closure.",
+      "closure_condition": "Independent continuation review of exact small diff and genuine source-matched successful local results. This original report does not preapprove unseen changed bytes."
+    }
+  ],
+  "nonblocking_observations": [
+    "11 actual unused-variable diagnostics in frozen public contract hypotheses; no warning suppression or fake uses required.",
+    "Top-level operational metadata and Lake Solution registration remain intentionally statement-stage; require separate publication continuation.",
+    "Only TauCetiReview guidance available locally, no full pinned Tau Ceti mathematical code checkout searched or claimed."
+  ],
+  "local_evidence_scope": "Read-only authentication of existing 56-source/33-origin receipt/log/output links, final local121 ordered 50 three-axiom reports; no fresh Lean run by this reviewer.",
+  "future_checks_not_claimed": [
+    "corrected_source_local_rerun",
+    "second_full_referee",
+    "real_Linux_Comparator",
+    "default_kernel_replay_and_sandbox_controls",
+    "publication_metadata_checks",
+    "GitHub_or_published_commit_acceptance"
+  ],
+  "Lean_invoked": false,
+  "Comparator_invoked": false,
+  "network_used": false,
+  "source_edited": false,
+  "official_Tau_Ceti_service_used": false,
+  "whole_problem_count_change": 0
+}

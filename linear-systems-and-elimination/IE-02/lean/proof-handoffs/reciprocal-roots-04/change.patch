@@ -1,0 +1,10 @@
+--- before
++++ after
+@@ -86,6 +86,7 @@
+         congrArg (Multiset.filter (fun z : ℂ => ¬‖z‖ < 1)) hpair
+       _ = (P.roots.filter (fun z => ¬‖reciprocalConj z‖ < 1)).map reciprocalConj := by
+         rw [Multiset.filter_map]
++        simp only [Function.comp_def]
+       _ = (insideRoots P).map reciprocalConj := by
+         apply congrArg (Multiset.map reciprocalConj)
+         unfold insideRoots

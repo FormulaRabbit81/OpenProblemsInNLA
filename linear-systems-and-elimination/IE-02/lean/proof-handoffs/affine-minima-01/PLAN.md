@@ -1,0 +1,9 @@
+# IE-02 affine minima: pre-code plan
+
+Prove exactly affine_operator_minimum and affine_vector_minimum for all n,k, including empty dimensions and dependent/zero directions. These are actual attained infima, not assumed best-approximation data.
+
+Use the existing proper-space nearest-point theorem IsClosed.exists_infDist_eq_dist. For vectors v_j in a finite-dimensional complex normed space E, the range of the linear combination map c↦Σ c_j • v_j is a closed submodule, nonempty at zero. Properness follows from FiniteDimensional.proper ℂ E. A nearest point therefore has some coefficient vector c and minimizes the residual norm. IsLeast.csInf_eq identifies its value with the actual sInf of the residual range. No injectivity/coercivity of the coefficient map is assumed (directions may be dependent).
+
+Instantiate E as the finite-dimensional space of continuous linear operators H n→L[ℂ]H n, carrying its actual operator norm, and as H n for vector residuals. Matrix.toEuclideanLin and LinearMap.toContinuousLinearMap are linear maps/equivalences; their additive/scalar/sum identities transport the actual affineResidual to these normed spaces. Do not use the entrywise norm on matrix arrays. Both dimension zero and k=0 stay valid since the range contains zero and nearest-point existence covers singletons.
+
+No numerical approximation/interval subdivision is needed. The existing exact-half LeanCert certificate is consumed elsewhere; these universal symbolic/compactness statements receive ordinary kernel trust checks. Primary reuse: pinned Mathlib Topology.MetricSpace.HausdorffDistance (closed-set nearest point), Analysis.Normed.Module.FiniteDimension (closed finite submodules/properness), Topology.Algebra.Module.FiniteDimension (finite continuous-linear-map space), IsLeast.csInf_eq. A small private adapter gives the exact project sInf contract, avoiding a new general best-approximation theory.

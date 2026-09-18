@@ -1,0 +1,40 @@
+NLA/IE02/FourierCoefficients.lean:24:37: error(lean.unknownIdentifier): Unknown identifier `star_ite`
+NLA/IE02/FourierCoefficients.lean:22:57: error: unsolved goals
+l m : ℕ
+q : Fin l → Poly
+r : ℤ
+j : Fin l
+_hj : j ∈ Finset.univ
+u : Fin (m + 1)
+_hu : u ∈ Finset.univ
+v : Fin (m + 1)
+_hv : v ∈ Finset.univ
+hfreq : ↑↑v - ↑↑u = -r ↔ ↑↑u - ↑↑v = r
+⊢ (if ↑↑u - ↑↑v = r then Polynomial.coeff (q j) ↑v * star (Polynomial.coeff (q j) ↑u) else 0) =
+    star (if ↑↑u - ↑↑v = r then Polynomial.coeff (q j) ↑u * star (Polynomial.coeff (q j) ↑v) else 0)
+NLA/IE02/FourierCoefficients.lean:24:47: warning: This simp argument is unused:
+  star_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [fourierCoeff, star_sum, star_ite, star_star, star_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/IE02/FourierCoefficients.lean:24:57: warning: This simp argument is unused:
+  star_star
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [fourierCoeff, star_sum, star_ite, star_mul, star_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+NLA/IE02/FourierCoefficients.lean:24:68: warning: This simp argument is unused:
+  star_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [fourierCoeff, star_sum, star_ite, star_mul, star_star]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'NLA.IE02.fourier_conjugate_symmetry' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/FourierCoefficients.lean:59:21: error: #assert_trust: 'NLA.IE02.fourier_conjugate_symmetry' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
+'NLA.IE02.fourier_zero_coefficient' depends on axioms: [propext, Classical.choice, Quot.sound]

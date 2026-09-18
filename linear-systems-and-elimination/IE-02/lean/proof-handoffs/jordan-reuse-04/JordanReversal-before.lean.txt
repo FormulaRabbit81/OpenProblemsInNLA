@@ -1,0 +1,92 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original mathematical and library attribution
+is retained in Definitions.lean and SourceCorrespondence.md.
+
+The reversal is an actual coordinate permutation and Euclidean isometry.
+All dimensions, including zero, are included; no numerical computation is needed.
+-/
+import NLA.IE02.Definitions
+import Mathlib.Data.Fin.Rev
+import LeanCert.Tactic
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+open scoped BigOperators Matrix
+open Polynomial
+
+private theorem rev_index_symm {n : ℕ} (i j : Fin n) :
+    i = j.rev ↔ j = i.rev := by
+  constructor <;> intro h <;>
+    simpa only [Fin.rev_rev] using (congrArg Fin.rev h).symm
+
+theorem reversal_mul_apply {n : ℕ} (A : Square n) (i j : Fin n) :
+    (reversal n * A) i j = A i.rev j := by
+  simp [Matrix.mul_apply, reversal]
+
+theorem mul_reversal_apply {n : ℕ} (A : Square n) (i j : Fin n) :
+    (A * reversal n) i j = A i j.rev := by
+  simp [Matrix.mul_apply, reversal, rev_index_symm j]
+
+theorem reversal_action {n : ℕ} (x : H n) :
+    euclideanLin (reversal n) x = reverseVector x := by
+  apply PiLp.ext
+  intro i
+  -- Expose the actual Euclidean matrix action as its single nonzero row entry.
+  change (∑ j : Fin n, (if j = i.rev then (1 : ℂ) else 0) * x j) = x i.rev
+  simp
+
+theorem reverseVector_norm {n : ℕ} (x : H n) : ‖reverseVector x‖ = ‖x‖ := by
+  let e := LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ (@Fin.revPerm n)
+  have he : e x = reverseVector x := by
+    apply PiLp.ext
+    intro i
+    rfl
+  rw [← he]
+  exact e.norm_map x
+
+theorem reverseVector_involutive {n : ℕ} (x : H n) :
+    reverseVector (reverseVector x) = x := by
+  apply PiLp.ext
+  intro i
+  simp [reverseVector]
+
+theorem jordan_reversal (n : ℕ) (lam : ℂ) :
+    (reversal n).conjTranspose = reversal n ∧ reversal n * reversal n = 1 ∧
+    reversal n * jordan n lam * (reversal n).conjTranspose = lowerJordan n lam ∧
+    (∀ x : H n, euclideanLin (reversal n) x = reverseVector x ∧ ‖reverseVector x‖ = ‖x‖ ∧
+      reverseVector (reverseVector x) = x) := by
+  have hstar : (reversal n).conjTranspose = reversal n := by
+    ext i j
+    simp [Matrix.conjTranspose_apply, reversal, rev_index_symm i j]
+  have hsquare : reversal n * reversal n = (1 : Square n) := by
+    ext i j
+    rw [reversal_mul_apply]
+    simp [reversal, Matrix.one_apply, eq_comm]
+  have hshift : reversal n * upperShift n * reversal n = shift n := by
+    ext i j
+    rw [mul_reversal_apply, reversal_mul_apply]
+    have hrev : j.rev.val = i.rev.val + 1 ↔ i.val = j.val + 1 := by
+      simp only [Fin.val_rev]
+      omega
+    unfold upperShift shift toeplitz
+    simp only [hrev]
+    by_cases hij : i.val = j.val + 1
+    · simp [hij]
+    · have hsub : i.val - j.val ≠ 1 := by omega
+      simp [hij, Polynomial.coeff_X, Ne.symm hsub]
+  refine ⟨hstar, hsquare, ?_, fun x =>
+    ⟨reversal_action x, reverseVector_norm x, reverseVector_involutive x⟩⟩
+  rw [hstar]
+  unfold jordan lowerJordan
+  simp only [mul_add, add_mul, Matrix.mul_smul, Matrix.smul_mul, mul_one, hsquare, hshift]
+
+#print axioms jordan_reversal
+#assert_trust kernel jordan_reversal
+
+end
+end NLA.IE02

@@ -1,0 +1,32 @@
+NLA/IE02/FourierEvaluation.lean:27:4: warning: Try `simp at hz` instead of `simpa using hz`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+NLA/IE02/FourierEvaluation.lean:29:4: error: Type mismatch: After simplification, term
+  Polynomial.eval_eq_sum_range' (Nat.lt_succ_of_le (Polynomial.natDegree_le_of_degree_le hp)) z
+ has type
+  Polynomial.eval z p = ∑ i ∈ Finset.range m.succ, Polynomial.coeff p i * z ^ i
+but is expected to have type
+  Polynomial.eval z p = ∑ i, Polynomial.coeff p ↑i * z ^ ↑i
+NLA/IE02/FourierEvaluation.lean:34:18: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (starRingEnd ℂ) z
+in the target expression
+  z ^ ↑u * star z ^ ↑v = z ^ (↑↑u - ↑↑v)
+
+m : ℕ
+p : Poly
+hp : DegreeLE p m
+z : ℂ
+hz : ‖z‖ = 1
+hz0 : z ≠ 0
+heval : Polynomial.eval z p = ∑ i, Polynomial.coeff p ↑i * z ^ ↑i
+u v : Fin (m + 1)
+⊢ z ^ ↑u * star z ^ ↑v = z ^ (↑↑u - ↑↑v)
+NLA/IE02/FourierEvaluation.lean:48:8: error: invalid 'calc' step, left-hand side is
+  Polynomial.coeff p ↑u * z ^ ↑u * star (Polynomial.coeff p ↑v * z ^ ↑v) : ℂ
+but is expected to be
+  Polynomial.coeff p ↑v * z ^ ↑v * star (Polynomial.coeff p ↑u * z ^ ↑u) : ℂ
+'NLA.IE02.polynomial_norm_square_terms' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/FourierEvaluation.lean:78:21: error: #assert_trust: 'NLA.IE02.polynomial_norm_square_terms' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
+'NLA.IE02.fourier_frequency_select' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,10 @@
+NLA/IE02/SchurEndpoint.lean:61:4: error: Type mismatch: After simplification, term
+  Finset.add_sum_erase Finset.univ (fun i => ‖coeff p ↑i‖ ^ 2) (Finset.mem_univ i0)
+ has type
+  ‖coeff p ↑i0‖ ^ 2 + ∑ x ∈ Finset.univ.erase i0, ‖coeff p ↑x‖ ^ 2 = ∑ x, ‖coeff p ↑x‖ ^ 2
+but is expected to have type
+  1 + ∑ i ∈ Finset.univ.erase i0, ‖coeff p ↑i‖ ^ 2 = ∑ i, ‖coeff p ↑i‖ ^ 2
+'NLA.IE02.schur_scalar_endpoint' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/SchurEndpoint.lean:141:21: error: #assert_trust: 'NLA.IE02.schur_scalar_endpoint' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

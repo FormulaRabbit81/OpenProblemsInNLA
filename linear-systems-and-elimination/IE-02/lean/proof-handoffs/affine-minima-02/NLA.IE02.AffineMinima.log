@@ -1,0 +1,36 @@
+NLA/IE02/AffineMinima.lean:29:19: error: unsolved goals
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : NormedSpace ℂ E
+inst✝ : FiniteDimensional ℂ E
+k : ℕ
+y : E
+v : Fin k → E
+a : ℂ
+c : Fin k → ℂ
+⊢ ∑ x, (a * c x) • v x = ∑ x, ((RingHom.id ℂ) a * c x) • v x
+NLA/IE02/AffineMinima.lean:33:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+NLA/IE02/AffineMinima.lean:68:15: warning: `ContinuousLinearMap.sub_apply` has been deprecated: Use `sub_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.sub_apply` to `sub_apply x`).
+NLA/IE02/AffineMinima.lean:68:46: warning: `ContinuousLinearMap.sum_apply` has been deprecated: Use `sum_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.sum_apply` to `sum_apply x`).
+NLA/IE02/AffineMinima.lean:69:6: warning: `ContinuousLinearMap.smul_apply` has been deprecated: Use `smul_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.smul_apply` to `smul_apply x`).
+'NLA.IE02.affine_operator_minimum' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/AffineMinima.lean:75:21: error: #assert_trust: 'NLA.IE02.affine_operator_minimum' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
+'NLA.IE02.affine_vector_minimum' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/AffineMinima.lean:77:21: error: #assert_trust: 'NLA.IE02.affine_vector_minimum' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

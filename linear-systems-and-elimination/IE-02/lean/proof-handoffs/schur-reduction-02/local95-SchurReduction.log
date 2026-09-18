@@ -1,0 +1,23 @@
+NLA/IE02/SchurReduction.lean:160:4: error: Type mismatch: After simplification, term
+  hZbound y
+ has type
+  @LE.le ℝ Real.instLE ‖(euclideanLin Z) y‖ ‖y‖
+but is expected to have type
+  @LE.le ℝ Real.instLE ‖(euclideanCLM Z) y‖ ‖y‖
+NLA/IE02/SchurReduction.lean:177:53: error(lean.invalidField): Invalid field `mp`: The environment does not contain `Function.mp`, so it is not possible to project the field `mp` from an expression
+  mul_le_mul_right ?m.1497
+of type
+  ∀ (a : ?m.1486), a * ?m.1490 ≤ a * ?m.1491
+NLA/IE02/SchurReduction.lean:177:28: error: Application type mismatch: The argument
+  norm_pos_iff.mpr hyne
+has type
+  0 < ‖y‖
+but is expected to have type
+  ?m.1490 ≤ ?m.1491
+in the application
+  mul_le_mul_right (norm_pos_iff.mpr hyne)
+NLA/IE02/SchurReduction.lean:183:13: error(lean.unknownIdentifier): Unknown identifier `hBtoep`
+'NLA.IE02.schur_strict_reduction' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/SchurReduction.lean:200:21: error: #assert_trust: 'NLA.IE02.schur_strict_reduction' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

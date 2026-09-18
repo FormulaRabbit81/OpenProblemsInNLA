@@ -1,0 +1,12 @@
+[
+  {
+    "name": "NLA.IE02.finite_schur_boundary",
+    "header": "theorem finite_schur_boundary {n : ℕ} (hn : 1 ≤ n) (U : Square n)\n    (hU : IsToeplitz U) (hnorm : operatorNorm U = 1) :\n    ∃ (d : ℕ) (a b : Poly), SchurPair n U d a b",
+    "header_sha256": "70b33851abbaa1070dcad13bd1d4ff63db754ba91909967e4ec691b32f9bec45"
+  },
+  {
+    "name": "NLA.IE02.scaled_maximal_factorization",
+    "header": "theorem scaled_maximal_factorization {n : ℕ} (hn : 1 ≤ n) (T : Square n)\n    (hT : IsToeplitz T) (hne : T ≠ 0) :\n    ∃ (d : ℕ) (a b : Poly),\n      SchurPair n ((operatorNorm T : ℂ)⁻¹ • T) d a b ∧\n      (∀ x : H n, x ∈ maximalSpace T ↔\n        ∃ h : Poly, DegreeLE h (n - 1 - d) ∧ x = coeffVector n (b * h)) ∧\n      (∀ h : Poly, DegreeLE h (n - 1 - d) →\n        euclideanLin T (coeffVector n (b * h)) =\n          (operatorNorm T : ℂ) • coeffVector n (a * h))",
+    "header_sha256": "92204d364e7eb0bbab8ef9d50ae8d2776692c528b95f354089922b0ac541c013"
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "name": "NLA.IE02.schur_pair_step",
+  "header": "theorem schur_pair_step {n d : ℕ} (p a b : Poly) (B : Square (n + 2))\n    (hU : operatorNorm (toeplitz (n + 2) p) = 1) (hc : ‖p.coeff 0‖ < 1)\n    (hleft : schurM (toeplitz (n + 2) p) (p.coeff 0) * B = 1)\n    (hright : B * schurM (toeplitz (n + 2) p) (p.coeff 0) = 1)\n    (hV : operatorNorm (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) = 1)\n    (hpair : SchurPair (n + 1)\n      (activeBlock (schurZ (toeplitz (n + 2) p) (p.coeff 0) B)) d a b) :\n    SchurPair (n + 2) (toeplitz (n + 2) p) (d + 1)\n      (schurNumerator (p.coeff 0) a b) (schurDenominator (p.coeff 0) a b)",
+  "header_sha256": "85ee101ab04d9d5d8d9a85353575bf90ae2692e9cc22e8d1828d3c6ecb69a02b"
+}

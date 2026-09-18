@@ -1,0 +1,7 @@
+# Frozen IE02 Schur diagonal bound and dimension-one norm before proof
+
+Prove exactly schur_diagonal_bound (ordinal8) and schur_dimension_one (ordinal10), retaining every frozen hypothesis. For n>=1, choose a literal unit coordinate vector at index0. Its first image coordinate under the concrete Toeplitz matrix is p.coeff0. The PiLp coordinate norm bound and actual CLM operator norm bound show this diagonal entry has modulus at most the operator norm, hence at most1 under hU. No spectral assumption is required.
+
+At n=1 the entire Toeplitz matrix equals p.coeff0 times the identity, by extensionality on the singleton finite type. Transport this equality through the actual Euclidean matrix/CLM maps; the norm of a complex scalar multiple of identity is the scalar modulus because H1 is nontrivial. Zero coefficients and zero polynomials remain included. Do not infer the stronger scalar-endpoint contract for general n from this one-dimensional proof.
+
+These are symbolic matrix and norm facts with no new interval bound, grid, or numerical approximation. Read pinned PiLp.norm_apply_le/single_apply/norm_single; Matrix.toLpLin_one and its linear-map conversions; ContinuousLinearMap.norm_id and norm_smul. Use actual Definitions.lean throughout. Exact statements already have two independent reviews and a root freeze; these new proof bodies still need actual local compilation and independent source review. Trust/pins/resource settings unchanged, root compiler only.

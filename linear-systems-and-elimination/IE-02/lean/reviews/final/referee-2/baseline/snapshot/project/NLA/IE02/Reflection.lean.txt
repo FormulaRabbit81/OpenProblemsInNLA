@@ -1,0 +1,100 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original mathematical and library attribution
+is retained in Definitions.lean and SourceCorrespondence.md. The fixed-bound reflection
+foundations are reused from Mathlib.Algebra.Polynomial.Reverse, authored by Damiano Testa.
+
+Conjugated fixed-bound reflection, its product law, and exact evaluation identities.
+The zero polynomial and bounds larger than the actual degree are retained.
+-/
+import NLA.IE02.Definitions
+import Mathlib.Algebra.GroupWithZero.Invertible
+import LeanCert.Tactic
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+open Polynomial
+
+private theorem mapped_natDegree_le {m : ℕ} (p : Poly) (hp : DegreeLE p m) :
+    (p.map (starRingEnd ℂ)).natDegree ≤ m :=
+  (Polynomial.natDegree_map_le (f := starRingEnd ℂ) (p := p)).trans
+    (Polynomial.natDegree_le_of_degree_le hp)
+
+theorem reflection_algebra (m : ℕ) (p q : Poly) (c : ℂ)
+    (hp : DegreeLE p m) (hq : DegreeLE q m) :
+    DegreeLE (conjReflect m p) m ∧ conjReflect m (conjReflect m p) = p ∧
+    conjReflect m (p + q) = conjReflect m p + conjReflect m q ∧
+    conjReflect m (C c * p) = C (star c) * conjReflect m p ∧
+    (conjReflect m p).coeff m = star (p.coeff 0) := by
+  -- Only the degree claim needs a bound. The other fixed-bound reflection
+  -- identities hold without a bound on q; its frozen hypothesis is retained.
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · apply Polynomial.degree_le_of_natDegree_le
+    exact (Polynomial.natDegree_reflect_le (p := p.map (starRingEnd ℂ)) (N := m)).trans
+      (max_le le_rfl (mapped_natDegree_le p hp))
+  · have hcomp : (starRingEnd ℂ).comp (starRingEnd ℂ) = RingHom.id ℂ := by
+      ext z
+      exact star_star z
+    dsimp only [conjReflect]
+    rw [Polynomial.reflect_map, Polynomial.reflect_reflect, Polynomial.map_map,
+      hcomp, Polynomial.map_id]
+  · simp only [conjReflect, Polynomial.map_add, Polynomial.reflect_add]
+  · simp only [conjReflect, Polynomial.map_mul, Polynomial.map_C,
+      starRingEnd_apply, Polynomial.reflect_C_mul]
+  · simp only [conjReflect, Polynomial.coeff_reflect,
+      Polynomial.revAt_le (le_refl m), Nat.sub_self, Polynomial.coeff_map,
+      starRingEnd_apply]
+
+theorem reflection_product (d m : ℕ) (p q : Poly)
+    (hp : DegreeLE p d) (hq : DegreeLE q m) :
+    conjReflect (d + m) (p * q) = conjReflect d p * conjReflect m q := by
+  simpa only [conjReflect, Polynomial.map_mul] using
+    Polynomial.reflect_mul (p.map (starRingEnd ℂ)) (q.map (starRingEnd ℂ))
+      (mapped_natDegree_le p hp) (mapped_natDegree_le q hq)
+
+theorem reflection_evaluation (m : ℕ) (p : Poly) (hp : DegreeLE p m)
+    (z : ℂ) (hz : z ≠ 0) :
+    (conjReflect m p).eval z = z ^ m * star (p.eval ((star z)⁻¹)) ∧
+    (‖z‖ = 1 → (conjReflect m p).eval z = z ^ m * star (p.eval z)) := by
+  let : Invertible (z⁻¹) := invertibleOfNonzero (inv_ne_zero hz)
+  -- Evaluate the library reflection identity at the inverse point, then
+  -- cancel its nonzero power. No coefficient expansion is needed here.
+  have hmul : (conjReflect m p).eval z * (z⁻¹) ^ m =
+      (p.map (starRingEnd ℂ)).eval (z⁻¹) := by
+    simpa only [conjReflect, invOf_eq_inv, inv_inv, Polynomial.eval₂_id] using
+      Polynomial.eval₂_reflect_mul_pow (RingHom.id ℂ) (z⁻¹) m
+        (p.map (starRingEnd ℂ)) (mapped_natDegree_le p hp)
+  have hinvpow : (z⁻¹) ^ m * z ^ m = 1 := by
+    rw [← _root_.mul_pow, inv_mul_cancel₀ hz, one_pow]
+  have hvalue : (conjReflect m p).eval z =
+      (p.map (starRingEnd ℂ)).eval (z⁻¹) * z ^ m := by
+    have h := congrArg (fun t : ℂ => t * z ^ m) hmul
+    simpa only [mul_assoc, hinvpow, mul_one] using h
+  have hmap : (p.map (starRingEnd ℂ)).eval (z⁻¹) =
+      star (p.eval ((star z)⁻¹)) := by
+    simpa only [starRingEnd_apply, star_inv₀, star_star] using
+      Polynomial.eval_map_apply (f := starRingEnd ℂ) (p := p) ((star z)⁻¹)
+  have hformula : (conjReflect m p).eval z = z ^ m * star (p.eval ((star z)⁻¹)) := by
+    calc
+      (conjReflect m p).eval z = (p.map (starRingEnd ℂ)).eval (z⁻¹) * z ^ m := hvalue
+      _ = z ^ m * star (p.eval ((star z)⁻¹)) := by rw [hmap, mul_comm]
+  refine ⟨hformula, ?_⟩
+  intro hnorm
+  have hstarinv : (star z)⁻¹ = z := by
+    simpa only [star_inv₀, starRingEnd_apply, star_star] using
+      congrArg star (Complex.inv_eq_conj hnorm)
+  simpa only [hstarinv] using hformula
+
+#print axioms reflection_algebra
+#assert_trust kernel reflection_algebra
+#print axioms reflection_product
+#assert_trust kernel reflection_product
+#print axioms reflection_evaluation
+#assert_trust kernel reflection_evaluation
+
+end
+end NLA.IE02

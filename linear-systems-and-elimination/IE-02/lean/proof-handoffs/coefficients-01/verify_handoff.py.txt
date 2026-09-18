@@ -1,0 +1,84 @@
+#!/usr/bin/env python3
+"""Read-only source/hash/header audit. Does not compile Lean or verify a proof."""
+import hashlib
+import json
+import re
+from pathlib import Path
+
+packet = Path(__file__).resolve().parent
+workspace = packet.parent.parent
+
+
+def digest(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+manifest = json.loads((packet / 'MANIFEST.json').read_text())
+actual = {str(p.relative_to(packet)) for p in packet.rglob('*')
+          if p.is_file() and p.name != 'MANIFEST.json'}
+assert actual == set(manifest['files'])
+for rel, expected in manifest['files'].items():
+    assert digest(packet / rel) == expected, rel
+
+for item in json.loads((packet / 'INPUT-BINDINGS.json').read_text())['inputs']:
+    assert digest(Path(item['path'])) == item['sha256'], item['path']
+freeze = json.loads((workspace / 'STATEMENT-FREEZE.json').read_text())
+assert len(freeze['frozen_files']) == 13
+for rel, expected in freeze['frozen_files'].items():
+    assert digest(workspace / rel) == expected, rel
+acceptance = workspace.parent.parent / 'IE02-ROOT-FREEZE-ACCEPTANCE.json'
+assert digest(acceptance) == 'acb508e19e36aae8a4160d214850179941858726d2a1187023dc5ebfc93c3adb'
+assert json.loads(acceptance.read_text())['proof_implementation_authorized'] is True
+
+for item in json.loads((packet / 'PRIMARY-BINDINGS.json').read_text())['sources']:
+    path = Path(item['path'])
+    assert digest(path) == item['sha256'], str(path)
+    lines = path.read_text().splitlines()
+    for excerpt in item['excerpts']:
+        body = '\n'.join(lines[excerpt['first_line'] - 1:excerpt['last_line']]) + '\n'
+        assert body == excerpt['text']
+        assert hashlib.sha256(body.encode()).hexdigest() == excerpt['sha256']
+    if 'prior_literal_pin_authentication_record' in item:
+        record = Path(item['prior_literal_pin_authentication_record'])
+        assert digest(record) == item['prior_literal_pin_authentication_record_sha256']
+        old = next(x for x in json.loads(record.read_text())['sources']
+                   if x['path'] == item['relative_path'])
+        assert old['sha256'] == item['sha256'] and old['literal_pinned_bytes_match_local']
+
+for item in json.loads((packet / 'IMPORT-AVAILABILITY.json').read_text())['cache_artifacts']:
+    path = Path(item['path'])
+    assert path.is_file() == item['exists']
+    if item['exists']:
+        assert digest(path) == item['sha256']
+
+source = workspace / 'NLA/IE02/Coefficients.lean'
+assert source.read_bytes() == (packet / 'sources/Coefficients.lean.txt').read_bytes()
+src = source.read_text()
+challenge = (workspace / 'Challenge.lean').read_text()
+headers = json.loads((packet / 'EXACT-HEADERS.json').read_text())
+names = ['coefficient_roundtrip', 'coefficient_inner_product']
+assert set(headers) == set(names)
+for name in names:
+    pattern = r'theorem ' + name + r'\b.*?:= by'
+    header = re.search(pattern, src, re.S).group(0)
+    assert header == re.search(pattern, challenge, re.S).group(0), name
+    assert header == headers[name]['header'], name
+    assert hashlib.sha256(header.encode()).hexdigest() == headers[name]['sha256']
+    assert '#print axioms ' + name in src
+    assert '#assert_trust kernel ' + name in src
+assert re.findall(r'^import (\S+)', src, re.M) == [
+    'NLA.IE02.Definitions', 'Mathlib.Algebra.Polynomial.OfFn', 'LeanCert.Tactic']
+code = re.sub(r'/\-.*?\-/', '', src, flags=re.S)
+code = re.sub(r'--[^\n]*', '', code)
+assert not re.search(r'\b(sorry|admit|axiom|unsafe|native_decide|implemented_by)\b', code)
+assert re.findall(r'^theorem (\w+)', code, re.M) == [
+    'vectorPolynomial_eq_ofFn', 'coefficient_roundtrip', 'coefficient_inner_product']
+assert 'set_option leancert.trust "kernel"' in code
+assert not re.search(r'set_option\s+(maxRecDepth|maxHeartbeats|debug|trace)', code)
+static = json.loads((packet / 'STATIC-CHECKS.json').read_text())
+assert static['source_sha256'] == digest(source)
+assert static['lean_axiom_and_trust_execution'] == 'UNRUN'
+assert static['GithubComparator'] == 'UNRUN'
+assert static['whole_problem_verified'] is False
+print('PASS: source/hash/header audit; two exact frozen contracts and one supporting helper; '
+      '13 frozen files unchanged; Lean/trust/Comparator execution unrun.')

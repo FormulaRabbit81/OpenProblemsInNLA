@@ -1,0 +1,16 @@
+--- before/SchurPolynomial.lean
++++ after/SchurPolynomial.lean
+@@ -51,10 +51,11 @@
+     (schurNumerator c a b).degree = (d + 1 : ℕ) ∧
+     DegreeLE (schurDenominator c a b) (d + 1) ∧
+     (schurDenominator c a b).coeff 0 = 1 := by
+-  have hXa : (X * a).degree = (d + 1 : ℕ) := by
++  have hXa : (X * a).degree = ((d + 1 : ℕ) : WithBot ℕ) := by
+     rw [mul_comm X a, Polynomial.degree_mul_X, ha]
+     simp only [Nat.cast_add, Nat.cast_one]
+-  have hstep : (d : WithBot ℕ) < (d + 1 : ℕ) := WithBot.coe_lt_coe.mpr (by omega)
++  have hstep : (d : WithBot ℕ) < ((d + 1 : ℕ) : WithBot ℕ) :=
++    WithBot.coe_lt_coe.mpr (Nat.lt_succ_self d)
+   have hcb : (C c * b).degree < (X * a).degree := by
+     rw [hXa]
+     exact ((schur_degree_C_mul_le c b).trans hb).trans_lt hstep

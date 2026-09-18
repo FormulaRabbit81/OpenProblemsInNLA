@@ -1,0 +1,158 @@
+#!/usr/bin/env python3
+"""Independent authentication of actual IE-02 statement elaboration; no compiler."""
+from pathlib import Path
+import datetime, hashlib, json, re
+B=Path('/tmp/nla-lean-next-20260915')
+O=B/'next-statements/IE-02'
+N=B/'next-statements/IE-02-elaboration-01'
+L=Path('/private/tmp/nla-lean-local-shared-20260916')
+R=Path(__file__).resolve().parent
+checks,bindings=[],{}
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def check(n,c):
+    if not c:raise AssertionError(n)
+    checks.append(n)
+def bind(p,h=None):
+    p=Path(p).resolve();v=sha(p)
+    check('exact bound input: '+str(p),h is None or v==h)
+    check('stable repeated binding: '+str(p),str(p) not in bindings or bindings[str(p)]==v)
+    bindings[str(p)]=v
+    return v
+def read(p):bind(p);return json.loads(Path(p).read_text())
+def copy(p,rel):
+    bind(p);q=R/rel;q.parent.mkdir(parents=True,exist_ok=True);q.write_bytes(Path(p).read_bytes())
+def write(rel,x):
+    q=R/rel;q.parent.mkdir(parents=True,exist_ok=True);q.write_text(json.dumps(x,indent=2,ensure_ascii=False)+'\n')
+def packet(p,h):
+    bind(p/'MANIFEST.json',h);m=read(p/'MANIFEST.json')
+    check('complete payload inventory '+str(p),{str(q.relative_to(p)) for q in p.rglob('*')
+          if q.is_file() and q!=p/'MANIFEST.json'}==set(m['files']))
+    for rel,value in m['files'].items():
+        if isinstance(value,dict):
+            check('payload bytes '+str(p/rel),len((p/rel).read_bytes())==value['bytes']);value=value['sha256']
+        bind(p/rel,value)
+    return m
+om=packet(O,'972a12860c8f7c9c0374a2ad51a9eee66104c43de333b379b3dad04eb27097ed')
+nm=packet(N,'ccaa18d34331f8fea6dcb1c990498d2eb02d19536473ebba1f11a9789cc9b7af')
+review_pins={
+ 'IE02-statement-referee-1-20260917':'b4fc1acce3ee264a45d5ae89344a84457fcaec448d1514fb6dcf53a65430a7bf',
+ 'IE02-statement-referee-2-20260917':'b398c274557aea9608b57836482793308a67fe1bcb6bb4b76d7d94b76004dcc2',
+ 'IE02-statement-continuation-referee-1-20260917':'5b5dcd72de88214d4007c5e866680f5497bf83d84fb5944dc84f3e042587d323',
+ 'IE02-statement-referee-2-continuation-01-20260917':'30aa676d34b702e6c366e1d9dec5ba296d7a90c33ead7167605768e0ad751b83'}
+reviews={}
+for name,h in review_pins.items():
+    p=B/'reviews'/name;m=packet(p,h);ib=read(p/'BINDINGS.json')
+    if 'bindings' in ib:
+        items=[(x['source'],x['sha256']) for x in ib['bindings']]
+        for x in ib['bindings']:
+            if 'bytes' in x:check('review source byte size '+x['source'],len(Path(x['source']).read_bytes())==x['bytes'])
+    else:items=list(ib.items())
+    for path,digest in items:bind(path,digest)
+    reviews[name]={'manifest_sha256':h,'payloads':len(m['files']),'external_bindings_reauthenticated':len(items)}
+    for rel in ['MANIFEST.json','REVIEW.md','BINDINGS.json']:
+        copy(p/rel,'evidence/reviews/'+name+'/'+rel)
+write('REVIEW-BINDINGS.json',reviews)
+original_acceptance=read(B/'IE02-ROOT-STATEMENT-REVIEW-ACCEPTANCE.json')
+retry_acceptance=read(B/'IE02-ALPHA-RETRY-APPROVAL.json')
+for path,h in retry_acceptance['reviews'].items():bind(path,h)
+check('original and retry approvals authorize no proofs',original_acceptance['proof_implementation_authorized'] is False
+      and retry_acceptance['proof_authorized'] is False)
+expected={'NLA/IE02/Definitions.lean':'ee87d4f129e26a996c46b02076389415402beae8858e2ad7391a305bbdba1b2a',
+          'Challenge.lean':'a09907c4074776caeddf729da4ef9461433f105da5dff60396103121178288f9'}
+for rel,h in expected.items():
+    bind(N/rel,h);local_rel='NLA/IE02/Challenge.lean' if rel=='Challenge.lean' else rel
+    bind(L/local_rel,h);copy(N/rel,'evidence/source/'+rel)
+    check('only approved character repair '+rel,(O/rel).read_text().replace('λ','lam')==(N/rel).read_text())
+check('root approved exact retry sources',retry_acceptance['source_hashes']==expected)
+source=(N/'Challenge.lean').read_text();definitions=(N/'NLA/IE02/Definitions.lean').read_text()
+headers=[]
+for m in re.finditer(r'^theorem (\w+)\b.*?(?=\s*:= by)',source,re.M|re.S):
+    h=m.group(0).strip();headers.append({'name':'NLA.IE02.'+m.group(1),'header':h,
+       'header_sha256':hashlib.sha256(h.encode()).hexdigest(),'line':source[:m.start()].count('\n')+1})
+recorded=read(N/'STATEMENT-HEADERS.json')['headers']
+check('fifty exact locally elaborated source headers',len(headers)==len(recorded)==50)
+for actual,record in zip(headers,recorded):
+    check('recorded source header '+actual['name'],all(actual[k]==record[k] for k in ['name','header','header_sha256']))
+check('all fifty complete Comparator names',[x['name'] for x in headers]==read(N/'comparator.json')['theorem_names'])
+strip=lambda s:re.sub(r'/\-.*?\-/','',re.sub(r'--[^\n]*','',s),flags=re.S)
+check('zero definition holes and fifty deliberate specifications',not re.search(r'\b(sorry|admit|axiom)\b',strip(definitions))
+      and len(re.findall(r'\bsorry\b',strip(source)))==50)
+check('no candidate proof or freeze',not (N/'Solution.lean').exists() and not (N/'STATEMENT-FREEZE.json').exists())
+write('HEADERS.json',headers)
+
+receipt=read(L/'runs/development-42/RECEIPT.json');assembly=read(L/'ASSEMBLY-42.json');previous=read(L/'ASSEMBLY-41.json')
+environment=read(L/'LOCAL-ENVIRONMENT.json');compiler=environment['compiler']
+bind(L/'serial_compile_v3.py','d6c00e953688e155c0a313a8f49c7c395ad0fb1166faf3655c0b47f3ea2b2266')
+bind(compiler,'1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554')
+check('receipt exact full assembly inventory',receipt['assembly_sha256']==sha(L/'ASSEMBLY-42.json') and
+      receipt['source_inputs']=={p:v['sha256'] for p,v in assembly['sources'].items()})
+check('only IE02 source records change from previous assembly',
+      {p:v for p,v in assembly['sources'].items() if not p.startswith('NLA/IE02/')}==
+      {p:v for p,v in previous['sources'].items() if not p.startswith('NLA/IE02/')})
+check('assembly predecessor and environment bound',assembly['prior_assembly_sha256']==sha(L/'ASSEMBLY-41.json') and
+      assembly['current_environment_sha256']==sha(L/'LOCAL-ENVIRONMENT.json'))
+for key in ['runner_sha256','compiler_sha256']:
+    check('actual binary record '+key,receipt[key]==sha(L/'serial_compile_v3.py' if key=='runner_sha256' else compiler))
+check('actual serial macOS statement run',receipt['platform']=='darwin' and receipt['max_compiler_processes']==1
+      and receipt['threads']==1 and receipt['memory_cap_mib']==4096 and receipt['count_change']==0)
+check('exact two-module successful run',receipt['module_order']==['NLA.IE02.Definitions','NLA.IE02.Challenge']
+      and len(receipt['commands'])==2 and receipt['completed_modules']==2
+      and receipt['failed_modules']==[] and receipt['blocked_modules']==[])
+last=receipt['start']
+for c in receipt['commands']:
+    rel=c['module'].replace('.','/')+'.lean';canonical='Challenge.lean' if c['module'].endswith('Challenge') else rel
+    output=L/'.lake/build/lib/lean'/(rel[:-5]+'.olean')
+    check('literal actual command '+c['module'],c['argv']==[compiler,'--threads=1','--memory=4096','-o',str(output),rel]
+          and c['cwd']==str(L))
+    check('exact successful source '+c['module'],c['exit_code']==0 and c['source_sha256']==expected[canonical]
+          and receipt['source_inputs'][rel]==expected[canonical] and assembly['sources'][rel]['sha256']==expected[canonical])
+    check('serial actual command interval '+c['module'],last<=c['start']<=c['end']<=receipt['end']);last=c['end']
+    log=L/'runs/development-42'/(c['module']+'.log');bind(log,c['log_sha256']);bind(output,c['output_sha256'])
+    copy(log,'evidence/local42/'+log.name);copy(output,'evidence/local42/outputs/'+output.name)
+check('fresh Definitions has no project dependency',receipt['commands'][0]['dependency_olean_sha256']=={})
+check('fresh Challenge consumes this exact fresh Definitions output',receipt['commands'][1]['dependency_olean_sha256']==
+      {'NLA.IE02.Definitions':receipt['commands'][0]['output_sha256']})
+check('Definitions log is empty',(L/'runs/development-42/NLA.IE02.Definitions.log').read_bytes()==b'')
+expected_log=''.join('NLA/IE02/Challenge.lean:'+str(x['line'])+':8: warning: declaration uses `sorry`\n' for x in headers)
+check('full Challenge log exactly fifty expected specification warnings',
+      (L/'runs/development-42/NLA.IE02.Challenge.log').read_text()==expected_log)
+check('root approval precedes successful retry',retry_acceptance['time']<=assembly['time']<=receipt['start'])
+for key,item in assembly['review_records'].items():
+    if 'IE02' in key:
+        bind(item['path'],item['sha256'])
+for q in [L/'ASSEMBLY-42.json',L/'ASSEMBLY-41.json',L/'LOCAL-ENVIRONMENT.json',
+          B/'IE02-ROOT-STATEMENT-REVIEW-ACCEPTANCE.json',B/'IE02-ALPHA-RETRY-APPROVAL.json']:
+    copy(q,'evidence/local42/'+q.name)
+copy(L/'runs/development-42/RECEIPT.json','evidence/local42/RECEIPT.json')
+copy(L/'serial_compile_v3.py','evidence/local42/serial_compile_v3.py.txt')
+
+project_lock,local_lock=read(N/'lake-manifest.json'),read(L/'lake-manifest.json')
+check('all ten dependency records unchanged',len(project_lock['packages'])==10 and project_lock['packages']==local_lock['packages'])
+bind(L/'lean-toolchain',sha(N/'lean-toolchain'))
+cache={'scope':'Current retained pinned external sources/cache observations; not contemporaneous external-output hashes for local42 and not a rebuild or fresh replay.','packages':[],'direct_imports':[]}
+for package in project_lock['packages']:
+    d=(L/'.lake/packages'/package['name']).resolve();g=d/'.git'
+    if g.is_file():bind(g);g=(d/g.read_text().strip().removeprefix('gitdir: ')).resolve()
+    head=g/'HEAD';bind(head);revision=head.read_text().strip()
+    if revision.startswith('ref: '):ref=g/revision.removeprefix('ref: ');bind(ref);revision=ref.read_text().strip()
+    check('retained dependency pin '+package['name'],revision==package['rev']);cache['packages'].append({'name':package['name'],'rev':revision})
+for module in sorted(set(re.findall(r'^import (\S+)',definitions+'\n'+source,re.M))):
+    if module.startswith('NLA.'):continue
+    root=L/'.lake/packages'/('mathlib' if module.startswith('Mathlib.') else 'leancert');rel=module.replace('.','/')
+    cache['direct_imports'].append({'module':module,'source_sha256':bind(root/(rel+'.lean')),
+       'cached_olean_sha256':bind(root/'.lake/build/lib/lean'/(rel+'.olean'))})
+write('DEPENDENCIES.json',cache)
+for path,h in list(bindings.items()):check('final stable external binding: '+path,sha(path)==h)
+write('BINDINGS.json',bindings);write('CHECKS.json',checks)
+result={'reviewer':'/root/sf_ra_runtime_referee','at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+ 'verdict':'PASS actual local42 statement elaboration/source correspondence; eligible for a pending-coordinator-acceptance freeze.',
+ 'scope':'Independent retained-runtime/source audit; reviewer did not run a compiler or implement a proof.',
+ 'checks':len(checks),'external_bindings':len(bindings),'original_payloads_guarded':len(om['files']),
+ 'continuation_payloads_guarded':len(nm['files']),'statement_review_bindings':reviews,
+ 'local_run':'development-42','exact_contracts':50,'intentional_Challenge_warnings':50,'definition_holes':0,
+ 'exit_codes':[c['exit_code'] for c in receipt['commands']],
+ 'receipt_sha256':sha(L/'runs/development-42/RECEIPT.json'),'assembly_sha256':sha(L/'ASSEMBLY-42.json'),
+ 'source_hashes':expected,'fresh_Lean_execution':False,'project_level_Challenge_target_built':False,
+ 'Solution_exists':False,'proof_implementation':False,'coordinator_freeze_acceptance':False,
+ 'LeanCert_Comparator_kernel_sandbox_checked':False,'whole_problem_verified':False,'count_change':0}
+write('AUDIT.json',result);print(json.dumps(result,indent=2))

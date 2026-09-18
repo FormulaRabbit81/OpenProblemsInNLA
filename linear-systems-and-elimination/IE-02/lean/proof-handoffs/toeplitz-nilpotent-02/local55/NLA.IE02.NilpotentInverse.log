@@ -1,0 +1,31 @@
+NLA/IE02/NilpotentInverse.lean:31:8: error: Ambiguous term
+  smul_pow
+Possible interpretations:
+  _root_.smul_pow : ∀ (r : ?m.85) (x : ?m.86) (n : ℕ), (r • x) ^ n = r ^ n • x ^ n
+  
+  Polynomial.smul_pow : ?m.87 → ℕ → ?m.85 → ?m.87
+NLA/IE02/NilpotentInverse.lean:46:2: error: unsolved goals
+case refine_3
+n : ℕ
+α : ℂ
+hα : α ≠ 0
+p : Poly
+hK : toeplitz n p ^ n = 0
+N : Square n := -α⁻¹ • toeplitz n p
+S : Square n := ∑ j, N ^ ↑j
+hN : N ^ n = 0
+hleft : (1 - N) * S = 1
+hright : S * (1 - N) = 1
+hscale : α • (1 - N) = α • 1 + toeplitz n p
+⊢ α⁻¹ • ∑ j, (-α⁻¹ • toeplitz n p) ^ ↑j = α⁻¹ • ∑ x, (-α⁻¹ • (toeplitzAlgHom n) p) ^ ↑x
+NLA/IE02/NilpotentInverse.lean:37:13: warning: This simp argument is unused:
+  smul_sub
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [N, smul_smul, hα]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'NLA.IE02.nilpotent_inverse' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/NilpotentInverse.lean:55:21: error: #assert_trust: 'NLA.IE02.nilpotent_inverse' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

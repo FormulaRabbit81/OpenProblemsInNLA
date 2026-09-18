@@ -1,0 +1,43 @@
+/-
+Copyright (c) 2026 George Stepaniants. Released under Apache 2.0 license.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+Substantial OpenAI Codex assistance. Original IE-02 and library attribution is
+retained in Definitions.lean and SourceCorrespondence.md. Mathlib's degree under
+scalar multiplication and nonnegative real square-root identities are reused.
+-/
+import NLA.IE02.Definitions
+import LeanCert.Tactic
+
+set_option autoImplicit false
+set_option leancert.trust "kernel"
+
+namespace NLA.IE02
+noncomputable section
+open scoped BigOperators
+open Polynomial
+
+theorem weighted_fold {l : ℕ} (m : ℕ) (q : Fin l → Poly) (w : Fin l → ℝ)
+    (hq : ∀ j, DegreeLE (q j) m) (hw : ∀ j, 0 ≤ w j) :
+    (∀ j, DegreeLE (weightedFold (w j) (q j)) m) ∧
+    ∀ z : ℂ, sumSquares (fun j => weightedFold (w j) (q j)) z =
+      ∑ j, w j * ‖(q j).eval z‖ ^ 2 := by
+  constructor
+  · intro j
+    unfold DegreeLE weightedFold
+    rw [← Polynomial.smul_eq_C_mul]
+    exact (Polynomial.degree_smul_le _ _).trans (hq j)
+  · intro z
+    unfold sumSquares
+    apply Finset.sum_congr rfl
+    intro j _hj
+    -- Expose the scalar-polynomial product inside the finite sum.
+    change ‖(C (Real.sqrt (w j) : ℂ) * q j).eval z‖ ^ 2 =
+      w j * ‖(q j).eval z‖ ^ 2
+    rw [Polynomial.eval_mul, Polynomial.eval_C, norm_mul,
+      Complex.norm_of_nonneg (Real.sqrt_nonneg _), mul_pow, Real.sq_sqrt (hw j)]
+
+#print axioms weighted_fold
+#assert_trust kernel weighted_fold
+
+end
+end NLA.IE02

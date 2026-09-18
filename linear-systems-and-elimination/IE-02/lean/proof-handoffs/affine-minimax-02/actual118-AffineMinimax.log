@@ -1,0 +1,35 @@
+NLA/IE02/AffineMinimax.lean:75:6: error: Type mismatch: After simplification, term
+  ((maximal_space_norm T).right x).mp hx.left
+ has type
+  ‖(euclideanLin T) x‖ = operatorNorm T * ‖x‖
+but is expected to have type
+  ‖(euclideanLin T) x‖ = operatorNorm T
+NLA/IE02/AffineMinimax.lean:84:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (euclideanLin (directionSum ?R ?c)) ?x
+in the target expression
+  (Matrix.toEuclideanLin T) x + (Matrix.toEuclideanLin (directionSum R (c - d))) x = (Matrix.toEuclideanLin T) x + v
+
+n k : ℕ
+hn : 1 ≤ n
+Y : Square n
+R : Fin k → Square n
+hY : IsToeplitz Y
+hR : ∀ (j : Fin k), IsToeplitz (R j)
+c : Fin k → ℂ
+hmin : ∀ (d : Fin k → ℂ), operatorNorm (affineResidual Y R c) ≤ operatorNorm (affineResidual Y R d)
+T : Square n := affineResidual Y R c
+hzero : ¬T = 0
+hT : IsToeplitz T
+hdirmin : ∀ (d : Fin k → ℂ), operatorNorm T ≤ operatorNorm (T + directionSum R d)
+x : H n
+hx : x ∈ unitMaximal T
+horth : ∀ (j : Fin k), inner ℂ ((euclideanLin T) x) ((euclideanLin (R j)) x) = 0
+hnorm : ‖(euclideanLin T) x‖ = operatorNorm T
+d : Fin k → ℂ
+v : H n := ∑ j, (c j - d j) • (euclideanLin (R j)) x
+hmat : affineResidual Y R d = T + directionSum R (c - d)
+⊢ (Matrix.toEuclideanLin T) x + (Matrix.toEuclideanLin (directionSum R (c - d))) x = (Matrix.toEuclideanLin T) x + v
+'NLA.IE02.affine_minimax_attained' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/AffineMinimax.lean:138:21: error: #assert_trust: 'NLA.IE02.affine_minimax_attained' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx

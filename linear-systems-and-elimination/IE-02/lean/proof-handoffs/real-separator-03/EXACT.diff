@@ -1,0 +1,22 @@
+--- before
++++ after
+@@ -30,13 +30,16 @@
+           ((z j).re • basisVector j + (z j).im • (Complex.I • basisVector j)) i :=
+       map_sum (PiLp.projₗ (𝕜 := ℝ) 2 (fun _ : Fin k => ℂ) i) _ _
+     rw [hs]
+-    simp [PiLp.add_apply, PiLp.smul_apply, basisVector, PiLp.toLp_apply,
++    simp [PiLp.add_apply, PiLp.smul_apply, basisVector,
+       Complex.real_smul, mul_ite, Finset.sum_add_distrib]
+   calc
+-    ell z = ∑ j : Fin k,
++    ell z = ell (∑ j : Fin k,
++        ((z j).re • basisVector j + (z j).im • (Complex.I • basisVector j))) :=
++      congrArg ell hz
++    _ = ∑ j : Fin k,
+         ((z j).re * ell (basisVector j) +
+           (z j).im * ell (Complex.I • basisVector j)) := by
+-      rw [hz, map_sum]
++      rw [map_sum]
+       simp only [map_add, map_smul, smul_eq_mul]
+     _ = (∑ j, separatorCoefficients ell j * z j).re := by
+       rw [Complex.re_sum]

@@ -1,0 +1,22 @@
+NLA/IE02/RealSeparator.lean:38:57: error: unsolved goals
+k : ℕ
+ell : H k →L[ℝ] ℝ
+z : H k
+hz : z = ∑ j, ((z.ofLp j).re • basisVector j + (z.ofLp j).im • Complex.I • basisVector j)
+⊢ ∑ x, ((z.ofLp x).re * ell (basisVector x) + (z.ofLp x).im * ell (Complex.I • basisVector x)) =
+    ∑ x,
+      (((∑ x, ((z.ofLp x).re • basisVector x + (z.ofLp x).im • Complex.I • basisVector x)).ofLp x).re *
+          ell (basisVector x) +
+        ((∑ x, ((z.ofLp x).re • basisVector x + (z.ofLp x).im • Complex.I • basisVector x)).ofLp x).im *
+          ell (Complex.I • basisVector x))
+NLA/IE02/RealSeparator.lean:33:56: warning: This simp argument is unused:
+  PiLp.toLp_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [PiLp.add_apply, PiLp.smul_apply, basisVector, Complex.real_smul, mul_ite, Finset.sum_add_distrib]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'NLA.IE02.real_separator_complex_form' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+NLA/IE02/RealSeparator.lean:51:21: error: #assert_trust: 'NLA.IE02.real_separator_complex_form' depends on sorry or unrecognized axioms
+  foundational: propext, Classical.choice, Quot.sound
+  sorryAx: sorryAx
