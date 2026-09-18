@@ -1,0 +1,141 @@
+{
+  "problem": "MF-05",
+  "stage": "statement draft before independent reviews/elaboration/freeze",
+  "Challenge_sha256": "ebe57eb8865dc19065c2ddc0d67bc16dab6e3fa40a6b61fec0954faa7fc3dba0",
+  "Definitions_sha256": "f4ada429ed3cf768c228bd936c3a969f618bd3e87e8bc860cc371b5b315a3cb9",
+  "contracts": [
+    {
+      "declaration": "NLA.MF05.half_radius_certificate",
+      "file": "Challenge.lean",
+      "line": 31,
+      "header": "theorem half_radius_certificate : 0 < localRadius ∧ localRadius < 1",
+      "header_sha256": "fd21798693ef4a8baf32828f7d9bdabf85efc60f88e6ff93c633f09fda3cf9f4",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    },
+    {
+      "declaration": "NLA.MF05.spectral_hausdorff_semantics",
+      "file": "Challenge.lean",
+      "line": 37,
+      "header": "theorem spectral_hausdorff_semantics {d : ℕ} (M N : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) (hN : IsCompact N) (hneN : N.Nonempty) :\n    IsCompact (spectralImage M) ∧ IsCompact (spectralImage N) ∧\n    Metric.hausdorffEDist (spectralImage M) (spectralImage N) ≠ ⊤ ∧\n    spectralHausdorff M N = canonicalHausdorff M N ∧\n    0 ≤ spectralHausdorff M N ∧\n    spectralHausdorff M N = spectralHausdorff N M ∧\n    (spectralHausdorff M N = 0 ↔ M = N) ∧\n    (∀ A ∈ M, ∃ B ∈ N,\n      pointFamilyDistance A N = spectralNorm (A - B) ∧\n      spectralNorm (A - B) ≤ spectralHausdorff M N) ∧\n    (∀ B ∈ N, ∃ A ∈ M,\n      pointFamilyDistance B M = spectralNorm (B - A) ∧\n      spectralNorm (B - A) ≤ spectralHausdorff M N)",
+      "header_sha256": "2db02f9aaed50538115ef887d046b60949ee361393a115f79b9d32c08b7682d7",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    },
+    {
+      "declaration": "NLA.MF05.general_exponential_envelope",
+      "file": "Challenge.lean",
+      "line": 55,
+      "header": "theorem general_exponential_envelope {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))\n    (hM : IsCompact M) (hne : M.Nonempty) (a : ℝ) (ha : jointSpectralRadius M < a) :\n    0 < a ∧ ∃ K : ℝ, 1 ≤ K ∧ ∀ n : ℕ, familyGrowth M n ≤ K * a ^ n",
+      "header_sha256": "707e8a3e3875bba725c75786234521e9ff905cc7cbd64d8b46165f95f9e6b4e0",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    },
+    {
+      "declaration": "NLA.MF05.general_root_limit_semantics",
+      "file": "Challenge.lean",
+      "line": 63,
+      "header": "theorem general_root_limit_semantics {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))\n    (hM : IsCompact M) (hne : M.Nonempty) :\n    0 ≤ jointSpectralRadius M ∧ jointSpectralRadius M ≤ familyNorm M ∧\n    Tendsto (rootGrowth M) atTop (𝓝 (jointSpectralRadius M))",
+      "header_sha256": "8f0a7b0bcbd9815185d9188fd2fb3888f9ff6cced5b5c34d29678a9912b0240a",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    },
+    {
+      "declaration": "NLA.MF05.positive_scaling_semantics",
+      "file": "Challenge.lean",
+      "line": 70,
+      "header": "theorem positive_scaling_semantics {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))\n    (hM : IsCompact M) (hne : M.Nonempty) (c : ℝ) (hc : 0 < c) :\n    IsCompact (scaledFamily c M) ∧ (scaledFamily c M).Nonempty ∧\n    familyNorm (scaledFamily c M) = c * familyNorm M ∧\n    (∀ n : ℕ, familyGrowth (scaledFamily c M) n = c ^ n * familyGrowth M n) ∧\n    jointSpectralRadius (scaledFamily c M) = c * jointSpectralRadius M",
+      "header_sha256": "b6dc28ae874b219323428fd5c6f70442d384a7b283039c8f88942143a248cbfa",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    },
+    {
+      "declaration": "NLA.MF05.exponential_bound_controls_radius",
+      "file": "Challenge.lean",
+      "line": 79,
+      "header": "theorem exponential_bound_controls_radius {d : ℕ} (hd : 1 ≤ d)\n    (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty)\n    (K b : ℝ) (hK : 1 ≤ K) (hb : 0 < b)\n    (hbound : ∀ n : ℕ, familyGrowth M n ≤ K * b ^ n) :\n    jointSpectralRadius M ≤ b",
+      "header_sha256": "822ba9ddeed2d4b5dd159f7d0c7d80c598c65f9b2ea715d546091a59c125b3f8",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    },
+    {
+      "declaration": "NLA.MF05.scalar_identity_adjoin_radius",
+      "file": "Challenge.lean",
+      "line": 88,
+      "header": "theorem scalar_identity_adjoin_radius {d : ℕ} (hd : 1 ≤ d) (M : Set (Square d))\n    (hM : IsCompact M) (hne : M.Nonempty) (e : ℝ) (he : 0 < e) :\n    IsCompact (identityAdjoin e M) ∧ (identityAdjoin e M).Nonempty ∧\n    familyNorm (identityAdjoin e M) = max (familyNorm M) e ∧\n    jointSpectralRadius (identityAdjoin e M) = max (jointSpectralRadius M) e",
+      "header_sha256": "59c363878d54ed8e2bfcf037de4f0052ac86046bfa3c3600a38199e5ce5df90b",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    },
+    {
+      "declaration": "NLA.MF05.general_quantitative_comparison",
+      "file": "Challenge.lean",
+      "line": 97,
+      "header": "theorem general_quantitative_comparison {d : ℕ} (hd : 1 ≤ d)\n    (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty)\n    (L s : ℝ) (hL : 0 < L) (hML : InNormBall M L) (hs : 1 ≤ s) (n : ℕ) :\n    familyGrowth M n ≤ comparisonFactor d s * (comparisonRate d M L s) ^ n",
+      "header_sha256": "53d589390fc1fda6b985d386b4578e1f08b867fddb2a33870d9d2963e2d9db84",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    },
+    {
+      "declaration": "NLA.MF05.controlled_comparison_norm",
+      "file": "Challenge.lean",
+      "line": 105,
+      "header": "theorem controlled_comparison_norm {d : ℕ} (hd : 1 ≤ d)\n    (M : Set (Square d)) (hM : IsCompact M) (hne : M.Nonempty)\n    (L s : ℝ) (hL : 0 < L) (hML : InNormBall M L) (hs : 1 ≤ s) :\n    0 < comparisonRate d M L s ∧\n    IsComplexNorm (comparisonNorm d M L s) ∧\n    (∀ x : EuclideanVector d,\n      ‖x‖ ≤ comparisonNorm d M L s x ∧\n      comparisonNorm d M L s x ≤ comparisonFactor d s * ‖x‖) ∧\n    (∀ A ∈ M, ∀ x : EuclideanVector d,\n      comparisonNorm d M L s (applyMatrix A x) ≤\n        comparisonRate d M L s * comparisonNorm d M L s x)",
+      "header_sha256": "ae65843c37263474f63a10c5f7035204ef0a2b174e1eda8f0073dd03661b681a",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    },
+    {
+      "declaration": "NLA.MF05.hausdorff_radius_transfer",
+      "file": "Challenge.lean",
+      "line": 120,
+      "header": "theorem hausdorff_radius_transfer {d : ℕ} (hd : 1 ≤ d) (M N : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) (hN : IsCompact N) (hneN : N.Nonempty)\n    (L s : ℝ) (hL : 0 < L) (hML : InNormBall M L) (hs : 1 ≤ s) :\n    jointSpectralRadius N ≤\n      comparisonRate d M L s + comparisonFactor d s * spectralHausdorff M N",
+      "header_sha256": "15ae7ef20867018267d60b34eba163cc97565a5dd3eadfc2953989a10ffeaf7c",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    },
+    {
+      "declaration": "NLA.MF05.holder_scale_identity",
+      "file": "Challenge.lean",
+      "line": 129,
+      "header": "theorem holder_scale_identity {d : ℕ} (hd : 1 ≤ d) (L delta : ℝ)\n    (hL : 0 < L) (hdelta : 0 < delta) (hdeltaL : delta ≤ L) :\n    1 ≤ holderScale d L delta ∧\n    (holderScale d L delta) ^ d = L / delta ∧\n    L / holderScale d L delta =\n      Real.rpow L (1 - 1 / (d : ℝ)) * Real.rpow delta (1 / (d : ℝ)) ∧\n    2 * (d : ℝ) ^ 2 * L / holderScale d L delta +\n        comparisonFactor d (holderScale d L delta) * delta =\n      holderConstant d L * Real.rpow delta (1 / (d : ℝ))",
+      "header_sha256": "8af2d0d19d44383138da399f29809d70cba37e37fb3779a36f9a4cb25e44661d",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    },
+    {
+      "declaration": "NLA.MF05.uniform_holder_estimate",
+      "file": "Challenge.lean",
+      "line": 142,
+      "header": "theorem uniform_holder_estimate {d : ℕ} (hd : 1 ≤ d) (M N : Set (Square d))\n    (hM : IsCompact M) (hneM : M.Nonempty) (hN : IsCompact N) (hneN : N.Nonempty)\n    (L : ℝ) (hL : 0 < L) (hML : InNormBall M L) (hNL : InNormBall N L) :\n    0 < holderConstant d L ∧\n    |jointSpectralRadius M - jointSpectralRadius N| ≤\n      holderConstant d L * Real.rpow (spectralHausdorff M N) (1 / (d : ℝ))",
+      "header_sha256": "b040c2c77d3f5a646f92259f7933027926ca516c18521b570d507c26758acdc6",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    },
+    {
+      "declaration": "NLA.MF05.local_common_norm_ball",
+      "file": "Challenge.lean",
+      "line": 152,
+      "header": "theorem local_common_norm_ball {d : ℕ} (hd : 1 ≤ d) (M0 : Set (Square d))\n    (hM0 : IsCompact M0) (hne0 : M0.Nonempty) :\n    0 < localNormBound M0 ∧\n    ∀ M : Set (Square d), IsCompact M → M.Nonempty →\n      spectralHausdorff M M0 < localRadius → InNormBall M (localNormBound M0)",
+      "header_sha256": "a77d88bc33d07ac1fedd43d968b0a8076441fc4ba7c183d21ebb3b6043a9231b",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    },
+    {
+      "declaration": "NLA.MF05.canonical_local_holder",
+      "file": "Challenge.lean",
+      "line": 163,
+      "header": "theorem canonical_local_holder {d : ℕ} (hd : 1 ≤ d) (M0 : Set (Square d))\n    (hM0 : IsCompact M0) (hne0 : M0.Nonempty) :\n    ∃ r : ℝ, 0 < r ∧ ∃ C : ℝ, 0 < C ∧\n      ∀ M N : Set (Square d),\n        IsCompact M → M.Nonempty → IsCompact N → N.Nonempty →\n        canonicalHausdorff M M0 < r → canonicalHausdorff N M0 < r →\n        |jointSpectralRadius M - jointSpectralRadius N| ≤\n          C * Real.rpow (canonicalHausdorff M N) (1 / (d : ℝ))",
+      "header_sha256": "22b42e01ab617768516f949f8df4191998fcf5c4975e84d28056d9b38e17ef0a",
+      "placeholder": "intentional independent Challenge sorry",
+      "status": "draft, unelaborated, unreviewed; no proof implementation"
+    }
+  ],
+  "mandatory_semantics": [
+    "NLA.MF05.spectral_hausdorff_semantics",
+    "NLA.MF05.general_root_limit_semantics"
+  ],
+  "original_target": "NLA.MF05.canonical_local_holder",
+  "planned_stronger_uniform_result": "NLA.MF05.uniform_holder_estimate",
+  "solution_must_not_import_Challenge": true
+}
