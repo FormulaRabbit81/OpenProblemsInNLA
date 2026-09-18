@@ -2,7 +2,7 @@
 
 **112 problems with open targets:** 42 open and 70 partially resolved. **105 other retained entries**, excluded from the open count.
 
-**Resolution evidence:** 53 solved (published or independently audited); 52 solved with Lean verification.
+**Resolution evidence:** 52 solved (published or independently audited); 53 solved with Lean verification.
 
 Each entry records its own literature-check date. Literature checks are bounded; ratings are editorial. “Impact” uses the canonical `Importance` field.
 
@@ -254,7 +254,7 @@ Retained entries outside the open count:
 | [MI-21](matrix-inequalities-and-norms/MI-21/README.md) | Freewan–Hayajneh inequality for sums of weighted geometric means | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](matrix-inequalities-and-norms/MI-21/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-21/problem.tex) |
 | [MI-22](matrix-inequalities-and-norms/MI-22/README.md) | Lemos–Soares singular-value log-majorization | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](matrix-inequalities-and-norms/MI-22/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-22/problem.tex) |
 | [MI-23](matrix-inequalities-and-norms/MI-23/README.md) | Corrected generalized geometric-mean product conjecture | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](matrix-inequalities-and-norms/MI-23/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-23/problem.tex) |
-| [MI-24](matrix-inequalities-and-norms/MI-24/README.md) | Schatten norm complement involving Lin's positive definite quantity | **✅ SOLVED** | challenging | interesting to specialist | [PDF](matrix-inequalities-and-norms/MI-24/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-24/problem.tex) |
+| [MI-24](matrix-inequalities-and-norms/MI-24/README.md) | Schatten norm complement involving Lin's positive definite quantity | **🏆 LEAN VERIFIED** | challenging | interesting to specialist | [PDF](matrix-inequalities-and-norms/MI-24/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-24/problem.tex) |
 | [MI-26](matrix-inequalities-and-norms/MI-26/README.md) | Concave unitary-orbit subadditivity without monotonicity | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](matrix-inequalities-and-norms/MI-26/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-26/problem.tex) |
 | [MI-27](matrix-inequalities-and-norms/MI-27/README.md) | Constant one in the logarithmic commutator inequality | **✅ SOLVED** | challenging | broadly interesting | [PDF](matrix-inequalities-and-norms/MI-27/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-27/problem.tex) |
 | [MI-28](matrix-inequalities-and-norms/MI-28/README.md) | Ghabries's determinant comparison for arbitrary nonnegative base powers | **✅ SOLVED** | challenging | interesting to specialist | [PDF](matrix-inequalities-and-norms/MI-28/problem.pdf) · [TeX](matrix-inequalities-and-norms/MI-28/problem.tex) |

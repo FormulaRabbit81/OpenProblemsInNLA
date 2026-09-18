@@ -653,6 +653,9 @@ The complete analytic proof and source applications passed a separate [Codex-age
 
 The complete argument passed a separate [Codex-agent review](references/stepaniants-mi24-2026-09-11/verification/reviews/MI-24-review.md). AI assistance, the existing published inputs and the limits of automated review are explicit. [Submission record and public-branch check](references/stepaniants-mi24-2026-09-11/README.md). The original ID, statement, path and historical ratings are retained.
 
+
+**Lean verified, 2026-09-18 (UTC). Formalization: George Stepaniants**, Department of Computing and Mathematical Sciences, California Institute of Technology. The [complete 22-contract formalization](matrix-inequalities-and-norms/MI-24/lean/README.md) proves the original target for every complex positive definite pair, every positive dimension, all real finite Schatten exponents at least one, and the infinity endpoint. It proves the Heron/Furuta inputs and Schatten semantics internally. The [immutable proof](https://github.com/sgstepaniants/OpenProblemsInNLA/blob/97ff57c89775783bb7ebe952315840be86733417/matrix-inequalities-and-norms/MI-24/lean/Solution.lean) and [actual Linux run 35310937025](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35310937025/job/105492723099) passed real Comparator, default-kernel replay, standard transitive axioms and per-project sandbox/rejection controls. Two independent nonauthor full-source reviews, kernel-mode LeanCert use and exact execution evidence are linked in the [canonical verification section](matrix-inequalities-and-norms/MI-24/README.md#lean-proof-and-verification-evidence). Prior mathematical authorship is preserved.
+
 ### ✅ RA-12 — the relative-error threshold for extremal Gaussian trace bounds — George Stepaniants
 
 **Author:** George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology, Pasadena, California, USA.

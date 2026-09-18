@@ -26,9 +26,7 @@ The canonical problem ID, page and mathematical target are retained.
 
 ## Current verification status
 
-This is a publication draft with **local proof checks passed; final publication
-gates pending**. It is not yet a Linux Comparator acceptance or an increase in
-the completed formalization count.
+**Complete immutable proof verification passed.** All 22 contracts passed actual local Lean332, two independent full-source reviews, and [non-root Linux run 35310937025](https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35310937025/job/105492723099) at proof commit `97ff57c89775783bb7ebe952315840be86733417`. The [Linux evidence](verification/linux-2026-09-18/README.md) retains the artifact and logs. Final publication and PR merge checks remain separate; campaign acceptance is pending those checks.
 
 | Check | Actual status |
 |---|---|
@@ -36,8 +34,8 @@ the completed formalization count.
 | Local Lean | Actual local332 passed all 22 contracts in the full 34-module closure: 8 fresh compilations and 26 source/dependency/output-matched successful reuses. Root retained commands, hashes, logs and source snapshots. |
 | Local matching and certificate use | Actual local333 independently elaborated Challenge and Solution; all 22 normalized types and universe lists matched. Proof-body traversal reaches both LeanCert checked bounds from the final theorem. This diagnostic is not Comparator. |
 | Full source review | Baseline local325 reviews reported mathematical approval and requested library reuse/comment changes. The cleanup passes local332, and both independent exact-source continuation reviews approve. All four historical/current reports are retained in [the review index](reviews/INDEX.json). |
-| Linux Comparator, default-kernel replay, sandbox and controls | Not yet run for these MI-24 sources. No GitHub run ID or accepted published commit is claimed. |
-| Staged packaging metadata | `Solution` is the default Lake target and the manifest root name is corrected to `NLAMI24`. These two metadata edits have not themselves been compiler-tested; dependency pins and proof bytes are unchanged. |
+| Linux Comparator, default-kernel replay, sandbox and controls | Actual run 35310937025 passed at proof commit `97ff57c89775783bb7ebe952315840be86733417`; 22 exports and all per-project controls checked. |
+| Staged packaging metadata | `Solution` is the default Lake target and the manifest root name is corrected to `NLAMI24`. Both metadata edits were included in the successful standalone Linux run; dependency pins and proof bytes match the reviewed local sources. |
 
 [STATE.json](STATE.json) records the scope, hashes and remaining gates.
 [IMPLEMENTATION-MAP.json](IMPLEMENTATION-MAP.json) maps every frozen contract to
@@ -78,8 +76,7 @@ The harness needs its documented Linux dependencies and namespace/sandbox
 support. It verifies committed source identity, builds in a fresh project copy,
 runs the sandbox probe, kernel-replay regression controls, Comparator negative
 controls and real 22-export comparison with the default kernel. An ordinary
-macOS `lake build` does not establish these Linux results. These commands are
-reproduction instructions, not a claim that the final MI-24 run has happened.
+macOS `lake build` does not establish these Linux results. These commands reproduce the class of check actually completed at the immutable proof revision above.
 
 The pins are Lean `v4.33.1`, Mathlib
 `0df444a360eaa60ab8c11dca51a86af692955474`, and LeanCert
@@ -142,8 +139,6 @@ trees. It found no target-named MI-24 formalization in that scope. This was a
 path/ID search of the observed public upstream/direct-fork branches; it does
 not establish PR coverage or a semantic search of unrelated files or
 private/unpublished work.
-It does not certify historical priority. Final publication still requires
-standalone package validation and a real Linux run on the exact published
-commit. The two source-bound nonauthor approvals are complete.
+It does not certify historical priority. Standalone package validation and the immutable proof-commit Linux run passed. The two source-bound nonauthor approvals are complete; later publication and PR merge checkouts remain separate gates.
 
-The [coordinator publication preflight](verification/MI24-ROOT-PACKAGE-PREFLIGHT.json) checks the complete package, current upstream source correspondence, dependency pins and privacy. It is separate from the two independent full mathematical/source reviews and does not claim Linux execution.
+The [coordinator publication preflight](verification/MI24-ROOT-PACKAGE-PREFLIGHT.json) checks the complete package, current upstream source correspondence, dependency pins and privacy. It preceded the actual Linux execution and is separate from the two independent full mathematical/source reviews.

@@ -104,7 +104,7 @@ def render(source):
             input=body.strip(), text=True, capture_output=True, check=True,
         )
         tex = result.stdout
-        if identifier in {"IE-02", "IE-04", "IE-14", "IV-03", "KE-05", "MF-12", "MF-22", "SP-04", "SP-05", "SP-15"}:
+        if identifier in {"IE-02", "IE-04", "IE-14", "IV-03", "KE-05", "MF-12", "MF-22", "MI-24", "SP-04", "SP-05", "SP-15"}:
             # These publication dates record formal verification, not a literature search.
             tex = tex.replace("Literature check:", "Verification check:")
         # The code spans in this catalog are literal search phrases. Set them
