@@ -34,7 +34,7 @@ radius},pdfauthor={Open Problems in Numerical Linear Algebra}}
 \fancyhf{}
 \fancyhead[L]{\sffamily\footnotesize\color{muted}OPEN PROBLEMS IN NUMERICAL LINEAR ALGEBRA}
 \fancyhead[R]{\sffamily\bfseries\footnotesize\color{accent}MF-06}
-\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-12}}
+\fancyfoot[L]{\parbox[b]{0.9\textwidth}{\sffamily\fontsize{8}{10}\selectfont\color{muted}Editorial ratings; a bounded search cannot certify that a problem remains unsolved.\\Literature check: 2026-09-18}}
 \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
@@ -51,7 +51,7 @@ pointwise Lipschitz lower bound for the joint spectral radius\par}
 \vspace{7pt}
 {\sffamily\small\textbf{Difficulty:} challenging\quad\textbf{Importance:} interesting
 to the community\par}
-{\sffamily\small\bfseries\color{accent}Status: Solved\par}
+{\sffamily\small\bfseries\color{accent}Status: Lean verified\par}
 \vspace{4pt}
 {\color{accent}\hrule height 0.8pt}
 \vspace{6pt}
@@ -90,8 +90,9 @@ Codex-agent mathematical audit}. The
 \href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/references/stepaniants-mf06-2026-09-12/README.md}{submission
 record} contains the exact sources, source clarification, supplementary
 checks, document inspection and bounded public-network/source audit.
-Substantial AI assistance is disclosed; this is informal agent review,
-not external human peer review or formal verification.
+That September 12 audit was informal agent review. The later Lean
+verification is recorded below; substantial AI assistance is disclosed
+and no external human peer review is claimed.
 
 Epperlein and Wirth retain attribution for the target. The
 Barabanov/Wirth extremal-norm theorem and Chitour-Mason-Sigalotti
@@ -101,24 +102,75 @@ family and does not claim a two-sided Lipschitz estimate uniform over
 two varying families. The original definitions, statement, historical
 partial status evidence and ratings below are retained.
 
+\subsection{Lean proof and verification
+evidence}\label{lean-proof-and-verification-evidence}
+
+\textbf{The complete original target is Lean verified, 2026-09-18
+(UTC).} The
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/blob/eae51c5c054eaa4b27b542488fab5ceef497dabb/matrix-functions-and-stability/MF-06/lean/Solution.lean}{immutable
+proof} at revision \textit{eae51c5c054eaa4b27b542488fab5ceef497dabb}
+passed
+\href{https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35291765215/job/105435999248}{non-root
+Linux run 35291765215}. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-06/lean/verification/linux-2026-09-18/README.md}{retained
+execution evidence} binds all 484 submitted project inputs and all 38
+exported statements. Comparator, default-kernel replay, standard
+transitive axioms, sandbox checks and rejection controls passed.
+
+The main declaration
+\textit{NLA.MF06.canonical\_pointwise\_lower\_lipschitz} proves the
+stated bound for every positive dimension and every fixed nonempty
+compact complex matrix family. Positive constants are chosen before the
+arbitrary nearby nonempty compact family. The spectral norm, literal
+two-sided Hausdorff distance and actual all-word joint-spectral-radius
+limit are proved to match the original definitions. Reducible reference
+families, unbounded normalized products, infinite compact sets, singular
+generators, zero radius and zero distance are covered. The proof
+internally establishes the critical product-bounded exterior power; it
+adds no flag-preservation or irreducibility hypothesis. The
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-06/lean/Challenge.lean}{38
+exact contracts},
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-06/lean/IMPLEMENTATION-MAP.json}{implementation
+map} and
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-06/lean/SourceCorrespondence.md}{source
+correspondence} identify these obligations.
+
+Mathematical solution and formalization: \textbf{George Stepaniants},
+Department of Computing and Mathematical Sciences, California Institute
+of Technology. Epperlein and Wirth retain the question, and the reused
+MF05/MF07 mathematics retain Matthew J. Colbrook's credit. Two
+independent statement reviews preceded implementation; two independent
+nonauthor final source reviews approved all 119 imported proof modules.
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-06/lean/reviews/README.md}{Review
+records} disclose substantial OpenAI Codex assistance and distinguish
+source inspection from executed checks.
+
+The project pins Lean 4.33.1,
+\href{https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474}{Mathlib}
+and
+\href{https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926}{LeanCert}.
+A kernel-mode LeanCert half-radius certificate is consumed by the proof;
+matrix dimensions, words and exterior powers remain symbolic. Every
+export has only \textit{propext}, \textit{Classical.choice} and
+\textit{Quot.sound} as transitive axioms. Run \textit{lake build} in
+\textit{matrix-functions-and-stability/MF-06/lean};
+\href{https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/main/matrix-functions-and-stability/MF-06/lean/README.md}{reproduction
+instructions} distinguish actual local checks from the Linux checker.
+
 \subsection{Context and notation}\label{context-and-notation}
 
 Let \(\mathcal H_d\) denote the nonempty compact subsets of
 \(\mathbb C^{d\times d}\). Use the spectral norm and its Hausdorff
 distance
 
-\[
-d_H(\mathcal M,\mathcal N)=\max\left\{
+\[d_H(\mathcal M,\mathcal N)=\max\left\{
 \sup_{A\in\mathcal M}\inf_{B\in\mathcal N}\|A-B\|_2,
-\sup_{B\in\mathcal N}\inf_{A\in\mathcal M}\|A-B\|_2\right\}.
-\]
+\sup_{B\in\mathcal N}\inf_{A\in\mathcal M}\|A-B\|_2\right\}.\]
 
 The joint spectral radius is
 
-\[
-\widehat\rho(\mathcal M)=\lim_{k\to\infty}
-\max_{A_1,\ldots,A_k\in\mathcal M}\|A_k\cdots A_1\|_2^{1/k}.
-\]
+\[\widehat\rho(\mathcal M)=\lim_{k\to\infty}
+\max_{A_1,\ldots,A_k\in\mathcal M}\|A_k\cdots A_1\|_2^{1/k}.\]
 
 These definitions also apply to finite real matrix sets. The ordinary
 spectral radius of one matrix is written \(\rho(A)\).
@@ -128,10 +180,8 @@ spectral radius of one matrix is written \(\rho(A)\).
 For every \(d\ge1\) and \(\mathcal M\in\mathcal H_d\), do there exist
 \(r,C>0\) such that
 
-\[
-\widehat\rho(\mathcal N)\ge\widehat\rho(\mathcal M)-C d_H(\mathcal M,\mathcal N)
-\quad\text{if }d_H(\mathcal M,\mathcal N)<r?
-\]
+\[\widehat\rho(\mathcal N)\ge\widehat\rho(\mathcal M)-C d_H(\mathcal M,\mathcal N)
+\quad\text{if }d_H(\mathcal M,\mathcal N)< r?\]
 
 \subsection{Reference and status
 evidence}\label{reference-and-status-evidence}

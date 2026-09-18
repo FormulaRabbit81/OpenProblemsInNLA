@@ -1,0 +1,626 @@
+{
+  "version": "v0.4",
+  "project": {
+    "name": "MI-24: the full Schatten norm complement",
+    "description": "The unchanged original matrix inequality for every complex positive definite pair in every positive dimension and every real Schatten exponent p>=1, with the infinity endpoint. The required Heron comparison and bounded Furuta input are proved internally.",
+    "authors": [
+      "George Stepaniants"
+    ],
+    "responsible_maintainers": [
+      "George Stepaniants"
+    ],
+    "license": "Apache-2.0",
+    "affiliation": "Department of Computing and Mathematical Sciences, California Institute of Technology",
+    "contribution_note": "George contributed the canonical convexity deduction; formalization prepared with substantial Codex assistance, with source-agent roles recorded below."
+  },
+  "repository": {
+    "role": "substantive-development"
+  },
+  "sources": [
+    {
+      "title": "MI-24: the Schatten norm complement follows by convexity",
+      "authors": [
+        "George Stepaniants"
+      ],
+      "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/e7519c46fd249a6a033bfe5d11c66bf47f7f8885/matrix-inequalities-and-norms/MI-24/solution.md",
+      "type": "research note",
+      "location": "Theorem 1 and the convexity deduction",
+      "relationship": "formalizes",
+      "author_endorsement": "participated",
+      "note": "George contributed the convexity deduction connecting the prior comparisons; Department of Computing and Mathematical Sciences, California Institute of Technology. No historical priority or external peer-review claim."
+    },
+    {
+      "title": "New log-majorization results concerning eigenvalues and singular values and a complement of a norm inequality",
+      "authors": [
+        "M. M. Ghabries",
+        "H. Abbas",
+        "B. Mourad",
+        "A. Assi"
+      ],
+      "id": "https://arxiv.org/html/2105.13356v1#S4",
+      "type": "article",
+      "location": "Section 4, ordered Lin formula, Corollary 4.1 and Conjecture 4.1",
+      "relationship": "formalizes",
+      "author_endorsement": "not-contacted",
+      "note": "Canonical problem and comparison attribution. DOI: 10.1080/03081087.2022.2059050. None of its inequalities is admitted as a Lean axiom."
+    },
+    {
+      "title": "On a conjecture of Bhatia, Lim and Yamazaki",
+      "authors": [
+        "Trung Hoa Dinh",
+        "Raluca Dumitru",
+        "Jose A. Franco"
+      ],
+      "id": "https://doi.org/10.1016/j.laa.2017.06.040",
+      "type": "article",
+      "location": "Theorem 4, equation (4), and the proof route through Theorem 3/Lemma 6",
+      "relationship": "formalizes",
+      "author_endorsement": "not-contacted",
+      "note": "Heron comparison proved inside this development for every real p>=1, with a separate proved infinity endpoint. Author manuscript: https://trunghoamath.wordpress.com/wp-content/uploads/2017/06/p_t_q_t-4-2.pdf. No whole-paper payload redistributed."
+    },
+    {
+      "title": "Furuta inequality and its related topics",
+      "authors": [
+        "Masatoshi Fujii"
+      ],
+      "id": "https://emis.muni.cz/journals/AFA/AFA-tex_v1_n2_a4.pdf",
+      "type": "article",
+      "location": "Lemma 1.2 and Theorem 1.3, pages 29\u201330",
+      "relationship": "adapts",
+      "author_endorsement": "not-contacted",
+      "note": "The proof of the bounded half-power slice is implemented internally. Furuta receives credit for the inequality. This source was read; an attempted retrieval of an earlier Furuta paper did not establish a separately read source. No whole-paper payload redistributed."
+    }
+  ],
+  "related_formalizations": [
+    {
+      "id": "https://github.com/jaumededios/Schiffer/tree/2938e277969c329caf154e48a3d8823f3635c7f1",
+      "relationship": "other",
+      "note": "Challenge organization inspected as a structure pattern, not a mathematical dependency."
+    },
+    {
+      "id": "https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62",
+      "relationship": "other",
+      "note": "Statement-first/numerical target pattern and pinned non-root Linux checker bundle."
+    },
+    {
+      "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/tree/e7519c46fd249a6a033bfe5d11c66bf47f7f8885/matrix-inequalities-and-norms/MI-22/lean",
+      "relationship": "adapts",
+      "note": "Concrete CFC, Euclidean operator norm and singular-value code patterns; original source attributions preserved."
+    },
+    {
+      "id": "https://github.com/sgstepaniants/OpenProblemsInNLA/tree/fa0937cad607e39687250931f786a7a04f3090f5/matrix-functions-and-stability/MF-06/lean",
+      "relationship": "adapts",
+      "note": "Actual minor/exterior-power bridge; retained byte hash recorded separately. Canonical category confirmed by the parent from actual PR297/package."
+    }
+  ],
+  "automation": {
+    "methods": [
+      {
+        "method": "agent",
+        "framework": "OpenAI Codex, parallel source/review agents and a single root-owned local compiler",
+        "tool_setup": "Actual local332 compiled the exact 34-module MI24 closure (8 fresh and 26 source/dependency/output-matched reused successes), exported all22 frozen contracts and checked their axioms/trust. Actual local333 compared independently elaborated types/universes and traversed proof bodies to both LeanCert checked bounds. These were local macOS Lean runs. This document preparation performed no Lean/Lake/Comparator execution. The real non-root Linux Comparator/default-kernel/sandbox/negative-control run 35310937025 passed at immutable proof commit 97ff57c89775783bb7ebe952315840be86733417. The Solution default target and corrected manifest name were included in that successful standalone run.",
+        "prompting_notes": "Freeze literal original-target definitions and 22 contracts after two independent statement reviews, then implement internally all Heron/Furuta inputs. Use pinned Mathlib and LeanCert, minimize numerical work, preserve source-matched receipts, obtain independent full nonauthor reviews, and distinguish every executed check from pending gates."
+      }
+    ],
+    "notes": "Principal MI24 source author: /root/nm04_final_referee1. Scalar prefix-product transfer author: /root. Review-requested cleanup contributor: /root/mf06_final_referee2. None counts as an independent final code referee. No spend estimate or model label is invented."
+  },
+  "status": {
+    "scope": "Complete original MI-24 target; actual local and non-root Linux immutable proof-commit verification passed",
+    "sorry_count": 0,
+    "sorry_in_definitions": 0,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "main_results": [
+      {
+        "declaration": "NLA.MI24.young_weight_interval",
+        "file": "NLA/MI24/Numerical.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "786a6e6b71d761310deb971ed7404e219bb2456b26624d8925cdd668bfa0bd45",
+        "contract": "C01",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.spectral_power_inverse",
+        "file": "NLA/MI24/SpectralPowers.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00",
+        "contract": "C02",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.geometric_congruence",
+        "file": "NLA/MI24/GeometricCongruence.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "c1fcbf72384351a8ac11d4d25c75077e08bf49e33eda6d9eb3875e1f6b12a1f5",
+        "contract": "C03",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.matrix_means_posdef",
+        "file": "NLA/MI24/MeanPositivity.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "c26b8d10c54e5dd22a28a959a8b131540ae9f901485b86bb88ef31a4892ffef3",
+        "contract": "C04",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.power_half_fixed_point",
+        "file": "NLA/MI24/HalfFixedPoint.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "629992e15b228d929ce54449fb09516a11905de53746d95859284a0a0d7ff186",
+        "contract": "C05",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.power_half_sqrt_q",
+        "file": "NLA/MI24/MeanPositivity.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "c26b8d10c54e5dd22a28a959a8b131540ae9f901485b86bb88ef31a4892ffef3",
+        "contract": "C06",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.furuta_half_power",
+        "file": "NLA/MI24/FurutaHalfPower.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "97a5aaff2b761a0df41fdc11a00a14a710b020fae0bc3076478a542e8161f87b",
+        "contract": "C07",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.weighted_geometric_trace",
+        "file": "NLA/MI24/WeightedTrace.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "fc69ed29065a54c27e4c61418b0f927f0d7abc3db1e788c1ce4b823b17622c94",
+        "contract": "C08",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.trace_young_half",
+        "file": "NLA/MI24/TraceYoung.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "ca62cf663d319da3e74d3c56e6210d47dec07ce7e6ca57def31328157c846113",
+        "contract": "C09",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.heron_trace_comparison",
+        "file": "NLA/MI24/HeronTrace.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "478641f30f5660c2149da977219fbe784e4e39cc22ca3fe5a0a28167c2e8fad5",
+        "contract": "C10",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.positive_schatten_monotone",
+        "file": "NLA/MI24/PositiveSchatten.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "ad6a1925a305080a0f51a038d9498ba189b3b371570e0f3fbde45bb9746704d7",
+        "contract": "C11",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.positive_schatten_triangle",
+        "file": "NLA/MI24/PositiveSchatten.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "ad6a1925a305080a0f51a038d9498ba189b3b371570e0f3fbde45bb9746704d7",
+        "contract": "C12",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.positive_schatten_smul",
+        "file": "NLA/MI24/PowerScaling.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "21856cb596910eb276eb96eec53d6022c844b2743b0f865cc3e093c7ec14d553",
+        "contract": "C13",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.positive_infinity_monotone",
+        "file": "NLA/MI24/OperatorNorm.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "b287ac8435fe7ad1fd9da7b4bb9d7c2a4432bc1fe4dbdbf10e08f41f52c32220",
+        "contract": "C14",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.finite_schatten_semantics",
+        "file": "NLA/MI24/FiniteSemantics.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "3963765613dc9ca6beb64056596ba739859f99932e9bb2632f6dc7726bb27550",
+        "contract": "C15",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.infinity_schatten_semantics",
+        "file": "NLA/MI24/OperatorNorm.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "b287ac8435fe7ad1fd9da7b4bb9d7c2a4432bc1fe4dbdbf10e08f41f52c32220",
+        "contract": "C16",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.heron_comparison_finite",
+        "file": "NLA/MI24/HeronFinite.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "26e7d4a3deac17b9212acf77d5ebcf89d050927be139cf64e3b9f5b08dddeb34",
+        "contract": "C17",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.heron_comparison_infinity",
+        "file": "NLA/MI24/HeronInfinity.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "c5bd40efec8f972cf8af1c085178346d9b520972d6ef73b97207da60ff0958db",
+        "contract": "C18",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.lin_comparison",
+        "file": "NLA/MI24/LinComparison.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "e0166dd6bea1c4e0f40bf254e7c9c1fbe5653b6649bfe290e3bcf388c28dca3f",
+        "contract": "C19",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.schatten_complement_finite",
+        "file": "NLA/MI24/Complement.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "93016dad8867ba425138d0a99f0395c4ad957a571e75e2689d13db03bfadd230",
+        "contract": "C20",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.schatten_complement_infinity",
+        "file": "NLA/MI24/Complement.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "93016dad8867ba425138d0a99f0395c4ad957a571e75e2689d13db03bfadd230",
+        "contract": "C21",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.MI24.schattenComplementConjecture",
+        "file": "NLA/MI24/Complement.lean",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "literature_dependencies": [],
+        "source_sha256": "93016dad8867ba425138d0a99f0395c4ad957a571e75e2689d13db03bfadd230",
+        "contract": "C22",
+        "verification_status": "PASS actual Linux run 35310937025 at 97ff57c89775783bb7ebe952315840be86733417: Comparator, default kernel, standard axioms and per-project controls."
+      }
+    ],
+    "deliberate_challenge_placeholders": 22,
+    "local_proof": {
+      "run": "development-332",
+      "record": "verification/local332/LOCAL-COMPLETE.json",
+      "record_sha256": "a1f478c2918460ddcde421bedf6139f6a4693b59ccca6d5f1148530b67ff4e24",
+      "modules": 34,
+      "fresh_modules": 8,
+      "source_matched_reused_modules": 26,
+      "contracts": 22,
+      "platform": "macOS",
+      "compiler_owner": "root agent, one serial compiler with --threads=1 --memory=4096",
+      "success": true,
+      "source_sha256": {
+        "NLA/MI24/GeometricCongruence.lean": "c1fcbf72384351a8ac11d4d25c75077e08bf49e33eda6d9eb3875e1f6b12a1f5",
+        "NLA/MI24/PolarPowers.lean": "4070ccee78226db5fc95b7274906f3c532a2c429244741b0d1922b826b7de5e4",
+        "NLA/MI24/DiagonalPowers.lean": "dace42e23b9f6ee4512af195790ec966dc8da90e41a4c147b23ecb85ea565a0a",
+        "NLA/MI24/Numerical.lean": "786a6e6b71d761310deb971ed7404e219bb2456b26624d8925cdd668bfa0bd45",
+        "Solution.lean": "704c031984cb615cd534b9ddfc26992122d752984423f5eab2c66aafc6d7d81d",
+        "NLA/MI24/TraceYoung.lean": "ca62cf663d319da3e74d3c56e6210d47dec07ce7e6ca57def31328157c846113",
+        "NLA/MI24/FurutaHalfPower.lean": "97a5aaff2b761a0df41fdc11a00a14a710b020fae0bc3076478a542e8161f87b",
+        "NLA/MI24/PositivePowers.lean": "c316ada9c7f4622fda96a412c2292683ccf5ee2473758eba6f82ca34488d2e85",
+        "NLA/MI24/HeronOrder.lean": "f3e81e8bf3ba9d6817f2195edaa66fc958dbad1950299a144e0363e3c091a793",
+        "NLA/MI24/CompoundSpectral.lean": "87e386e944e4c733014d20f0bf2985267f9c68b4f31f7bfdcc617b7f50c40296",
+        "NLA/MI24/Complement.lean": "93016dad8867ba425138d0a99f0395c4ad957a571e75e2689d13db03bfadd230",
+        "NLA/MI24/OrderPowers.lean": "5271fa66e5d7ad4620f5ec4ac35dc931a37dd910a16a6a9f1db32c37cbaf2e53",
+        "NLA/MI24/CompoundAlgebra.lean": "3f11762b0e86e8bce2d087a824687b26e61098bf464bd320e3cd9cf01ccf1522",
+        "NLA/MI24/FiniteSemantics.lean": "3963765613dc9ca6beb64056596ba739859f99932e9bb2632f6dc7726bb27550",
+        "NLA/MI24/PowerScaling.lean": "21856cb596910eb276eb96eec53d6022c844b2743b0f865cc3e093c7ec14d553",
+        "NLA/MI24/TraceOverlap.lean": "254fe37a3102bc733eda86fb0503c6137ade4f375f688a920d8d2c7c64bee62f",
+        "NLA/MI24/TraceSpectral.lean": "31d6d6d85f8681995b9db5015d862b762033107e621d63ae00782578961de504",
+        "NLA/MI24/HeronFinite.lean": "26e7d4a3deac17b9212acf77d5ebcf89d050927be139cf64e3b9f5b08dddeb34",
+        "NLA/MI24/FurutaBase.lean": "e36b6bff7134df7d88c4824caf0f5e8720a76beb8ab9fd8da366e7159b27740a",
+        "NLA/MI24/CompoundNorm.lean": "dd915e3edd780efb765241b94a1e9a554c097024443d17ee72cefe2a4ab59161",
+        "NLA/MI24/HalfFixedPoint.lean": "629992e15b228d929ce54449fb09516a11905de53746d95859284a0a0d7ff186",
+        "NLA/MI24/HeronInfinity.lean": "c5bd40efec8f972cf8af1c085178346d9b520972d6ef73b97207da60ff0958db",
+        "NLA/MI24/PolarModulus.lean": "ab2d08bee103bd8c0c4c603529aa80cc5f24885b05d59e65dc1e32b971cc3be8",
+        "NLA/MI24/OperatorNorm.lean": "b287ac8435fe7ad1fd9da7b4bb9d7c2a4432bc1fe4dbdbf10e08f41f52c32220",
+        "NLA/MI24/WeightedTrace.lean": "fc69ed29065a54c27e4c61418b0f927f0d7abc3db1e788c1ce4b823b17622c94",
+        "NLA/MI24/SpectralPowers.lean": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00",
+        "NLA/MI24/LinComparison.lean": "e0166dd6bea1c4e0f40bf254e7c9c1fbe5653b6649bfe290e3bcf388c28dca3f",
+        "NLA/MI24/PositiveSchatten.lean": "ad6a1925a305080a0f51a038d9498ba189b3b371570e0f3fbde45bb9746704d7",
+        "NLA/MI24/HeronTrace.lean": "478641f30f5660c2149da977219fbe784e4e39cc22ca3fe5a0a28167c2e8fad5",
+        "NLA/MI24/MeanPositivity.lean": "c26b8d10c54e5dd22a28a959a8b131540ae9f901485b86bb88ef31a4892ffef3",
+        "NLA/MI24/TraceHolder.lean": "b0197afbe382e0c0bd3ec59db242051b208d99673f88d198cfe1eb3f289ad1ca",
+        "NLA/MI24/ScalarLogMajorization.lean": "a4f5d003ec94ed8149f16ab7917b4dc97d93dcc20610e3736d7306b1ccbc97b1",
+        "NLA/MI24/HeronNorm.lean": "6687bb92a7d6f1edb69bbd5ff5a3b8635257a744fe61d1afdeabe7b5616d0fc2",
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c"
+      },
+      "execution_lineage": "Exact sources, dependency/output hashes, fresh origin receipts, commands and logs are retained in the completion record; this documents agent did not rerun Lean."
+    },
+    "local_type_diagnostic": {
+      "run": "development-333",
+      "record": "verification/type-diagnostics-333/COMPARISON.json",
+      "record_sha256": "e3c76907ad179ae3dba0258b9a20baf6fb74f2dcea2347667bdf4087f0da10f3",
+      "matched_contracts": 22,
+      "binder_normalized_types_and_universes_match": true,
+      "both_LeanCert_bounds_consumed": true,
+      "Comparator_executed": false,
+      "scope": "Actual independently elaborated local Challenge/Solution types and proof-body traversal, not the final Comparator."
+    },
+    "final_Linux_status": "passed at immutable proof commit; later publication checks pending",
+    "whole_problem_verified": true,
+    "completed_original_targets": 1
+  },
+  "fidelity": {
+    "divergences": "No weakening of the original target. Finite real p>=1 and infinity are separate conjuncts. CFC powers and genuine Euclidean/singular-value norms give concrete semantics. Positive-cone norm lemmas are sufficient because positivity is proved; they are not added assumptions. The infinity Heron endpoint uses a proved finite-power contradiction. The half-power Furuta slice is the full slice actually consumed; a more general Furuta theorem is not claimed. Frozen source comments describing preproof draft status are historical and retained unchanged; current execution status is in STATE.json."
+  },
+  "review": {
+    "status": "Two independent statement and two independent final source approvals",
+    "reviewers": [
+      "/root/mi24_full_referee1",
+      "/root/mi13_full_referee2"
+    ],
+    "record": "reviews/INDEX.json",
+    "notes": "Nonauthor agent source reviews under pinned Tau Ceti rubrics. Historical request-changes reports and their resolving continuations are retained. Reviewer integrity replays did not invoke Lean or Comparator. No external human review or official Tau Ceti service claim."
+  },
+  "alignment": {
+    "canonical_problem": "MI-24",
+    "canonical_revision": "e7519c46fd249a6a033bfe5d11c66bf47f7f8885",
+    "contracts": "IMPLEMENTATION-MAP.json",
+    "frozen_statement": "STATEMENT-FREEZE.json",
+    "numerical_targets": "NUMERICAL_TARGETS.md",
+    "formal_target": "NLA.MI24.SchattenComplementConjecture",
+    "formal_proof": "NLA.MI24.schattenComplementConjecture",
+    "comparator": "comparator.json",
+    "constant_free_of_dimension": true,
+    "extra_substantive_hypotheses": false,
+    "status": "All 22 exact contracts matched by actual Linux Comparator at the immutable proof revision"
+  },
+  "acknowledgements": "George Stepaniants, Department of Computing and Mathematical Sciences, California Institute of Technology. Preserve the original mathematical authorship of Ghabries\u2013Abbas\u2013Mourad\u2013Assi, Dinh\u2013Dumitru\u2013Franco and Furuta/Fujii. This work uses Mathlib, LeanCert and the separately pinned Comparator/replay harness; pattern and reused-code provenance are recorded in SOURCE-ATTRIBUTION.json. No George email is included.",
+  "verification": {
+    "local_Lean": {
+      "run": "development-332",
+      "record": "verification/local332/LOCAL-COMPLETE.json",
+      "record_sha256": "a1f478c2918460ddcde421bedf6139f6a4693b59ccca6d5f1148530b67ff4e24",
+      "modules": 34,
+      "fresh_modules": 8,
+      "source_matched_reused_modules": 26,
+      "contracts": 22,
+      "platform": "macOS",
+      "compiler_owner": "root agent, one serial compiler with --threads=1 --memory=4096",
+      "success": true,
+      "source_sha256": {
+        "NLA/MI24/GeometricCongruence.lean": "c1fcbf72384351a8ac11d4d25c75077e08bf49e33eda6d9eb3875e1f6b12a1f5",
+        "NLA/MI24/PolarPowers.lean": "4070ccee78226db5fc95b7274906f3c532a2c429244741b0d1922b826b7de5e4",
+        "NLA/MI24/DiagonalPowers.lean": "dace42e23b9f6ee4512af195790ec966dc8da90e41a4c147b23ecb85ea565a0a",
+        "NLA/MI24/Numerical.lean": "786a6e6b71d761310deb971ed7404e219bb2456b26624d8925cdd668bfa0bd45",
+        "Solution.lean": "704c031984cb615cd534b9ddfc26992122d752984423f5eab2c66aafc6d7d81d",
+        "NLA/MI24/TraceYoung.lean": "ca62cf663d319da3e74d3c56e6210d47dec07ce7e6ca57def31328157c846113",
+        "NLA/MI24/FurutaHalfPower.lean": "97a5aaff2b761a0df41fdc11a00a14a710b020fae0bc3076478a542e8161f87b",
+        "NLA/MI24/PositivePowers.lean": "c316ada9c7f4622fda96a412c2292683ccf5ee2473758eba6f82ca34488d2e85",
+        "NLA/MI24/HeronOrder.lean": "f3e81e8bf3ba9d6817f2195edaa66fc958dbad1950299a144e0363e3c091a793",
+        "NLA/MI24/CompoundSpectral.lean": "87e386e944e4c733014d20f0bf2985267f9c68b4f31f7bfdcc617b7f50c40296",
+        "NLA/MI24/Complement.lean": "93016dad8867ba425138d0a99f0395c4ad957a571e75e2689d13db03bfadd230",
+        "NLA/MI24/OrderPowers.lean": "5271fa66e5d7ad4620f5ec4ac35dc931a37dd910a16a6a9f1db32c37cbaf2e53",
+        "NLA/MI24/CompoundAlgebra.lean": "3f11762b0e86e8bce2d087a824687b26e61098bf464bd320e3cd9cf01ccf1522",
+        "NLA/MI24/FiniteSemantics.lean": "3963765613dc9ca6beb64056596ba739859f99932e9bb2632f6dc7726bb27550",
+        "NLA/MI24/PowerScaling.lean": "21856cb596910eb276eb96eec53d6022c844b2743b0f865cc3e093c7ec14d553",
+        "NLA/MI24/TraceOverlap.lean": "254fe37a3102bc733eda86fb0503c6137ade4f375f688a920d8d2c7c64bee62f",
+        "NLA/MI24/TraceSpectral.lean": "31d6d6d85f8681995b9db5015d862b762033107e621d63ae00782578961de504",
+        "NLA/MI24/HeronFinite.lean": "26e7d4a3deac17b9212acf77d5ebcf89d050927be139cf64e3b9f5b08dddeb34",
+        "NLA/MI24/FurutaBase.lean": "e36b6bff7134df7d88c4824caf0f5e8720a76beb8ab9fd8da366e7159b27740a",
+        "NLA/MI24/CompoundNorm.lean": "dd915e3edd780efb765241b94a1e9a554c097024443d17ee72cefe2a4ab59161",
+        "NLA/MI24/HalfFixedPoint.lean": "629992e15b228d929ce54449fb09516a11905de53746d95859284a0a0d7ff186",
+        "NLA/MI24/HeronInfinity.lean": "c5bd40efec8f972cf8af1c085178346d9b520972d6ef73b97207da60ff0958db",
+        "NLA/MI24/PolarModulus.lean": "ab2d08bee103bd8c0c4c603529aa80cc5f24885b05d59e65dc1e32b971cc3be8",
+        "NLA/MI24/OperatorNorm.lean": "b287ac8435fe7ad1fd9da7b4bb9d7c2a4432bc1fe4dbdbf10e08f41f52c32220",
+        "NLA/MI24/WeightedTrace.lean": "fc69ed29065a54c27e4c61418b0f927f0d7abc3db1e788c1ce4b823b17622c94",
+        "NLA/MI24/SpectralPowers.lean": "77c494ec04b502fa351bff9c819fbf2a2af769b39651b9c16713a0194e453b00",
+        "NLA/MI24/LinComparison.lean": "e0166dd6bea1c4e0f40bf254e7c9c1fbe5653b6649bfe290e3bcf388c28dca3f",
+        "NLA/MI24/PositiveSchatten.lean": "ad6a1925a305080a0f51a038d9498ba189b3b371570e0f3fbde45bb9746704d7",
+        "NLA/MI24/HeronTrace.lean": "478641f30f5660c2149da977219fbe784e4e39cc22ca3fe5a0a28167c2e8fad5",
+        "NLA/MI24/MeanPositivity.lean": "c26b8d10c54e5dd22a28a959a8b131540ae9f901485b86bb88ef31a4892ffef3",
+        "NLA/MI24/TraceHolder.lean": "b0197afbe382e0c0bd3ec59db242051b208d99673f88d198cfe1eb3f289ad1ca",
+        "NLA/MI24/ScalarLogMajorization.lean": "a4f5d003ec94ed8149f16ab7917b4dc97d93dcc20610e3736d7306b1ccbc97b1",
+        "NLA/MI24/HeronNorm.lean": "6687bb92a7d6f1edb69bbd5ff5a3b8635257a744fe61d1afdeabe7b5616d0fc2",
+        "NLA/MI24/Definitions.lean": "d96504d2aa26369299dbf4db7351804859d6ba5d677251cba5f42d7f8c5cdf1c"
+      },
+      "execution_lineage": "Exact sources, dependency/output hashes, fresh origin receipts, commands and logs are retained in the completion record; this documents agent did not rerun Lean."
+    },
+    "local_diagnostic": {
+      "run": "development-333",
+      "record": "verification/type-diagnostics-333/COMPARISON.json",
+      "record_sha256": "e3c76907ad179ae3dba0258b9a20baf6fb74f2dcea2347667bdf4087f0da10f3",
+      "matched_contracts": 22,
+      "binder_normalized_types_and_universes_match": true,
+      "both_LeanCert_bounds_consumed": true,
+      "Comparator_executed": false,
+      "scope": "Actual independently elaborated local Challenge/Solution types and proof-body traversal, not the final Comparator."
+    },
+    "independent_reviews": {
+      "statement": 2,
+      "final": 2,
+      "record": "reviews/INDEX.json"
+    },
+    "GitHub_Comparator": {
+      "status": "passed",
+      "published_commit": "97ff57c89775783bb7ebe952315840be86733417",
+      "run": 35310937025,
+      "job": 105492723099,
+      "url": "https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35310937025/job/105492723099",
+      "input_count": 212,
+      "exports": 22,
+      "evidence": "verification/linux-2026-09-18/README.md",
+      "root_audit": "verification/linux-2026-09-18/ROOT-AUDIT.json",
+      "artifact_sha256": "8b5ec3e7f3eb5e884d0cc91969d9339b7b7cef15e1c8dbfb559b6e6c62866db1",
+      "source_lock_sha256": "b3833b07916e5db77579b9cc53ca582282f6a841f36d6a60d693e5b02d342b6b",
+      "scope": "Actual proof-commit execution; later publication and PR merge checkouts checked separately"
+    },
+    "count_change": 0,
+    "package_preflight": {
+      "result": "Coordinator preflight passed",
+      "record": "verification/MI24-ROOT-PACKAGE-PREFLIGHT.json",
+      "checks": 1774,
+      "scope": "Author/coordinator packaging checks, not an additional independent referee. Two independent complete source approvals remain in reviews/INDEX.json."
+    },
+    "publication_status": "Immutable full proof verified; publication and PR checks pending"
+  }
+}

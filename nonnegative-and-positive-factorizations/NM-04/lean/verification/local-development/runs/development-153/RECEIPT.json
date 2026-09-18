@@ -1,0 +1,88 @@
+{
+  "scope": "macOS serial development only; no Comparator, isolation controls, publication or whole-problem acceptance",
+  "start": "2026-09-17T17:43:03.968878+00:00",
+  "assembly_sha256": "91e715bddc5d2daf65408c2a964c63401fa01ee2794c678b180f5b1e2ac3e05c",
+  "runner_sha256": "d6c00e953688e155c0a313a8f49c7c395ad0fb1166faf3655c0b47f3ea2b2266",
+  "compiler_sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+  "platform": "darwin",
+  "max_compiler_processes": 1,
+  "threads": 1,
+  "memory_cap_mib": 4096,
+  "source_inputs": {
+    "NLA/NM04/WeightedExpansion.lean": "888180ac2c4659fe5b90c430518f415d27b179e28e2ff9e9a8c00ac3945843fd",
+    "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+    "NLA/NM04/RankOneBordered.lean": "186041523a6accf7352f5aabfed2c0b0435a8135fd4f342b51a8e5f8e4165303"
+  },
+  "module_order": [
+    "NLA.NM04.Definitions",
+    "NLA.NM04.WeightedExpansion",
+    "NLA.NM04.RankOneBordered"
+  ],
+  "commands": [
+    {
+      "module": "NLA.NM04.Definitions",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+      "output_sha256": "03d65aeb592b7b0ce073686b3f34013d0a68ee2e95f28f82d953ea933bc95ba6",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-152/RECEIPT.json",
+      "prior_receipt_sha256": "dee6980dd0b99f8bba0f2701f0cad0ca3a62ee1b4643c9694c8811077e1ef379",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a"
+      }
+    },
+    {
+      "module": "NLA.NM04.WeightedExpansion",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/NM04/WeightedExpansion.olean",
+        "NLA/NM04/WeightedExpansion.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-17T17:43:03.974925+00:00",
+      "source_sha256": "888180ac2c4659fe5b90c430518f415d27b179e28e2ff9e9a8c00ac3945843fd",
+      "dependency_olean_sha256": {
+        "NLA.NM04.Definitions": "03d65aeb592b7b0ce073686b3f34013d0a68ee2e95f28f82d953ea933bc95ba6"
+      },
+      "exit_code": 1,
+      "end": "2026-09-17T17:43:23.030444+00:00",
+      "elapsed_seconds": 19.055227290955372,
+      "log_sha256": "dc9d2ceff1842e8343cb06af4d39fce19a4888e17490e61d91cf5fbc93c28cce",
+      "maxrss_bytes_macos_cumulative": 3487236096,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.NM04.RankOneBordered",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/NM04/RankOneBordered.olean",
+        "NLA/NM04/RankOneBordered.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-17T17:43:23.032232+00:00",
+      "source_sha256": "186041523a6accf7352f5aabfed2c0b0435a8135fd4f342b51a8e5f8e4165303",
+      "dependency_olean_sha256": {
+        "NLA.NM04.Definitions": "03d65aeb592b7b0ce073686b3f34013d0a68ee2e95f28f82d953ea933bc95ba6"
+      },
+      "exit_code": 1,
+      "end": "2026-09-17T17:43:39.570163+00:00",
+      "elapsed_seconds": 16.537028249935247,
+      "log_sha256": "25e44e57b307ca30cf9797c13ead095e344aee5a42eb4559b193b39da2b5793f",
+      "maxrss_bytes_macos_cumulative": 3487236096,
+      "output_sha256": null
+    }
+  ],
+  "count_change": 0,
+  "end": "2026-09-17T17:43:39.572034+00:00",
+  "completed_modules": 1,
+  "failed_modules": [
+    "NLA.NM04.WeightedExpansion",
+    "NLA.NM04.RankOneBordered"
+  ],
+  "blocked_modules": []
+}

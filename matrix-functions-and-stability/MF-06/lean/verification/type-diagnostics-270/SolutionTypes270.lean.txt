@@ -1,0 +1,36 @@
+import NLA.MF06.CanonicalLower
+import Lean
+
+private def diagnosticEraseBinderNames : Lean.Expr → Lean.Expr
+  | .forallE _ t b info => .forallE .anonymous (diagnosticEraseBinderNames t) (diagnosticEraseBinderNames b) info
+  | .lam _ t b info => .lam .anonymous (diagnosticEraseBinderNames t) (diagnosticEraseBinderNames b) info
+  | .letE _ t v b nd => .letE .anonymous (diagnosticEraseBinderNames t) (diagnosticEraseBinderNames v) (diagnosticEraseBinderNames b) nd
+  | .app f a => .app (diagnosticEraseBinderNames f) (diagnosticEraseBinderNames a)
+  | .mdata m b => .mdata m (diagnosticEraseBinderNames b)
+  | .proj n i b => .proj n i (diagnosticEraseBinderNames b)
+  | e => e
+
+open Lean in
+run_cmd do
+  let mut rows : Array Json := #[]
+  for name in #[`NLA.MF05.half_radius_certificate, `NLA.MF05.spectral_hausdorff_semantics, `NLA.MF05.general_root_limit_semantics, `NLA.MF05.positive_scaling_semantics, `NLA.MF06.bounded_envelope_norm, `NLA.MF06.tail_seminorm_limit, `NLA.MF06.stable_gauge_max_recurrence, `NLA.MF06.stable_kernel_exponential, `NLA.MF06.cone_numerical_bound, `NLA.MF06.product_bounded_lower_lipschitz, `NLA.MF06.separated_sum_bound, `NLA.MF06.block_radius_formula, `NLA.MF06.block_nonresonance_product_bounded, `NLA.MF06.irreducible_radius_one_product_bounded, `NLA.MF06.irreducible_flag, `NLA.MF06.similarity_semantics, `NLA.MF06.compound_dimensions, `NLA.MF06.compound_coordinate_semantics, `NLA.MF06.compound_algebra, `NLA.MF06.compound_norm_bound, `NLA.MF06.compound_local_lipschitz, `NLA.MF06.tensor_algebra, `NLA.MF06.tensor_norm_comparison, `NLA.MF06.allocation_dimensions, `NLA.MF06.allocation_algebra, `NLA.MF06.allocation_product_bounded, `NLA.MF06.compound_allocation_radius, `NLA.MF06.distinct_allocation_degrees, `NLA.MF06.allocation_tensor_norm_bridge, `NLA.MF06.critical_allocation_nonresonance, `NLA.MF06.compound_nonresonance_product_bounded, `NLA.MF06.compound_family_semantics, `NLA.MF06.critical_compound_product_bounded, `NLA.MF06.compound_hausdorff_bound, `NLA.MF06.positive_hausdorff_scaling, `NLA.MF06.root_lower_bound, `NLA.MF06.normalized_pointwise_lower_lipschitz, `NLA.MF06.canonical_pointwise_lower_lipschitz] do
+    let ci ← getConstInfo name
+    rows := rows.push <| Json.mkObj [
+      ("name", toJson name.toString),
+      ("levelParams", toJson (ci.levelParams.map Name.toString)),
+      ("type", toJson (reprStr ci.type)),
+      ("binderNormalizedType", toJson (reprStr (diagnosticEraseBinderNames ci.type)))]
+  IO.FS.writeFile "/private/tmp/nla-lean-next-20260915/MF06-type-diagnostics-270/solution-types.json" (Json.compress (toJson rows))
+
+open Lean in
+run_cmd do
+  let mut rows : Array Json := #[]
+  for name in #[`NLA.MF06.canonical_pointwise_lower_lipschitz, `NLA.MF06.normalized_pointwise_lower_lipschitz, `NLA.MF06.lower_lipschitz_of_critical_compound, `NLA.MF06.product_bounded_lower_lipschitz, `NLA.MF06.cone_numerical_bound, `NLA.MF05.local_common_norm_ball, `NLA.MF05.half_radius_certificate] do
+    let ci ← getConstInfo name
+    match ci.value? (allowOpaque := true) with
+    | none => throwError "Expected an actual theorem body for {name}"
+    | some body =>
+      rows := rows.push <| Json.mkObj [
+        ("name", toJson name.toString),
+        ("bodyConstants", toJson (body.getUsedConstants.map Name.toString))]
+  IO.FS.writeFile "/private/tmp/nla-lean-next-20260915/MF06-type-diagnostics-270/certificate-body-route.json" (Json.compress (toJson rows))

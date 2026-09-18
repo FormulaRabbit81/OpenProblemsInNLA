@@ -1,0 +1,108 @@
+"""Local Lean expression diagnostics; not Comparator or a proof acceptance.
+
+Frozen Challenge text and approved proof sources are not edited. Compiler is
+the same serial, one-thread 4096 MiB runner; two isolated diagnostic modules
+dump all 38 elaborated statement types for inspection.
+"""
+from pathlib import Path
+import datetime, fcntl, hashlib, json, os, shutil, sys
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+P = B / 'next-proofs/MF-06'
+run = int(sys.argv[1])
+D = B / f'MF06-type-diagnostics-{run}'
+D.mkdir(exist_ok=False)
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+assert sha(L / 'serial_compile_v3.py') == 'd6c00e953688e155c0a313a8f49c7c395ad0fb1166faf3655c0b47f3ea2b2266'
+for rel, h in json.loads((P / 'STATEMENT-FREEZE.json').read_text())['source_sha256'].items():
+    assert sha(P / rel) == h, rel
+lock = (L / '.compiler.lock').open('r+')
+fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+for p in (L / 'runs').glob('development-*/RECEIPT.json'):
+    assert 'end' in json.loads(p.read_text()), p
+names = json.loads((P / 'comparator.json').read_text())['theorem_names']
+name_literal = '#[' + ', '.join('`' + n for n in names) + ']'
+def suffix(label):
+    return '''
+private def diagnosticEraseBinderNames : Lean.Expr → Lean.Expr
+  | .forallE _ t b info => .forallE .anonymous (diagnosticEraseBinderNames t) (diagnosticEraseBinderNames b) info
+  | .lam _ t b info => .lam .anonymous (diagnosticEraseBinderNames t) (diagnosticEraseBinderNames b) info
+  | .letE _ t v b nd => .letE .anonymous (diagnosticEraseBinderNames t) (diagnosticEraseBinderNames v) (diagnosticEraseBinderNames b) nd
+  | .app f a => .app (diagnosticEraseBinderNames f) (diagnosticEraseBinderNames a)
+  | .mdata m b => .mdata m (diagnosticEraseBinderNames b)
+  | .proj n i b => .proj n i (diagnosticEraseBinderNames b)
+  | e => e
+
+open Lean in
+run_cmd do
+  let mut rows : Array Json := #[]
+  for name in ''' + name_literal + ''' do
+    let ci ← getConstInfo name
+    rows := rows.push <| Json.mkObj [
+      ("name", toJson name.toString),
+      ("levelParams", toJson (ci.levelParams.map Name.toString)),
+      ("type", toJson (reprStr ci.type)),
+      ("binderNormalizedType", toJson (reprStr (diagnosticEraseBinderNames ci.type)))]
+  IO.FS.writeFile "''' + str(D / (label + '-types.json')) + '''" (Json.compress (toJson rows))
+'''
+challenge = (P / 'Challenge.lean').read_text()
+challenge = challenge.replace('import NLA.MF06.Definitions', 'import NLA.MF06.Definitions\nimport Lean', 1)
+inputs = {
+    f'NLA.MF06Diagnostics.ChallengeTypes{run}': challenge + suffix('challenge'),
+    f'NLA.MF06Diagnostics.SolutionTypes{run}':
+        'import NLA.MF06.CanonicalLower\nimport Lean\n' + suffix('solution')}
+# Inspect only the explicit certificate-consumption route, not all Mathlib bodies.
+proof_route = ['NLA.MF06.canonical_pointwise_lower_lipschitz',
+ 'NLA.MF06.normalized_pointwise_lower_lipschitz',
+ 'NLA.MF06.lower_lipschitz_of_critical_compound',
+ 'NLA.MF06.product_bounded_lower_lipschitz', 'NLA.MF06.cone_numerical_bound',
+ 'NLA.MF05.local_common_norm_ball', 'NLA.MF05.half_radius_certificate']
+route_literal = '#[' + ', '.join('`' + n for n in proof_route) + ']'
+inputs[f'NLA.MF06Diagnostics.SolutionTypes{run}'] += '''
+open Lean in
+run_cmd do
+  let mut rows : Array Json := #[]
+  for name in ''' + route_literal + ''' do
+    let ci ← getConstInfo name
+    match ci.value? (allowOpaque := true) with
+    | none => throwError "Expected an actual theorem body for {name}"
+    | some body =>
+      rows := rows.push <| Json.mkObj [
+        ("name", toJson name.toString),
+        ("bodyConstants", toJson (body.getUsedConstants.map Name.toString))]
+  IO.FS.writeFile "''' + str(D / 'certificate-body-route.json') + '''" (Json.compress (toJson rows))
+'''
+sources = {}
+def visit(module):
+    rel = module.replace('.', '/') + '.lean'
+    if rel in sources:
+        return
+    data = inputs[module].encode() if module in inputs else (P / rel).read_bytes()
+    target = D / 'sources' / rel
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(data)
+    sources[rel] = {'source':str(target), 'sha256':sha(target)}
+    (L / rel).parent.mkdir(parents=True, exist_ok=True)
+    if module in inputs:
+        assert not (L / '.lake/build/lib/lean' / (rel[:-5] + '.olean')).exists()
+    shutil.copy2(target, L / rel)
+    for line in data.decode().splitlines():
+        if line.startswith('import '):
+            for dep in line[7:].split():
+                if dep.startswith('NLA.'):
+                    visit(dep)
+for module in inputs:
+    visit(module)
+assembly = {'scope':'Read-only elaborated-type diagnosis before final real Linux Comparator; Challenge placeholders expected; not proof or Comparator success',
+            'time':datetime.datetime.now(datetime.timezone.utc).isoformat(), 'sources':sources,
+            'frozen_Challenge_sha256':sha(P / 'Challenge.lean'),
+            'script_sha256':sha(Path(__file__))}
+path = L / f'ASSEMBLY-{run}.json'
+assert not path.exists()
+path.write_text(json.dumps(assembly,indent=2)+'\n')
+fcntl.flock(lock, fcntl.LOCK_UN)
+lock.close()
+os.chdir(L)
+os.execv(sys.executable,[sys.executable,str(L/'serial_compile_v3.py'),path.name,
+                        f'development-{run}',*inputs])

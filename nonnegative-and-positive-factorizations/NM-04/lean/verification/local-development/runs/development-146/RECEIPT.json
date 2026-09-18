@@ -1,0 +1,102 @@
+{
+  "scope": "macOS serial development only; no Comparator, isolation controls, publication or whole-problem acceptance",
+  "start": "2026-09-17T17:19:29.404578+00:00",
+  "assembly_sha256": "5bfd6af56a7edab87d0ebb18dde7e8b2f400c3932c76f5f269d7c02cbc568a33",
+  "runner_sha256": "d6c00e953688e155c0a313a8f49c7c395ad0fb1166faf3655c0b47f3ea2b2266",
+  "compiler_sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+  "platform": "darwin",
+  "max_compiler_processes": 1,
+  "threads": 1,
+  "memory_cap_mib": 4096,
+  "source_inputs": {
+    "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+    "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb",
+    "NLA/NM04/TransitionEntries.lean": "31349333af88fb5292ebee5b0cc0fae69719634d6a162160e9061a2ba072a50c",
+    "NLA/NM04/SchurMargins.lean": "569d8fd90cec5312a5431e873100497adda5bf5aa34d541154ac4f3b616104ed"
+  },
+  "module_order": [
+    "NLA.NM04.Definitions",
+    "NLA.NM04.TransitionSupport",
+    "NLA.NM04.TransitionEntries",
+    "NLA.NM04.SchurMargins"
+  ],
+  "commands": [
+    {
+      "module": "NLA.NM04.Definitions",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+      "output_sha256": "03d65aeb592b7b0ce073686b3f34013d0a68ee2e95f28f82d953ea933bc95ba6",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-145/RECEIPT.json",
+      "prior_receipt_sha256": "e34f1826b51bf4952ca9461b72f0c6062cd098f78755d39a0684caea7fdcb413",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a"
+      }
+    },
+    {
+      "module": "NLA.NM04.TransitionSupport",
+      "status": "reused_exact_successful_local_output",
+      "source_sha256": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb",
+      "output_sha256": "5e32085466df4c56a824f9f1f17f52727238cec308122a06f22b4794d718df7a",
+      "prior_receipt": "/private/tmp/nla-lean-local-shared-20260916/runs/development-145/RECEIPT.json",
+      "prior_receipt_sha256": "e34f1826b51bf4952ca9461b72f0c6062cd098f78755d39a0684caea7fdcb413",
+      "transitive_source_hashes": {
+        "NLA/NM04/Definitions.lean": "8f55d605dcd56160feede340a7cb03734be0e04085b4d4bfd30f4d36cede7c6a",
+        "NLA/NM04/TransitionSupport.lean": "c796e29ac8c99cf53a0808c701b56118a4f48721f75440f882cda77ba66927fb"
+      }
+    },
+    {
+      "module": "NLA.NM04.TransitionEntries",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/NM04/TransitionEntries.olean",
+        "NLA/NM04/TransitionEntries.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-17T17:19:29.410989+00:00",
+      "source_sha256": "31349333af88fb5292ebee5b0cc0fae69719634d6a162160e9061a2ba072a50c",
+      "dependency_olean_sha256": {
+        "NLA.NM04.TransitionSupport": "5e32085466df4c56a824f9f1f17f52727238cec308122a06f22b4794d718df7a"
+      },
+      "exit_code": 1,
+      "end": "2026-09-17T17:19:53.167273+00:00",
+      "elapsed_seconds": 23.75622179196216,
+      "log_sha256": "3037e42071dc6eb9cfa0960093bd1f26f672d8552f78774a5deeee9c09d36863",
+      "maxrss_bytes_macos_cumulative": 3447046144,
+      "output_sha256": null
+    },
+    {
+      "module": "NLA.NM04.SchurMargins",
+      "argv": [
+        "/Users/georgestepaniants/.elan/toolchains/leanprover--lean4---v4.33.1/bin/lean",
+        "--threads=1",
+        "--memory=4096",
+        "-o",
+        "/private/tmp/nla-lean-local-shared-20260916/.lake/build/lib/lean/NLA/NM04/SchurMargins.olean",
+        "NLA/NM04/SchurMargins.lean"
+      ],
+      "cwd": "/private/tmp/nla-lean-local-shared-20260916",
+      "start": "2026-09-17T17:19:53.170020+00:00",
+      "source_sha256": "569d8fd90cec5312a5431e873100497adda5bf5aa34d541154ac4f3b616104ed",
+      "dependency_olean_sha256": {
+        "NLA.NM04.Definitions": "03d65aeb592b7b0ce073686b3f34013d0a68ee2e95f28f82d953ea933bc95ba6"
+      },
+      "exit_code": 1,
+      "end": "2026-09-17T17:20:03.013983+00:00",
+      "elapsed_seconds": 9.843372624949552,
+      "log_sha256": "a70f4f71151fad921853884273341efc749d2dc3614f248e164f3c767a7f6e9d",
+      "maxrss_bytes_macos_cumulative": 3447046144,
+      "output_sha256": null
+    }
+  ],
+  "count_change": 0,
+  "end": "2026-09-17T17:20:03.015927+00:00",
+  "completed_modules": 2,
+  "failed_modules": [
+    "NLA.NM04.TransitionEntries",
+    "NLA.NM04.SchurMargins"
+  ],
+  "blocked_modules": []
+}

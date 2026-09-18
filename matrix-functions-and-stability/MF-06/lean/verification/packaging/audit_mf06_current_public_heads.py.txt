@@ -1,0 +1,33 @@
+from pathlib import Path
+import concurrent.futures,datetime,gzip,hashlib,json,subprocess
+B=Path('/private/tmp/nla-lean-next-20260915'); D=B/'MF06-current-public-audit-20260917';D.mkdir(exist_ok=True);(D/'trees').mkdir(exist_ok=True);G='/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+def api(endpoint,paginate=False):
+ args=[G,'api',endpoint]+(['--paginate','--slurp'] if paginate else [])
+ p=subprocess.run(args,text=True,capture_output=True);assert p.returncode==0,(endpoint,p.stderr)
+ data=json.loads(p.stdout);return ([x for page in data for x in page] if paginate else data)
+meta=api('repos/ajt60gaibb/OpenProblemsInNLA'); ancestors={meta[k]['full_name'] for k in ['parent','source'] if isinstance(meta.get(k),dict)}
+forks=api('repos/ajt60gaibb/OpenProblemsInNLA/forks?per_page=100',True);repos=sorted({'ajt60gaibb/OpenProblemsInNLA','sgstepaniants/OpenProblemsInNLA'}|ancestors|{r['full_name'] for r in forks});(D/'REPOSITORIES.json').write_text(json.dumps({'time':datetime.datetime.now(datetime.timezone.utc).isoformat(),'api':'repos/ajt60gaibb/OpenProblemsInNLA/forks?per_page=100 (all pages)','repos':repos},indent=2)+'\n')
+cache={}
+for v in json.loads((B/'new-problem-research-20260917/RE-02/CACHED-TREE-SCAN.json').read_text())['observations']:
+ r=v['tree_record'];p=Path(r.get('fresh_tree',r.get('cached_immutable_tree')));assert sha(p)==r['sha256'];cache[r['commit']]=(p,r['sha256'])
+for v in json.loads((B/'MF05-current-public-audit-20260917/AUDIT.json').read_text())['observations']:
+ p=Path(v['tree_snapshot']);assert sha(p)==v['sha256'];cache[v['commit']]=(p,v['sha256'])
+for v in json.loads((B/'NM04-current-public-audit-20260917/AUDIT.json').read_text())['observations']:
+ p=Path(v['tree_snapshot']);assert sha(p)==v['sha256'];cache[v['commit']]=(p,v['sha256'])
+def branches(repo):return repo,[{'name':v['name'],'sha':v['commit']['sha']} for v in api('repos/'+repo+'/branches?per_page=100',True)]
+with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool: heads=dict(pool.map(branches,repos))
+(D/'FRESH-BRANCH-HEADS.json').write_text(json.dumps(heads,indent=2)+'\n');unique={}
+for repo,hs in heads.items():
+ for v in hs:unique.setdefault(v['sha'],repo)
+print('repositories',len(repos),'branch heads',sum(map(len,heads.values())),'unique commits',len(unique),flush=True)
+def inspect(item):
+ commit,repo=item;cached=commit in cache
+ if cached:p,h=cache[commit];data=json.loads(gzip.decompress(p.read_bytes()))
+ else:
+  data=api('repos/'+repo+'/git/trees/'+commit+'?recursive=1');p=D/'trees'/(commit+'.json.gz');p.write_bytes(gzip.compress(json.dumps(data,separators=(',',':')).encode(),mtime=0));h=sha(p)
+ assert data.get('truncated') is False,(repo,commit,'truncated tree')
+ matches=[{'path':v['path'],'sha':v['sha'],'type':v['type']} for v in data['tree'] if ('mf-06' in v['path'].lower() or 'mf06' in v['path'].lower()) and (v['path'].endswith('.lean') or '/lean/' in v['path'].lower() or v['path'].endswith('formalization.yaml'))]
+ return {'repository':repo,'commit':commit,'tree_snapshot':str(p),'sha256':h,'immutable_cache_reused':cached,'complete_tree':True,'target_named_formalization_paths':matches}
+with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:rows=list(pool.map(inspect,unique.items()))
+record={'time':datetime.datetime.now(datetime.timezone.utc).isoformat(),'scope':'Current complete public branch enumeration for upstream and visible direct forks, with authenticated immutable recursive-tree reuse. Target-ID/path formalization scan, not semantic inspection of every unrelated filename, private fork, deleted branch or unpublished work.','repository_count':len(repos),'branch_head_count':sum(map(len,heads.values())),'unique_commit_count':len(rows),'fresh_tree_count':sum(not r['immutable_cache_reused'] for r in rows),'observations':rows,'matches':[(r['repository'],r['commit'],r['target_named_formalization_paths']) for r in rows if r['target_named_formalization_paths']]}
+(D/'AUDIT.json').write_text(json.dumps(record,indent=2)+'\n');print('COMPLETE',json.dumps({k:record[k] for k in ['repository_count','branch_head_count','unique_commit_count','fresh_tree_count','matches']}),flush=True)

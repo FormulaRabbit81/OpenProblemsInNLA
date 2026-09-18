@@ -1,0 +1,232 @@
+"""Package actual full local MF06 evidence. No Linux or publication acceptance."""
+from pathlib import Path
+import datetime, gzip, hashlib, io, json, re, shutil, tarfile
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+N = B / 'next-proofs/MF-06'
+P = B / 'MF06-canonical-package-local268'
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+load = lambda p: json.loads(Path(p).read_text())
+now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+assert not P.exists()
+local_path = B / 'MF06-LOCAL-COMPLETE-268.json'
+local = load(local_path)
+assert sha(local_path) == '7c138cd627b595aa7e18c625cc39b73a673ed0434d6020664d77d769b2cdeaa6'
+D = B / 'MF06-type-diagnostics-270'
+assert sha(D / 'COMPARISON.json') == '3ffb62cff222c6bfc6df5139c44cf43ce5f0e5519f1db22ccc3bcbffdba9bbd5'
+assert load(D / 'COMPARISON.json')['all38_match']
+P.mkdir()
+records = {}
+
+def copy(src, rel):
+    src = Path(src)
+    dst = P / rel
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(src, dst)
+    assert sha(src) == sha(dst)
+    records[rel] = {'source': str(src), 'destination': rel, 'sha256': sha(src)}
+
+for rel, h in local['sources'].items():
+    src = B / 'MF06-local268-source-snapshot' / rel
+    assert sha(src) == sha(N / rel) == h, rel
+    copy(src, rel)
+freeze = load(N / 'STATEMENT-FREEZE.json')
+for rel, h in freeze['source_sha256'].items():
+    assert sha(N / rel) == h
+    copy(N / rel, rel)
+for rel in ['STATEMENT-FREEZE.json', 'STATEMENT-IMPORT-BOUNDARY.json',
+            'STATEMENTS-FIRST.json', 'REUSE-SOURCE-PINS.json', 'CONTRACT-MAP.json',
+            'SOURCE-INPUTS.json', 'API-REUSE-NOTES.md', 'REUSE-CONTRACT-CHECK.json',
+            'lean-toolchain', 'lakefile.toml', 'lake-manifest.json']:
+    copy(N / rel, rel)
+for item in load(N / 'SOURCE-INPUTS.json')['files']:
+    assert sha(N / item['path']) == item['sha256'], item['path']
+for src in sorted((N / 'source-inputs').rglob('*')):
+    if src.is_file():
+        copy(src, str(src.relative_to(N)))
+for rel in ['README.md', 'formalization.yaml', 'STATE.json', 'VERIFICATION.json']:
+    copy(N / rel, 'verification/statement-history/' + rel)
+copy('/private/tmp/nla-lean-next-nm04-worktree/nonnegative-and-positive-factorizations/NM-04/lean/LICENSE', 'LICENSE')
+copy(local_path, 'verification/LOCAL-COMPLETE.json')
+for src, h in local['retained_original_evidence'].items():
+    assert sha(src) == h
+    copy(src, 'verification/local-development/' + str(Path(src).relative_to(L)))
+for n in [268, 269, 270]:
+    copy(L / f'ASSEMBLY-{n}.json', f'verification/local-development/ASSEMBLY-{n}.json')
+    copy(L / f'runs/development-{n}/RECEIPT.json', f'verification/local-development/runs/development-{n}/RECEIPT.json')
+    for src in (L / f'runs/development-{n}').glob('*.log'):
+        copy(src, 'verification/local-development/' + str(src.relative_to(L)))
+for src in D.glob('*.json'):
+    copy(src, 'verification/type-diagnostics-270/' + src.name)
+for src in (D / 'sources/NLA/MF06Diagnostics').glob('*.lean'):
+    copy(src, 'verification/type-diagnostics-270/' + src.name + '.txt')
+for name in ['capture_mf06_local_completion.py', 'diagnose_mf06_types.py',
+             'compare_mf06_diagnostics.py', 'prepare_mf06_local268_package.py',
+             'run_mf06_serial.py', 'audit_mf06_current_public_heads.py']:
+    copy(B / name, 'verification/packaging/' + name + '.txt')
+copy(L / 'serial_compile_v3.py', 'verification/local-development/serial_compile_v3.py.txt')
+for name in ['AUDIT.json', 'REPOSITORIES.json', 'FRESH-BRANCH-HEADS.json']:
+    copy(B / 'MF06-current-public-audit-20260917' / name, 'verification/public-scope/' + name)
+audit = load(B / 'MF06-current-public-audit-20260917/AUDIT.json')
+assert audit['matches'] == []
+
+def archive_review(src, label):
+    src = Path(src)
+    for name, suffix in [('REVIEW.md', '.md'), ('VERDICT.json', '-verdict.json'), ('MANIFEST.json', '-manifest.json')]:
+        copy(src / name, 'reviews/' + label + suffix)
+    dest = P / 'reviews' / (label + '-packet.tar.gz')
+    with dest.open('wb') as raw, gzip.GzipFile(fileobj=raw, mode='wb', mtime=0) as gz, tarfile.open(fileobj=gz, mode='w') as tar:
+        for f in sorted(src.rglob('*')):
+            assert not f.is_symlink()
+            if f.is_file():
+                data = f.read_bytes()
+                assert not re.search(r'(?i)(?:george|g?stepaniants|sgstepaniants)[^\s@<>]{0,40}@[\w.-]+\.[A-Za-z]{2,}', data.decode('utf8', errors='ignore')), f
+                info = tarfile.TarInfo(src.name + '/' + str(f.relative_to(src)))
+                info.size, info.mode = len(data), 0o644
+                tar.addfile(info, io.BytesIO(data))
+    return {'label': label, 'source_packet': str(src), 'manifest_sha256': sha(src / 'MANIFEST.json'),
+            'archive': dest.name, 'archive_sha256': sha(dest), 'report': label + '.md'}
+
+reviews = []
+for i, item in enumerate(freeze['accepted_reviews'], 1):
+    assert sha(Path(item['directory']) / 'MANIFEST.json') == item['manifest_sha256']
+    assert sha(Path(item['directory']) / 'VERDICT.json') == item['verdict_sha256']
+    reviews.append(archive_review(item['directory'], 'statement-referee-' + str(i)))
+(P / 'reviews/INDEX.json').write_text(json.dumps(reviews, indent=2) + '\n')
+results = []
+for h in load(N / 'STATEMENT-HEADERS.json')['headers']:
+    short = h['declaration'].rsplit('.', 1)[1]
+    matches = []
+    for rel in local['sources']:
+        text = (P / rel).read_text()
+        m = re.search(r'^theorem\s+' + re.escape(short) + r'\b', text, re.M)
+        if m:
+            matches.append((rel, text[:m.start()].count('\n') + 1))
+    assert len(matches) == 1
+    rel, line = matches[0]
+    results.append({'id': h['id'], 'declaration': h['declaration'], 'file': rel, 'line': line,
+                    'file_sha256': sha(P / rel), 'frozen_header_sha256': h['header_sha256'],
+                    'verification_status': 'Actual local268 Lean/kernel trust passed; local270 type diagnostic matched; final reviews and Linux pending'})
+meta = load(N / 'formalization.yaml')
+meta['project']['name'] = 'MF-06: Pointwise Lipschitz lower bound for the joint spectral radius'
+meta['project']['description'] = 'For every fixed nonempty compact complex matrix family in every positive finite dimension, prove a one-sided linear lower perturbation bound for its joint spectral radius, uniformly over arbitrary nearby nonempty compact families. The proof includes the actual critical product-bounded exterior-power construction.'
+meta['sources'][0]['note'] = 'Full unchanged canonical target, including reducible references, infinite compact families, zero radii and arbitrary nearby perturbations.'
+meta['related_formalizations'][0]['note'] = 'Exact pinned MF05/MF07 source reuse, source-matched and locally checked as part of MF06. Preserve Matthew J. Colbrook mathematical attribution and existing code authorship.'
+meta['automation']['methods'][0]['tool_setup'] = 'Multiple author and independent reviewer agents. Root alone runs local Lean with one process, one thread and4096 MiB. Two independent statement reviews and local177 elaboration preceded all proof bodies; exact statement files remain frozen.'
+meta['automation']['notes'] = 'Full119-module actual local268 proof and38 exported kernel-trust checks passed. Local270 independently elaborated types match all38 contracts and actual theorem bodies consume the pinned kernel-mode LeanCert half certificate. Two nonauthor full-source reviews and real Linux Comparator are still pending; no human peer review or official Tau Ceti service claim.'
+meta['status'] = {'scope': 'Full original canonical target implemented and locally checked; final publication gates pending',
+                  'main_results': results, 'stage': 'complete-local-proof-final-gates-pending',
+                  'whole_problem_verified': False, 'completed_original_targets': 0,
+                  'intentional_challenge_placeholders': 38}
+meta['review'] = {'status': 'Two independent statement approvals complete; two independent nonauthor final source reviews pending',
+                  'reviewers': [], 'notes': 'AI-agent reviews applying pinned Tau Ceti standards; source/evidence inspection is distinct from a reviewer compiler execution.'}
+meta['alignment'] = {'status': 'All38 literal frozen headers and local270 binder-normalized expressions match; real Comparator pending',
+                     'contracts': results, 'frozen_boundary': 'STATEMENT-FREEZE.json'}
+meta['verification'] = {
+    'local_Lean': {'status': 'pass', 'run': 268, 'modules': 119, 'contracts': 38,
+                  'fresh': 2, 'source_matched_reuse': 117, 'record': 'verification/LOCAL-COMPLETE.json'},
+    'local_elaborated_type_diagnostics': {'status': 'pass', 'run': 270, 'statements': 38,
+                    'record': 'verification/type-diagnostics-270/COMPARISON.json', 'real_Comparator': False},
+    'LeanCert': {'trust': 'kernel', 'certificate': 'NLA.MF05.half_radius_certificate',
+                'actual_body_consumption': 'verification/type-diagnostics-270/CERTIFICATE-CONSUMPTION.json'},
+    'GitHub_Comparator': {'status': 'not run for MF06'},
+    'independent_reviews': {'statement': 2, 'final': 'pending', 'record': 'reviews/INDEX.json'},
+    'publication_status': 'Local complete; canonical remains Solved until final independent reviews and actual Linux verification.'}
+(P / 'formalization.yaml').write_text(json.dumps(meta, indent=2) + '\n')
+(P / 'IMPLEMENTATION-MAP.json').write_text(json.dumps({'results': results}, indent=2) + '\n')
+(P / 'ACTIVE-SOURCE-MANIFEST.json').write_text(json.dumps({'source_sha256': local['sources'], 'local_run': 268,
+    'contracts': 38, 'frozen_boundary_sha256': sha(N / 'STATEMENT-FREEZE.json'), 'Linux_Comparator': 'not run'}, indent=2) + '\n')
+state = {'time': now, 'stage': 'Complete local proof; final reviews and Linux verification pending', 'local_run': 268,
+    'contracts': 38, 'modules': 119, 'local_Lean_passed': True, 'local_type_diagnostic_run': 270,
+    'all38_local_types_match': True, 'two_final_nonauthor_reviews': 'pending', 'GitHub_Comparator': 'not run', 'count_change': 0}
+(P / 'STATE.json').write_text(json.dumps(state, indent=2) + '\n')
+(P / 'README.md').write_text('''# MF-06 Lean formalization
+
+For every fixed nonempty compact family of complex matrices in every positive
+finite dimension, the joint spectral radius has the original pointwise
+Lipschitz lower bound against all sufficiently nearby nonempty compact families.
+George Stepaniants contributes the mathematical solution and this formalization,
+with substantial OpenAI Codex assistance. Epperlein and Wirth retain attribution
+for the question; reused MF05/MF07 mathematics retain Matthew J. Colbrook's credit.
+
+**All 38 frozen contracts pass actual local Lean268 through 119 modules. Final
+independent reviews and the real Linux Comparator checks remain pending.**
+The [local record](verification/LOCAL-COMPLETE.json) binds every source, actual
+command, complete output log and chain of successful source-matched reuse.
+Every export passes its kernel trust assertion with only `propext`,
+`Classical.choice` and `Quot.sound`. No canonical status promotion is claimed.
+
+Read [CanonicalLower](NLA/MF06/CanonicalLower.lean) for the final theorem,
+[CriticalCompound](NLA/MF06/CriticalCompound.lean) for the exterior-power reduction,
+and [ProductBoundedLower](NLA/MF06/ProductBoundedLower.lean) for the cone argument.
+[Definitions](NLA/MF06/Definitions.lean), [Challenge](Challenge.lean),
+[Solution](Solution.lean), and the [implementation map](IMPLEMENTATION-MAP.json)
+identify all objects and exports. The independent Challenge contains specification
+placeholders and is never imported by the proof.
+
+The reference may be reducible and have unbounded normalized products. Nearby
+families need not preserve its invariant subspaces. Infinite compact sets,
+singular generators, zero radius, zero distance, empty words and degree-zero
+exterior factors remain included. Constants are chosen before the perturbing
+family. This is a pointwise one-sided bound at a fixed reference family.
+
+The [numerical plan](NUMERICAL_TARGETS.md) and two independent statement approvals
+precede implementation. All matrix dimensions, determinants, words and norm
+constants remain symbolic; no interval grid or numerical spectral search is
+performed. The pinned half-radius certificate uses `interval_decide (trust :=
+kernel)` and is genuinely consumed in the cone and neighborhood arguments.
+[Actual theorem-body inspection](verification/type-diagnostics-270/CERTIFICATE-CONSUMPTION.json)
+records those references. The separate [local type diagnostic](verification/type-diagnostics-270/COMPARISON.json)
+matches all 38 independently elaborated statements; it is not a Comparator run.
+
+With the pinned toolchain and dependencies, run `lake build` here. Its default
+target is `Solution`. Campaign development shares one pinned local cache and
+uses at most one compiler process, one thread and 4096 MiB. On a non-root Linux
+system meeting the [harness prerequisites](../../../tools/lean/HARNESS.md), run
+from the repository root:
+
+```sh
+tools/lean/bootstrap.sh /tmp/nla-mf06-tools
+tools/lean/verify.sh matrix-functions-and-stability/MF-06/lean /tmp/nla-mf06-tools
+```
+
+That separate harness runs the real Comparator, default-kernel replay, standard
+axiom checks, sandbox checks and negative controls. No Linux success is claimed
+in this local-stage package.
+
+The [current public audit](verification/public-scope/AUDIT.json) checked target-named
+formalization paths in 268 public branch heads across 15 repositories and 222
+distinct commits; it found none. This is a path-based duplicate check, not a
+semantic search of unrelated filenames or private/unpublished work. Immutable
+tree snapshots remain retained in the campaign audit. Historical statement-stage
+wording is preserved in frozen files and [archived metadata](verification/statement-history/);
+[STATE.json](STATE.json) reports the current stage.
+
+Contributor: **George Stepaniants, Department of Computing and Mathematical
+Sciences, California Institute of Technology**. Original target, background
+theorems, Mathlib, LeanCert, Comparator, Tau Ceti, Schiffer and Forsythe retain
+their attribution. No email for George Stepaniants is published. Agent review
+does not constitute external human peer review or official Tau Ceti endorsement.
+[License](LICENSE).
+''')
+(P / 'reviews/README.md').write_text('''# Independent review evidence
+
+Two independent statement reviews preceded proof bodies. Their complete packets
+are retained and indexed in [INDEX.json](INDEX.json). Two nonauthor whole-target
+source reviews are in progress. Historical informal mathematics reviews do not
+substitute for these formal source reviews or actual Linux execution.
+''')
+(P / 'verification/RETAINED-PATHS.json').write_text(json.dumps(list(records.values()), indent=2) + '\n')
+for item in records.values():
+    assert sha(P / item['destination']) == item['sha256']
+for src in P.rglob('*'):
+    if src.is_file() and src.suffix != '.gz':
+        assert not re.search(r'(?i)(?:george|g?stepaniants|sgstepaniants)[^\s@<>]{0,40}@[\w.-]+\.[A-Za-z]{2,}', src.read_text(errors='ignore')), src
+assert len(list(P.rglob('*.lean'))) == 120
+manifest = {'stage': state['stage'], 'files': {str(f.relative_to(P)): sha(f) for f in sorted(P.rglob('*'))
+                                            if f.is_file() and f != P / 'PACKAGE-MANIFEST.json'}}
+(P / 'PACKAGE-MANIFEST.json').write_text(json.dumps(manifest, indent=2) + '\n')
+print(json.dumps({'package': str(P), 'manifest_sha256': sha(P / 'PACKAGE-MANIFEST.json'),
+    'payload_files': len(manifest['files']), 'local_complete': True,
+    'final_reviews': 'pending', 'Linux_Comparator': 'not run', 'count_change': 0}, indent=2))

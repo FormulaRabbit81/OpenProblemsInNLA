@@ -25,8 +25,8 @@
 | --- | --- | --- | --- | --- | --- |
 | [MF-02](MF-02/README.md) | Multiplication overhead of cubic sign compositions | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](MF-02/problem.pdf) · [TeX](MF-02/problem.tex) |
 | [MF-03](MF-03/README.md) | A uniform disk bound for wave-kernel Padé approximants | **✅ SOLVED** | hard | interesting to specialist | [PDF](MF-03/problem.pdf) · [TeX](MF-03/problem.tex) |
-| [MF-05](MF-05/README.md) | Local Hölder continuity of the joint spectral radius | **✅ SOLVED** | challenging | interesting to the community | [PDF](MF-05/problem.pdf) · [TeX](MF-05/problem.tex) |
-| [MF-06](MF-06/README.md) | A pointwise Lipschitz lower bound for the joint spectral radius | **✅ SOLVED** | challenging | interesting to the community | [PDF](MF-06/problem.pdf) · [TeX](MF-06/problem.tex) |
+| [MF-05](MF-05/README.md) | Local Hölder continuity of the joint spectral radius | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](MF-05/problem.pdf) · [TeX](MF-05/problem.tex) |
+| [MF-06](MF-06/README.md) | A pointwise Lipschitz lower bound for the joint spectral radius | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](MF-06/problem.pdf) · [TeX](MF-06/problem.tex) |
 | [MF-07](MF-07/README.md) | Uniform polynomial bounds for products at joint spectral radius one | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](MF-07/problem.pdf) · [TeX](MF-07/problem.tex) |
 | [MF-12](MF-12/README.md) | Realizing arbitrary polynomial growth exponents by finite matrix families | **🏆 LEAN VERIFIED** | challenging | interesting to the community | [PDF](MF-12/problem.pdf) · [TeX](MF-12/problem.tex) |
 | [MF-14](MF-14/README.md) | Degree coverage with seven matrix multiplications | **✅ SOLVED** | challenging | interesting to the community | [PDF](MF-14/problem.pdf) · [TeX](MF-14/problem.tex) |
