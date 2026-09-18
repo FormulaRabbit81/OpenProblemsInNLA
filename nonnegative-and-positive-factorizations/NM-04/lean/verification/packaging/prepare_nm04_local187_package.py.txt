@@ -1,0 +1,155 @@
+"""Retain the completed local187 sources and historical statement evidence.
+
+This is packaging, not a Lean/Comparator run or final publication approval.
+"""
+from pathlib import Path
+import datetime, gzip, hashlib, io, json, re, shutil, tarfile
+
+B = Path('/private/tmp/nla-lean-next-20260915')
+L = Path('/private/tmp/nla-lean-local-shared-20260916')
+N = B / 'next-proofs/NM-04'
+OLD = B / 'NM04-canonical-package-local184'
+P = B / 'NM04-canonical-package-local187'
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+assert not P.exists()
+assert sha(B / 'NM04-LOCAL-COMPLETE-187.json') == 'd32daefe49cde06358205c59a897a439f3af49aa8d017b31a68f8265893efa4d'
+old_manifest = json.loads((OLD / 'PACKAGE-MANIFEST.json').read_text())
+for rel, h in old_manifest['files'].items():
+    assert sha(OLD / rel) == h, rel
+shutil.copytree(OLD, P)
+history = P / 'verification/packaging/local184'
+history.mkdir(parents=True)
+for rel in ['PACKAGE-MANIFEST.json', 'verification/RETAINED-PATHS.json',
+            'README.md', 'formalization.yaml', 'STATE.json',
+            'ACTIVE-SOURCE-MANIFEST.json', 'IMPLEMENTATION-MAP.json']:
+    dest = history / rel
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(OLD / rel, dest)
+records = {r['destination']: r for r in json.loads((P / 'verification/RETAINED-PATHS.json').read_text())}
+
+def copy(src, rel):
+    src = Path(src)
+    dest = P / rel
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(src, dest)
+    assert sha(dest) == sha(src)
+    records[rel] = {'source': str(src), 'destination': rel, 'sha256': sha(src)}
+
+local = json.loads((B / 'NM04-LOCAL-COMPLETE-187.json').read_text())
+for rel, h in local['sources'].items():
+    src = B / 'NM04-local187-source-snapshot' / rel
+    assert sha(src) == h == sha(N / rel)
+    copy(src, rel)
+copy(B / 'NM04-LOCAL-COMPLETE-187.json', 'verification/LOCAL-COMPLETE.json')
+copy(B / 'NM04-LOCAL-COMPLETE-187.json', 'verification/LOCAL-COMPLETE-187.json')
+copy(B / 'NM04-COMMENT187.json', 'verification/packaging/COMMENT187.json')
+for f in (B / 'NM04-comment187-before').glob('*'):
+    # Historical Lean bytes stay inert to repository source discovery.
+    copy(f, 'verification/packaging/comment187-before/' + f.name + ('.txt' if f.suffix == '.lean' else ''))
+for original, h in local['retained_original_evidence'].items():
+    src = Path(original)
+    assert sha(src) == h
+    copy(src, 'verification/local-development/' + str(src.relative_to(L)))
+copy(L / 'ASSEMBLY-187.json', 'verification/local-development/ASSEMBLY-187.json')
+copy(B / 'prepare_nm04_local187_package.py', 'verification/packaging/prepare_nm04_local187_package.py.txt')
+copy(B / 'NM04-PREPUBLICATION-REFRESH-20260917.json', 'verification/public-scope/PREPUBLICATION-REFRESH.json')
+
+# Preserve the original plan at the very locations named by the frozen documents.
+assert not list((N / 'precode-01').rglob('*.lean'))
+for f in (N / 'precode-01').rglob('*'):
+    if f.is_file():
+        copy(f, 'precode-01/' + str(f.relative_to(N / 'precode-01')))
+copy(N / 'precode-01/SEMANTIC-PLAN.md', 'SEMANTIC-PLAN.md')
+copy(N / 'statement-draft-01/MANIFEST.json', 'verification/statement-history/STATEMENT-DRAFT-MANIFEST.json')
+
+def archive(src, dest):
+    with dest.open('wb') as raw, gzip.GzipFile(fileobj=raw, mode='wb', mtime=0) as gz:
+        with tarfile.open(fileobj=gz, mode='w') as tar:
+            for f in sorted(src.rglob('*')):
+                assert not f.is_symlink(), f
+                if f.is_file():
+                    data = f.read_bytes()
+                    text = data.decode('utf-8', errors='ignore')
+                    assert not re.search(r'(?i)(?:george|g?stepaniants|sgstepaniants)[^\s@<>]{0,40}@[\w.-]+\.[A-Za-z]{2,}', text), f
+                    info = tarfile.TarInfo(src.name + '/' + str(f.relative_to(src)))
+                    info.size, info.mode = len(data), 0o644
+                    tar.addfile(info, io.BytesIO(data))
+
+archive(N / 'statement-draft-01', P / 'verification/statement-history/statement-draft-01.tar.gz')
+R = P / 'reviews'
+R.mkdir(exist_ok=False)
+index = []
+for label, name in [('statement-1', 'NM04-root-statement-20260917'),
+                    ('statement-2', 'NM04-statement-formal-review-20260917'),
+                    ('final-2-local184', 'NM04-full-referee2-20260917')]:
+    src = B / 'reviews' / name
+    manifest = json.loads((src / 'MANIFEST.json').read_text())['files']
+    if isinstance(manifest, list):
+        manifest = {r['path']: r for r in manifest}
+    for rel, v in manifest.items():
+        h = v['sha256'] if isinstance(v, dict) else v
+        assert sha(src / rel) == h, (name, rel)
+    packet = R / (label + '-packet.tar.gz')
+    archive(src, packet)
+    for original, suffix in [('REVIEW.md', '.md'), ('VERDICT.json', '-verdict.json'), ('MANIFEST.json', '-manifest.json')]:
+        copy(src / original, 'reviews/' + label + suffix)
+    index.append({'label': label, 'original_packet': name, 'report': label + '.md',
+                  'verdict': label + '-verdict.json', 'manifest': label + '-manifest.json',
+                  'manifest_sha256': sha(src / 'MANIFEST.json'), 'archive': packet.name,
+                  'archive_sha256': sha(packet), 'archive_bytes': packet.stat().st_size})
+(R / 'INDEX.json').write_text(json.dumps(index, indent=2) + '\n')
+(R / 'README.md').write_text('''# Independent review evidence
+
+Two independent statement approvals preceded implementation. Final referee 2
+approved the complete local184 proof source; its comment-only local187 update
+and a fresh final referee 1 review remain to be appended. These are AI-agent
+source reviews, not external human peer review, official Tau Ceti service
+certification, reviewer compiler reruns, or GitHub Comparator results.
+
+[INDEX.json](INDEX.json) binds complete packets and readable reports. Original
+historical scopes remain unchanged. Statement-stage snapshot and pre-code
+evidence are retained under verification/statement-history/ and precode-01/.
+Historical audit scripts may refer to development-machine paths; those paths
+are provenance, not required paths for rebuilding the current Lean project.
+''')
+
+metadata = json.loads((P / 'formalization.yaml').read_text())
+for r in metadata['status']['main_results']:
+    f = P / r['file']
+    name = r['declaration'].split('.')[-1]
+    lines = f.read_text().splitlines()
+    r['line'] = next(i for i, line in enumerate(lines, 1) if re.match(r'^theorem\s+' + re.escape(name) + r'\b', line))
+    r['file_sha256'] = sha(f)
+    r['verification_status'] = 'PASS: actual source-bound local Lean compilation187 and kernel trust assertion; final source-review completion and GitHub Linux Comparator pending.'
+metadata['automation']['notes'] = metadata['automation']['notes'].replace('local184', 'local187')
+metadata['verification']['local_Lean']['run'] = 187
+metadata['verification']['independent_reviews'] = {'statement': 2, 'final': 'local187 approvals pending', 'record': 'reviews/INDEX.json'}
+metadata['alignment']['historical_precode_plan'] = 'precode-01/CONTRACT-PLAN.json'
+metadata['alignment']['reviews'] = 'reviews/README.md'
+(P / 'formalization.yaml').write_text(json.dumps(metadata, indent=2) + '\n')
+(P / 'IMPLEMENTATION-MAP.json').write_text(json.dumps({'results': metadata['status']['main_results']}, indent=2) + '\n')
+active = json.loads((P / 'ACTIVE-SOURCE-MANIFEST.json').read_text())
+active.update(source_sha256=local['sources'], local_run=187)
+(P / 'ACTIVE-SOURCE-MANIFEST.json').write_text(json.dumps(active, indent=2) + '\n')
+state = json.loads((P / 'STATE.json').read_text())
+state.update(time=now, local_run=187,
+             stage='complete local proof187; exact final source reviews and Linux Comparator pending')
+(P / 'STATE.json').write_text(json.dumps(state, indent=2) + '\n')
+readme = (P / 'README.md').read_text()
+readme += '\nThe final readability adjustment adds only explanatory comments. Local187 recompiled its seven affected modules and reauthenticated the complete 38-module chain. [Review packets](reviews/README.md) and the original [pre-code plan](precode-01/CONTRACT-PLAN.json) preserve their original dates and scopes.\n'
+(P / 'README.md').write_text(readme)
+# Updated metadata is generated here, not a byte-identical copy from its old source.
+generated = ['formalization.yaml', 'IMPLEMENTATION-MAP.json', 'ACTIVE-SOURCE-MANIFEST.json', 'STATE.json', 'README.md']
+for rel in generated:
+    records.pop(rel, None)
+(P / 'verification/RETAINED-PATHS.json').write_text(json.dumps(list(records.values()), indent=2) + '\n')
+for r in records.values():
+    assert sha(P / r['destination']) == r['sha256'], r['destination']
+manifest = {'stage': state['stage'], 'files': {str(f.relative_to(P)): sha(f)
+            for f in sorted(P.rglob('*')) if f.is_file() and f != P / 'PACKAGE-MANIFEST.json'}}
+(P / 'PACKAGE-MANIFEST.json').write_text(json.dumps(manifest, indent=2) + '\n')
+assert len(list(P.rglob('*.lean'))) == 39
+print(json.dumps({'package': str(P), 'manifest_sha256': sha(P / 'PACKAGE-MANIFEST.json'),
+                  'files': len(manifest['files']), 'active_Lean_files': 39,
+                  'Lean_or_Comparator_executed_by_packager': False}, indent=2))

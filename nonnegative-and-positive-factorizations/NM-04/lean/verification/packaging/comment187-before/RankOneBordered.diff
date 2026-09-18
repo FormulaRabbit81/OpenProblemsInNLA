@@ -1,0 +1,11 @@
+--- local184/RankOneBordered.lean
++++ local187/RankOneBordered.lean
+@@ -149,6 +149,8 @@
+   intro i _
+   apply Finset.sum_congr rfl
+   intro j _
++  -- Expand the selected rank-one entry so the scalar z can be factored from
++  -- the adjugate pairing without changing the sorted row and column indices.
+   change (minorMatrix T I).adjugate j i * ((z * u (r i)) * v (c j)) =
+     z * ((minorMatrix T I).adjugate j i * (u (r i) * v (c j)))
+   ring

@@ -1,0 +1,668 @@
+{
+  "version": "v0.4",
+  "project": {
+    "name": "NM-04: the complete Rowland\u2013Wu polynomial identity for rectangular Sinkhorn scaling",
+    "description": "Complete Lean verification of the original Rowland-Wu coefficient identity for every strictly positive real rectangular matrix, including positive scaling existence and uniqueness, empty and singular minors, and all transition signs.",
+    "authors": [
+      "George Stepaniants"
+    ],
+    "affiliations": {
+      "George Stepaniants": "Department of Computing and Mathematical Sciences, California Institute of Technology"
+    },
+    "responsible_maintainers": [
+      "George Stepaniants"
+    ],
+    "license": "Apache-2.0"
+  },
+  "repository": {
+    "role": "substantive-development"
+  },
+  "sources": [
+    {
+      "title": "NM-04 \u2014 The Rowland\u2013Wu polynomial identity for Sinkhorn limits",
+      "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/849003686970b372e1b2128ba072f86168f81d38/nonnegative-and-positive-factorizations/NM-04/README.md",
+      "type": "web-post",
+      "location": "Complete original problem statement, including the four coefficient signs and all positive rectangular dimensions",
+      "relationship": "formalizes",
+      "author_endorsement": "not-contacted",
+      "note": "The question is attributed to Eric Rowland and Jason Wu. The canonical page and problem number are preserved; it already records Matthew J. Colbrook\u2019s mathematical solution."
+    },
+    {
+      "title": "A null vector for the Rowland\u2013Wu determinant identity",
+      "authors": [
+        "Matthew J. Colbrook"
+      ],
+      "id": "https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/849003686970b372e1b2128ba072f86168f81d38/references/colbrook-factorization-2026-09-11/manuscripts/NM-04_sinkhorn_identity.tex",
+      "type": "web-post",
+      "location": "Theorem 1 and Sections 1\u20134; later extensions are outside the proposed theorem set",
+      "relationship": "formalizes",
+      "author_endorsement": "not-contacted",
+      "note": "Original mathematical authorship: Matthew J. Colbrook, Department of Applied Mathematics and Theoretical Physics, University of Cambridge. The complete pinned source was read and retained; the additional scaling existence/uniqueness proof supplies the canonical object internally."
+    }
+  ],
+  "related_formalizations": [
+    {
+      "id": "https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474",
+      "relationship": "builds-on",
+      "note": "Pinned determinant, adjugate, finite-set and real analytic APIs are reused. Universal minor identities include empty and singular minors."
+    },
+    {
+      "id": "https://github.com/alerad/leancert/tree/621a43d7cf21f87872392a01e874f2f1dbddc926",
+      "relationship": "builds-on",
+      "note": "Actual kernel-mode interval_decide proves two rational half bounds in Numerical; Coercivity consumes both in the minimization route to genuine positive scaling existence. No interval subdivision or matrix enumeration."
+    },
+    {
+      "id": "https://github.com/sgstepaniants/Forsythe/tree/8d1b0c0545a77b40245e84705aa7d273e6c81e62/lean-proof",
+      "relationship": "other",
+      "note": "Read retained Challenge and numerical-target examples for independent statement structure; no Forsythe mathematical theorem is imported."
+    },
+    {
+      "id": "https://github.com/jaumededios/Schiffer",
+      "relationship": "other",
+      "note": "Read the byte-bound retained Challenge example for faithful concrete definitions. No fresh repository head or Schiffer proof verification is claimed."
+    }
+  ],
+  "automation": {
+    "methods": [
+      {
+        "method": "agent",
+        "framework": "OpenAI Codex",
+        "tool_setup": "Parallel source work and independent reviews. Root alone owns local Lean compilation with one process, one thread and a 4096 MiB limit. Actual proof-commit Comparator/kernel/sandbox verification ran on GitHub non-root Linux (run35276203784); final publication and upstream merge checks remain separate.",
+        "prompting_notes": "Numerical statements first; two independent reviews of actual complete Definitions and Challenge, local statement elaboration and freeze before proof implementation. Preserve all four signs, dimensions and vanishing minors."
+      }
+    ],
+    "notes": "Two independent statement approvals preceded implementation. Actual local204 exports all35 contracts through38 modules, with eight fresh commands and30 exact successful reuses; one compiler process, one thread,4096 MiB. Two nonauthor full187 reviews are preserved; both exact204 continuation approvals are retained. Local205 diagnostics match all35 elaborated statements. Real Linux Comparator run 35276203784 passed at the immutable proof commit; no official Tau Ceti service or human peer review is claimed."
+  },
+  "status": {
+    "scope": "Full original positive rectangular target; literal coefficients, true scaling existence/uniqueness, singular and empty minors included.",
+    "sorry_count": 0,
+    "sorry_in_definitions": 0,
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "main_results": [
+      {
+        "declaration": "NLA.NM04.coercivity_half_certificate",
+        "file": "NLA/NM04/Numerical.lean",
+        "line": 18,
+        "file_sha256": "5fe5f4b22ed58b5c8e2e2bac02920c57d46bda84183db24fff9465cfc337d8f6",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.row_partition_positive",
+        "file": "NLA/NM04/AnalyticBasics.lean",
+        "line": 28,
+        "file_sha256": "7105ee575ec4c24f1617485bf841426fe5042e282f4c49e49b8d9340712bea28",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.potential_continuous",
+        "file": "NLA/NM04/AnalyticBasics.lean",
+        "line": 44,
+        "file_sha256": "7105ee575ec4c24f1617485bf841426fe5042e282f4c49e49b8d9340712bea28",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.potential_line_derivative",
+        "file": "NLA/NM04/AnalyticBasics.lean",
+        "line": 95,
+        "file_sha256": "7105ee575ec4c24f1617485bf841426fe5042e282f4c49e49b8d9340712bea28",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.zero_mean_coercivity",
+        "file": "NLA/NM04/Coercivity.lean",
+        "line": 92,
+        "file_sha256": "a677a2bc6ca322de7688464072a2fd3059da6f15e4f65c9a81905374b1118ed7",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.potential_attains_minimum",
+        "file": "NLA/NM04/Minimum.lean",
+        "line": 74,
+        "file_sha256": "5063604d685052d0887eb1bef87ba3f973b73ddee612ea8b1eef2aad349bc433",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.potential_minimum_has_margins",
+        "file": "NLA/NM04/Stationary.lean",
+        "line": 52,
+        "file_sha256": "def490de33f62503abd5eaa9421a5bcd5362a11adef25d5c2a86f0e705dde9c2",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.positive_balanced_scaling_exists",
+        "file": "NLA/NM04/ScalingExistence.lean",
+        "line": 42,
+        "file_sha256": "c6275a414aa97a55cb06e5bb20d1991acd61c9a5a88e60332830d3aaceca7b84",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.positive_balanced_scaling_unique",
+        "file": "NLA/NM04/ScalingUniqueness.lean",
+        "line": 126,
+        "file_sha256": "a174669abe9268ac851f1e9d3ba14eca4d00ea59bea37c75f1aa47ce241dc083",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.sinkhorn_semantics",
+        "file": "NLA/NM04/SinkhornSemantics.lean",
+        "line": 19,
+        "file_sha256": "2fe0975d3800c189008168c219cfcf441e5d00450ebc9c3b6ea518764913cfc7",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.position_sorted_semantics",
+        "file": "NLA/NM04/MinorBasics.lean",
+        "line": 43,
+        "file_sha256": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.empty_minor_values",
+        "file": "NLA/NM04/MinorBasics.lean",
+        "line": 72,
+        "file_sha256": "86b5ba9b6bccc59db608debd2b343b3bf1d9a6f26134e5af46ed264bf0ac12f4",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.H_diagonal",
+        "file": "NLA/NM04/TransitionEntries.lean",
+        "line": 21,
+        "file_sha256": "32bfef81fe5d67460b983873043355164338ef9baa3954294527d885183eebcc",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.H_raising",
+        "file": "NLA/NM04/TransitionEntries.lean",
+        "line": 25,
+        "file_sha256": "32bfef81fe5d67460b983873043355164338ef9baa3954294527d885183eebcc",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.H_lowering",
+        "file": "NLA/NM04/TransitionEntries.lean",
+        "line": 45,
+        "file_sha256": "32bfef81fe5d67460b983873043355164338ef9baa3954294527d885183eebcc",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.H_column_exchange",
+        "file": "NLA/NM04/TransitionEntries.lean",
+        "line": 66,
+        "file_sha256": "32bfef81fe5d67460b983873043355164338ef9baa3954294527d885183eebcc",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.H_row_exchange",
+        "file": "NLA/NM04/TransitionEntries.lean",
+        "line": 86,
+        "file_sha256": "32bfef81fe5d67460b983873043355164338ef9baa3954294527d885183eebcc",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.H_other",
+        "file": "NLA/NM04/TransitionEntries.lean",
+        "line": 106,
+        "file_sha256": "32bfef81fe5d67460b983873043355164338ef9baa3954294527d885183eebcc",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.weighted_principal_minor_expansion",
+        "file": "NLA/NM04/WeightedExpansion.lean",
+        "line": 71,
+        "file_sha256": "f23e55f8c856f2dcf797bebca4091a20c59678ca987fceb7ab3988e9eae1288e",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.cofactor_signed_minor_formula",
+        "file": "NLA/NM04/CofactorSigned.lean",
+        "line": 81,
+        "file_sha256": "a3c93ca75a02e0536e0800982423332eb7b5447dc6982dfae2d6d56d712e6095",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.universal_rank_one_update",
+        "file": "NLA/NM04/RankOneBordered.lean",
+        "line": 130,
+        "file_sha256": "46954a3cbd771676897b254fba33758ec0c2874104f54ed950fd4ee9209acec7",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.universal_bordered_determinant",
+        "file": "NLA/NM04/RankOneBordered.lean",
+        "line": 158,
+        "file_sha256": "46954a3cbd771676897b254fba33758ec0c2874104f54ed950fd4ee9209acec7",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.minor_lowering_identity",
+        "file": "NLA/NM04/MinorLowering.lean",
+        "line": 99,
+        "file_sha256": "effb39f2dad36379d41de388a4ab278024ae9267bee2afedb7fd96aefa344b13",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.minor_column_exchange_identity",
+        "file": "NLA/NM04/MinorColumnExchange.lean",
+        "line": 107,
+        "file_sha256": "93332bae55973883bbd732893da68259169214f601508052307d4cb68bd2549d",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.minor_row_exchange_identity",
+        "file": "NLA/NM04/MinorRowExchange.lean",
+        "line": 22,
+        "file_sha256": "84f60d4dca081d371419d5161807652292e720974f68114b21a067a01af06b3c",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.minor_raising_identity",
+        "file": "NLA/NM04/MinorRaising.lean",
+        "line": 85,
+        "file_sha256": "a5b5f514a12e36dd739cac78eb4c5f8c5c98265c60944b01cab30fb3bf30492c",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.schur_margin_identities",
+        "file": "NLA/NM04/SchurMargins.lean",
+        "line": 38,
+        "file_sha256": "312a07c84a4f2ed829672d7731c18e8571297110a333aa7bc0808e7aacd1a817",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.schur_bordered_minor",
+        "file": "NLA/NM04/SchurBordered.lean",
+        "line": 20,
+        "file_sha256": "b7d14fd9fe28d256c99ff4880e1f4912c2ed30a4e39d5ded64655040cc629117",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.balanced_minor_relation",
+        "file": "NLA/NM04/BalancedMinor.lean",
+        "line": 28,
+        "file_sha256": "123258547a3e59933881e978f0773e4d2359e3ad30d5357d1b4b0d3eb5f6c612",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.weighted_transition_action",
+        "file": "NLA/NM04/WeightedTransition.lean",
+        "line": 145,
+        "file_sha256": "8f1f6d966144fb5dadeb1851d1313d1ff269d8a528268bcf11c943b83ed77090",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.balanced_null_vector",
+        "file": "NLA/NM04/Canonical.lean",
+        "line": 20,
+        "file_sha256": "74af1358ba86fd3c16d0088139f79459f7c3bdf7269dd2a017b9e4e314a87572",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.diagonal_minor_covariance",
+        "file": "NLA/NM04/DiagonalCovariance.lean",
+        "line": 52,
+        "file_sha256": "7f4fa4755b09a1a1538829dc5dc66b549394d611cbabedac311943cff00db39e",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.diagonal_pencil_covariance",
+        "file": "NLA/NM04/DiagonalCovariance.lean",
+        "line": 84,
+        "file_sha256": "7f4fa4755b09a1a1538829dc5dc66b549394d611cbabedac311943cff00db39e",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.sinkhorn_pencil_singular",
+        "file": "NLA/NM04/Canonical.lean",
+        "line": 30,
+        "file_sha256": "74af1358ba86fd3c16d0088139f79459f7c3bdf7269dd2a017b9e4e314a87572",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      },
+      {
+        "declaration": "NLA.NM04.rowland_wu_identity",
+        "file": "NLA/NM04/Canonical.lean",
+        "line": 43,
+        "file_sha256": "74af1358ba86fd3c16d0088139f79459f7c3bdf7269dd2a017b9e4e314a87572",
+        "sorry_count": 0,
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "comparator_config": "comparator.json",
+        "verification_status": "PASS: actual non-root Linux run 35276203784 at 21ed3545a8b4784303e9cc0473879eb33ef4d813; default kernel, Comparator, standard axioms and per-project controls."
+      }
+    ],
+    "whole_problem_verified": true,
+    "source_scan_note": "Implementation contains no proof placeholders. The independent Challenge has 35 intentional specification placeholders and is never imported by Solution."
+  },
+  "fidelity": {
+    "divergences": "The final contract displays the literal canonical coefficient sum. Sinkhorn scaling is defined by the canonical equivalent unique positive scaling characterization; existence and uniqueness are independent obligations. Actual alternating-normalization convergence, arbitrary margins and later manuscript extensions are not claimed. Pure multilinear algebra uses the natural general commutative-ring level. Elementary auxiliary hypotheses are weakened where unnecessary."
+  },
+  "review": {
+    "status": "Two independent statement approvals before proof implementation; two nonauthor complete source reviews with exact local204 continuation approvals.",
+    "reviewers": [
+      "/root (statement only)",
+      "/root/formal_review_standards (statement)",
+      "/root/nm04_final_referee1 (final)",
+      "/root/mf06_statement_referee2 (final)"
+    ],
+    "notes": "AI-agent reviews under pinned Tau Ceti guidance; scopes/hashes in reviews/INDEX.json. No independent reviewer compiler rerun, official service run, human review or unrun Linux check is claimed."
+  },
+  "alignment": {
+    "source_correspondence": "SourceCorrespondence.md",
+    "numerical_boundary": "NUMERICAL_TARGETS.md",
+    "proposed_statements": "Challenge.lean",
+    "concrete_definitions": "NLA/NM04/Definitions.lean",
+    "exact_statement_headers": "STATEMENT-HEADERS.json",
+    "historical_precode_plan": "precode-01/CONTRACT-PLAN.json",
+    "intended_implementation_entry": "Solution.lean",
+    "implementation_map": "IMPLEMENTATION-MAP.json",
+    "verification_state": "STATE.json",
+    "active_sources": "ACTIVE-SOURCE-MANIFEST.json",
+    "local_execution": "verification/LOCAL-COMPLETE.json",
+    "reviews": "reviews/README.md",
+    "status": "Two independent statement approvals before proof implementation; two nonauthor complete source reviews with exact local204 continuation approvals."
+  },
+  "acknowledgements": "Eric Rowland and Jason Wu for the question; Matthew J. Colbrook for the complete mathematical solution; Mathlib, LeanCert, Comparator, Tau Ceti, Schiffer and Forsythe contributors for mathematical libraries and workflow examples. George Stepaniants contributes the proposed formalization, with substantial OpenAI Codex assistance.",
+  "verification": {
+    "local_Lean": {
+      "status": "pass",
+      "run": 204,
+      "record": "verification/LOCAL-COMPLETE.json",
+      "contract_count": 35,
+      "closure_modules": 38
+    },
+    "GitHub_Comparator": {
+      "status": "passed",
+      "published_commit": "21ed3545a8b4784303e9cc0473879eb33ef4d813",
+      "run": 35276203784,
+      "job": 105387449317,
+      "url": "https://github.com/sgstepaniants/OpenProblemsInNLA/actions/runs/35276203784/job/105387449317",
+      "input_count": 380,
+      "exports": 35,
+      "evidence": "verification/linux-2026-09-17/README.md",
+      "root_audit": "verification/linux-2026-09-17/ROOT-AUDIT.json",
+      "source_lock_sha256": "b3833b07916e5db77579b9cc53ca582282f6a841f36d6a60d693e5b02d342b6b",
+      "artifact_sha256": "33efcf4a5566999c953fac7b029c94cb9fe0264a8910c0cb8702a1d3d1d7f8d8",
+      "scope": "Actual immutable proof-commit execution; subsequent publication and PR merge checkouts have separate checks",
+      "independent_runtime_review": "reviews/runtime-35276203784.md",
+      "independent_runtime_review_manifest_sha256": "00033569477aa56252d663f0a9816b3bc3995997e3185a4813e2f2ce1758d13a"
+    },
+    "independent_reviews": {
+      "statement": 2,
+      "final": 2,
+      "result": "Two nonauthor whole-target reviews with approved exact204 continuations",
+      "record": "reviews/INDEX.json"
+    },
+    "publication_status": "Immutable proof, independent runtime audit and publication-document review complete; final published-commit and upstream PR merge-checkout checks pending.",
+    "package_preflight": {
+      "result": "approved",
+      "report": "reviews/publication-package.md",
+      "packet": "reviews/publication-package-packet.tar.gz",
+      "packet_sha256": "155ffba87b0ac929ca6e2a12df65292440b0ee443fdb4a4d29281d3ab611fe52",
+      "manifest_sha256": "97d00248b7b39e1da758cf85c179cd39240501bd71730480fb7fe301fa0dde3e",
+      "reviewer_actual_audit_checks": 2003,
+      "root_actual_integrity_checks": 366,
+      "scope": "Independent metadata/source/review/local-evidence preflight and root integrity checks; no new Lean or Comparator run; historical local187 package only, not current204 repair approval"
+    },
+    "local_elaborated_type_diagnostics": {
+      "status": "pass",
+      "run": 205,
+      "statements": 35,
+      "record": "verification/type-diagnostics-205/COMPARISON.json",
+      "scope": "Local diagnostic only, not real Comparator"
+    },
+    "publication_document_review": {
+      "result": "approved",
+      "reviewer": "/root/nm04_final_referee1",
+      "report": "reviews/publication-documents.md",
+      "manifest_sha256": "d5d9051dbda7653a0f94e130ea1c4519afd0c0f4219b1489c0aefb4ded009a50",
+      "packet": "reviews/publication-documents-packet.tar.gz",
+      "packet_sha256": "b2077beb811b98e9db23e796d1275d506768c31b96f141b90fc8667835408272",
+      "root_actual_readonly_checks": 8163,
+      "scope": "Exact418-file publication candidate reviewed; attached approval and final bookkeeping receive a bounded integrity continuation before push. No new Lean or Comparator execution."
+    }
+  }
+}

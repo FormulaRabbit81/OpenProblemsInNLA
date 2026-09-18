@@ -1,0 +1,50 @@
+{
+  "time": "2026-09-17T20:47:18.740374+00:00",
+  "scope": "Fresh upstream main and targeted NM04 pull-request and known fork branch queries; earlier retained multi-branch scans are separate historical evidence",
+  "queries": [
+    {
+      "label": "upstream-main",
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "api",
+        "repos/ajt60gaibb/OpenProblemsInNLA/commits/main"
+      ],
+      "exit_code": 0,
+      "sha256": "7a74607605c569a4d4ddeb1431dc07b26fde83e9b53b97e14c54e5efdb0ad9b9",
+      "bytes": 21851
+    },
+    {
+      "label": "upstream-nm04-pr-search",
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "api",
+        "search/issues?q=repo%3Aajt60gaibb%2FOpenProblemsInNLA+is%3Apr+NM-04&per_page=100"
+      ],
+      "exit_code": 0,
+      "sha256": "c2b9bf3a93de34fcd9d2b041c963986e21a097326afed413a8b60d106e6878f4",
+      "bytes": 6761
+    },
+    {
+      "label": "upstream-own-open-prs",
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "api",
+        "repos/ajt60gaibb/OpenProblemsInNLA/pulls?state=open&head=sgstepaniants:codex/lean-nm04-verification&per_page=100"
+      ],
+      "exit_code": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "label": "fork-nm04-head",
+      "argv": [
+        "/tmp/nla-submission-tools/gh_2.100.0_macOS_arm64/bin/gh",
+        "api",
+        "repos/sgstepaniants/OpenProblemsInNLA/branches/codex%2Flean-nm04-verification"
+      ],
+      "exit_code": 0,
+      "sha256": "161f3f43ea29b0a52e70339fcf044cb9fb26705de059e4960dcb569796dc31bd",
+      "bytes": 2000
+    }
+  ]
+}
