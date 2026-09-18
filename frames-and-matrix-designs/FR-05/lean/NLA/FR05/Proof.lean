@@ -33,6 +33,7 @@ import NLA.FR05.TailConditionalSmallBall
 import NLA.FR05.SourceTailConditional
 import NLA.FR05.SourceTailBridge
 import NLA.FR05.SourceTailGlobal
+import NLA.FR05.SourceRowSmallBall
 import NLA.FR05.ProductSections
 import NLA.FR05.SourceConditional
 import NLA.FR05.PlantedLaw
