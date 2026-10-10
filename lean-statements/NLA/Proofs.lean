@@ -34,6 +34,9 @@ import NLA.Proofs.RA10.SelectedCompressionPrefixSupport
 import NLA.Proofs.RA10.SelectedCompressionComparison
 import NLA.Proofs.RA10.NuclearIdealOperatorBridge
 import NLA.Proofs.RA10.NuclearIdealGramOrder
+import NLA.Proofs.RA10.NuclearIdealGramIndex
+import NLA.Proofs.RA10.NuclearIdealPointwiseLeft
+import NLA.Proofs.RA10.NuclearIdealLeft
 import NLA.Proofs.RA10.NuclearNormHomogeneity
 import NLA.Proofs.RA10.NuclearOrthogonalLeft
 import NLA.Proofs.RA10.NuclearOrthogonalRight

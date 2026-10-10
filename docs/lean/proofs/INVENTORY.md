@@ -321,8 +321,13 @@ and [two-sided invariance](RA-10/NUCLEAR_ORTHOGONAL_CONJUGATION_INDEPENDENT_FINA
 of that exact nuclear norm are kernel proved. The
 [same-index PSD Loewner eigenvalue bound](RA-10/ORDERED_PSD_LOEWNER_EIGENVALUE_INDEPENDENT_FINAL_REVIEW.md)
 and [sharp left Gram order](RA-10/NUCLEAR_IDEAL_GRAM_ORDER_INDEPENDENT_FINAL_REVIEW.md)
-are also kernel proved. The coefficient-one ideal
-inequalities, Equation (14)'s bound, and full Target remain open under the
+are also kernel proved. The [exact same-index Gram eigenvalue/singular-value
+square bridge](RA-10/NUCLEAR_IDEAL_GRAM_INDEX_INDEPENDENT_FINAL_REVIEW.md)
+now covers every supplied ordered Gram decomposition. The
+[coefficient-one same-index left singular-value bound](RA-10/NUCLEAR_IDEAL_POINTWISE_LEFT_INDEPENDENT_FINAL_REVIEW.md)
+is kernel proved for every `Fin n` index. Its sum gives the
+[exact frozen nuclear-norm left ideal inequality](RA-10/NUCLEAR_IDEAL_LEFT_INDEPENDENT_FINAL_REVIEW.md).
+The right ideal inequality, Equation (14)'s bound, and full Target remain open under the
 [reviewed exact contract](RA-10/NUCLEAR_IDEAL_EQ14_INDEPENDENT_PRE_REVIEW.md).
 
 The [independently reviewed normalized exterior boundary factor](SP-14/BASE_EXTERIOR_FACTOR_INDEPENDENT_FINAL_REVIEW.md)
