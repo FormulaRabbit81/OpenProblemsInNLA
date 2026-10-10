@@ -46,6 +46,7 @@ import NLA.Proofs.RA10.NuclearIdealEq14Restricted
 import NLA.Proofs.RA10.NuclearTraceDualUpper
 import NLA.Proofs.RA10.NuclearTraceDualAttains
 import NLA.Proofs.RA10.NuclearNormTriangle
+import NLA.Proofs.RA10.NuclearPinching
 import NLA.Proofs.RA10.NuclearNormHomogeneity
 import NLA.Proofs.RA10.NuclearOrthogonalLeft
 import NLA.Proofs.RA10.NuclearOrthogonalRight
