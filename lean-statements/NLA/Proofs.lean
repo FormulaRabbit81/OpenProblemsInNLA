@@ -41,6 +41,8 @@ import NLA.Proofs.RA10.NuclearSingularValuesTranspose
 import NLA.Proofs.RA10.NuclearNormTranspose
 import NLA.Proofs.RA10.NuclearOperatorNormTranspose
 import NLA.Proofs.RA10.NuclearIdealRight
+import NLA.Proofs.RA10.NuclearIdealEq14Product
+import NLA.Proofs.RA10.NuclearIdealEq14Restricted
 import NLA.Proofs.RA10.NuclearNormHomogeneity
 import NLA.Proofs.RA10.NuclearOrthogonalLeft
 import NLA.Proofs.RA10.NuclearOrthogonalRight

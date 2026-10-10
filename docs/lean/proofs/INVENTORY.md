@@ -331,8 +331,11 @@ The [same-index transpose singular values](RA-10/NUCLEAR_SINGULAR_VALUES_TRANSPO
 [frozen nuclear-norm transpose](RA-10/NUCLEAR_NORM_TRANSPOSE_INDEPENDENT_FINAL_REVIEW.md),
 and [scoped L2 operator-norm transpose](RA-10/NUCLEAR_OPERATOR_NORM_TRANSPOSE_INDEPENDENT_FINAL_REVIEW.md)
 then give the [coefficient-one right ideal inequality](RA-10/NUCLEAR_IDEAL_RIGHT_INDEPENDENT_FINAL_REVIEW.md).
-Equation (14)'s nuclear bound and full Target remain open under the
-[reviewed exact contract](RA-10/NUCLEAR_IDEAL_EQ14_INDEPENDENT_PRE_REVIEW.md).
+The [sharp selected resolvent nuclear product](RA-10/NUCLEAR_IDEAL_EQ14_PRODUCT_INDEPENDENT_FINAL_REVIEW.md)
+and [restricted ridge difference inequality](RA-10/NUCLEAR_IDEAL_EQ14_RESTRICTED_INDEPENDENT_FINAL_REVIEW.md)
+now prove the source's exact Equation (14) with coefficient `1/(s+a_k)`.
+The remaining compression, perturbation, integral transfer, and full Target
+remain open under the [reviewed exact contract](RA-10/NUCLEAR_IDEAL_EQ14_INDEPENDENT_PRE_REVIEW.md).
 
 The [independently reviewed normalized exterior boundary factor](SP-14/BASE_EXTERIOR_FACTOR_INDEPENDENT_FINAL_REVIEW.md)
 is a continuous half-binomial series with exact square, endpoint zero, and
