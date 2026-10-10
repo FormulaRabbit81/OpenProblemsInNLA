@@ -53,10 +53,12 @@ import NLA.Proofs.RA10.MatchedLeadingEq8
 import NLA.Proofs.RA10.MatchedLeadingEq9
 import NLA.Proofs.RA10.HermitianPositivePart
 import NLA.Proofs.RA10.MatchedLeadingEq10
+import NLA.Proofs.RA10.SelectedCompressionTail
 import NLA.Proofs.SP14.EndpointFiniteRealizationPositive
 import NLA.Proofs.SP14.EndpointFiniteRealizationNegative
 import NLA.Proofs.SP14.EndpointFiniteFourierUniqueness
 import NLA.Proofs.SP14.EndpointFiniteRealizationPointwise
+import NLA.Proofs.SP14.EndpointVanishingBasics
 import NLA.Proofs.TR14.ChartLocalFourierWidth
 import NLA.Proofs.TR14.GL2AffineChartPolynomial
 import NLA.Proofs.RA10.NuclearNormHomogeneity

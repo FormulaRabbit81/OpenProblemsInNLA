@@ -269,6 +269,10 @@ determines a continuous circle function, through an exact AddCircle/`L²` bridge
 The [source-specific finite-input pointwise realization](SP-14/ENDPOINT_FINITE_POINTWISE_INDEPENDENT_FINAL_REVIEW.md)
 now identifies the actual circle extension with `g₀V` for every finitely
 supported physical input, including the endpoint zero of `g₀`.
+The [exact endpoint square, zero, and truncation density gates](SP-14/ENDPOINT_VANISHING_BASICS_INDEPENDENT_FINAL_REVIEW.md)
+reuse the already audited normalized series and literal `lp²` finite-coordinate
+truncation. A pointwise input-continuity bound is still needed to pass the
+finite endpoint zero to arbitrary weighted input.
 
 The [RA-10 selected-projector gates](RA-10/SELECTED_PROJECTOR_INDEPENDENT_FINAL_REVIEW.md)
 identify the exact frozen first-`k` eigenvector projector, prove symmetry and
@@ -377,7 +381,11 @@ kernel proved for every real Hermitian matrix; the [source compression
 Equation (10)](RA-10/MATCHED_LEADING_EQ10_POSITIVE_PART_INDEPENDENT_FINAL_REVIEW.md)
 is now assembled with both supplied bases and the original trace tail.
 The exact [Equation (11) defect contract](RA-10/MATCHED_LEADING_EQ11_DEFECT_INDEPENDENT_PRE_REVIEW.md)
-is approved for staged implementation.
+is approved for staged implementation. Its [arbitrary selected-compression
+eigenvalue-tail and trace-prefix gates](RA-10/SELECTED_COMPRESSION_TAIL_INDEPENDENT_FINAL_REVIEW.md)
+now prove every supplied compression spectrum has zero tail from index `k`,
+including repeated and zero eigenvalues. The scalar deficit and exact matrix
+positive-part identification remain open.
 The remaining compression, perturbation, integral transfer, and full Target
 remain open under the [reviewed exact contract](RA-10/NUCLEAR_IDEAL_EQ14_INDEPENDENT_PRE_REVIEW.md).
 
