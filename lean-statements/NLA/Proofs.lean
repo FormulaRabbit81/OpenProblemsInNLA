@@ -48,6 +48,7 @@ import NLA.Proofs.RA10.NuclearTraceDualAttains
 import NLA.Proofs.RA10.NuclearNormTriangle
 import NLA.Proofs.RA10.NuclearPinching
 import NLA.Proofs.RA10.NuclearNormPSDTrace
+import NLA.Proofs.RA10.NuclearComplementaryBlocks
 import NLA.Proofs.SP14.EndpointFiniteRealizationPositive
 import NLA.Proofs.SP14.EndpointFiniteRealizationNegative
 import NLA.Proofs.TR14.ChartLocalFourierWidth
