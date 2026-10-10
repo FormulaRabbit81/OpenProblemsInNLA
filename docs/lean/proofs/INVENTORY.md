@@ -26,7 +26,7 @@ sources.
 | IV-02 | [`Solution.lean`](../../../intervals-and-absolute-value-equations/IV-02/lean/Solution.lean) | Rotation identity and positive even layer count. The original complexity claim remains absent from the implemented semantics. |
 | IV-04 | [`Solution.lean`](../../../intervals-and-absolute-value-equations/IV-04/lean/Solution.lean) | A two-by-two corner algebra lemma. The original complexity target is absent and the current statement's interval semantics have a known scope gap. |
 | MD-06 | [`Solution.lean`](../../../matrix-discrepancy-and-optimization/MD-06/lean/Solution.lean) | Extracts a nonsynchronized critical point from an assumed stable event. Graph probability and local-minimum semantics are parameters of an abstract structure. |
-| RA-10 | [`SpectralQuadratic.lean`](../../../lean-statements/NLA/Proofs/RA10/SpectralQuadratic.lean) | Source spectral, compression, resolvent, and exact Equation (14) nuclear inequalities are proved below. The frozen all-singular-value nuclear norm has kernel-proved homogeneity, orthogonal invariance, coefficient-one ideal inequalities, exact orthogonal trace duality, sharp triangle, pinching contraction, PSD nuclear norm equals trace, and complementary-block additivity. The source Equation (8), integral transfer, and full Target remain open. |
+| RA-10 | [`SpectralQuadratic.lean`](../../../lean-statements/NLA/Proofs/RA10/SpectralQuadratic.lean) | Source spectral, compression, resolvent, and exact Equation (14) nuclear inequalities are proved below. The frozen all-singular-value nuclear norm has kernel-proved homogeneity, orthogonal invariance, coefficient-one ideal inequalities, exact orthogonal trace duality, sharp triangle, pinching contraction, PSD nuclear norm equals trace, complementary-block additivity, and the source Equation (8). Equations (9)–(13), integral transfer, and full Target remain open. |
 | SP-14 | [`SubsequenceGap.lean`](../../../lean-statements/NLA/Proofs/SP14/SubsequenceGap.lean) | [Independently reviewed](SP-14/SUBSEQUENCE_GAP_INDEPENDENT_FINAL_REVIEW.md) kernel proof that a supplied continuous counterexample with a positive eventual empirical gap refutes the exact frozen conjecture. Separate [base-coefficient convolution](SP-14/BASE_COEFFICIENT_INDEPENDENT_REVIEW.md), [unconditional coefficient-defined block product](SP-14/BASE_CB_INDEPENDENT_FINAL_REVIEW.md), [frozen-integral monomial Fourier orthogonality](SP-14/BASE_FOURIER_MODE_INDEPENDENT_REVIEW.md), [absolute summability of the exterior half-binomial coefficients](SP-14/BASE_COEFF_SUMMABLE_INDEPENDENT_REVIEW.md), [continuous exterior boundary series](SP-14/BASE_EXTERIOR_SERIES_INDEPENDENT_REVIEW.md), [termwise frozen Fourier integration](SP-14/BASE_EXTERIOR_FOURIER_INDEPENDENT_REVIEW.md), [the exterior base symbol's exact Fourier pattern and actual odd Toeplitz characteristic polynomial](SP-14/BASE_EXTERIOR_PATTERN_INDEPENDENT_REVIEW.md), [its boundary square and zero identities](SP-14/BASE_EXTERIOR_BOUNDARY_SQUARE_INDEPENDENT_REVIEW.md), [positive packet Fourier support and small-section invisibility](SP-14/POSITIVE_PACKET_INVISIBILITY_INDEPENDENT_FINAL_REVIEW.md), [finite negative-restoration algebra and earlier-section persistence](SP-14/NEGATIVE_RESTORATION_INVISIBILITY_INDEPENDENT_FINAL_REVIEW.md), [the conditional all-order odd-frequency Toeplitz characteristic polynomial in the jet coordinate](SP-14/ODD_FREQUENCY_TOEPLITZ_CHARPOLY_INDEPENDENT_FINAL_REVIEW.md), [continuous odd Fourier support and jet polynomial shape for every finite corrected symbol](SP-14/FINITE_CORRECTED_ODD_SUPPORT_INDEPENDENT_FINAL_REVIEW.md), [the exact conditional jet-to-algebraic-root-multiplicity bridge](SP-14/JET_VANISHING_MULTIPLICITY_INDEPENDENT_FINAL_REVIEW.md), [the real upper-triangular base-jet matrix with its unique inverse solve](SP-14/BASE_JET_TRIANGULAR_INDEPENDENT_PARTIAL_REVIEW.md), and [the generic selected-block cofactor identity](SP-14/BASE_JET_CORNER_INDEPENDENT_FINAL_REVIEW.md), and [the exact frozen Fourier-to-matrix bridge for a base plus restored packet](SP-14/BASE_JET_FOURIER_MATRIX_INDEPENDENT_FINAL_REVIEW.md), and [the actual corrected odd-jet polynomial’s finite pencil formula](SP-14/BASE_JET_PENCIL_FORMULA_INDEPENDENT_FINAL_REVIEW.md), and [the explicit real first-jet solve and bijective derivative of that actual base-model map](SP-14/BASE_JET_REAL_SOLVE_INDEPENDENT_FINAL_REVIEW.md) are kernel checked. The base symbol has an outer annular extension and is not the counterexample; selecting correction vectors for perturbed backgrounds, the final infinite symbol, two-sided nonextension, unconditional multiplicity estimates, and final subsequence gap remain unproved in Lean. |
 | TR-04 | [`Solution.lean`](../../../tensor-computations/TR-04/lean/Solution.lean) | Elementary candidate/window count inequalities. It explicitly does not prove the TT-SVD approximation target; the current statement has unconstrained rank and operation-count fields. |
 | TR-14 | [`WidthBasics.lean`](../../../lean-statements/NLA/Proofs/TR14/WidthBasics.lean) | [Independently reviewed](TR-14/WIDTH_BASICS_INDEPENDENT_FINAL_REVIEW.md) kernel proofs of symmetric-width implies ordinary-width and both exact width-zero characterizations, [moment-index surjectivity and the Hankel-zero equivalence](TR-14/MOMENT_INDEX_INDEPENDENT_FINAL_REVIEW.md), [the exact apolar map and least nonzero degree](TR-14/APOLAR_MINIMAL_INDEPENDENT_FINAL_REVIEW.md), [conditional monic quotient all-moment matching](TR-14/NORMALIZED_QUOTIENT_INDEPENDENT_PARTIAL_REVIEW.md), [the normalized least-apolar quotient’s full Frobenius pairing](TR-14/FROBENIUS_MINIMAL_INDEPENDENT_FINAL_REVIEW.md), [the exact middle catalecticant rank in that monic chart](TR-14/MIDDLE_CATALECTICANT_INDEPENDENT_FINAL_REVIEW.md), and [the genuine homogeneous chart substitution, degreewise equivalence, multiplication, and inverse-dual pairing](TR-14/GL2_HOMOGENEOUS_INDEPENDENT_FINAL_REVIEW.md). The original-coordinate middle catalecticant rank and a conditional local CRT/Fourier symmetric upper width are now proved through independently reviewed GL₂ chart bridges below. The arbitrary ordinary-to-symmetric implication and full all-width target remain unproved. |
@@ -263,13 +263,17 @@ the negative-mode weight shift and factor `2^(2r)` for `1/2<r<1`.
 The [explicit circle-energy bound](SP-14/ENDPOINT_CIRCLE_ENERGY_BOUND_INDEPENDENT_FINAL_REVIEW.md)
 combines that comparison with the actual negative Fourier operator to give
 `2^(2r)(1+C_r²)‖y‖²` with source `C_r=1+1/r+1/(1-r)`.
+The [pointwise continuous Fourier uniqueness theorem](SP-14/ENDPOINT_FINITE_FOURIER_UNIQUENESS_INDEPENDENT_FINAL_REVIEW.md)
+now proves that equality of every frozen normalized interval coefficient
+determines a continuous circle function, through an exact AddCircle/`L²` bridge.
+The source-specific finite-input pointwise realization is still separate.
 
 The [RA-10 selected-projector gates](RA-10/SELECTED_PROJECTOR_INDEPENDENT_FINAL_REVIEW.md)
 identify the exact frozen first-`k` eigenvector projector, prove symmetry and
 idempotence from every supplied ordered decomposition, and give rank `k` for
 `k≤n`, including tied and zero eigenvalues. The [supported functional-calculus identity](RA-10/SELECTED_PROJECTION_FUNCTION_INDEPENDENT_FINAL_REVIEW.md)
 holds for every real `f`, including `f(0)>0`, with the same supplied `Q`.
-The nuclear pinching contraction remains open.
+The pinching contraction is proved by the audited later gate below.
 The [independently reviewed shifted-inverse gate](RA-10/RIDGE_SHIFT_INVERSE_INDEPENDENT_FINAL_REVIEW.md)
 identifies the exact frozen reciprocal spectral matrix with the actual
 inverse of `sI+A` for every supplied PSD decomposition and `s>0`.
@@ -359,8 +363,11 @@ The [PSD nuclear-trace identity](RA-10/NUCLEAR_NORM_PSD_TRACE_INDEPENDENT_FINAL_
 now supplies the exact positive-block accounting for source Equation (8).
 The [complementary-block additivity theorem](RA-10/NUCLEAR_COMPLEMENTARY_BLOCKS_INDEPENDENT_FINAL_REVIEW.md)
 now gives the exact coefficient-one identity for every pair of blocks supported
-on a symmetric projection and its complement. The final source excess
-calculation remains under the [independently reviewed block contract](RA-10/MATCHED_LEADING_EQ8_BLOCKS_INDEPENDENT_PRE_REVIEW.md).
+on a symmetric projection and its complement. The [source Equation (8)
+calculation](RA-10/MATCHED_LEADING_EQ8_INDEPENDENT_FINAL_REVIEW.md) now proves
+the exact selected-compression excess and trace-loss inequality with both
+supplied bases and the original tail. Equation (9) is separately
+[pre-reviewed](RA-10/MATCHED_LEADING_EQ9_TRIANGLE_INDEPENDENT_PRE_REVIEW.md).
 The remaining compression, perturbation, integral transfer, and full Target
 remain open under the [reviewed exact contract](RA-10/NUCLEAR_IDEAL_EQ14_INDEPENDENT_PRE_REVIEW.md).
 
@@ -528,4 +535,4 @@ They do **not** contain a theorem proving `Target`. The source-path pattern is
 LeanCert `#assert_statement`, `#assert_trust kernel`, frozen identity checks,
 and the shared Comparator certificates check statement definitions and their
 trust closure. They do not prove any of the 33 statement-only propositions or
-upgrade the ten partial projects to full proofs.
+upgrade the nine partial projects to full proofs.
