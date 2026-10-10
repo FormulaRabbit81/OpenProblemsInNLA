@@ -51,6 +51,7 @@ import NLA.Proofs.RA10.NuclearNormPSDTrace
 import NLA.Proofs.RA10.NuclearComplementaryBlocks
 import NLA.Proofs.RA10.MatchedLeadingEq8
 import NLA.Proofs.RA10.MatchedLeadingEq9
+import NLA.Proofs.RA10.HermitianPositivePart
 import NLA.Proofs.SP14.EndpointFiniteRealizationPositive
 import NLA.Proofs.SP14.EndpointFiniteRealizationNegative
 import NLA.Proofs.SP14.EndpointFiniteFourierUniqueness
