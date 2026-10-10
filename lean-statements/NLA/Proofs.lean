@@ -33,6 +33,12 @@ import NLA.Proofs.RA10.OrderedSpectralIntersection
 import NLA.Proofs.RA10.SelectedCompressionPrefixSupport
 import NLA.Proofs.RA10.SelectedCompressionComparison
 import NLA.Proofs.RA10.NuclearIdealOperatorBridge
+import NLA.Proofs.RA10.NuclearIdealGramOrder
+import NLA.Proofs.RA10.NuclearNormHomogeneity
+import NLA.Proofs.RA10.NuclearOrthogonalLeft
+import NLA.Proofs.RA10.NuclearOrthogonalRight
+import NLA.Proofs.RA10.NuclearOrthogonalConjugation
+import NLA.Proofs.RA10.OrderedPSDLoewnerEigenvalue
 import NLA.Proofs.MF03.OrderOne
 import NLA.Proofs.MF03.Transport
 import NLA.Proofs.MF03.Finite02
@@ -59,6 +65,13 @@ import NLA.Proofs.MF03.CosineCoefficientTransfer
 import NLA.Proofs.MF03.FiniteElementaryLimit
 import NLA.Proofs.MF03.FiniteDeterminantLimit
 import NLA.Proofs.MF03.PadeToeplitzCramer
+import NLA.Proofs.MF03.CramerAugmentedDeterminant
+import NLA.Proofs.MF03.PadeNonconstantCoefficients
+import NLA.Proofs.MF03.PadeDenominatorPolynomial
+import NLA.Proofs.MF03.PadeNumeratorPolynomial
+import NLA.Proofs.MF03.PadeDenominatorTail
+import NLA.Proofs.MF03.PadeHighEquations
+import NLA.Proofs.MF03.AllOrderTarget
 import NLA.Proofs.MF03.FiniteBidiagonalMinor
 import NLA.Proofs.MF03.FiniteBidiagonalStep
 import NLA.Proofs.MF03.FiniteMinorCauchyBinet
