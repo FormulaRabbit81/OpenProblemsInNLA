@@ -30,6 +30,37 @@ NuclearNorm (X+Y) = NuclearNorm X + NuclearNorm Y.
 
 This is exact coefficient-one additivity for the literal frozen sum over `Fin n`. It is valid for nonsymmetric `X,Y`, zero/full-rank `P`, singular blocks, and `Fin 0`. It must be kernel proved through an orthogonal direct-sum/singular-value argument or an exact trace-dual witness assembled on complementary blocks. Ordinary triangle inequality gives only the reverse inequality and does not prove this gate.
 
+### Exact contractive trace-dual intermediate
+
+For every `n`, real square matrices `W,M`, and the **pointwise Euclidean contraction**
+
+```
+∀ x : EuclideanSpace ℝ (Fin n), ‖Matrix.toEuclideanLin W x‖ ≤ ‖x‖,
+```
+
+prove the sharp coefficient-one statement
+
+```
+Matrix.trace (W.transpose * M) ≤ NuclearNorm M.
+```
+
+This is a private helper for complementary-block additivity, not a replacement definition of the frozen nuclear norm. Its exact derivation expands the matrix trace over an orthonormal Gram eigenbasis `bᵢ` for `M`: each pairing satisfies
+
+```
+⟪W bᵢ, M bᵢ⟫ ≤ ‖W bᵢ‖ ‖M bᵢ‖
+              ≤ ‖M bᵢ‖ = singularValues(M,i),
+```
+
+where the last equality is the already kernel-audited same-index Gram/singular-value identity used in the orthogonal trace upper gate. Summing over **all** `i : Fin n` gives exactly the frozen nuclear norm, including zero singular values and `Fin 0`. No dimension or rank factor appears. The proof does not assume `W` orthogonal.
+
+To instantiate this helper, obtain independent orthogonal trace-attaining witnesses `U_X,U_Y` for `X,Y`, put `Q=I−P`, and set `W=P U_X P+Q U_Y Q`. Symmetry and idempotence of `P`, together with `U_XᵀU_X=U_YᵀU_Y=I`, yield the exact Gram deficit identity
+
+```
+I−WᵀW = (Q U_X P)ᵀ(Q U_X P) + (P U_Y Q)ᵀ(P U_Y Q) ⪰ 0.
+```
+
+Thus `‖Wx‖≤‖x‖` for every Euclidean `x`. Support `PXP=X` and `QYQ=Y`, plus trace cyclicity, give `tr(Wᵀ(X+Y))=tr(U_XᵀX)+tr(U_YᵀY)=NuclearNorm X+NuclearNorm Y`. The contraction upper bound proves the missing `≥` direction; the audited nuclear triangle proves `≤`. The argument uses the literal original supports and does not silently require `X` or `Y` to be PSD or symmetric.
+
 For every real `Matrix.PosSemidef Y`, prove
 
 ```
@@ -112,6 +143,18 @@ theorem matchedLeading_excess_ge_remainder_plus_loss {n k : ℕ}
   ...
 
 end NLA.Proofs.RA10
+```
+
+The private helper may be implemented with this exact Lean signature before the public block theorem:
+
+```lean
+private theorem trace_contracting_le_nuclearNorm {n : ℕ}
+    (W M : Matrix (Fin n) (Fin n) ℝ)
+    (hW : ∀ x : EuclideanSpace ℝ (Fin n),
+      ‖Matrix.toEuclideanLin W x‖ ≤ ‖x‖) :
+    Matrix.trace (W.transpose * M) ≤
+      NLA.Statements.RA10.NuclearNorm M := by
+  ...
 ```
 
 The generic block theorem's support hypotheses are internal exact matrix equations, discharged by the actual `B₀,C,Q` in the source theorem. The PSD theorem's hypothesis is discharged by the actual `QAQ`, using `hA`, not added to `TransferBound`. The final theorem has only the two original supplied decompositions and Target-range indices as premises. Any helper module must pass direct pinned Lean 4.33.1/LeanCert kernel checks and a separate imported exact-signature/source/axiom audit before aggregate import. If complementary-block additivity cannot be proved, Equation (8) stays open; do not install it as an axiom or substitute a weaker factor.
