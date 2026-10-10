@@ -327,7 +327,11 @@ now covers every supplied ordered Gram decomposition. The
 [coefficient-one same-index left singular-value bound](RA-10/NUCLEAR_IDEAL_POINTWISE_LEFT_INDEPENDENT_FINAL_REVIEW.md)
 is kernel proved for every `Fin n` index. Its sum gives the
 [exact frozen nuclear-norm left ideal inequality](RA-10/NUCLEAR_IDEAL_LEFT_INDEPENDENT_FINAL_REVIEW.md).
-The right ideal inequality, Equation (14)'s bound, and full Target remain open under the
+The [same-index transpose singular values](RA-10/NUCLEAR_SINGULAR_VALUES_TRANSPOSE_INDEPENDENT_FINAL_REVIEW.md),
+[frozen nuclear-norm transpose](RA-10/NUCLEAR_NORM_TRANSPOSE_INDEPENDENT_FINAL_REVIEW.md),
+and [scoped L2 operator-norm transpose](RA-10/NUCLEAR_OPERATOR_NORM_TRANSPOSE_INDEPENDENT_FINAL_REVIEW.md)
+then give the [coefficient-one right ideal inequality](RA-10/NUCLEAR_IDEAL_RIGHT_INDEPENDENT_FINAL_REVIEW.md).
+Equation (14)'s nuclear bound and full Target remain open under the
 [reviewed exact contract](RA-10/NUCLEAR_IDEAL_EQ14_INDEPENDENT_PRE_REVIEW.md).
 
 The [independently reviewed normalized exterior boundary factor](SP-14/BASE_EXTERIOR_FACTOR_INDEPENDENT_FINAL_REVIEW.md)
