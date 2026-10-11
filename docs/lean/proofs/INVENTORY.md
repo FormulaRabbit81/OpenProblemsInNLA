@@ -273,6 +273,9 @@ The [exact endpoint square, zero, and truncation density gates](SP-14/ENDPOINT_V
 reuse the already audited normalized series and literal `lp²` finite-coordinate
 truncation. A pointwise input-continuity bound is still needed to pass the
 finite endpoint zero to arbitrary weighted input.
+The [actual pointwise input and difference bounds](SP-14/ENDPOINT_POINTWISE_BOUND_INDEPENDENT_FINAL_REVIEW.md)
+now give that continuity with the exact `W_r(1+C_r)` factor for every circle
+point. The arbitrary-input endpoint-zero limit is the remaining gate here.
 
 The [RA-10 selected-projector gates](RA-10/SELECTED_PROJECTOR_INDEPENDENT_FINAL_REVIEW.md)
 identify the exact frozen first-`k` eigenvector projector, prove symmetry and
@@ -384,8 +387,9 @@ The exact [Equation (11) defect contract](RA-10/MATCHED_LEADING_EQ11_DEFECT_INDE
 is approved for staged implementation. Its [arbitrary selected-compression
 eigenvalue-tail and trace-prefix gates](RA-10/SELECTED_COMPRESSION_TAIL_INDEPENDENT_FINAL_REVIEW.md)
 now prove every supplied compression spectrum has zero tail from index `k`,
-including repeated and zero eigenvalues. The scalar deficit and exact matrix
-positive-part identification remain open.
+including repeated and zero eigenvalues. The [scalar deficit sum](RA-10/MATCHED_LEADING_EQ11_SCALAR_INDEPENDENT_FINAL_REVIEW.md)
+is now bounded by `L` at coefficient one. Its exact matrix positive-part
+identification and the source Equation (11) remain open.
 The remaining compression, perturbation, integral transfer, and full Target
 remain open under the [reviewed exact contract](RA-10/NUCLEAR_IDEAL_EQ14_INDEPENDENT_PRE_REVIEW.md).
 
