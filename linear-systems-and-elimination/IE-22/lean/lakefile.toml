@@ -1,17 +1,21 @@
-name = "ie22"
+name = "NLAIE22"
 version = "0.1.0"
 defaultTargets = ["Solution"]
 
+# Development dependency; replace with an immutable Git/subDir pin before publication.
 [[require]]
-name = "leancert"
-git = "https://github.com/alerad/leancert"
-rev = "621a43d7cf21f87872392a01e874f2f1dbddc926"
-
-[[lean_lib]]
-name = "Definitions"
+name = "NLARowDeletion"
+path = "../../IE-21/lean"
 
 [[lean_lib]]
 name = "Challenge"
+roots = ["IE22.Challenge"]
+
+[[lean_lib]]
+name = "IE22"
+roots = ["IE22.Transfer"]
+globs = ["IE22.Transfer"]
 
 [[lean_lib]]
 name = "Solution"
+roots = ["IE22.Solution"]

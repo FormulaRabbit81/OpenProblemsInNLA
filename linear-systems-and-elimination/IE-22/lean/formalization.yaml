@@ -1,39 +1,48 @@
 version: v0.4
 project:
-  name: 'IE-22 Lean formalization scaffold'
-  description: 'Statement-first formalization of the complete uniform row-deletion target; supporting lemmas only.'
+  name: IE-22 partial Lean formalisation
+  description: Shared row-deletion proof development; the unconditional main targets
+    remain unproved.
   authors:
-  - Matthew J. Colbrook
+  - FormulaRabbit81
   responsible_maintainers:
-  - OpenProblemsInNLA formalization team
+  - FormulaRabbit81
   license: Apache-2.0
 repository:
   role: substantive-development
 sources:
-- title: 'IE-22 problem statement and independently reviewed resolution'
-  id: https://github.com/ajt60gaibb/OpenProblemsInNLA/blob/aa8d010bdd5a/linear-systems-and-elimination/IE-22/README.md
+- title: IE-22 canonical problem
+  id: https://github.com/FormulaRabbit81/OpenProblemsInNLA/blob/775bedc1e33cc0951d08610cc7ba50d2901eda1a/linear-systems-and-elimination/IE-22/README.md
   type: web-post
   relationship: formalizes
-  note: 'Canonical source snapshot recorded in SPEC.md.'
-- title: 'IE-21/IE-22 resolution manuscript'
+- title: Recovered IE-21/IE-22 manuscript
+  location: references/colbrook-recovered-2026-09-11/manuscripts/IE-21-22.tex
   type: manuscript
-  location: '04_twenty_problem_resolutions/main.tex, sec:rows'
   relationship: formalizes
+- title: Published formalisation scaffold
+  id: https://github.com/FormulaRabbit81/OpenProblemsInNLA/tree/775bedc1e33cc0951d08610cc7ba50d2901eda1a/linear-systems-and-elimination/IE-22/lean
+  type: formalisation
+  relationship: background
+  note: The original recorded authorship, including Matthew J. Colbrook, and all prior
+    review records are retained verbatim in verification/published-scaffold.
 automation:
   methods:
   - method: agent
     framework: OpenAI Codex
-    tool_setup: Pinned Lean 4.33.1, Mathlib and LeanCert revisions are recorded in lakefile.toml.
-    prompting_notes: The full Challenge target is isolated from the supporting Solution lemmas.
+    tool_setup: Lean 4.33.1 and pinned mathlib; local builds and transitive axiom
+      audits.
+    prompting_notes: Current development directed by FormulaRabbit81; proof development
+      before independent statement review was explicitly authorized. Main challenge
+      placeholders are never imported by implementation modules.
 toolchain:
   lean: leanprover/lean4:v4.33.1
   mathlib: 0df444a360eaa60ab8c11dca51a86af692955474
-  leancert: 621a43d7cf21f87872392a01e874f2f1dbddc926
   dependency_manifest: lake-manifest.json
 status:
-  scope: 'Challenge.lean records the full uniform row-deletion theorem; Solution.lean proves only l2Sq_zero and rowEnergy_empty.'
+  scope: Partial proof development. Only implemented results are listed here; comparator.json
+    describes the eventual complete target and is not yet discharged.
   whole_problem_verified: false
-  canonical_status: 'not Lean verified'
+  canonical_status: not Lean verified
   sorry_count: 0
   sorry_in_definitions: 0
   axioms:
@@ -41,18 +50,38 @@ status:
   - Classical.choice
   - Quot.sound
   main_results:
-  - declaration: IE22.l2Sq_zero
-    file: Solution.lean
+  - declaration: NLA.IE22.extremal_eventual_uniform_upper_of_uniform_upper
+    file: IE22/Transfer.lean
     sorry_count: 0
-    axioms: [propext, Classical.choice, Quot.sound]
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
     comparator_config: comparator.json
-  - declaration: IE22.rowEnergy_empty
-    file: Solution.lean
+  - declaration: NLA.IE22.sharp_constant_of_diagonal_concentration
+    file: IE22/Transfer.lean
     sorry_count: 0
-    axioms: [propext, Classical.choice, Quot.sound]
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
     comparator_config: comparator.json
+  - declaration: NLA.IE22.extremalDeletion_tendsto_of_concentration_and_uniform_upper
+    file: IE22/Transfer.lean
+    sorry_count: 0
+    axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+    comparator_config: comparator.json
+  challenge_status: Unproved main signatures contain deliberate placeholders. These
+    are outside the implementation sorry count.
+  verification_status: Local build and axiom audit only; full Comparator and independent
+    review pending.
 fidelity:
-  divergences: 'The complete probability infrastructure for uniform sphere laws and varying-dimensional convergence remains an explicit blocker; the full target is retained in Challenge.lean.'
+  divergences: See NUMERICAL_TARGETS.md and DEVELOPMENT.md (shared under IE-21). The
+    complete original targets are retained. Auxiliary estimates and proof routes are
+    documented; current statement fidelity remains unreviewed.
 review:
-  status: 'AI statement-reviewed; proof-blocked'
-  notes: 'Independent proof and Comparator verification remain pending.'
+  status: Not independently reviewed; draft
+  notes: Historical scaffold reviews are preserved but do not apply to this candidate.
