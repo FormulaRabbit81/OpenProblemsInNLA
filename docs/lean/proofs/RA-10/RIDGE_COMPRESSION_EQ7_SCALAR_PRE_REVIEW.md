@@ -36,15 +36,17 @@ Create a new, unimported `NLA.Proofs.RA10.RidgeCompressionEq7Scalar` module with
 namespace NLA.Proofs.RA10
 
 theorem ridgeCompression_eq7_scalar
-    {s c λ : ℝ} (hs : 0 < s) (hc : 0 < c)
-    (hλ : 0 < λ) (hλ1 : λ < 1) :
-    let μ := λ / (1 + λ)
-    λ * (s + c) / 2 ≤
+    {s c lam : ℝ} (hs : 0 < s) (hc : 0 < c)
+    (hlam : 0 < lam) (hlam1 : lam < 1) :
+    let μ := lam / (1 + lam)
+    lam * (s + c) / 2 ≤
       μ * s + (μ * (2 - μ) * c) / (2 * (1 - μ)) := by
   ...
 
 end NLA.Proofs.RA10
 ```
+
+The Lean binder `lam` denotes the source's `λ`; bare `λ` is reserved Lean syntax for a lambda expression. This binder spelling has no mathematical effect.
 
 The module may contain private helper facts for the displayed exact difference. It must have no additional public theorem and no `sorry`, new axiom, native decision procedure, weakened numerical constant, or altered domain. After implementation, require pinned LeanCert `kernel` checking and printed axiom inspection. Leave the new source unimported and uncommitted for separate final audit.
 
