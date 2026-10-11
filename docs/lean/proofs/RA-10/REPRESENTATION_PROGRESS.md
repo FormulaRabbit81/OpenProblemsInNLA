@@ -9,7 +9,9 @@ isolated Linux verification. There are no new dependencies or axioms.
 ## What is locally proved
 
 All twenty-seven representation-stage modules are under
-`lean-statements/NLA/Proofs/RA10/` (97 RA-10 proof files in total).
+`lean-statements/NLA/Proofs/RA10/` (97 at the original completion check;
+99 after moving the submission onto upstream PR #350, which supplies two
+additional existing modules).
 
 | Module | Proved scope |
 | --- | --- |

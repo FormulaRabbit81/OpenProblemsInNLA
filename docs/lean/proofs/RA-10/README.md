@@ -1,8 +1,9 @@
 # RA-10 completed proof: review guide
 
 The candidate proves the unchanged `NLA.Statements.RA10.Target` with universal
-constant 11. It extends the existing RA-10 foundations at
-`50106db1b75a1019b708f495db747ab37bb8efbd`.
+constant 11. The upstream submission extends the RA-10 foundations in
+[PR #350](https://github.com/ajt60gaibb/OpenProblemsInNLA/pull/350) at
+`696b59ff414c74d24bfef71ab22e6d67b5c0f7cd`.
 Local Lean checking is complete; independent review and isolated non-root
 Linux Comparator verification remain outstanding.
 
@@ -17,8 +18,10 @@ Linux Comparator verification remain outstanding.
   perturbation and constant-11 assembly.
 - [Operator-monotone representation](REPRESENTATION_PROGRESS.md): compactness,
   harmonic extreme points, Hansen splitting, Bendat–Sherman and measure existence.
-- [Final verification evidence](verification/2026-10-11-complete/README.md):
-  local build, transitive axiom reports and the manifest of 101 source hashes.
+- [Upstream submission evidence](verification/2026-10-11-upstream-pr/README.md):
+  local build, transitive axiom reports and the manifest of 104 source hashes.
+- [Original completion evidence](verification/2026-10-11-complete/README.md):
+  the earlier local check on the aggregate proof-development baseline.
 
 The mathematical source is George Stepaniants's
 [RA-10 solution](../../../../randomized-and-low-rank-approximation/RA-10/solution.md),
@@ -35,7 +38,7 @@ From `lean-statements/`, with the committed dependency pins:
 ```bash
 lake exe cache get
 lake build NLA.Proofs.RA10.OperatorMonotoneRepresentation NLA.Proofs.RA10.OperatorMonotoneConcavity
-shasum -a 256 -c ../docs/lean/proofs/RA-10/verification/2026-10-11-complete/complete-source-sha256.txt
+shasum -a 256 -c ../docs/lean/proofs/RA-10/verification/2026-10-11-upstream-pr/source-sha256.txt
 ```
 
 The final representation, transfer and target report only `propext`,
@@ -45,17 +48,20 @@ them to the reviewed proof aggregate. That build is not the independent
 Comparator verification of the target; existing statement-identity checks do
 not verify the target's truth.
 
-## Fork review scope
+## Upstream review scope
 
-The draft PR is intended for `FormulaRabbit81/OpenProblemsInNLA`, from
-`codex/ra10-spectral-transfer` into `codex/ra10-review-base`. The review base
-points to a snapshot of upstream's proof-development branch,
-`codex/solved-lean-proofs` (formerly PR #342), containing the RA-10 foundations.
-The fork's `main` and upstream's `main` are identical at `775bedc1e`.
-The development snapshot has 126 commits absent from `main`, while `main` has
-one commit absent from that snapshot; this is branch divergence, not an
-out-of-date fork. Comparing against the snapshot keeps this review specific
-to the new RA-10 work. The fork's `main` is not modified.
+The draft PR is submitted from
+`FormulaRabbit81:codex/ra10-complete-upstream` to upstream's
+`codex/nla-proof-ra10` branch. It depends on PR #350, which supplies the
+existing RA-10 foundations and is itself based on the shared proof
+infrastructure in PR #344. The new PR contains the completion work, rather
+than the unrelated problems from the former aggregate PR #342.
+
+The earlier [fork review PR](https://github.com/FormulaRabbit81/OpenProblemsInNLA/pull/2)
+is retained. Its 97 proof sources are unchanged in this submission. The
+dedicated upstream RA-10 base supplies two additional existing modules,
+giving 99 RA-10 proof files in this tree; neither is a new dependency of the
+final representation theorem.
 
 The canonical problem, mathematical target, dependency pins and catalogue
 status are unchanged. Before claiming the repository's `Lean verified`

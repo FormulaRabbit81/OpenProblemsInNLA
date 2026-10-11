@@ -146,7 +146,10 @@ is unchanged. Evidence is in `verification/2026-10-11-complete/`.
 Independent review and authoritative Linux verification remain open; no
 Docker or Podman executable was available in this macOS session.
 
-Work branch: `codex/ra10-spectral-transfer`. Existing baseline:
-`50106db1b75a1019b708f495db747ab37bb8efbd`. See
+Original development branch: `codex/ra10-spectral-transfer`, at baseline
+`50106db1b75a1019b708f495db747ab37bb8efbd`. The upstream submission branch is
+`codex/ra10-complete-upstream`, based on PR #350 at
+`696b59ff414c74d24bfef71ab22e6d67b5c0f7cd`; its local check is retained in
+`verification/2026-10-11-upstream-pr/`. See
 [`SPECTRAL_TRANSFER_PROGRESS.md`](SPECTRAL_TRANSFER_PROGRESS.md) for earlier
 local checks and their limits.
