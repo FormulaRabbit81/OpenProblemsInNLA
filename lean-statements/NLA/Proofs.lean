@@ -62,8 +62,10 @@ import NLA.Proofs.SP14.EndpointFiniteRealizationPointwise
 import NLA.Proofs.SP14.EndpointVanishingBasics
 import NLA.Proofs.SP14.EndpointCirclePointwiseBound
 import NLA.Proofs.SP14.EndpointVanishingByDensity
+import NLA.Proofs.SP14.EndpointFiniteInverseFourier
 import NLA.Proofs.TR14.ChartLocalFourierWidth
 import NLA.Proofs.TR14.GL2AffineChartPolynomial
+import NLA.Proofs.TR14.GL2MobiusEval
 import NLA.Proofs.RA10.NuclearNormHomogeneity
 import NLA.Proofs.RA10.NuclearOrthogonalLeft
 import NLA.Proofs.RA10.NuclearOrthogonalRight

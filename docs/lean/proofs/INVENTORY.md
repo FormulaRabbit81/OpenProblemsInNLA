@@ -277,6 +277,10 @@ now give that continuity with the exact `W_r(1+C_r)` factor for every circle
 point. The [arbitrary-input endpoint-zero theorem](SP-14/ENDPOINT_VANISHING_BY_DENSITY_FINAL_REVIEW.md)
 now passes the finite identity to every weighted input by literal truncation
 density. The negative SP-14 Target remains open.
+The [finite inverse Fourier gate](SP-14/ENDPOINT_FINITE_INVERSE_FOURIER_INDEPENDENT_FINAL_REVIEW.md)
+identifies every actual normalized Fourier coefficient of the source's
+triangular inverse polynomial, with all strictly negative modes zero.
+Its uniform `H^r→L²` bound and infinite inverse extension remain open.
 
 The [RA-10 selected-projector gates](RA-10/SELECTED_PROJECTOR_INDEPENDENT_FINAL_REVIEW.md)
 identify the exact frozen first-`k` eigenvector projector, prove symmetry and
@@ -474,6 +478,10 @@ The [full affine chart polynomial identity](TR-14/GL2_AFFINE_CHART_POLYNOMIAL_IN
 now gives every coefficient of the transported degree-`d` form as
 `G(t,1+zt)=Σᵢ gᵢ t^(d−i)(1+zt)^i`, including trailing zeros and infinity
 cases. The projective-root multiplicity correspondence remains open.
+The [nonzero affine-coordinate identity](TR-14/GL2_MOBIUS_EVAL_INDEPENDENT_FINAL_REVIEW.md)
+now gives the exact degree-`d` Möbius evaluation `p_z(t)=t^d p(z+t⁻¹)`
+for every `t≠0`, including trailing-zero forms. Root multiplicity and the
+exceptional zero coordinate remain open.
 
 The [independently reviewed chosen least-apolar normalization](TR-14/GL2_CHART_NORMALIZE_INDEPENDENT_FINAL_REVIEW.md)
 now transports any supplied nonzero least witness to a monic affine polynomial
