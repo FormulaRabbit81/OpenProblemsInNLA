@@ -57,6 +57,7 @@ import NLA.Proofs.RA10.SelectedCompressionTail
 import NLA.Proofs.RA10.MatchedLeadingEq11Scalar
 import NLA.Proofs.RA10.MatchedLeadingEq11Variational
 import NLA.Proofs.RA10.MatchedLeadingEq12RidgeLoss
+import NLA.Proofs.RA10.MatchedLeadingEq13TraceIdentity
 import NLA.Proofs.SP14.EndpointFiniteRealizationPositive
 import NLA.Proofs.SP14.EndpointFiniteRealizationNegative
 import NLA.Proofs.SP14.EndpointFiniteFourierUniqueness
@@ -66,6 +67,7 @@ import NLA.Proofs.SP14.EndpointCirclePointwiseBound
 import NLA.Proofs.SP14.EndpointVanishingByDensity
 import NLA.Proofs.SP14.EndpointFiniteInverseFourier
 import NLA.Proofs.SP14.EndpointInverseHSScalar
+import NLA.Proofs.SP14.EndpointFiniteInverseEnergy
 import NLA.Proofs.TR14.ChartLocalFourierWidth
 import NLA.Proofs.TR14.GL2AffineChartPolynomial
 import NLA.Proofs.TR14.GL2MobiusEval

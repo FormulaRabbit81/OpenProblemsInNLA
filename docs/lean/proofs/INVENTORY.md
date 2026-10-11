@@ -282,8 +282,12 @@ identifies every actual normalized Fourier coefficient of the source's
 triangular inverse polynomial, with all strictly negative modes zero.
 The [Hilbert–Schmidt scalar gate](SP-14/ENDPOINT_INVERSE_HS_SCALAR_INDEPENDENT_FINAL_REVIEW.md)
 now proves the exact column sum converges for every `r>1/2` and is at most
-`(1+1/(r−1/2))²`. Finite coefficient energy, normalized-circle Parseval,
-and the infinite inverse extension remain open.
+`(1+1/(r−1/2))²`.
+The [finite inverse coefficient-energy gate](SP-14/ENDPOINT_FINITE_INVERSE_ENERGY_INDEPENDENT_FINAL_REVIEW.md)
+now bounds the actual triangular inverse's first `N` coefficient squares by
+the exact Hilbert–Schmidt sum times the literal weighted input norm squared,
+including `N=0`. Normalized-circle Parseval and the infinite inverse extension
+remain open.
 
 The [RA-10 selected-projector gates](RA-10/SELECTED_PROJECTOR_INDEPENDENT_FINAL_REVIEW.md)
 identify the exact frozen first-`k` eigenvector projector, prove symmetry and
@@ -404,8 +408,11 @@ compression eigenbases. The restricted-block trace notation used for source
 `d` still needs an explicit formal bridge during later integration.
 The [positive-cutoff ridge trace-loss theorem](RA-10/MATCHED_LEADING_EQ12_RIDGE_LOSS_INDEPENDENT_FINAL_REVIEW.md)
 now proves exact `0≤L_s≤L/(s+c)` with the actual full-space functional
-matrix and zero compression tail. The `c=0` branch, source Equation (13),
-and full Target remain open.
+matrix and zero compression tail. The [first Equation (13) trace
+identity](RA-10/MATCHED_LEADING_EQ13_TRACE_IDENTITY_INDEPENDENT_FINAL_REVIEW.md)
+now equates the exact ridge nuclear excess with `L_s` plus twice the
+positive-part trace of `F_C−F_A`. The `c=0` branch, Lemma 2's positive-part
+bound, remaining Equation (13) inequalities, and full Target remain open.
 The remaining compression, perturbation, integral transfer, and full Target
 remain open under the [reviewed exact contract](RA-10/NUCLEAR_IDEAL_EQ14_INDEPENDENT_PRE_REVIEW.md).
 
