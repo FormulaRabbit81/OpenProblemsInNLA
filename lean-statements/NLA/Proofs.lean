@@ -55,6 +55,8 @@ import NLA.Proofs.RA10.HermitianPositivePart
 import NLA.Proofs.RA10.MatchedLeadingEq10
 import NLA.Proofs.RA10.SelectedCompressionTail
 import NLA.Proofs.RA10.MatchedLeadingEq11Scalar
+import NLA.Proofs.RA10.MatchedLeadingEq11Variational
+import NLA.Proofs.RA10.MatchedLeadingEq12RidgeLoss
 import NLA.Proofs.SP14.EndpointFiniteRealizationPositive
 import NLA.Proofs.SP14.EndpointFiniteRealizationNegative
 import NLA.Proofs.SP14.EndpointFiniteFourierUniqueness
@@ -63,9 +65,11 @@ import NLA.Proofs.SP14.EndpointVanishingBasics
 import NLA.Proofs.SP14.EndpointCirclePointwiseBound
 import NLA.Proofs.SP14.EndpointVanishingByDensity
 import NLA.Proofs.SP14.EndpointFiniteInverseFourier
+import NLA.Proofs.SP14.EndpointInverseHSScalar
 import NLA.Proofs.TR14.ChartLocalFourierWidth
 import NLA.Proofs.TR14.GL2AffineChartPolynomial
 import NLA.Proofs.TR14.GL2MobiusEval
+import NLA.Proofs.TR14.GL2NonzeroRootCorrespondence
 import NLA.Proofs.RA10.NuclearNormHomogeneity
 import NLA.Proofs.RA10.NuclearOrthogonalLeft
 import NLA.Proofs.RA10.NuclearOrthogonalRight
