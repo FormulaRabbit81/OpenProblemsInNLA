@@ -49,6 +49,7 @@ import NLA.Proofs.RA10.HermitianPositivePart
 import NLA.Proofs.RA10.MatchedLeadingEq10
 import NLA.Proofs.RA10.SelectedCompressionTail
 import NLA.Proofs.RA10.MatchedLeadingEq11Scalar
+import NLA.Proofs.RA10.RidgeCompressionDefectSupport
 import NLA.Proofs.RA10.MatchedLeadingEq11Variational
 import NLA.Proofs.RA10.MatchedLeadingEq12RidgeLoss
 import NLA.Proofs.RA10.MatchedLeadingEq13TraceIdentity
