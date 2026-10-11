@@ -49,9 +49,13 @@ not verify the target's truth.
 
 The draft PR is intended for `FormulaRabbit81/OpenProblemsInNLA`, from
 `codex/ra10-spectral-transfer` into `codex/ra10-review-base`. The review base
-points to the existing upstream baseline above: the fork's `main` is 126
-commits behind it, and comparing against that baseline keeps the diff specific
-to this proof development. The fork's `main` is not modified.
+points to a snapshot of upstream's proof-development branch,
+`codex/solved-lean-proofs` (formerly PR #342), containing the RA-10 foundations.
+The fork's `main` and upstream's `main` are identical at `775bedc1e`.
+The development snapshot has 126 commits absent from `main`, while `main` has
+one commit absent from that snapshot; this is branch divergence, not an
+out-of-date fork. Comparing against the snapshot keeps this review specific
+to the new RA-10 work. The fork's `main` is not modified.
 
 The canonical problem, mathematical target, dependency pins and catalogue
 status are unchanged. Before claiming the repository's `Lean verified`
