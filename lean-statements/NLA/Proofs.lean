@@ -61,6 +61,7 @@ import NLA.Proofs.SP14.EndpointFiniteFourierUniqueness
 import NLA.Proofs.SP14.EndpointFiniteRealizationPointwise
 import NLA.Proofs.SP14.EndpointVanishingBasics
 import NLA.Proofs.SP14.EndpointCirclePointwiseBound
+import NLA.Proofs.SP14.EndpointVanishingByDensity
 import NLA.Proofs.TR14.ChartLocalFourierWidth
 import NLA.Proofs.TR14.GL2AffineChartPolynomial
 import NLA.Proofs.RA10.NuclearNormHomogeneity

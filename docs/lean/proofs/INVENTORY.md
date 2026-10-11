@@ -271,11 +271,12 @@ now identifies the actual circle extension with `g₀V` for every finitely
 supported physical input, including the endpoint zero of `g₀`.
 The [exact endpoint square, zero, and truncation density gates](SP-14/ENDPOINT_VANISHING_BASICS_INDEPENDENT_FINAL_REVIEW.md)
 reuse the already audited normalized series and literal `lp²` finite-coordinate
-truncation. A pointwise input-continuity bound is still needed to pass the
-finite endpoint zero to arbitrary weighted input.
+truncation.
 The [actual pointwise input and difference bounds](SP-14/ENDPOINT_POINTWISE_BOUND_INDEPENDENT_FINAL_REVIEW.md)
 now give that continuity with the exact `W_r(1+C_r)` factor for every circle
-point. The arbitrary-input endpoint-zero limit is the remaining gate here.
+point. The [arbitrary-input endpoint-zero theorem](SP-14/ENDPOINT_VANISHING_BY_DENSITY_FINAL_REVIEW.md)
+now passes the finite identity to every weighted input by literal truncation
+density. The negative SP-14 Target remains open.
 
 The [RA-10 selected-projector gates](RA-10/SELECTED_PROJECTOR_INDEPENDENT_FINAL_REVIEW.md)
 identify the exact frozen first-`k` eigenvector projector, prove symmetry and
@@ -389,7 +390,8 @@ eigenvalue-tail and trace-prefix gates](RA-10/SELECTED_COMPRESSION_TAIL_INDEPEND
 now prove every supplied compression spectrum has zero tail from index `k`,
 including repeated and zero eigenvalues. The [scalar deficit sum](RA-10/MATCHED_LEADING_EQ11_SCALAR_INDEPENDENT_FINAL_REVIEW.md)
 is now bounded by `L` at coefficient one. Its exact matrix positive-part
-identification and the source Equation (11) remain open.
+identification and the source Equation (11) remain open under the
+[independently reviewed variational bridge contract](RA-10/MATCHED_LEADING_EQ11_VARIATIONAL_INDEPENDENT_PRE_REVIEW.md).
 The remaining compression, perturbation, integral transfer, and full Target
 remain open under the [reviewed exact contract](RA-10/NUCLEAR_IDEAL_EQ14_INDEPENDENT_PRE_REVIEW.md).
 
